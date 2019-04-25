@@ -1,0 +1,39 @@
+
+
+<?php $__env->startSection('content'); ?>
+<section class="content-header">
+      <h1>
+        Dashboard
+        <small>Control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+</section>
+<section class="content">
+<div class="row">
+  <?php if(auth()->check() && auth()->user()->hasRole('root')): ?>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <p id="users"><h3>0</h3></p>
+              <p>Users</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+  <?php endif; ?>
+</div>
+      
+</section>
+  <?php $__env->startSection('script'); ?>
+      <script src="<?php echo e(asset('js/etm/dashb.js')); ?>"></script>
+  <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.gps', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
