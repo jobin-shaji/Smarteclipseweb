@@ -17,7 +17,7 @@
 
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow bxs">
+          <div class="small-box bg-green bxs">
             <div class="inner">
               <p id="users"><h3>0</h3></p>
               <p>GPS</p>
@@ -32,7 +32,7 @@
 
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow bxs">
+          <div class="small-box bg-green bxs">
             <div class="inner">
               <p id="users"><h3>0</h3></p>
               <p>Dealers</p>
@@ -47,7 +47,7 @@
 
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow bxs">
+          <div class="small-box bg-green bxs">
             <div class="inner">
               <p id="users"><h3>0</h3></p>
               <p>Sub Dealers</p>
@@ -62,7 +62,7 @@
 
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow bxs">
+          <div class="small-box bg-green bxs">
             <div class="inner">
               <p id="users"><h3>0</h3></p>
               <p>Users</p>
