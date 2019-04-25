@@ -17,7 +17,7 @@
 <li class="treeview">
     <a href="#">
       <i class="fa fa-user-plus"></i>
-      <span>Sub Dealer</span>
+      <span>User</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
       </span>
