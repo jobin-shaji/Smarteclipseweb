@@ -1,0 +1,38 @@
+.main-sidebar {
+    padding-top: 0px;
+}
+
+.center_div{
+    margin: 0 auto;
+    width:80% /* value of your choice which suits your alignment */
+}
+.error-text{
+    color: red;
+}
+
+.has-error{
+    border-color : red;
+}
+
+.hilite-content{
+    position: relative;
+    background: #fff;
+    border: 1px solid #f4f4f4;
+    padding: 20px;
+    margin: 10px 25px;
+}
+
+.form-btn{
+    margin-top: 10px;
+}
+
+.content-header{
+    padding: 20px 20px 10px 20px;
+    margin-left: 10px;
+}
+
+label.srequired:after {
+    content: "*";
+    color: #f15757;
+    padding-left: 3px;
+}

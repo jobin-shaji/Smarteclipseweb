@@ -1,0 +1,54 @@
+@extends('layouts.etm')
+@section('title')
+  All States
+@endsection
+@section('content')
+
+<!--  flash message -->
+ @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
+          </div>
+        </div>
+    @endif
+ <!-- end flash message -->
+<section class="content-header">
+      <h1>
+        State
+        <small>Control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">State List</li>
+      </ol>
+</section>
+
+
+<section class="content">
+  <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">States</div>
+                <div class="table-responsive">
+                <div class="panel-body">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                        <thead>
+                            <tr>
+                              <th>Sl.No</th>
+                              <th>Name</th>
+                              <th style="width:160px;">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section('script')
+    <script src="{{asset('js/etm/state-list.js')}}"></script>
+@endsection
+@endsection
+
