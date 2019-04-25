@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="<?php echo e(url('/home')); ?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>GPS</b></span>
+      <span class="logo-mini"><b><img src="<?php echo e(asset('images/logo.png')); ?>"></b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>GPS</b></span>
+      <span class="logo-lg"><b><img src="<?php echo e(asset('images/logo.png')); ?>" height="39px"></b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

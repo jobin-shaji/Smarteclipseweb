@@ -2,7 +2,7 @@
 <html>
     <?php echo $__env->make('layouts.sections.meta', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php echo $__env->make('layouts.sections.header', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <body class="hold-transition skin-yellow-light sidebar-mini">
+    <body class="hold-transition skin-black-light sidebar-mini">
         <div class="wrapper">
             <?php echo $__env->make('layouts.sections.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <div class="content-wrapper">
