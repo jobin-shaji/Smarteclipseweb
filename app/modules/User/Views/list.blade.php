@@ -1,4 +1,4 @@
-@extends('layouts.etm')
+@extends('layouts.gps')
 @section('content')
 <section class="content-header">
       <h1>
@@ -37,6 +37,6 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/etm/userlist.js')}}"></script>
+    <script src="{{asset('js/gps/userlist.js')}}"></script>
 @endsection
 @endsection
