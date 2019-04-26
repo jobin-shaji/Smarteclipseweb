@@ -1,12 +1,12 @@
 @extends('layouts.gps')
 @section('title')
-    Create Dealer
+    Create Sub Dealer
 @endsection
 
 
 @section('content')
     <section class="content-header">
-        <h1>Create Dealer</h1>
+        <h1>Create  Sub Dealer</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -26,12 +26,10 @@
         </div>
         <!-- /.col -->
       </div>
-     <form  method="POST" action="{{route('dealer.create.p')}}">
+     <form  method="POST" action="{{route('sub.dealer.create.p')}}">
         {{csrf_field()}}
       <div class="row">
           <div class="col-md-6">
-              
-
               <div class="form-group has-feedback">
                 <label class="srequired">Name</label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
@@ -42,10 +40,6 @@
                     <strong class="error-text">{{ $errors->first('name') }}</strong>
                 </span>
               @endif
-
-              
-             
-
               <div class="form-group has-feedback">
                     <label class="srequired">Address</label>
                     <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required>
@@ -68,7 +62,16 @@
                     <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
                  </span>
               @endif
-             
+                <div class="form-group has-feedback">
+                    <label class="srequired">Email.</label>
+                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required>
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+              </div>
+              @if ($errors->has('email'))
+                 <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('email') }}</strong>
+                 </span>
+              @endif
            </div>
             <div class="col-md-6">
 
@@ -111,8 +114,5 @@
 </section>
  
 <div class="clearfix"></div>
-@section('script')
-    <script src="{{asset('js/etm/employee-list.js')}}"></script>
-@endsection
 
 @endsection
