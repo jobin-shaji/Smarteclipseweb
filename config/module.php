@@ -5,7 +5,7 @@ return  [
        'User',
        'Dashboard',
        'Vehicle',
-       'Etm',
+       'Gps',
        'EtmTransfer',
        'Root',
        'Exports',
