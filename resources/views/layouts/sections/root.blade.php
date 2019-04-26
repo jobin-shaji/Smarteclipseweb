@@ -20,8 +20,8 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href=""><i class="fa fa-plus"></i>Add Dealer</a></li>
-      <li><a href="{{url('/users')}}"><i class="fa fa-list"></i> List Dealers</a></li>
+       <li><a href="{{url('/dealer/create')}}"><i class="fa fa-plus"></i>Add Dealer</a></li>
+      <li><a href="{{url('/dealers')}}"><i class="fa fa-list"></i> List Dealers</a></li>
   </ul>
 </li>
 
@@ -34,7 +34,8 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/users')}}"><i class="fa fa-list"></i> List Sub Dealers</a></li>
+      <li><a href="{{url('/sub-dealers')}}"><i class="fa fa-list"></i> List Sub Dealers</a></li>
+
   </ul>
 </li>
 
