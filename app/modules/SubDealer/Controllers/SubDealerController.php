@@ -4,27 +4,27 @@ namespace App\Modules\SubDealer\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modules\SubDealer\Models\Dealer;
+use App\Modules\SubDealer\Models\Subdealer;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class SubDealerController extends Controller {
     //Display employee details 
     public function subdealerListPage()
     {
-        return view('SubDealer::dealer-list');
+        return view('SubDealer::sub-dealer-list');
     }
     //returns employees as json 
-    public function getDealers()
+    public function getSubDealers()
     {
-        $dealers = Dealer::select(
-                    'id',
-                    
+        $dealers = Subdealer::select(
+                    'id', 
+                    'user_id',
+                    'dealer_id',                      
                     'name',                   
                     'address',                    
                     'phone_number',
-                    'username',
-                    'deleted_at',
-                    'password')
+                    'email',
+                    'deleted_at')
                     ->withTrashed()
                    ->get();
         return DataTables::of($dealers)
@@ -51,5 +51,10 @@ class SubDealerController extends Controller {
     }
 
 
+//     //employee creation page
+    public function create()
+    {
+       return view('SubDealer::sub-dealer-create');
+    }
 
 }

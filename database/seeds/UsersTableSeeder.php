@@ -76,6 +76,18 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::where('username','end_user')->first()->assignRole('end_user'); 
+
+
+         $user = DB::table('users')->insert([
+            'username' => 'dealer',
+            'mobile' => 123453,
+            'email' => 'phpdeveloper02@vehiclest.in',
+            'password' => bcrypt('123456'),
+            'status' => 1
+        ]);
+
+        User::where('username','dealer')->first()->assignRole('dealer');    
+
 		
     }
 }

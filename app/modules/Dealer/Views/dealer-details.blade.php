@@ -53,26 +53,7 @@
        
 
         </div>
-        <div class="col-md-6">
-
-      
-         
-
-
-            <div class="form-group has-feedback">
-              <label>Username</label>
-              <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ $dealer->username}}" disabled>
-              <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-            </div>
-             
-     
-            <div class="form-group has-feedback">
-              <label>Password</label>
-              <input type="text" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}"  name="password" value="{{ $dealer->password}}" disabled>
-              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div> 
-            
-          </div>
+       
       </div>
 <!--  -->
     </form>

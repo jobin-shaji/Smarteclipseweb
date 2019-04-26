@@ -4,13 +4,11 @@ namespace App\Modules\SubDealer\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Subdealer extends Model
+class SubDealer extends Model
 {
-    use SoftDeletes;
+   use SoftDeletes;
     
 	protected $fillable=[
-		'name','address','phone_number','username','password','status','created_by','deleted_by','deleted_at'
+		'user_id','dealer_id','name','address','phone_number','email','status','created_by','deleted_by','deleted_at'
 	];
-
 }

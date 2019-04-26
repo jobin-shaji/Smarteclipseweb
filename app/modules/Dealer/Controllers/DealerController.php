@@ -5,6 +5,9 @@ namespace App\Modules\Dealer\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Dealer\Models\Dealer;
+use App\Modules\User\Models\User;
+use App\Modules\Depot\Models\DepotUser;
+
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class DealerController extends Controller {
@@ -17,14 +20,13 @@ class DealerController extends Controller {
     public function getDealers()
     {
         $dealers = Dealer::select(
-                    'id',
-                    
+                    'id', 
+                    'user_id',                      
                     'name',                   
                     'address',                    
                     'phone_number',
-                    'username',
-                    'deleted_at',
-                    'password')
+                    'email',
+                    'deleted_at')
                     ->withTrashed()
                    ->get();
         return DataTables::of($dealers)
@@ -60,22 +62,36 @@ class DealerController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {
-        $rules = $this->dealerCreateRules();
+      
+        if($request->user()->hasRole('root')){
+        $rules = $this->user_create_rules();
         $this->validate($request, $rules);
-        $dealer = Dealer::create([
-            
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'mobile' => $request->phone_number,
+            'status' => 1,
+            'password' => bcrypt($request->password),
+        ]);
+            $dealer = Dealer::create([
+            // 'depot_id' => $request->user()->depot->first()->id,
+            'user_id' => $user->id,
             'name' => $request->name,            
             'address' => $request->address,
             'phone_number' => $request->phone_number,
-            'username' => $request->username,
+            'email' => $request->email,
             'status'=>1,
-            'password' => $request->password
+            
             // 'created_by' => \Auth::user()->id
-        ]);
-         $eid= encrypt($dealer->id);
+            ]);
+
+            User::where('username', $request->username)->first()->assignRole('dealer');
+        }
+ $eid= encrypt($user->id);
         $request->session()->flash('message', 'New dealer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('dealer.details',$eid));
+         return redirect(route('dealers')); 
+       
     }
 
     //employee details view
@@ -137,7 +153,8 @@ class DealerController extends Controller {
     //update password
     public function updatePassword(Request $request)
     {
-        $dealer = Dealer::find($request->id);
+        $dealer = User::find($request->id);
+        
         $did = encrypt($dealer->id);
         if($dealer == null){
            return view('Dealer::404');
@@ -159,7 +176,7 @@ class DealerController extends Controller {
         {
             $request->session()->flash('message', 'Old password is incorrect!');
             $request->session()->flash('alert-class', 'alert-danger'); 
-            return redirect(route('dealer.change-password',$did));
+            return redirect(route('dealers.change-password',$did));
         }
          
     }
@@ -243,6 +260,15 @@ class DealerController extends Controller {
         ];
         return $rules;
   }
+    //user create rules 
+    public function user_create_rules(){
+        $rules = [
+            'username' => 'required|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
 
 
 }
