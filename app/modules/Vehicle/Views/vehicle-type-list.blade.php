@@ -1,4 +1,4 @@
-@extends('layouts.etm')
+@extends('layouts.gps')
 @section('title')
   All Bus Types
 @endsection
@@ -40,7 +40,6 @@
                         <tr>
 	                      <th>#</th>
 	                      <th>vehicle Type</th>
-	                      <th>Type Code</th>
 	                      <th style="width:160px;">Action</th>
                         </tr>
                         </thead>
@@ -51,7 +50,7 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/etm/vehicle-type-list.js')}}"></script>
+    <script src="{{asset('js/gps/vehicle-type-list.js')}}"></script>
 @endsection
 
 @endsection

@@ -1,9 +1,9 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:state'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:end_user'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 
-Route::get('/vehicles','VehicleController@VehicleList')->name('vehicles');
+Route::get('/vehicle','VehicleController@VehicleList')->name('vehicle');
 
 Route::post('/vehicle-list','VehicleController@getVehicleList')->name('vehicle-list');
 Route::get('/vehicles/create','VehicleController@craeteVehicle')->name('vehicles.create');
@@ -14,6 +14,13 @@ Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
+});
+
+
+
+
+
+Route::group(['middleware' => ['web','auth','role:root'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 //VEHICLE TYPE
 Route::get('/vehicle-types','VehicleController@vehicleTypeList')->name('vehicle-types');
@@ -25,21 +32,5 @@ Route::get('/vehicle-type/{id}/details','VehicleController@detailsVehicleType')-
 Route::get('/vehicle-type/{id}/edit','VehicleController@editVehicleType')->name('vehicle-type.edit');
 Route::post('/vehicle_type/{id}/edit','VehicleController@updateVehicleType')->name('vehicle-type.update.p');
 // Route::post('vehicle_type/delete','VehicleController@deleteVehicleType')->name('vehicle-type.delete');
-
-Route::post('/vehicle-concession-add','VehicleController@vehicleConcessionAdd')->name('vehicle.concession.add');
-Route::post('/vehicle-concession-remove','VehicleController@vehicleConcessionRemove')->name('vehicle.concession.remove');
-
-
-});
-
-
-
-
-
-Route::group(['middleware' => ['web','auth','role:depot'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-
-
-Route::get('/vehicle-list','VehicleDepoController@VehicleList')->name('vehicles_depo');
-Route::post('/vehicledepo-list','VehicleDepoController@getVehicleList')->name('vehicledepo-list');
 
 });
