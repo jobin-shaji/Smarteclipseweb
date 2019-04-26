@@ -1,4 +1,4 @@
-@extends('layouts.etm')
+@extends('layouts.gps')
 @section('title')
   Add Vehicle
 @endsection
