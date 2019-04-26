@@ -1,13 +1,20 @@
 <?php 
-Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
 
 	// //for dealers
 	Route::get('/sub-dealers','SubDealerController@subdealerListPage')->name('sub-dealers');
-	Route::post('/dealer-list','DealerController@getDealers')->name('dealer-list');
+	Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-dealer-list');
+});
+
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+	// //for dealers
+	// Route::get('/sub-dealers','SubDealerController@subdealerListPage')->name('sub-dealers');
+	// Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-dealer-list');
 
 
-	// Route::get('/sub-dealer/create','DealerController@create')->name('sub.dealer.create');
-	//  Route::post('/sub-dealer/create','DealerController@save')->name('sub.dealer.create.p');
+	Route::get('/sub-dealer/create','SubDealerController@create')->name('sub.dealer.create');
+	
+	 Route::post('/sub-dealer/create','SubDealerController@save')->name('sub.dealer.create.p');
 	//  Route::get('/dealers/{id}/edit','DealerController@edit')->name('dealers.edit');
 	//   Route::post('/dealers/{id}/edit','DealerController@update')->name('dealers.update.p'); 
 	//  Route::get('/dealers/{id}/change-password','DealerController@changePassword')->name('dealers.change-password');
