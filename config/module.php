@@ -9,6 +9,8 @@ return  [
        'EtmTransfer',
        'Root',
        'Exports',
+       'Dealer',
+        'SubDealer',
        'Alert',
     ]
 ]
