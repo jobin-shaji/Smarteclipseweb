@@ -1,4 +1,4 @@
-@extends('layouts.etm') 
+@extends('layouts.gps') 
 @section('title')
     Create Vehicle Type
 @endsection
@@ -40,18 +40,6 @@
                 </span>
               @endif
 
-              <div class="form-group has-feedback">
-                <label class="srequired">Type Code</label>
-                <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Type Code" name="code" value="{{ old('code') }}" required> 
-                <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
-              </div>
-              @if ($errors->has('code'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('code') }}</strong>
-                </span>
-              @endif
-
-              
            </div>
             
         </div>
