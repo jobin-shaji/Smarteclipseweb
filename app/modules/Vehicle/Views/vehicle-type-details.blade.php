@@ -1,4 +1,4 @@
-@extends('layouts.etm') 
+@extends('layouts.gps') 
 @section('title')
    Vehicle type details
 @endsection
@@ -40,40 +40,11 @@
             </span>
           @endif
 
-          <div class="form-group has-feedback">
-            <label>Type Code</label>
-            <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Type Code" name="code" value="{{ $vehicle_type->code}}" disabled> 
-            <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
-          </div>
-          @if ($errors->has('code'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('code') }}</strong>
-            </span>
-          @endif
-
         </div>
         
    </div>
 <!--  -->
     </form>
-</section>
-
-<section class="hilite-content">
-  <h2>Applicable concession types</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Concession</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($vehicle_type->ticketConcessions as $concession)
-      <tr>
-        <td>{{$concession->name}}</td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
 </section>
 
 <div class="clearfix"></div>

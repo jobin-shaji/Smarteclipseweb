@@ -1,9 +1,8 @@
-@extends('layouts.etm')
+@extends('layouts.gps')
 @section('title')
-  All Vehicle
+    View Dealer
 @endsection
 @section('content')
-
 <!--  flash message -->
  @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -13,50 +12,51 @@
         </div>
     @endif
  <!-- end flash message -->
-
- <section class="content-header">
+<section class="content-header">
       <h1>
-        Vehicle
+        Dealer
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Bus</li>
+        <li class="active">Dealer List</li>
       </ol>
 </section>
 
- <section class="content">
+
+<section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-              @role('state')
-                <div class="panel-heading">Vehicle List 
-                    <a href="{{route('vehicles.create')}}">
-                    <button class="btn btn-xs btn-primary pull-right">Add new Vehicle</button>
+                <div class="panel-heading">Dealer  
+                    <a href="{{route('dealer.create')}}">
+                    <button class="btn btn-xs btn-primary pull-right">Add new Dealer</button>
                     </a>
                 </div>
-                 @endrole
+                <div class="table-responsive">
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                        <tr>
-	                      <th>#</th>
-	                      <th>Register Number</th>
-	                      <th>Vehicle Type</th>
-	                      <th>Depo Name</th>
-	                      <th>Occupancy</th>
-	                      <th>Speed Limit</th>
-	                      <!-- <th style="width:160px;">Action</th> -->
-                        </tr>
+                            <tr>
+                              <th>Sl.No</th>
+                              
+                              <th>Name</th>                            
+                              <th>Address</th>                              
+                              <th>Mobile</th>                            
+                              <th>Username</th>
+                             
+                              <th style="width:160px;">Action</th>
+                            </tr>
                         </thead>
                     </table>
                 </div>
+              </div>
             </div>
         </div>
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/etm/vehicle-depo-list.js')}}"></script>
+    <script src="{{asset('js/gps/dealer-list.js')}}"></script>
+@endsection
 @endsection
 
-@endsection

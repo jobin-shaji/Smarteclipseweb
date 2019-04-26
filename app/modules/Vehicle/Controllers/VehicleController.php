@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
-use App\Modules\Depot\Models\Depot;
-use App\Modules\Concession\Models\TicketConcession;
-use App\Modules\Concession\Models\VehicleTypeTicketConcession;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -191,18 +188,17 @@ class VehicleController extends Controller {
     public function getVehicleTypeList()
     {
 
-        $bus_type = VehicleType::select(
+        $vehicle_type = VehicleType::select(
                     'id',
-                    'name',
-                    'code'
+                    'name'
                     )
-            ->get();
+                ->get();
 
-        return DataTables::of($bus_type)
+        return DataTables::of($vehicle_type)
             ->addIndexColumn()
-            ->addColumn('action', function ($bus_type) {
-                return "<a href=/vehicle-type/".$bus_type->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/vehicle-type/".$bus_type->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            ->addColumn('action', function ($vehicle_type) {
+                return "<a href=/vehicle-type/".$vehicle_type->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/vehicle-type/".$vehicle_type->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
              })
             ->rawColumns(['link', 'action'])
             ->make();
@@ -220,7 +216,6 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle_type = VehicleType::create([
             'name' => $request->name,
-            'code' => $request->code,
             'status' =>1,
            ]);
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
@@ -241,23 +236,12 @@ class VehicleController extends Controller {
     // edit vehicle type
     public function editVehicleType(Request $request)
     {
-      $vehicle_type = VehicleType::find($request->id);
-       if($vehicle_type == null)
+        $vehicle_type = VehicleType::find($request->id);
+        if($vehicle_type == null)
         {
             return view('Vehicle::404');
         }
-        $includes = [];
-        foreach($vehicle_type->ticketConcessions as $concession)
-        {
-            $includes[] = $concession->id;
-        }
-        $concessions= TicketConcession::select(
-            'id',
-            'name'
-        )
-        ->whereNotIn('id',$includes)
-        ->get();
-        return view('Vehicle::vehicle-type-edit',['vehicle_type' => $vehicle_type,'concessions' =>$concessions ]);
+        return view('Vehicle::vehicle-type-edit',['vehicle_type' => $vehicle_type]);
     }
 
     // update vehicle type
@@ -271,7 +255,6 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
 
         $vehicle_type->name = $request->name;
-        $vehicle_type->code = $request->code;
         $vehicle_type->save();
 
         $request->session()->flash('message', 'Vehicle type details updated successfully!'); 
@@ -289,61 +272,15 @@ class VehicleController extends Controller {
                 'message' => 'Bus type does not exist'
             ]);
         }
-        $includes = [];
-        foreach($vehicle_type->ticketConcessions as $concession){
-            $includes[] = $concession->id;
-        }
-        $concession_count=count($includes);
-        if($concession_count==0){
-            $vehicle_type->delete(); 
+        $vehicle_type->delete(); 
         return response()->json([
             'status' => 1,
             'title' => 'Success',
             'message' => 'Bus type deleted successfully'
         ]);
-        }else{
-            return response()->json([
-            'status' => 0,
-            'title' => 'Error',
-            'message' => 'This bus type having concession.So you can delete this after deleting concesion'
-            ]);
-        }
+        
      }
-    // vehicle concession add
-    public function vehicleConcessionAdd(Request $request)
-     {
-        $vehicle_type_id = $request->vehicle_type_id;
-
-        $ticket_concession_id = $request->ticket_concession_id;  //dd($ticket_concession_id);
-
-        $ticket_concession = VehicleTypeTicketConcession::create([
-                          'vehicle_type_id' => $vehicle_type_id,
-                          'ticket_concession_id' => $ticket_concession_id
-                        ]);
-        //dd($ticket_concession);
-        if($ticket_concession){
-            $request->session()->flash('message', 'New concession type added to vehicle successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-         return back();
-        }
-    }
-
-    // vehicle concession remove
-    public function vehicleConcessionRemove(Request $request)
-    {
-        $pivot = VehicleTypeTicketConcession::find($request->pivot);
-
-        if($pivot== null){
-            return view('Vehicle::404');
-        }
-
-        if($pivot->delete()){
-            $request->session()->flash('message', 'New concession type removed from vehicle successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-         return back();
-        }
-
-    }
+    
 
     // vehicle create rules
       public function vehicleCreateRules()
@@ -373,8 +310,7 @@ class VehicleController extends Controller {
       public function vehicleTypeCreateRules()
       {
         $rules = [
-            'name' => 'required',
-            'code' => 'required'
+            'name' => 'required'
         ];
         return  $rules;
       }
@@ -382,8 +318,7 @@ class VehicleController extends Controller {
       public function vehicleTypeUpdateRules()
       {
         $rules = [
-            'name' => 'required',
-            'code' => 'required'
+            'name' => 'required'
         ];
         return  $rules;
       }
