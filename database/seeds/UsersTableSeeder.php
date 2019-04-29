@@ -42,6 +42,14 @@ class UsersTableSeeder extends Seeder
             'status' => 1,
         ]);
 
+        DB::table('root')->insert([
+            'address' => 'vst',
+            'created_on' => 123456,
+            'user_id'=>$user->id,
+            'status' => 1,
+        ]);
+
+
 
         User::where('username','vst')->first()->assignRole('root');
 
@@ -51,6 +59,13 @@ class UsersTableSeeder extends Seeder
             'email' => 'phpdeveloper02@vehiclest.in',
             'password' => bcrypt('123456'),
             'status' => 1
+        ]);
+
+           DB::table('dealer')->insert([
+            'address' => 'vst',
+            'created_on' => 123456,
+            'user_id'=>$user->id,
+            'status' => 1,
         ]);
 
         User::where('username','dealer')->first()->assignRole('dealer');	
@@ -64,6 +79,13 @@ class UsersTableSeeder extends Seeder
             'status' => 1
         ]);
 
+           DB::table('sub_dealer')->insert([
+            'address' => 'vst',
+            'created_on' => 123456,
+            'user_id'=>$user->id,
+            'status' => 1,
+        ]);
+
         User::where('username','sub_dealer')->first()->assignRole('sub_dealer'); 
 
 
@@ -74,8 +96,23 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('123456'),
             'status' => 1
         ]);
+
+
+        DB::table('end_user')->insert([
+            'address' => 'vst',
+            'created_on' => 123456,
+            'user_id'=>$user->id,
+            'status' => 1,
+        ]);
+
+        // User::where('username','end_user')->first()->assignRole('end_user'); 
+
+   
+
+
         
         User::where('username','client')->first()->assignRole('client'); 
+
 		
     }
 }
