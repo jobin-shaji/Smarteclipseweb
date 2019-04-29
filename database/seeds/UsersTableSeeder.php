@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
 
         $permission_root = Permission::create(['name' => 'manage dealers']);
         $permission_dealer = Permission::create(['name' => 'manage subdealers']);
-        $permission_sub_dealer = Permission::create(['name' => 'manage users']);
+        $permission_sub_dealer = Permission::create(['name' => 'manage clients']);
         $permission_client = Permission::create(['name' => 'client']);
 
         $rootUserRole = Role::create(['name' => 'root']);
