@@ -14,7 +14,11 @@ class RootDealersTable extends Migration
     public function up()
     {
           Schema::create('root_dealers', function (Blueprint $table) {
+
             $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('root_id');
+
       
         });
     }

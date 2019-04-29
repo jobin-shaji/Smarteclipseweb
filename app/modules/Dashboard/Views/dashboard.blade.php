@@ -34,13 +34,13 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <p id="dealers"><h3>0</h3></p>
               <p>Dealers</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
