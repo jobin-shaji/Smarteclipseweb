@@ -25,7 +25,7 @@
   </a>
   <ul class="treeview-menu" style="display: none;">
       <li><a href="{{url('/sub-dealer/create')}}"><i class="fa fa-plus"></i>Add Sub Dealer</a></li>
-      <li><a href="{{url('/users')}}"><i class="fa fa-list"></i> List Sub Dealers</a></li>
+      <li><a href="{{url('/subdealers')}}"><i class="fa fa-list"></i> List Sub Dealers</a></li>
   </ul>
 </li>
 

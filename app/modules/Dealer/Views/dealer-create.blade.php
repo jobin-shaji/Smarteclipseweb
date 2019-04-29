@@ -121,8 +121,6 @@
 </section>
  
 <div class="clearfix"></div>
-@section('script')
-    <script src="{{asset('js/etm/employee-list.js')}}"></script>
-@endsection
+
 
 @endsection

@@ -12,5 +12,8 @@ class Dealer extends Model
 	protected $fillable=[
 		'user_id','name','address','phone_number','email','status','created_by','deleted_by','deleted_at'
 	];
+	// users of a depot
+ 
+
 
 }

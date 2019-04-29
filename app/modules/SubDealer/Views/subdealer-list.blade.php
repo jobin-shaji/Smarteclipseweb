@@ -14,7 +14,7 @@
  <!-- end flash message -->
 <section class="content-header">
       <h1>
-        Sub Dealer
+        Dealer
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -33,14 +33,12 @@
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>
-                             <th>Sl.No</th>
-                              
+                             <th>Sl.No</th>                              
                               <th>Name</th>                            
                               <th>Address</th>                              
                               <th>Mobile</th>                            
                               <th>email</th>
-                              <th>Dealer</th>
-                              <!-- <th style="width:160px;">Action</th> -->
+                              <th style="width:160px;">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -51,7 +49,7 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/gps/sub-dealer-list.js')}}"></script>
+    <script src="{{asset('js/gps/subdealer-list.js')}}"></script>
 @endsection
 @endsection
 
