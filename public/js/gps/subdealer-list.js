@@ -51,16 +51,16 @@ function callBackDataTable(){
 
 }
 
-function delDealers(dealer){
-    var url = 'dealer/delete';
+function delSubDealers(dealer){
+    var url = 'sub-dealer/delete';
     var data = {
         uid : dealer
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
-function activateDealer(dealer){
-    var url = 'dealer/activate';
+function activateSubDealer(dealer){
+    var url = 'sub-dealer/activate';
     var data = {
         id : dealer
     };

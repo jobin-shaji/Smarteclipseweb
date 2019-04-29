@@ -17,38 +17,22 @@ class SubDealerController extends Controller {
     //returns employees as json 
     public function getSubDealers()
     {
-        $dealers = SubDealer::select(
-                    'id', 
-                    'user_id',
-                    'dealer_id',                      
-                    'name',                   
-                    'address',                    
-                    'phone_number',
-                    'email',
-                    'deleted_at')
-                    ->withTrashed()
-                   ->get();
-        return DataTables::of($dealers)
-            ->addIndexColumn()
-            ->addColumn('action', function ($dealers) {
-                if($dealers->deleted_at == null){ 
-                
-                    return "
-                     <a href=/dealers/".Crypt::encrypt($dealers->id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-                     <a href=/dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <a href=/dealers/".Crypt::encrypt($dealers->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                   
-                    <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
-                 }else{ 
-                  
-                    return "
-                  
-                    <a href=/dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        $subdealers = SubDealer::select(
+            'id', 
+            'user_id',
+            'dealer_id',                      
+            'name',                   
+            'address',                    
+            'phone_number',
+            'email',
+            'deleted_at'
+        )
+        // ->withTrashed()
+        ->with('dealer:user_id,name')
+        ->get();
+        return DataTables::of($subdealers)
+        ->addIndexColumn()           
+        ->make();
     }
 
 
@@ -72,8 +56,7 @@ class SubDealerController extends Controller {
             'status' => 1,
             'password' => bcrypt($request->password),
         ]);
-            $dealer = SubDealer::create([
-             
+            $dealer = SubDealer::create([            
             'user_id' => $user->id,
             'dealer_id' => \Auth::user()->id,
             'name' => $request->name,            
@@ -81,7 +64,6 @@ class SubDealerController extends Controller {
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'status'=>1,
-            
             // 'created_by' => \Auth::user()->id
             ]);
 
@@ -133,13 +115,13 @@ class SubDealerController extends Controller {
                     <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                      <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                       <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-                    <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+                    <button onclick=delSubDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
                  }else{ 
                   
                     return "
                   
                     <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+                    <button onclick=activateSubDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
                 }
             })
             ->rawColumns(['link', 'action'])
@@ -222,5 +204,58 @@ class SubDealerController extends Controller {
          ];
      return $rules;
   }
+
+    //employee details view
+    public function details(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);   
+        $subdealer = SubDealer::find($decrypted);
+        if($subdealer == null){
+           return view('SubDealer::404');
+        }
+       return view('SubDealer::sub-dealer-details',['subdealer' => $subdealer]);
+    }
+
+
+
+     //delete Sub Dealer details from table
+    public function deleteSubDealer(Request $request)
+    {
+        $subdealer = SubDealer::find($request->uid);
+        if($subdealer == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Sub Dealer does not exist'
+            ]);
+        }
+        $subdealer->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Sub Dealer deleted successfully'
+        ]);
+    }
+
+    // restore emplopyee
+    public function activateSubDealer(Request $request)
+    {
+        $subdealer = SubDealer::withTrashed()->find($request->id);
+        if($subdealer==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Sub Dealer does not exist'
+             ]);
+        }
+
+        $subdealer->restore();
+
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Sub Dealer restored successfully'
+        ]);
+    }
 
 }

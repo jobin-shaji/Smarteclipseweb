@@ -11,4 +11,12 @@ class SubDealer extends Model
 	protected $fillable=[
 		'user_id','dealer_id','name','address','phone_number','email','status','created_by','deleted_by','deleted_at'
 	];
+	
+    public function dealer()
+    {
+    	return $this->hasOne('App\Modules\Dealer\Models\Dealer','user_id','dealer_id');
+    }
+
+
+
 }

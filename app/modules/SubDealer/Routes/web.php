@@ -20,10 +20,10 @@ Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App
 	 Route::get('/sub-dealers/{id}/change-password','SubDealerController@changePassword')->name('sub.dealers.change-password');
 	 Route::post('/sub-dealer/{id}/update-password','SubDealerController@updatePassword')->name('sub.dealer.update-password.p'); 
 
-	// Route::get('/dealers/{id}/details','DealerController@details')->name('dealers.details');
+	Route::get('/sub-dealers/{id}/details','SubDealerController@details')->name('sub.dealer.details');
 		
-	// Route::post('/dealer/delete','DealerController@deleteDealer')->name('dealer.delete');
-	// Route::post('/dealer/activate','DealerController@activateDealer')->name('dealer.activate');
+	Route::post('/sub-dealer/delete','SubDealerController@deleteSubDealer')->name('dealer.delete');
+	 Route::post('/sub-dealer/activate','SubDealerController@activateSubDealer')->name('dealer.activate');
 
 
 });

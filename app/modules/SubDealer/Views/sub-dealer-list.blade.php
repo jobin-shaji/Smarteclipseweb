@@ -14,7 +14,7 @@
  <!-- end flash message -->
 <section class="content-header">
       <h1>
-        Dealer
+        Sub Dealer
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -39,7 +39,8 @@
                               <th>Address</th>                              
                               <th>Mobile</th>                            
                               <th>email</th>
-                              <th style="width:160px;">Action</th>
+                              <th>Dealer</th>
+                              <!-- <th style="width:160px;">Action</th> -->
                             </tr>
                         </thead>
                     </table>

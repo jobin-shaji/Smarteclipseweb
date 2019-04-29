@@ -9,6 +9,7 @@
   $id = null;
   ?>
   <meta name="depot" content="{{$id}}">
+   <meta name="dealer" content="{{$id}}">
   <meta name="domain" content="{{url('/')}}">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
