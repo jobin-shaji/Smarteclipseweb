@@ -19,11 +19,6 @@ class CreateDealersTable extends Migration
             $table->integer('root_id');
             $table->string('name');
             $table->string('address');
-            $table->string('phone_number');
-            $table->string('email');
-            $table->integer('status');            
-            $table->string('created_by');
-            $table->integer('deleted_by')->nullable();
             $table->timestamps();
              $table->softDeletes();
         });

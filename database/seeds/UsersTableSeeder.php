@@ -42,11 +42,10 @@ class UsersTableSeeder extends Seeder
             'status' => 1,
         ]);
 
-        DB::table('root')->insert([
+        DB::table('roots')->insert([
             'address' => 'vst',
-            'created_on' => 123456,
-            'user_id'=>$user->id,
-            'status' => 1,
+            'name' => 'vst',
+            'user_id'=>1,
         ]);
 
 
@@ -61,11 +60,11 @@ class UsersTableSeeder extends Seeder
             'status' => 1
         ]);
 
-           DB::table('dealer')->insert([
+        DB::table('dealers')->insert([
             'address' => 'vst',
-            'created_on' => 123456,
-            'user_id'=>$user->id,
-            'status' => 1,
+            'name' => 'dealer',
+            'user_id'=>2,
+            'root_id' => 1
         ]);
 
         User::where('username','dealer')->first()->assignRole('dealer');	
@@ -79,11 +78,11 @@ class UsersTableSeeder extends Seeder
             'status' => 1
         ]);
 
-           DB::table('sub_dealer')->insert([
+        DB::table('sub_dealers')->insert([
             'address' => 'vst',
-            'created_on' => 123456,
-            'user_id'=>$user->id,
-            'status' => 1,
+            'name' => 'sub_dealer',
+            'user_id'=>3,
+            'dealer_id' => 1
         ]);
 
         User::where('username','sub_dealer')->first()->assignRole('sub_dealer'); 
@@ -98,19 +97,13 @@ class UsersTableSeeder extends Seeder
         ]);
 
 
-        DB::table('end_user')->insert([
+        DB::table('clients')->insert([
             'address' => 'vst',
-            'created_on' => 123456,
-            'user_id'=>$user->id,
-            'status' => 1,
+            'name' => 'client',
+            'user_id'=>4,
+            'sub_dealer_id' => 1
         ]);
-
-        // User::where('username','end_user')->first()->assignRole('end_user'); 
-
-   
-
-
-        
+  
         User::where('username','client')->first()->assignRole('client'); 
 
 		
