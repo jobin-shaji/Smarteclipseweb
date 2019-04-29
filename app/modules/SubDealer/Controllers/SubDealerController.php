@@ -22,13 +22,12 @@ class SubDealerController extends Controller {
             'user_id',
             'dealer_id',                      
             'name',                   
-            'address',                    
-            'phone_number',
-            'email',
+            'address',                               
             'deleted_at'
         )
-        // ->withTrashed()
-        ->with('dealer:user_id,name')
+        ->withTrashed()
+        ->with('dealer:id,user_id,name')
+         ->with('user:id,email,mobile')
         ->get();
         return DataTables::of($subdealers)
         ->addIndexColumn()           
