@@ -23,11 +23,10 @@ class DealerController extends Controller {
                     'id', 
                     'user_id',                      
                     'name',                   
-                    'address',                    
-                    'phone_number',
-                    'email',
+                    'address',                                        
                     'deleted_at')
                     ->withTrashed()
+                    ->with('user:id,email,mobile')
                    ->get();
         return DataTables::of($dealers)
             ->addIndexColumn()
@@ -36,8 +35,8 @@ class DealerController extends Controller {
                 
                     return "
                      <a href=/dealers/".Crypt::encrypt($dealers->id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-                     <a href=/dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <a href=/dealers/".Crypt::encrypt($dealers->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                     <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                    
                     <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
                  }else{ 
@@ -62,28 +61,26 @@ class DealerController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {
-      
+        // \Auth::user()->root->first()->id
+       $root_id=\Auth::user()->id;
+
         if($request->user()->hasRole('root')){
         $rules = $this->user_create_rules();
         $this->validate($request, $rules);
+        
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'mobile' => $request->phone_number,
+             'mobile' => $request->mobile,
             'status' => 1,
             'password' => bcrypt($request->password),
         ]);
             $dealer = Dealer::create([
-            // 'depot_id' => $request->user()->depot->first()->id,
-            'user_id' => $user->id,
+           'user_id' => $user->id,
+           'root_id'=>$root_id,
             'name' => $request->name,            
             'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email,
-            'status'=>1,
-            
-            // 'created_by' => \Auth::user()->id
-            ]);
+           ]);
 
             User::where('username', $request->username)->first()->assignRole('dealer');
         }
@@ -98,7 +95,21 @@ class DealerController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);   
-        $dealer = Dealer::find($decrypted);
+        // $dealer = Dealer::find($decrypted);
+       
+         $dealer = Dealer::select(
+                    'id', 
+                    'user_id',                      
+                    'name',                   
+                    'address',                                        
+                    'deleted_at')
+                    ->withTrashed()
+                    ->with('user:id,email,mobile')
+                    ->where('user_id',$decrypted)
+                   ->get();
+
+
+
         if($dealer == null){
            return view('Dealer::404');
         }
@@ -109,8 +120,18 @@ class DealerController extends Controller {
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);   
-        $dealers = Dealer::find($decrypted);
+        // $dealers = Dealer::find($decrypted);
        
+         $dealers = Dealer::select(
+                    'id', 
+                    'user_id',                      
+                    'name',                   
+                    'address',                                        
+                    'deleted_at')
+                    ->withTrashed()
+                    ->with('user:id,email,mobile')
+                    ->where('user_id',$decrypted)
+                   ->get();
        
         
         if($dealers == null){
@@ -122,18 +143,20 @@ class DealerController extends Controller {
     //update dealers details
     public function update(Request $request)
     {
-        $dealer = Dealer::find($request->id);
+ 
+       $dealer = Dealer::where('user_id', $request->id)->first();
         if($dealer == null){
            return view('Dealer::404');
         } 
         $rules = $this->dealersUpdateRules($dealer);
-        $this->validate($request, $rules);
-       
+        $this->validate($request, $rules);      
         $dealer->name = $request->name;
-       
-        $dealer->phone_number = $request->phone_number;
         $dealer->save();
-        $did = encrypt($dealer->id);
+        //
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->save();
+        $did = encrypt($user->id);
         $request->session()->flash('message', 'Dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('dealers.edit',$did));  
@@ -142,8 +165,10 @@ class DealerController extends Controller {
 //     //for edit page of employee password
     public function changePassword(Request $request)
     {
+
          $decrypted = Crypt::decrypt($request->id);
-        $dealer = Dealer::find($decrypted);
+         $dealer = Dealer::where('user_id', $decrypted)->first();
+        // $dealer = Dealer::find($decrypted);
         if($dealer == null){
            return view('Dealer::404');
         }
@@ -265,6 +290,7 @@ class DealerController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;

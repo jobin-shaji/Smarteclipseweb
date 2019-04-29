@@ -12,16 +12,19 @@ class SubDealer extends Model
 		'user_id','dealer_id','name','address','phone_number','email','status','created_by','deleted_by','deleted_at'
 	];
 	
-	 // // users of a depot
-  // public function dealer()
-  // {
-  //      return $this->belongsToMany('\App\Modules\Dealer\Models\Dealer','sub_dealers','user_id','dealer_id')->withPivot('id');
-  // }
-
-    public function dealer()
+    // public function dealer()
+    // {
+    // 	return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id','user_id');
+    // }
+     public function dealer()
     {
-    	return $this->hasOne('App\Modules\Dealer\Models\Dealer','user_id','dealer_id');
+      return $this->hasone('App\Modules\Dealer\Models\Dealer','user_id','dealer_id');
     }
+    public function user()
+    {
+      return $this->belongsTo('App\Modules\User\Models\User','user_id','id');
+    }
+
 
 
 
