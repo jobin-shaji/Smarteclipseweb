@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'dealer-list',
+            url: 'sub-dealer-list',
             type: 'POST',
             data: {
                 'data': data
@@ -41,9 +41,7 @@ function callBackDataTable(){
             {data: 'address', name: 'address',searchable: false},           
             {data: 'phone_number', name: 'phone_number'},
            {data: 'email', name: 'email',searchable: false},
-           
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-           
+           {data: 'dealer.name', name: 'dealer.name',searchable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

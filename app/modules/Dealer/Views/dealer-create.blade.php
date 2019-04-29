@@ -68,6 +68,16 @@
                     <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
                  </span>
               @endif
+               <div class="form-group has-feedback">
+                    <label class="srequired">Email.</label>
+                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required>
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+              </div>
+              @if ($errors->has('email'))
+                 <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('email') }}</strong>
+                 </span>
+              @endif
              
            </div>
             <div class="col-md-6">
@@ -111,8 +121,6 @@
 </section>
  
 <div class="clearfix"></div>
-@section('script')
-    <script src="{{asset('js/etm/employee-list.js')}}"></script>
-@endsection
+
 
 @endsection

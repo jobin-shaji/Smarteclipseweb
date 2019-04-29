@@ -74,7 +74,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('123456'),
             'status' => 1
         ]);
-
+        
         User::where('username','client')->first()->assignRole('client'); 
 		
     }

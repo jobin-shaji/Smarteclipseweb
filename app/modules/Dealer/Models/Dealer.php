@@ -10,7 +10,10 @@ class Dealer extends Model
     use SoftDeletes;
     
 	protected $fillable=[
-		'name','address','phone_number','username','password','status','created_by','deleted_by','deleted_at'
+		'user_id','name','address','phone_number','email','status','created_by','deleted_by','deleted_at'
 	];
+	// users of a depot
+ 
+
 
 }
