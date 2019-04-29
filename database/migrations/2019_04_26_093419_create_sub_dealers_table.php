@@ -17,15 +17,10 @@ class CreateSubDealersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('dealer_id');
-             $table->string('name');
+            $table->string('name');
             $table->string('address');
-            $table->string('phone_number');
-            $table->string('email');
-            $table->integer('status');            
-             $table->string('created_by');
-              $table->integer('deleted_by')->nullable();
             $table->timestamps();
-             $table->softDeletes();
+            $table->softDeletes();
         });
     }
 

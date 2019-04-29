@@ -18,9 +18,6 @@ class RootTable extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->string('address');
-            $table->integer('status');
-            $table->string('created_by');
-            $table->integer('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +30,7 @@ class RootTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('roots');
+        
     }
 }
