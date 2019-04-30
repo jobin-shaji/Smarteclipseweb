@@ -12,17 +12,14 @@ class SubDealer extends Model
 		'user_id','dealer_id','name','address','status','created_by','deleted_by','deleted_at'
 	];
 	
-    public function dealers()
+    public function dealer()
     {
-    	return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id','user_id');
+    	return $this->belongsTo('App\Modules\Dealer\Models\Dealer');
     }
-    //  public function dealer()
-    // {
-    //   return $this->hasone('App\Modules\Dealer\Models\Dealer','user_id','dealer_id');
-    // }
+   
     public function user()
     {
-      return $this->belongsTo('App\Modules\User\Models\User','user_id','id');
+      return $this->belongsTo('App\Modules\User\Models\User');
     }
 
 
