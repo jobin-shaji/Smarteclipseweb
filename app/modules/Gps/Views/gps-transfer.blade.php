@@ -35,7 +35,7 @@
              
               <div class="form-group has-feedback">
                 <label class="srequired">GPS</label>
-                <select class="form-control selectpicker" name="gps_id" data-live-search="true" title="Select GPS" required>
+                <select class="form-control selectpicker" id="gpsTransfer" name="gps_id" data-live-search="true" title="Select GPS" required>
                   @foreach($devices as $gps)
                   <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
                   @endforeach
@@ -49,23 +49,24 @@
               @endif 
 
 
-              <!-- <div class="form-group has-feedback">
-                <label class="srequired">From User</label>
-                <input type="text" name="from_user" class="form-control from_etm_depot_name" value= disabled>
+              <div class="form-group has-feedback">
+                <label>From User</label>
+                <input type="text" name="from_user" class="form-control from_user_name" readonly="" >
+                <input type="hidden"  class="form-control from_user_id" name="from_user">
               </div>
-              @if ($errors->has('from_depot'))
+              @if ($errors->has('from_user'))
                 <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('from_depot') }}</strong>
+                    <strong class="error-text">{{ $errors->first('from_user') }}</strong>
                 </span>
-              @endif -->
+              @endif
 
 
 
               <div class="form-group has-feedback">
                 <label class="srequired">To User</label>
-                <select class="form-control selectpicker" name="to_user" data-live-search="true" title="Select Dealer" required>
-                  @foreach($dealers as $dealer)
-                  <option value="{{$dealer->id}}">{{$dealer->name}}</option>
+                <select class="form-control selectpicker" id="to_user" name="to_user" data-live-search="true" title="Select Dealer" required>
+                  @foreach($users as $user)
+                  <option value="{{$user->id}}">{{$user->username}}</option>
                   @endforeach
                 </select>
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
@@ -94,7 +95,7 @@
 <div class="clearfix"></div>
 
 @section('script')
-    <script src="{{asset('js/etm/etm-transfer.js')}}"></script>
+    <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
 @endsection
 
 

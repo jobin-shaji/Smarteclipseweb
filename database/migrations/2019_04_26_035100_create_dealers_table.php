@@ -16,7 +16,7 @@ class CreateDealersTable extends Migration
         Schema::create('dealers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('root_id');
+            $table->integer('root_user_id');
             $table->string('name');
             $table->string('address');
             $table->timestamps();
