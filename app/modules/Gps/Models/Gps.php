@@ -17,4 +17,10 @@ class Gps extends Model
     }
 
     protected $fillable=[ 'name','imei','manufacturing_date','version','status'];
+
+    //join user table with gps table
+    public function dealer()
+    {
+    	return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id');
+    }
 }
