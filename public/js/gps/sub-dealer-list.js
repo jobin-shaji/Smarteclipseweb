@@ -41,7 +41,7 @@ function callBackDataTable(){
             {data: 'address', name: 'address',searchable: false},           
             {data: 'user.mobile', name: 'user.mobile'},
            {data: 'user.email', name: 'user.email',searchable: false},          
-           {data: 'dealer.name', name: 'dealer.name',searchable: false},        
+           {data: 'dealers.name', name: 'dealers.name',searchable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
