@@ -5,6 +5,7 @@ $(document).ready(function () {
 
 function callBackDataTable(){
     var  data = {
+         dealer : $('meta[name = "dealer"]').attr('content')
     
     }; 
 
@@ -39,9 +40,8 @@ function callBackDataTable(){
             
             {data: 'name', name: 'name' },            
             {data: 'address', name: 'address',searchable: false},           
-            {data: 'phone_number', name: 'phone_number'},
-           {data: 'email', name: 'email',searchable: false},
-           
+             {data: 'user.mobile', name: 'user.mobile'},
+           {data: 'user.email', name: 'user.email',searchable: false},         
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
         ],

@@ -20,6 +20,7 @@
           <h2 class="page-header">
             <i class="fa fa-edit">Sub Dealer details</i> 
           </h2>
+            @foreach($subdealers as $subdealers)
           <?php 
             $password=$subdealers->password;
             if($subdealers){
@@ -31,7 +32,7 @@
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="{{route('sub.dealers.update.p',$subdealers->id)}}">
+    <form  method="POST" action="{{route('sub.dealers.update.p',$subdealers->user_id)}}">
         {{csrf_field()}}
     <div class="row">
         <div class="col-md-6">
@@ -50,7 +51,7 @@
         
  <div class="form-group has-feedback">
           <label class="srequired">Mobile No.</label>
-          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealers->phone_number}}">
+          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealers->user->mobile}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>
         @if ($errors->has('phone_number'))
@@ -119,6 +120,7 @@
                         <!-- /.col -->
                       </div>
                 </form>
+            @endforeach
 
       </div>
     </div>

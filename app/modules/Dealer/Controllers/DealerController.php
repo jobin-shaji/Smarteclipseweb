@@ -34,7 +34,7 @@ class DealerController extends Controller {
                 if($dealers->deleted_at == null){ 
                 
                     return "
-                     <a href=/dealers/".Crypt::encrypt($dealers->id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+                     <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
                      <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                    
@@ -43,7 +43,7 @@ class DealerController extends Controller {
                   
                     return "
                   
-                    <a href=/dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
                 }
             })
@@ -178,32 +178,26 @@ class DealerController extends Controller {
     //update password
     public function updatePassword(Request $request)
     {
-        $dealer = User::find($request->id);
-        
-        $did = encrypt($dealer->id);
-        if($dealer == null){
-           return view('Dealer::404');
+        $subdealer=User::find($request->id);
+        if($subdealer== null){
+            return view('SubDealer::404');
         }
-        $rules = $this->passwordUpdateRules();
-        $this->validate($request, $rules);
-        $old_password=$dealer->password;
-        $entered_old_password=$request->old_password;
-        if($old_password==$entered_old_password)
-        {
-            $dealer->password = $request->password;
-            $dealer->save();
-            $did = encrypt($dealer->id);
-            $request->session()->flash('message', 'Password updated successfully!');
-            $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect(route('dealers.edit',$did));   
-        }
-        else
-        {
-            $request->session()->flash('message', 'Old password is incorrect!');
-            $request->session()->flash('alert-class', 'alert-danger'); 
-            return redirect(route('dealers.change-password',$did));
-        }
-         
+        $did=encrypt($subdealer->id);
+        // dd($request->password);
+        $rules=$this->updateDepotUserRuleChangePassword($subdealer);
+        $this->validate($request,$rules);
+        $subdealer->password=bcrypt($request->password);
+        $subdealer->save();
+        $request->session()->flash('message','Dealer Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('dealers.change-password',$did));
+    }
+     public function updateDepotUserRuleChangePassword()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
     }
 
     //delete employee details from table
