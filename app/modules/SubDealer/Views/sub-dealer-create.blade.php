@@ -54,12 +54,12 @@
             
               <div class="form-group has-feedback">
                     <label class="srequired">Mobile No.</label>
-                    <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ old('phone_number') }}" required>
+                    <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" required>
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
               </div>
-              @if ($errors->has('phone_number'))
+              @if ($errors->has('mobile'))
                  <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                    <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                  </span>
               @endif
                 <div class="form-group has-feedback">

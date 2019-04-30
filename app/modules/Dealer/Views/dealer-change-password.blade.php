@@ -28,16 +28,7 @@
       <input type="hidden" name="id" value="{{$dealer->user_id}}"> 
       <div class="row">
         <div class="col-md-6">
-            <div class="form-group has-feedback">
-              <label>Old Password</label>
-              <input type="text" class="form-control {{ $errors->has('old_password') ? ' has-error' : '' }}" placeholder="Old Password" name="old_password" required> 
-              <span class="glyphicon glyphicon-car form-control-feedback"></span>
-            </div>
-            @if ($errors->has('old_password'))
-              <span class="help-block">
-                <strong class="error-text">{{ $errors->first('old_password') }}</strong>
-              </span>
-            @endif
+            
 
             <div class="form-group has-feedback">
               <label class="srequired">New Password</label>
