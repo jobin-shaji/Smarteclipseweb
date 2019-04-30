@@ -36,12 +36,11 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            
             {data: 'name', name: 'name' },            
             {data: 'address', name: 'address',searchable: false},           
             {data: 'user.mobile', name: 'user.mobile'},
-           {data: 'user.email', name: 'user.email',searchable: false},          
-           {data: 'dealers.name', name: 'dealers.name',searchable: false},        
+            {data: 'user.email', name: 'user.email',searchable: false},          
+            {data: 'dealer.name', name: 'dealer.name',searchable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
