@@ -26,7 +26,7 @@ class SubDealerController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
-        ->with('dealers:id,user_id,name')
+        ->with('dealer:id,user_id,name')
          ->with('user:id,email,mobile')
         ->get();
         return DataTables::of($subdealers)
