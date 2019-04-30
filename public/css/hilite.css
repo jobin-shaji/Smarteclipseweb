@@ -36,3 +36,8 @@ label.srequired:after {
     color: #f15757;
     padding-left: 3px;
 }
+
+#map {
+    height: 400px;
+    width : 1100px;
+}
