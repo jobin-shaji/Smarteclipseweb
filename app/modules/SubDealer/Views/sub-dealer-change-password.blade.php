@@ -23,9 +23,9 @@
         </div>
         <!-- /.col -->
       </div>
-      <form  method="POST" action="{{route('dealer.update-password.p',$dealer->id)}}">
+      <form  method="POST" action="{{route('sub.dealer.update-password.p',$subdealer->user_id)}}">
           {{csrf_field()}}
-      <input type="hidden" name="id" value="{{$dealer->id}}"> 
+      <input type="hidden" name="id" value="{{$subdealer->user_id}}"> 
       <div class="row">
         <div class="col-md-6">
             <div class="form-group has-feedback">

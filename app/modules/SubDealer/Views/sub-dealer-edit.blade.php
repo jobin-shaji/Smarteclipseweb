@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <section class="content-header">
-     <h1>Edit Dealer</h1>
+     <h1>Edit Sub Dealer</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -18,27 +18,27 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-edit"> Dealer details</i> 
+            <i class="fa fa-edit">Sub Dealer details</i> 
           </h2>
           <?php 
-            $password=$dealers->password;
-            if($dealers){
-              $encript=Crypt::encrypt($dealers->id)
+            $password=$subdealers->password;
+            if($subdealers){
+              $encript=Crypt::encrypt($subdealers->id)
           ?>
-          <a href="{{route('dealers.change-password',$encript)}}">
+          <a href="{{route('sub.dealers.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>
           </a><?php } ?>
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="{{route('dealers.update.p',$dealers->id)}}">
+    <form  method="POST" action="{{route('sub.dealers.update.p',$subdealers->id)}}">
         {{csrf_field()}}
     <div class="row">
         <div class="col-md-6">
           
           <div class="form-group has-feedback">
             <label class="srequired">Name</label>
-            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealers->name}}"> 
+            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealers->name}}"> 
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
           @if ($errors->has('name'))
@@ -50,7 +50,7 @@
         
  <div class="form-group has-feedback">
           <label class="srequired">Mobile No.</label>
-          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealers->phone_number}}">
+          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealers->phone_number}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>
         @if ($errors->has('phone_number'))
@@ -78,14 +78,14 @@
         <h4 class="modal-title">Change Password</h4>
       </div>
       <div class="modal-body">
-            <form  method="POST" action="{{route('dealer.update-password.p',$dealers->id)}}">
+            <form  method="POST" action="{{route('dealer.update-password.p',$subdealers->id)}}">
                     {{csrf_field()}}
-                  <input type="hidden" name="id" value="{{$dealers->id}}"> 
+                  <input type="hidden" name="id" value="{{$subdealers->id}}"> 
                   <div class="row">
                           <div class="col-md-12">
                               <div class="form-group has-feedback">
                                 <label>Old Password</label>
-                                <input type="text" class="form-control {{ $errors->has('old_password') ? ' has-error' : '' }}" placeholder="Old Password" name="old_password" value="{{$dealers->password}}" required> 
+                                <input type="text" class="form-control {{ $errors->has('old_password') ? ' has-error' : '' }}" placeholder="Old Password" name="old_password" value="{{$subdealers->password}}" required> 
                                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
                               </div>
                               @if ($errors->has('old_password'))

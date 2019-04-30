@@ -10,7 +10,7 @@ return  [
        'Root',
        'Exports',
        'Dealer',
-        'SubDealer',
+       'SubDealer',
        'Alert',
     ]
 ]

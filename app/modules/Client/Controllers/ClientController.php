@@ -8,7 +8,7 @@ use App\Modules\User\Models\User;
 use App\Modules\Depot\Models\DepotUser;
 use DataTables;
 
-class UserController extends Controller {
+class ClientController extends Controller {
     
     //user create page 
     public function create()

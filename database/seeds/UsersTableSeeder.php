@@ -19,8 +19,8 @@ class UsersTableSeeder extends Seeder
 
         $permission_root = Permission::create(['name' => 'manage dealers']);
         $permission_dealer = Permission::create(['name' => 'manage subdealers']);
-        $permission_sub_dealer = Permission::create(['name' => 'manage users']);
-        $permission_end_user = Permission::create(['name' => 'end user']);
+        $permission_sub_dealer = Permission::create(['name' => 'manage clients']);
+        $permission_client = Permission::create(['name' => 'client']);
 
         $rootUserRole = Role::create(['name' => 'root']);
         $rootUserRole->givePermissionTo($permission_root);
@@ -31,8 +31,8 @@ class UsersTableSeeder extends Seeder
         $subDealerUserRole = Role::create(['name' => 'sub_dealer']);
         $subDealerUserRole->givePermissionTo($permission_sub_dealer);
 
-        $endUserRole = Role::create(['name' => 'end_user']);
-        $endUserRole->givePermissionTo($permission_end_user);
+        $clientUserRole = Role::create(['name' => 'client']);
+        $clientUserRole->givePermissionTo($permission_client);
 
         $user =  DB::table('users')->insert([
             'username' => 'vst',
@@ -41,6 +41,13 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('123456'),
             'status' => 1,
         ]);
+
+        DB::table('roots')->insert([
+            'address' => 'vst',
+            'name' => 'vst',
+            'user_id'=>1,
+        ]);
+
 
 
         User::where('username','vst')->first()->assignRole('root');
@@ -51,6 +58,13 @@ class UsersTableSeeder extends Seeder
             'email' => 'phpdeveloper02@vehiclest.in',
             'password' => bcrypt('123456'),
             'status' => 1
+        ]);
+
+        DB::table('dealers')->insert([
+            'address' => 'vst',
+            'name' => 'dealer',
+            'user_id'=>2,
+            'root_id' => 1
         ]);
 
         User::where('username','dealer')->first()->assignRole('dealer');	
@@ -64,18 +78,34 @@ class UsersTableSeeder extends Seeder
             'status' => 1
         ]);
 
+        DB::table('sub_dealers')->insert([
+            'address' => 'vst',
+            'name' => 'sub_dealer',
+            'user_id'=>3,
+            'dealer_id' => 1
+        ]);
+
         User::where('username','sub_dealer')->first()->assignRole('sub_dealer'); 
 
 
         $user = DB::table('users')->insert([
-            'username' => 'end_user',
+            'username' => 'client',
             'mobile' => 123453,
             'email' => 'phpdeveloper04@vehiclest.in',
             'password' => bcrypt('123456'),
             'status' => 1
         ]);
 
-        User::where('username','end_user')->first()->assignRole('end_user'); 
+
+        DB::table('clients')->insert([
+            'address' => 'vst',
+            'name' => 'client',
+            'user_id'=>4,
+            'sub_dealer_id' => 1
+        ]);
+  
+        User::where('username','client')->first()->assignRole('client'); 
+
 		
     }
 }

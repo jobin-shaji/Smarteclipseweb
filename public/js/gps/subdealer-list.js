@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'dealer-list',
+            url: 'subdealer-list',
             type: 'POST',
             data: {
                 'data': data
@@ -39,8 +39,8 @@ function callBackDataTable(){
             
             {data: 'name', name: 'name' },            
             {data: 'address', name: 'address',searchable: false},           
-            {data: 'user.mobile', name: 'user.mobile'},
-           {data: 'user.email', name: 'user.email',searchable: false},
+            {data: 'phone_number', name: 'phone_number'},
+           {data: 'email', name: 'email',searchable: false},
            
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
@@ -51,16 +51,16 @@ function callBackDataTable(){
 
 }
 
-function delDealers(dealer){
-    var url = 'dealer/delete';
+function delSubDealers(dealer){
+    var url = 'sub-dealer/delete';
     var data = {
         uid : dealer
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
-function activateDealer(dealer){
-    var url = 'dealer/activate';
+function activateSubDealer(dealer){
+    var url = 'sub-dealer/activate';
     var data = {
         id : dealer
     };

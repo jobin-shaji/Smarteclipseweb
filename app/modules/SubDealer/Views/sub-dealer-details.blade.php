@@ -1,6 +1,6 @@
 @extends('layouts.gps') 
 @section('title')
-   Dealer details
+   Sub Dealer details
 @endsection
 @section('content')
 
@@ -32,13 +32,13 @@
        
           <div class="form-group has-feedback">
             <label>Name</label>
-            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealer->name}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealer->name}}" disabled>
           </div>
 
           
           <div class="form-group has-feedback">
             <label>Address</label>
-            <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $dealer->address}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $subdealer->address}}" disabled>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
               
@@ -47,32 +47,13 @@
 
           <div class="form-group has-feedback">
             <label>Mobile No.</label>
-            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealer->phone_number}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealer->phone_number}}" disabled>
             <span class="glyphicon glyphicon-phone form-control-feedback"></span>
           </div>
        
 
         </div>
-        <div class="col-md-6">
-
-      
-         
-
-
-            <div class="form-group has-feedback">
-              <label>Username</label>
-              <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ $dealer->username}}" disabled>
-              <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-            </div>
-             
-     
-            <div class="form-group has-feedback">
-              <label>Password</label>
-              <input type="text" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}"  name="password" value="{{ $dealer->password}}" disabled>
-              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div> 
-            
-          </div>
+       
       </div>
 <!--  -->
     </form>
