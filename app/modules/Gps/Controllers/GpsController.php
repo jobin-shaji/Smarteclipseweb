@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
-use App\Modules\Depot\Models\Depot;
+use App\Modules\Dealer\Models\Dealer;
+use App\Modules\User\Models\User;
 
 use DataTables;
 
@@ -199,43 +200,52 @@ class GpsController extends Controller {
     }
 
     // create gps transfer
-    public function createGpsTransfer() 
+    public function createGpsTransfer(Request $request) 
     {
-       
-        $gps = Gps::select('id', 'name', 'imei','dealer_id')
-        ->get();
-        $dealers = Dealer::select('id', 'name', 'code')
-        ->get();
-        return view('EtmTransfer::etm-transfer', ['etms' => $etms, 'depots' => $depots]);
+        if($request->user()->hasRole('root')){
+            $devices = Gps::select('id', 'name', 'imei','dealer_id')
+            ->get();
+            $users = User::role('dealer')->get();
+        }
+        
+        return view('Gps::gps-transfer', ['devices' => $devices, 'users' => $users]);
     }
-    // save etm transfer
+    // save gps transfer
     public function saveTransfer(Request $request) 
     {
        
-        $rules = $this->etmTransferRule();
+        $rules = $this->gpsTransferRule();
         $this->validate($request, $rules);
-        $etmTransfer = EtmTransfer::create([
-          "etmID" => $request->etm, 
-          "from_depot" => $request->from_depot, 
-          "to_depot" => $request->to_depot,
-          "tarnferDate" => date('Y-m-d H:i:s')]
+        $gps_transfer = GpsTransfer::create([
+          "gps_id" => $request->gps_id, 
+          "from_user" => $request->from_user, 
+          "to_user" => $request->to_user,
+          "transfer_date" => date('Y-m-d H:i:s')]
           );
-        // update employee table
-        $etmID = $request->etm;
-        $etm = ETM::find($etmID);
-        $etm->depot_id = $request->to_depot;
-        $etm->save();
-        $request->session()->flash('message', 'ETM Transfer successfully completed!');
+        //update gps table
+        $gps_id = $request->gps_id;
+        $gps = Gps::find($gps_id);
+        $gps->dealer_id = $request->to_user;
+        $gps->save();
+        $request->session()->flash('message', 'Gps Transfer successfully completed!');
         $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('etm-transfers'));
+        return redirect(route('gps-transfers'));
+    }
+
+    // gps user details
+    public function userData(Request $request) 
+    {
+        $gps = Gps::find($request->gpsID);    
+        $dealer = $gps->dealer;     
+        return response()->json(array('response' => 'success', 'gps' => $gps , 'dealer' => $dealer));
     }
 
     // etm transfer rule
     public function etmTransferRule() {
         $rules = [
-          'etm' => 'required',
-         'from_depot' => 'required',
-          'to_depot' => 'required'];
+          'gps_id' => 'required',
+          'from_user' => 'nullable',
+          'to_user' => 'required'];
         return $rules;
     }
 }

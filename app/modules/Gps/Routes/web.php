@@ -16,5 +16,6 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-transfer-list','GpsController@getListData')->name('gps-transfer-list.p');
 	Route::get('/gps-transfer/create','GpsController@createGpsTransfer')->name('gps-transfer.create');
 	Route::post('/gps-transfer/save-transfer','GpsController@saveGpsTransfer')->name('gps-transfer.create.p');
+	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
 
 });

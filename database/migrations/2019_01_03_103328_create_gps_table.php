@@ -19,9 +19,9 @@ class CreateGpsTable extends Migration
             $table->string('imei');
             $table->date('manufacturing_date');
             $table->string('version');
-            $table->integer('dealer_id')->nullable();
-            $table->integer('sub_dealer_id')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('dealer_user_id')->nullable();
+            $table->integer('sub_dealer_user_id')->nullable();
+            $table->integer('client_user_id')->nullable();
             $table->integer('vehicle_id')->nullable();
             $table->integer('status');
             $table->timestamps();

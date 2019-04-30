@@ -18,7 +18,7 @@ class ClientsTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->integer('user_id');
-            $table->integer('sub_dealer_id');
+            $table->integer('sub_dealer_user_id');
             $table->timestamps();
             $table->softDeletes();
         });
