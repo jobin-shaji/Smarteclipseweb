@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Modules\SubDealer\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\SubDealer\Models\SubDealer;
@@ -33,18 +31,14 @@ class SubDealerController extends Controller {
         ->addIndexColumn()           
         ->make();
     }
-
-
-//     //employee creation page
+    //employee creation page
     public function create()
     {
        return view('SubDealer::sub-dealer-create');
     }
-
     //upload employee details to database table
     public function save(Request $request)
-    {
-      
+    {      
         if($request->user()->hasRole('dealer')){
         $rules = $this->user_create_rules();
         $this->validate($request, $rules);
@@ -57,20 +51,16 @@ class SubDealerController extends Controller {
         ]);
             $dealer = SubDealer::create([            
             'user_id' => $user->id,
-            'dealer_id' => \Auth::user()->id,
+            'dealer_user_id' => \Auth::user()->id,
             'name' => $request->name,            
             'address' => $request->address,           
-           
-            // 'created_by' => \Auth::user()->id
-            ]);
-
+           ]);
             User::where('username', $request->username)->first()->assignRole('sub_dealer');
         }
- $eid= encrypt($user->id);
+        $eid= encrypt($user->id);
         $request->session()->flash('message', 'New dealer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('subdealers')); 
-       
+         return redirect(route('subdealers'));        
     }
     public function subdealerList()
     {
@@ -78,7 +68,7 @@ class SubDealerController extends Controller {
     }
 
 
-     public function user_create_rules(){
+    public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
             'mobile' => 'required|unique:users',
@@ -111,14 +101,14 @@ class SubDealerController extends Controller {
               <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <button onclick=delSubDealers(".$subdealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
-                    return "
-                  
-                    <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateSubDealer(".$subdealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+                return "
+              
+                <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateSubDealer(".$subdealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
     public function edit(Request $request)
     {
@@ -150,16 +140,14 @@ class SubDealerController extends Controller {
            return view('SubDealer::404');
         } 
         $rules = $this->dealersUpdateRules($subdealer);
-        $this->validate($request, $rules);
-       
+        $this->validate($request, $rules);       
         $subdealer->name = $request->name;
         $subdealer->save();
         $user = User::find($request->id);
         $user->mobile = $request->phone_number;
         $user->save();
         $did = encrypt($user->id);
-        // $subdealer->phone_number = $request->phone_number;
-       
+        // $subdealer->phone_number = $request->phone_number;       
         // $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'SubDealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 

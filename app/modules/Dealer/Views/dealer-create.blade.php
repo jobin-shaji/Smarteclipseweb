@@ -2,8 +2,6 @@
 @section('title')
     Create Dealer
 @endsection
-
-
 @section('content')
     <section class="content-header">
         <h1>Create Dealer</h1>
@@ -15,8 +13,7 @@
       </div>
     </div>
     @endif  
-
-<section class="hilite-content">
+    <section class="hilite-content">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
@@ -30,9 +27,7 @@
         {{csrf_field()}}
       <div class="row">
           <div class="col-md-6">
-              
-
-              <div class="form-group has-feedback">
+             <div class="form-group has-feedback">
                 <label class="srequired">Name</label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -42,10 +37,6 @@
                     <strong class="error-text">{{ $errors->first('name') }}</strong>
                 </span>
               @endif
-
-              
-             
-
               <div class="form-group has-feedback">
                     <label class="srequired">Address</label>
                     <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required>
@@ -56,9 +47,7 @@
                     <strong class="error-text">{{ $errors->first('address') }}</strong>
                  </span>
               @endif
-
-            
-              <div class="form-group has-feedback">
+             <div class="form-group has-feedback">
                     <label class="srequired">Mobile No.</label>
                     <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" required>
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
@@ -78,10 +67,8 @@
                     <strong class="error-text">{{ $errors->first('email') }}</strong>
                  </span>
               @endif
-             
-           </div>
+            </div>
             <div class="col-md-6">
-
               <div class="form-group has-feedback">
                     <label>Username</label>
                     <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}">
@@ -92,7 +79,6 @@
                     <strong class="error-text">{{ $errors->first('username') }}</strong>
                  </span>
               @endif
-
                 <div class="form-group has-feedback">
                     <label>Password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password">
@@ -119,8 +105,5 @@
           </div>
     </form>
 </section>
- 
 <div class="clearfix"></div>
-
-
 @endsection

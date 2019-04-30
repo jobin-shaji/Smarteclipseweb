@@ -3,7 +3,6 @@
    Dealer details
 @endsection
 @section('content')
-
     <section class="content-header">
      <h1>Dealer details</h1>
     </section>
@@ -27,15 +26,12 @@
     <form  method="POST" action="#">
         {{csrf_field()}}
     <div class="row">
-        <div class="col-md-6">
-          
+        <div class="col-md-6">          
         @foreach($dealer as $dealer)
           <div class="form-group has-feedback">
             <label>Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealer->name}}" disabled>
           </div>
-
-          
           <div class="form-group has-feedback">
             <label>Address</label>
             <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $dealer->address}}" disabled>
@@ -58,7 +54,5 @@
 <!--  -->
     </form>
 </section>
-
 <div class="clearfix"></div>
-
 @endsection
