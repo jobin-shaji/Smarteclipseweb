@@ -47,7 +47,6 @@ class UserController extends Controller {
        $users = User::all(); 
        return view('User::user-list',['users' => $users]);
     }
-
     //user edit page 
     public function edit(Request $request){     
        $user = User::find($request->id);

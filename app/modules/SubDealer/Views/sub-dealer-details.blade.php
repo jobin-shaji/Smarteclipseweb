@@ -5,7 +5,7 @@
 @section('content')
 
     <section class="content-header">
-     <h1>Dealer details</h1>
+     <h1>Sub Dealer details</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -28,29 +28,27 @@
         {{csrf_field()}}
     <div class="row">
         <div class="col-md-6">
-          
-       
+            @foreach($subdealer as $subdealer)
           <div class="form-group has-feedback">
             <label>Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealer->name}}" disabled>
           </div>
-
-          
           <div class="form-group has-feedback">
             <label>Address</label>
             <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $subdealer->address}}" disabled>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
-              
-
-       
-
           <div class="form-group has-feedback">
             <label>Mobile No.</label>
-            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealer->phone_number}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealer->user->mobile}}" disabled>
             <span class="glyphicon glyphicon-phone form-control-feedback"></span>
           </div>
-       
+          <div class="form-group has-feedback">
+            <label>Email</label>
+            <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $subdealer->user->email}}" disabled>
+            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+          </div>     
+         @endforeach
 
         </div>
        

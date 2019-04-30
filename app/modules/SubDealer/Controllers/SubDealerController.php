@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Modules\SubDealer\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\SubDealer\Models\SubDealer;
@@ -22,58 +20,47 @@ class SubDealerController extends Controller {
             'user_id',
             'dealer_id',                      
             'name',                   
-            'address',                    
-            'phone_number',
-            'email',
+            'address',                               
             'deleted_at'
         )
-        // ->withTrashed()
-        ->with('dealer:user_id,name')
+        ->withTrashed()
+        ->with('dealer:id,user_id,name')
+         ->with('user:id,email,mobile')
         ->get();
         return DataTables::of($subdealers)
         ->addIndexColumn()           
         ->make();
     }
-
-
-//     //employee creation page
+    //employee creation page
     public function create()
     {
        return view('SubDealer::sub-dealer-create');
     }
-
     //upload employee details to database table
     public function save(Request $request)
-    {
-      
+    {      
         if($request->user()->hasRole('dealer')){
         $rules = $this->user_create_rules();
         $this->validate($request, $rules);
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'mobile' => $request->phone_number,
+            'mobile' => $request->mobile,
             'status' => 1,
             'password' => bcrypt($request->password),
         ]);
             $dealer = SubDealer::create([            
             'user_id' => $user->id,
-            'dealer_id' => \Auth::user()->id,
+            'dealer_user_id' => \Auth::user()->id,
             'name' => $request->name,            
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email,
-            'status'=>1,
-            // 'created_by' => \Auth::user()->id
-            ]);
-
+            'address' => $request->address,           
+           ]);
             User::where('username', $request->username)->first()->assignRole('sub_dealer');
         }
- $eid= encrypt($user->id);
+        $eid= encrypt($user->id);
         $request->session()->flash('message', 'New dealer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('subdealers')); 
-       
+         return redirect(route('subdealers'));        
     }
     public function subdealerList()
     {
@@ -81,78 +68,87 @@ class SubDealerController extends Controller {
     }
 
 
-     public function user_create_rules(){
+    public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
+            'mobile' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
     }
-
-
-     public function getSubDealersView()
+    public function getSubDealersView(Request $request)
     {
-        $dealers = SubDealer::select(
-                    'id', 
-                    'user_id',
-                    'dealer_id',                      
-                    'name',                   
-                    'address',                    
-                    'phone_number',
-                    'email',
-                    'deleted_at')
-                    ->withTrashed()
-                   ->get();
-        return DataTables::of($dealers)
-            ->addIndexColumn()
-            ->addColumn('action', function ($dealers) {
-                if($dealers->deleted_at == null){ 
-                
-                    return "
-                  
-                    
-                    <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                     <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                      <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-                    <button onclick=delSubDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
-                 }else{ 
-                  
-                    return "
-                  
-                    <a href=/sub-dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateSubDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        $dealer=$request->user()->id;
+        $subdealers = SubDealer::select(
+        'id', 
+        'user_id',
+        'dealer_id',                      
+        'name',                   
+        'address',                                       
+        'deleted_at')
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('dealer_id',$dealer)
+        ->get();
+        return DataTables::of($subdealers)
+        ->addIndexColumn()
+        ->addColumn('action', function ($subdealers) {
+        if($subdealers->deleted_at == null){ 
+            return "
+            <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+             <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+              <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+            <button onclick=delSubDealers(".$subdealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+        }else{                   
+                return "
+              
+                <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateSubDealer(".$subdealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
     public function edit(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id);   
-        $subdealers = SubDealer::find($decrypted);
-        
-        if($subdealers == null){
+        $decrypted = Crypt::decrypt($request->id); 
+        $subdealers = SubDealer::select(
+            'id', 
+            'user_id',
+            'dealer_id',                         
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('user_id',$decrypted)
+        ->get();
+        if($subdealers == null)
+        {
            return view('SubDealer::404');
         }
-       return view('SubDealer::sub-dealer-edit',['subdealers' => $subdealers]);
+        return view('SubDealer::sub-dealer-edit',['subdealers' => $subdealers]);
     }
 
     //update dealers details
     public function update(Request $request)
     {
-        $subdealer = SubDealer::find($request->id);
+        $subdealer = subdealer::where('user_id', $request->id)->first();
         if($subdealer == null){
            return view('SubDealer::404');
         } 
         $rules = $this->dealersUpdateRules($subdealer);
-        $this->validate($request, $rules);
-       
+        $this->validate($request, $rules);       
         $subdealer->name = $request->name;
-       
-        $subdealer->phone_number = $request->phone_number;
         $subdealer->save();
-        $did = encrypt($subdealer->id);
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'SubDealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sub.dealers.edit',$did));  
@@ -172,52 +168,62 @@ class SubDealerController extends Controller {
     public function changePassword(Request $request)
     {
          $decrypted = Crypt::decrypt($request->id);
-        $subdealer = SubDealer::find($decrypted);
+          $subdealer = SubDealer::where('user_id', $decrypted)->first();
+         
         if($subdealer == null){
            return view('SubDealer::404');
         }
         return view('SubDealer::sub-dealer-change-password',['subdealer' => $subdealer]);
     }
 
+    
     //update password
     public function updatePassword(Request $request)
     {
         $subdealer=User::find($request->id);
         if($subdealer== null){
             return view('SubDealer::404');
-       }
-       $did=encrypt($subdealer->id);
-       // dd($request->password);
-      $rules=$this->updateDepotUserRuleChangePassword($subdealer);
-      $this->validate($request,$rules);
-      $subdealer->password=bcrypt($request->password);
-      $subdealer->save();
-      $request->session()->flash('message','SubDealer details updated successfully');
-      $request->session()->flash('alert-class','alert-success');
-      return  redirect(route('sub.dealers.change-password',$did));
+        }
+        $did=encrypt($subdealer->id);
+        // dd($request->password);
+        $rules=$this->updateDepotUserRuleChangePassword($subdealer);
+        $this->validate($request,$rules);
+        $subdealer->password=bcrypt($request->password);
+        $subdealer->save();
+        $request->session()->flash('message','SubDealer Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('sub.dealers.change-password',$did));
     }
-   
-
-  public function updateDepotUserRuleChangePassword(){
-     $rules=[
-      'password' => 'required|string|min:6|confirmed'
-         ];
-     return $rules;
-  }
+    public function updateDepotUserRuleChangePassword()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+    }
 
     //employee details view
     public function details(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id);   
-        $subdealer = SubDealer::find($decrypted);
+        $decrypted = Crypt::decrypt($request->id); 
+        $subdealer = SubDealer::select(
+            'id', 
+            'user_id',
+            'dealer_id',                      
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('user_id',$decrypted)
+        ->get();  
+        // $subdealer = SubDealer::find($decrypted);
         if($subdealer == null){
            return view('SubDealer::404');
         }
-       return view('SubDealer::sub-dealer-details',['subdealer' => $subdealer]);
+        return view('SubDealer::sub-dealer-details',['subdealer' => $subdealer]);
     }
-
-
-
      //delete Sub Dealer details from table
     public function deleteSubDealer(Request $request)
     {
@@ -257,5 +263,10 @@ class SubDealerController extends Controller {
             'message' => 'Sub Dealer restored successfully'
         ]);
     }
-
+ public function passwordUpdateRules(){
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+  }
 }

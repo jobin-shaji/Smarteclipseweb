@@ -1,13 +1,9 @@
 $(document).ready(function () {
     callBackDataTable();
 });
-
-
 function callBackDataTable(){
-    var  data = {
-    
+    var  data = {   
     }; 
-
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -36,21 +32,15 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            
             {data: 'name', name: 'name' },            
             {data: 'address', name: 'address',searchable: false},           
-            {data: 'phone_number', name: 'phone_number'},
-           {data: 'email', name: 'email',searchable: false},
-           
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-           
-        ],
-        
+            {data: 'user.mobile', name: 'user.mobile'},
+            {data: 'user.email', name: 'user.email',searchable: false},
+            {data: 'action', name: 'action', orderable: false, searchable: false},           
+        ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-
 }
-
 function delDealers(dealer){
     var url = 'dealer/delete';
     var data = {
@@ -58,7 +48,6 @@ function delDealers(dealer){
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-
 function activateDealer(dealer){
     var url = 'dealer/activate';
     var data = {

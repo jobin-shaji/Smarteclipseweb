@@ -3,7 +3,6 @@
    Dealer details
 @endsection
 @section('content')
-
     <section class="content-header">
      <h1>Dealer details</h1>
     </section>
@@ -27,38 +26,33 @@
     <form  method="POST" action="#">
         {{csrf_field()}}
     <div class="row">
-        <div class="col-md-6">
-          
-       
+        <div class="col-md-6">          
+        @foreach($dealer as $dealer)
           <div class="form-group has-feedback">
             <label>Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealer->name}}" disabled>
           </div>
-
-          
           <div class="form-group has-feedback">
             <label>Address</label>
             <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $dealer->address}}" disabled>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
-              
-
-       
-
           <div class="form-group has-feedback">
             <label>Mobile No.</label>
-            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealer->phone_number}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealer->user->mobile}}" disabled>
             <span class="glyphicon glyphicon-phone form-control-feedback"></span>
           </div>
-       
-
+         <div class="form-group has-feedback">
+          <label>Email</label>
+          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $dealer->user->email}}" disabled>
+          <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+        </div>       
+      @endforeach
         </div>
        
       </div>
 <!--  -->
     </form>
 </section>
-
 <div class="clearfix"></div>
-
 @endsection

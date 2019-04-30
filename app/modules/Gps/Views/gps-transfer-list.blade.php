@@ -1,8 +1,9 @@
 @extends('layouts.gps')
 @section('title')
-    View Dealer
+  GPS Transfer
 @endsection
 @section('content')
+
 <!--  flash message -->
  @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -12,47 +13,46 @@
         </div>
     @endif
  <!-- end flash message -->
-  <section class="content-header">
+ <section class="content-header">
       <h1>
-        Dealer
+        GPS Transfer
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dealer List</li>
+        <li class="active">GPS Transfer</li>
       </ol>
-  </section>
-  <section class="content">
-    <div class="row">
+</section>
+
+
+ <section class="content">
+  <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Dealer  
-                    <a href="{{route('dealer.create')}}">
-                    <button class="btn btn-xs btn-primary pull-right">Add new Dealer</button>
+                <div class="panel-heading">GPS Transfer List 
+                    <a href="{{route('gps-transfer.create')}}">
+                    <button class="btn btn-xs btn-primary pull-right">New Transfer</button>
                     </a>
                 </div>
-                <div class="table-responsive">
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                            <tr>
-                              <th>Sl.No</th>
-                              <th>Name</th>                            
-                              <th>Address</th>                              
-                              <th>Mobile</th>                            
-                              <th>email</th>
-                             <th style="width:160px;">Action</th>
-                            </tr>
+                        <tr>
+  	                      <th>#</th>
+  	                      <th>GPS</th>
+  	                      <th>From User</th>
+                          <th>To User</th>
+                          <th>Date</th>
+                        </tr>
                         </thead>
                     </table>
                 </div>
-              </div>
             </div>
         </div>
     </div>
 </section>
-@section('script')
-    <script src="{{asset('js/gps/dealer-list.js')}}"></script>
-@endsection
-@endsection
 
+@section('script')
+    <script src="{{asset('js/etm/etm-transfer.js')}}"></script>
+@endsection
+@endsection

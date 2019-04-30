@@ -20,10 +20,11 @@
           <h2 class="page-header">
             <i class="fa fa-edit"> Dealer details</i> 
           </h2>
+          @foreach($dealers as $dealers)
           <?php 
             $password=$dealers->password;
             if($dealers){
-              $encript=Crypt::encrypt($dealers->id)
+              $encript=Crypt::encrypt($dealers->user_id)
           ?>
           <a href="{{route('dealers.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>
@@ -31,11 +32,10 @@
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="{{route('dealers.update.p',$dealers->id)}}">
+    <form  method="POST" action="{{route('dealers.update.p',$dealers->user_id)}}">
         {{csrf_field()}}
-    <div class="row">
-        <div class="col-md-6">
-          
+      <div class="row">
+        <div class="col-md-6">          
           <div class="form-group has-feedback">
             <label class="srequired">Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealers->name}}"> 
@@ -46,11 +46,9 @@
             <strong class="error-text">{{ $errors->first('name') }}</strong>
             </span>
           @endif
-
-        
- <div class="form-group has-feedback">
+        <div class="form-group has-feedback">
           <label class="srequired">Mobile No.</label>
-          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealers->phone_number}}">
+          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealers->user->mobile}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>
         @if ($errors->has('phone_number'))
@@ -62,22 +60,18 @@
           <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
         </div>
       </div>
-     
-   
     </form>
-</section>
-
-
-<!-- add depot user -->
- <div id="myModal" class="modal fade" role="dialog">
+  </section>
+  <!-- add depot user -->
+  <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Change Password</h4>
-      </div>
-      <div class="modal-body">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Password</h4>
+        </div>
+        <div class="modal-body">
             <form  method="POST" action="{{route('dealer.update-password.p',$dealers->id)}}">
                     {{csrf_field()}}
                   <input type="hidden" name="id" value="{{$dealers->id}}"> 
@@ -119,7 +113,7 @@
                         <!-- /.col -->
                       </div>
                 </form>
-
+ @endforeach
       </div>
     </div>
    </div>

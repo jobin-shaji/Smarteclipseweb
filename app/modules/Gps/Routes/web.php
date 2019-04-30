@@ -11,4 +11,11 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
 	Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
 
+	//fro Gps transfer
+	Route::get('/gps-transfers','GpsController@getList')->name('gps-transfers');
+	Route::post('/gps-transfer-list','GpsController@getListData')->name('gps-transfer-list.p');
+	Route::get('/gps-transfer/create','GpsController@createGpsTransfer')->name('gps-transfer.create');
+	Route::post('/gps-transfer/save-transfer','GpsController@saveGpsTransfer')->name('gps-transfer.create.p');
+	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
+
 });

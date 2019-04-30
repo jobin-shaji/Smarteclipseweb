@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Modules\Dealer\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\User\Models\User;
 use App\Modules\Depot\Models\DepotUser;
-
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class DealerController extends Controller {
@@ -20,167 +17,161 @@ class DealerController extends Controller {
     public function getDealers()
     {
         $dealers = Dealer::select(
-                    'id', 
-                    'user_id',                      
-                    'name',                   
-                    'address',                    
-                    'phone_number',
-                    'email',
-                    'deleted_at')
-                    ->withTrashed()
-                   ->get();
+            'id', 
+            'user_id',                      
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->get();
         return DataTables::of($dealers)
-            ->addIndexColumn()
-            ->addColumn('action', function ($dealers) {
-                if($dealers->deleted_at == null){ 
-                
-                    return "
-                     <a href=/dealers/".Crypt::encrypt($dealers->id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-                     <a href=/dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <a href=/dealers/".Crypt::encrypt($dealers->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                   
-                    <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
-                 }else{ 
-                  
-                    return "
-                  
-                    <a href=/dealers/".Crypt::encrypt($dealers->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        ->addIndexColumn()
+        ->addColumn('action', function ($dealers) {
+            if($dealers->deleted_at == null){ 
+            return "
+            <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+            <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+            <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+            }else{ 
+            return "<a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
-
-
-//     //employee creation page
+    //dealer creation page
     public function create()
     {
        return view('Dealer::dealer-create');
     }
-
-    //upload employee details to database table
+    //upload dealer details to database table
     public function save(Request $request)
     {
-      
+        // \Auth::user()->root->first()->id
+        $root_id=\Auth::user()->id;
         if($request->user()->hasRole('root')){
-        $rules = $this->user_create_rules();
-        $this->validate($request, $rules);
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'mobile' => $request->phone_number,
-            'status' => 1,
-            'password' => bcrypt($request->password),
-        ]);
-            $dealer = Dealer::create([
-            // 'depot_id' => $request->user()->depot->first()->id,
-            'user_id' => $user->id,
-            'name' => $request->name,            
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email,
-            'status'=>1,
-            
-            // 'created_by' => \Auth::user()->id
+            $rules = $this->user_create_rules();
+            $this->validate($request, $rules);
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'status' => 1,
+                'password' => bcrypt($request->password),
             ]);
-
+            $dealer = Dealer::create([
+                'user_id' => $user->id,
+                'root_user_id'=>$root_id,
+                'name' => $request->name,            
+                'address' => $request->address,
+            ]);
             User::where('username', $request->username)->first()->assignRole('dealer');
         }
- $eid= encrypt($user->id);
+        $eid= encrypt($user->id);
         $request->session()->flash('message', 'New dealer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('dealers')); 
-       
+        return redirect(route('dealers')); 
     }
-
-    //employee details view
+    //Dealer details view
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);   
-        $dealer = Dealer::find($decrypted);
+        // $dealer = Dealer::find($decrypted);
+        $dealer = Dealer::select(
+            'id', 
+            'user_id',                      
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('user_id',$decrypted)
+        ->get();
         if($dealer == null){
-           return view('Dealer::404');
+            return view('Dealer::404');
         }
-       return view('Dealer::dealer-details',['dealer' => $dealer]);
+        return view('Dealer::dealer-details',['dealer' => $dealer]);
     }
-
     //for edit page of Dealers
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);   
-        $dealers = Dealer::find($decrypted);
-       
-       
-        
+        // $dealers = Dealer::find($decrypted);
+        $dealers = Dealer::select(
+            'id', 
+            'user_id',                      
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('user_id',$decrypted)
+        ->get();
         if($dealers == null){
-           return view('Dealer::404');
+            return view('Dealer::404');
         }
-       return view('Dealer::dealer-edit',['dealers' => $dealers]);
+        return view('Dealer::dealer-edit',['dealers' => $dealers]);
     }
-
     //update dealers details
     public function update(Request $request)
-    {
-        $dealer = Dealer::find($request->id);
+    { 
+       $dealer = Dealer::where('user_id', $request->id)->first();
         if($dealer == null){
            return view('Dealer::404');
         } 
         $rules = $this->dealersUpdateRules($dealer);
-        $this->validate($request, $rules);
-       
+        $this->validate($request, $rules);      
         $dealer->name = $request->name;
-       
-        $dealer->phone_number = $request->phone_number;
         $dealer->save();
-        $did = encrypt($dealer->id);
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->save();
+        $did = encrypt($user->id);
         $request->session()->flash('message', 'Dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('dealers.edit',$did));  
     }
-
-//     //for edit page of employee password
+    //for edit page of employee password
     public function changePassword(Request $request)
     {
-         $decrypted = Crypt::decrypt($request->id);
-        $dealer = Dealer::find($decrypted);
+        $decrypted = Crypt::decrypt($request->id);
+        $dealer = Dealer::where('user_id', $decrypted)->first();
+        // $dealer = Dealer::find($decrypted);
         if($dealer == null){
            return view('Dealer::404');
         }
         return view('Dealer::dealer-change-password',['dealer' => $dealer]);
     }
-
     //update password
     public function updatePassword(Request $request)
     {
-        $dealer = User::find($request->id);
-        
-        $did = encrypt($dealer->id);
-        if($dealer == null){
-           return view('Dealer::404');
+        $subdealer=User::find($request->id);
+        if($subdealer== null){
+            return view('SubDealer::404');
         }
-        $rules = $this->passwordUpdateRules();
-        $this->validate($request, $rules);
-        $old_password=$dealer->password;
-        $entered_old_password=$request->old_password;
-        if($old_password==$entered_old_password)
-        {
-            $dealer->password = $request->password;
-            $dealer->save();
-            $did = encrypt($dealer->id);
-            $request->session()->flash('message', 'Password updated successfully!');
-            $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect(route('dealers.edit',$did));   
-        }
-        else
-        {
-            $request->session()->flash('message', 'Old password is incorrect!');
-            $request->session()->flash('alert-class', 'alert-danger'); 
-            return redirect(route('dealers.change-password',$did));
-        }
-         
+        $did=encrypt($subdealer->id);
+        // dd($request->password);
+        $rules=$this->updateDepotUserRuleChangePassword($subdealer);
+        $this->validate($request,$rules);
+        $subdealer->password=bcrypt($request->password);
+        $subdealer->save();
+        $request->session()->flash('message','Dealer Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('dealers.change-password',$did));
     }
-
+    public function updateDepotUserRuleChangePassword()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+    }
     //delete employee details from table
     public function deleteDealer(Request $request)
     {
@@ -199,76 +190,60 @@ class DealerController extends Controller {
             'message' => 'Dealer deleted successfully'
         ]);
     }
-
     // restore emplopyee
     public function activateDealer(Request $request)
     {
         $dealer = Dealer::withTrashed()->find($request->id);
         if($dealer==null){
-             return response()->json([
+            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Dealer does not exist'
-             ]);
+            ]);
         }
-
         $dealer->restore();
-
         return response()->json([
             'status' => 1,
             'title' => 'Success',
             'message' => 'Dealer restored successfully'
         ]);
     }
-
-
     //validation for employee creation
     public function dealerCreateRules()
     {
         $rules = [
-             
-
-
-           
-            'name' => 'required',
-           
-            'address' => 'required',
-           
+            'name' => 'required',       
+            'address' => 'required',       
             'phone_number' => 'required|numeric',
-            
-            
             'username' => 'nullable|string|max:20|unique:dealers',
             'password' => 'nullable|string|min:6|confirmed',
         ];
         return  $rules;
     }
-
     //validation for employee updation
     public function dealersUpdateRules($dealer)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric'
-            
+            'phone_number' => 'required|numeric'       
         ];
         return  $rules;
     }
-
-    public function passwordUpdateRules(){
+    public function passwordUpdateRules()
+    {
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
         return $rules;
-  }
+    }
     //user create rules 
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
     }
-
-
 }
