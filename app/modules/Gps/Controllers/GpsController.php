@@ -202,11 +202,11 @@ class GpsController extends Controller {
     public function createGpsTransfer() 
     {
        
-        $gps = Gps::select('id', 'name', 'imei','dealer_id')
+        $devices = Gps::select('id', 'name', 'imei','dealer_id')
         ->get();
-        $dealers = Dealer::select('id', 'name', 'code')
+        $dealers = Dealer::select('id', 'name')
         ->get();
-        return view('EtmTransfer::etm-transfer', ['etms' => $etms, 'depots' => $depots]);
+        return view('Gps::gps-transfer', ['devices' => $devices, 'dealers' => $dealers]);
     }
     // save etm transfer
     public function saveTransfer(Request $request) 
