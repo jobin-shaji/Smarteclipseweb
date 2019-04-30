@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:end_user'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:client'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 
 Route::get('/vehicle','VehicleController@VehicleList')->name('vehicle');
