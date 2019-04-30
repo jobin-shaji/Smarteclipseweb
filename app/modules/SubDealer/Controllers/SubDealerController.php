@@ -77,7 +77,7 @@ class SubDealerController extends Controller {
         ];
         return  $rules;
     }
-    public function getSubDealersView(Request $request)
+    public function getSubDealerlist(Request $request)
     {
         $dealer=$request->user()->id;
         $subdealers = SubDealer::select(
