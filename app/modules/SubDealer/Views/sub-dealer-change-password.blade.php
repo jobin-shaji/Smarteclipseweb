@@ -13,7 +13,7 @@
       </div>
     </div>
     @endif  
-<section class="hilite-content">
+    <section class="hilite-content">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">

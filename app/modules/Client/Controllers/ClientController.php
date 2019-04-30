@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
 use App\Modules\Depot\Models\DepotUser;
+use Illuminate\Support\Facades\Crypt;
 use DataTables;
 
 class ClientController extends Controller {

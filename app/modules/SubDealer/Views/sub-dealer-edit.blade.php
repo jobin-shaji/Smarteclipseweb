@@ -24,7 +24,7 @@
           <?php 
             $password=$subdealers->password;
             if($subdealers){
-              $encript=Crypt::encrypt($subdealers->id)
+              $encript=Crypt::encrypt($subdealers->user_id)
           ?>
           <a href="{{route('sub.dealers.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>

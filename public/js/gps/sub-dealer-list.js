@@ -1,13 +1,9 @@
 $(document).ready(function () {
     callBackDataTable();
 });
-
-
 function callBackDataTable(){
-    var  data = {
-    
+    var  data = {    
     }; 
-
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -46,21 +42,5 @@ function callBackDataTable(){
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 
-}
-
-function delDealers(dealer){
-    var url = 'dealer/delete';
-    var data = {
-        uid : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
-}
-
-function activateDealer(dealer){
-    var url = 'dealer/activate';
-    var data = {
-        id : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 

@@ -12,7 +12,7 @@
         </div>
     @endif
  <!-- end flash message -->
-<section class="content-header">
+  <section class="content-header">
       <h1>
         Dealer
         <small>Control panel</small>
@@ -21,11 +21,9 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dealer List</li>
       </ol>
-</section>
-
-
-<section class="content">
-  <div class="row">
+  </section>
+  <section class="content">
+    <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Dealer  
@@ -39,13 +37,11 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              
                               <th>Name</th>                            
                               <th>Address</th>                              
                               <th>Mobile</th>                            
                               <th>email</th>
-                             
-                              <th style="width:160px;">Action</th>
+                             <th style="width:160px;">Action</th>
                             </tr>
                         </thead>
                     </table>
