@@ -6,6 +6,7 @@ namespace App\Modules\Gps\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Depot\Models\Depot;
 
 use DataTables;
@@ -174,4 +175,67 @@ class GpsController extends Controller {
         ];
         return  $rules;
     }  
+
+    ///////////////////////////Gps Transfer////////////////////////////////
+
+    // gps transfer list
+    public function getList() 
+    {
+        return view('Gps::gps-transfer-list');
+    }
+
+    // gps transfer list data
+    public function getListData() 
+    {
+ 
+        $gps_transfer = GpsTransfer::select('id', 'etmID', 'from_depot', 'to_depot', 'tarnferDate')
+        ->with('fromDepotDetails:id,name')
+        ->with('toDepotDetails:id,name')
+        ->with('etmDetails:id,name')
+        ->get();
+        return DataTables::of($etm_transfer)
+        ->addIndexColumn()
+        ->make();
+    }
+
+    // create gps transfer
+    public function createGpsTransfer() 
+    {
+       
+        $gps = Gps::select('id', 'name', 'imei','dealer_id')
+        ->get();
+        $dealers = Dealer::select('id', 'name', 'code')
+        ->get();
+        return view('EtmTransfer::etm-transfer', ['etms' => $etms, 'depots' => $depots]);
+    }
+    // save etm transfer
+    public function saveTransfer(Request $request) 
+    {
+       
+        $rules = $this->etmTransferRule();
+        $this->validate($request, $rules);
+        $etmTransfer = EtmTransfer::create([
+          "etmID" => $request->etm, 
+          "from_depot" => $request->from_depot, 
+          "to_depot" => $request->to_depot,
+          "tarnferDate" => date('Y-m-d H:i:s')]
+          );
+        // update employee table
+        $etmID = $request->etm;
+        $etm = ETM::find($etmID);
+        $etm->depot_id = $request->to_depot;
+        $etm->save();
+        $request->session()->flash('message', 'ETM Transfer successfully completed!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('etm-transfers'));
+    }
+
+    // etm transfer rule
+    public function etmTransferRule() {
+        $rules = [
+          'etm' => 'required',
+         'from_depot' => 'required',
+          'to_depot' => 'required'];
+        return $rules;
+    }
 }
