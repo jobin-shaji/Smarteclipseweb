@@ -19,3 +19,9 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
 
 });
+
+Route::group([ 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/gps-location','GpsController@addLocation')->name('gps-location');
+
+});
