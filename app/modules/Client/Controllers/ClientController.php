@@ -15,7 +15,7 @@ class ClientController extends Controller {
     }
     //upload employee details to database table
     public function save(Request $request)
-    {      
+    {      $subdealer_id = \Auth::user()->subdealer->id; 
         if($request->user()->hasRole('sub_dealer')){
         $rules = $this->user_create_rules();
         $this->validate($request, $rules);
@@ -28,7 +28,7 @@ class ClientController extends Controller {
         ]);
             $client = Client::create([            
             'user_id' => $user->id,
-            'sub_dealer_user_id' => \Auth::user()->id,
+            'sub_dealer_id' => $subdealer_id,
             'name' => $request->name,            
             'address' => $request->address,           
            ]);
@@ -56,17 +56,17 @@ class ClientController extends Controller {
     }
     public function getClientlist(Request $request)
     {
-        $subdealer=$request->user()->id;
+        $subdealer=$request->user()->subdealer->id;
         $client = Client::select(
         'id', 
         'user_id',
-        'sub_dealer_user_id',                      
+        'sub_dealer_id',                      
         'name',                   
         'address',                                       
         'deleted_at')
         ->withTrashed()
         ->with('user:id,email,mobile')
-        ->where('sub_dealer_user_id',$subdealer)
+        ->where('sub_dealer_id',$subdealer)
         ->get();
         return DataTables::of($client)
         ->addIndexColumn()
@@ -93,7 +93,7 @@ class ClientController extends Controller {
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_user_id',                         
+            'sub_dealer_id',                         
             'name',                   
             'address',                                        
             'deleted_at'
@@ -186,7 +186,7 @@ class ClientController extends Controller {
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_user_id',                      
+            'sub_dealer_id',                      
             'name',                   
             'address',                                        
             'deleted_at'
@@ -201,6 +201,35 @@ class ClientController extends Controller {
         }
         return view('Client::client-details',['client' => $client]);
     }
+
+
+    public function clientListPage()
+    {
+        return view('Client::root-client-list');
+    }
+    //returns employees as json 
+    public function getRootClient()
+    {
+        $client = Client::select(
+            'id', 
+            'user_id',
+            'sub_dealer_id',                      
+            'name',                   
+            'address',                               
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('subdealer:id,user_id,name')
+         ->with('user:id,email,mobile')
+         ->where('deleted_at',NULL)
+        ->get();
+        return DataTables::of($client)
+        ->addIndexColumn()           
+        ->make();
+    }
+
+
+
      //delete Sub Dealer details from table
     public function deleteClient(Request $request)
     {

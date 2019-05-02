@@ -64,7 +64,7 @@ class UsersTableSeeder extends Seeder
             'address' => 'vst',
             'name' => 'dealer',
             'user_id'=>2,
-            'root_user_id' => 1
+            'root_id' => 1
         ]);
 
         User::where('username','dealer')->first()->assignRole('dealer');	
@@ -82,7 +82,7 @@ class UsersTableSeeder extends Seeder
             'address' => 'vst',
             'name' => 'sub_dealer',
             'user_id'=>3,
-            'dealer_user_id' => 1
+            'dealer_id' => 1
         ]);
 
         User::where('username','sub_dealer')->first()->assignRole('sub_dealer'); 
@@ -101,7 +101,7 @@ class UsersTableSeeder extends Seeder
             'address' => 'vst',
             'name' => 'client',
             'user_id'=>4,
-            'sub_dealer_user_id' => 1
+            'sub_dealer_id' => 1
         ]);
   
         User::where('username','client')->first()->assignRole('client'); 
