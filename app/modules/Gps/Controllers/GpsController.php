@@ -158,7 +158,7 @@ class GpsController extends Controller {
 
     public function addLocation(Request $request){
         $gps = GpsLocation::create([
-            'vltdata'=> $request->data,
+            'data'=> $request->vltdata,
         ]);
 
          return response()->json([
