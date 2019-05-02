@@ -18,7 +18,7 @@ class SubDealerController extends Controller {
         $subdealers = SubDealer::select(
             'id', 
             'user_id',
-            'dealer_id',                      
+            'dealer_user_id',                      
             'name',                   
             'address',                               
             'deleted_at'
@@ -77,19 +77,20 @@ class SubDealerController extends Controller {
         ];
         return  $rules;
     }
-    public function getSubDealersView(Request $request)
+    public function getSubDealerlist(Request $request)
     {
         $dealer=$request->user()->id;
+        // dd($dealer);
         $subdealers = SubDealer::select(
         'id', 
         'user_id',
-        'dealer_id',                      
+        'dealer_user_id',                      
         'name',                   
         'address',                                       
         'deleted_at')
         ->withTrashed()
         ->with('user:id,email,mobile')
-        ->where('dealer_id',$dealer)
+        ->where('dealer_user_id',$dealer)
         ->get();
         return DataTables::of($subdealers)
         ->addIndexColumn()
@@ -116,7 +117,7 @@ class SubDealerController extends Controller {
         $subdealers = SubDealer::select(
             'id', 
             'user_id',
-            'dealer_id',                         
+            'dealer_user_id',                         
             'name',                   
             'address',                                        
             'deleted_at'
@@ -209,7 +210,7 @@ class SubDealerController extends Controller {
         $subdealer = SubDealer::select(
             'id', 
             'user_id',
-            'dealer_id',                      
+            'dealer_user_id',                      
             'name',                   
             'address',                                        
             'deleted_at'

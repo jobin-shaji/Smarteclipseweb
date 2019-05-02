@@ -7,7 +7,7 @@ Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-d
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
 // //for dealers
 Route::get('/subdealers','SubDealerController@subdealerList')->name('subdealers');
-Route::post('/subdealer-list','SubDealerController@getSubDealersView')->name('subdealer-list');
+Route::post('/subdealer-list','SubDealerController@getSubDealerlist')->name('subdealer-list');
 Route::get('/sub-dealer/create','SubDealerController@create')->name('sub.dealer.create');
 Route::post('/sub-dealer/create','SubDealerController@save')->name('sub.dealer.create.p');
 Route::get('/sub-dealers/{id}/edit','SubDealerController@edit')->name('sub.dealers.edit');

@@ -9,9 +9,12 @@
   $id = null;
   ?>
   <meta name="depot" content="<?php echo e($id); ?>">
+  <meta name="dealer" content="<?php echo e($id); ?>">
   <meta name="domain" content="<?php echo e(url('/')); ?>">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap.min.css')); ?>">
   <!-- Font Awesome -->
