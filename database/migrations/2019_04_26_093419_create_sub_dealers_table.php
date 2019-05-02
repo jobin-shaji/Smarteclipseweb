@@ -16,7 +16,7 @@ class CreateSubDealersTable extends Migration
         Schema::create('sub_dealers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('dealer_user_id');
+            $table->integer('dealer_id');
             $table->string('name');
             $table->string('address');
             $table->timestamps();

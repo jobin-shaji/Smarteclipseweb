@@ -44,6 +44,19 @@
 <li class="treeview">
     <a href="#">
       <i class="fa fa-users"></i>
+      <span>Client</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/client')}}"><i class="fa fa-list"></i> List Client</a></li>
+  </ul>
+</li>
+
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-users"></i>
       <span>User</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
