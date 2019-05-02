@@ -10,22 +10,24 @@ class GpsTransfer extends Model
 {
 	// fillable fields
     protected $fillable=[
-		'gps_id','from_user','to_user','transfer_date'
+		'gps_id','from_user_id','to_user_id','transfer_date'
 	];
 
- //   // from depot details from Etm transfer
-	// public function fromDepotDetails(){
-	
-	// 	return $this->hasOne('App\Modules\Depot\Models\Depot','id','from_depot');
-	// }
- //   // to depot details from Etm transfer
-	// public function toDepotDetails(){
-		
-	// 	return $this->hasOne('App\Modules\Depot\Models\Depot','id','to_depot');
-	// }
+	//join user table with gps table
+    public function gps()
+    {
+    	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+    }
 
-	// // etm details from etm transfer
-	// public function etmDetails(){
-	//   return $this->hasOne('App\Modules\Etm\Models\Etm','id','etmID');	
-	// }
+	//join user table with gps table
+    public function fromUser()
+    {
+    	return $this->hasOne('App\Modules\User\Models\User','id','from_user_id');
+    }
+
+    //join user table with gps table
+    public function toUser()
+    {
+    	return $this->hasOne('App\Modules\User\Models\User','id','to_user_id');
+    }
 }
