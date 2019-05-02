@@ -22,6 +22,6 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 Route::group([ 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
-Route::get('/gps-location','GpsController@addLocation')->name('gps-location');
+Route::post('/gps-location','GpsController@addLocation')->name('gps-location');
 
 });
