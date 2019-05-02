@@ -20,8 +20,8 @@
 
    function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+          center: {lat: 10.107570, lng: 76.345665},
+          zoom: 12
         });
 
         var drawingManager = new google.maps.drawing.DrawingManager({
