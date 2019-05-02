@@ -18,7 +18,7 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url(http://localhost:8000/images/bg.jpg);
+                    background-image: url(<?php echo e(asset('images/bg.jpg')); ?>);
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: cover;
