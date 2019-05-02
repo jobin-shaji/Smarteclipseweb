@@ -20,8 +20,8 @@
 
    function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+          center: {lat: 10.107570, lng: 76.345665},
+          zoom: 12
         });
 
         var drawingManager = new google.maps.drawing.DrawingManager({
@@ -43,24 +43,24 @@
         });
         drawingManager.setMap(map);
 
-      var polygons = [];
-
-      google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
-       // polygon.addListener('click', showArrays);
-       showArrays(polygon);
-        polygons.push(polygon);
-      });
+        google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
+          addArrays(polygon);
+        });
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
-            for (var i = 0; i < polygons.length; i++) {
-            console.log(polygons[i]);                            
-         }
-       });
+          var url = 'save/fence';
+          var data = {
+           polygons : allPolly
+          };
+          backgroundPostData(url,data,'none',{alert:true});  
+
+          console.log(allPolly);
+        });
    
     }
 
 
-function showArrays(polygon) {
+function addArrays(polygon) {
 
   var vertices = polygon.getPath();
   var contentString = "";
@@ -68,15 +68,14 @@ function showArrays(polygon) {
 
   for (var i =0; i < vertices.getLength(); i++) {
     var xy = vertices.getAt(i);
-    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-        xy.lng();
-    cord = JSON.stringify({lat : xy.lat(),lng : xy.lng()});
+    // contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
+        // xy.lng();
+    cord = [ xy.lat(),xy.lng()];
     poly.push(cord);
   }
 
   allPolly.push(poly);
-
-  alert(allPolly);
+ 
 }
 
      

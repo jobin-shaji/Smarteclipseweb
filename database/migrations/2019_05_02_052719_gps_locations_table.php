@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RootTable extends Migration
+class GpsLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class RootTable extends Migration
      */
     public function up()
     {
-        Schema::create('roots', function (Blueprint $table) {
+         Schema::create('gps_locations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('name');
-            $table->string('address');
+            $table->text('data');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +27,6 @@ class RootTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roots');
+        Schema::dropIfExists('gps_locations');
     }
 }

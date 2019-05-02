@@ -39,7 +39,8 @@
                         <thead>
                         <tr>
   	                      <th>#</th>
-  	                      <th>GPS</th>
+  	                      <th>GPS Name</th>
+                          <th>IMEI</th>
   	                      <th>From User</th>
                           <th>To User</th>
                           <th>Date</th>
@@ -53,6 +54,6 @@
 </section>
 
 @section('script')
-    <script src="{{asset('js/etm/etm-transfer.js')}}"></script>
+    <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
 @endsection
 @endsection

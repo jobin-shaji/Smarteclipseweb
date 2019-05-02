@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RootTable extends Migration
+class Geofence extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class RootTable extends Migration
      */
     public function up()
     {
-        Schema::create('roots', function (Blueprint $table) {
+        Schema::create('geofences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('name');
-            $table->string('address');
+            $table->json('cordinates');
+            $table->string('fence_type_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ class RootTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roots');
+        Schema::dropIfExists('geofences');
     }
 }
