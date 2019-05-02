@@ -26,7 +26,7 @@
         </div>
         <!-- /.col -->
       </div>
-     <form  method="POST" action="{{route('etm-transfer.create.p')}}">
+     <form  method="POST" action="{{route('gps-transfer.create.p')}}">
         {{csrf_field()}}
       <div class="row">
          
@@ -52,7 +52,7 @@
               <div class="form-group has-feedback">
                 <label>From User</label>
                 <input type="text" name="from_user" class="form-control from_user_name" readonly="" >
-                <input type="hidden"  class="form-control from_user_id" name="from_user">
+                <input type="hidden"  class="form-control from_user_id" name="from_user_id">
               </div>
               @if ($errors->has('from_user'))
                 <span class="help-block">
@@ -64,7 +64,7 @@
 
               <div class="form-group has-feedback">
                 <label class="srequired">To User</label>
-                <select class="form-control selectpicker" id="to_user" name="to_user" data-live-search="true" title="Select Dealer" required>
+                <select class="form-control selectpicker" id="to_user" name="to_user_id" data-live-search="true" title="Select Dealer" required>
                   @foreach($users as $user)
                   <option value="{{$user->id}}">{{$user->username}}</option>
                   @endforeach

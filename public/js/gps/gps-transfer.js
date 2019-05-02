@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'etm-transfer-list',
+            url: 'gps-transfer-list',
             type: 'POST',
             data: {
                 'data': data
@@ -31,10 +31,11 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'etm_details.name', name: 'etm_details.name'},
-            {data: 'from_depot_details.name', name: 'from_depot_details.name'},
-            {data: 'to_depot_details.name', name: 'to_depot_details.name'},
-            {data: 'tarnferDate', name: 'tarnferDate',orderable: false, searchable: false}
+            {data: 'gps.name', name: 'gps.name'},
+            {data: 'gps.imei', name: 'gps.imei'},
+            {data: 'from_user.username', name: 'from_user.username'},
+            {data: 'to_user.username', name: 'to_user.username'},
+            {data: 'transfer_date', name: 'transfer_date',orderable: false, searchable: false}
 
             ],
         
@@ -56,8 +57,8 @@ $('#gpsTransfer').on('change', function() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-          var CurrentUser=res.dealer.user_id;
-          var CurrentUserName=res.dealer.name;
+          var CurrentUser=res.dealer_user.user_id;
+          var CurrentUserName=res.dealer_user.username;
           $(".from_user_id").val(CurrentUser); 
           $(".from_user_name").val(CurrentUserName); 
           $("#to_user option[value="+CurrentUser+"]").hide();

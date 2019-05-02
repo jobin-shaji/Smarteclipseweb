@@ -195,13 +195,12 @@ class GpsController extends Controller {
     // gps transfer list data
     public function getListData() 
     {
- 
-        $gps_transfer = GpsTransfer::select('id', 'etmID', 'from_depot', 'to_depot', 'tarnferDate')
-        ->with('fromDepotDetails:id,name')
-        ->with('toDepotDetails:id,name')
-        ->with('etmDetails:id,name')
+        $gps_transfer = GpsTransfer::select('id', 'gps_id', 'from_user_id', 'to_user_id', 'transfer_date')
+        ->with('fromUser:id,username')
+        ->with('toUser:id,username')
+        ->with('gps:id,name,imei')
         ->get();
-        return DataTables::of($etm_transfer)
+        return DataTables::of($gps_transfer)
         ->addIndexColumn()
         ->make();
     }
@@ -210,7 +209,7 @@ class GpsController extends Controller {
     public function createGpsTransfer(Request $request) 
     {
         if($request->user()->hasRole('root')){
-            $devices = Gps::select('id', 'name', 'imei','dealer_id')
+            $devices = Gps::select('id', 'name', 'imei','dealer_user_id')
             ->get();
             $users = User::role('dealer')->get();
         }
@@ -218,21 +217,30 @@ class GpsController extends Controller {
         return view('Gps::gps-transfer', ['devices' => $devices, 'users' => $users]);
     }
     // save gps transfer
-    public function saveTransfer(Request $request) 
+    public function saveGpsTransfer(Request $request) 
     {
        
         $rules = $this->gpsTransferRule();
+        $root_id=\Auth::user()->id;
         $this->validate($request, $rules);
+        $gps_id = $request->gps_id;
+        $from_user = $request->from_user_id;
+        if($from_user){
+            $from_user_id=$from_user;
+        }else{
+            $from_user_id=$root_id;
+        }
+        $to_user_id = $request->to_user_id;
         $gps_transfer = GpsTransfer::create([
-          "gps_id" => $request->gps_id, 
-          "from_user" => $request->from_user, 
-          "to_user" => $request->to_user,
+          "gps_id" => $gps_id, 
+          "from_user_id" => $from_user_id, 
+          "to_user_id" => $to_user_id,
           "transfer_date" => date('Y-m-d H:i:s')]
           );
         //update gps table
         $gps_id = $request->gps_id;
         $gps = Gps::find($gps_id);
-        $gps->dealer_id = $request->to_user;
+        $gps->dealer_user_id = $request->to_user_id;
         $gps->save();
         $request->session()->flash('message', 'Gps Transfer successfully completed!');
         $request->session()->flash('alert-class', 'alert-success');
@@ -243,16 +251,16 @@ class GpsController extends Controller {
     public function userData(Request $request) 
     {
         $gps = Gps::find($request->gpsID);    
-        $dealer = $gps->dealer;     
-        return response()->json(array('response' => 'success', 'gps' => $gps , 'dealer' => $dealer));
+        $dealer_user = $gps->dealer_user;     
+        return response()->json(array('response' => 'success', 'gps' => $gps , 'dealer_user' => $dealer_user));
     }
 
-    // etm transfer rule
-    public function etmTransferRule() {
+    // gps transfer rule
+    public function gpsTransferRule() {
         $rules = [
           'gps_id' => 'required',
-          'from_user' => 'nullable',
-          'to_user' => 'required'];
+          'from_user_id' => 'nullable',
+          'to_user_id' => 'required'];
         return $rules;
     }
 }
