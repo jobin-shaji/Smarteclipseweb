@@ -162,9 +162,9 @@ class GpsController extends Controller {
         ]);
 
          return response()->json([
-            'message' => 'Success'
+            'success'
         ]);
-         
+
     }
 
     //validation for gps creation
