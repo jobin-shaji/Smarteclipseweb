@@ -9,11 +9,15 @@
   $id = null;
   ?>
   <meta name="depot" content="{{$id}}">
-   <meta name="dealer" content="{{$id}}">
-   <meta name="root" content="{{$id}}">
+  <meta name="dealer" content="{{$id}}">
+  <meta name="root" content="{{$id}}">
+
+  
   <meta name="domain" content="{{url('/')}}">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
