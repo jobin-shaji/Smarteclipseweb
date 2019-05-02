@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
+use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\User\Models\User;
 
@@ -152,6 +153,12 @@ class GpsController extends Controller {
             'status' => 1,
             'title' => 'Success',
             'message' => 'Gps restored successfully'
+        ]);
+    }
+
+    public function addLocation(Request $request){
+        $gps = GpsLocation::create([
+            'data'=> $request->data,
         ]);
     }
 
