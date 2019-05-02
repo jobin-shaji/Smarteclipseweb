@@ -12,6 +12,7 @@ return  [
        'Dealer',
        'SubDealer',
        'Alert',
+       'Client',
     ]
 ]
 

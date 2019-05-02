@@ -1,18 +1,17 @@
-<?php
+<?php 
 
-Route::group(['middleware' => ['web','auth','role:client'] ,'namespace' => 'App\Modules\User\Controllers' ] , function () {
-
-
-Route::get('/clients','ClientController@subdealerList')->name('clients');
-Route::post('/subdealer-list','SubDealerController@getSubDealersView')->name('subdealer-list');
-Route::get('/sub-dealer/create','SubDealerController@create')->name('sub.dealer.create');
-Route::post('/sub-dealer/create','SubDealerController@save')->name('sub.dealer.create.p');
-Route::get('/sub-dealers/{id}/edit','SubDealerController@edit')->name('sub.dealers.edit');
-Route::post('/sub-dealers/{id}/edit','SubDealerController@update')->name('sub.dealers.update.p'); 
-Route::get('/sub-dealers/{id}/change-password','SubDealerController@changePassword')->name('sub.dealers.change-password');
-Route::post('/sub-dealer/{id}/update-password','SubDealerController@updatePassword')->name('sub.dealer.update-password.p'); 
-Route::get('/sub-dealers/{id}/details','SubDealerController@details')->name('sub.dealer.details');
-Route::post('/sub-dealer/delete','SubDealerController@deleteSubDealer')->name('dealer.delete');
-Route::post('/sub-dealer/activate','SubDealerController@activateSubDealer')->name('dealer.activate');
-
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+// //for dealers
+Route::get('/clients','ClientController@clientList')->name('clients');
+Route::post('/client-list','ClientController@getClientlist')->name('client-list');
+Route::get('/client/create','ClientController@create')->name('client.create');
+Route::post('/client/create','ClientController@save')->name('client.create.p');
+Route::get('/client/{id}/edit','ClientController@edit')->name('client.edit');
+Route::post('/client/{id}/edit','ClientController@update')->name('client.update.p'); 
+Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
+Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
+Route::get('/client/{id}/details','ClientController@details')->name('client.details');
+Route::post('/client/delete','ClientController@deleteClient')->name('client.delete');
+Route::post('/client/activate','ClientController@activateClient')->name('client.activate');
 });
+

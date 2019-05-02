@@ -23,8 +23,8 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href=""><i class="fa fa-plus"></i>Add User</a></li>
-      <li><a href="{{url('/users')}}"><i class="fa fa-list"></i> List Users</a></li>
+      <li><a href="{{url('/client/create')}}"><i class="fa fa-plus"></i>Add User</a></li>
+      <li><a href="{{url('/clients')}}"><i class="fa fa-list"></i> List Users</a></li>
   </ul>
 </li>
 
