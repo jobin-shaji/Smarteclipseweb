@@ -12,7 +12,9 @@ return  [
        'Dealer',
        'SubDealer',
        'Alert',
+       'Client',
        'Geofence'
+
     ]
 ]
 

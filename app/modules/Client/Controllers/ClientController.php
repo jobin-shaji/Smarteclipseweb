@@ -1,160 +1,249 @@
 <?php
-
-namespace App\Modules\User\Controllers;
-
+namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Client\Models\Client;
 use App\Modules\User\Models\User;
-use App\Modules\Depot\Models\DepotUser;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
-
 class ClientController extends Controller {
-    
-    //user create page 
+   
+    //employee creation page
     public function create()
     {
-        return view('User::user-create');
+       return view('Client::client-create');
     }
-
-    //creating a user 
-    public function store(Request $request)
-    {
+    //upload employee details to database table
+    public function save(Request $request)
+    {      
+        if($request->user()->hasRole('sub_dealer')){
         $rules = $this->user_create_rules();
         $this->validate($request, $rules);
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
+            'mobile' => $request->mobile,
+            'status' => 1,
             'password' => bcrypt($request->password),
         ]);
-
-        if($request->user()->hasRole('depot')){
-            $depot_user = DepotUser::create([
-                'depot_id' => $request->user()->depot->first()->id,
-                'user_id' => $user->id,
-            ]);
+            $client = Client::create([            
+            'user_id' => $user->id,
+            'sub_dealer_user_id' => \Auth::user()->id,
+            'name' => $request->name,            
+            'address' => $request->address,           
+           ]);
+            User::where('username', $request->username)->first()->assignRole('client');
         }
-
-        $user->assignRole('waybill');
-
-        $request->session()->flash('message', 'New user created successfully!'); 
+        $eid= encrypt($user->id);
+        $request->session()->flash('message', 'New client created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('users.details',$user->id));
+         return redirect(route('clients'));        
     }
-
-    //user list page 
-    public function index()
+    public function clientList()
     {
-       $users = User::all(); 
-       return view('User::user-list',['users' => $users]);
+        return view('Client::client-list');
     }
 
-    //user edit page 
-    public function edit(Request $request){     
-       $user = User::find($request->id);
-        if($user == null){
-           return view('User::404');
-        }
-       return view('User::user-edit',['user' => $user]);
-    }
 
-    //user details page 
-    public function details(Request $request)
-    {
-        $user = User::find($request->id);
-        if($user == null){
-           return view('User::404');
-        }
-       return view('User::user-details',['user' => $user]);
-    }
-
-    //updating a user 
-    public function update(Request $request)
-    {
-        $user = User::find($request->id);
-        if($user == null){
-           return view('User::404');
-        }
-        $rules = $this->user_update_rules($user);
-        $this->validate($request, $rules);
-        $user->email = $request->email;
-        $user->username = $request->username;
-        $user->save();
-        $request->session()->flash('message', 'User details updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('users.update',$user));
-    }
-
-    //deleting a user 
-    public function delete(Request $request)
-    {
-        $user = User::find($request->uid);
-        if($user == null){
-            return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'User does not exist'
-            ]);
-        }
-        $user->delete();
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'User deleted successfully'
-        ]);
-
-    }
-
-    //user list page 
-    public function UserListPage()
-    {
-        return view('User::list');
-    }
-
-    //returns users as json 
-    public function getUsers(Request $request)
-    {
-        if($request->user()->hasRole('root')){
-            $users = User::all();
-        }
-        
-        return DataTables::of($users)
-        ->addIndexColumn()
-        ->addColumn('action', function ($user) {
-        return "
-        <a href=/users/".$user->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-        <a href=/users/".$user->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-        <button onclick=delUser(".$user->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete </button>";
-        })
-        ->rawColumns(['link', 'action'])
-        ->make();
-    }
-
-    //user create rules 
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
+            'mobile' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
     }
-
-    //user update rules 
-    public function user_update_rules($user){
-        $rules = [
-            'username' => 'required|unique:users,username,'.$user->id,
-            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-        ];
-        return $rules;
+    public function getClientlist(Request $request)
+    {
+        $subdealer=$request->user()->id;
+        $client = Client::select(
+        'id', 
+        'user_id',
+        'sub_dealer_user_id',                      
+        'name',                   
+        'address',                                       
+        'deleted_at')
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('sub_dealer_user_id',$subdealer)
+        ->get();
+        return DataTables::of($client)
+        ->addIndexColumn()
+        ->addColumn('action', function ($client) {
+        if($client->deleted_at == null){ 
+            return "
+            <a href=/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+             <a href=/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+            <button onclick=delClient(".$client->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+        }else{                   
+                return "
+              
+                <a href=/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateClient(".$client->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+    public function edit(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $client = Client::select(
+            'id', 
+            'user_id',
+            'sub_dealer_user_id',                         
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('user_id',$decrypted)
+        ->get();
+        if($client == null)
+        {
+           return view('Client::404');
+        }
+        return view('Client::client-edit',['client' => $client]);
     }
 
-    //password update rules 
-    public function password_update_rules(){
+    //update dealers details
+    public function update(Request $request)
+    {
+        $client = Client::where('user_id', $request->id)->first();
+        if($client == null){
+           return view('Client::404');
+        } 
+        $rules = $this->dealersUpdateRules($client);
+        $this->validate($request, $rules);       
+        $client->name = $request->name;
+        $client->save();
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
+        $request->session()->flash('message', 'Client details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client.edit',$did));  
+    }
+     //validation for employee updation
+    public function dealersUpdateRules($subdealer)
+    {
         $rules = [
-            'password' => 'required|string|min:6',
+            'name' => 'required',
+            'phone_number' => 'required|numeric'
+            
         ];
         return  $rules;
     }
 
+    //     //for edit page of subdealer password
+    public function changePassword(Request $request)
+    {
+         $decrypted = Crypt::decrypt($request->id);
+          $client = Client::where('user_id', $decrypted)->first();
+         
+        if($client == null){
+           return view('Client::404');
+        }
+        return view('Client::client-change-password',['client' => $client]);
+    }
+
+    
+    //update password
+    public function updatePassword(Request $request)
+    {
+        $client=User::find($request->id);
+        if($client== null){
+            return view('SubDealer::404');
+        }
+        $did=encrypt($client->id);
+        // dd($request->password);
+        $rules=$this->updateDepotUserRuleChangePassword($client);
+        $this->validate($request,$rules);
+        $client->password=bcrypt($request->password);
+        $client->save();
+        $request->session()->flash('message','Client Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('client.change-password',$did));
+    }
+    public function updateDepotUserRuleChangePassword()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+    }
+
+    //employee details view
+    public function details(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $client = Client::select(
+            'id', 
+            'user_id',
+            'sub_dealer_user_id',                      
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile')
+        ->where('user_id',$decrypted)
+        ->get();  
+        // $subdealer = SubDealer::find($decrypted);
+        if($client == null){
+           return view('Client::404');
+        }
+        return view('Client::client-details',['client' => $client]);
+    }
+     //delete Sub Dealer details from table
+    public function deleteClient(Request $request)
+    {
+        $client = Client::find($request->uid);
+        if($client == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Client does not exist'
+            ]);
+        }
+        $client->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Client deleted successfully'
+        ]);
+    }
+
+    // restore emplopyee
+    public function activateClient(Request $request)
+    {
+        $client = Client::withTrashed()->find($request->id);
+        if($client==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Client does not exist'
+             ]);
+        }
+
+        $client->restore();
+
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Client restored successfully'
+        ]);
+    }
+ public function passwordUpdateRules(){
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+  }
 }
