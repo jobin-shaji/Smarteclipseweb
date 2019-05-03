@@ -9,6 +9,7 @@ use App\Modules\Dealer\Models\Dealer;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsTransfer;
 use DataTables;
 use DB;
 use Carbon\Carbon; 
@@ -34,7 +35,8 @@ class DashboardController extends Controller
     public function dashCount(Request $request){
 
         $user = $request->user();
-
+        $subdealers=Dealer::where('user_id',$user->id)->first();
+        $client=SubDealer::where('user_id',$user->id)->first();
 
         if($user->hasRole('root')){
             return response()->json([
@@ -44,18 +46,19 @@ class DashboardController extends Controller
                  'clients' => Client::all()->count(),
                 'status' => 'dbcount'
             ]);
-        }else if($user->hasRole('')){
-            //  $sum_collections=TicketLog::where('depot_id',$request->depot)->whereDate('created_at', Carbon::today())->sum('total_amount');
-            //      return response()->json([
-            //     'trips' => TripLog::where('depot_id',$request->depot)->count(),
-            //     'tickets' => TicketLog::where('depot_id',$request->depot)->whereDate('created_at', Carbon::today())->count(),
-            //     'vehicles' => Vehicle::where('depot_id',$request->depot)->count(),
-            //     'employees' => Employee::where('depot_id',$request->depot)->count(), 
-            //     'collections'=>$sum_collections,
-            //     'etms' => Etm::where('depot_id',$request->depot)->count(),
-            //     'status' => 'dbcount',
-            //     'expense' => Expense::where('depot_id',$request->depot)->whereDate('created_at', Carbon::today())->sum('amount')
-            // ]);
+        }else if($user->hasRole('dealer')){
+            return response()->json([
+                'subdealers' => SubDealer::where('dealer_id',$subdealers->id)->count(),
+                'gps' => GpsTransfer::where('to_user_id',$user->id)->count(),
+                'status' => 'dbcount'           
+            ]);
+        }
+        else if($user->hasRole('sub_dealer')){
+            return response()->json([
+                'clients' => Client::where('sub_dealer_id',$client->id)->count(),
+                'gps' => GpsTransfer::where('to_user_id',$user->id)->count(),
+                'status' => 'dbcount'           
+            ]);
         }
 
        

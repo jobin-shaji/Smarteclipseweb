@@ -10,8 +10,12 @@ $(document).ready(function () {
 });
 
 function dbcount(res){
-	   $('#gps').text(res.gps);
+	    $('#gps').text(res.gps);
       $('#dealer').text(res.dealers);
       $('#sub_dealer').text(res.subdealers);
       $('#client').text(res.clients);
+      $('#dealer_subdealer').text(res.subdealers);
+      $('#gps_dealer').text(res.gps);
+      $('#subdealer_gps').text(res.gps);
+      $('#subdealer_client').text(res.clients);
 }
