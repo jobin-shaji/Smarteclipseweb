@@ -82,7 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    GPS ECLIPSE
+                    ECLIPSE
                 </div>
 
                 <div class="links">
