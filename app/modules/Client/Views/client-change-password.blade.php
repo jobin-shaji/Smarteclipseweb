@@ -3,7 +3,6 @@
    Change Password
 @endsection
 @section('content')
-
     <section class="content-header">
     </section>
     @if(Session::has('message'))
