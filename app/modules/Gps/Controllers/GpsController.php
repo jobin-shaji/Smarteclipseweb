@@ -161,9 +161,7 @@ class GpsController extends Controller {
             'data'=> $request->vltdata,
         ]);
 
-         return response()->json([
-            'success'
-        ]);
+         return "Success";
 
     }
 
