@@ -22,5 +22,11 @@ class Client extends Model
   {
     return $this->belongsTo('App\Modules\User\Models\User');
   }
+
+  // client
+  public function subDealer()
+  {
+    return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','id','sub_dealer_id');
+  }
 }
 
