@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Gps\Models\Gps;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -16,22 +17,23 @@ class VehicleController extends Controller {
        return view('Vehicle::vehicle-list'); 
     }
 
-    
     // data for list page
     public function getVehicleList()
     {
-      $vehicles = Vehicle::select(
+        $client_id=\Auth::user()->id;
+        $vehicles = Vehicle::select(
                     'id',
+                    'name',
                     'register_number',
-                    'depot_id',
-                    'vehicle_occupancy',
-                    'speed_limit',
+                    'gps_id',
+                    'e_sim_number',
                     'vehicle_type_id',
                     'deleted_at'
                     )
             ->withTrashed()
+            ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
-            ->with('vehicleDepot:id,name,code')
+            ->with('gps:id,name,imei')
             ->get();
 
         return DataTables::of($vehicles)
@@ -54,38 +56,46 @@ class VehicleController extends Controller {
     // create a new vehicle
     public function createVehicle()
     {
+        $client_id=\Auth::user()->id;
         $vehicleTypes=VehicleType::select(
                 'id','name')->get();
-        $gps=Gps::select('id','name','imei')
-            ->get();
-        
-        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'depots'=>$vehicleDepot]);
+        $vehicle_device = Vehicle::select(
+                'gps_id'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+        $single_gps = [];
+        foreach($vehicle_device as $device){
+            $single_gps[] = $device->gps_id;
+        }
+        $devices=Gps::select('id','name','imei')
+                ->where('user_id',$client_id)
+                ->whereNotIn('id',$single_gps)
+                ->get();
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices]);
     }
 
     // save vehicle
     public function saveVehicle(Request $request)
     {
-
-         $rules = $this->vehicleCreateRules();
-         $this->validate($request, $rules);
-         $vehicle = Vehicle::create([
+        $client_id=\Auth::user()->id;
+        $rules = $this->vehicleCreateRules();
+        $this->validate($request, $rules);
+        $vehicle = Vehicle::create([
+            'name' => $request->name,
             'register_number' => $request->register_number,
-            'vehicle_type_id' => $request->vehicle_type,
-            'vehicle_occupancy' =>$request->vehicle_occupancy,
-            'speed_limit' =>$request->vehicle_speed,
-            'depot_id' =>$request->vehicle_depot,
-            'status' =>1,
-           ]);
+            'vehicle_type_id' => $request->vehicle_type_id,
+            'e_sim_number' => $request->e_sim_number,
+            'gps_id' => $request->gps_id,
+            'client_id' =>$client_id,
+            'status' =>1
 
+        ]);
         $request->session()->flash('message', 'New Vehicle created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-
-        return redirect(route('vehicles'));
+        return redirect(route('vehicle'));
     }
     
-
-
-  
    // edit vehicle
     public function edit(Request $request)
     {
@@ -107,7 +117,7 @@ class VehicleController extends Controller {
         if($vehicle == null){
            return view('Vehicle::404');
         }
-        $rules = $this->vehicleUpdateRules();
+        $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
 
         $vehicle->register_number = $request->register_number;
@@ -175,6 +185,31 @@ class VehicleController extends Controller {
             'title' => 'Success',
             'message' => 'Vehicle restored successfully'
         ]);
+    }
+
+    // vehicle create rules
+    public function vehicleCreateRules()
+    {
+        $rules = [
+            'name' => 'required',
+            'register_number' => 'required|unique:vehicles',
+            'vehicle_type_id' => 'required',
+            'gps_id' => 'required',
+            'e_sim_number' => 'required|numeric'
+        ];
+        return  $rules;
+    }
+    // vehicle update rules
+    public function vehicleUpdateRules($vehicle)
+    {
+        $rules = [
+            'name' => 'required',
+            'register_number' => 'required|unique:vehicles,register_number,'.$vehicle->id,
+            'vehicle_type_id' => 'required',
+            'gps_id' => 'required',
+            'e_sim_number' => 'required|numeric'
+        ];
+        return  $rules;  
     }
 
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////
@@ -281,47 +316,22 @@ class VehicleController extends Controller {
         
      }
     
-
-    // vehicle create rules
-      public function vehicleCreateRules()
-      {
+    // vehicle type create rules
+    public function vehicleTypeCreateRules()
+    {
         $rules = [
-            'register_number' => 'required',
-            'vehicle_type' => 'required',
-            'vehicle_depot' => 'required',
-            'vehicle_occupancy' => 'required|integer',
-            'vehicle_speed' => 'required|integer'
+            'name' => 'required'
         ];
         return  $rules;
-       }
+    }
     // vehicle update rules
-       public function vehicleUpdateRules()
-       {
-        $rules = [
-            'register_number' => 'required',
-            'vehicle_type' => 'required',
-            'vehicle_depot' => 'required',
-            'vehicle_occupancy' => 'required|integer',
-            'vehicle_speed' => 'required|integer'
-        ];
-        return  $rules;  
-      }
-      // vehicle type create rules
-      public function vehicleTypeCreateRules()
-      {
+    public function vehicleTypeUpdateRules()
+    {
         $rules = [
             'name' => 'required'
         ];
         return  $rules;
-      }
-      // vehicle update rules
-      public function vehicleTypeUpdateRules()
-      {
-        $rules = [
-            'name' => 'required'
-        ];
-        return  $rules;
-      }
+    }
 
 
 }
