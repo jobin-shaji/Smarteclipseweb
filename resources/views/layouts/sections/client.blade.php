@@ -33,8 +33,8 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href=""><i class="fa fa-plus"></i>Add Geofence</a></li>
-      <li><a href="{{url('/vehicle')}}"><i class="fa fa-list"></i> List Geofence</a></li>
+      <li><a href="{{url('/fence')}}"><i class="fa fa-plus"></i>Add Geofence</a></li>
+      <li><a href=""><i class="fa fa-list"></i> List Geofence</a></li>
   </ul>
 </li>
 
