@@ -34,15 +34,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    //state of a user 
-    public function state()
-    {
-        return $this->hasOne('App\Modules\Depot\Models\State','id','state_id');
-    }
-
-    //depot of a user 
-    public function depot()
-    {
-       return $this->belongsToMany('\App\Modules\Depot\Models\Depot','depot_users','user_id','depot_id');
-    }
+    public function dealer()
+  {
+    return $this->hasone('App\Modules\Dealer\Models\Dealer','user_id','id');
+  } 
+  public function subdealer()
+  {
+    return $this->hasone('App\Modules\SubDealer\Models\SubDealer','user_id','id');
+  } 
 }

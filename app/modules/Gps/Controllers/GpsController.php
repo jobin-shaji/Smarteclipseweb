@@ -18,7 +18,7 @@ class GpsController extends Controller {
     //Display all gps
 	public function gpsListPage()
     {
-		return view('Gps::gps-list');
+        return view('Gps::gps-list');
 	}
 
 	//returns gps as json 
@@ -63,6 +63,7 @@ class GpsController extends Controller {
     //upload gps details to database table
     public function save(Request $request)
     {
+        $root_id=\Auth::user()->id;
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
         $gps = Gps::create([
@@ -70,6 +71,7 @@ class GpsController extends Controller {
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
             'version'=> $request->version,
+            'user_id' => $root_id,
             'status'=>1
         ]);
         $request->session()->flash('message', 'New gps created successfully!'); 
@@ -185,7 +187,81 @@ class GpsController extends Controller {
             'version' => 'required',
         ];
         return  $rules;
-    }  
+    } 
+    //////////////////////////GPS DEALER///////////////////////////////////
+
+    //Display all dealer gps
+    public function gpsDealerListPage()
+    {
+        return view('Gps::gps-dealer-list');
+    } 
+
+    //returns gps as json 
+    public function getDealerGps()
+    {
+        $dealer_id=\Auth::user()->id;
+        $gps = Gps::select(
+                'id',
+                'name',
+                'imei',
+                'deleted_at')
+                ->withTrashed()
+                ->where('user_id',$dealer_id)
+                ->get();
+        return DataTables::of($gps)
+            ->addIndexColumn()
+            ->make();
+    }
+
+    //////////////////////////GPS SUB DEALER///////////////////////////////////
+
+    //Display all dealer gps
+    public function gpsSubDealerListPage()
+    {
+        return view('Gps::gps-sub-dealer-list');
+    } 
+
+    //returns gps as json 
+    public function getSubDealerGps()
+    {
+        $sub_dealer_id=\Auth::user()->id;
+        $gps = Gps::select(
+                'id',
+                'name',
+                'imei',
+                'deleted_at')
+                ->withTrashed()
+                ->where('user_id',$sub_dealer_id)
+                ->get();
+        return DataTables::of($gps)
+            ->addIndexColumn()
+            ->make();
+    }
+
+    //////////////////////////GPS SUB DEALER///////////////////////////////////
+
+    //Display all dealer gps
+    public function gpsClientListPage()
+    {
+        return view('Gps::gps-client-list');
+    } 
+
+    //returns gps as json 
+    public function getClientGps()
+    {
+        $client_id=\Auth::user()->id;
+        $gps = Gps::select(
+                'id',
+                'name',
+                'imei',
+                'deleted_at')
+                ->withTrashed()
+                ->where('user_id',$client_id)
+                ->get();
+        return DataTables::of($gps)
+            ->addIndexColumn()
+            ->make();
+    }
 
     ///////////////////////////Gps Transfer////////////////////////////////
 
@@ -198,10 +274,12 @@ class GpsController extends Controller {
     // gps transfer list data
     public function getListData() 
     {
+        $user_id=\Auth::user()->id;
         $gps_transfer = GpsTransfer::select('id', 'gps_id', 'from_user_id', 'to_user_id', 'transfer_date')
         ->with('fromUser:id,username')
         ->with('toUser:id,username')
         ->with('gps:id,name,imei')
+        ->where('from_user_id',$user_id)
         ->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
@@ -212,9 +290,23 @@ class GpsController extends Controller {
     public function createGpsTransfer(Request $request) 
     {
         if($request->user()->hasRole('root')){
-            $devices = Gps::select('id', 'name', 'imei','dealer_user_id')
-            ->get();
+            $root_id=\Auth::user()->id;
+            $devices = Gps::select('id', 'name', 'imei','user_id')
+                            ->where('user_id',$root_id)
+                            ->get();
             $users = User::role('dealer')->get();
+        }else if($request->user()->hasRole('dealer')){
+            $dealer_id=\Auth::user()->id;
+            $devices = Gps::select('id', 'name', 'imei','user_id')
+                            ->where('user_id',$dealer_id)
+                            ->get();
+            $users = User::role('sub_dealer')->get();
+        }else if($request->user()->hasRole('sub_dealer')){
+            $sub_dealer_id=\Auth::user()->id;
+            $devices = Gps::select('id', 'name', 'imei','user_id')
+                            ->where('user_id',$sub_dealer_id)
+                            ->get();
+            $users = User::role('client')->get();
         }
         
         return view('Gps::gps-transfer', ['devices' => $devices, 'users' => $users]);
@@ -222,17 +314,10 @@ class GpsController extends Controller {
     // save gps transfer
     public function saveGpsTransfer(Request $request) 
     {
-       
         $rules = $this->gpsTransferRule();
-        $root_id=\Auth::user()->id;
         $this->validate($request, $rules);
         $gps_id = $request->gps_id;
-        $from_user = $request->from_user_id;
-        if($from_user){
-            $from_user_id=$from_user;
-        }else{
-            $from_user_id=$root_id;
-        }
+        $from_user_id = $request->from_user_id;
         $to_user_id = $request->to_user_id;
         $gps_transfer = GpsTransfer::create([
           "gps_id" => $gps_id, 
@@ -243,7 +328,7 @@ class GpsController extends Controller {
         //update gps table
         $gps_id = $request->gps_id;
         $gps = Gps::find($gps_id);
-        $gps->dealer_user_id = $request->to_user_id;
+        $gps->user_id = $request->to_user_id;
         $gps->save();
         $request->session()->flash('message', 'Gps Transfer successfully completed!');
         $request->session()->flash('alert-class', 'alert-success');
@@ -254,8 +339,8 @@ class GpsController extends Controller {
     public function userData(Request $request) 
     {
         $gps = Gps::find($request->gpsID);    
-        $dealer_user = $gps->dealer_user;     
-        return response()->json(array('response' => 'success', 'gps' => $gps , 'dealer_user' => $dealer_user));
+        $user = $gps->user;     
+        return response()->json(array('response' => 'success', 'gps' => $gps , 'user' => $user));
     }
 
     // gps transfer rule

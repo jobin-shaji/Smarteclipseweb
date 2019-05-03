@@ -1,4 +1,10 @@
 <?php 
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+// //for dealers
+Route::get('/client','ClientController@clientListPage')->name('client');
+Route::post('/root-client-list','ClientController@getRootClient')->name('root-client-list');
+});
+
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 // //for dealers
