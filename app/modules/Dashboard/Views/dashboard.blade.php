@@ -148,7 +148,6 @@
           </div>
         </div>
    @endrole
-
    @role('client')
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
