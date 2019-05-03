@@ -8,7 +8,7 @@
   <?php
   $id = null;
   ?>
-  <meta name="depot" content="{{$id}}">
+  <meta name="sub_dealer" content="{{$id}}">
   <meta name="dealer" content="{{$id}}">
   <meta name="root" content="{{$id}}">
 

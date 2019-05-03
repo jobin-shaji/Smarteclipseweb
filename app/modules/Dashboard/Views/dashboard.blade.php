@@ -32,7 +32,7 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="dealers"><h3>0</h3></p>
+               <h3 id="dealer"><div class="loader"></div></h3>
               <p>Dealers</p>
             </div>
             <div class="icon">
@@ -46,7 +46,7 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <h3 id="sub_dealer"><div class="loader"></div></h3>
               <p>Sub Dealers</p>
             </div>
             <div class="icon">
@@ -61,7 +61,7 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <h3 id="client"><div class="loader"></div></h3>
               <p>Clients</p>
             </div>
             <div class="icon">
@@ -147,6 +147,6 @@
       
 </section>
   @section('script')
-      <script src="{{asset('js/etm/dashb.js')}}"></script>
+      <script src="{{asset('js/gps/dashb.js')}}"></script>
   @endsection
 @endsection
