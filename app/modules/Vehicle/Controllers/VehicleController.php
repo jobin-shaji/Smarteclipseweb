@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Gps\Models\Gps;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -57,10 +58,10 @@ class VehicleController extends Controller {
         $user_id=\Auth::user()->id;
         $vehicleTypes=VehicleType::select(
                 'id','name')->get();
-        $gps=Gps::select('id','name','imei')
+        $devices=Gps::select('id','name','imei')
                 ->where('user_id',$user_id)
                 ->get();
-        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'gps'=>$gps]);
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices]);
     }
 
     // save vehicle
