@@ -8,7 +8,9 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href=""><i class="fa fa-list"></i> GPS List</a></li>
+      <li><a href="{{url('/gps-sub-dealer')}}"><i class="fa fa-list"></i> List GPS</a></li>
+      <li><a href="{{url('/gps-transfer/create')}}"><i class="fa fa-list"></i> GPS Transfer</a></li>
+      <li><a href="{{url('/gps-transfers')}}"><i class="fa fa-list"></i> GPS Transfer List</a></li>
   </ul>
 </li>
   
