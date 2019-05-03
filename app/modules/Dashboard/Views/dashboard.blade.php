@@ -18,13 +18,13 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <h3 id="gps"><div class="loader"></div></h3>
               <p>GPS</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -32,7 +32,7 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="dealers"><h3>0</h3></p>
+               <h3 id="dealer"><div class="loader"></div></h3>
               <p>Dealers</p>
             </div>
             <div class="icon">
@@ -46,13 +46,13 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <h3 id="sub_dealer"><div class="loader"></div></h3>
               <p>Sub Dealers</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/sub-dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -61,53 +61,47 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <h3 id="client"><div class="loader"></div></h3>
               <p>Clients</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-
   @endrole
 
    @role('dealer')
-
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green bxs">
-            <div class="inner">
-              <p id="users"><h3>0</h3></p>
+            <div class="inner">              
+              <h3 id="gps_dealer"><div class="loader"></div></h3>
               <p>GPS</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="dealers"><h3>0</h3></p>
+               <h3 id="dealer_subdealer"><div class="loader"></div></h3>              
               <p>Sub Dealers</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-
-       
-
+        <!-- ./col -->       
   @endrole
    @role('sub_dealer')
 
@@ -115,28 +109,27 @@
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="users"><h3>0</h3></p>
+              <h3 id="subdealer_gps"><div class="loader"></div></h3>              
               <p>GPS</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/users" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps-transfers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <p id="dealers"><h3>0</h3></p>
+              <h3 id="subdealer_client"><div class="loader"></div></h3>  
               <p>Client</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/clients" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -147,6 +140,6 @@
       
 </section>
   @section('script')
-      <script src="{{asset('js/etm/dashb.js')}}"></script>
+      <script src="{{asset('js/gps/dashb.js')}}"></script>
   @endsection
 @endsection
