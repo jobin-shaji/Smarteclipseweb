@@ -24,5 +24,19 @@
   </ul>
 </li>
 
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-bus"></i>
+      <span>Geofence</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/fence')}}"><i class="fa fa-plus"></i>Add Geofence</a></li>
+      <li><a href=""><i class="fa fa-list"></i> List Geofence</a></li>
+  </ul>
+</li>
+
 
 
