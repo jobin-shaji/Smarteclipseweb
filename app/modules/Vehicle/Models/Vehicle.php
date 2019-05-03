@@ -12,7 +12,7 @@ class Vehicle extends Model
 
    // vehicle fillable data
 	protected $fillable = [
-        'register_number', 'vehicle_type_id', 'vehicle_occupancy','speed_limit','depot_id','status','state_id'
+        'name','register_number','gps_id', 'vehicle_type_id', 'e_sim_number','status','client_id'
     ];
 
     // vehicle type of vehicle
@@ -20,8 +20,8 @@ class Vehicle extends Model
     	return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
     }
     
-    // depot of vehicle
-    public function vehicleDepot(){
-    	return $this->hasOne('App\Modules\Depot\Models\Depot','id','depot_id');
+    // gps
+    public function gps(){
+    	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
 }
