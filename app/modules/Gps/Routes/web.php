@@ -11,11 +11,35 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
 	Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
 
+});
+
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+	//gps dealer list
+	Route::get('/gps-dealer','GpsController@gpsDealerListPage')->name('gps-dealer');
+	Route::post('/gps-dealer-list','GpsController@getDealerGps')->name('gps-dealer-list');
+});
+
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+	//gps dealer list
+	Route::get('/gps-sub-dealer','GpsController@gpsSubDealerListPage')->name('gps-sub-dealer');
+	Route::post('/gps-sub-dealer-list','GpsController@getSubDealerGps')->name('gps-sub-dealer-list');
+});
+
+Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+	//gps client list
+	Route::get('/gps-client','GpsController@gpsClientListPage')->name('gps-client');
+	Route::post('/gps-client-list','GpsController@getClientGps')->name('gps-client-list');
+});
+
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
 	//fro Gps transfer
 	Route::get('/gps-transfers','GpsController@getList')->name('gps-transfers');
 	Route::post('/gps-transfer-list','GpsController@getListData')->name('gps-transfer-list.p');
 	Route::get('/gps-transfer/create','GpsController@createGpsTransfer')->name('gps-transfer.create');
 	Route::post('/gps-transfer','GpsController@saveGpsTransfer')->name('gps-transfer.create.p');
 	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
-
 });

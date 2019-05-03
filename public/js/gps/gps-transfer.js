@@ -57,8 +57,8 @@ $('#gpsTransfer').on('change', function() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-          var CurrentUser=res.dealer_user.user_id;
-          var CurrentUserName=res.dealer_user.username;
+          var CurrentUser=res.user.id;
+          var CurrentUserName=res.user.username;
           $(".from_user_id").val(CurrentUser); 
           $(".from_user_name").val(CurrentUserName); 
           $("#to_user option[value="+CurrentUser+"]").hide();

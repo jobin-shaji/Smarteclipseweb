@@ -16,12 +16,12 @@ class Gps extends Model
         static::addGlobalScope(new DeleteScope);
     }
 
-    protected $fillable=[ 'name','imei','manufacturing_date','version','status'];
+    protected $fillable=[ 'name','imei','manufacturing_date','version','user_id','status'];
 
     //join user table with gps table
-    public function dealer_user()
+    public function user()
     {
-    	return $this->belongsTo('App\Modules\User\Models\User','dealer_user_id');
+    	return $this->belongsTo('App\Modules\User\Models\User','user_id');
     }
 
     public function transfers()
