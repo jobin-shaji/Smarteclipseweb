@@ -10,6 +10,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
+use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
 use DB;
 use Carbon\Carbon; 
@@ -42,8 +43,9 @@ class DashboardController extends Controller
             return response()->json([
                 'gps' => Gps::all()->count(), 
                 'dealers' => Dealer::all()->count(), 
-                 'subdealers' => SubDealer::all()->count(),
-                 'clients' => Client::all()->count(),
+                'subdealers' => SubDealer::all()->count(),
+                'clients' => Client::all()->count(),
+                'vehicles' => Vehicle::all()->count(),
                 'status' => 'dbcount'
             ]);
         }else if($user->hasRole('dealer')){
@@ -60,7 +62,13 @@ class DashboardController extends Controller
                 'status' => 'dbcount'           
             ]);
         }
-
+         else if($user->hasRole('client')){
+            return response()->json([
+                // 'clients' => Client::where('sub_dealer_id',$client->id)->count(),
+                'gps' => GpsTransfer::where('to_user_id',$user->id)->count(),
+                'status' => 'dbcount'           
+            ]);
+        }
        
     }
 }
