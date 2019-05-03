@@ -51,21 +51,21 @@ class DashboardController extends Controller
         }else if($user->hasRole('dealer')){
             return response()->json([
                 'subdealers' => SubDealer::where('dealer_id',$subdealers->id)->count(),
-                'gps' => GpsTransfer::where('to_user_id',$user->id)->count(),
+                'gps' => Gps::where('user_id',$user->id)->count(),
                 'status' => 'dbcount'           
             ]);
         }
         else if($user->hasRole('sub_dealer')){
             return response()->json([
                 'clients' => Client::where('sub_dealer_id',$client->id)->count(),
-                'gps' => GpsTransfer::where('to_user_id',$user->id)->count(),
+                'gps' => Gps::where('user_id',$user->id)->count(),
                 'status' => 'dbcount'           
             ]);
         }
          else if($user->hasRole('client')){
             return response()->json([
                 // 'clients' => Client::where('sub_dealer_id',$client->id)->count(),
-                'gps' => GpsTransfer::where('to_user_id',$user->id)->count(),
+                'gps' => Gps::where('user_id',$user->id)->count(),
                 'status' => 'dbcount'           
             ]);
         }
