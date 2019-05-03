@@ -52,14 +52,14 @@ class VehicleController extends Controller {
     }
 
     // create a new vehicle
-    public function craeteVehicle()
+    public function createVehicle()
     {
-      $vehicleTypes=VehicleType::select(
-            'id','name')->get();
-      $vehicleDepot=Depot::select('id','name')
-        ->get();
-    
-      return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'depots'=>$vehicleDepot]);
+        $vehicleTypes=VehicleType::select(
+                'id','name')->get();
+        $gps=Gps::select('id','name','imei')
+            ->get();
+        
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'depots'=>$vehicleDepot]);
     }
 
     // save vehicle

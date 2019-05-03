@@ -19,7 +19,7 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href=""><i class="fa fa-plus"></i>Add Vehicle</a></li>
+      <li><a href="/vehicles/create"><i class="fa fa-plus"></i>Add Vehicle</a></li>
       <li><a href="{{url('/vehicle')}}"><i class="fa fa-list"></i> List Vehicles</a></li>
   </ul>
 </li>
