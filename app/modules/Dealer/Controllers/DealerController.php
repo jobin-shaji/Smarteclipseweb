@@ -65,7 +65,7 @@ class DealerController extends Controller {
             ]);
             $dealer = Dealer::create([
                 'user_id' => $user->id,
-                'root_user_id'=>$root_id,
+                'root_id'=>$root_id,
                 'name' => $request->name,            
                 'address' => $request->address,
             ]);

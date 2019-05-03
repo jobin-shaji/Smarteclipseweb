@@ -6,12 +6,17 @@ class SubDealer extends Model
 {
   use SoftDeletes;    
 	protected $fillable=[
-		'user_id','dealer_user_id','name','address','status','created_by','deleted_by','deleted_at'
+		'user_id','dealer_id','name','address','status','created_by','deleted_by','deleted_at'
 	];	
-  public function dealer()
+  // public function dealer()
+  // {
+  // 	return $this->hasone('App\Modules\Dealer\Models\Dealer','id','dealer_id');
+  // }  
+
+   public function dealer()
   {
-  	return $this->belongsTo('App\Modules\Dealer\Models\Dealer');
-  }  
+    return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id','id');
+  } 
   public function user()
   {
     return $this->belongsTo('App\Modules\User\Models\User');

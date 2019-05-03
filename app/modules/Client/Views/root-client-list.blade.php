@@ -1,6 +1,6 @@
 @extends('layouts.gps')
 @section('title')
-    View Dealer
+    View Client
 @endsection
 @section('content')
 <!--  flash message -->
@@ -14,7 +14,7 @@
  <!-- end flash message -->
 <section class="content-header">
       <h1>
-        Sub Dealer
+        Client
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -39,7 +39,7 @@
                               <th>Address</th>                              
                               <th>Mobile</th>                            
                               <th>email</th>
-                              <th>Dealer</th>
+                              <th>Sub Dealer</th>
                               <!-- <th style="width:160px;">Action</th> -->
                             </tr>
                         </thead>
@@ -51,7 +51,7 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/gps/sub-dealer-list.js')}}"></script>
+    <script src="{{asset('js/gps/root-client-list.js')}}"></script>
 @endsection
 @endsection
 

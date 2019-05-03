@@ -43,3 +43,9 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer'] , 'na
 	Route::post('/gps-transfer','GpsController@saveGpsTransfer')->name('gps-transfer.create.p');
 	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
 });
+
+Route::group([ 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::post('/gps-location','GpsController@addLocation')->name('gps-location');
+
+});
