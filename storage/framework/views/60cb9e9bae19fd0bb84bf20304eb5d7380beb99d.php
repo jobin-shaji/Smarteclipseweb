@@ -19,8 +19,8 @@
         <?php if(auth()->check() && auth()->user()->hasRole('sub_dealer')): ?>
             <?php echo $__env->make('layouts.sections.sub-dealer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <?php endif; ?>
-        <?php if(auth()->check() && auth()->user()->hasRole('end_user')): ?>
-            <?php echo $__env->make('layouts.sections.end-user', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php if(auth()->check() && auth()->user()->hasRole('client')): ?>
+            <?php echo $__env->make('layouts.sections.client', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <?php endif; ?>
       </ul>
     </section>
