@@ -33,7 +33,10 @@ class DashboardController extends Controller
 
     public function dashCount(Request $request){
 
-        if($request->dealer == null){
+        $user = $request->user();
+
+
+        if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
                 'dealers' => Dealer::all()->count(), 
@@ -41,7 +44,7 @@ class DashboardController extends Controller
                  'clients' => Client::all()->count(),
                 'status' => 'dbcount'
             ]);
-        }else{
+        }else if($user->hasRole('')){
             //  $sum_collections=TicketLog::where('depot_id',$request->depot)->whereDate('created_at', Carbon::today())->sum('total_amount');
             //      return response()->json([
             //     'trips' => TripLog::where('depot_id',$request->depot)->count(),

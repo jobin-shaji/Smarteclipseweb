@@ -1,7 +1,7 @@
 $(document).ready(function () {
      var url = 'dash-count';
      var data = { 
-      dealer : $('meta[name = "dealer"]').attr('content')
+     
      };
 
     window.setInterval(function(){
@@ -10,7 +10,7 @@ $(document).ready(function () {
 });
 
 function dbcount(res){
-	  
+	   $('#gps').text(res.gps);
       $('#dealer').text(res.dealers);
       $('#sub_dealer').text(res.subdealers);
       $('#client').text(res.clients);
