@@ -21,7 +21,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Bus</li>
+        <li class="active">Vehicle</li>
       </ol>
 </section>
 
@@ -29,23 +29,22 @@
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-              @role('state')
                 <div class="panel-heading">Vehicle List 
                     <a href="{{route('vehicles.create')}}">
                     <button class="btn btn-xs btn-primary pull-right">Add new Vehicle</button>
                     </a>
                 </div>
-                 @endrole
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                         <tr>
 	                      <th>#</th>
+	                      <th>Vehicle Name</th>
 	                      <th>Register Number</th>
-	                      <th>Vehicle Type</th>
-	                      <th>Depo Name</th>
-	                      <th>Occupancy</th>
-	                      <th>Speed Limit</th>
+	                      <th>GPS Name</th>
+                        <th>IMEI</th>
+	                      <th>E-SIM Number</th>
+                        <th>Vehicle Type</th>
 	                      <th style="width:160px;">Action</th>
                         </tr>
                         </thead>
@@ -56,7 +55,7 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/etm/vehicle-list.js')}}"></script>
+    <script src="{{asset('js/gps/vehicle-list.js')}}"></script>
 @endsection
 
 @endsection

@@ -3,7 +3,7 @@
 Route::group(['middleware' => ['web','auth','role:client'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 
-Route::get('/vehicle','VehicleController@VehicleList')->name('vehicle');
+Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
 
 Route::post('/vehicle-list','VehicleController@getVehicleList')->name('vehicle-list');
 Route::get('/vehicles/create','VehicleController@createVehicle')->name('vehicles.create');
