@@ -20,7 +20,7 @@
             @include('layouts.sections.sub-dealer')
         @endrole
         @role('client')
-            @include('layouts.sections.end-user')
+            @include('layouts.sections.client')
         @endrole
       </ul>
     </section>
