@@ -54,12 +54,13 @@ class VehicleController extends Controller {
     // create a new vehicle
     public function createVehicle()
     {
+        $user_id=\Auth::user()->id;
         $vehicleTypes=VehicleType::select(
                 'id','name')->get();
         $gps=Gps::select('id','name','imei')
-            ->get();
-        
-        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'depots'=>$vehicleDepot]);
+                ->where('user_id',$user_id)
+                ->get();
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'gps'=>$gps]);
     }
 
     // save vehicle
