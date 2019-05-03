@@ -14,5 +14,11 @@ class Dealer extends Model
     	return $this->belongsTo('App\Modules\User\Models\User','user_id','id');
     }
 
+    // root
+  	public function root()
+  	{
+    	return $this->hasOne('App\Modules\Root\Models\Root','id','root_id');
+  	}
+
     
 }

@@ -99,15 +99,16 @@ class VehicleController extends Controller {
    // edit vehicle
     public function edit(Request $request)
     {
-      $vehicle = Vehicle::find($request->id);
-      $vehicleTypes=VehicleType::select('id','name')->get();
-      $vehicleDepot=Depot::select('id','name')
-                    // ->where('state_id',\Auth::user()->state->id)
-                    ->get();
-         if($vehicle == null){
+        $client_id=\Auth::user()->id;
+        $vehicle = Vehicle::find($request->id);
+        $vehicleTypes=VehicleType::select('id','name')->get();
+        $devices=Gps::select('id','name','imei')
+                ->where('user_id',$client_id)
+                ->get();
+        if($vehicle == null){
             return view('Vehicle::404');
-          }
-     return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'vehicleTypes'=>$vehicleTypes,'depots'=>$vehicleDepot]);
+        }
+        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'vehicleTypes'=>$vehicleTypes,'devices'=>$devices]);
     }
 
     // update vehicle
@@ -120,11 +121,10 @@ class VehicleController extends Controller {
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
 
+        $vehicle->name = $request->name;
         $vehicle->register_number = $request->register_number;
-        $vehicle->vehicle_type_id= $request->vehicle_type;
-        $vehicle->vehicle_occupancy = $request->vehicle_occupancy;
-        $vehicle->speed_limit = $request->vehicle_speed;
-        $vehicle->depot_id = $request->vehicle_depot;
+        $vehicle->vehicle_type_id= $request->vehicle_type_id;
+        $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->save();
 
         $request->session()->flash('message', 'Vehicle details updated successfully!'); 
@@ -135,17 +135,14 @@ class VehicleController extends Controller {
     // details page
     public function details(Request $request)
     {
-     $vehicle=Vehicle::find($request->id);
-
-      if($vehicle==null){
-        return view('Vehicle::404');
-      } 
-
-     return view('Vehicle::vehicle-details',['vehicle' => $vehicle]);
+        $vehicle=Vehicle::find($request->id);
+        if($vehicle==null){
+            return view('Vehicle::404');
+        } 
+        return view('Vehicle::vehicle-details',['vehicle' => $vehicle]);
     }
 
     
-
     // vehicle delete
     public function deleteVehicle(Request $request)
     {
