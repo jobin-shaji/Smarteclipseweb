@@ -8,8 +8,7 @@ class SubDealer extends Model
 	protected $fillable=[
 		'user_id','dealer_id','name','address','status','created_by','deleted_by','deleted_at'
 	];	
-
-   public function dealer()
+  public function dealer()
   {
     return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id','id');
   } 
@@ -17,6 +16,5 @@ class SubDealer extends Model
   {
     return $this->belongsTo('App\Modules\User\Models\User');
   }
-
 }
 
