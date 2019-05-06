@@ -44,6 +44,19 @@
 <li class="treeview">
     <a href="#">
       <i class="fa fa-users"></i>
+      <span>Client</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="<?php echo e(url('/client')); ?>"><i class="fa fa-list"></i> List Client</a></li>
+  </ul>
+</li>
+
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-users"></i>
       <span>User</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
@@ -76,7 +89,6 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href=""><i class="fa fa-plus"></i>Add Vehicle</a></li>
       <li><a href="<?php echo e(url('/users')); ?>"><i class="fa fa-list"></i> List Vehicles</a></li>
   </ul>
 </li>
