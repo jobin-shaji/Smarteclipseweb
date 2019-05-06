@@ -17,9 +17,6 @@ Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehic
 });
 
 
-
-
-
 Route::group(['middleware' => ['web','auth','role:root'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 //VEHICLE TYPE
