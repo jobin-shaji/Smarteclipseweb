@@ -8,10 +8,6 @@ class SubDealer extends Model
 	protected $fillable=[
 		'user_id','dealer_id','name','address','status','created_by','deleted_by','deleted_at'
 	];	
-  // public function dealer()
-  // {
-  // 	return $this->hasone('App\Modules\Dealer\Models\Dealer','id','dealer_id');
-  // }  
 
    public function dealer()
   {
@@ -22,10 +18,5 @@ class SubDealer extends Model
     return $this->belongsTo('App\Modules\User\Models\User');
   }
 
-  // // dealer
-  // public function dealer()
-  // {
-  //   return $this->hasOne('App\Modules\Dealer\Models\Dealer','id','dealer_id');
-  // }
 }
 
