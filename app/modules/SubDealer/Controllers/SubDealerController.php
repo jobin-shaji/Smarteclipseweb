@@ -72,15 +72,7 @@ class SubDealerController extends Controller {
     }
 
 
-    public function user_create_rules(){
-        $rules = [
-            'username' => 'required|unique:users',
-            'mobile' => 'required|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ];
-        return  $rules;
-    }
+  
     public function getSubDealerlist(Request $request)
     {
        
@@ -199,13 +191,7 @@ class SubDealerController extends Controller {
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('sub.dealers.change-password',$did));
     }
-    public function updateDepotUserRuleChangePassword()
-    {
-        $rules=[
-            'password' => 'required|string|min:6|confirmed'
-        ];
-        return $rules;
-    }
+    
 
     //employee details view
     public function details(Request $request)
@@ -274,4 +260,20 @@ class SubDealerController extends Controller {
         ];
         return $rules;
   }
+    public function user_create_rules(){
+        $rules = [
+            'username' => 'required|unique:users',
+            'mobile' => 'required|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+    public function updateDepotUserRuleChangePassword()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+    }
 }

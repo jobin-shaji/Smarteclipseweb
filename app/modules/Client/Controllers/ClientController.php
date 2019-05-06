@@ -140,7 +140,6 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
-
     //     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
