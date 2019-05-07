@@ -14,6 +14,8 @@ Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
+Route::get('/vehicles/documents','VehicleController@vehicleDocuments')->name('vehicles.documents');
+
 });
 
 
@@ -30,4 +32,24 @@ Route::get('/vehicle-type/{id}/edit','VehicleController@editVehicleType')->name(
 Route::post('/vehicle_type/{id}/edit','VehicleController@updateVehicleType')->name('vehicle-type.update.p');
 // Route::post('vehicle_type/delete','VehicleController@deleteVehicleType')->name('vehicle-type.delete');
 
+//Vehicle List
+Route::get('/vehicle-root','VehicleController@vehicleRootList')->name('vehicle-root');
+
+Route::post('/vehicle-root-list','VehicleController@getVehicleRootList')->name('vehicle-root-list');
+});
+
+Route::group(['middleware' => ['web','auth','role:dealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+//Vehicle List
+Route::get('/vehicle-dealer','VehicleController@vehicleDealerList')->name('vehicle-dealer');
+
+Route::post('/vehicle-dealer-list','VehicleController@getVehicleDealerList')->name('vehicle-dealer-list');
+});
+
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+//Vehicle List
+Route::get('/vehicle-sub-dealer','VehicleController@vehicleSubDealerList')->name('vehicle-sub-dealer');
+
+Route::post('/vehicle-sub-dealer-list','VehicleController@getVehicleSubDealerList')->name('vehicle-sub-dealer-list');
 });

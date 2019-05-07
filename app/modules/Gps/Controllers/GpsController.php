@@ -159,27 +159,6 @@ class GpsController extends Controller {
     }
 
 
-    //validation for gps creation
-    public function gpsCreateRules(){
-        $rules = [
-            'name' => 'required',
-            'imei' => 'required|string|min:15|unique:gps',
-            'manufacturing_date' => 'required',
-            'version' => 'required'
-        ];
-        return  $rules;
-    }
-
-    //validation for gps updation
-    public function gpsUpdateRules($gps){
-        $rules = [
-            'name' => 'required',
-            'imei' => 'required|string|min:15|unique:gps,imei,'.$gps->id,
-            'manufacturing_date' => 'required',
-            'version' => 'required',
-        ];
-        return  $rules;
-    } 
     //////////////////////////GPS DEALER///////////////////////////////////
 
     //Display all dealer gps
@@ -282,26 +261,29 @@ class GpsController extends Controller {
     public function createGpsTransfer(Request $request) 
     {
         if($request->user()->hasRole('root')){
-            $root_id=\Auth::user()->id;
+            $user = \Auth::user();
+            $root = $user->root;
             $devices = Gps::select('id', 'name', 'imei','user_id')
-                            ->where('user_id',$root_id)
+                            ->where('user_id',$user->id)
                             ->get();
-            $users = User::role('dealer')->get();
+            $entities = $root->dealers;
         }else if($request->user()->hasRole('dealer')){
-            $dealer_id=\Auth::user()->id;
+            $user = \Auth::user();
+            $dealer = $user->dealer;
             $devices = Gps::select('id', 'name', 'imei','user_id')
-                            ->where('user_id',$dealer_id)
+                            ->where('user_id',$user->id)
                             ->get();
-            $users = User::role('sub_dealer')->get();
+            $entities = $dealer->subDealers;
         }else if($request->user()->hasRole('sub_dealer')){
-            $sub_dealer_id=\Auth::user()->id;
+            $user = \Auth::user();
+            $sub_dealer=$user->subdealer;
             $devices = Gps::select('id', 'name', 'imei','user_id')
-                            ->where('user_id',$sub_dealer_id)
+                            ->where('user_id',$user->id)
                             ->get();
-            $users = User::role('client')->get();
+            $entities = $sub_dealer->clients;
         }
         
-        return view('Gps::gps-transfer', ['devices' => $devices, 'users' => $users]);
+        return view('Gps::gps-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
     // save gps transfer
     public function saveGpsTransfer(Request $request) 
@@ -343,4 +325,26 @@ class GpsController extends Controller {
           'to_user_id' => 'required'];
         return $rules;
     }
+
+    //validation for gps creation
+    public function gpsCreateRules(){
+        $rules = [
+            'name' => 'required',
+            'imei' => 'required|string|min:15|unique:gps',
+            'manufacturing_date' => 'required',
+            'version' => 'required'
+        ];
+        return  $rules;
+    }
+
+    //validation for gps updation
+    public function gpsUpdateRules($gps){
+        $rules = [
+            'name' => 'required',
+            'imei' => 'required|string|min:15|unique:gps,imei,'.$gps->id,
+            'manufacturing_date' => 'required',
+            'version' => 'required',
+        ];
+        return  $rules;
+    } 
 }
