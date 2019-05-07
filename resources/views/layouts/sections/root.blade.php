@@ -89,7 +89,7 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/users')}}"><i class="fa fa-list"></i> List Vehicles</a></li>
+      <li><a href="{{url('/vehicle-root')}}"><i class="fa fa-list"></i> List Vehicles</a></li>
   </ul>
 </li>
 
