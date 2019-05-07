@@ -14,8 +14,12 @@ class GpsData extends Migration
     public function up()
     {
          Schema::create('gps_data', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->string('header');
+            $table->integer('client_id')->nullable();
+            $table->integer('gps_id')->nullable();
+            $table->integer('vehicle_id')->nullable();
+            $table->string('header')->nullable();
             $table->integer('vendor_id')->nullable();
             $table->string('firmware_version')->nullable();
             $table->bigInteger('imei')->nullable();
@@ -27,34 +31,34 @@ class GpsData extends Migration
             $table->integer('digital_io_status')->nullable();
             $table->string('analog_io_status')->nullable();
             $table->bigInteger('activation_key')->nullable();
-            $table->float('latitude',5,8)->nullable();
-            $table->char('lat_dir',5)->nullable();
-            $table->float('longitude',5,8)->nullable();
-            $table->char('lon_dir',5)->nullable();
+            $table->float('latitude')->nullable();
+            $table->char('lat_dir')->nullable();
+            $table->float('longitude')->nullable();
+            $table->char('lon_dir')->nullable();
             $table->integer('date')->nullable();
             $table->integer('time')->nullable();
-            $table->float('speed',3,3)->nullable();
+            $table->float('speed')->nullable();
             $table->integer('alert_id')->nullable();
-            $table->char('packet_status',5)->nullable();
+            $table->char('packet_status')->nullable();
             $table->integer('gps_fix')->nullable();
             $table->integer('mcc')->nullable();
             $table->integer('mnc')->nullable();
             $table->string('lac')->nullable();
             $table->string('cell_id')->nullable();
-            $table->float('heading',3,3)->nullable();
+            $table->float('heading')->nullable();
             $table->integer('no_of_satelites')->nullable();
             $table->integer('hdop')->nullable();
             $table->integer('gsm_signal_strength')->nullable();
             $table->integer('ignition')->nullable();
             $table->integer('main_power_status')->nullable();
             $table->integer('vehicle_mode')->nullable();
-            $talbe->float('altitude',5,5)->nullable();
+            $table->float('altitude')->nullable();
             $table->integer('pdop')->nullable();
             $table->string('nw_op_name')->nullable();
             $table->integer('nmr')->nullable();
-            $table->float('main_input_voltage',3,3)->nullable();
-            $table->float('internal_battery_voltage',3,3)->nullable();
-            $table->char('tamper_alert',5)->nullable();
+            $table->float('main_input_voltage')->nullable();
+            $table->float('internal_battery_voltage')->nullable();
+            $table->char('tamper_alert')->nullable();
             $table->integer('digital_input_status')->nullable();
             $table->integer('digital_output_status')->nullable();
             $table->integer('frame_number')->nullable();
@@ -78,6 +82,6 @@ class GpsData extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('gps_data');
     }
 }
