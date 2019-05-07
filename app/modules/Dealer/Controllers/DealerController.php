@@ -165,13 +165,7 @@ class DealerController extends Controller {
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('dealers.change-password',$did));
     }
-    public function updateDepotUserRuleChangePassword()
-    {
-        $rules=[
-            'password' => 'required|string|min:6|confirmed'
-        ];
-        return $rules;
-    }
+   
     //delete employee details from table
     public function deleteDealer(Request $request)
     {
@@ -207,6 +201,13 @@ class DealerController extends Controller {
             'title' => 'Success',
             'message' => 'Dealer restored successfully'
         ]);
+    }
+     public function updateDepotUserRuleChangePassword()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
     }
     //validation for employee creation
     public function dealerCreateRules()

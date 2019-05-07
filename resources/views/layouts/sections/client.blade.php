@@ -37,6 +37,19 @@
       <li><a href=""><i class="fa fa-list"></i> List Geofence</a></li>
   </ul>
 </li>
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-bell"></i>
+      <span>Alerts</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/alert-type/create')}}"><i class="fa fa-plus"></i>Add Alert Type</a></li>
+      <li><a href="{{url('/alert-types')}}"><i class="fa fa-list"></i> List Alert Type</a></li>
+  </ul>
+</li>
 
 
 
