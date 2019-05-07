@@ -18,11 +18,10 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url({{asset('images/bg.jpg')}});
+                    background-image: url({{asset('images/bg.png')}});
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: cover;
-        
             }
 
             .full-height {
@@ -85,8 +84,8 @@
                     ECLIPSE
                 </div>
 
-                <div class="links">
-                    Developed by <a href="http://www.vehiclest.com/">Vehiclest</a>
+                <div class="links"> Developed by <a href="https://laravel.com/docs">VST Mobility Solutions</a>
+
                 </div>
             </div>
         </div>

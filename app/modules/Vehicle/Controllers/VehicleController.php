@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Client\Models\Client;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -20,7 +22,7 @@ class VehicleController extends Controller {
     // data for list page
     public function getVehicleList()
     {
-        $client_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
         $vehicles = Vehicle::select(
                     'id',
                     'name',
@@ -40,7 +42,9 @@ class VehicleController extends Controller {
             ->addIndexColumn()
             ->addColumn('action', function ($vehicles) {
                 if($vehicles->deleted_at == null){
-                    return "<a href=/vehicles/".$vehicles->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    return "
+                    <a href=/vehicles/".$vehicles->id."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
+                    <a href=/vehicles/".$vehicles->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                     <a href=/vehicles/".$vehicles->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
                 }else{
@@ -56,7 +60,8 @@ class VehicleController extends Controller {
     // create a new vehicle
     public function createVehicle()
     {
-        $client_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
+        $client_user_id=\Auth::user()->id;
         $vehicleTypes=VehicleType::select(
                 'id','name')->get();
         $vehicle_device = Vehicle::select(
@@ -69,7 +74,7 @@ class VehicleController extends Controller {
             $single_gps[] = $device->gps_id;
         }
         $devices=Gps::select('id','name','imei')
-                ->where('user_id',$client_id)
+                ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
         return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices]);
@@ -78,7 +83,7 @@ class VehicleController extends Controller {
     // save vehicle
     public function saveVehicle(Request $request)
     {
-        $client_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
         $rules = $this->vehicleCreateRules();
         $this->validate($request, $rules);
         $vehicle = Vehicle::create([
@@ -142,6 +147,12 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-details',['vehicle' => $vehicle]);
     }
 
+    // upload vehicle documents
+    public function vehicleDocuments()
+    {
+        return view('Vehicle::vehicle-documents');
+    }
+
     
     // vehicle delete
     public function deleteVehicle(Request $request)
@@ -184,31 +195,7 @@ class VehicleController extends Controller {
         ]);
     }
 
-    // vehicle create rules
-    public function vehicleCreateRules()
-    {
-        $rules = [
-            'name' => 'required',
-            'register_number' => 'required|unique:vehicles',
-            'vehicle_type_id' => 'required',
-            'gps_id' => 'required',
-            'e_sim_number' => 'required|numeric'
-        ];
-        return  $rules;
-    }
-    // vehicle update rules
-    public function vehicleUpdateRules($vehicle)
-    {
-        $rules = [
-            'name' => 'required',
-            'register_number' => 'required|unique:vehicles,register_number,'.$vehicle->id,
-            'vehicle_type_id' => 'required',
-            'gps_id' => 'required',
-            'e_sim_number' => 'required|numeric'
-        ];
-        return  $rules;  
-    }
-
+    
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////
     // vehicle type list
     public function vehicleTypeList()
@@ -313,6 +300,173 @@ class VehicleController extends Controller {
         
      }
     
+    /////////////////////////////Vehicle Root List//////////////////////////
+    // show list page
+    public function vehicleRootList()
+    {
+       return view('Vehicle::vehicle-root-list'); 
+    }
+
+    // data for list page
+    public function getVehicleRootList()
+    {
+        $vehicles = Vehicle::select(
+                    'id',
+                    'name',
+                    'register_number',
+                    'gps_id',
+                    'e_sim_number',
+                    'vehicle_type_id',
+                    'client_id',
+                    'deleted_at'
+                    )
+            ->withTrashed()
+            ->with('client:id,name')
+            ->with('vehicleType:id,name')
+            ->with('gps:id,name,imei')
+            ->get();
+
+        return DataTables::of($vehicles)
+            ->addIndexColumn()
+            ->addColumn('dealer',function($vehicles){
+                $vehicle = Vehicle::find($vehicles->id);
+                return $vehicle->client->subDealer->dealer->name;
+                
+            })
+            ->addColumn('sub_dealer',function($vehicles){
+               $vehicle = Vehicle::find($vehicles->id);
+               return $vehicle->client->subDealer->name;
+                
+            })
+            ->make();
+    }
+
+    /////////////////////////////Vehicle Dealer List//////////////////////////
+    // show list page
+    public function vehicleDealerList()
+    {
+       return view('Vehicle::vehicle-dealer-list'); 
+    }
+
+    // data for list page
+    public function getVehicleDealerList()
+    {
+        $dealer_id=\Auth::user()->dealer->id;
+        $sub_dealers = SubDealer::select(
+                'id'
+                )
+                ->where('dealer_id',$dealer_id)
+                ->get();
+        $single_sub_dealers = [];
+        foreach($sub_dealers as $sub_dealer){
+            $single_sub_dealers[] = $sub_dealer->id;
+        }
+        $clients = Client::select(
+                'id'
+                )
+                ->whereIn('sub_dealer_id',$single_sub_dealers)
+                ->get();
+        $single_clients = [];
+        foreach($clients as $client){
+            $single_clients[] = $client->id;
+        }
+
+        $vehicles = Vehicle::select(
+                    'id',
+                    'name',
+                    'register_number',
+                    'gps_id',
+                    'e_sim_number',
+                    'vehicle_type_id',
+                    'client_id',
+                    'deleted_at'
+                    )
+            ->withTrashed()
+            ->whereIn('client_id',$single_clients)
+            ->with('client:id,name')
+            ->with('vehicleType:id,name')
+            ->with('gps:id,name,imei')
+            ->get();
+
+        return DataTables::of($vehicles)
+            ->addIndexColumn()
+            ->addColumn('sub_dealer',function($vehicles){
+               $vehicle = Vehicle::find($vehicles->id);
+               return $vehicle->client->subDealer->name;
+                
+            })
+            ->make();
+    }
+
+    /////////////////////////////Vehicle Sub Dealer List/////////////////////
+    // show list page
+    public function vehicleSubDealerList()
+    {
+       return view('Vehicle::vehicle-sub-dealer-list'); 
+    }
+
+    // data for list page
+    public function getVehicleSubDealerList()
+    {
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $clients = Client::select(
+                'id'
+                )
+                ->where('sub_dealer_id',$sub_dealer_id)
+                ->get();
+        $single_clients = [];
+        foreach($clients as $client){
+            $single_clients[] = $client->id;
+        }
+
+        $vehicles = Vehicle::select(
+                    'id',
+                    'name',
+                    'register_number',
+                    'gps_id',
+                    'e_sim_number',
+                    'vehicle_type_id',
+                    'client_id',
+                    'deleted_at'
+                    )
+            ->withTrashed()
+            ->whereIn('client_id',$single_clients)
+            ->with('client:id,name')
+            ->with('vehicleType:id,name')
+            ->with('gps:id,name,imei')
+            ->get();
+
+        return DataTables::of($vehicles)
+            ->addIndexColumn()
+            ->make();
+    }
+
+    //////////////////////////////////////RULES/////////////////////////////
+    // vehicle create rules
+    public function vehicleCreateRules()
+    {
+        $rules = [
+            'name' => 'required',
+            'register_number' => 'required|unique:vehicles',
+            'vehicle_type_id' => 'required',
+            'gps_id' => 'required',
+            'e_sim_number' => 'required|numeric'
+        ];
+        return  $rules;
+    }
+    // vehicle update rules
+    public function vehicleUpdateRules($vehicle)
+    {
+        $rules = [
+            'name' => 'required',
+            'register_number' => 'required|unique:vehicles,register_number,'.$vehicle->id,
+            'vehicle_type_id' => 'required',
+            'gps_id' => 'required',
+            'e_sim_number' => 'required|numeric'
+        ];
+        return  $rules;  
+    }
+
     // vehicle type create rules
     public function vehicleTypeCreateRules()
     {
@@ -329,6 +483,7 @@ class VehicleController extends Controller {
         ];
         return  $rules;
     }
+
 
 
 }

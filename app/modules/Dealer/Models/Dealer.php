@@ -20,5 +20,9 @@ class Dealer extends Model
     	return $this->hasOne('App\Modules\Root\Models\Root','id','root_id');
   	}
 
+    public function subDealers(){
+      return $this->hasMany('App\Modules\SubDealer\Models\SubDealer');
+    }
+
     
 }

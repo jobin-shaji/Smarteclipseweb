@@ -65,8 +65,8 @@
               <div class="form-group has-feedback">
                 <label class="srequired">To User</label>
                 <select class="form-control selectpicker" id="to_user" name="to_user_id" data-live-search="true" title="Select Dealer" required>
-                  @foreach($users as $user)
-                  <option value="{{$user->id}}">{{$user->username}}</option>
+                  @foreach($entities as $entity)
+                  <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                   @endforeach
                 </select>
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
