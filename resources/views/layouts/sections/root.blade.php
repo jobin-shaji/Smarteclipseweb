@@ -54,7 +54,7 @@
   </ul>
 </li>
 
-<li class="treeview">
+<!-- <li class="treeview">
     <a href="#">
       <i class="fa fa-users"></i>
       <span>User</span>
@@ -65,7 +65,7 @@
   <ul class="treeview-menu" style="display: none;">
       <li><a href="{{url('/users')}}"><i class="fa fa-list"></i> List Users</a></li>
   </ul>
-</li>
+</li> -->
 <li class="treeview">
     <a href="#">
       <i class="fa fa-bus"></i>

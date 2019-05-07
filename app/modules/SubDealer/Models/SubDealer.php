@@ -13,6 +13,7 @@ class SubDealer extends Model
   // {
   //   return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id','id');
   // } 
+
   public function user()
   {
     return $this->belongsTo('App\Modules\User\Models\User');

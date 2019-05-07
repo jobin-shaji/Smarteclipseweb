@@ -5,14 +5,6 @@
       <?php echo $__env->yieldContent('title'); ?>
   </title>
   <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-  <?php
-  $id = null;
-  ?>
-  <meta name="depot" content="<?php echo e($id); ?>">
-  <meta name="dealer" content="<?php echo e($id); ?>">
-  <meta name="root" content="<?php echo e($id); ?>">
-
-  
   <meta name="domain" content="<?php echo e(url('/')); ?>">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
