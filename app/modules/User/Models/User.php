@@ -34,12 +34,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function root()
+    {
+        return $this->hasone('App\Modules\Root\Models\Root','user_id','id');
+    } 
+
     public function dealer()
-  {
-    return $this->hasone('App\Modules\Dealer\Models\Dealer','user_id','id');
-  } 
-  public function subdealer()
-  {
-    return $this->hasone('App\Modules\SubDealer\Models\SubDealer','user_id','id');
-  } 
+    {
+        return $this->hasone('App\Modules\Dealer\Models\Dealer','user_id','id');
+    } 
+
+    public function subdealer()
+    {
+        return $this->hasone('App\Modules\SubDealer\Models\SubDealer','user_id','id');
+    } 
+
+    public function client()
+    {
+        return $this->hasone('App\Modules\Client\Models\Client','user_id','id');
+    }
 }

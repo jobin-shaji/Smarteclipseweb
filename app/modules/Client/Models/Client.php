@@ -9,15 +9,12 @@ class Client extends Model
 		'user_id','sub_dealer_id','name','address','created_by','deleted_by','deleted_at'
 	];	
   
+
   //  public function subdealer()
   // {
-  //   return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer');
+  //   return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id');
   // } 
 
-   public function subdealer()
-  {
-    return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id');
-  } 
   public function user()
   {
     return $this->belongsTo('App\Modules\User\Models\User');
