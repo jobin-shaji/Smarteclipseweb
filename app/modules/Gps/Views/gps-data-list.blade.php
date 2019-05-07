@@ -22,7 +22,7 @@
                 </div>
                 <div class="table-responsive">
                 <div class="panel-body">
-                  <input type="text" id="hd_gps" value="{{ $gps->id}}">
+                  <input type="hidden" id="hd_gps" value="{{$gps->id}}">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>
@@ -65,6 +65,7 @@
                               <th>Alititude</th>
                               <th>Pdop</th>
                               <th>New OP Name</th>
+                              <th>NMR</th>
                               <th>Main Input Voltage</th>
                               <th>Internal Battery Voltage</th>
                               <th>Tamper Alert</th>

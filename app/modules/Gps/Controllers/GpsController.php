@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Gps\Models\GpsLocation;
+use App\Modules\Gps\Models\GpsData;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -152,37 +153,73 @@ class GpsController extends Controller {
     }
 
     //returns gps as json 
-    public function getGpsData()
+    public function getGpsData(Request $request)
     {
-        $gps = Gps::select(
-                'id',
-                'name',
-                'imei',
-                'manufacturing_date',
-                'version',
-                'deleted_at')
-                ->withTrashed()
-                ->get();
-        return DataTables::of($gps)
-            ->addIndexColumn()
-            ->addColumn('action', function ($gps) {
-                if($gps->deleted_at == null){
-                    return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
-                    <a href=/gps/".$gps->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".$gps->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
-                    </button>";
-                }else{
-                     return "
-                    <a href=/gps/".$gps->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".$gps->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
-                    </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        $gps_id=$request->gps_id;                 
+        $gps_data = GpsData::select(
+            'client_id',
+            'gps_id',
+            'vehicle_id',
+            'header',
+            'vendor_id',
+            'firmware_version',
+            'imei',
+            'update_rate_ignition_on',
+            'update_rate_ignition_off',
+            'battery_percentage',
+            'low_battery_threshold_value',
+            'memory_percentage',
+            'digital_io_status',
+            'analog_io_status',
+            'activation_key',
+            'latitude',
+            'lat_dir',
+            'longitude',
+            'lon_dir',
+            'date',
+            'time',
+            'speed',
+            'alert_id',
+            'packet_status',
+            'gps_fix',
+            'mcc',
+            'mnc',
+            'lac',
+            'cell_id',
+            'heading',
+            'no_of_satelites',
+            'hdop',
+            'gsm_signal_strength',
+            'ignition',
+            'main_power_status',
+            'vehicle_mode',
+            'altitude',
+            'pdop',
+            'nw_op_name',
+            'nmr',
+            'main_input_voltage',
+            'internal_battery_voltage',
+            'tamper_alert',
+            'digital_input_status',
+            'digital_output_status',
+            'frame_number',
+            'checksum',
+            'key1',
+            'value1',
+            'key2',
+            'value2',
+            'key3',
+            'value3',
+            'gf_id'
+        )
+        ->with('client:id,name')
+        ->with('gps:id,name')
+        ->with('vehicle:id,name')
+        ->where('gps_id',$gps_id)
+        ->get();
+        return DataTables::of($gps_data)
+        ->addIndexColumn()           
+        ->make();
     }
 
     // restore gps 
