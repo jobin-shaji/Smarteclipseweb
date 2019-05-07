@@ -10,10 +10,10 @@ class Client extends Model
 	];	
   
 
-  //  public function subdealer()
-  // {
-  //   return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id');
-  // } 
+   public function subdealer()
+  {
+    return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id');
+  } 
 
   public function user()
   {
