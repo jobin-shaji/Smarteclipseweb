@@ -16,7 +16,7 @@ class Geofence extends Migration
         Schema::create('geofences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->json('cordinates');
+            $table->string('cordinates');
             $table->string('fence_type_id');
             $table->timestamps();
             $table->softDeletes();

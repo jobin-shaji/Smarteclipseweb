@@ -1,6 +1,6 @@
 $(document).ready(function () {
     callBackDataTable();
-    
+   alert($gps);
 });
 
 
@@ -17,7 +17,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-list',
+            url: 'gps-data-list',
             type: 'POST',
             data: {
                 'data': data

@@ -125,13 +125,13 @@ class GpsController extends Controller {
 
 
     public function data(Request $request)
-    {
+     {
         $decrypted = Crypt::decrypt($request->id);   
         $gps = Gps::find($decrypted);
         if($gps == null){
            return view('Gps::404');
         }
-       return view('Gps::gps-details',['gps' => $gps]);
+       return view('Gps::gps-data-list',['gps' => $gps]);
     } 
     //delete gps details
     public function deleteGps(Request $request){
@@ -149,6 +149,40 @@ class GpsController extends Controller {
             'title' => 'Success',
             'message' => 'Gps deleted successfully'
         ]);
+    }
+
+    //returns gps as json 
+    public function getGpsData()
+    {
+        $gps = Gps::select(
+                'id',
+                'name',
+                'imei',
+                'manufacturing_date',
+                'version',
+                'deleted_at')
+                ->withTrashed()
+                ->get();
+        return DataTables::of($gps)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps) {
+                if($gps->deleted_at == null){
+                    return "
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
+                    <a href=/gps/".$gps->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/gps/".$gps->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                    </button>";
+                }else{
+                     return "
+                    <a href=/gps/".$gps->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/gps/".$gps->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
+                    </button>";
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
     }
 
     // restore gps 
@@ -172,14 +206,6 @@ class GpsController extends Controller {
         ]);
     }
 
-    public function addLocation(Request $request){
-        $gps = GpsLocation::create([
-            'data'=> $request->vltdata,
-        ]);
-
-         return "Success";
-
-    }
 
     //////////////////////////GPS DEALER///////////////////////////////////
 

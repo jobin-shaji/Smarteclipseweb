@@ -12,6 +12,7 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
 
 	Route::get('/gps/{id}/data','GpsController@data')->name('gps.data');
+	Route::post('/gps-data-list','GpsController@getGpsData')->name('gps-data-list');
 
 
 });
