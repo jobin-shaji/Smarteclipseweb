@@ -15,6 +15,7 @@ Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.d
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
 Route::get('/vehicles/documents','VehicleController@vehicleDocuments')->name('vehicles.documents');
+Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
 
 });
 
