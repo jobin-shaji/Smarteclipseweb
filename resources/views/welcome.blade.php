@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="links">
-                    Developed by <a href="https://laravel.com/docs">Vehiclest</a>
+                    Developed by <a href="http://www.vehiclest.com/">Vehiclest</a>
                 </div>
             </div>
         </div>
