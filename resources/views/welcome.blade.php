@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    Developed by <a href="https://laravel.com/docs">VST Mobility Solutions</a>
+                    Developed by <a href="https://vstmobility.com">VST Mobility Solutions</a>
                 </div>
             </div>
         </div>
