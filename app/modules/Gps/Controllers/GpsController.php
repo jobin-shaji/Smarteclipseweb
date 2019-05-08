@@ -151,6 +151,22 @@ class GpsController extends Controller {
             'message' => 'Gps deleted successfully'
         ]);
     }
+ public function gpsDataCount(Request $request){
+        $user = $request->user();
+        if($user->hasRole('root')){
+            return response()->json([
+                'gpscount' => $request->gps_id,  
+                'gpsdatacounts' => GpsData::where('gps_id',$request->gps_id)->count(),               
+                'status' => 'gpsdatacount'           
+            ]);
+        }
+            
+    }
+
+
+
+
+
 
     //returns gps as json 
     public function getGpsData(Request $request)

@@ -14,7 +14,10 @@ function toast(res){
     }
     else if(res.status == 'dbcount'){
         dbcount(res);
-    }      
+    }    
+    else if(res.status == 'gpsdatacount'){
+        gpsdatacount(res);
+    }  
 }
 
 function backgroundPostData(url, data, callBack, options) { 
