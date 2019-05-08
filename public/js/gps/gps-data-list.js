@@ -12,13 +12,17 @@ function gpsdatacount(res){
     var gps_id = document.getElementById('hd_gps').value;
     $("#gps_count").val(res.gpsdatacounts);
     var gpsdatacount= document.getElementById('gps_count').value;  
-    gpscount = JSON.parse(localStorage.getItem("gps_count"));     
-    if(gpsdatacount!=gpscount)
+    gpscount = JSON.parse(localStorage.getItem("gps_count"));  
+    if(!empty(gpsdatacoun))
     {
-        var gps_id = document.getElementById('hd_gps').value;
-        var data = { 'gps_id':gps_id};
-        callBackDataTable(data);         
-    }
+        if(gpsdatacount!=gpscount)
+        {
+            var gps_id = document.getElementById('hd_gps').value;
+            var data = { 'gps_id':gps_id};
+            callBackDataTable(data);         
+        }
+    }   
+    
  var old_gpsdatacount= localStorage.setItem("gps_count", gpsdatacount);
 
 }
