@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class GpsData extends Model
 {
 
-	protected $table  = 'gps_data';
+	 protected $table = 'gps_data';
 
     protected $fillable=[ 
     	'client_id',
@@ -54,6 +54,7 @@ class GpsData extends Model
     	'tamper_alert',
     	'digital_input_status',
     	'digital_output_status',
+        'vehicle_register_num',
     	'frame_number',
     	'checksum',
     	'key1',
