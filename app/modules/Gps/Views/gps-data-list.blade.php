@@ -11,8 +11,6 @@
         <li class="active">GPS Data</li>
       </ol>
 </section>
-
-
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
