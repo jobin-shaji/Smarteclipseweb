@@ -25,9 +25,9 @@
               <thead>
                 <tr>
                   <th>Sl.No</th>
-                  <th>Client</th>
+                  <!-- <th>Client</th> -->
                   <th>Gps</th>
-                  <th>Vehicle</th>
+                  <!-- <th>Vehicle</th> -->
                   <th>Header</th>
                   <th>Firmware</th>
                   <th>IMEI</th>

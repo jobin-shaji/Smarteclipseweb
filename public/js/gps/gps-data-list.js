@@ -3,17 +3,27 @@ $(document).ready(function () {
     var gps_id = document.getElementById('hd_gps').value;
     var data = { 'gps_id':gps_id};  
      callBackDataTable(data);   
-    window.setInterval(function(){
-         backgroundPostData(url,data,'gpsdatacount',{alert:false});  
-    }, 5000);    
+    backgroundPostData(url,data,'gpsdatacount',{alert:false});  
+      
 });
+
+ window.setInterval(function(){
+        var url = 'gps-data-count';
+        var data = { 'gps_id':gps_id};  
+    var gps_id = document.getElementById('hd_gps').value;
+        
+
+          backgroundPostData(url,data,'gpsdatacount',{alert:false});  
+    }, 5000); 
+
+
 function gpsdatacount(res){  
     var gps_id = document.getElementById('hd_gps').value;
     $("#gps_count").val(res.gpsdatacounts);
     var gpsdatacount= document.getElementById('gps_count').value;
-    var old_gpsdatacount= localStorage.setItem("gps_count"+gps_id+gpsdatacount, gpsdatacount);
-    // var new_gpsdatacount= localStorage.setItem("new_gpsdatacount", gpsdatacount);
-    if(old_gpsdatacount!=gpsdatacount)
+    var old_gpsdatacount= localStorage.setItem("gps_count", gpsdatacount);
+    gpscount = JSON.parse(localStorage.getItem("gps_count"));     
+    if(gpsdatacount!=gpscount)
     {
         var gps_id = document.getElementById('hd_gps').value;
         var data = { 'gps_id':gps_id};
@@ -50,9 +60,9 @@ function callBackDataTable(data=null){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'client.name', name: 'client.name', searchable: false},
+            // {data: 'client.name', name: 'client.name', searchable: false},
             {data: 'gps.name', name: 'gps.name'},
-            {data: 'vehicle.name', name: 'vehicle.name'},
+            // {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'header', name: 'header'},
             {data: 'firmware_version', name: 'firmware_version'},
             {data: 'imei', name: 'imei'},

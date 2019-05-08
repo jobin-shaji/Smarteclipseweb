@@ -152,6 +152,7 @@ class GpsController extends Controller {
         ]);
     }
  public function gpsDataCount(Request $request){
+
         $user = $request->user();
         if($user->hasRole('root')){
             return response()->json([
@@ -160,6 +161,8 @@ class GpsController extends Controller {
                 'status' => 'gpsdatacount'           
             ]);
         }
+            
+
             
     }
 
@@ -228,9 +231,9 @@ class GpsController extends Controller {
             'value3',
             'gf_id'
         )
-        ->with('client:id,name')
+        // ->with('client:id,name')
         ->with('gps:id,name')
-        ->with('vehicle:id,name')
+        // ->with('vehicle:id,name')
         ->where('gps_id',$gps_id)
         ->get();
         return DataTables::of($gps_data)
