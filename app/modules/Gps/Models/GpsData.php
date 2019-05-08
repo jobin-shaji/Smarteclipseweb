@@ -66,14 +66,14 @@ class GpsData extends Model
     	'gf_id'
     ];
 
-     // dealer
-  public function client()
-  {
+    // dealer
+    public function client()
+    {
     return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
-  }
+    }
     public function gps()
     {
-        return $this->hasOne('App\Modules\GPS\Models\GPS','id','gps_id');
+        return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
      public function vehicle()
     {
