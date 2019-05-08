@@ -227,7 +227,30 @@ class ClientController extends Controller {
         ->make();
     }
 
-
+ public function dealerClientListPage()
+    {
+        return view('Client::dealer-client-list');
+    }
+    //returns employees as json 
+    public function getDealerClient()
+    {
+        $client = Client::select(
+            'id', 
+            'user_id',
+            'sub_dealer_id',                      
+            'name',                   
+            'address',                               
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('subdealer:id,user_id,name')
+         ->with('user:id,email,mobile')
+         ->where('deleted_at',NULL)
+        ->get();
+        return DataTables::of($client)
+        ->addIndexColumn()           
+        ->make();
+    }
 
      //delete Sub Dealer details from table
     public function deleteClient(Request $request)

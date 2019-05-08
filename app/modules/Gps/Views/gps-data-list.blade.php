@@ -19,7 +19,7 @@
         </div>
         <div class="table-responsive">
           <div class="panel-body">
-             <input type="text" id="gps_count" >
+             <input type="hidden" id="gps_count" >
             <input type="hidden" id="hd_gps" value="{{$gps->id}}">
             <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
               <thead>
