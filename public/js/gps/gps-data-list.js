@@ -1,10 +1,39 @@
 $(document).ready(function () {
-   
-     var gps_id = document.getElementById('hd_gps').value;
-    var data = { 'gps_id':gps_id};   
-     callBackDataTable(data);     
+    var url = 'gps-data-count';
+    var gps_id = document.getElementById('hd_gps').value;
+    var data = { 'gps_id':gps_id};  
+     callBackDataTable(data);   
+    backgroundPostData(url,data,'gpsdatacount',{alert:false});  
+      
 });
+
+ window.setInterval(function(){
+        var url = 'gps-data-count';
+        var data = { 'gps_id':gps_id};  
+    var gps_id = document.getElementById('hd_gps').value;
+        
+
+          backgroundPostData(url,data,'gpsdatacount',{alert:false});  
+    }, 5000); 
+
+
+function gpsdatacount(res){  
+    var gps_id = document.getElementById('hd_gps').value;
+    $("#gps_count").val(res.gpsdatacounts);
+    var gpsdatacount= document.getElementById('gps_count').value;
+    var old_gpsdatacount= localStorage.setItem("gps_count", gpsdatacount);
+    gpscount = JSON.parse(localStorage.getItem("gps_count"));     
+    if(gpsdatacount!=gpscount)
+    {
+        var gps_id = document.getElementById('hd_gps').value;
+        var data = { 'gps_id':gps_id};
+        callBackDataTable(data);  
+    }
+}
+
+
 function callBackDataTable(data=null){
+             
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -19,15 +48,21 @@ function callBackDataTable(data=null){
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
-        },              
+        },   
+         createdRow: function ( row, data, index ) {
+            if ( data['header'] =='NRM') {
+                $('td', row).css('background-color', 'rgb(128,255,128)');
+            }
+        },     
+
         fnDrawCallback: function (oSettings, json) {
 
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'client.name', name: 'client.name', searchable: false},
+            // {data: 'client.name', name: 'client.name', searchable: false},
             {data: 'gps.name', name: 'gps.name'},
-            {data: 'vehicle.name', name: 'vehicle.name'},
+            // {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'header', name: 'header'},
             {data: 'firmware_version', name: 'firmware_version'},
             {data: 'imei', name: 'imei'},
@@ -82,5 +117,6 @@ function callBackDataTable(data=null){
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+
 }
 
