@@ -196,19 +196,73 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-document-edit',['vehicle_doc' => $vehicle_doc,'document_type'=>$document_type]);
     }
 
+    // update vehicle doc
+    public function vehicleDocumentUpdate(Request $request)
+    {
+        $vehicle_doc = Document::find($request->id);
+        if($vehicle_doc == null){
+           return view('Vehicle::404');
+        }
+        $rules = $this->documentUpdateRules();
+        $this->validate($request, $rules);
+
+        $file=$request->path;
+        if($file){
+            $old_file = $vehicle_doc->path;
+            $myFile = "documents/".$old_file;
+            $delete_file=unlink($myFile);
+            if($delete_file){
+                $getFileExt   = $file->getClientOriginalExtension();
+                $uploadedFile =   time().'.'.$getFileExt;
+                //Move Uploaded File
+                $destinationPath = 'documents';
+                $file->move($destinationPath,$uploadedFile);
+                $vehicle_doc->path = $uploadedFile;
+            }
+        }
+        
+        $vehicle_doc->vehicle_id = $request->vehicle_id;
+        $vehicle_doc->document_type_id = $request->document_type_id;
+        $vehicle_doc->expiry_date= $request->expiry_date;
+        $vehicle_doc->save();
+
+        $request->session()->flash('message', 'Document updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle-doc.edit',$vehicle_doc));  
+    }
+
+    // vehicle doc delete
+    public function vehicleDocumentDelete(Request $request)
+    {
+        $vehicle_doc=Document::find($request->id);
+        if($vehicle_doc == null){
+           return view('Vehicle::404');
+        }
+        $file=$vehicle_doc->path;
+        if($file){
+            $old_file = $vehicle_doc->path;
+            $myFile = "documents/".$old_file;
+            $delete_file=unlink($myFile);
+            $vehicle_doc->delete(); 
+        }
+        $request->session()->flash('message', 'Document deleted successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle')); 
+     }
+
     
     // vehicle delete
     public function deleteVehicle(Request $request)
     {
-        $vehcle=Vehicle::find($request->vid);
-        if($vehcle == null){
+        $vehicle=Vehicle::find($request->vid);
+        if($vehicle == null){
            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Vehicle does not exist'
             ]);
         }
-        $vehcle->delete(); 
+        $vehicle->delete(); 
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -535,6 +589,18 @@ class VehicleController extends Controller {
             'document_type_id' => 'required',
             'expiry_date' => 'nullable',
             'path' => 'required'
+
+        ];
+        return  $rules;
+    }
+
+    // document update rules
+    public function documentUpdateRules()
+    {
+        $rules = [
+            'vehicle_id' => 'required',
+            'document_type_id' => 'required',
+            'expiry_date' => 'nullable'
 
         ];
         return  $rules;
