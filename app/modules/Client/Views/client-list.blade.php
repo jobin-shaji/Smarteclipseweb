@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 <!--  flash message -->
- @if(Session::has('message'))
-        <div class="pad margin no-print">
-          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-            {{ Session::get('message') }}  
-          </div>
-        </div>
-    @endif
+@if(Session::has('message'))
+  <div class="pad margin no-print">
+    <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+      {{ Session::get('message') }}  
+    </div>
+  </div>
+@endif
  <!-- end flash message -->
 <section class="content-header">
       <h1>
@@ -22,15 +22,13 @@
         <li class="active">Sub Client List</li>
       </ol>
 </section>
-
-
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">Dealer  
                     <a href="{{route('client.create')}}">
-                    <button class="btn btn-xs btn-primary pull-right">Add new Client</button>
+                    <button class="btn btn-xs btn-primary pull-right">Add New Client</button>
                     </a>
                 </div>              
                 <div class="table-responsive">
