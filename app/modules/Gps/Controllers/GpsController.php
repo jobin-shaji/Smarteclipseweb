@@ -41,14 +41,14 @@ class GpsController extends Controller {
                 if($gps->deleted_at == null){
                     return "
                     <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
-                    <a href=/gps/".$gps->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".$gps->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
                     </button>";
                 }else{
                      return "
-                    <a href=/gps/".$gps->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".$gps->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
                     </button>";
                 }
@@ -79,13 +79,14 @@ class GpsController extends Controller {
         ]);
         $request->session()->flash('message', 'New gps created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('gps.details',$gps->id));
+        return redirect(route('gps.details',Crypt::encrypt($gps->id)));
     } 
 
     //view gps details
     public function details(Request $request)
     {
-        $gps = Gps::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps = Gps::find($decrypted_id);
         if($gps == null){
            return view('Gps::404');
         }
@@ -95,7 +96,8 @@ class GpsController extends Controller {
     //edit gps details
     public function edit(Request $request)
     {
-        $gps = Gps::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps = Gps::find($decrypted_id);
         if($gps == null){
            return view('Gps::404');
         }
@@ -117,9 +119,10 @@ class GpsController extends Controller {
         $gps->version = $request->version;
         $gps->save();
 
+        $encrypted_gps_id = encrypt($gps->id);
         $request->session()->flash('message', ' Gps updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('gps.edit',$gps));  
+        return redirect(route('gps.edit',$encrypted_gps_id));  
     }
 
 // data of gps
