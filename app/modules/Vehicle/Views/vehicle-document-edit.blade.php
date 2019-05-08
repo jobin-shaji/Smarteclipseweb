@@ -48,7 +48,7 @@
 
               <div class="form-group has-feedback">
                 <label>Expiry Date</label>
-                <input type="date" class="form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" value="{{$vehicle_doc->expiry_date}}" required> 
+                <input type="date" class="form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" value="{{$vehicle_doc->expiry_date}}"> 
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
               </div>
               @if ($errors->has('expiry_date'))
@@ -59,14 +59,18 @@
 
               <div class="form-group has-feedback">
                 <label class="srequired">Upload File</label>
-                @if ("/documents/{{$vehicle_doc->path}}")
-                  <img src="{{ $vehicle_doc->path }}">
-                @else
-                <p>No image found</p>
-                @endif
-                image <input type="file" name="path" value="{{ $vehicle_doc->path }}"/>
-                <!-- <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{$vehicle_doc->path}}" > 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span> -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="file" name="path" value="{{$vehicle_doc->path }}">
+                  </div>
+                  <div class="col-md-6">
+                    @if($vehicle_doc->path)
+                      <img class="img-responsive" src="/documents/{{ $vehicle_doc->path }}" />
+                    @else
+                    <p>No image found</p>
+                    @endif
+                  </div>
+                </div>
               </div>
               @if ($errors->has('path'))
                 <span class="help-block">
