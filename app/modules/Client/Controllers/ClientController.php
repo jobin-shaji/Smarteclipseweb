@@ -3,6 +3,7 @@ namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Subdealer\Models\Subdealer;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -227,13 +228,25 @@ class ClientController extends Controller {
         ->make();
     }
 
- public function dealerClientListPage()
+    public function dealerClientListPage()
     {
         return view('Client::dealer-client-list');
     }
     //returns employees as json 
     public function getDealerClient()
     {
+         $dealer_id=\Auth::user()->dealer->id;
+        $sub_dealers = SubDealer::select(
+                'id'
+                )
+                ->where('dealer_id',$dealer_id)
+                ->get();
+        $single_sub_dealers = [];
+        foreach($sub_dealers as $sub_dealer){
+            $single_sub_dealers[] = $sub_dealer->id;
+        }
+       
+
         $client = Client::select(
             'id', 
             'user_id',
@@ -245,7 +258,7 @@ class ClientController extends Controller {
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
          ->with('user:id,email,mobile')
-         ->where('deleted_at',NULL)
+        ->whereIn('sub_dealer_id',$single_sub_dealers)
         ->get();
         return DataTables::of($client)
         ->addIndexColumn()           
