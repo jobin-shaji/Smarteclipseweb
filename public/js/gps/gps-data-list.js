@@ -3,34 +3,29 @@ $(document).ready(function () {
     var gps_id = document.getElementById('hd_gps').value;
     var data = { 'gps_id':gps_id};  
      callBackDataTable(data);   
-    backgroundPostData(url,data,'gpsdatacount',{alert:false});  
-      
-});
-
- window.setInterval(function(){
-        var url = 'gps-data-count';
-        var data = { 'gps_id':gps_id};  
-    var gps_id = document.getElementById('hd_gps').value;
-        
-
+    window.setInterval(function(){
           backgroundPostData(url,data,'gpsdatacount',{alert:false});  
-    }, 5000); 
-
+    }, 5000);    
+});
 
 function gpsdatacount(res){  
     var gps_id = document.getElementById('hd_gps').value;
     $("#gps_count").val(res.gpsdatacounts);
-    var gpsdatacount= document.getElementById('gps_count').value;
-    var old_gpsdatacount= localStorage.setItem("gps_count", gpsdatacount);
-    gpscount = JSON.parse(localStorage.getItem("gps_count"));     
-    if(gpsdatacount!=gpscount)
+    var gpsdatacount= document.getElementById('gps_count').value;  
+    gpscount = JSON.parse(localStorage.getItem("gps_count"));  
+    if(!empty(gpsdatacoun))
     {
-        var gps_id = document.getElementById('hd_gps').value;
-        var data = { 'gps_id':gps_id};
-        callBackDataTable(data);  
-    }
-}
+        if(gpsdatacount!=gpscount)
+        {
+            var gps_id = document.getElementById('hd_gps').value;
+            var data = { 'gps_id':gps_id};
+            callBackDataTable(data);         
+        }
+    }   
+    
+ var old_gpsdatacount= localStorage.setItem("gps_count", gpsdatacount);
 
+}
 
 function callBackDataTable(data=null){
              
