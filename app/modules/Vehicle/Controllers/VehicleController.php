@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Vehicle\Models\DocumentType;
+use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
@@ -101,7 +103,7 @@ class VehicleController extends Controller {
         return redirect(route('vehicle'));
     }
     
-   // edit vehicle
+    // edit vehicle
     public function edit(Request $request)
     {
         $client_id=\Auth::user()->id;
@@ -148,9 +150,50 @@ class VehicleController extends Controller {
     }
 
     // upload vehicle documents
-    public function vehicleDocuments()
+    public function vehicleDocuments(Request $request)
     {
-        return view('Vehicle::vehicle-documents');
+        $vehicle = Vehicle::find($request->id);
+        $docTypes=DocumentType::select(
+                'id','name')->get();
+        $vehicleDocs=Document::select(
+                'id','vehicle_id','document_type_id','expiry_date','path')
+                ->where('vehicle_id',$vehicle->id)
+                ->with('documentType:id,name')
+                ->get();
+        return view('Vehicle::vehicle-documents',['vehicle' => $vehicle,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
+    }
+
+    // save documents
+    public function saveDocuments(Request $request)
+    {
+        $rules = $this->documentCreateRules();
+        $this->validate($request, $rules);
+        $file=$request->path;
+        $getFileExt   = $file->getClientOriginalExtension();
+        $uploadedFile =   time().'.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $file->move($destinationPath,$uploadedFile);
+        $documents = Document::create([
+            'vehicle_id' => $request->vehicle_id,
+            'document_type_id' => $request->document_type_id,
+            'expiry_date' => $request->expiry_date,
+            'path' => $uploadedFile,
+        ]);
+        $request->session()->flash('message', 'Document stored successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle'));
+    }
+
+    // edit vehicle doc
+    public function vehicleDocumentEdit(Request $request)
+    {
+        $vehicle_doc = Document::find($request->id);
+        $document_type=DocumentType::select('id','name')->get();
+        if($vehicle_doc == null){
+            return view('Vehicle::404');
+        }
+        return view('Vehicle::vehicle-document-edit',['vehicle_doc' => $vehicle_doc,'document_type'=>$document_type]);
     }
 
     
@@ -480,6 +523,19 @@ class VehicleController extends Controller {
     {
         $rules = [
             'name' => 'required'
+        ];
+        return  $rules;
+    }
+
+    // document create rules
+    public function documentCreateRules()
+    {
+        $rules = [
+            'vehicle_id' => 'required',
+            'document_type_id' => 'required',
+            'expiry_date' => 'nullable',
+            'path' => 'required'
+
         ];
         return  $rules;
     }

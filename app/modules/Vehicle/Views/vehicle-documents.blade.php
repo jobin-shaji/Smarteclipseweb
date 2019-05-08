@@ -1,6 +1,6 @@
 @extends('layouts.gps')
 @section('title')
-  Add Vehicle
+  Upload Documents
 @endsection
 
 @section('content')
@@ -26,76 +26,48 @@
         </div>
         <!-- /.col -->
       </div>
-     <form  method="POST" action="{{route('vehicles.create.p')}}">
+
+      <form  method="POST" action="{{route('vehicles.doc.p')}}" enctype="multipart/form-data">
         {{csrf_field()}}
       <div class="row">
           <div class="col-md-6">
+              <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
               <div class="form-group has-feedback">
-                <label class="srequired">Name</label>
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" > 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>
-              @if ($errors->has('name'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('name') }}</strong>
-                </span>
-              @endif
-
-              <div class="form-group has-feedback">
-                <label class="srequired">Register Number</label>
-                <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" > 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>
-              @if ($errors->has('register_number'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('register_number') }}</strong>
-                </span>
-              @endif
-
-              <div class="form-group has-feedback">
-                <label class="srequired">E-SIM Number</label>
-                <input type="text" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ old('e_sim_number') }}" > 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>
-              @if ($errors->has('e_sim_number'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
-                </span>
-              @endif
-
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group has-feedback">
-                <label class="srequired">Vehicle Type</label>
-                <select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="vehicle_type_id" value="{{ old('vehicle_type_id') }}" required>
-                  <option value="" selected disabled>Select Vehicle Type</option>
-                  @foreach($vehicleTypes as $type)
+                <label class="srequired">Document Type</label>
+                <select class="form-control {{ $errors->has('document_type_id') ? ' has-error' : '' }}" placeholder="Document Type" name="document_type_id" value="{{ old('document_type_id') }}" required>
+                  <option value="" selected disabled>Select Document Type</option>
+                  @foreach($docTypes as $type)
                   <option value="{{$type->id}}">{{$type->name}}</option>
                   @endforeach
                 </select>
               </div>
-              @if ($errors->has('vehicle_type_id'))
+              @if ($errors->has('document_type_id'))
                 <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('vehicle_type_id') }}</strong>
+                    <strong class="error-text">{{ $errors->first('document_type_id') }}</strong>
                 </span>
               @endif
 
+              <div class="form-group has-feedback">
+                <label>Expiry Date</label>
+                <input type="date" class="form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" value="{{ old('expiry_date') }}" > 
+                <span class="glyphicon glyphicon-car form-control-feedback"></span>
+              </div>
+              @if ($errors->has('expiry_date'))
+                <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('expiry_date') }}</strong>
+                </span>
+              @endif
 
               <div class="form-group has-feedback">
-                <label class="srequired">GPS</label>
-                <select class="form-control selectpicker" name="gps_id" data-live-search="true" title="Select GPS" required>
-                  @foreach($devices as $gps)
-                  <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
-                  @endforeach
-                </select>
+                <label class="srequired">Upload File</label>
+                <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" > 
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>     
-              @if ($errors->has('gps_id'))
+              </div>
+              @if ($errors->has('path'))
                 <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                    <strong class="error-text">{{ $errors->first('path') }}</strong>
                 </span>
-              @endif 
+              @endif
 
             </div>
         </div>
@@ -108,6 +80,52 @@
           </div>
     </form>
 </section>
+<div class="clearfix"></div>
+
+<section class="hilite-content">
+  <div class="row">
+    <div class="col-xs-8">
+      <div class="row">
+        <div class="col-md-6">
+        <h2 class="page-header">
+          <i class="fa fa-file"> Vehicle Documents</i> 
+        </h2>
+        </div>
+        <div class="col-md-6">
+      </div>
+         <div class="panel-body">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                  <thead>
+                      <tr>
+                          <th>sl</th>
+                          <th>Document Type</th>
+                          <th>Expiry Date</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($vehicleDocs as $doc)
+
+
+                      <tr>
+                          <td>{{$loop->iteration}}</td>
+                          <td>{{$doc->documentType->name}}</td>
+                          <td>{{$doc->expiry_date}}</td>
+                          <td>
+                            <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'><i class='glyphicon glyphicon-download'></i> Download </a>
+                            <a href="/vehicle-doc/{{$doc->id}}/edit" class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                            <!-- <a href="/vehicle-doc/{{$doc->id}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a> -->
+                          </td>
+                      </tr>
+
+                    @endforeach
+                  </tbody>
+              </table>
+           </div> 
+    </div>
+  </div>
+</section>
+
  
 <div class="clearfix"></div>
 

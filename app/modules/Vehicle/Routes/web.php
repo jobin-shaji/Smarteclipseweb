@@ -14,7 +14,10 @@ Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
-Route::get('/vehicles/documents','VehicleController@vehicleDocuments')->name('vehicles.documents');
+Route::get('/vehicles/{id}/documents','VehicleController@vehicleDocuments')->name('vehicle.documents');
+Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
+Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicl-doc.edit');
+Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 
 });
 

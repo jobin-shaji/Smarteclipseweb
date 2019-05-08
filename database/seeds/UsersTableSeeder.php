@@ -107,23 +107,23 @@ class UsersTableSeeder extends Seeder
         User::where('username','client')->first()->assignRole('client'); 
 
         DB::table('document_types')->insert([
-            'name' => 'rc_book'
+            'name' => 'RC Book'
         ]);
 
         DB::table('document_types')->insert([
-            'name' => 'insurance'
+            'name' => 'Insurance'
         ]);
 
         DB::table('document_types')->insert([
-            'name' => 'pollution_document'
+            'name' => 'Pollution Document'
         ]);
 
         DB::table('document_types')->insert([
-            'name' => 'permit'
+            'name' => 'Permit'
         ]);
 
         DB::table('document_types')->insert([
-            'name' => 'tax_document_reference_number'
+            'name' => 'Tax Document Reference Number'
         ]);
 
 		
