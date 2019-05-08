@@ -3,6 +3,10 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::get('/client','ClientController@clientListPage')->name('client');
 	Route::post('/root-client-list','ClientController@getRootClient')->name('root-client-list');
 });
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+	Route::get('/dealer-client','ClientController@dealerClientListPage')->name('dealer-client');
+	Route::post('/dealer-client-list','ClientController@getDealerClient')->name('dealer-client-list');
+});
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/clients','ClientController@clientList')->name('clients');
 	Route::post('/client-list','ClientController@getClientlist')->name('client-list');
