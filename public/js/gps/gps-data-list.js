@@ -1,10 +1,29 @@
 $(document).ready(function () {
-   
-     var gps_id = document.getElementById('hd_gps').value;
-    var data = { 'gps_id':gps_id};   
-     callBackDataTable(data);     
+    var url = 'gps-data-count';
+    var gps_id = document.getElementById('hd_gps').value;
+    var data = { 'gps_id':gps_id};  
+     callBackDataTable(data);   
+    window.setInterval(function(){
+         backgroundPostData(url,data,'gpsdatacount',{alert:false});  
+    }, 5000);    
 });
+function gpsdatacount(res){  
+    var gps_id = document.getElementById('hd_gps').value;
+    $("#gps_count").val(res.gpsdatacounts);
+    var gpsdatacount= document.getElementById('gps_count').value;
+    var old_gpsdatacount= localStorage.setItem("gps_count"+gps_id+gpsdatacount, gpsdatacount);
+    // var new_gpsdatacount= localStorage.setItem("new_gpsdatacount", gpsdatacount);
+    if(old_gpsdatacount!=gpsdatacount)
+    {
+        var gps_id = document.getElementById('hd_gps').value;
+        var data = { 'gps_id':gps_id};
+        callBackDataTable(data);  
+    }
+}
+
+
 function callBackDataTable(data=null){
+             
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -19,7 +38,13 @@ function callBackDataTable(data=null){
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
-        },              
+        },   
+         createdRow: function ( row, data, index ) {
+            if ( data['header'] =='NRM') {
+                $('td', row).css('background-color', 'rgb(128,255,128)');
+            }
+        },     
+
         fnDrawCallback: function (oSettings, json) {
 
         },
@@ -82,5 +107,6 @@ function callBackDataTable(data=null){
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+
 }
 
