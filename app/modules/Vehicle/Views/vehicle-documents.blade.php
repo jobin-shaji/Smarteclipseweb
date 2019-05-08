@@ -114,7 +114,7 @@
                           <td>
                             <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'><i class='glyphicon glyphicon-download'></i> Download </a>
                             <a href="/vehicle-doc/{{$doc->id}}/edit" class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                            <!-- <a href="/vehicle-doc/{{$doc->id}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a> -->
+                            <a href="/vehicle-doc/{{$doc->id}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a>
                           </td>
                       </tr>
 
