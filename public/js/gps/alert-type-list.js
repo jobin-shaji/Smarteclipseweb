@@ -32,7 +32,7 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'alert_type', name: 'alert_type' },            
+            {data: 'code', name: 'code' },            
             {data: 'description', name: 'description',searchable: false},                      
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        

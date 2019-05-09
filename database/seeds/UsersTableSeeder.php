@@ -126,6 +126,10 @@ class UsersTableSeeder extends Seeder
             'name' => 'Tax Document Reference Number'
         ]);
 
+        DB::table('vehicle_types')->insert([
+            'name' => 'Car'
+        ]);
+
 		
     }
 }
