@@ -10,12 +10,16 @@ class Alert extends Model
 	 return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
 	}
 
-	public function stage(){
-	  return $this->hasOne('App\Modules\Stage\Models\Stage','id','stage_id');
+	public function gps(){
+	  return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
 	}
 
-	public function waybill(){
-	  return $this->hasOne('App\Modules\WayBill\Models\Waybill','id','waybill_id');
-
+	public function client(){
+	  return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
 	}
+
+	public function alertType(){
+	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_type_id');
+	}
+
 }

@@ -12,69 +12,96 @@ use DataTables;
 
 class AlertController extends Controller {
 
-    //Display all etms
+    //Display all alerts
 	public function alerts()
     {
 		return view('Alert::alert-list');
 	}
 
-	//returns etm as json 
+	//returns alerts as json 
     public function alertsList()
     {
+        $client_id=\Auth::user()->client->id;
         $alert = Alert::select(
                 'id',
-                'message_type',
-            	'message',
+                'alert_type_id',
+            	'gps_data_id',
                 'device_time',
                 'vehicle_id',
-                'imei',
-                'waybill_id',
-                'stage_id',
-                'trip_no')
-                ->with('vehicle:id,register_number')
-                ->with('stage:id,name')
-                ->with('waybill:id,code')
+                'gps_id',
+                'client_id',
+                'latitude',
+                'longitude',
+                'status',
+                'created_at')
+                ->with('alertType:id,code,description')
+                ->with('vehicle:id,name,register_number')
+                ->with('gps:id,name,imei')
+                ->with('client:id,name')
+                ->where('client_id',$client_id)
+                ->where('status',0)
                 ->get();
         return DataTables::of($alert)
             ->addIndexColumn()
-            ->make();
+            ->addColumn('action', function ($alert) {
+            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-ok'></i> Verify </button>";
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
-     //dealer creation page
+
+    // alert verification
+    public function verifyAlert(Request $request)
+    {
+        $alert = Alert::find($request->id);
+        if($alert == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Alert does not exist'
+            ]);
+        }
+        $alert->status = 1;
+        $alert->save();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Alert verified successfully'
+        ]);
+     }
+
+     //alert creation page
     public function create()
     {
        return view('Alert::alert-type-create');
     }
-     //upload dealer details to database table
+     //upload alert details to database table
     public function save(Request $request)
     {
-        // \Auth::user()->root->first()->id
-        $client_id=\Auth::user()->id;
-        if($request->user()->hasRole('client')){
-            $rules = $this->alert_rules();
-            $this->validate($request, $rules);
-            $alert_type = AlertType::create([
-                'alert_type' => $request->alert_type,
-                'description' => $request->description,               
-                'status' => 1,               
-            ]);
-            // User::where('username', $request->username)->first()->assignRole('dealer');
-        }       
+        $rules = $this->alert_rules();
+        $this->validate($request, $rules);
+        $alert_type = AlertType::create([
+            'code' => $request->code,
+            'description' => $request->description,               
+            'status' => 1,               
+        ]);
+
         $request->session()->flash('message', 'New Alert Type created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('alert-type/create')); 
     }
-     //Display employee details 
+     //Display alert details 
     public function alertListPage()
     {
         return view('Alert::alert-type-list');
     }
-     //returns employees as json 
+     //returns alert as json 
     public function getAlertTypes()
     {
         $alert_type = AlertType::select(
             'id', 
-            'alert_type',                      
-            'description',                                                                      
+            'code',                      
+            'description',        
             'deleted_at'
         )
         ->withTrashed()        
@@ -96,15 +123,15 @@ class AlertController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
-     //Dealer details view
+     //alert details view
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);   
         
         $alert_type = AlertType::select(
             'id', 
-            'alert_type',                      
-            'description',                                                                      
+            'code',                      
+            'description',                
             'deleted_at'
         )
         ->withTrashed()
@@ -121,8 +148,8 @@ class AlertController extends Controller {
         $decrypted = Crypt::decrypt($request->id);   
          $alert_type = AlertType::select(
             'id', 
-            'alert_type',                      
-            'description',                                                                      
+            'code',                      
+            'description',                                                       
             'deleted_at'
         )
         ->withTrashed()       
@@ -142,7 +169,7 @@ class AlertController extends Controller {
         } 
         $rules = $this->alertUpdateRules($alert_type);
         $this->validate($request, $rules);      
-        $alert_type->alert_type = $request->alert_type;
+        $alert_type->code = $request->code;
         $alert_type->description = $request->description;
         $alert_type->save();
       
@@ -151,7 +178,7 @@ class AlertController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('alert.types.edit',$did));  
     }
-     //delete employee details from table
+     //delete alert details from table
     public function deleteAlertType(Request $request)
     {
         $alert_type = AlertType::find($request->uid);
@@ -169,7 +196,7 @@ class AlertController extends Controller {
             'message' => 'Alert Type deleted successfully'
         ]);
     }
-     // restore emplopyee
+     // restore alert
     public function activateAlertType(Request $request)
     {
         $alert_type = AlertType::withTrashed()->find($request->id);
@@ -187,20 +214,20 @@ class AlertController extends Controller {
             'message' => 'Dealer restored successfully'
         ]);
     }
-     //user create rules 
+     //alert create rules 
     public function alert_rules(){
         $rules = [
-            'alert_type' => 'required|unique:alert_types',
+            'code' => 'required|unique:alert_types',
             'description' => 'required',
             
         ];
         return  $rules;
     }
-    //validation for employee updation
+    //validation for alert updation
     public function alertUpdateRules($alert_type)
     {
         $rules = [
-            'alert_type' => 'required|unique:alert_types,alert_type,'.$alert_type->id,
+            'code' => 'required|unique:alert_types,code,'.$alert_type->id,
             'description' => 'required'       
         ];
         return  $rules;

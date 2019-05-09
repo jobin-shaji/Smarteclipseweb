@@ -30,13 +30,13 @@
       <div class="row">
         <div class="col-md-6">          
           <div class="form-group has-feedback">
-            <label class="srequired">Alert Type</label>
-            <input type="text" class="form-control {{ $errors->has('alert_type') ? ' has-error' : '' }}" placeholder="Alert Type" name="alert_type" value="{{ $alert_type->alert_type}}"> 
+            <label class="srequired">Code</label>
+            <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" name="code" value="{{ $alert_type->code}}"> 
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
-          @if ($errors->has('alert_type'))
+          @if ($errors->has('code'))
             <span class="help-block">
-            <strong class="error-text">{{ $errors->first('alert_type') }}</strong>
+            <strong class="error-text">{{ $errors->first('code') }}</strong>
             </span>
           @endif
         <div class="form-group has-feedback">

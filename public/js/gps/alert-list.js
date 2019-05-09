@@ -31,18 +31,30 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'waybill.code', name: 'waybill.code'},
-            {data: 'imei', name: 'imei'},
-            {data: 'stage.name', name: 'stage.name'},
-            {data: 'trip_no', name: 'trip_no'},
-            {data: 'message_type', name: 'message_type'},
-            {data: 'message', name: 'message'},
-            {data: 'device_time', name: 'device_time'},
+            {data: 'alert_type.code', name: 'alert_type.code'},
+            {data: 'alert_type.description', name: 'alert_type.description'},
+            {data: 'vehicle.name', name: 'vehicle.name'},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
+            {data: 'latitude', name: 'latitude'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
+
+function VerifyAlert(alert_id){
+    if(confirm('Are you sure want to verify this alert?')){
+        var url = 'alert/verify';
+        var data = {
+        id : alert_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
+}
+
+
 
 
 
