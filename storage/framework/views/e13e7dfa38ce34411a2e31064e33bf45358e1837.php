@@ -12,7 +12,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                    background-color: #fff;
+                    background-color: #151515;
                     color: white;
                     font-family: 'Nunito', sans-serif;
                     font-weight: 200;
@@ -21,7 +21,7 @@
                     background-image: url(<?php echo e(asset('images/bg.png')); ?>);
                     background-repeat: no-repeat;
                     background-position: center;
-                    background-size: cover;
+                    background-size: contain;
             }
 
             .full-height {
@@ -84,8 +84,9 @@
                     ECLIPSE
                 </div>
 
-                <div class="links">
-                    Developed by <a href="https://vstmobility.com">VST Mobility Solutions</a>
+
+                <div class="links">Developed by <a href="https://vstmobility.com">VST Mobility Solutions</a>
+
                 </div>
             </div>
         </div>

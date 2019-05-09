@@ -71,6 +71,7 @@ class GpsData extends Migration
             $table->string('key3')->nullable();
             $table->string('value3')->nullable();
             $table->string('gf_id')->nullable();
+            $table->text('vlt_data')->nullable();
 
             $table->timestamps();
         });

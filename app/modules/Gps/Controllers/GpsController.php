@@ -424,6 +424,11 @@ class GpsController extends Controller {
         return response()->json(array('response' => 'success', 'gps' => $gps , 'user' => $user));
     }
 
+    public function allGpsData(Request $request){
+        $items = GpsData::all();
+        return view('Gps::alldata',['items' => $items]);
+    }
+
     // gps transfer rule
     public function gpsTransferRule() {
         $rules = [

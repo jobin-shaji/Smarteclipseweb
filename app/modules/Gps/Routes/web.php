@@ -48,3 +48,6 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer'] , 'na
 	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
 });
 
+Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+Route::get('/gps-data','GpsController@allGpsData');
+});
