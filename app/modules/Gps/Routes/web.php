@@ -49,5 +49,5 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer'] , 'na
 });
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
-Route::get('/gps-data','GpsController@allGpsData');
+	Route::get('/gps-data','GpsController@allGpsData');
 });
