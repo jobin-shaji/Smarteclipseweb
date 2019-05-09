@@ -1,8 +1,6 @@
 <?php 
-Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
 
-	Route::get('/alerts','AlertController@alerts')->name('alerts');
-	Route::post('/alert-list','AlertController@alertsList')->name('alert-list');
 	Route::get('/alert-type/create','AlertController@create')->name('alert-type/create');
 	Route::post('/alert-type/create','AlertController@save')->name('alert.type.create.p');
 	Route::get('/alert-types','AlertController@alertListPage')->name('alert-types');
@@ -13,6 +11,14 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/alert-type/delete','AlertController@deleteAlertType')->name('alert.type.delete');
 	Route::post('/alert-type/activate','AlertController@activateAlertType')->name('alert.type.activate');
 
+
+});
+
+Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
+
+	Route::get('/alerts','AlertController@alerts')->name('alerts');
+	Route::post('/alert-list','AlertController@alertsList')->name('alert-list');
+	Route::post('/alert/verify','AlertController@verifyAlert')->name('alert.verify');
 
 });
 

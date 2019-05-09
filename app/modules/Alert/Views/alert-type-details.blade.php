@@ -29,8 +29,8 @@
         <div class="col-md-6">          
         @foreach($alert_type as $alert_type)
           <div class="form-group has-feedback">
-            <label>Alert Type</label>
-            <input type="text" class="form-control {{ $errors->has('alert_type') ? ' has-error' : '' }}" placeholder="Alert Type" name="alert_type" value="{{ $alert_type->alert_type}}" disabled>
+            <label>Code</label>
+            <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" name="code" value="{{ $alert_type->code}}" disabled>
           </div>
           <div class="form-group has-feedback">
             <label>Description</label>

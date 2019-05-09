@@ -37,7 +37,7 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <th>Alert Type</th>                            
+                              <th>Code</th>                            
                               <th>Description</th>                              
                              <th style="width:160px;">Action</th>
                             </tr>
