@@ -12,14 +12,20 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
+                              <th>IMEI</th>
                               <th>data</th>
+                              <th>size</th>
+                              <th>date</th>
                             </tr>
                         </thead>
                         <tbody>
                           @foreach($items as $item)
                           <tr>
                             <td>{{$loop->iteration}}</td>
+                            <td>{{$item->imei}}</td>
                             <td>{{$item->vlt_data}}</td>
+                            <td>{{strlen($item->vlt_data)}}</td>
+                            <td>{{$item->created_at->diffForHumans()}} , {{$item->created_at}}</td>
                           </tr>
                           @endforeach
                         </tbody>
