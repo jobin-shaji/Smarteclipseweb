@@ -32,28 +32,6 @@
           <div class="col-md-6">
 
               <div class="form-group has-feedback">
-                <label class="srequired">Name</label>
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{$vehicle->name}}" required> 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>
-              @if ($errors->has('name'))
-                <span class="help-block">
-                  <strong class="error-text">{{ $errors->first('name') }}</strong>
-                </span>
-              @endif
-
-              <div class="form-group has-feedback">
-                <label class="srequired">Register Number</label>
-                <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{$vehicle->register_number}}" required> 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>
-              @if ($errors->has('register_number'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('register_number') }}</strong>
-                </span>
-              @endif
-
-              <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" required> 
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
@@ -63,40 +41,7 @@
                     <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
                 </span>
               @endif
-
-           </div>
-
-            <div class="col-md-6">
-              <div class="form-group has-feedback">
-                <label class="srequired">Vehicle Type</label>
-                <select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="vehicle_type_id" value="{{ old('vehicle_type_id') }}" required>
-                  <option>Select</option>
-                  @foreach($vehicleTypes as $type)
-                  <option value="{{$type->id}}" @if($type->id==$vehicle->vehicle_type_id){{"selected"}} @endif>{{$type->name}}</option>
-                  @endforeach
-                </select>
-              </div>
-              @if ($errors->has('vehicle_type_id'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('vehicle_type_id') }}</strong>
-                </span>
-              @endif
-
-              <div class="form-group has-feedback">
-                <label class="srequired">GPS</label>
-                <select class="form-control {{ $errors->has('gps_id') ? ' has-error' : '' }}"  name="gps_id" value="{{ old('gps_id') }}" required>
-                  <option>Select GPS</option>
-                  @foreach($devices as $gps)
-                  <option value="{{$gps->id}}" @if($gps->id==$vehicle->gps_id){{"selected"}} @endif>{{$gps->name}}||{{$gps->imei}}</option>
-                  @endforeach
-                </select>
-              </div>
-              @if ($errors->has('gps_id'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
-                </span>
-              @endif
-
+            
          
             </div>
         </div>
