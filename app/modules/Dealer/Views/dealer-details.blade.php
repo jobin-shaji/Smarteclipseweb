@@ -27,7 +27,7 @@
         {{csrf_field()}}
     <div class="row">
         <div class="col-md-6">          
-        @foreach($dealer as $dealer)
+      
           <div class="form-group has-feedback">
             <label>Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealer->name}}" disabled>
@@ -39,15 +39,15 @@
           </div>
           <div class="form-group has-feedback">
             <label>Mobile No.</label>
-            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $dealer->user->mobile}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}" disabled>
             <span class="glyphicon glyphicon-phone form-control-feedback"></span>
           </div>
          <div class="form-group has-feedback">
           <label>Email</label>
-          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $dealer->user->email}}" disabled>
+          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>       
-      @endforeach
+     
         </div>
        
       </div>
