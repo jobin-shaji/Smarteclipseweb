@@ -11,6 +11,7 @@ use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
+use Illuminate\Support\Facades\Crypt;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -45,13 +46,13 @@ class VehicleController extends Controller {
             ->addColumn('action', function ($vehicles) {
                 if($vehicles->deleted_at == null){
                     return "
-                    <a href=/vehicles/".$vehicles->id."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
-                    <a href=/vehicles/".$vehicles->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/vehicles/".$vehicles->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
                 }else{
-                     return "<a href=/vehicles/".$vehicles->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/vehicles/".$vehicles->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                     return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateVehicle(".$vehicles->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
                 }
              })
@@ -106,8 +107,9 @@ class VehicleController extends Controller {
     // edit vehicle
     public function edit(Request $request)
     {
+        $decrypted_id = Crypt::decrypt($request->id);
         $client_id=\Auth::user()->id;
-        $vehicle = Vehicle::find($request->id);
+        $vehicle = Vehicle::find($decrypted_id);
         $vehicleTypes=VehicleType::select('id','name')->get();
         $devices=Gps::select('id','name','imei')
                 ->where('user_id',$client_id)
@@ -134,15 +136,17 @@ class VehicleController extends Controller {
         $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->save();
 
+        $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Vehicle details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.edit',$vehicle));  
+        return redirect(route('vehicle.edit',$encrypted_vehicle_id));  
     }
 
     // details page
     public function details(Request $request)
     {
-        $vehicle=Vehicle::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle=Vehicle::find($decrypted_id);
         if($vehicle==null){
             return view('Vehicle::404');
         } 
@@ -152,7 +156,8 @@ class VehicleController extends Controller {
     // upload vehicle documents
     public function vehicleDocuments(Request $request)
     {
-        $vehicle = Vehicle::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle = Vehicle::find($decrypted_id);
         $docTypes=DocumentType::select(
                 'id','name')->get();
         $vehicleDocs=Document::select(
@@ -188,7 +193,8 @@ class VehicleController extends Controller {
     // edit vehicle doc
     public function vehicleDocumentEdit(Request $request)
     {
-        $vehicle_doc = Document::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_doc = Document::find($decrypted_id);
         $document_type=DocumentType::select('id','name')->get();
         if($vehicle_doc == null){
             return view('Vehicle::404');
@@ -226,15 +232,17 @@ class VehicleController extends Controller {
         $vehicle_doc->expiry_date= $request->expiry_date;
         $vehicle_doc->save();
 
+        $encrypted_vehicle_doc_id = encrypt($vehicle_doc->id);
         $request->session()->flash('message', 'Document updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle-doc.edit',$vehicle_doc));  
+        return redirect(route('vehicle-doc.edit',$encrypted_vehicle_doc_id));  
     }
 
     // vehicle doc delete
     public function vehicleDocumentDelete(Request $request)
     {
-        $vehicle_doc=Document::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_doc=Document::find($decrypted_id);
         if($vehicle_doc == null){
            return view('Vehicle::404');
         }
@@ -313,8 +321,8 @@ class VehicleController extends Controller {
         return DataTables::of($vehicle_type)
             ->addIndexColumn()
             ->addColumn('action', function ($vehicle_type) {
-                return "<a href=/vehicle-type/".$vehicle_type->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/vehicle-type/".$vehicle_type->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+                return "<a href=/vehicle-type/".Crypt::encrypt($vehicle_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/vehicle-type/".Crypt::encrypt($vehicle_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
              })
             ->rawColumns(['link', 'action'])
             ->make();
@@ -337,13 +345,14 @@ class VehicleController extends Controller {
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
 
-        return redirect(route('vehicle_type.details',$vehicle_type->id));
+        return redirect(route('vehicle_type.details',Crypt::encrypt($vehicle_type->id)));
     }
 
     // vehicle type details
     public function detailsVehicleType(Request $request)
      {
-        $vehicle_type=VehicleType::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_type=VehicleType::find($decrypted_id);
         if($vehicle_type==null){
             return view('Vehicle::404');
         } 
@@ -352,7 +361,8 @@ class VehicleController extends Controller {
     // edit vehicle type
     public function editVehicleType(Request $request)
     {
-        $vehicle_type = VehicleType::find($request->id);
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_type = VehicleType::find($decrypted_id);
         if($vehicle_type == null)
         {
             return view('Vehicle::404');
@@ -373,9 +383,10 @@ class VehicleController extends Controller {
         $vehicle_type->name = $request->name;
         $vehicle_type->save();
 
+        $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
         $request->session()->flash('message', 'Vehicle type details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle-type.edit',$vehicle_type));  
+        return redirect(route('vehicle-type.edit',$encrypted_vehicle_type_id));  
     }
     // delete vehicle type
      public function deleteVehicleType(Request $request)

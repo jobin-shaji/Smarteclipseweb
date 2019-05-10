@@ -1,4 +1,4 @@
-@extends('layouts.etm')
+@extends('layouts.gps')
 
 @section('content')
 <section class="content-header">
@@ -24,13 +24,13 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <th>Waybill</th>
-                              <th>IMEI</th>
-                              <th>Stage</th>
-                              <th>Trip</th>
-                              <th>Alert Type</th>
+                              <th>Alert Code</th>
                               <th>Alert</th>
-                              <th>Device Date</th>
+                              <th>Vehicle Name</th>
+                              <th>Register Number</th>
+                              <th>Place</th>
+                              <th>DateTime</th>
+                              <th>Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -41,6 +41,6 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/etm/alert-list.js')}}"></script>
+    <script src="{{asset('js/gps/alert-list.js')}}"></script>
 @endsection
 @endsection
