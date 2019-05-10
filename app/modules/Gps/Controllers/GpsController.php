@@ -425,7 +425,7 @@ class GpsController extends Controller {
     }
 
     public function allGpsData(Request $request){
-        $items = GpsData::all();
+        $items = GpsData::all()->sortByDesc('id');
         return view('Gps::alldata',['items' => $items]);
     }
 
