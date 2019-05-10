@@ -34,7 +34,7 @@
           </div>
           <div class="form-group has-feedback">
             <label>Address</label>
-            <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $dealer->address}}" disabled>
+            <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$dealer->address}}" disabled>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
