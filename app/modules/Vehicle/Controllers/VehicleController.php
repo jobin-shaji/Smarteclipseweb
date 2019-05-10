@@ -110,14 +110,10 @@ class VehicleController extends Controller {
         $decrypted_id = Crypt::decrypt($request->id);
         $client_id=\Auth::user()->id;
         $vehicle = Vehicle::find($decrypted_id);
-        $vehicleTypes=VehicleType::select('id','name')->get();
-        $devices=Gps::select('id','name','imei')
-                ->where('user_id',$client_id)
-                ->get();
         if($vehicle == null){
             return view('Vehicle::404');
         }
-        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'vehicleTypes'=>$vehicleTypes,'devices'=>$devices]);
+        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle]);
     }
 
     // update vehicle
@@ -130,9 +126,6 @@ class VehicleController extends Controller {
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
 
-        $vehicle->name = $request->name;
-        $vehicle->register_number = $request->register_number;
-        $vehicle->vehicle_type_id= $request->vehicle_type_id;
         $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->save();
 
@@ -566,10 +559,6 @@ class VehicleController extends Controller {
     public function vehicleUpdateRules($vehicle)
     {
         $rules = [
-            'name' => 'required',
-            'register_number' => 'required|unique:vehicles,register_number,'.$vehicle->id,
-            'vehicle_type_id' => 'required',
-            'gps_id' => 'required',
             'e_sim_number' => 'required|numeric'
         ];
         return  $rules;  
