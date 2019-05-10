@@ -4,7 +4,7 @@
 
 <section class="content">
   <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12 ">
             <div class="panel panel-default">
                 <div class="table-responsive">
                 <div class="panel-body">
@@ -13,9 +13,10 @@
                             <tr>
                               <th>Sl.No</th>
                               <th>IMEI</th>
-                              <th>data</th>
                               <th>size</th>
                               <th>date</th>
+                              <th>data</th>
+                      
                             </tr>
                         </thead>
                         <tbody>
@@ -23,9 +24,9 @@
                           <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$item->imei}}</td>
-                            <td>{{$item->vlt_data}}</td>
                             <td>{{strlen($item->vlt_data)}}</td>
                             <td>{{$item->created_at->diffForHumans()}} , {{$item->created_at}}</td>
+                            <td>{{$item->vlt_data}}</td>
                           </tr>
                           @endforeach
                         </tbody>
