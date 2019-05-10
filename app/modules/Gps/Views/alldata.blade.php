@@ -4,7 +4,7 @@
 
 <section class="content">
   <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12 ">
             <div class="panel panel-default">
                 <div class="table-responsive">
                 <div class="panel-body">
