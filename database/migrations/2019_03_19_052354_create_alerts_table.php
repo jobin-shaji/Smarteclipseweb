@@ -16,7 +16,6 @@ class CreateAlertsTable extends Migration
         Schema::create('alerts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('alert_type_id');
-            $table->integer('gps_data_id');
             $table->dateTime('device_time');
             $table->integer('vehicle_id');
             $table->integer('gps_id');
