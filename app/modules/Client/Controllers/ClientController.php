@@ -16,23 +16,24 @@ class ClientController extends Controller {
     }
     //upload employee details to database table
     public function save(Request $request)
-    {      $subdealer_id = \Auth::user()->subdealer->id; 
+    {      
+        $subdealer_id = \Auth::user()->subdealer->id; 
         if($request->user()->hasRole('sub_dealer')){
-        $rules = $this->user_create_rules();
-        $this->validate($request, $rules);
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'mobile' => $request->mobile,
-            'status' => 1,
-            'password' => bcrypt($request->password),
-        ]);
+            $rules = $this->user_create_rules();
+            $this->validate($request, $rules);
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'status' => 1,
+                'password' => bcrypt($request->password),
+            ]);
             $client = Client::create([            
-            'user_id' => $user->id,
-            'sub_dealer_id' => $subdealer_id,
-            'name' => $request->name,            
-            'address' => $request->address,           
-           ]);
+                'user_id' => $user->id,
+                'sub_dealer_id' => $subdealer_id,
+                'name' => $request->name,            
+                'address' => $request->address,           
+            ]);
             User::where('username', $request->username)->first()->assignRole('client');
         }
         $eid= encrypt($user->id);
@@ -44,9 +45,8 @@ class ClientController extends Controller {
     {
         return view('Client::client-list');
     }
-
-
-    public function user_create_rules(){
+    public function user_create_rules()
+    {
         $rules = [
             'username' => 'required|unique:users',
             'mobile' => 'required|unique:users',
