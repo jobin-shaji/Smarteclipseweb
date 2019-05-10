@@ -11,6 +11,8 @@ use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Alert\Models\Alert;
+use App\Modules\Vehicle\Models\Document;
 use DataTables;
 use DB;
 use Carbon\Carbon; 
@@ -30,7 +32,58 @@ class DashboardController extends Controller
      */
     public function index()
     {
-         return view('Dashboard::dashboard');         
+        if(\Auth::user()->hasRole('root')){
+            return view('Dashboard::dashboard');  
+        }
+        else if(\Auth::user()->hasRole('dealer')){
+            return view('Dashboard::dashboard');  
+        }
+        else if(\Auth::user()->hasRole('sub_dealer')){
+            return view('Dashboard::dashboard');  
+        }else if(\Auth::user()->hasRole('client')){
+            $client_id=\Auth::user()->client->id;
+            $alerts = Alert::select(
+                    'id',
+                    'alert_type_id',
+                    'vehicle_id',
+                    'status',
+                    'created_at')
+                    ->with('alertType:id,code,description')
+                    ->with('vehicle:id,name,register_number')
+                    ->where('client_id',$client_id)
+                    ->orderBy('id', 'desc')->take(10)
+                    ->get();
+            $vehicles = Vehicle::select('id')
+                    ->where('client_id',$client_id)
+                    ->get();
+            $single_vehicle = [];
+            foreach($vehicles as $vehicle){
+                $single_vehicle[] = $vehicle->id;
+            }
+            $expired_documents=Document::select([
+                    'id',
+                    'vehicle_id',
+                    'document_type_id',
+                    'expiry_date'
+                    ])
+                    ->with('vehicle:id,name,register_number')
+                    ->with('documentType:id,name')
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->whereDate('expiry_date', '<', date('Y-m-d'))
+                    ->get();
+            $expire_documents=Document::select([
+                    'id',
+                    'vehicle_id',
+                    'document_type_id',
+                    'expiry_date'
+                    ])
+                    ->with('vehicle:id,name,register_number')
+                    ->with('documentType:id,name')
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+                    ->get();
+            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents]); 
+        }        
     }
     public function dashCount(Request $request){
         $user = $request->user();

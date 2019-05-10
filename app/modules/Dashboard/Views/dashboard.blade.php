@@ -190,6 +190,129 @@
             <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <div class="row">
+          <!-- alert report-start -->
+          <div class="col-xs-6">
+            <div class="box box-danger">
+              <div class="box-header ui-sortable-handle" style="cursor: move;">
+                <i class="fa fa-bell-o"></i>
+                <h3 class="box-title">Alert List</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                <ul class="list-group">
+                  @if($alerts)
+                    @foreach ($alerts as $alert )
+                    <li class="list-group-item">
+                    <!-- drag handle -->
+                    <span class="handle ui-sortable-handle">
+                      <i class="fa fa-ellipsis-v"></i>
+                      <i class="fa fa-ellipsis-v"></i>
+                    </span>
+                        
+                    <!-- todo text -->
+                    <span class="text">{{$alert->alertType->description}}</span>
+                    [<span class="text-primary" style="color:#000;"> {{$alert->vehicle->name}} - {{$alert->vehicle->register_number}}</span>]
+                        <?php 
+                              $alert_time=$alert->created_at;
+                              $alert_status=$alert->status;
+                         ?>
+                         <br>
+                        <!-- Emphasis label -->
+                        <small class="label label-danger" style="font-size: 13px;     margin: 0px 12px;"><i class="fa fa-clock-o"></i> {{$alert_time}}</small>
+                        @if($alert_status==0)
+                          <small class="label label-danger pull-right" style="font-size: 13px;"><?php echo "Pending"; ?></small>
+                        @else
+                          <small class="label label-success pull-right" style="font-size: 13px;"><?php echo "Success"; ?></small>
+                        @endif
+                        <!-- General tools such as edit or delete-->
+                      </li>
+                      @endforeach
+                    @else
+                      <h4 class="text-info"> Sorry!! waiting for alerts.....</h4>
+                    @endif
+                      
+                    </ul>
+                  </div>
+                  <!--Alert report-end -->
+                </div>
+          </div>
+          <div class="col-xs-6">
+            <!-- documents report -start -->
+            <div class="box box-danger">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-file"></i>
+                    <h3 class="box-title">Expired Documents List</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    <ul class="list-group">
+                      @if($expired_documents)
+                        @foreach ($expired_documents as $expired )
+                        <li class="list-group-item">
+                          <!-- drag handle -->
+                          <span class="handle ui-sortable-handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                              </span>
+                          
+                          <!-- todo text -->
+                          <span class="text-danger">{{$expired->documentType->name}} expired on {{$expired->expiry_date}}</span>
+                          [<span class="text-primary" style="color:#000;">{{$expired->vehicle->name}} - {{$expired->vehicle->register_number}}</span>]
+
+                          <div class="card-link pull-right">
+                            <?php $id=Crypt::encrypt($expired->vehicle_id); ?>
+                            <a href="{{route('vehicle.documents',$id)}}" class="c-link">View
+                            <i class="fa fa-angle-right"></i>
+                            </a>
+                            
+                          </div>
+                          <!-- General tools such as edit or delete-->
+                        </li>
+                       @endforeach
+                      @else
+                        <h4 class="text-info"> </h4>
+                      @endif
+                      
+                    </ul>
+                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    <ul class="list-group">
+                      @if($expire_documents)
+                        @foreach ($expire_documents as $expired )
+                        <li class="list-group-item">
+                          <!-- drag handle -->
+                          <span class="handle ui-sortable-handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                              </span>
+                          
+                          <!-- todo text -->
+                          <span class="text-danger">{{$expired->documentType->name}} will expire on {{$expired->expiry_date}}</span>
+                          [<span class="text-primary" style="color:#000;">{{$expired->vehicle->name}} - {{$expired->vehicle->register_number}}</span>]
+
+                          <div class="card-link pull-right">
+                            <?php $id=Crypt::encrypt($expired->vehicle_id); ?>
+                            <a href="{{route('vehicle.documents',$id)}}" class="c-link">View
+                            <i class="fa fa-angle-right"></i>
+                            </a>
+                            
+                          </div>
+                          <!-- General tools such as edit or delete-->
+                        </li>
+                       @endforeach
+                      @else
+                        <h4 class="text-info"> </h4>
+                      @endif
+                      
+                    </ul>
+                  </div>
+                  <!--Documents report-end -->
+                </div>
+          </div>
+        </div>
+
   @endrole
 
 </div>

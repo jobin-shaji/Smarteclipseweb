@@ -2,20 +2,23 @@
 
 @section('content')
 
+
+
 <section class="content">
-  <div class="row">
-        <div class="col-md-9">
+  <div>
+        <div class="col-md-12 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="table-responsive">
                 <div class="panel-body">
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped " style="width:100%">
                         <thead>
                             <tr>
                               <th>Sl.No</th>
                               <th>IMEI</th>
-                              <th>data</th>
                               <th>size</th>
                               <th>date</th>
+                              <th>data</th>
+                      
                             </tr>
                         </thead>
                         <tbody>
@@ -23,9 +26,9 @@
                           <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$item->imei}}</td>
-                            <td>{{$item->vlt_data}}</td>
                             <td>{{strlen($item->vlt_data)}}</td>
                             <td>{{$item->created_at->diffForHumans()}} , {{$item->created_at}}</td>
+                            <td>{{$item->vlt_data}}</td>
                           </tr>
                           @endforeach
                         </tbody>
