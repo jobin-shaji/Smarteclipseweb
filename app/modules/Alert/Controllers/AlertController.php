@@ -25,7 +25,6 @@ class AlertController extends Controller {
         $alert = Alert::select(
                 'id',
                 'alert_type_id',
-            	'gps_data_id',
                 'device_time',
                 'vehicle_id',
                 'gps_id',

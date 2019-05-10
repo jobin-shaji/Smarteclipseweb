@@ -123,7 +123,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('document_types')->insert([
-            'name' => 'Tax Document Reference Number'
+            'name' => 'Tax Document'
         ]);
 
         DB::table('vehicle_types')->insert([
