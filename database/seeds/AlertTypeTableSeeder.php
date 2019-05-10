@@ -59,6 +59,47 @@ class AlertTypeTableSeeder extends Seeder
             'description' => 'Low battery removed'
         ]);
 
+        DB::table('alert_types')->insert([
+            'code' => '16',
+            'description' => 'Emergency button wiredisconnect/wirecut'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '03',
+            'description' => 'Disconnect from main battery'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '06',
+            'description' => 'Connect back to main battery'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '17',
+            'description' => 'Over speed'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '22',
+            'description' => 'Tilt'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '23',
+            'description' => 'Impact'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '20',
+            'description' => 'Overspeed+ GF Entry'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '21',
+            'description' => 'Overspeed + GF Exit'
+        ]);
+
 		
     }
 }
+
