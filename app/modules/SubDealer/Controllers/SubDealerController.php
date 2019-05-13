@@ -109,24 +109,14 @@ class SubDealerController extends Controller {
     }
     public function edit(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id); 
-        $subdealers = SubDealer::select(
-            'id', 
-            'user_id',
-            'dealer_id',                         
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile')
-        ->where('user_id',$decrypted)
-        ->get();
+        $decrypted = Crypt::decrypt($request->id);
+        $subdealers = SubDealer::withTrashed()->where('user_id', $decrypted)->first();
+        $user=User::find($decrypted);        
         if($subdealers == null)
         {
            return view('SubDealer::404');
         }
-        return view('SubDealer::sub-dealer-edit',['subdealers' => $subdealers]);
+        return view('SubDealer::sub-dealer-edit',['subdealers' => $subdealers,'user' => $user]);
     }
 
     //update dealers details
@@ -197,23 +187,13 @@ class SubDealerController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
-        $subdealer = SubDealer::select(
-            'id', 
-            'user_id',
-            'dealer_id',                      
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile')
-        ->where('user_id',$decrypted)
-        ->get();  
-        // $subdealer = SubDealer::find($decrypted);
+        $subdealer = SubDealer::withTrashed()->where('user_id', $decrypted)->first();
+        $user=User::find($decrypted);    
+        
         if($subdealer == null){
            return view('SubDealer::404');
         }
-        return view('SubDealer::sub-dealer-details',['subdealer' => $subdealer]);
+        return view('SubDealer::sub-dealer-details',['subdealer' => $subdealer,'user' => $user]);
     }
      //delete Sub Dealer details from table
     public function deleteSubDealer(Request $request)
