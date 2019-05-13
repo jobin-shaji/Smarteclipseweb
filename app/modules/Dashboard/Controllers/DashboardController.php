@@ -87,9 +87,9 @@ class DashboardController extends Controller
     }
     public function dashCount(Request $request){
         $user = $request->user();
-        $subdealers=Dealer::where('user_id',$user->id)->first();
-        $client=SubDealer::where('user_id',$user->id)->first();
-         $client_id=Client::where('user_id',$user->id)->first();
+        $dealers=Dealer::where('user_id',$user->id)->first();
+        $subdealers=SubDealer::where('user_id',$user->id)->first();
+         $client=Client::where('user_id',$user->id)->first();
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
@@ -102,14 +102,14 @@ class DashboardController extends Controller
         }
         else if($user->hasRole('dealer')){
             return response()->json([
-                'subdealers' => SubDealer::where('dealer_id',$subdealers->id)->count(),
+                'subdealers' => SubDealer::where('dealer_id',$dealers->id)->count(),
                 'gps' => Gps::where('user_id',$user->id)->count(),
                 'status' => 'dbcount'           
             ]);
         }
         else if($user->hasRole('sub_dealer')){
             return response()->json([
-                'clients' => Client::where('sub_dealer_id',$client->id)->count(),
+                'clients' => Client::where('sub_dealer_id',$subdealers->id)->count(),
                 'gps' => Gps::where('user_id',$user->id)->count(),
                 'status' => 'dbcount'           
             ]);
@@ -117,7 +117,7 @@ class DashboardController extends Controller
         else if($user->hasRole('client')){
             return response()->json([
                 'gps' => Gps::where('user_id',$user->id)->count(),
-                 'vehicles' => Vehicle::where('client_id',$client_id->id)->count(),
+                 'vehicles' => Vehicle::where('client_id',$client->id)->count(),
                 'status' => 'dbcount'           
             ]);
         }       
