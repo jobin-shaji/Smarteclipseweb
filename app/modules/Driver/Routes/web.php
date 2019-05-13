@@ -1,12 +1,5 @@
 <?php 
-// Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
-// 	Route::get('/client','ClientController@clientListPage')->name('client');
-// 	Route::post('/root-client-list','ClientController@getRootClient')->name('root-client-list');
-// });
-// Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
-// 	Route::get('/dealer-client','ClientController@dealerClientListPage')->name('dealer-client');
-// 	Route::post('/dealer-client-list','ClientController@getDealerClient')->name('dealer-client-list');
-// });
+
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Driver\Controllers' ] , function() {
 	 Route::get('/drivers','DriverController@driverList')->name('drivers');
 	 Route::post('/driver-list','DriverController@getDriverlist')->name('driver-list');
