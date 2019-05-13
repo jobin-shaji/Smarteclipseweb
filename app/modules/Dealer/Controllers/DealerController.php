@@ -79,44 +79,26 @@ class DealerController extends Controller {
     //Dealer details view
     public function details(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id);   
-        // $dealer = Dealer::find($decrypted);
-        $dealer = Dealer::select(
-            'id', 
-            'user_id',                      
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile')
-        ->where('user_id',$decrypted)
-        ->get();
+        $decrypted = Crypt::decrypt($request->id);
+        $dealer = Dealer::where('user_id', $decrypted)->first();
+        $user=User::find($decrypted);   
+        
         if($dealer == null){
             return view('Dealer::404');
         }
-        return view('Dealer::dealer-details',['dealer' => $dealer]);
+        return view('Dealer::dealer-details',['dealer' => $dealer,'user' => $user]);
     }
     //for edit page of Dealers
     public function edit(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id);   
-        // $dealers = Dealer::find($decrypted);
-        $dealers = Dealer::select(
-            'id', 
-            'user_id',                      
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile')
-        ->where('user_id',$decrypted)
-        ->get();
+        $decrypted = Crypt::decrypt($request->id); 
+            $dealers = Dealer::where('user_id', $decrypted)->first();
+            $user=User::find($decrypted);
+
         if($dealers == null){
             return view('Dealer::404');
         }
-        return view('Dealer::dealer-edit',['dealers' => $dealers]);
+        return view('Dealer::dealer-edit',['dealers' => $dealers,'user' => $user]);
     }
     //update dealers details
     public function update(Request $request)
