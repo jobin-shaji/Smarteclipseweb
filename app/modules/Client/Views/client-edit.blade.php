@@ -20,11 +20,11 @@
           <h2 class="page-header">
             <i class="fa fa-edit">Client details</i> 
           </h2>
-            @foreach($client as $client)
+           
           <?php 
             $password=$client->password;
             if($client){
-              $encript=Crypt::encrypt($client->user_id)
+              $encript=Crypt::encrypt($user->id)
           ?>
           <a href="{{route('client.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>
@@ -32,7 +32,7 @@
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="{{route('client.update.p',$client->user_id)}}">
+    <form  method="POST" action="{{route('client.update.p',$user->id)}}">
         {{csrf_field()}}
     <div class="row">
         <div class="col-md-6">
@@ -51,7 +51,7 @@
         
  <div class="form-group has-feedback">
           <label class="srequired">Mobile No.</label>
-          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $client->user->mobile}}">
+          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>
         @if ($errors->has('phone_number'))
@@ -80,7 +80,7 @@
       </div>
       <div class="modal-body">
             <form  method="POST" action="{{route('client.update-password.p',$client->id)}}">
-                    {{csrf_field()}}
+                  {{csrf_field()}}
                   <input type="hidden" name="id" value="{{$client->id}}"> 
                   <div class="row">
                           <div class="col-md-12">
@@ -120,8 +120,7 @@
                         <!-- /.col -->
                       </div>
                 </form>
-            @endforeach
-
+           
       </div>
     </div>
    </div>
