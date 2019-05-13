@@ -53,7 +53,7 @@ class VehicleController extends Controller {
                 }else{
                      return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateVehicle(".$vehicles->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
+                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -274,24 +274,32 @@ class VehicleController extends Controller {
 
     // restore vehicle
     public function activateVehicle(Request $request)
-    {
-        $vehicle = Vehicle::withTrashed()->find($request->id);
-        if($vehicle==null){
-             return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Vehicle does not exist'
-             ]);
+    {       
+        $vehicles = Vehicle::where('gps_id', $request->gps_id)->first();        
+        if($vehicles== null)
+        {
+            $vehicle = Vehicle::withTrashed()->find($request->id);  
+            if($vehicle==null){
+                return response()->json([
+                    'status' => 0,
+                    'title' => 'Error',
+                    'message' => 'Vehicle does not exist'
+                ]);
+            }
+            $vehicle->restore();
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Vehicle restored successfully'
+            ]);
         }
-
-        $vehicle->restore();
-
         return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Vehicle restored successfully'
+            'status' => 0,
+            'title' => 'Error',
+            'message' => 'gps already asigned'
         ]);
     }
+
 
     
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////

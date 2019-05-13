@@ -20,11 +20,11 @@
           <h2 class="page-header">
             <i class="fa fa-edit">Sub Dealer details</i> 
           </h2>
-            @foreach($subdealers as $subdealers)
+           
           <?php 
             $password=$subdealers->password;
             if($subdealers){
-              $encript=Crypt::encrypt($subdealers->user_id)
+              $encript=Crypt::encrypt($user->id)
           ?>
           <a href="{{route('sub.dealers.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>
@@ -32,7 +32,7 @@
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="{{route('sub.dealers.update.p',$subdealers->user_id)}}">
+    <form  method="POST" action="{{route('sub.dealers.update.p',$user->id)}}">
         {{csrf_field()}}
     <div class="row">
         <div class="col-md-6">
@@ -51,7 +51,7 @@
         
  <div class="form-group has-feedback">
           <label class="srequired">Mobile No.</label>
-          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $subdealers->user->mobile}}">
+          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>
         @if ($errors->has('phone_number'))
@@ -120,7 +120,7 @@
                         <!-- /.col -->
                       </div>
                 </form>
-            @endforeach
+           
 
       </div>
     </div>

@@ -91,23 +91,14 @@ class ClientController extends Controller {
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
-        $client = Client::select(
-            'id', 
-            'user_id',
-            'sub_dealer_id',                         
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile')
-        ->where('user_id',$decrypted)
-        ->get();
+        $client = Client::withTrashed()->where('user_id', $decrypted)->first();
+        $user=User::find($decrypted); 
+       
         if($client == null)
         {
            return view('Client::404');
         }
-        return view('Client::client-edit',['client' => $client]);
+        return view('Client::client-edit',['client' => $client,'user' => $user]);
     }
 
     //update dealers details
@@ -183,23 +174,14 @@ class ClientController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
-        $client = Client::select(
-            'id', 
-            'user_id',
-            'sub_dealer_id',                      
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile')
-        ->where('user_id',$decrypted)
-        ->get();  
-        // $subdealer = SubDealer::find($decrypted);
+
+        $client = Client::withTrashed()->where('user_id', $decrypted)->first();
+        $user=User::find($decrypted); 
+
         if($client == null){
            return view('Client::404');
         }
-        return view('Client::client-details',['client' => $client]);
+        return view('Client::client-details',['client' => $client,'user' => $user]);
     }
 
 
