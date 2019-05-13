@@ -58,10 +58,11 @@ function callBackDataTable(){
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
- function activateVehicle(vehicle){
+ function activateVehicle(vehicle,gps_id){
     var url = 'vehicle/activate';
     var data = {
-         id : vehicle
+         id : vehicle,
+         gps_id : gps_id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
