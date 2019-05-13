@@ -1,4 +1,4 @@
-<li class="treeview">
++<li class="treeview">
   <a href="#">
       <i class="fa fa-mobile fa-lg"></i>
       <span>GPS</span>
@@ -61,6 +61,22 @@
   <ul class="treeview-menu" style="display: none;">
       <li><a href="{{url('/fence')}}"><i class="fa fa-plus"></i>Add Geofence</a></li>
       <li><a href=""><i class="fa fa-list"></i> List Geofence</a></li>
+  </ul>
+</li>
+
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-files-o"></i>
+      <span>Reports</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/geofence-report')}}"><i class="fa fa-list"></i>Geofence Report</a></li>
+      <li><a href="{{url('/alert-report')}}"><i class="fa fa-list"></i>Alert Report</a></li>
+      <li><a href="{{url('/tracking-report')}}"><i class="fa fa-list"></i>Tracking Report</a></li>
+      <li><a href="{{url('/route-deviation-report')}}"><i class="fa fa-list"></i>Route Deviation Report</a></li>
   </ul>
 </li>
 

@@ -14,7 +14,8 @@ return  [
        'Alert',
        'Client',
        'Driver',
-       'Geofence'
+       'Geofence',
+       'Reports'
 
     ]
 ]
