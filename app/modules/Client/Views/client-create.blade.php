@@ -1,12 +1,12 @@
 @extends('layouts.gps')
 @section('title')
-    Create Sub Dealer
+    Create Client
 @endsection
 
 
 @section('content')
     <section class="content-header">
-        <h1>Create  Sub Dealer</h1>
+        <h1>Create  Client</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">

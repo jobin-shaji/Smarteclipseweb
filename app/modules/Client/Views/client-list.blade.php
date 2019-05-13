@@ -14,19 +14,19 @@
  <!-- end flash message -->
 <section class="content-header">
       <h1>
-       Client Dealer
+       Client 
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sub Client List</li>
+        <li class="active"> Client List</li>
       </ol>
 </section>
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-              <div class="panel-heading">Dealer  
+              <div class="panel-heading">Client  
                     <a href="{{route('client.create')}}">
                     <button class="btn btn-xs btn-primary pull-right">Add New Client</button>
                     </a>
