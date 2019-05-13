@@ -14,7 +14,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	// route deviation report 
 	Route::get('/route-deviation-report','RouteDeviationReportController@routeDeviationReport')->name('route-deviation-report');
- 	
+ 	Route::post('/route-deviation-report-list','RouteDeviationReportController@routeDeviationReportList')->name('route-deviation-report-list');
 
 });
 
