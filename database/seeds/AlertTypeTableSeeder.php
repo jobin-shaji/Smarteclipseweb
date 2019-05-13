@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Seeder;
@@ -70,11 +71,6 @@ class AlertTypeTableSeeder extends Seeder
         ]);
 
         DB::table('alert_types')->insert([
-            'code' => '06',
-            'description' => 'Connect back to main battery'
-        ]);
-
-        DB::table('alert_types')->insert([
             'code' => '17',
             'description' => 'Over speed'
         ]);
@@ -99,7 +95,45 @@ class AlertTypeTableSeeder extends Seeder
             'description' => 'Overspeed + GF Exit'
         ]);
 
+        DB::table('alert_types')->insert([
+            'code' => '1',
+            'description' => 'Location Update'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '2',
+            'description' => 'Location Update (history)'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '7',
+            'description' => 'Alert – Ignition ON'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '8',
+            'description' => 'Alert – Ignition OFF'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '10',
+            'description' => 'Alert – Emergency state ON*'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '11',
+            'description' => 'Alert – emergency State OFF'
+        ]);
+
+        DB::table('alert_types')->insert([
+            'code' => '12',
+            'description' => 'Alert Over the air parameter change'
+        ]);
+
+
+
 		
     }
 }
+
 
