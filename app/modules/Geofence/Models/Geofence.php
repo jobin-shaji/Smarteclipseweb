@@ -20,5 +20,8 @@ class Geofence extends Model
     	return $this->belongsTo('App\Modules\User\Models\User','user_id','id');
     }
 
+     public function clients(){
+      return $this->hasOne('App\Modules\Client\Models\Client','user_id','user_id');
+  }
 	
 }

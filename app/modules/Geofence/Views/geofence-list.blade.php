@@ -14,7 +14,7 @@
  <!-- end flash message -->
   <section class="content-header">
       <h1>
-        Client
+        Geofence
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -39,9 +39,6 @@
                     <th>Sl.No</th>
                     <th>Name</th> 
                     <th>User</th>                            
-                    <th>Cordinates</th>                              
-                    <th>Geofence Type</th>                            
-                    
                     <th style="width:160px;">Action</th>
                   </tr>
                 </thead>

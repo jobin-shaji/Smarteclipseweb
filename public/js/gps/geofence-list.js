@@ -32,26 +32,24 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'cordinates', name: 'cordinates' },            
-            {data: 'cordinates', name: 'cordinates',searchable: false},           
-            {data: 'user.mobile', name: 'user.mobile'},
-            {data: 'user.email', name: 'user.email',searchable: false},
+            {data: 'name', name: 'name' },            
+            {data: 'clients.name', name: 'clients.name',searchable: false},           
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
-function delDealers(dealer){
-    var url = 'dealer/delete';
+function delGeofence(geofence){
+    var url = 'geofence/delete';
     var data = {
-        uid : dealer
+        uid : geofence
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-function activateDealer(dealer){
-    var url = 'dealer/activate';
+function activateGeofence(geofence){
+    var url = 'geofence/activate';
     var data = {
-        id : dealer
+        id : geofence
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }

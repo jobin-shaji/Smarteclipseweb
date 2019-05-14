@@ -6,8 +6,9 @@ namespace App\Modules\Geofence\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Geofence\Models\Geofence;
-
-
+use Illuminate\Support\Facades\Crypt;
+use App\Modules\Client\Models\Client;
+use App\Modules\User\Models\User;
 use DataTables;
 
 class GeofenceController extends Controller {
@@ -54,22 +55,69 @@ class GeofenceController extends Controller {
         )
         ->withTrashed()
         ->with('user:id,email,mobile')
-        ->get();
+        ->with('clients:id,user_id,name')
+       ->get();  
         return DataTables::of($geofence)
         ->addIndexColumn()
-        ->addColumn('action', function ($dealers) {
-            if($geofence->deleted_at == null){ 
-            return "
-            <a href=/dealers/".Crypt::encrypt($geofence->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-            <a href=/dealers/".Crypt::encrypt($geofence->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <a href=/dealers/".Crypt::encrypt($geofence->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-            <button onclick=delDealers(".$geofence->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+        ->addColumn('action', function ($geofence) {
+            if($geofence->deleted_at == null){  
+            return "          
+            <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>           
+            <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
             }else{ 
-            return "<a href=/dealers/".Crypt::encrypt($geofence->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <button onclick=activateDealer(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            return "
+            <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>  
+            <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
         ->rawColumns(['link', 'action'])
         ->make();
+    }
+    public function details(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $geofence = Geofence::where('id',$decrypted)->first();
+        // dd($geofence->cordinates);
+        if($geofence == null)
+        {
+           return view('Geofence::404');
+        }
+        return view('Geofence::geofence-details',['geofence' => $geofence]);
+    }
+    //delete employee details from table
+    public function deleteGeofence(Request $request)
+    {
+        $geofence = Geofence::find($request->uid);
+        if($geofence == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Geofence does not exist'
+            ]);
+        }
+        $geofence->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Geofence deleted successfully'
+        ]);
+    }
+    // restore emplopyee
+    public function activateGeofence(Request $request)
+    {
+        $geofence = Geofence::withTrashed()->find($request->id);
+        if($geofence==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Geofence does not exist'
+            ]);
+        }
+        $geofence->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Geofence restored successfully'
+        ]);
     }
 }
