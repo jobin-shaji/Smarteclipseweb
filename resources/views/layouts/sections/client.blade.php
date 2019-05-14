@@ -1,4 +1,4 @@
-+<li class="treeview">
+<li class="treeview">
   <a href="#">
       <i class="fa fa-mobile fa-lg"></i>
       <span>GPS</span>
