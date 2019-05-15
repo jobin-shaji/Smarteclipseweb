@@ -25,9 +25,9 @@ class GpsData extends Migration
             $table->bigInteger('imei')->nullable();
             $table->char('update_rate_ignition_on',3)->nullable();
             $table->char('update_rate_ignition_off',3)->nullable();
-            $table->char('battery_percentage',3)->nullable();
-            $table->char('low_battery_threshold_value',3)->nullable();
-            $table->char('memory_percentage',3)->nullable();
+            $table->string('battery_percentage')->nullable();
+            $table->string('low_battery_threshold_value')->nullable();
+            $table->string('memory_percentage')->nullable();
             $table->string('digital_io_status')->nullable();
             $table->string('analog_io_status')->nullable();
             $table->bigInteger('activation_key')->nullable();
@@ -71,6 +71,15 @@ class GpsData extends Migration
             $table->string('key3')->nullable();
             $table->string('value3')->nullable();
             $table->string('gf_id')->nullable();
+            $table->string('packet_type')->nullable();
+            $table->string('packet_version')->nullable();
+            $table->string('emergency_status')->nullable();
+            $table->string('message_type')->nullable();
+            $table->string('gps_validity')->nullable();
+            $table->string('distance')->nullable();
+            $table->string('provider')->nullable();
+            $table->integer('reply_number')->nullable();
+            $table->string('crc')->nullable();
             $table->text('vlt_data')->nullable();
 
             $table->timestamps();
