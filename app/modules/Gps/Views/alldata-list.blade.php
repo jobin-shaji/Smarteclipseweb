@@ -1,9 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.api-app')
 @section('content')
-
 <section class="content">
-  <div> 
-          
+  <div>
+      
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>
@@ -12,13 +11,12 @@
                               <th>Size</th>
                               <th>Date</th>
                               <th>Time</th>
-                              <th>Data</th>
-                      
+                              <th>Data</th>                      
                             </tr>
                         </thead>
                     </table>
-             
-        
+                
+       
     </div>
 </section>
 @section('script')
