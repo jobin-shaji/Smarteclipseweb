@@ -11,6 +11,8 @@
                               <th>Size</th>
                               <th>Device Date</th>
                               <th>Device Time</th>
+                              <th>Server Date</th>
+                              <th>Server Time</th>
                               <th>Data</th>                      
                             </tr>
                         </thead>

@@ -462,6 +462,11 @@ class GpsController extends Controller {
                 $forhuman=Carbon::parse($items->device_time)->diffForHumans();;
                 return $forhuman;
              })
+         ->addColumn('servertime', function ($items) {
+                $servertime=0;
+                $servertime=Carbon::parse($items->created_at)->diffForHumans();;
+                return $servertime;
+             })
         ->make();
     }
 
