@@ -123,7 +123,7 @@ function downloadFile(url,data){
 function getPolygonData(url, data, callBack, options) { 
 
     var purl = getUrl() + '/'+url ;
-
+alert(purl);
     var defaults = {
         type: 'POST',
         alert: false
@@ -139,8 +139,7 @@ function getPolygonData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-           
-           return res['cordinates'];
+          
            
         },
         error: function (err) {
