@@ -81,6 +81,7 @@ class GpsData extends Migration
             $table->integer('reply_number')->nullable();
             $table->string('crc')->nullable();
             $table->text('vlt_data')->nullable();
+            $table->dateTime('device_time');
 
             $table->timestamps();
         });
