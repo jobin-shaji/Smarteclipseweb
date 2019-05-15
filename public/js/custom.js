@@ -123,7 +123,7 @@ function downloadFile(url,data){
 function getPolygonData(url, data, callBack, options) { 
 
     var purl = getUrl() + '/'+url ;
-alert(purl);
+
     var defaults = {
         type: 'POST',
         alert: false

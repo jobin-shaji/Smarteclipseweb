@@ -109,20 +109,20 @@ class GeofenceController extends Controller {
 
 
      public function geofenceShow(Request $request){
-       
-      $decrypted = Crypt::decrypt($request->id);          
-            return response()->json([
-                'geofence' => Geofence:: select([
+
+            $cordinates =  Geofence:: select([
                             'cordinates'                   
                         ])
-                        ->where('id',$decrypted)->first(),                
+                        ->where('id',$request->id)->first();
+               
+            return response()->json([
+                'cordinates' => $cordinates,                
                 'status' => 1
             ]);
-       
-       
-             
+
     }
-      public function details(Request $request)
+
+    public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
         // $geofence = Geofence::where('id',$decrypted)->first();
