@@ -1,22 +1,23 @@
-
-
- var allPolly = [];
- var showMap;
+$(document).ready(function () {
+  var allPolly = []; 
+  var geo_id= document.getElementById('hd_id').value;
+  var url = 'geofence/show';
+  var data = {
+    uid : geo_id
+  };
+  allPolly[] =getPolygonData(url,data,'Coordinates',{alert:true});  
+alert(allPolly);
+});
+ 
    function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 10.107570, lng: 76.345665},
           zoom: 12
         });
 
-//         function showMap(geofence_id){
-         
-//     var url = 'geofence/show';
-//     var data = {
-//         uid : geofence_id
-//     };
-//     getPolygonData(url,data,'flightPlanCoordinates',{alert:true});  
-// }
-
+      
+function Coordinates(res){
+  
  var flightPlanCoordinates = [
          {lat: 10.146437001122608, lng: 76.30206301025396},
           {lat: 10.153533944581872, lng: 76.37896730712896},
@@ -39,5 +40,6 @@
           }
         });
         flightPath.setMap(map);
+      }
     }
 

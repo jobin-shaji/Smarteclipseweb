@@ -9,8 +9,8 @@
                               <th>Sl.No</th>
                               <th>IMEI</th>
                               <th>Size</th>
-                              <th>Date</th>
-                              <th>Time</th>
+                              <th>Device Date</th>
+                              <th>Device Time</th>
                               <th>Data</th>                      
                             </tr>
                         </thead>
