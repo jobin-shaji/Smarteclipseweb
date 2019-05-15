@@ -12,7 +12,8 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
-
+use Carbon\Carbon;
+use Auth;
 use DataTables;
 
 class GpsController extends Controller {
@@ -424,9 +425,32 @@ class GpsController extends Controller {
         return response()->json(array('response' => 'success', 'gps' => $gps , 'user' => $user));
     }
 
-    public function allGpsData(Request $request){
+    public function allGpsDatas(Request $request){
         $items = GpsData::all()->sortByDesc('id');
         return view('Gps::alldata',['items' => $items]);
+    }
+
+
+    public function allgpsListPage()
+    {
+        return view('Gps::alldata-list');
+    }
+     public function getAllData()
+    {
+         $items = GpsData::all()->sortByDesc('id');        
+        return DataTables::of($items)
+        ->addIndexColumn()
+         ->addColumn('count', function ($items) {
+                $count=0;
+                $count=strlen($items->vlt_data);
+                return $count;
+             })
+         ->addColumn('forhuman', function ($items) {
+                $forhuman=0;
+                $forhuman=$items->created_at->diffForHumans();
+                return $forhuman;
+             })
+        ->make();
     }
 
     // gps transfer rule

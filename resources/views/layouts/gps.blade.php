@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
     @include('layouts.sections.meta')
     @include('layouts.sections.header')
     <body class="hold-transition skin-black-light sidebar-mini">
