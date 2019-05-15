@@ -62,12 +62,12 @@ class GeofenceController extends Controller {
         ->addColumn('action', function ($geofence) {
             if($geofence->deleted_at == null){  
             return "          
-            <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>           
-            <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
-            }else{ 
-            return "
-            <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>  
-            <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+	               <button onclick=showMap(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </button>          
+	            <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+	            }else{ 
+	            return "
+	            <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>  
+	            <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
         ->rawColumns(['link', 'action'])
