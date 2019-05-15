@@ -49,7 +49,7 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer'] , 'na
 });
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
-	 Route::get('/gps-datas','GpsController@allGpsDatas');
+	
 	Route::get('/gps-data','GpsController@allgpsListPage')->name('gps-data');
 	Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 });
