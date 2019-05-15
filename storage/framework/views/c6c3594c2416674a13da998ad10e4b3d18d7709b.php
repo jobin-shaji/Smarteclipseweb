@@ -7,10 +7,39 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title><?php echo e(config('app.name', 'PEPSU')); ?></title>
+    <title><?php echo e(config('app.name', 'GPS')); ?></title>
 
+
+
+
+
+   <!-- search option in dropdown -->
+   <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap-select.css')); ?>">
+
+   
+   <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap-datetimepicker.css')); ?>">
+
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+ 
+  <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <!-- Scripts -->
     <script src="<?php echo e(asset('js/app.js')); ?>" defer></script>
+     <script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="<?php echo e(asset('js/jquery-ui.min.js')); ?>"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <!-- Bootstrap 3.3.7 -->
+    <script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/adminlte.min.js')); ?>"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- search option in dropdown -->
+    <script src="<?php echo e(asset('js/bootstrap-select.js')); ?>"></script>
+
+    <!-- datetime picker -->
+    <script src="<?php echo e(asset('js/moment-with-locales.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/bootstrap-datetimepicker.js')); ?>"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,13 +47,25 @@
 
     <!-- Styles -->
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
+      <!-- datetime picker -->
+    <?php echo Toastr::render(); ?>
+
+
+    <?php echo $__env->yieldContent('script'); ?>
+
+    <script type="text/javascript">
+        toastr.options.closeButton = true;
+        toastr.options.escapeHtml = true;
+        toastr.options.newestOnTop = false;
+    </script>
+      <script src="<?php echo e(asset('js/custom.js')); ?>"></script>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
-                    <?php echo e(config('app.name', 'PEPSU')); ?>
+                    <?php echo e(config('app.name', 'GPS')); ?>
 
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php echo e(__('Toggle navigation')); ?>">
@@ -73,5 +114,8 @@
             <?php echo $__env->yieldContent('content'); ?>
         </main>
     </div>
+
+  
+
 </body>
 </html>
