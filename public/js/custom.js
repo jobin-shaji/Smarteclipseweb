@@ -4,6 +4,7 @@ function getUrl(){
 }
 
 function toast(res){
+    alert(res.status);
    if(res.status == 1){
         toastr.success( res.message, res.title);
         console.log( res.message, res.title);
@@ -17,7 +18,10 @@ function toast(res){
     }    
     else if(res.status == 'gpsdatacount'){
         gpsdatacount(res);
-    }  
+    } 
+     else if(res.status == 'cordinate'){
+        Coordinates(res);
+    } 
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -39,7 +43,8 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-           toast(res);
+           
+            toast(res);
             if (callBack){
                 if (callBack == 'callBackDataTables'){
                     callBackDataTable();
@@ -139,7 +144,7 @@ function getPolygonData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-            
+            toast(res);
            if (callBack){
                 if (callBack == 'Coordinates'){
                     Coordinates();
