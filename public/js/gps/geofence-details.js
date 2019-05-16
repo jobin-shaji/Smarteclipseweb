@@ -16,7 +16,9 @@ $(document).ready(function () {
 //         });
 
       
-// function Coordinates(res){
+ function Coordinates(res){
+  alert(res);
+ }
 //   console.log(res.cordinates);
 //  var flightPlanCoordinates = res.cordinates;
 //           var flightPath = new google.maps.Polyline({
@@ -37,7 +39,7 @@ $(document).ready(function () {
 //         flightPath.setMap(map);
 //       }
 //     }
-function Coordinates(res){
+
 function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 5,
@@ -64,5 +66,5 @@ function initMap() {
         });
         bermudaTriangle.setMap(map);
       }
-    }
+   
 
