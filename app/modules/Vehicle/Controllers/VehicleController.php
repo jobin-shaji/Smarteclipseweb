@@ -9,6 +9,7 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
@@ -513,6 +514,79 @@ class VehicleController extends Controller {
     public function location(Request $request){
 
        return view('Vehicle::vehicle-tracker'); 
+    }
+    public function locationTrack(Request $request){
+     $vehicleid=1;
+     $get_vehicle=Vehicle::find($vehicleid);
+
+     $currentDateTime=Date('Y-m-d H:i:s');
+     $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-1 minutes"));
+     
+    
+
+     $track_data=GpsData::select('latitude as latitude',
+                  'longitude as longitude',
+                  'heading as angle',
+                  'vehicle_mode as vehicleStatus',
+                  'speed',
+                  'created_at as dateTime',
+                  'main_power_status as power',
+                  'gps_fix as gps',
+                  'ignition as ign',
+                  'gsm_signal_strength as signalStrength'
+                  )->where('device_time', '>=',$oneMinut_currentDateTime)
+                  ->where('device_time', '<=',$currentDateTime)
+                  ->orderBy('id','desc')
+                  ->first();
+       if($track_data==null){
+             $track_data=GpsData::select('latitude as latitude',
+                  'longitude as longitude',
+                  'heading as angle',
+                  'vehicle_mode as vehicleStatus',
+                  'speed',
+                  'created_at as dateTime',
+                  'main_power_status as power',
+                  'gps_fix as gps',
+                  'ignition as ign',
+                  'gsm_signal_strength as signalStrength'
+                  )->orderBy('id','desc')
+                  ->first();
+                }
+
+
+      if($track_data){
+
+                $reponseData=array(
+                            "latitude"=>$track_data->latitude,
+                            "longitude"=>$track_data->longitude,
+                            "angle"=>$track_data->angle,
+                            "vehicleStatus"=>$track_data->vehicleStatus,
+                            "speed"=>$track_data->speed,
+                            "dateTime"=>$track_data->dateTime,
+                            "power"=>$track_data->power,
+                            "gps"=>$track_data->gps,
+                            "ign"=>$track_data->ign,
+                            "signalStrength"=>$track_data->signalStrength,
+                            "fuel"=>"",
+                            "ac"=>"",
+                            "fuelquantity"=>""
+                          );
+
+
+            $response_data = array('status'  => 'success',
+                               'message' => 'success',
+                               'code'    =>1,
+                               'vehicle_type' => $get_vehicle->vehicleType->name,
+                               'liveData' => $reponseData
+                                );
+
+             }else{
+
+                 $response_data = array('status'  => 'failed',
+                               'message' => 'failed',
+                                'code'    =>0);
+             }
+        return response()->json($response_data); 
     }
 
     /////////////////////////////Vehicle Sub Dealer List/////////////////////
