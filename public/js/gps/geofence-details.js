@@ -9,36 +9,13 @@ $(document).ready(function () {
 
 });
  
-//    function initMap() {
-//         var map = new google.maps.Map(document.getElementById('map'), {
-//           center: {lat: 10.107570, lng: 76.345665},
-//           zoom: 12
-//         });
 
       
  function Coordinates(res){
-  alert(res);
+  alert(res.cordinates);
+  
  }
-//   console.log(res.cordinates);
-//  var flightPlanCoordinates = res.cordinates;
-//           var flightPath = new google.maps.Polyline({
-//           path: flightPlanCoordinates,
-//           geodesic: true,         
-//           strokeOpacity: 1.0,
-//           strokeWeight: 2,
-//           markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-//           circleOptions: {
-//             fillColor: '#ffff00',
-//             fillOpacity: 1,
-//             strokeWeight: 5,
-//             clickable: false,
-//             editable: true,
-//             zIndex: 1
-//           }
-//         });
-//         flightPath.setMap(map);
-//       }
-//     }
+
 
 function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {

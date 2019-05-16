@@ -70,7 +70,11 @@ class GeofenceController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
-
+ public function details(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        return view('Geofence::geofence-details',['id' => $decrypted]);
+    }
      public function deleteGeofence(Request $request)
     {
         $geofence = Geofence::find($request->uid);
@@ -108,30 +112,16 @@ class GeofenceController extends Controller {
     }
 
 
-     public function geofenceShow(Request $request){
-
-            $cordinates =  Geofence:: select([
-                            'cordinates'                   
-                        ])
-                        ->where('id',$request->id)->first();
-               
+     public function geofenceShow(Request $request){  
+       $coordinates = [];        
+             $coordinates  =  Geofence:: select('cordinates')->where('id',$request->id)->first();              
             return response()->json([
-                'cordinates' => $cordinates,                
-                'status' => 1
+                'cordinates' => $coordinates,                
+                'status' => 'cordinate'
             ]);
 
     }
 
-    public function details(Request $request)
-    {
-        $decrypted = Crypt::decrypt($request->id);
-        // $geofence = Geofence::where('id',$decrypted)->first();
-        // // dd($geofence->cordinates);
-        // if($geofence == null)
-        // {
-        //    return view('Geofence::404');
-        // }
-        return view('Geofence::geofence-details',['id' => $decrypted]);
-    }
+   
 
 }
