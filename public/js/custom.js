@@ -54,6 +54,8 @@ function backgroundPostData(url, data, callBack, options) {
 
 }
 
+
+
 function downloadFile(url,data){
 
     var purl = getUrl() + '/'+url ;
@@ -115,6 +117,42 @@ function downloadFile(url,data){
                 } 
             }
         });
+}
+
+
+function getPolygonData(url, data, callBack, options) { 
+
+    var purl = getUrl() + '/'+url ;
+
+    var defaults = {
+        type: 'POST',
+        alert: false
+    };
+
+    jQuery.extend(defaults, options);
+    $.ajax({
+        type: defaults.type,
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            
+           if (callBack){
+                if (callBack == 'Coordinates'){
+                    Coordinates();
+                }
+            }
+          
+        },
+        error: function (err) {
+            var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
+            toastr.error(message, 'Error');
+        }
+    });
+
 }
 
 

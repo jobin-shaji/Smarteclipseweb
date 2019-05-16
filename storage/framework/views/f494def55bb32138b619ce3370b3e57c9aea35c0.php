@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
     <?php echo $__env->make('layouts.sections.meta', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php echo $__env->make('layouts.sections.header', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <body class="hold-transition skin-black-light sidebar-mini">

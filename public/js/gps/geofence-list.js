@@ -1,14 +1,9 @@
 $(document).ready(function () {
     callBackDataTable();
-
 });
-
-
 function callBackDataTable(){
-    var  data = {
-    
+    var  data = {   
     }; 
-
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -17,7 +12,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'vehicle-list',
+            url: 'geofence-list',
             type: 'POST',
             data: {
                 'data': data
@@ -37,37 +32,33 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name'},
-            {data: 'register_number', name: 'register_number'},
-            {data: 'gps.name', name: 'gps.name'},
-            {data: 'gps.imei', name: 'gps.imei'},
-            {data: 'e_sim_number', name: 'e_sim_number'},
-            {data: 'vehicle_type.name', name: 'vehicle_type.name'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-        ],
-        
+            {data: 'name', name: 'name' },            
+            {data: 'clients.name', name: 'clients.name',searchable: false},           
+            {data: 'action', name: 'action', orderable: false, searchable: false},           
+        ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
- }
-
- function deleteVehicle(vehicle){
-    var url = 'vehicle/delete';
+}
+function delGeofence(geofence){
+    var url = 'geofence/delete';
     var data = {
-        vid : vehicle
+        uid : geofence
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-
- function activateVehicle(vehicle,gps_id){
-    var url = 'vehicle/activate';
+function activateGeofence(geofence){
+    var url = 'geofence/activate';
     var data = {
-         id : vehicle,
-         gps_id : gps_id
+        id : geofence
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-
-
-
-
+ function mapsView(geofence_id){
+         
+    var url = 'geofence/show';
+    var data = {
+        uid : geofence_id
+    };
+    getPolygonData(url,data,'Coordinates',{alert:true});  
+}
 

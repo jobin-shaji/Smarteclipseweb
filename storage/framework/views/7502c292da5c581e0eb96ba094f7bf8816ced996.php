@@ -190,6 +190,129 @@
             <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <div class="row">
+          <!-- alert report-start -->
+          <div class="col-xs-6">
+            <div class="box box-danger">
+              <div class="box-header ui-sortable-handle" style="cursor: move;">
+                <i class="fa fa-bell-o"></i>
+                <h3 class="box-title">Alert List</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                <ul class="list-group">
+                  <?php if($alerts): ?>
+                    <?php $__currentLoopData = $alerts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $alert): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li class="list-group-item">
+                    <!-- drag handle -->
+                    <span class="handle ui-sortable-handle">
+                      <i class="fa fa-ellipsis-v"></i>
+                      <i class="fa fa-ellipsis-v"></i>
+                    </span>
+                        
+                    <!-- todo text -->
+                    <span class="text"><?php echo e($alert->alertType->description); ?></span>
+                    [<span class="text-primary" style="color:#000;"> <?php echo e($alert->vehicle->name); ?> - <?php echo e($alert->vehicle->register_number); ?></span>]
+                        <?php 
+                              $alert_time=$alert->created_at;
+                              $alert_status=$alert->status;
+                         ?>
+                         <br>
+                        <!-- Emphasis label -->
+                        <small class="label label-danger" style="font-size: 13px;     margin: 0px 12px;"><i class="fa fa-clock-o"></i> <?php echo e($alert_time); ?></small>
+                        <?php if($alert_status==0): ?>
+                          <small class="label label-danger pull-right" style="font-size: 13px;"><?php echo "Pending"; ?></small>
+                        <?php else: ?>
+                          <small class="label label-success pull-right" style="font-size: 13px;"><?php echo "Success"; ?></small>
+                        <?php endif; ?>
+                        <!-- General tools such as edit or delete-->
+                      </li>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php else: ?>
+                      <h4 class="text-info"> Sorry!! waiting for alerts.....</h4>
+                    <?php endif; ?>
+                      
+                    </ul>
+                  </div>
+                  <!--Alert report-end -->
+                </div>
+          </div>
+          <div class="col-xs-6">
+            <!-- documents report -start -->
+            <div class="box box-danger">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-file"></i>
+                    <h3 class="box-title">Expired Documents List</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    <ul class="list-group">
+                      <?php if($expired_documents): ?>
+                        <?php $__currentLoopData = $expired_documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expired): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li class="list-group-item">
+                          <!-- drag handle -->
+                          <span class="handle ui-sortable-handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                              </span>
+                          
+                          <!-- todo text -->
+                          <span class="text-danger"><?php echo e($expired->documentType->name); ?> expired on <?php echo e($expired->expiry_date); ?></span>
+                          [<span class="text-primary" style="color:#000;"><?php echo e($expired->vehicle->name); ?> - <?php echo e($expired->vehicle->register_number); ?></span>]
+
+                          <div class="card-link pull-right">
+                            <?php $id=Crypt::encrypt($expired->vehicle_id); ?>
+                            <a href="<?php echo e(route('vehicle.documents',$id)); ?>" class="c-link">View
+                            <i class="fa fa-angle-right"></i>
+                            </a>
+                            
+                          </div>
+                          <!-- General tools such as edit or delete-->
+                        </li>
+                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      <?php else: ?>
+                        <h4 class="text-info"> </h4>
+                      <?php endif; ?>
+                      
+                    </ul>
+                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    <ul class="list-group">
+                      <?php if($expire_documents): ?>
+                        <?php $__currentLoopData = $expire_documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expired): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li class="list-group-item">
+                          <!-- drag handle -->
+                          <span class="handle ui-sortable-handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                              </span>
+                          
+                          <!-- todo text -->
+                          <span class="text-danger"><?php echo e($expired->documentType->name); ?> will expire on <?php echo e($expired->expiry_date); ?></span>
+                          [<span class="text-primary" style="color:#000;"><?php echo e($expired->vehicle->name); ?> - <?php echo e($expired->vehicle->register_number); ?></span>]
+
+                          <div class="card-link pull-right">
+                            <?php $id=Crypt::encrypt($expired->vehicle_id); ?>
+                            <a href="<?php echo e(route('vehicle.documents',$id)); ?>" class="c-link">View
+                            <i class="fa fa-angle-right"></i>
+                            </a>
+                            
+                          </div>
+                          <!-- General tools such as edit or delete-->
+                        </li>
+                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      <?php else: ?>
+                        <h4 class="text-info"> </h4>
+                      <?php endif; ?>
+                      
+                    </ul>
+                  </div>
+                  <!--Documents report-end -->
+                </div>
+          </div>
+        </div>
+
   <?php endif; ?>
 
 </div>
