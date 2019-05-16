@@ -1,47 +1,66 @@
-$(document).ready(function () {
-  var allPolly = []; 
-  var geo_id= document.getElementById('hd_id').value;
-  var url = 'geofence/show';
-  var data = {
-    id : geo_id
-  };
-  allPolly=getPolygonData(url,data,'Coordinates',{alert:true});  
 
-});
- 
-
-      
- function Coordinates(res){
-  alert(res.cordinates);
-  
- }
+function getUrl(){
+  return $('meta[name = "domain"]').attr('content');
+}
 
 
-function initMap() {
+function initMap(res) {
+    // latlng= res.cordinates;
+    // console.log(latlng);
+   // latlng.push(new google.maps.LatLng(res.cordinates));
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 5,
-          center: {lat: 24.886, lng: -70.268},
+          zoom: 13,
+          center: {lat: 10.125145227224547, lng: 76.30721285156255},
           mapTypeId: 'terrain'
         });
 
+        var url = 'geofence/show';
+
+          var geo_id= document.getElementById('hd_id').value;
+          var data = {
+            id : geo_id
+          };
+
+        var purl = getUrl() + '/'+url ;
+        var triangleCoords = [];
+
+        $.ajax({
+            type:'POST',
+            url: purl,
+            data: data,
+            async: true,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+
+                triangleCoords = res.cordinates;
+
+                  var bermudaTriangle = new google.maps.Polygon({
+                    paths: triangleCoords,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35
+                  });
+                  bermudaTriangle.setMap(map);
+            },
+            error: function (err) {
+                var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
+                toastr.error(message, 'Error');
+            }
+        });
+
+
+   
     // Define the LatLng coordinates for the polygon's path.
-        var triangleCoords = [
-          {lat: 25.774, lng: -80.190},
-          {lat: 18.466, lng: -66.118},
-          {lat: 32.321, lng: -64.757},
-          {lat: 25.774, lng: -80.190}
-        ];
+    
+
+        // var triangleCoords = 
 
         // Construct the polygon.
-        var bermudaTriangle = new google.maps.Polygon({
-          paths: triangleCoords,
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35
-        });
-        bermudaTriangle.setMap(map);
+      
       }
    
 
