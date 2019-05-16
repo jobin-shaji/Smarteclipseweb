@@ -20,6 +20,8 @@ Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->na
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
 
+Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
+
 });
 
 
@@ -56,4 +58,10 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => '
 Route::get('/vehicle-sub-dealer','VehicleController@vehicleSubDealerList')->name('vehicle-sub-dealer');
 
 Route::post('/vehicle-sub-dealer-list','VehicleController@getVehicleSubDealerList')->name('vehicle-sub-dealer-list');
+
+
+
+
 });
+
+
