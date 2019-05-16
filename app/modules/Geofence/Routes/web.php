@@ -11,6 +11,13 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/geofence/delete','GeofenceController@deleteGeofence')->name('geofence.delete');
 	Route::post('/geofence/activate','GeofenceController@activateGeofence')->name('geofence.activate');
 
+<<<<<<< HEAD
+	Route::post('/geofence/show','GeofenceController@deleteGeofence')->name('geofence.show');
+
+	Route::get('test','GeofenceController@test')->name('geofence.test');
+
+=======
 	Route::post('/geofence/show','GeofenceController@geofenceShow')->name('geofence.show');
+>>>>>>> e2ab25d160e8f88060de39616fb41edfacf8328a
 });
 

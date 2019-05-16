@@ -512,7 +512,6 @@ class VehicleController extends Controller {
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
-
        return view('Vehicle::vehicle-tracker'); 
     }
     public function locationTrack(Request $request){
