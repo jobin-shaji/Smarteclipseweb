@@ -31,8 +31,10 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index'},
             {data: 'imei', name: 'imei', },
             {data: 'count', name: 'count'},
-            {data: 'created_at', name: 'created_at'},
+            {data: 'device_time', name: 'device_time'},
             {data: 'forhuman', name: 'forhuman'},
+             {data: 'created_at', name: 'created_at'},
+            {data: 'servertime', name: 'servertime'},
             {data: 'vlt_data', name: 'vlt_data'},
         ],
         

@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Geofence\Models\Geofence;
 use Illuminate\Support\Facades\Crypt;
-use App\Modules\Client\Models\Client;
-use App\Modules\User\Models\User;
+
 use DataTables;
 
 class GeofenceController extends Controller {
@@ -34,27 +33,24 @@ class GeofenceController extends Controller {
         return json_encode($polygons);
 
     }
-
-
+    
 	public function saveFence(Request $request){
-
 		foreach ($request->polygons as $polygon) {
 			Geofence::create([
 				'user_id' => $request->user()->id,
 				'cordinates' => $polygon,
 				'fence_type_id' => 1
-
 			]);
 		}
-
 		return response()->json([
             'status' => 1,
             'title' => 'Success',
             'message' => 'Geofence added successfully'
         ]);
-
 	}
- public function geofenceListPage()
+
+
+     public function geofenceListPage()
     {
         return view('Geofence::geofence-list');
     }
@@ -77,31 +73,25 @@ class GeofenceController extends Controller {
         ->addIndexColumn()
         ->addColumn('action', function ($geofence) {
             if($geofence->deleted_at == null){  
-            return "          
-	               <button onclick=showMap(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </button>          
-	            <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
-	            }else{ 
-	            return "
-	            <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>  
-	            <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            return " 
+             <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>           
+                           
+                <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+                }else{ 
+                return "
+                <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>  
+                <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
-    public function details(Request $request)
+ public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $geofence = Geofence::where('id',$decrypted)->first();
-        // dd($geofence->cordinates);
-        if($geofence == null)
-        {
-           return view('Geofence::404');
-        }
-        return view('Geofence::geofence-details',['geofence' => $geofence]);
+        return view('Geofence::geofence-details',['id' => $decrypted]);
     }
-    //delete employee details from table
-    public function deleteGeofence(Request $request)
+     public function deleteGeofence(Request $request)
     {
         $geofence = Geofence::find($request->uid);
         if($geofence == null){
@@ -136,4 +126,28 @@ class GeofenceController extends Controller {
             'message' => 'Geofence restored successfully'
         ]);
     }
+
+
+     public function geofenceShow(Request $request){  
+            
+            $coordinates  =  Geofence:: select(['cordinates'])->where('id',$request->id)->first();  
+            $cordinates=$coordinates->cordinates; 
+
+               $polygons = array();
+                foreach ($cordinates as $cord) {
+                    $p = new Geofence;
+                    $p->lat = (float)$cord[0];
+                    $p->lng = (float)$cord[1];
+                     array_push($polygons,$p);
+                }
+
+            return response()->json([
+                'cordinates' => $polygons,                
+                'status' => 'cordinate'
+            ]);
+
+    }
+
+   
+
 }

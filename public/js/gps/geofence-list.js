@@ -53,4 +53,12 @@ function activateGeofence(geofence){
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
+ function mapsView(geofence_id){
+         
+    var url = 'geofence/show';
+    var data = {
+        uid : geofence_id
+    };
+    getPolygonData(url,data,'Coordinates',{alert:true});  
+}
 

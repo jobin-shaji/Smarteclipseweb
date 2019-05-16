@@ -14,6 +14,7 @@
     </div>
     @endif  
   <section class="content">
+    <input type="hidden" name="hd_id" id="hd_id" value="{{$id}}">
     <div style="position: absolute;">
       <div id="map" style="position: "></div>
     </div>

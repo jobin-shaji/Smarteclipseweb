@@ -437,7 +437,19 @@ class GpsController extends Controller {
     }
      public function getAllData()
     {
-         $items = GpsData::all()->sortByDesc('id');        
+
+         // $gps = GpsData::select(
+         //        'id',
+         //        'name',
+         //        'imei',
+         //        'deleted_at')
+                
+         //        ->orderBy('id',$client_id)
+         //        ->get();
+
+
+         $items = GpsData::all()->sortByDesc('id');  
+           
         return DataTables::of($items)
         ->addIndexColumn()
          ->addColumn('count', function ($items) {
@@ -447,8 +459,13 @@ class GpsController extends Controller {
              })
          ->addColumn('forhuman', function ($items) {
                 $forhuman=0;
-                $forhuman=$items->created_at->diffForHumans();
+                $forhuman=Carbon::parse($items->device_time)->diffForHumans();;
                 return $forhuman;
+             })
+         ->addColumn('servertime', function ($items) {
+                $servertime=0;
+                $servertime=Carbon::parse($items->created_at)->diffForHumans();;
+                return $servertime;
              })
         ->make();
     }
