@@ -4,7 +4,7 @@ function getUrl(){
 }
 
 function toast(res){
-    alert(res.status);
+    
    if(res.status == 1){
         toastr.success( res.message, res.title);
         console.log( res.message, res.title);
@@ -20,7 +20,7 @@ function toast(res){
         gpsdatacount(res);
     } 
      else if(res.status == 'cordinate'){
-        Coordinates(res);
+        initMap(res);
     } 
 }
 
@@ -146,8 +146,8 @@ function getPolygonData(url, data, callBack, options) {
         success: function (res) {
             toast(res);
            if (callBack){
-                if (callBack == 'Coordinates'){
-                    Coordinates();
+                if (callBack == 'initMap'){
+                    initMap();
                 }
             }
           
