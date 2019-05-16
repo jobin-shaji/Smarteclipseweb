@@ -4,7 +4,7 @@ function getUrl(){
 }
 
 
-function initMap(res) {   
+function initMap() {   
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 13,
           center: {lat: 10.125145227224547, lng: 76.30721285156255},
