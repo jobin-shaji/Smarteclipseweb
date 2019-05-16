@@ -4,26 +4,19 @@ function getUrl(){
 }
 
 
-function initMap(res) {
-    // latlng= res.cordinates;
-    // console.log(latlng);
-   // latlng.push(new google.maps.LatLng(res.cordinates));
+function initMap(res) {   
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 13,
           center: {lat: 10.125145227224547, lng: 76.30721285156255},
           mapTypeId: 'terrain'
         });
-
         var url = 'geofence/show';
-
-          var geo_id= document.getElementById('hd_id').value;
-          var data = {
-            id : geo_id
-          };
-
+        var geo_id= document.getElementById('hd_id').value;
+        var data = {
+          id : geo_id
+        };
         var purl = getUrl() + '/'+url ;
         var triangleCoords = [];
-
         $.ajax({
             type:'POST',
             url: purl,
@@ -33,7 +26,6 @@ function initMap(res) {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (res) {
-
                 triangleCoords = res.cordinates;
 
                   var bermudaTriangle = new google.maps.Polygon({
