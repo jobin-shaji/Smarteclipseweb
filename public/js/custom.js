@@ -139,8 +139,13 @@ function getPolygonData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
+            
+           if (callBack){
+                if (callBack == 'Coordinates'){
+                    Coordinates();
+                }
+            }
           
-           
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
