@@ -561,11 +561,12 @@ class VehicleController extends Controller {
 
         $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
 
-        $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-
+    $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+   
+    dd($snapRoute);
                 $reponseData=array(
-                            "latitude"=>$snapRoute->lat,
-                            "longitude"=>$snapRoute->lng,
+                            "latitude"=>$snapRoute['lat'],
+                            "longitude"=>$snapRoute['lng'],
                             "angle"=>$track_data->angle,
                             "vehicleStatus"=>$track_data->vehicleStatus,
                             "speed"=>$track_data->speed,
@@ -746,6 +747,7 @@ class VehicleController extends Controller {
         }
         $userData = ["lat" => $lat, "lng" => $lng];
         return $userData;
+
     }
 /////////////// snap root for live data///////////////////////////////////
 
