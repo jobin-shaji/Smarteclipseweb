@@ -48,13 +48,26 @@
         });
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
-          var url = 'save/fence';
-          var data = {
-           polygons : allPolly
-          };
-          backgroundPostData(url,data,'none',{alert:true});  
+          var name= document.getElementById('name').value;
+          if(name !== "")
+          {
+            var url = 'save/fence';
+            var data = {
+             polygons : allPolly,
+             name : name
+            };
+            backgroundPostData(url,data,'none',{alert:true});  
 
-          console.log(allPolly);
+            console.log(allPolly);
+          }
+          else
+          {
+            alert("Plese Enter Name");
+          }
+        
+           
+         
+         
         });
    
     }

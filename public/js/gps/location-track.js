@@ -73,9 +73,10 @@ function getMarkers() {
             }
             if (res.liveData.ign == 1) {
                 document.getElementById("ignition").innerHTML = "Ignitio ON";
-            } else {
-                document.getElementById("ignition").innerHTML = "Ignitio OFF";
-            }
+             }else
+              {
+                 document.getElementById("ignition").innerHTML = "Ignitio OFF";
+              }
             // document.getElementById("user").innerHTML = res.client_name;
             document.getElementById("vehicle_name").innerHTML = res.vehicle_name;
             document.getElementById("car_speed").innerHTML = res.liveData.speed;

@@ -16,10 +16,13 @@
 <section class="content box">
   <div class="row">
     <div class="col-lg-12 col-sm-12">
-        
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h2 class="card-title" id="user"></h2>
+      <input type="text" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+                      
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <h2 class="card-title" id="user"></h2>
+                                
+                              
 
                 <p>
                     <b>
