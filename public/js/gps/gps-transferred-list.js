@@ -1,5 +1,6 @@
 $(document).ready(function () {
     callBackDataTable();
+    
 });
 
 
@@ -16,7 +17,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-dealer-list',
+            url: 'gps-transferred-list',
             type: 'POST',
             data: {
                 'data': data
@@ -38,14 +39,15 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name', searchable: false},
             {data: 'imei', name: 'imei'},
+            {data: 'manufacturing_date', name: 'manufacturing_date'},
             {data: 'version', name: 'version'},
+            {data: 'user', name: 'user'},
             
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
-
 
 
 

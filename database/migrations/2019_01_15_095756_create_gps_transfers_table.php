@@ -15,11 +15,12 @@ class CreateGpsTransfersTable extends Migration
     {
         Schema::create('gps_transfers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('gps_id');
             $table->integer('from_user_id');
             $table->integer('to_user_id');
-            $table->dateTime('transfer_date');
+            $table->dateTime('dispatched_on');
+            $table->dateTime('accepted_on')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

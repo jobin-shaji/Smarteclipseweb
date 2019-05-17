@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-dealer-list',
+            url: 'gps-new-list',
             type: 'POST',
             data: {
                 'data': data
@@ -26,8 +26,8 @@ function callBackDataTable(){
             }
         },
         createdRow: function ( row, data, index ) {
-            if ( data['deleted_at'] ) {
-                $('td', row).css('background-color', 'rgb(243, 204, 204)');
+            if ( data['accepted_on'] ) {
+                $('td', row).css('background-color', 'rgb(210, 239, 203)');
             }
         },
        
@@ -36,14 +36,23 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name', searchable: false},
-            {data: 'imei', name: 'imei'},
-            {data: 'version', name: 'version'},
-            
+            {data: 'from_user.username', name: 'from_user.username', searchable: false},
+            {data: 'dispatched_on', name: 'dispatched_on'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+}
+
+function acceptGpsTransfer(gps_transfer_id){
+    if(confirm('Are you sure want to accept this?')){
+        var url = 'gps-transfer/accept';
+        var data = {
+            id : gps_transfer_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

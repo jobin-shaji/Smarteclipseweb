@@ -27,6 +27,7 @@
                               <th>Sl.No</th>
                               <th>Name</th>
                               <th>IMEI</th>
+                              <th>Version</th>
                             </tr>
                         </thead>
                     </table>
