@@ -14,6 +14,7 @@
   </section>
 
   <section class="content">
+    <input type="text" name="name" id="name" >
     <button id="savebutton" class="btn btn-success">SAVE FENCE</button>
     <div style="position: absolute;">
       <div id="map" style="position: "></div>

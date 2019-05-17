@@ -19,7 +19,7 @@
                       
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                              <h2 class="card-title" id="user">1</h2>
+                              <h2 class="card-title" id="user"></h2>
                                 
                                 <p>
                                 <b>  

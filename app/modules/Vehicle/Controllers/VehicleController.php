@@ -577,7 +577,7 @@ class VehicleController extends Controller {
                           );
 
 
-            $response_data = array('status'  => 'success',
+                $response_data = array('status'  => 'success',
                                'message' => 'success',
                                'code'    =>1,
                                'vehicle_type' => $get_vehicle->vehicleType->name,
