@@ -14,7 +14,15 @@
   </section>
 
   <section class="content">
-    <input type="text" name="name" id="name" >
+    <div class="row">
+     <div class="col-md-4">
+         <div class="form-group has-feedback">
+            <label class="srequired">Name</label>
+            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="" required> 
+           
+          </div>
+        </div>
+      </div>   
     <button id="savebutton" class="btn btn-success">SAVE FENCE</button>
     <div style="position: absolute;">
       <div id="map" style="position: "></div>
