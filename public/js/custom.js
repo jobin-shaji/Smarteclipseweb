@@ -4,6 +4,7 @@ function getUrl(){
 }
 
 function toast(res){
+    
    if(res.status == 1){
         toastr.success( res.message, res.title);
         console.log( res.message, res.title);
@@ -17,7 +18,10 @@ function toast(res){
     }    
     else if(res.status == 'gpsdatacount'){
         gpsdatacount(res);
-    }  
+    } 
+     else if(res.status == 'cordinate'){
+        initMap(res);
+    } 
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -39,7 +43,8 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-           toast(res);
+           
+            toast(res);
             if (callBack){
                 if (callBack == 'callBackDataTables'){
                     callBackDataTable();
@@ -53,6 +58,8 @@ function backgroundPostData(url, data, callBack, options) {
     });
 
 }
+
+
 
 function downloadFile(url,data){
 
@@ -115,6 +122,42 @@ function downloadFile(url,data){
                 } 
             }
         });
+}
+
+
+function getPolygonData(url, data, callBack, options) { 
+
+    var purl = getUrl() + '/'+url ;
+
+    var defaults = {
+        type: 'POST',
+        alert: false
+    };
+
+    jQuery.extend(defaults, options);
+    $.ajax({
+        type: defaults.type,
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            toast(res);
+           if (callBack){
+                if (callBack == 'initMap'){
+                    initMap();
+                }
+            }
+          
+        },
+        error: function (err) {
+            var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
+            toastr.error(message, 'Error');
+        }
+    });
+
 }
 
 

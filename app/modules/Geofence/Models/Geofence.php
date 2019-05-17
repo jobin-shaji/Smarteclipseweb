@@ -15,5 +15,13 @@ class Geofence extends Model
 	protected $casts = [
         'cordinates' => 'array'
     ];
+
+  public function user()
+  {
+    return $this->belongsTo('App\Modules\User\Models\User','user_id','id');
+  }
+  public function clients(){
+      return $this->hasOne('App\Modules\Client\Models\Client','user_id','user_id');
+  }
 	
 }
