@@ -15,45 +15,41 @@
 
   <section class="content">
     <div class="col-lg-12 col-sm-12">
+      <input type="text" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
                       
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                              <h2 class="card-title">1</h2>
+                              <h2 class="card-title" id="user">1</h2>
                                 
                                 <p>
                                 <b>  
                                   </b></p><div class="cover_ofline"><b>
-                                  <span id="online_status">
-                                    <?php $online_status="M";
-                                      if($online_status=="M"){ ?>
+                                 
+                                   <span id="online" style="display: none;">
                                         <i class="fa fa-circle" style="color:green;" aria-hidden="true"></i> Online
-                                      <?php } elseif($online_status=="H") { ?>
+                                      </span>
+                                       <span id="halt"  style="display: none;">
                                         <i class="fa fa-circle" style="color:yellow;" aria-hidden="true"></i> Halt
-                                      <?php } elseif($online_status=="S"){ ?>
+                                      </span>
+                                       <span id="sleep"  style="display: none;">
                                         <i class="fa fa-circle" style="color:orange;" aria-hidden="true"></i> Sleep
-                                      <?php } else{ ?>
+                                     </span>
+                                       <span id="ofline"  style="display: none;">
                                         <i class="fa fa-circle" style="color:red;" aria-hidden="true"></i> Offline
-                                      <?php } ?>
-                                  </span>
-                           
+                                      </span>
+                                 
                                  <div class="col-sm-12 social-buttons">
-                                   <a class="btn btn-block btn-social btn-bitbucket">
-                                      <i class="fa fa-car"></i><?php echo "245"; ?></a>
-                                    <a class="btn btn-block btn-social btn-bitbucket">
-                                      <i class="fa fa-key"></i> <b>
-                                        <span id="ignition">
-                                          <?php $ignition_status=1;
-                                          if($ignition_status==1){ ?>Ignition On
-                                          <?php } else{ ?> Ignition Off
-                                          <?php } ?>
-                                        </span></b>
-                                    </a>
-                                    
-                                    <a class="btn btn-block btn-social btn-bitbucket">
-                                      <i class="fa fa-tachometer"></i> <b><span id="car_speed"><?php echo 10; ?></span></b> K.M/H
+                                   <a class="btn btn-block btn-social btn-bitbucket" >
+                                      <i class="fa fa-car"></i><label id="vehicle_name"></label></a>
+                                   
+                                       <a class="btn btn-block btn-social btn-bitbucket">
+                                      <i class="fa fa-key"></i> <b><label id="ignition"></label></b> 
                                     </a>
                                     <a class="btn btn-block btn-social btn-bitbucket">
-                                      <i class="fa fa-battery-full"></i><b><span id="car_bettary"><?php echo 10; ?></span></b>%
+                                      <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label></b> K.M/H
+                                    </a>
+                                    <a class="btn btn-block btn-social btn-bitbucket">
+                                      <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label></b>%
                                     </a>
                                     <a class="btn btn-block btn-social btn-bitbucket">
                                       <i class="fa fa-plug"></i>
@@ -67,6 +63,7 @@
                                       <?php } ?>
                                       </span>
                                     </a>
+                                     
                                    <div class="viewmore_location">
                                       <i class="fa fa-map-marker"></i>-<b><span id="car_location"><?php echo "////"; ?></span></b>
                                    </div>

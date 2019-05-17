@@ -512,11 +512,15 @@ class VehicleController extends Controller {
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
-       return view('Vehicle::vehicle-tracker'); 
+       
+         $decrypted_id = Crypt::decrypt($request->id);  
+          
+        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id] );
+       
     }
     public function locationTrack(Request $request){
-     $vehicleid=1;
-     $get_vehicle=Vehicle::find($vehicleid);
+
+     $get_vehicle=Vehicle::find($request->id);
 
      $currentDateTime=Date('Y-m-d H:i:s');
      $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-1 minutes"));
@@ -531,6 +535,7 @@ class VehicleController extends Controller {
                   'created_at as dateTime',
                   'main_power_status as power',
                   'gps_fix as gps',
+
                   'ignition as ign',
                   'gsm_signal_strength as signalStrength'
                   )->where('device_time', '>=',$oneMinut_currentDateTime)
@@ -576,6 +581,8 @@ class VehicleController extends Controller {
                                'message' => 'success',
                                'code'    =>1,
                                'vehicle_type' => $get_vehicle->vehicleType->name,
+                               'client_name' => $get_vehicle->client->name,
+                               'vehicle_name' => $get_vehicle->register_number,
                                'liveData' => $reponseData
                                 );
 
@@ -585,6 +592,7 @@ class VehicleController extends Controller {
                                'message' => 'failed',
                                 'code'    =>0);
              }
+             // dd($response_data['liveData']['ign']);
         return response()->json($response_data); 
     }
 
