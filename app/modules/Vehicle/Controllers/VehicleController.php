@@ -13,6 +13,7 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -524,8 +525,6 @@ class VehicleController extends Controller {
 
      $currentDateTime=Date('Y-m-d H:i:s');
      $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-1 minutes"));
-     
-    
 
      $track_data=GpsData::select('latitude as latitude',
                   'longitude as longitude',
@@ -546,20 +545,20 @@ class VehicleController extends Controller {
              $track_data=GpsData::select('latitude as latitude',
                   'longitude as longitude',
                   'heading as angle',
-                  'vehicle_mode as vehicleStatus',
                   'speed',
                   'created_at as dateTime',
                   'main_power_status as power',
                   'gps_fix as gps',
                   'ignition as ign',
-                  'gsm_signal_strength as signalStrength'
+                  'gsm_signal_strength as signalStrength',
+                  /DB::raw("offline as vehicleStatus")
                   )->orderBy('id','desc')
                   ->first();
                 }
 
-
       if($track_data){
 
+        $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
                 $reponseData=array(
                             "latitude"=>$track_data->latitude,
                             "longitude"=>$track_data->longitude,
@@ -573,6 +572,7 @@ class VehicleController extends Controller {
                             "signalStrength"=>$track_data->signalStrength,
                             "fuel"=>"",
                             "ac"=>"",
+                            "place"=>$plcaeName,
                             "fuelquantity"=>""
                           );
 
@@ -702,6 +702,27 @@ class VehicleController extends Controller {
         ];
         return  $rules;
     }
+// --------------------------------------------------------------------------------
+    function getPlacenameFromLatLng($latitude,$longitude){
+    if(!empty($latitude) && !empty($longitude)){
+        //Send request and receive json data by address
+        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE'); 
+        $output = json_decode($geocodeFromLatLong);
+     
+        $status = $output->status;
+        //Get address from json data
+        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        //Return address of the given latitude and longitude
+        if(!empty($address)){
+            return $address;
+        }else{
+            return false;
+        }
+    }else{
+        return false;   
+    }
+  }
+// ---------------------------------------------------------------------
 
 
 
