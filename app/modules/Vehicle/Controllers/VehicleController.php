@@ -525,7 +525,7 @@ class VehicleController extends Controller {
 
      $currentDateTime=Date('Y-m-d H:i:s');
      $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-1 minutes"));
-
+     $offline="Offline";
      $track_data=GpsData::select('latitude as latitude',
                   'longitude as longitude',
                   'heading as angle',
@@ -551,7 +551,8 @@ class VehicleController extends Controller {
                   'gps_fix as gps',
                   'ignition as ign',
                   'gsm_signal_strength as signalStrength',
-                  /DB::raw("offline as vehicleStatus")
+                  \DB::raw("'$offline' as vehicleStatus")
+                  
                   )->orderBy('id','desc')
                   ->first();
                 }
