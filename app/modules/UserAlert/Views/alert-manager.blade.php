@@ -1,10 +1,12 @@
 @extends('layouts.gps')
 @section('title')
-    Update Alert Type Details
+   GPS Transfer
 @endsection
+
 @section('content')
+
     <section class="content-header">
-     <h1>Edit Alert Type</h1>
+        <h1>GPS Transfer</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -13,53 +15,60 @@
       </div>
     </div>
     @endif  
+
 <section class="hilite-content">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-edit"> Alert Manager</i> 
+            <i class="fa fa-home"></i> 
           </h2>
-        
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="">
+     <form  method="POST" action="">
         {{csrf_field()}}
+      
+
+      <?php
+      $numOfCols = 4;
+      $bootstrapColWidth = 12 / $numOfCols;
+      ?>
+
+      <div class="form-group has-feedback">
+        <label class="srequired">Alert</label>
+        <div class="row">
+            @foreach ($user_alert as $user_alert )
+              <div class="col-md-<?php echo $bootstrapColWidth; ?>">
+                  <input type="checkbox" name="alert_type_id[]" value="{{$user_alert->id}}">
+              </div>
+            @endforeach
+            <span class="glyphicon glyphicon-car form-control-feedback"></span>
+
+        </div>
+      </div>     
+      @if ($errors->has('gps_id'))
+        <span class="help-block">
+            <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+        </span>
+      @endif 
+
+          
       <div class="row">
-        <div class="col-md-6">          
-          <div class="form-group has-feedback">
-            <label class="srequired">Code</label>
-            <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" name="code" value=""> 
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-          </div>
-          @if ($errors->has('code'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('code') }}</strong>
-            </span>
-          @endif
-        <div class="form-group has-feedback">
-          <label class="srequired">Description</label>
-          <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="">
-          <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+        <!-- /.col -->
+        <div class="col-md-3 ">
+          <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
         </div>
-        @if ($errors->has('description'))
-          <span class="help-block">
-          <strong class="error-text">{{ $errors->first('description') }}</strong>
-          </span>
-        @endif
-       
-          <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
-        </div>
+        <!-- /.col -->
       </div>
-
     </form>
-  </section>
-  <!-- add depot user -->
-  
-<!-- add depot user -->
-
+</section>
+ 
 <div class="clearfix"></div>
+
+@section('script')
+    <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
+@endsection
+
 
 @endsection

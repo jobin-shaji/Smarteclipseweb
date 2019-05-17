@@ -14,7 +14,7 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 });
 
-Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\UserAlert\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\UserAlert\Controllers' ] , function() {
 
 	Route::get('/alert-manager','UserAlertController@edit')->name('alert.manager');
 
