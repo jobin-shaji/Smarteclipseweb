@@ -710,7 +710,7 @@ class VehicleController extends Controller {
     function getPlacenameFromLatLng($latitude,$longitude){
     if(!empty($latitude) && !empty($longitude)){
         //Send request and receive json data by address
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE'); 
+        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4'); 
         $output = json_decode($geocodeFromLatLong);
      
         $status = $output->status;
@@ -731,7 +731,7 @@ class VehicleController extends Controller {
         $lat = $b_lat;
         $lng = $b_lng;
         $route = $lat . "," . $lng;
-        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE";
+        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4";
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {
