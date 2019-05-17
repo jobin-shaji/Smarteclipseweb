@@ -659,9 +659,9 @@ class GpsController extends Controller {
     {
     
         if($request->gps){
-         $items = GpsData::where('gps_id',$request->gps)->sortByDesc('id');  
+         $items = GpsData::where('gps_id',$request->gps);  
         }else{
-         $items = GpsData::all()->sortByDesc('id');  
+         $items = GpsData::all();  
         }
 
 
