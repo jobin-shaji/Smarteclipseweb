@@ -64,12 +64,18 @@ function getMarkers() {
             // console.log(res.liveData.ign);
             if (res.liveData.vehicleStatus == 'M') {
                 $("#online").show();
+                vehicleColor="#203a17";
             } else if (res.liveData.vehicleStatus == 'H') {
                 $("#halt").show();
+                vehicleColor="#c1c431";
+
             } else if (res.liveData.vehicleStatus == 'S') {
                 $("#sleep").show();
+                vehicleColor="#ffa500";
             } else {
                 $("#ofline").show();
+                vehicleColor="#711307";
+
             }
             if (res.liveData.ign == 1) {
                 document.getElementById("ignition").innerHTML = "Ignitio ON";
@@ -102,13 +108,24 @@ function getMarkers() {
 
         var lat = parseFloat(res.liveData.latitude);
         var lng = parseFloat(res.liveData.longitude);
+        var angle=parseFloat(res.liveData.angle);
         var markerLatLng = new google.maps.LatLng(res.liveData.latitude, res.liveData.longitude);
         i = 0;
         deltaLat = (lat - posLat) / numDeltas;
         deltaLng = (lng - posLng) / numDeltas;
-
+       
         map.panTo(markerLatLng);
         moveMarker();
+        var icon = { // car icon
+                    path:vehiclePath,
+                    scale: parseFloat(vehicleScale),
+                    fillColor: vehicleColor, //<-- Car Color, you can change it 
+                    fillOpacity: 1,
+                    strokeWeight: 1,
+                    anchor: new google.maps.Point(0, 5),
+                    rotation:angle  //<-- Car angle
+                };
+              marker.setIcon(icon);
 
 
 

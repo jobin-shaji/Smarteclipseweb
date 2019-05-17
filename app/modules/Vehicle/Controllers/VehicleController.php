@@ -560,9 +560,13 @@ class VehicleController extends Controller {
       if($track_data){
 
         $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
+
+    $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+   
+
                 $reponseData=array(
-                            "latitude"=>$track_data->latitude,
-                            "longitude"=>$track_data->longitude,
+                            "latitude"=>$snapRoute['lat'],
+                            "longitude"=>$snapRoute['lng'],
                             "angle"=>$track_data->angle,
                             "vehicleStatus"=>$track_data->vehicleStatus,
                             "speed"=>$track_data->speed,
@@ -707,7 +711,7 @@ class VehicleController extends Controller {
     function getPlacenameFromLatLng($latitude,$longitude){
     if(!empty($latitude) && !empty($longitude)){
         //Send request and receive json data by address
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE'); 
+        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4'); 
         $output = json_decode($geocodeFromLatLong);
      
         $status = $output->status;
@@ -723,8 +727,28 @@ class VehicleController extends Controller {
         return false;   
     }
   }
-// ---------------------------------------------------------------------
+/////////////// snap root for live data///////////////////////////////////
+    function LiveSnapRoot($b_lat, $b_lng) {
+        $lat = $b_lat;
+        $lng = $b_lng;
+        $route = $lat . "," . $lng;
+        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4";
+        $geocode_stats = file_get_contents($url);
+        $output_deals = json_decode($geocode_stats);
+        if (isset($output_deals->snappedPoints)) {
+            $outPut_snap = $output_deals->snappedPoints;
+            // var_dump($output_deals);
+            if ($outPut_snap) {
+                foreach ($outPut_snap as $ldata) {
+                    $lat = $ldata->location->latitude;
+                    $lng = $ldata->location->longitude;
+                }
+            }
+        }
+        $userData = ["lat" => $lat, "lng" => $lng];
+        return $userData;
 
-
+    }
+/////////////// snap root for live data///////////////////////////////////
 
 }
