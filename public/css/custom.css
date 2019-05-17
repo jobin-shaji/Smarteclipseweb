@@ -147,7 +147,7 @@
     position: fixed;
     margin-top: 8px;
     z-index: 999999;
-    background-color: #FFBB33;
+    background-color: #ffbb3387;
     /* background-color: #ffffffd4; */
     border-radius: 35px;
     margin-left: 64%;
@@ -169,4 +169,11 @@ span#online_status {
 }
 .col-sm-12.social-buttons {
     margin-top: 6px;
+}
+
+.cover_status {
+    padding-left: 18px;
+}
+a.btn {
+    margin: 3px;
 }
