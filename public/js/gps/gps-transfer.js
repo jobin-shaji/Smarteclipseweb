@@ -25,47 +25,42 @@ function callBackDataTable(){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
+        createdRow: function ( row, data, index ) {
+            if ( data['deleted_at'] ) {
+                $('td', row).css('background-color', 'rgb(178, 178, 178)');
+            }
+            else if ( data['accepted_on'] ) {
+                $('td', row).css('background-color', 'rgb(210, 239, 203)');
+            }
+
+        },
        
         fnDrawCallback: function (oSettings, json) {
 
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'gps.name', name: 'gps.name'},
-            {data: 'gps.imei', name: 'gps.imei'},
             {data: 'from_user.username', name: 'from_user.username'},
             {data: 'to_user.username', name: 'to_user.username'},
-            {data: 'transfer_date', name: 'transfer_date',orderable: false, searchable: false}
-
+            {data: 'dispatched_on', name: 'dispatched_on'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
 
+function cancelGpsTransfer(gps_transfer_id){
+    if(confirm('Are you sure want to cancel this?')){
+        var url = 'gps-transfer/cancel';
+        var data = {
+            id : gps_transfer_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
+}
 
-$('#gpsTransfer').on('change', function() {
-   $("#to_user option").css('display','block');
-    var gpsID=this.value;
-    var data = { gpsID : gpsID };
-    $.ajax({
-        type:'POST',
-        url: '/gps-transfer/user-detils',
-        data:data ,
-        async: true,
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (res) {
-          var CurrentUser=res.user.id;
-          var CurrentUserName=res.user.username;
-          $(".from_user_id").val(CurrentUser); 
-          $(".from_user_name").val(CurrentUserName); 
-          $("#to_user option[value="+CurrentUser+"]").hide();
-        }
-    });
 
-  });
 
 
 

@@ -39,11 +39,10 @@
                         <thead>
                         <tr>
   	                      <th>#</th>
-  	                      <th>GPS Name</th>
-                          <th>IMEI</th>
   	                      <th>From User</th>
                           <th>To User</th>
-                          <th>Date</th>
+                          <th>Dispatched On</th>
+                          <th>Action</th>
                         </tr>
                         </thead>
                     </table>

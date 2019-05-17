@@ -3,12 +3,12 @@
 @section('content')
 <section class="content-header">
       <h1>
-        GPS User
+        Transferred GPS
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">GPS User</li>
+        <li class="active">Transferred GPS</li>
       </ol>
 </section>
 
@@ -17,7 +17,7 @@
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Gps Users List 
+                <div class="panel-heading">Transferred Gps List 
                 </div>
                 <div class="table-responsive">
                 <div class="panel-body">
@@ -27,7 +27,9 @@
                               <th>Sl.No</th>
                               <th>Name</th>
                               <th>IMEI</th>
+                              <th>Manufacturing Date</th>
                               <th>Version</th>
+                              <th>User</th>
                             </tr>
                         </thead>
                     </table>
@@ -38,6 +40,6 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/gps/gps-user-list.js')}}"></script>
+    <script src="{{asset('js/gps/gps-transferred-list.js')}}"></script>
 @endsection
 @endsection

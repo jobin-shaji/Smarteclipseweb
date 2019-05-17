@@ -3,6 +3,8 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	//for Gps
 	Route::get('/gps','GpsController@gpsListPage')->name('gps');
 	Route::post('/gps-list','GpsController@getGps')->name('gps-list');
+	Route::get('/gps-transferred','GpsController@gpsTransferredListPage')->name('gps-transferred');
+	Route::post('/gps-transferred-list','GpsController@getTransferredGps')->name('gps-transferred-list');
 	Route::get('/gps/create','GpsController@create')->name('gps.create');
 	Route::post('/gps/create','GpsController@save')->name('gps.create.p');
 	Route::get('/gps/{id}/details','GpsController@details')->name('gps.details');
@@ -38,14 +40,21 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/gps-client-list','GpsController@getClientGps')->name('gps-client-list');
 });
 
-Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
-	//fro Gps transfer
+	//for Gps transfer
 	Route::get('/gps-transfers','GpsController@getList')->name('gps-transfers');
-	Route::post('/gps-transfer-list','GpsController@getListData')->name('gps-transfer-list.p');
+	Route::post('/gps-transfer-list','GpsController@getListData')->name('gps-transfer-list');
 	Route::get('/gps-transfer/create','GpsController@createGpsTransfer')->name('gps-transfer.create');
 	Route::post('/gps-transfer','GpsController@saveGpsTransfer')->name('gps-transfer.create.p');
+	Route::get('/gps-transfer/{id}/view','GpsController@viewGpsTransfer')->name('gps-transfer.view');
 	Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-transfer.user-detils');
+	Route::post('/gps-transfer/accept','GpsController@AcceptGpsTransfer')->name('gps.accept');
+	Route::post('/gps-transfer/cancel','GpsController@cancelGpsTransfer')->name('gps.cancel');
+
+	//gps new arrivals in dealer
+	Route::get('/gps-new','GpsController@newGpsListPage')->name('gps-new');
+	Route::post('/gps-new-list','GpsController@getNewGps')->name('gps-new-list');
 });
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
