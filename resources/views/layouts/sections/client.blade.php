@@ -24,7 +24,7 @@
       <li><a href="{{url('/vehicle')}}"><i class="fa fa-list"></i> List Vehicles</a></li>
   </ul>
 </li>
-<li class="treeview">
+<!-- <li class="treeview">
     <a href="#">
       <i class="fa fa-user-plus"></i>
       <span>Driver</span>
@@ -37,7 +37,7 @@
       <li><a href="{{url('/drivers')}}"><i class="fa fa-list"></i> List Driver</a></li>
   </ul>
 </li>
-
+ -->
 <li class="treeview">
     <a href="#">
       <i class="fa fa-bell"></i>
