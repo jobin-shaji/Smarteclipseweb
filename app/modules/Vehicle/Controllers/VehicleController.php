@@ -563,7 +563,7 @@ class VehicleController extends Controller {
 
     $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
    
-    dd($snapRoute);
+
                 $reponseData=array(
                             "latitude"=>$snapRoute['lat'],
                             "longitude"=>$snapRoute['lng'],
