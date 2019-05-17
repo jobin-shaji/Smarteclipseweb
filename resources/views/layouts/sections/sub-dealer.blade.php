@@ -11,6 +11,18 @@
       <li><a href="{{url('/clients')}}"><i class="fa fa-list"></i> List Client</a></li>
   </ul>
 </li>
+<li class="treeview">
+    <a href="#">
+     <i class="fa fa-bell"></i>
+      <span>User Alerts</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">     
+      <li><a href="{{url('/alert-manager')}}"><i class="fa fa-list"></i> Alert Manager</a></li>
+  </ul>
+</li>
 
 <li class="treeview">
   <a href="#">
