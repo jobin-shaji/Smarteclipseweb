@@ -19,9 +19,11 @@ class GeofenceController extends Controller {
 	}
 
 	public function saveFence(Request $request){
+
 		foreach ($request->polygons as $polygon) {
 			Geofence::create([
 				'user_id' => $request->user()->id,
+                'name' => $request->name,
 				'cordinates' => $polygon,
 				'fence_type_id' => 1
 			]);

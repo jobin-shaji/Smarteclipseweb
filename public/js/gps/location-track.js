@@ -55,7 +55,7 @@
               {
                  document.getElementById("ignition").innerHTML = "Ignitio OFF";
               }
-               // document.getElementById("user").innerHTML = res.client_name;
+                document.getElementById("user").innerHTML = res.client_name;
               document.getElementById("vehicle_name").innerHTML = res.vehicle_name;
               document.getElementById("car_speed").innerHTML = res.liveData.speed;
                document.getElementById("car_bettary").innerHTML = res.liveData.power;
