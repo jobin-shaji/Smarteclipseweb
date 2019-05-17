@@ -7,6 +7,7 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/gps-new')}}"><i class="fa fa-list"></i> New Arrivals</a></li>
       <li><a href="{{url('/gps-client')}}"><i class="fa fa-list"></i> List GPS</a></li>
   </ul>
 </li>
@@ -23,7 +24,7 @@
       <li><a href="{{url('/vehicle')}}"><i class="fa fa-list"></i> List Vehicles</a></li>
   </ul>
 </li>
-<li class="treeview">
+<!-- <li class="treeview">
     <a href="#">
       <i class="fa fa-user-plus"></i>
       <span>Driver</span>
@@ -36,7 +37,7 @@
       <li><a href="{{url('/drivers')}}"><i class="fa fa-list"></i> List Driver</a></li>
   </ul>
 </li>
-
+ -->
 <li class="treeview">
     <a href="#">
       <i class="fa fa-bell"></i>

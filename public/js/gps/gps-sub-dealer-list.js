@@ -38,6 +38,7 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name', searchable: false},
             {data: 'imei', name: 'imei'},
+            {data: 'version', name: 'version'},
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

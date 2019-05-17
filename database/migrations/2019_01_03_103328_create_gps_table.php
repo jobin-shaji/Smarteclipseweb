@@ -19,7 +19,7 @@ class CreateGpsTable extends Migration
             $table->string('imei');
             $table->date('manufacturing_date');
             $table->string('version');
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->integer('status');
             $table->timestamps();
             $table->softDeletes();

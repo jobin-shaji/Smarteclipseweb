@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
+use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Dealer\Models\Dealer;
@@ -27,6 +28,7 @@ class GpsController extends Controller {
 	//returns gps as json 
     public function getGps()
     {
+        $user_id=\Auth::user()->id;
         $gps = Gps::select(
                 'id',
                 'name',
@@ -35,9 +37,62 @@ class GpsController extends Controller {
             	'version',
                 'deleted_at')
                 ->withTrashed()
+                ->where('user_id',$user_id)
                 ->get();
         return DataTables::of($gps)
             ->addIndexColumn()
+            ->addColumn('action', function ($gps) {
+                if($gps->deleted_at == null){
+                    return "
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                    </button>";
+                }else{
+                     return "
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
+                    </button>";
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
+    //Display all transferred gps
+    public function gpsTransferredListPage()
+    {
+        return view('Gps::gps-transferred-list');
+    }
+
+    //returns gps as json 
+    public function getTransferredGps()
+    {
+        $user_id[]=\Auth::user()->id;
+        $gps = Gps::select(
+                'id',
+                'name',
+                'imei',
+                'manufacturing_date',
+                'version',
+                'user_id',
+                'deleted_at')
+                ->withTrashed()
+                ->with('user:id,username')
+                ->whereNotIn('user_id',$user_id)
+                ->orWhere('user_id',null)
+                ->get();
+        return DataTables::of($gps)
+            ->addIndexColumn()
+            ->addColumn('user', function ($gps) {
+                if($gps->user_id == null){
+                    return "Transfer in progress";
+                }else{
+                    return $gps->user->username;
+                }
+            })
             ->addColumn('action', function ($gps) {
                 if($gps->deleted_at == null){
                     return "
@@ -155,7 +210,31 @@ class GpsController extends Controller {
             'message' => 'Gps deleted successfully'
         ]);
     }
- public function gpsDataCount(Request $request){
+
+    // restore gps 
+    public function activateGps(Request $request)
+    {
+        $gps = Gps::withTrashed()->find($request->id);
+        if($gps==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+             ]);
+        }
+
+        $gps->restore();
+
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps restored successfully'
+        ]);
+    }
+////////////////////////////////////////////////////////////////////////////
+
+    public function gpsDataCount(Request $request)
+    {
 
         $user = $request->user();
         if($user->hasRole('root')){
@@ -164,16 +243,8 @@ class GpsController extends Controller {
                 'gpsdatacounts' => GpsData::where('gps_id',$request->gps_id)->count(),               
                 'status' => 'gpsdatacount'           
             ]);
-        }
-            
-
-            
+        }    
     }
-
-
-
-
-
 
     //returns gps as json 
     public function getGpsData(Request $request)
@@ -244,27 +315,49 @@ class GpsController extends Controller {
         ->addIndexColumn()           
         ->make();
     }
+    /////////////////////////New Arrivals-start//////////////////////////////////
 
-    // restore gps 
-    public function activateGps(Request $request)
+    //Display new arrived dealer gps
+    public function newGpsListPage()
     {
-        $gps = Gps::withTrashed()->find($request->id);
-        if($gps==null){
-             return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Gps does not exist'
-             ]);
-        }
+        return view('Gps::gps-new-arrival-list');
+    } 
 
-        $gps->restore();
-
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Gps restored successfully'
-        ]);
+    //returns new arrived gps as json 
+    public function getNewGps()
+    {
+        $user_id=\Auth::user()->id;
+        $devices=GpsTransfer::select(
+                            'id',
+                            'from_user_id',
+                            'dispatched_on',
+                            'accepted_on'
+                            )
+                            ->with('fromUser:id,username')
+                            ->where('to_user_id',$user_id)
+                            ->orderBy('id','DESC')
+                            ->get();
+        return DataTables::of($devices)
+            ->addIndexColumn()
+            ->addColumn('action', function ($devices) {
+                if($devices->accepted_on == null)
+                {
+                    return "
+                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Gps </a>
+                    <button onclick=acceptGpsTransfer(".$devices->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Accept
+                    </button>";
+                }else{
+                    return "
+                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View Gps </a>
+                    <b style='color:#008000';>Accepted</b>";
+                }
+                
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
     }
+
+    //////////////////////////New Arrivals-end////////////////////////////////
 
 
     //////////////////////////GPS DEALER///////////////////////////////////
@@ -278,14 +371,15 @@ class GpsController extends Controller {
     //returns gps as json 
     public function getDealerGps()
     {
-        $dealer_id=\Auth::user()->id;
+        $dealer_user_id=\Auth::user()->id;
         $gps = Gps::select(
                 'id',
                 'name',
                 'imei',
+                'version',
                 'deleted_at')
                 ->withTrashed()
-                ->where('user_id',$dealer_id)
+                ->where('user_id',$dealer_user_id)
                 ->get();
         return DataTables::of($gps)
             ->addIndexColumn()
@@ -308,6 +402,7 @@ class GpsController extends Controller {
                 'id',
                 'name',
                 'imei',
+                'version',
                 'deleted_at')
                 ->withTrashed()
                 ->where('user_id',$sub_dealer_id)
@@ -333,6 +428,7 @@ class GpsController extends Controller {
                 'id',
                 'name',
                 'imei',
+                'version',
                 'deleted_at')
                 ->withTrashed()
                 ->where('user_id',$client_id)
@@ -350,18 +446,38 @@ class GpsController extends Controller {
         return view('Gps::gps-transfer-list');
     }
 
-    // gps transfer list data
+    //gps transfer list data
     public function getListData() 
     {
         $user_id=\Auth::user()->id;
-        $gps_transfer = GpsTransfer::select('id', 'gps_id', 'from_user_id', 'to_user_id', 'transfer_date')
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
-        ->with('gps:id,name,imei')
-        ->where('from_user_id',$user_id)
-        ->get();
+        $gps_transfer = GpsTransfer::select('id', 'from_user_id', 'to_user_id','dispatched_on','accepted_on','deleted_at')
+            ->with('fromUser:id,username')
+            ->with('toUser:id,username')
+            ->where('from_user_id',$user_id)
+            ->withTrashed()
+            ->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
+        ->addColumn('action', function ($gps_transfer) {
+            if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
+            {
+                return "
+                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=cancelGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                </button>";
+            }
+            else if($gps_transfer->deleted_at != null){
+                return "
+                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <b style='color:#FF0000';>Cancelled</b>";
+            }
+            else{
+                 return "
+                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <b style='color:#008000';>Transferred</b>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
         ->make();
     }
 
@@ -396,25 +512,128 @@ class GpsController extends Controller {
     // save gps transfer
     public function saveGpsTransfer(Request $request) 
     {
+        $from_user_id = \Auth::user()->id;
         $rules = $this->gpsTransferRule();
         $this->validate($request, $rules);
-        $gps_id = $request->gps_id;
-        $from_user_id = $request->from_user_id;
+        $gps_array = $request->gps_id;
         $to_user_id = $request->to_user_id;
-        $gps_transfer = GpsTransfer::create([
-          "gps_id" => $gps_id, 
-          "from_user_id" => $from_user_id, 
-          "to_user_id" => $to_user_id,
-          "transfer_date" => date('Y-m-d H:i:s')]
-          );
-        //update gps table
-        $gps_id = $request->gps_id;
-        $gps = Gps::find($gps_id);
-        $gps->user_id = $request->to_user_id;
-        $gps->save();
+        if($gps_array){
+            $gps_transfer = GpsTransfer::create([
+              "from_user_id" => $from_user_id, 
+              "to_user_id" => $to_user_id,
+              "dispatched_on" => date('Y-m-d H:i:s')
+            ]);
+            $last_id_in_gps_transfer=$gps_transfer->id;
+        }
+        if($last_id_in_gps_transfer){
+            foreach ($gps_array as $gps_id) {
+                $gps_transfer_item = GpsTransferItems::create([
+                  "gps_id" => $gps_id, 
+                  "gps_transfer_id" => $last_id_in_gps_transfer
+                ]);
+                if($gps_transfer_item){
+                    //update gps table
+                    $gps = Gps::find($gps_id);
+                    $gps->user_id =null;
+                    $gps->save();
+                }
+            }
+        }
+        
         $request->session()->flash('message', 'Gps Transfer successfully completed!');
         $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('gps-transfers'));
+    }
+
+    public function viewGpsTransfer(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$decrypted_id)
+                        ->get();
+        if($gps_items == null){
+           return view('Gps::404');
+        }
+        $devices=array();
+        foreach($gps_items as $gps_item){
+            $single_gps= $gps_item->gps_id;
+            $devices[]=Gps::select('id','name','imei','version')
+                        ->where('id',$single_gps)
+                        ->first();
+        }
+       return view('Gps::gps-list-view',['devices' => $devices]);
+    }
+
+    //accept transferred gps
+    public function AcceptGpsTransfer(Request $request)
+    {
+        $user_id = \Auth::user()->id;
+        $gps_transfer = GpsTransfer::find($request->id);
+        if($gps_transfer == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Transferred gps does not exist'
+            ]);
+        }
+        $gps_transfer->accepted_on =date('Y-m-d H:i:s');
+        $accept_gps=$gps_transfer->save();
+        if($accept_gps){
+            $gps_items = GpsTransferItems::select( 'gps_id')
+                        ->where('gps_transfer_id',$gps_transfer->id)
+                        ->get();
+            if($gps_items == null){
+               return view('Gps::404');
+            }
+            $devices=array();
+            foreach($gps_items as $gps_item){
+                $single_gps_id= $gps_item->gps_id;
+                //update gps table
+                $gps = Gps::find($single_gps_id);
+                $gps->user_id =$user_id;
+                $gps->save();
+            }
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps accepted successfully'
+        ]);
+    }
+
+    //cancel gps transfer
+    public function cancelGpsTransfer(Request $request){
+        $user_id = \Auth::user()->id;
+        $gps_transfer = GpsTransfer::find($request->id);
+        if($gps_transfer == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Transferred gps does not exist'
+            ]);
+        }
+        $cancel_transfer=$gps_transfer->delete();
+        if($cancel_transfer){
+            $gps_items = GpsTransferItems::select( 'gps_id')
+                        ->where('gps_transfer_id',$gps_transfer->id)
+                        ->get();
+            if($gps_items == null){
+               return view('Gps::404');
+            }
+            $devices=array();
+            foreach($gps_items as $gps_item){
+                $single_gps_id= $gps_item->gps_id;
+                //update gps table
+                $gps = Gps::find($single_gps_id);
+                $gps->user_id =$user_id;
+                $gps->save();
+            }
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps transfer cancelled successfully'
+        ]);
     }
 
     // gps user details
