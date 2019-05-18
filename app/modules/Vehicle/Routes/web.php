@@ -20,6 +20,9 @@ Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->na
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
 
+Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
+Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
+
 Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
 
 Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
