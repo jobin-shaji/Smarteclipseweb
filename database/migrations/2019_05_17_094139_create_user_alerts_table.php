@@ -17,6 +17,7 @@ class CreateUserAlertsTable extends Migration
             $table->increments('id');
             $table->integer('client_id');
             $table->integer('alert_id');
+            $table->integer('status');
             $table->timestamps();
         });
     }
