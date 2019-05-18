@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\Subdealer\Models\Subdealer;
+use App\Modules\Alert\Models\AlertType;
+use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -35,6 +37,22 @@ class ClientController extends Controller {
                 'address' => $request->address,           
             ]);
             User::where('username', $request->username)->first()->assignRole('client');
+            
+            $alert = AlertType::all(); 
+             
+            if($client){
+            foreach ($alert as $alert) {
+
+                $gps_transfer_item = UserAlerts::create([
+                  "alert_id" => $alert->id, 
+                  "client_id" => $client->id, 
+                  "status" => 1
+                ]);
+               
+            }
+        }
+
+
         }
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New client created successfully!'); 
