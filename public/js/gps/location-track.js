@@ -87,7 +87,7 @@ function getMarkers() {
                 vehicleColor="#ffa500";
             } else {
                 $("#ofline").show();
-                $("#sleep").show();
+                $("#sleep").hide();
                 $("#halt").hide();
                 $("#online").hide();
                 vehicleColor="#711307";
