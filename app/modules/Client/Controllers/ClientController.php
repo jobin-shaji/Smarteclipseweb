@@ -53,6 +53,38 @@ class ClientController extends Controller {
         }
 
 
+
+
+
+              // $gps_transfer_item = UserAlerts::create([
+              //     "alert_1" =>1, 
+              //     "alert_2" =>1, 
+              //     "alert_3" =>1, 
+              //     "alert_4" =>1, 
+              //     "alert_5" =>1, 
+              //     "alert_6" =>1, 
+              //     "alert_7" =>1, 
+              //     "alert_8" =>1, 
+              //     "alert_9" =>1, 
+              //     "alert_10" =>1, 
+              //     "alert_11" =>1, 
+              //     "alert_12" =>1, 
+              //     "alert_13" =>1, 
+              //     "alert_14" =>1, 
+              //     "alert_15" =>1, 
+              //     "alert_16" =>1, 
+              //     "alert_17" =>1, 
+              //     "alert_18" =>1, 
+              //     "alert_19" =>1, 
+              //     "alert_20" =>1, 
+              //     "alert_21" =>1, 
+              //     "alert_22" =>1, 
+              //     "alert_23" =>1, 
+              //    "client_id" => $client->id, 
+              //     "status" => 1
+              //   ]);
+
+
         }
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New client created successfully!'); 

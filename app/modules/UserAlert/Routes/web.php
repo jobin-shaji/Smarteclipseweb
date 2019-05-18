@@ -16,8 +16,10 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\UserAlert\Controllers' ] , function() {
 
-	Route::get('/alert-manager','UserAlertController@edit')->name('alert.manager');
 
+
+	Route::get('/alert-manager','UserAlertController@edit')->name('alert.manager');
+	Route::post('/alert-manager-create','UserAlertController@savealertManager')->name('alert.manager.create.p');
 	// Route::get('/alerts','AlertController@alerts')->name('alerts');
 	// Route::post('/alert-list','AlertController@alertsList')->name('alert-list');
 	// Route::post('/alert/verify','AlertController@verifyAlert')->name('alert.verify');

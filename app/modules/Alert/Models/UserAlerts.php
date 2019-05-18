@@ -13,3 +13,4 @@ class UserAlerts extends Model
 	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_id');
 	}
 }
+
