@@ -64,16 +64,32 @@ function getMarkers() {
             // console.log(res.liveData.ign);
             if (res.liveData.vehicleStatus == 'M') {
                 $("#online").show();
+                $("#halt").hide();
+                $("#ofline").hide();
+                $("#sleep").hide();
+
+
+
                 vehicleColor="#203a17";
             } else if (res.liveData.vehicleStatus == 'H') {
                 $("#halt").show();
+                $("#online").hide();
+                $("#ofline").hide();
+                $("#sleep").hide();
+
                 vehicleColor="#c1c431";
 
             } else if (res.liveData.vehicleStatus == 'S') {
                 $("#sleep").show();
+                $("#halt").hide();
+                $("#online").hide();
+                $("#ofline").hide();
                 vehicleColor="#ffa500";
             } else {
                 $("#ofline").show();
+                $("#sleep").hide();
+                $("#halt").hide();
+                $("#online").hide();
                 vehicleColor="#711307";
 
             }
@@ -84,11 +100,11 @@ function getMarkers() {
                  document.getElementById("ignition").innerHTML = "Ignitio OFF";
               }
             // document.getElementById("user").innerHTML = res.client_name;
-            document.getElementById("vehicle_name").innerHTML = res.vehicle_name;
+            document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
             document.getElementById("car_speed").innerHTML = res.liveData.speed;
             document.getElementById("car_bettary").innerHTML = res.liveData.power;
             document.getElementById("car_location").innerHTML = res.liveData.place;
-            document.getElementById("user").innerHTML = res.client_name;
+            document.getElementById("user").innerHTML = res.vehicle_name;
 
             
 

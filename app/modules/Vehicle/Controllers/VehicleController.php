@@ -524,7 +524,7 @@ class VehicleController extends Controller {
      $get_vehicle=Vehicle::find($request->id);
 
      $currentDateTime=Date('Y-m-d H:i:s');
-     $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-1 minutes"));
+     $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
      $offline="Offline";
      $track_data=GpsData::select('latitude as latitude',
                   'longitude as longitude',
@@ -539,6 +539,8 @@ class VehicleController extends Controller {
                   'gsm_signal_strength as signalStrength'
                   )->where('device_time', '>=',$oneMinut_currentDateTime)
                   ->where('device_time', '<=',$currentDateTime)
+                  ->where('vehicle_id',$request->id)
+
                   ->orderBy('id','desc')
                   ->first();
        if($track_data==null){
@@ -554,6 +556,7 @@ class VehicleController extends Controller {
                   \DB::raw("'$offline' as vehicleStatus")
                   
                   )->orderBy('id','desc')
+                  ->where('vehicle_id',$request->id)
                   ->first();
                 }
 
@@ -587,7 +590,8 @@ class VehicleController extends Controller {
                                'code'    =>1,
                                'vehicle_type' => $get_vehicle->vehicleType->name,
                                'client_name' => $get_vehicle->client->name,
-                               'vehicle_name' => $get_vehicle->register_number,
+                               'vehicle_reg' => $get_vehicle->register_number,
+                               'vehicle_name' => $get_vehicle->name,
                                'liveData' => $reponseData
                                 );
 
