@@ -524,7 +524,7 @@ class VehicleController extends Controller {
      $get_vehicle=Vehicle::find($request->id);
 
      $currentDateTime=Date('Y-m-d H:i:s');
-     $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-5 minutes"));
+     $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
      $offline="Offline";
      $track_data=GpsData::select('latitude as latitude',
                   'longitude as longitude',
@@ -590,7 +590,8 @@ class VehicleController extends Controller {
                                'code'    =>1,
                                'vehicle_type' => $get_vehicle->vehicleType->name,
                                'client_name' => $get_vehicle->client->name,
-                               'vehicle_name' => $get_vehicle->register_number,
+                               'vehicle_reg' => $get_vehicle->register_number,
+                               'vehicle_name' => $get_vehicle->name,
                                'liveData' => $reponseData
                                 );
 
