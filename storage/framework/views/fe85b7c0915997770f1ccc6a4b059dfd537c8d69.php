@@ -9,6 +9,7 @@
   <ul class="treeview-menu" style="display: none;">
       <li><a href="<?php echo e(url('/gps/create')); ?>"><i class="fa fa-plus"></i>Add GPS</a></li>
       <li><a href="<?php echo e(url('/gps')); ?>"><i class="fa fa-list"></i> List GPS</a></li>
+      <li><a href="<?php echo e(url('/gps-transferred')); ?>"><i class="fa fa-list"></i>Transferred GPS List </a></li>
       <li><a href="<?php echo e(url('/gps-transfer/create')); ?>"><i class="fa fa-list"></i> GPS Transfer</a></li>
       <li><a href="<?php echo e(url('/gps-transfers')); ?>"><i class="fa fa-list"></i> GPS Transfer List</a></li>
   </ul>

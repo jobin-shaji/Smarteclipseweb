@@ -18,7 +18,7 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url(<?php echo e(asset('images/bg.png')); ?>);
+                    background-image: url(<?php echo e(asset('images/wallpaper.jpg')); ?>);
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: contain;

@@ -1,11 +1,10 @@
 @extends('layouts.gps') 
 @section('title')
-   Driver details
+   Alert Type details
 @endsection
 @section('content')
-
     <section class="content-header">
-     <h1>Driver details</h1>
+     <h1>Alert Type details</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -27,31 +26,24 @@
     <form  method="POST" action="#">
         {{csrf_field()}}
     <div class="row">
-        <div class="col-md-6">
-           
+        <div class="col-md-6">          
+        @foreach($alert_type as $alert_type)
           <div class="form-group has-feedback">
-            <label>Name</label>
-            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $driver->name}}" disabled>
+            <label>Code</label>
+            <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" name="code" value="{{ $alert_type->code}}" disabled>
           </div>
           <div class="form-group has-feedback">
-            <label>Address</label>
-            <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $driver->address}}" disabled>
+            <label>Description</label>
+            <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{ $alert_type->description}}" disabled>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
-          <div class="form-group has-feedback">
-            <label>Mobile No.</label>
-            <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $driver->mobile}}" disabled>
-            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-          </div>
-             
-      
+           
+      @endforeach
         </div>
        
       </div>
 <!--  -->
     </form>
 </section>
-
 <div class="clearfix"></div>
-
 @endsection

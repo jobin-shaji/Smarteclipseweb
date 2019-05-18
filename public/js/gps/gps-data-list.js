@@ -27,8 +27,9 @@ function gpsdatacount(res){
 
 }
 
-function callBackDataTable(data=null){
-             
+
+function callBackDataTable(value){
+
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -39,7 +40,7 @@ function callBackDataTable(data=null){
         ajax: {
             url: '/gps-data-list',
             type: 'POST',
-            data:data,           
+            data: 'hello',          
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\Subdealer\Models\Subdealer;
+use App\Modules\Alert\Models\AlertType;
+use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -35,6 +37,54 @@ class ClientController extends Controller {
                 'address' => $request->address,           
             ]);
             User::where('username', $request->username)->first()->assignRole('client');
+            
+            $alert = AlertType::all(); 
+             
+            if($client){
+            foreach ($alert as $alert) {
+
+                $gps_transfer_item = UserAlerts::create([
+                  "alert_id" => $alert->id, 
+                  "client_id" => $client->id, 
+                  "status" => 1
+                ]);
+               
+            }
+        }
+
+
+
+
+
+              // $gps_transfer_item = UserAlerts::create([
+              //     "alert_1" =>1, 
+              //     "alert_2" =>1, 
+              //     "alert_3" =>1, 
+              //     "alert_4" =>1, 
+              //     "alert_5" =>1, 
+              //     "alert_6" =>1, 
+              //     "alert_7" =>1, 
+              //     "alert_8" =>1, 
+              //     "alert_9" =>1, 
+              //     "alert_10" =>1, 
+              //     "alert_11" =>1, 
+              //     "alert_12" =>1, 
+              //     "alert_13" =>1, 
+              //     "alert_14" =>1, 
+              //     "alert_15" =>1, 
+              //     "alert_16" =>1, 
+              //     "alert_17" =>1, 
+              //     "alert_18" =>1, 
+              //     "alert_19" =>1, 
+              //     "alert_20" =>1, 
+              //     "alert_21" =>1, 
+              //     "alert_22" =>1, 
+              //     "alert_23" =>1, 
+              //    "client_id" => $client->id, 
+              //     "status" => 1
+              //   ]);
+
+
         }
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New client created successfully!'); 

@@ -652,22 +652,19 @@ class GpsController extends Controller {
 
     public function allgpsListPage()
     {
-        return view('Gps::alldata-list');
+        $gps = Gps::all();
+        return view('Gps::alldata-list',['gps' => $gps]);
     }
-     public function getAllData()
+     public function getAllData(Request $request)
     {
-
-         // $gps = GpsData::select(
-         //        'id',
-         //        'name',
-         //        'imei',
-         //        'deleted_at')
-                
-         //        ->orderBy('id',$client_id)
-         //        ->get();
+    
+        if($request->gps){
+         $items = GpsData::where('gps_id',$request->gps);  
+        }else{
+         $items = GpsData::all();  
+        }
 
 
-         $items = GpsData::all()->sortByDesc('id');  
            
         return DataTables::of($items)
         ->addIndexColumn()
