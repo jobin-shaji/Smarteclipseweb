@@ -6,7 +6,7 @@
 @section('content')
 
     <section class="content-header">
-        <h1>GPS Transfer</h1>
+        <h1>Alert Manager</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -36,7 +36,7 @@
       ?>
 
       <div class="form-group has-feedback">
-        <label class="srequired">Alert</label>
+        <label >Alert</label>
        <div class="row">
             @foreach ($user_alert as $user_alert)
               <div class="col-md-<?php echo $bootstrapColWidth; ?>">
@@ -47,11 +47,7 @@
 
         </div>
       </div>     
-      @if ($errors->has('alert_id'))
-        <span class="help-block">
-            <strong class="error-text">{{ $errors->first('alert_id') }}</strong>
-        </span>
-      @endif 
+      
 
           
       <div class="row">
