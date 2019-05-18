@@ -1,6 +1,6 @@
 @extends('layouts.gps')
 @section('title')
-   GPS Transfer
+  Alert Manager
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
         </div>
         <!-- /.col -->
       </div>
-     <form  method="POST" action="">
+     <form  method="POST" action="{{route('alert.manager.create.p')}}">
         {{csrf_field()}}
       
 
@@ -37,19 +37,19 @@
 
       <div class="form-group has-feedback">
         <label class="srequired">Alert</label>
-        <div class="row">
-            @foreach ($user_alert as $user_alert )
+       <div class="row">
+            @foreach ($user_alert as $user_alert)
               <div class="col-md-<?php echo $bootstrapColWidth; ?>">
-                  <input type="checkbox" name="alert_type_id[]" value="{{$user_alert->id}}">
+                  <input type="checkbox" name="alert_id[]" value="{{$user_alert->alertType->id}}" @if ($user_alert->status==1) checked="checked"  @endif >{{$user_alert->alertType->description}}
               </div>
             @endforeach
             <span class="glyphicon glyphicon-car form-control-feedback"></span>
 
         </div>
       </div>     
-      @if ($errors->has('gps_id'))
+      @if ($errors->has('alert_id'))
         <span class="help-block">
-            <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+            <strong class="error-text">{{ $errors->first('alert_id') }}</strong>
         </span>
       @endif 
 
@@ -65,10 +65,6 @@
 </section>
  
 <div class="clearfix"></div>
-
-@section('script')
-    <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
-@endsection
 
 
 @endsection
