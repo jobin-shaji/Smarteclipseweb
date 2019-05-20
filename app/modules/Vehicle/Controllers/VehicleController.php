@@ -428,8 +428,9 @@ class VehicleController extends Controller {
             $string="OU:".$request->OU;
             array_push($ota_array,$string);
         }
-        $ota_string = implode( ", ", $ota_array );
+        $ota_string = implode( ",", $ota_array );
         $final_ota_string="SET ".$ota_string;
+        
         $vehicle_ota->PU = $request->PU;
         $vehicle_ota->EU = $request->EU;
         $vehicle_ota->EM = $request->EM;
@@ -555,6 +556,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle_type = VehicleType::create([
             'name' => $request->name,
+            'svg_icon' => $request->svg_icon,
             'status' =>1,
            ]);
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
@@ -596,6 +598,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
 
         $vehicle_type->name = $request->name;
+        $vehicle_type->svg_icon = $request->svg_icon;
         $vehicle_type->save();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
