@@ -10,7 +10,7 @@ class Vehicle extends Model
 {
     use SoftDeletes;
 
-   // vehicle fillable data
+    // vehicle fillable data
 	protected $fillable = [
         'name','register_number','gps_id', 'vehicle_type_id', 'e_sim_number','status','client_id'
     ];
