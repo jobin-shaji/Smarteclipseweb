@@ -39,6 +39,17 @@
             </span>
           @endif
 
+          <div class="form-group has-feedback">
+            <label class="srequired">SVG Icon</label>
+            <input type="text" class="form-control {{ $errors->has('svg_icon') ? ' has-error' : '' }}" placeholder="SVG Icon" name="svg_icon" value="{{ $vehicle_type->svg_icon}}"> 
+            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+          </div>
+          @if ($errors->has('svg_icon'))
+            <span class="help-block">
+            <strong class="error-text">{{ $errors->first('svg_icon') }}</strong>
+            </span>
+          @endif
+
         </div>
     </div>
       <div class="row">
