@@ -86,7 +86,7 @@
                 </div>
 
 
-                <div class="links">Developed by <a href="https://vstmobility.com">VST Mobility Solutions</a>
+                <div class="links">Developed by <a href="http://vstmobility.com">VST Mobility Solutions</a>
 
                 </div>
             </div>
