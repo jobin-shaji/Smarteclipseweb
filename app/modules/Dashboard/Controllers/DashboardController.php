@@ -10,6 +10,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransfer;
+use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
@@ -118,6 +119,7 @@ class DashboardController extends Controller
             return response()->json([
                 'gps' => Gps::where('user_id',$user->id)->count(),
                  'vehicles' => Vehicle::where('client_id',$client->id)->count(),
+                 'geofence' => Geofence::where('user_id',$user->id)->count(),
                 'status' => 'dbcount'           
             ]);
         }       
