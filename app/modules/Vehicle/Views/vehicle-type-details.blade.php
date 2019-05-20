@@ -32,11 +32,20 @@
           <div class="form-group has-feedback">
             <label>Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_type->name}}" disabled> 
-            <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
           </div>
           @if ($errors->has('name'))
             <span class="help-block">
             <strong class="error-text">{{ $errors->first('name') }}</strong>
+            </span>
+          @endif
+
+          <div class="form-group has-feedback">
+            <label>SVG Icon</label>
+            <input type="text" class="form-control {{ $errors->has('svg_icon') ? ' has-error' : '' }}" placeholder="SVG Icon" name="svg_icon" value="{{ $vehicle_type->svg_icon}}" disabled> 
+          </div>
+          @if ($errors->has('svg_icon'))
+            <span class="help-block">
+            <strong class="error-text">{{ $errors->first('svg_icon') }}</strong>
             </span>
           @endif
 

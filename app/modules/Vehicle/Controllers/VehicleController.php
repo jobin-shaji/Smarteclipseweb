@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Vehicle\Models\OtaResponse;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleOta;
 use App\Modules\Vehicle\Models\Document;
@@ -105,7 +106,6 @@ class VehicleController extends Controller {
             'gps_id' => $request->gps_id,
             'client_id' =>$client_id,
             'status' =>1
-
         ]);
         if($vehicle){
             $vehicle_ota = VehicleOta::create([
@@ -428,8 +428,16 @@ class VehicleController extends Controller {
             $string="OU:".$request->OU;
             array_push($ota_array,$string);
         }
-        $ota_string = implode( ", ", $ota_array );
+        $ota_string = implode( ",", $ota_array );
         $final_ota_string="SET ".$ota_string;
+        $ota_reponse = OtaResponse::create([
+            'client_id' => $vehicle_ota->client_id,
+            'vehicle_id' => $vehicle_ota->vehicle_id,
+            'imei' => $vehicle_ota->vehicle->gps->imei,
+            'response' => $final_ota_string,
+            'status' =>1
+        ]);
+
         $vehicle_ota->PU = $request->PU;
         $vehicle_ota->EU = $request->EU;
         $vehicle_ota->EM = $request->EM;
@@ -555,6 +563,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle_type = VehicleType::create([
             'name' => $request->name,
+            'svg_icon' => $request->svg_icon,
             'status' =>1,
            ]);
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
@@ -596,6 +605,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
 
         $vehicle_type->name = $request->name;
+        $vehicle_type->svg_icon = $request->svg_icon;
         $vehicle_type->save();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
