@@ -53,6 +53,8 @@ class VehicleController extends Controller {
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>
 
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='glyphicon glyphicon-map-marker'></i>Playback</a>
+
                      <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
 
                     <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
@@ -853,6 +855,15 @@ class VehicleController extends Controller {
         return DataTables::of($vehicles)
             ->addIndexColumn()
             ->make();
+    }
+
+     /////////////////////////////Vehicle Tracker/////////////////////////////
+    public function playback(Request $request){
+       
+         $decrypted_id = Crypt::decrypt($request->id);  
+          
+        return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
+       
     }
 
     //////////////////////////////////////RULES/////////////////////////////

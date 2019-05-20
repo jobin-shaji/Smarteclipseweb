@@ -1,8 +1,5 @@
 <?php 
-
-
 namespace App\Modules\UserAlert\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
@@ -30,11 +27,9 @@ class UserAlertController extends Controller {
     {       
         $user_id = \Auth::user()->id;
         $client = Client::where('user_id', $user_id)->first();
-
         $alert = AlertType::all(); 
         foreach ($alert as $alert) { 
-            $user_item = UserAlerts::where('alert_id', $alert->id)->where('client_id', $client->id)->first();
-             
+            $user_item = UserAlerts::where('alert_id', $alert->id)->where('client_id', $client->id)->first();             
             if($user_item)
             { 
                 $user_item->status =0;
@@ -44,7 +39,6 @@ class UserAlertController extends Controller {
         $rules = $this->alertManagerRule();
         $this->validate($request, $rules);       
         $alert_array = $request->alert_id; 
-                     
         if($alert_array){
             foreach ($alert_array as $alert_id) {                           
                 $user_alert = UserAlerts::where('alert_id', $alert_id)->where('client_id', $client->id)->first();                
@@ -55,15 +49,14 @@ class UserAlertController extends Controller {
                 }                
             }
         }                      
-        $request->session()->flash('message', 'Alert Manager successfully completed!');
+        $request->session()->flash('message', 'Alert Manager successfully updated!');
         $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('alert.manager'));
     }
        // gps transfer rule
-    public function alertManagerRule() {
+    public function alertManagerRule(){
         $rules = [
           'alert_id' => 'required'];
         return $rules;
     }
-
 }
