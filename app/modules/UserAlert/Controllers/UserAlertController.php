@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Crypt;
 use DataTables;
 
 class UserAlertController extends Controller {
-
-    
     public function edit(Request $request)
     {        
         $user = \Auth::user();
@@ -28,12 +26,10 @@ class UserAlertController extends Controller {
         ->get();
         return view('UserAlert::alert-manager',['user_alert' => $user_alert]);
     }
-     public function savealertManager(Request $request) 
-    { 
-      
+    public function savealertManager(Request $request) 
+    {       
         $user_id = \Auth::user()->id;
         $client = Client::where('user_id', $user_id)->first(); 
-        // $delete=UserAlerts::where('client_id', $client->id)->delete();
         $alert = AlertType::all(); 
         foreach ($alert as $alert) { 
             $user_item = UserAlerts::where('id', $alert->id)->where('client_id', $client->id)->first();
