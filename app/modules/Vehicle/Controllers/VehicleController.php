@@ -4,6 +4,7 @@
 namespace App\Modules\Vehicle\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Route\Models\Route;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\OtaResponse;
@@ -153,12 +154,14 @@ class VehicleController extends Controller {
     public function edit(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
-        $client_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
         $vehicle = Vehicle::find($decrypted_id);
         if($vehicle == null){
             return view('Vehicle::404');
         }
-        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle]);
+        $routes=Route::where('client_id',$client_id)
+                        ->get();
+        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'routes' => $routes]);
     }
 
     // update vehicle
