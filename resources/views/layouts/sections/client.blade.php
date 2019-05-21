@@ -67,6 +67,20 @@
 
 <li class="treeview">
     <a href="#">
+      <i class="fa fa-bus"></i>
+      <span>Route</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/route/create')}}"><i class="fa fa-plus"></i>Add Route</a></li>
+      <li><a href="{{url('/route')}}"><i class="fa fa-list"></i> List Route</a></li>
+  </ul>
+</li>
+
+<li class="treeview">
+    <a href="#">
       <i class="fa fa-files-o"></i>
       <span>Reports</span>
       <span class="pull-right-container">

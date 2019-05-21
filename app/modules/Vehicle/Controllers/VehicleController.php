@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Vehicle\Models\OtaResponse;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleOta;
 use App\Modules\Vehicle\Models\Document;
@@ -53,7 +54,9 @@ class VehicleController extends Controller {
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>
 
+
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='glyphicon glyphicon-map-marker'></i>Playback</a>
+
 
                      <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
 
@@ -105,7 +108,6 @@ class VehicleController extends Controller {
             'gps_id' => $request->gps_id,
             'client_id' =>$client_id,
             'status' =>1
-
         ]);
         if($vehicle){
             $vehicle_ota = VehicleOta::create([
@@ -430,7 +432,14 @@ class VehicleController extends Controller {
         }
         $ota_string = implode( ",", $ota_array );
         $final_ota_string="SET ".$ota_string;
-        
+        $ota_reponse = OtaResponse::create([
+            'client_id' => $vehicle_ota->client_id,
+            'vehicle_id' => $vehicle_ota->vehicle_id,
+            'imei' => $vehicle_ota->vehicle->gps->imei,
+            'response' => $final_ota_string,
+            'status' =>1
+        ]);
+
         $vehicle_ota->PU = $request->PU;
         $vehicle_ota->EU = $request->EU;
         $vehicle_ota->EM = $request->EM;
