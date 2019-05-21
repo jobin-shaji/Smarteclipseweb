@@ -876,11 +876,7 @@ class VehicleController extends Controller {
        
     }
 
-
     // public function locationPlayback(Request $request){
-
-
-
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
     //         'longitude as lng', 
@@ -929,19 +925,9 @@ class VehicleController extends Controller {
 
 
 
-    public function locationPlayback(Request $request){
-
-        
-        
-        $playBackPolyLine=$this->playBackForLine($request->id,$request->from_time,$request->to_time);
-         
-        $MarkData=$this->playBackForMark_Route($request->id,$request->from_time,$request->to_time); 
-        dd($MarkData);  
-        // $vehicleDeatils=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);   
-
-// $vehicleID,$from_time,$to_time
-
-        $gpsdata=GpsData::Select(
+public function locationPlayback(Request $request){
+ 
+     $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng', 
             'heading as angle',
@@ -952,23 +938,46 @@ class VehicleController extends Controller {
         ->where('vehicle_id',$request->id)                
         ->get();    
         $playback=array();
-        $gps_playback=array();
+       $playbackData=array();
         if($gpsdata){
             foreach ($gpsdata as $data) {
                 $playback[]=array(
                     "lat"=>(float)$data->lat,
                     "lng"=>(float)$data->lng
                 ); 
-
-                
                 
             }
+            $startLat=(float)$gpsdata[0]->lat;
+            $startLng=(float)$gpsdata[0]->lng;
+            foreach ($gpsdata as $vdata) {
+            $lat=(float)$vdata->lat;
+            $lng=(float)$vdata->lat;
+            //$caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
+            // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
+                $vehicle_status="Running";
+                if($vdata->ign==1){
+                    $ignitionData="ON";
+                }else{
+                    $ignitionData="Off";
+                }
+                $playbackData[]=array(
+                     "lat"=>$startLat,
+                    "lng"=>$startLng,
+                    "angle"=>$vdata->angle,
+                    "Speed"=>$vdata->speed,
+                    "Ignition"=>$ignitionData
+                ); 
+                $startLat=$vdata->lat;
+                $startLng=$vdata->lng;
+            }
+           
             $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',
                 'code'    =>1,                              
                 'polyline' => $playback,
-                'marker' => $gps_playback
+                'markers' => $playbackData,
+                
             );
         }else{
             $response_data = array(
@@ -977,8 +986,22 @@ class VehicleController extends Controller {
                 'code'    =>0
             );
         }
-        return response()->json($response_data); 
-    }
+
+    // $playBackPolyLine=$this->playBackForLine($request->id,$request->from_time,$request->to_time);         
+    // $MarkData=$this->playBackForMark_Route($request->id,$request->from_time,$request->to_time);
+    // $reponseData =array(
+    //     "playbackpolyline"=>$playBackPolyLine,
+    //     "markerdata"=>$MarkData,
+    //     "playData"=>$MarkData
+    // );
+    // $response_data = array('status'  => 'success',
+    //     'message' => 'success',
+    //     'code'    =>1,                               
+    //     'polylineData' => $reponseData
+    // );
+   // dd($response_data['liveData']['ign']);
+    return response()->json($response_data); 
+}
 public function playBackForLine($vehicleID,$fromDate,$toDate){
 
     $playBackDataList=array();
@@ -988,13 +1011,16 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'latitude as lat',
             'longitude as lng', 
             'heading as angle',
+            'gps_fix as gps',
+            'ignition as ign',
             'speed'       
         )
         ->where('device_time', '>=',$fromDate)
         ->where('device_time', '<=',$toDate)
         ->where('vehicle_id',$vehicleID)                
         ->get(); 
-       
+        $startLat=(float)$gpsdata[0]->lat;
+    $startLng=(float)$gpsdata[0]->lng;
      if($gpsdata){
     foreach ($gpsdata as $data) {
                 $playback[]=array(
@@ -1002,9 +1028,17 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
                     "lng"=>(float)$data->lng
                 ); 
             }
-      }
-     
-     return json_encode($playback);
+             $response_data = array(
+                'status'  => 'success',
+                'message' => 'success',
+                'code'    =>1,                              
+                'polyline' => $playback
+                
+            );
+       }
+     return response()->json($response_data); 
+     // return json_encode($playback);
+       // return response()->json($playback); 
    }
 
 public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
@@ -1046,7 +1080,7 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
                     "lat"=>$startLat,
                     "lng"=>$startLng,
                     "angle"=>$vdata->angle,
-                    "Speed"=>$vdata->Speed,
+                    "Speed"=>$vdata->speed,
                     "Ignition"=>$ignitionData
                 ); 
                 $startLat=$vdata->lat;

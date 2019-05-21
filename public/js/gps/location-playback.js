@@ -144,14 +144,10 @@ function playback() {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-             initMap();
-        // callBackForData(playBackData,url);
-        // createPolyline(locationData);
-        // markerAddInmap(markerPointData);
-        // loopItems(markerData);
-           
-            // createPolyline(res.polyline); 
-            //   markerAddInmap(res.marker,res);           
+             
+           console.log(res.markers);
+             createPolyline(res.polyline); 
+               markerAddInmap(res.markers);           
         },
         error: function(err) {
             var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
@@ -161,3 +157,67 @@ function playback() {
        
       }); 
 }
+function createPolyline(locationData) { 
+    var lineData =locationData;
+    var linePath = new google.maps.Polyline({
+        path: lineData,
+        geodesic: true,
+        strokeColor: '#0C2161',
+        strokeOpacity: 0.5,
+        strokeWeight: 7
+    });
+    linePath.setMap(map);          
+}
+
+
+ function markerAddInmap(markerPointData){
+      console.log(markerPointData);
+  //     var lineData =locationData;
+  //   // alert(markerPointData);
+//   if(markerPointData.length>0){
+//    icon = { 
+//      // path:vehicleDetails.SvgICon,
+//     path: locationData,
+//     scale: 0.4,
+//     fillColor: "#ff0023", //<-- Car Color, you can change it 
+//     fillOpacity: 1,
+//     rotation:150.0  //<-- Car angle
+//     }; 
+//      // var markerLatlng = new google.maps.LatLng(parseFloat(locationData.polyline[0]);
+
+
+        
+//   var locationsMarkerdata=locationData;
+ 
+//   var latlng = new google.maps.LatLng(parseFloat(locationData.polyline[0]);
+//       car = new google.maps.Marker({
+//         position: latlng,
+//         map: map,
+//         icon:icon
+//      });
+// // {lat: 10.056075, lng: 76.354691}
+// // 1: {lat: 10.055787, lng: 76.354712}
+//   if(locationsMarkerdata){
+//     var infowindow = new google.maps.InfoWindow();
+//     // for (i = 0; i < locationsMarkerdata.length; i++) {  
+//        marker = new google.maps.Marker({
+//       position: new google.maps.LatLng(parseFloat(locationData.polyline[i]),
+//       icon:markericon,
+//       map: map
+//       });
+
+//        google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+//         return function() {
+//           infowindow.setContent('<div id="content" style="width:150px;">' +
+//               'div style="padding-top:5px;"><i class="fa fa-tachometer"></i> '+markerPointData[i].Speed+' KM/H </div>'+ 
+//               '</div>');
+//           infowindow.open(map, marker);
+//         }
+//        })(marker, i));
+
+
+     
+//    }
+
+//   }
+  }
