@@ -32,7 +32,7 @@
 <li class="treeview">
     <a href="#">
       <i class="fa fa-user-plus"></i>
-      <span>Client</span>
+      <span>End User</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
       </span>

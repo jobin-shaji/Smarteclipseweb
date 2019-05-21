@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\OtaResponse;
+use App\Modules\Vehicle\Models\VehicleRoute;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleOta;
 use App\Modules\Vehicle\Models\Document;

@@ -1,0 +1,150 @@
+<?php
+
+
+namespace App\Modules\Route\Controllers;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Modules\Route\Models\Route;
+use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Route\Models\RouteArea;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use DataTables;
+
+class RouteController extends Controller {
+    
+    // show list page
+    public function routeList()
+    {
+       return view('Route::route-list'); 
+    }
+
+    // data for list page
+    public function getRouteList()
+    {
+        $client_id=\Auth::user()->client->id;
+        $route = Route::select(
+                    'id',
+                    'name',
+                    'deleted_at'
+                    )
+            ->withTrashed()
+            ->where('client_id',$client_id)
+            ->get();
+        return DataTables::of($route)
+            ->addIndexColumn()
+            ->addColumn('action', function ($route) {
+                if($route->deleted_at == null){
+                    return "
+                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+
+                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
+                }else{
+                     return "
+                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
+                }
+             })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
+    // create a new route
+    public function createRoute()
+    {
+        return view('Route::route-add');
+    }
+
+    // // save route
+    public function saveRoute(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $rules = $this->routeCreateRules();
+        $this->validate($request, $rules);
+        $route_name=$request->name;
+        $route_points=$request->points;
+        $removed_last_comma_points=substr($route_points, 0, -1);
+        $point_split=explode(";",$removed_last_comma_points);
+        $route = Route::create([
+            'name' => $request->name,
+            'client_id' => $client_id
+        ]);
+        if($route){
+            foreach ($point_split as $point){
+                $route_point_remove_brackets=trim($point,'(,)');
+                $route_point_imploaded=explode(",",$route_point_remove_brackets);
+                $route_point_lat=$route_point_imploaded[0];
+                $route_point_lng=$route_point_imploaded[1];
+
+                $route_area = RouteArea::create([
+                    'route_id' => $route->id,
+                    'latitude' => $route_point_lat,
+                    'longitude' => $route_point_lng
+                ]);
+            }
+        }
+        $request->session()->flash('message', 'New Route created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('route'));
+    }
+    
+    // // details page
+    public function details(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $route=Route::find($decrypted_id);
+        if($route==null){
+            return view('Route::404');
+        } 
+        return view('Route::route-details',['route' => $route]);
+    }
+
+    // Route delete
+    public function deleteRoute(Request $request)
+    {
+        $route=Route::find($request->id);
+        if($route == null){
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Route does not exist'
+            ]);
+        }
+        $route->delete(); 
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Route deleted successfully'
+        ]);
+     }
+
+
+    // restore route
+    public function activateRoute(Request $request)
+    {       
+        $route = Route::withTrashed()->find($request->id);
+        if($route==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Route does not exist'
+             ]);
+        }
+        $route->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Route restored successfully'
+        ]);
+    }
+
+    //////////////////////////////////////RULES/////////////////////////////
+    //route create rules
+    public function routeCreateRules()
+    {
+        $rules = [
+            'name' => 'required'
+        ];
+        return  $rules;
+    }
+}
