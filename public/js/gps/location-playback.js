@@ -14,9 +14,7 @@ var vehicleColor = "#0C2161";
 var vehicleScale = "0.5";
 
  function initMap() {
-
-
-    map = new google.maps.Map(document.getElementById('map'), {
+   map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 10.107570,
             lng: 76.345665
@@ -24,73 +22,18 @@ var vehicleScale = "0.5";
         zoom: 10,
         mapTypeId: 'roadmap'
 
-    });
-
-
-function check() {
-   console.log(id);
-    var url = '/vehicles/location-track';
-    var id = document.getElementById('vehicle_id').value;
- 
-    // var id=1;
-    var data = {
-        id: id
-    };
-    var purl = getUrl() + '/' + url;
-    var triangleCoords = [];
-    $.ajax({
-        type: 'POST',
-        url: purl,
-        data: data,
-        async: true,
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(res) {
-           
-            // // document.getElementById("user").innerHTML = res.client_name;
-            // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-            // document.getElementById("car_speed").innerHTML = res.liveData.speed;
-            // document.getElementById("car_bettary").innerHTML = res.liveData.power;
-            // document.getElementById("car_location").innerHTML = res.liveData.place;
-            // document.getElementById("user").innerHTML = res.vehicle_name;
-
-
-        },
-        error: function(err) {
-            var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-            toastr.error(message, 'Error');
-        }
-    });
-
+    }); 
 }
 
-
-
-
-//     var icon = { // car icon
-//         path: vehiclePath,
-//         scale: parseFloat(vehicleScale),
-//         fillColor: vehicleColor, //<-- Car Color, you can change it 
-//         fillOpacity: 1,
-//         strokeWeight: 1,
-//         anchor: new google.maps.Point(0, 5),
-//         rotation: 0 //<-- Car angle
-//     };
-//     marker = new google.maps.Marker({
-//         map: map,
-//         icon: icon
-//     });
-//     getMarkers(map);
-// }
-
-// function getMarkers() {
-
-//     var url = '/vehicles/location-track';
+// function playback() {
+//     var url = '/vehicles/location-playback';
 //     var id = document.getElementById('vehicle_id').value;
-//     // var id=1;
+//     var from_time = document.getElementById('fromDate').value;
+//     var to_time = document.getElementById('toDate').value;
 //     var data = {
-//         id: id
+//         id: id,
+//         from_time: from_time,
+//         to_time: to_time
 //     };
 //     var purl = getUrl() + '/' + url;
 //     var triangleCoords = [];
@@ -100,109 +43,121 @@ function check() {
 //         data: data,
 //         async: true,
 //         headers: {
-//             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+//         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 //         },
 //         success: function(res) {
-//             // console.log(res.liveData.ign);
-//             if (res.liveData.vehicleStatus == 'M') {
-//                 $("#online").show();
-//                 $("#halt").hide();
-//                 $("#ofline").hide();
-//                 $("#sleep").hide();
-
-
-
-//                 vehicleColor="#203a17";
-//             } else if (res.liveData.vehicleStatus == 'H') {
-//                 $("#halt").show();
-//                 $("#online").hide();
-//                 $("#ofline").hide();
-//                 $("#sleep").hide();
-
-//                 vehicleColor="#c1c431";
-
-//             } else if (res.liveData.vehicleStatus == 'S') {
-//                 $("#sleep").show();
-//                 $("#halt").hide();
-//                 $("#online").hide();
-//                 $("#ofline").hide();
-//                 vehicleColor="#ffa500";
-//             } else {
-//                 $("#ofline").show();
-//                 $("#sleep").hide();
-//                 $("#halt").hide();
-//                 $("#online").hide();
-//                 vehicleColor="#711307";
-
-//             }
-//             if (res.liveData.ign == 1) {
-//                 document.getElementById("ignition").innerHTML = "Ignitio ON";
-//              }else
-//               {
-//                  document.getElementById("ignition").innerHTML = "Ignitio OFF";
-//               }
-//             // document.getElementById("user").innerHTML = res.client_name;
-//             document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-//             document.getElementById("car_speed").innerHTML = res.liveData.speed;
-//             document.getElementById("car_bettary").innerHTML = res.liveData.power;
-//             document.getElementById("car_location").innerHTML = res.liveData.place;
-//             document.getElementById("user").innerHTML = res.vehicle_name;
-
-            
-
-//             track(map, res);
-//             setTimeout(locate, 5000);
-
-
+           
+//             createPolyline(res.polyline); 
+//               markerAddInmap(res.marker,res);           
 //         },
 //         error: function(err) {
 //             var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
 //             toastr.error(message, 'Error');
 //         }
 //     });
+// }
+// function createPolyline(locationData) { 
+//     var lineData =locationData;
+//     var linePath = new google.maps.Polyline({
+//         path: lineData,
+//         geodesic: true,
+//         strokeColor: '#0C2161',
+//         strokeOpacity: 0.5,
+//         strokeWeight: 7
+//     });
+//     linePath.setMap(map);          
+// }
 
 
-//     function track(map, res) {
+//  function markerAddInmap(markerPointData,locationData){
+//       console.log(locationData.polyline[0]);
+// //   //     var lineData =locationData;
+// //   //   // alert(markerPointData);
+// //   if(markerPointData.length>0){
+// //    icon = { 
+// //      // path:vehicleDetails.SvgICon,
+// //     path: locationData,
+// //     scale: 0.4,
+// //     fillColor: "#ff0023", //<-- Car Color, you can change it 
+// //     fillOpacity: 1,
+// //     rotation:150.0  //<-- Car angle
+// //     }; 
+// //      // var markerLatlng = new google.maps.LatLng(parseFloat(locationData.polyline[0]);
 
-//         var lat = parseFloat(res.liveData.latitude);
-//         var lng = parseFloat(res.liveData.longitude);
-//         var angle=parseFloat(res.liveData.angle);
-//         var markerLatLng = new google.maps.LatLng(res.liveData.latitude, res.liveData.longitude);
-//         i = 0;
-//         deltaLat = (lat - posLat) / numDeltas;
-//         deltaLng = (lng - posLng) / numDeltas;
+
+        
+// //   var locationsMarkerdata=locationData;
+ 
+// //   var latlng = new google.maps.LatLng(parseFloat(locationData.polyline[0]);
+// //       car = new google.maps.Marker({
+// //         position: latlng,
+// //         map: map,
+// //         icon:icon
+// //      });
+// // // {lat: 10.056075, lng: 76.354691}
+// // // 1: {lat: 10.055787, lng: 76.354712}
+// //   if(locationsMarkerdata){
+// //     var infowindow = new google.maps.InfoWindow();
+// //     // for (i = 0; i < locationsMarkerdata.length; i++) {  
+// //        marker = new google.maps.Marker({
+// //       position: new google.maps.LatLng(parseFloat(locationData.polyline[i]),
+// //       icon:markericon,
+// //       map: map
+// //       });
+
+// //        // google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+// //        //  return function() {
+// //        //    infowindow.setContent('<div id="content" style="width:150px;">' +
+// //        //        'div style="padding-top:5px;"><i class="fa fa-tachometer"></i> '+markerPointData[i].Speed+' KM/H </div>'+ 
+// //        //        '</div>');
+// //        //    infowindow.open(map, marker);
+// //        //  }
+// //        // })(marker, i));
+
+
+// //      // }
+// //    }
+
+// //   }
+//   }
+function playback() {
+ $(function() {
+
+     // var baseurl = '/vehicles/location-playback';
+         var url = '/vehicles/location-playback';
+    var id = document.getElementById('vehicle_id').value;
+    var from_time = document.getElementById('fromDate').value;
+    var to_time = document.getElementById('toDate').value;
+    var data = {
+        id: id,
+        from_time: from_time,
+        to_time: to_time
+    };
+    var purl = getUrl() + '/' + url;
+    var triangleCoords = [];
+    $.ajax({
+        type: 'POST',
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+             initMap();
+        // callBackForData(playBackData,url);
+        // createPolyline(locationData);
+        // markerAddInmap(markerPointData);
+        // loopItems(markerData);
+           
+            // createPolyline(res.polyline); 
+            //   markerAddInmap(res.marker,res);           
+        },
+        error: function(err) {
+            var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
+            toastr.error(message, 'Error');
+        }
+    });
        
-//         map.panTo(markerLatLng);
-//         moveMarker();
-//         var icon = { // car icon
-//                     path:vehiclePath,
-//                     scale: parseFloat(vehicleScale),
-//                     fillColor: vehicleColor, //<-- Car Color, you can change it 
-//                     fillOpacity: 1,
-//                     strokeWeight: 1,
-//                     anchor: new google.maps.Point(0, 5),
-//                     rotation:angle  //<-- Car angle
-//                 };
-//               marker.setIcon(icon);
-
-
-
-//     }
-
-    // function moveMarker() {
-
-    //     posLat += deltaLat;
-    //     posLng += deltaLng;
-    //     var latlng = new google.maps.LatLng(posLat, posLng);
-    //     marker.setPosition(latlng);
-    //     if (i != numDeltas) {
-    //         i++;
-    //         setTimeout(moveMarker, delay);
-    //     }
-    // }
-
-    // function locate() {
-    //     getMarkers();
-    // }
-
+      }); 
 }

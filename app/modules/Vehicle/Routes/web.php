@@ -30,7 +30,7 @@ Route::post('/vehicles/location-track','VehicleController@locationTrack')->name(
 
 Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicles.playback');
 
-// Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
+Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
 
 });
 
