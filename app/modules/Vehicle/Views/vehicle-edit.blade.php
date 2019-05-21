@@ -57,5 +57,102 @@
  
 <div class="clearfix"></div>
 
+<section class="hilite-content">
+  <div class="row">
+    <div class="col-xs-8">
+      <div class="row">
+        <div class="col-md-6">
+        <h2 class="page-header">
+          <i class="fa fa-car"> Vehicle Routes</i> 
+        </h2>
+        </div>
+        <div class="col-md-6">
+        <div class="clearfix"></div>
+           <a href="#" class='btn btn-xs btn-success pull-right' data-toggle="modal" data-target="#myModal"><i class='glyphicon glyphicon-plus'></i> Add vehicle Route </a>
 
+        </div>
+      </div>
+         <div class="panel-body">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                  <thead>
+                      <tr>
+                          <th>Sl.No</th>
+                          <th>Route</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($vehicle->vehicleRoute as $vehicle_route)
+
+                      <tr>
+                          <td>{{$loop->iteration}}</td>
+                          <td>{{$vehicle_route->route_id}}</td>
+                          <td>{{$vehicle_route->date_from}}</td>
+                          <td>{{$vehicle_route->date_to}}</td>
+                          <td>
+                            <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->id)}}/edit" class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+
+                            <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->id)}}/view" class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+
+                            <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->id)}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a>
+
+                          </td>
+                      </tr>
+
+                    @endforeach
+                  </tbody>
+              </table>
+           </div> 
+    </div>
+  </div>
+</section>
+
+
+<!-- add depot user -->
+ <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Vehicle Routes</h4>
+      </div>
+      <div class="modal-body">
+            <form  method="POST" action="">
+                    {{csrf_field()}}
+                  <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}"> 
+                  <div class="row">
+                          <div class="col-md-12">
+                             <div class="form-group has-feedback">
+                                <label class="srequired">Email</label>
+                                <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ old('email') }}" required> 
+                                <span class="glyphicon glyphicon-car form-control-feedback"></span>
+                              </div>
+                              @if ($errors->has('email'))
+                                <span class="help-block">
+                                    <strong class="error-text">{{ $errors->first('email') }}</strong>
+                                </span>
+                              @endif
+
+              
+                        </div>
+                    </div>
+                      <div class="row">
+                        <!-- /.col -->
+                        <div class="col-md-3 ">
+                          <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+   </div>
+ </div>
    @endsection
