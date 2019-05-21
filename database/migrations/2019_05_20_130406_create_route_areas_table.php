@@ -15,6 +15,9 @@ class CreateRouteAreasTable extends Migration
     {
         Schema::create('route_areas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('route_id');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }
