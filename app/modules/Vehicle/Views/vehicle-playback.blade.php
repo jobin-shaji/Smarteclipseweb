@@ -25,9 +25,10 @@
                   <input type="text" id="fromDate" name="fromDate">
                   <label> To date</label>
                   <input type="text" id="toDate" name="toDate">
+
                   <button class="btn btn-xs btn-info" onclick="playback()"> <i class="fa fa-filter"></i> Playback </button>                 
               </div>               
-
+             
         <div id="map" style="width:100%;height:500px;"></div>
     </div>
     </div>
