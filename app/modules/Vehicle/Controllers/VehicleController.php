@@ -479,6 +479,40 @@ class VehicleController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle.ota',$encrypted_vehicle_ota_id));  
     }
+
+    // save vehicle route
+    public function saveVehicleRoute(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $rules = $this->vehicleRouteCreateRules();
+        $this->validate($request, $rules);
+        $vehicle_route = VehicleRoute::create([
+            'vehicle_id' => $request->vehicle_id,
+            'route_id' => $request->route_id,
+            'date_from' => $request->date_from,
+            'date_to' => $request->date_to,
+            'client_id' => $client_id,
+            'status' =>1,
+           ]);
+        $request->session()->flash('message', 'Vehicle Route scheduled successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+
+        return redirect(route('vehicle.edit',Crypt::encrypt($vehicle_route->vehicle_id)));
+    }
+
+    // edit vehicle route
+    public function editVehicleRoute(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $client_id=\Auth::user()->client->id;
+        $vehicle_route = VehicleRoute::find($decrypted_id);
+        if($vehicle_route == null){
+            return view('Vehicle::404');
+        }
+        $routes=Route::where('client_id',$client_id)
+                        ->get();
+        return view('Vehicle::vehicle-route-edit',['vehicle_route' => $vehicle_route,'routes' => $routes]);
+    }
     
     // vehicle delete
     public function deleteVehicle(Request $request)
@@ -935,7 +969,7 @@ public function locationPlayback(Request $request){
             'longitude as lng', 
             'heading as angle',
             'ignition as ign',
-            'device_time as datetime'
+            'device_time as datetime',
             'speed'       
         )
         ->where('device_time', '>=',$request->from_time)
@@ -1106,31 +1140,6 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
   return ($miles * 1.609344);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()
@@ -1151,6 +1160,18 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
             'e_sim_number' => 'required|numeric'
         ];
         return  $rules;  
+    }
+
+    // vehicle route create rules
+    public function vehicleRouteCreateRules()
+    {
+        $rules = [
+            'vehicle_id' => 'required',
+            'route_id' => 'required',
+            'date_from' => 'required',
+            'date_to' => 'required'
+        ];
+        return  $rules;
     }
 
     // vehicle type create rules
