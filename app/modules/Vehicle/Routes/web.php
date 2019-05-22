@@ -34,6 +34,7 @@ Route::post('/vehicles/location-playback','VehicleController@locationPlayback')-
 
 //////////////////////////////////Route in vehicle//////////////////////////////
 
+Route::post('/vehicle-route/save_route','VehicleController@saveRoute')->name('vehicle-route.create.p');
 Route::get('/vehicle-route/{id}/edit','VehicleController@edit')->name('vehicle-route.edit');
 Route::post('/vehicle-route/{id}/edit','VehicleController@update')->name('vehicle-route.update.p');
 Route::get('/vehicle-route/{id}/details','VehicleController@details')->name('vehicle-route.details');
