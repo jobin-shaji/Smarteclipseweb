@@ -934,6 +934,8 @@ public function locationPlayback(Request $request){
             'latitude as lat',
             'longitude as lng', 
             'heading as angle',
+            'ignition as ign',
+            'device_time as datetime'
             'speed'       
         )
         ->where('device_time', '>=',$request->from_time)
@@ -955,8 +957,8 @@ public function locationPlayback(Request $request){
             foreach ($gpsdata as $vdata) {
             $lat=(float)$vdata->lat;
             $lng=(float)$vdata->lat;
-            //$caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
-            // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
+            $caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
+              // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
                 $vehicle_status="Running";
                 if($vdata->ign==1){
                     $ignitionData="ON";
@@ -964,16 +966,18 @@ public function locationPlayback(Request $request){
                     $ignitionData="Off";
                 }
                 $playbackData[]=array(
-                     "lat"=>$startLat,
-                    "lng"=>$startLng,
+                    
+                    "lat"=>(float)$vdata->lat,
+                    "lng"=>(float)$vdata->lng,
                     "angle"=>$vdata->angle,
                     "Speed"=>$vdata->speed,
+                    "DateTime"=>$vdata->datetime,
                     "Ignition"=>$ignitionData
                 ); 
-                $startLat=$vdata->lat;
-                $startLng=$vdata->lng;
-            }
-           
+                $startLat=(float)$vdata->lat;
+                $startLng=(float)$vdata->lng;
+            // }
+            }           
             $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',

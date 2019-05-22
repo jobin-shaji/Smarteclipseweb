@@ -6,6 +6,8 @@ var delay = 10; //milliseconds
 var i = 0;
 var posLat = 10.107570;
 var posLng = 76.345665;
+
+ var markericon;
 var deltaLat, deltaLng;
 var marker;
 var map;
@@ -16,10 +18,10 @@ var vehicleScale = "0.5";
  function initMap() {
    map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 10.107570,
-            lng: 76.345665
+            lat: 10.056075,
+            lng: 76.354691
         },
-        zoom: 10,
+        zoom: 19,
         mapTypeId: 'roadmap'
 
     }); 
@@ -121,41 +123,40 @@ var vehicleScale = "0.5";
 // //   }
 //   }
 function playback() {
- $(function() {
-
-     // var baseurl = '/vehicles/location-playback';
-         var url = '/vehicles/location-playback';
-    var id = document.getElementById('vehicle_id').value;
-    var from_time = document.getElementById('fromDate').value;
-    var to_time = document.getElementById('toDate').value;
-    var data = {
-        id: id,
-        from_time: from_time,
-        to_time: to_time
-    };
-    var purl = getUrl() + '/' + url;
-    var triangleCoords = [];
-    $.ajax({
-        type: 'POST',
-        url: purl,
-        data: data,
-        async: true,
-        headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(res) {
-             
-           console.log(res.markers);
-             createPolyline(res.polyline); 
-               markerAddInmap(res.markers);           
-        },
-        error: function(err) {
-            var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-            toastr.error(message, 'Error');
-        }
-    });
+    $(function() {
+        // var baseurl = '/vehicles/location-playback';
+        var url = '/vehicles/location-playback';
+        var id = document.getElementById('vehicle_id').value;
+        var from_time = document.getElementById('fromDate').value;
+        var to_time = document.getElementById('toDate').value;
+        var data = {
+            id: id,
+            from_time: from_time,
+            to_time: to_time
+        };
+        var purl = getUrl() + '/' + url;
+        var triangleCoords = [];
+        $.ajax({
+            type: 'POST',
+            url: purl,
+            data: data,
+            async: true,
+            headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(res) {
+                createPolyline(res.polyline); 
+                markerAddInmap(res.markers); 
+                loopItems(res.markers);   
+                // console.log(res.markers);       
+            },
+            error: function(err) {
+                var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
+                toastr.error(message, 'Error');
+            }
+        });
        
-      }); 
+    }); 
 }
 function createPolyline(locationData) { 
     var lineData =locationData;
@@ -168,56 +169,73 @@ function createPolyline(locationData) {
     });
     linePath.setMap(map);          
 }
-
-
- function markerAddInmap(markerPointData){
-      console.log(markerPointData);
-  //     var lineData =locationData;
-  //   // alert(markerPointData);
-//   if(markerPointData.length>0){
-//    icon = { 
-//      // path:vehicleDetails.SvgICon,
-//     path: locationData,
-//     scale: 0.4,
-//     fillColor: "#ff0023", //<-- Car Color, you can change it 
-//     fillOpacity: 1,
-//     rotation:150.0  //<-- Car angle
-//     }; 
-//      // var markerLatlng = new google.maps.LatLng(parseFloat(locationData.polyline[0]);
-
-
-        
-//   var locationsMarkerdata=locationData;
- 
-//   var latlng = new google.maps.LatLng(parseFloat(locationData.polyline[0]);
-//       car = new google.maps.Marker({
-//         position: latlng,
-//         map: map,
-//         icon:icon
-//      });
-// // {lat: 10.056075, lng: 76.354691}
-// // 1: {lat: 10.055787, lng: 76.354712}
-//   if(locationsMarkerdata){
-//     var infowindow = new google.maps.InfoWindow();
-//     // for (i = 0; i < locationsMarkerdata.length; i++) {  
-//        marker = new google.maps.Marker({
-//       position: new google.maps.LatLng(parseFloat(locationData.polyline[i]),
-//       icon:markericon,
-//       map: map
-//       });
-
-//        google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
-//         return function() {
-//           infowindow.setContent('<div id="content" style="width:150px;">' +
-//               'div style="padding-top:5px;"><i class="fa fa-tachometer"></i> '+markerPointData[i].Speed+' KM/H </div>'+ 
-//               '</div>');
-//           infowindow.open(map, marker);
-//         }
-//        })(marker, i));
-
+function markerAddInmap(markerPointData){
+    if(markerPointData.length>0){
+        icon = { 
+            path:vehicleDetails.SvgICon,
+            // path:markerPointData.length,
+            scale: 0.4,
+            fillColor: "#ff0023", //<-- Car Color, you can change it 
+            fillOpacity: 1,
+            rotation:150.0  //<-- Car angle
+        }; 
+        var locationsMarkerdata=markerPointData;
+        var latlng = new google.maps.LatLng(locationsMarkerdata[0].lat,locationsMarkerdata[0].lng);
+        car = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            icon:icon
+        });
+        if(locationsMarkerdata){
+            var infowindow = new google.maps.InfoWindow();
+            for (i = 0; i < locationsMarkerdata.length; i++) {  
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locationsMarkerdata[i].lat, locationsMarkerdata[i].lng),
+                    icon:marker,
+                    map: map
+                });
+                google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+                    return function() {
+                        infowindow.setContent('<div id="content" style="width:150px;">' +
+                        '<div style="padding-top:10px;"><i class="fa fa-car"></i> '+locationsMarkerdata[i].status+'</div>'+ 
+                        '<div style="padding-top:5px;"><i class="fa fa-calendar"></i> '+locationsMarkerdata[i].DateTime+'</div>'+ 
+                        '<div style="padding-top:5px;"><i class="fa fa-tachometer"></i> '+locationsMarkerdata[i].Speed+' KM/H </div>'+ 
+                        '<div style="padding-top:5px;"><i class="fa fa-key"></i> '+locationsMarkerdata[i].Ignition+'</div>'+ 
+                        '</div>');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+        }
+    }
+}
+function loopItems(markerData){   
+    if(markerData){
+        var item = markerData.shift(); 
+        moveMarker(item.lat,item.lng,item.angle);
+    }
+}
+function moveMarker(latLoc,lngLoc,angle){    
+    var latlng=new google.maps.LatLng(latLoc,lngLoc);
+    duration=1000;
+    duration=parseInt(duration);
+    if(duration < 0) {
+        duration = 1;  
+    }
+    car.animateTo(latlng, {easing:'swing', duration: duration});
+    var icon = car.getIcon();
+    icon.rotation = parseFloat(angle);
+    car.setIcon(icon);
+    map.setCenter(latlng);
+    setTimeout(function () {
+    loopItems();
+    }, 1000);
+}  
+  // change Speed
+    // function changeSpeed(speed){
+    //   duration=1000;
+    //   duration=parseInt(duration)+parseInt(speed);
+    //   $("#rangePrimary").text(speed);
+    //  } 
 
      
-//    }
-
-//   }
-  }
