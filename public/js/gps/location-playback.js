@@ -172,7 +172,7 @@ function createPolyline(locationData) {
 function markerAddInmap(markerPointData){
     if(markerPointData.length>0){
         icon = { 
-            path:vehicleDetails.SvgICon,
+            path:vehiclePath,
             // path:markerPointData.length,
             scale: 0.4,
             fillColor: "#ff0023", //<-- Car Color, you can change it 
