@@ -32,6 +32,10 @@ Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicl
 
 Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
 
+
+
+
+
 //////////////////////////////////Route in vehicle//////////////////////////////
 
 Route::post('/vehicle-route/save_route','VehicleController@saveVehicleRoute')->name('vehicle-route.create.p');

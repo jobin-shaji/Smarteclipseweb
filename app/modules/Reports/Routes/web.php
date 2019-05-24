@@ -8,7 +8,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	// alert report 
 	Route::get('/alert-report','AlertReportController@alertReport')->name('alert-report');
-
+	Route::post('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
 	// tracking report 
 	Route::get('/tracking-report','TrackingReportController@trackingReport')->name('tracking-report');
 
