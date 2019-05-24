@@ -957,11 +957,6 @@ class VehicleController extends Controller {
     // }
 
 
-
-
-
-
-
 public function locationPlayback(Request $request){
  
      $gpsdata=GpsData::Select(
@@ -980,18 +975,46 @@ public function locationPlayback(Request $request){
        $playbackData=array();
         if($gpsdata){
             foreach ($gpsdata as $data) {
+
+                if($data->ign==1){
+                    $ignitionData="ON";
+                }else{
+                    $ignitionData="Off";
+                }
                 $playback[]=array(
                     "lat"=>(float)$data->lat,
-                    "lng"=>(float)$data->lng
+                    "lng"=>(float)$data->lng,
+                    "Speed"=>$data->speed,
+                     "Ignition"=>$ignitionData,
+                    "DateTime"=>$data->datetime
                 ); 
                 
             }
-            $startLat=(float)$gpsdata[0]->lat;
-            $startLng=(float)$gpsdata[0]->lng;
-            foreach ($gpsdata as $vdata) {
-            $lat=(float)$vdata->lat;
-            $lng=(float)$vdata->lat;
-            $caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
+        }
+         $gpsvdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'ignition as ign',
+            'device_time as datetime',
+            'speed'       
+        )
+        ->where('device_time', '>=',$request->from_time)
+        ->where('device_time', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id) 
+        ->orderBy('id','desc')               
+        ->get(); 
+        if($gpsvdata)
+        {
+
+
+            $vstartLat=(float)$gpsvdata[0]->lat;
+            $vstartLng=(float)$gpsvdata[0]->lng;
+            foreach ($gpsvdata as $vdata) {
+            $vlat=(float)$vdata->lat;
+            $vlng=(float)$vdata->lat;
+            $caluculate_distance_between_latlng=$this->distanceCalculation($vlat,$vlng,$vstartLat,$vstartLat);
+            // dd(MARKER_SELECT_POINT_DISTANCE);
               // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
                 $vehicle_status="Running";
                 if($vdata->ign==1){
@@ -1109,6 +1132,7 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
              $lat=(float)$vdata->lat;
             $lng=(float)$vdata->lat;
             $caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
+            // dd($caluculate_distance_between_latlng);
             // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
                 $vehicle_status="Running";
                 if($vdata->ign==1){
