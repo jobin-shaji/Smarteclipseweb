@@ -33,10 +33,10 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <th>Vehicle</th>
-                              <th>Geofence Zone</th>
-                              <th>Zone In Time</th>
-                              <th>Zone Out Time</th>        
+                              <th>Vehicle Name</th>
+                              <th>Register Number</th>
+                              <th>Geofence Type</th>
+                              <th>Time</th>      
                             </tr>
                         </thead>
                     </table>

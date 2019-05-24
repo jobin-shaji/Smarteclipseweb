@@ -16,6 +16,7 @@ class VehicleRoute extends Model
     
     // route
     public function route(){
-    	return $this->hasOne('App\Modules\Route\Models\Route','id','route_id');
+    	return $this->hasMany('App\Modules\Route\Models\Route');
     }
+    
 }

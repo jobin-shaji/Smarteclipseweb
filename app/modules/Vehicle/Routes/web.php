@@ -42,7 +42,7 @@ Route::post('/vehicle-route/save_route','VehicleController@saveVehicleRoute')->n
 Route::get('/vehicle-route/{id}/edit','VehicleController@editVehicleRoute')->name('vehicle-route.edit');
 Route::post('/vehicle-route/{id}/edit','VehicleController@updateVehicleRoute')->name('vehicle-route.update.p');
 Route::get('/vehicle-route/{id}/view','VehicleController@viewVehicleRoute')->name('vehicle-route.view');
-Route::post('vehicle-route/delete','VehicleController@deleteVehicleRoute')->name('vehicle-route.delete');
+Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->name('vehicle-route.delete');
 
 });
 

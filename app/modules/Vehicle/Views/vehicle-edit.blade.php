@@ -94,7 +94,7 @@
                           <td>
                             <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->id)}}/edit" class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
 
-                            <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->id)}}/view" class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                            <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->route_id)}}/view" class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
 
                             <a href="/vehicle-route/{{Crypt::encrypt($vehicle_route->id)}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a>
 
