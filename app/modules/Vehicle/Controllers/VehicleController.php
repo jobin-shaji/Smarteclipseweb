@@ -52,8 +52,11 @@ class VehicleController extends Controller {
                 if($vehicles->deleted_at == null){
                     return "
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/ota class='btn btn-xs btn-info'><i class='glyphicon glyphicon-th'></i> OTA </a>
+                    
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
+
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>
 
 

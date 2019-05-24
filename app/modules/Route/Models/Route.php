@@ -16,6 +16,6 @@ class Route extends Model
 
     public function routeArea()
     {
-        return $this->hasMany('App\Modules\Route\Models\RouteArea','route_id','id');
+        return $this->hasMany('App\Modules\Route\Models\RouteArea','id','route_id');
     }
 }
