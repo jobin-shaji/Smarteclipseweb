@@ -530,9 +530,36 @@ class VehicleController extends Controller {
         $vehicle_route->save();
 
         $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
-        $request->session()->flash('message', 'Vehicle details updated successfully!'); 
+        $request->session()->flash('message', 'Vehicle route details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle-route.edit',$encrypted_vehicle_route_id));  
+    }
+
+    // view page
+    public function viewVehicleRoute(Request $request)
+    {
+        $decrypted_route_id = Crypt::decrypt($request->id);
+        $route=Route::find($decrypted_route_id);
+        if($route==null){
+            return view('Route::404');
+        } 
+        return view('Route::route-details',['route' => $route]);
+    }
+
+    // update vehicle route
+    public function deleteVehicleRoute(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_route = VehicleRoute::find($decrypted_id);
+        if($vehicle_route == null){
+           return view('Vehicle::404');
+        }
+        $vehicle_route->delete();
+
+        $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
+        $request->session()->flash('message', 'Vehicle Route deleted successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle.edit',Crypt::encrypt($vehicle_route->vehicle_id)));
     }
     
     // vehicle delete
