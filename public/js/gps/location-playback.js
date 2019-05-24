@@ -15,13 +15,14 @@ var vehiclePath = "M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.
 var vehicleColor = "#0C2161";
 var vehicleScale = "0.5";
 
+
  function initMap() {
    map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 10.056075,
             lng: 76.354691
         },
-        zoom: 19,
+        zoom: 17,
         mapTypeId: 'roadmap'
 
     }); 
@@ -145,17 +146,17 @@ function playback() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(res) {
+                 initMap();
                 createPolyline(res.polyline); 
-                markerAddInmap(res.markers); 
+                markerAddInmap(res.polyline); 
                 loopItems(res.markers);   
-                // console.log(res.markers);       
+                 // console.log(res.markers);       
             },
             error: function(err) {
                 var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
                 toastr.error(message, 'Error');
             }
-        });
-       
+        });       
     }); 
 }
 function createPolyline(locationData) { 
@@ -170,14 +171,14 @@ function createPolyline(locationData) {
     linePath.setMap(map);          
 }
 function markerAddInmap(markerPointData){
+     // console.log(markerPointData); 
     if(markerPointData.length>0){
         icon = { 
-            path:vehiclePath,
-            // path:markerPointData.length,
-            scale: 0.4,
+            path:vehiclePath,           
+            scale: parseFloat(0.4),
             fillColor: "#ff0023", //<-- Car Color, you can change it 
             fillOpacity: 1,
-            rotation:150.0  //<-- Car angle
+            rotation:parseFloat(150.0)  //<-- Car angle
         }; 
         var locationsMarkerdata=markerPointData;
         var latlng = new google.maps.LatLng(locationsMarkerdata[0].lat,locationsMarkerdata[0].lng);
@@ -209,21 +210,31 @@ function markerAddInmap(markerPointData){
         }
     }
 }
-function loopItems(markerData){   
+function loopItems(markerData){ 
+ 
     if(markerData){
         var item = markerData.shift(); 
         moveMarker(item.lat,item.lng,item.angle);
     }
 }
-function moveMarker(latLoc,lngLoc,angle){    
-    var latlng=new google.maps.LatLng(latLoc,lngLoc);
-    duration=1000;
+function moveMarker(latLoc,lngLoc,angle){  
+
+        icon = { 
+            path:vehiclePath,           
+            scale: 0.4,
+            fillColor: "#ff0023", //<-- Car Color, you can change it 
+            fillOpacity: 1,
+            rotation:150.0  //<-- Car angle
+        };   
+          var latlng=new google.maps.LatLng(latLoc,lngLoc);
+   
+    duration=10000;
     duration=parseInt(duration);
     if(duration < 0) {
         duration = 1;  
     }
     car.animateTo(latlng, {easing:'swing', duration: duration});
-    var icon = car.getIcon();
+    var icon =icon ;
     icon.rotation = parseFloat(angle);
     car.setIcon(icon);
     map.setCenter(latlng);
