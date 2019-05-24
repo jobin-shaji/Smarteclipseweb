@@ -22,7 +22,7 @@ var vehicleScale = "0.5";
             lat: 10.056075,
             lng: 76.354691
         },
-        zoom: 17,
+        zoom: 10,
         mapTypeId: 'roadmap'
 
     }); 
@@ -211,7 +211,7 @@ function markerAddInmap(markerPointData){
     }
 }
 function loopItems(markerData){ 
- 
+ console.log(markerData);
     if(markerData){
         var item = markerData.shift(); 
         moveMarker(item.lat,item.lng,item.angle);
@@ -228,7 +228,7 @@ function moveMarker(latLoc,lngLoc,angle){
         };   
           var latlng=new google.maps.LatLng(latLoc,lngLoc);
    
-    duration=10000;
+    duration=100000;
     duration=parseInt(duration);
     if(duration < 0) {
         duration = 1;  
