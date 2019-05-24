@@ -513,6 +513,27 @@ class VehicleController extends Controller {
                         ->get();
         return view('Vehicle::vehicle-route-edit',['vehicle_route' => $vehicle_route,'routes' => $routes]);
     }
+
+    // update vehicle route
+    public function updateVehicleRoute(Request $request)
+    {
+        $vehicle_route = VehicleRoute::find($request->id);
+        if($vehicle_route == null){
+           return view('Vehicle::404');
+        }
+        $rules = $this->vehicleRouteUpdateRules();
+        $this->validate($request, $rules);
+
+        $vehicle_route->route_id = $request->route_id;
+        $vehicle_route->date_from = $request->date_from;
+        $vehicle_route->date_to = $request->date_to;
+        $vehicle_route->save();
+
+        $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
+        $request->session()->flash('message', 'Vehicle details updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle-route.edit',$encrypted_vehicle_route_id));  
+    }
     
     // vehicle delete
     public function deleteVehicle(Request $request)
@@ -1191,6 +1212,17 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
     {
         $rules = [
             'vehicle_id' => 'required',
+            'route_id' => 'required',
+            'date_from' => 'required',
+            'date_to' => 'required'
+        ];
+        return  $rules;
+    }
+
+    // vehicle route update rules
+    public function vehicleRouteUpdateRules()
+    {
+        $rules = [
             'route_id' => 'required',
             'date_from' => 'required',
             'date_to' => 'required'

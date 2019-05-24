@@ -48,18 +48,17 @@
 
               <div class="form-group has-feedback">
                 <label class="srequired">From Date</label>
-                <input type="text" class="form-control {{ $errors->has('date_from') ? ' has-error' : '' }}" placeholder="From Date" name="date_from" value="{{$vehicle_route->date_from}}" required> 
-                <span class="glyphicon glyphicon-car form-control-feedback"></span>
+                <input type="date" class="form-control {{ $errors->has('date_from') ? ' has-error' : '' }}" placeholder="From Date" name="date_from" value="{{ $vehicle_route->date_from}}">
               </div>
               @if ($errors->has('date_from'))
                 <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('date_from') }}</strong>
+                <strong class="error-text">{{ $errors->first('date_from') }}</strong>
                 </span>
               @endif
 
               <div class="form-group has-feedback">
                 <label class="srequired">To Date</label>
-                <input type="text" class="form-control {{ $errors->has('date_to') ? ' has-error' : '' }}" placeholder="From Date" name="date_to" value="{{$vehicle_route->date_to}}" required> 
+                <input type="date" class="form-control {{ $errors->has('date_to') ? ' has-error' : '' }}" placeholder="From Date" name="date_to" value="{{$vehicle_route->date_to}}" required> 
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
               </div>
               @if ($errors->has('date_to'))
