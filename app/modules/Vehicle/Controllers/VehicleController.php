@@ -963,7 +963,13 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
        
     }
-
+public function playbackHMap(Request $request){
+       
+         $decrypted_id = Crypt::decrypt($request->id);  
+          
+        return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
+       
+    }
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',

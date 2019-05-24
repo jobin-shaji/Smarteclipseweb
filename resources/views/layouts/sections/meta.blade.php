@@ -5,6 +5,16 @@
       @yield('title')
   </title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
+   <?php
+     $client = Auth::user()->client;
+   // $user = Auth::user();
+    if($client->count() > 0){
+      $id = $client->id;
+    }else{
+      $id = null;
+    }
+  ?>
+  <meta name="client" content="{{$id}}">
   <meta name="domain" content="{{url('/')}}">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
