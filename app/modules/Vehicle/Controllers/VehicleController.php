@@ -1023,7 +1023,7 @@ public function locationPlayback(Request $request){
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
         ->where('vehicle_id',$request->id) 
-        ->orderBy('id','desc')               
+        // ->orderBy('id','desc')               
         ->get(); 
         if($gpsvdata)
         {
