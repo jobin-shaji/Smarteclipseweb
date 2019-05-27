@@ -28,10 +28,14 @@ Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicl
 Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
 
 
-Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicles.playback');
+// Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicles.playback');
 
-Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
+// Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
 
+
+Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
+
+Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
 
 
 

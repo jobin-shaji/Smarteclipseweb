@@ -1040,10 +1040,10 @@ public function locationPlayback(Request $request){
                 }
                 $playback[]=array(
                     "lat"=>(float)$data->lat,
-                    "lng"=>(float)$data->lng,
-                    "Speed"=>$data->speed,
-                     "Ignition"=>$ignitionData,
-                    "DateTime"=>$data->datetime
+                    "lng"=>(float)$data->lng
+                    // "Speed"=>$data->speed,
+                    //  "Ignition"=>$ignitionData,
+                    // "DateTime"=>$data->datetime
                 ); 
                 
             }
@@ -1121,6 +1121,98 @@ public function locationPlayback(Request $request){
     //     'polylineData' => $reponseData
     // );
    // dd($response_data['liveData']['ign']);
+    return response()->json($response_data); 
+}
+
+
+
+
+
+
+
+public function hmapLocationPlayback(Request $request){
+ 
+     $gpsdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'ignition as ign',
+            'device_time as datetime',
+            'speed'       
+        )
+        ->where('device_time', '>=',$request->from_time)
+        ->where('device_time', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id)                
+        ->get();    
+        $playback=array();
+        $playback_point= array();
+        $playback_round=array();
+       $playbackData=array();
+       $length=0;$counts=0;$count=0;
+        if($gpsdata){
+            $length=$gpsdata->count();
+            // dd($length);
+                if($length!=0)
+                {
+                    if($length>=150){
+                        $counts=$length/150;
+                    }
+                    else{
+                        $counts=$length;
+                    }
+                }
+                // dd($counts);
+                   
+                    if($counts!=0)
+                    {
+                      
+                        $count=$length/$counts;
+                        }
+                        else{
+                            $count=$counts;
+                        }  
+                   
+                //                 $counts=$length/150;
+          
+                // $count=$length/$counts;
+
+            // $count=$length/$counts;
+            $round_value=round($count);            
+            $startLat=(float)$gpsdata[0]->lat;
+            $startLng=(float)$gpsdata[0]->lng;
+            for($i=0;$i<$round_value; $i++)
+            {
+                $playback_round[]=$gpsdata[$i];
+            } 
+            $playback_point[]=array(
+                    "lat"=>(float)$gpsdata[0]->lat,
+                    "lng"=>(float)$gpsdata[0]->lng                    
+                );    
+            // dd($playback_round);
+            foreach ($playback_round as $data) {
+                // dd($data->lat);
+                $playback[]=array(
+                    "lat"=>(float)$data->lat,
+                    "lng"=>(float)$data->lng                    
+                ); 
+                  
+                $startLat=(float)$data->lat;
+                $startLng=(float)$data->lng; 
+            }
+            $response_data = array(
+                'status'  => 'success',
+                'message' => 'success',
+                'code'    =>1,                              
+                'polyline' => $playback,
+                'firstpoint' => $playback_point,
+            );
+        }else{
+            $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0
+            );
+        }    
     return response()->json($response_data); 
 }
 public function playBackForLine($vehicleID,$fromDate,$toDate){

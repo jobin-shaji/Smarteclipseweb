@@ -41,8 +41,16 @@
         toastr.options.newestOnTop = false;
     </script>
  <script src="{{asset('js/custom.js')}}"></script>
-    <script src="{{asset('js/markerAnimate.js')}}"></script>
+    <!-- <script src="{{asset('js/markerAnimate.js')}}"></script>
     <script src="{{asset('js/jquery_easing.js')}}"></script>
+ -->
 
+
+
+
+
+
+
+  
     </body>
 </html>
