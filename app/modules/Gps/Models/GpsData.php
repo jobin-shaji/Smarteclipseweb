@@ -86,6 +86,13 @@ class GpsData extends Model
     {
         return $this->hasOne('App\Modules\Alert\Models\AlertType','code','alert_id');
     }
+      public function sleep()
+    {
+       return $this->hasMany('App\Modules\Gps\Models\GpsData','date','date');
+        // ->where('vehicle_mode',"H");
+    }
+
+
 
 
 }

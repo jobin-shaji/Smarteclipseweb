@@ -30,7 +30,8 @@ class RouteDeviationReportController extends Controller
         if($from){
             $query = $query->whereBetween('created_at',[$from,$to]);
         }
-        $route_deviation = $query->get();      
+        $route_deviation = $query->get(); 
+        // dd($route_deviation);     
         return DataTables::of($route_deviation)
         ->addIndexColumn()
         ->addColumn('location', function ($route_deviation) {            

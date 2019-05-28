@@ -34,12 +34,14 @@ class AlertReportController extends Controller
         ->with('vehicle:id,name,register_number')
         ->where('client_id',$client)
         ->where('status',1);
+
         // ->with('tripsWithAmount');
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
             // $query = $query->whereBetween('device_time',[$from,$to]);
         }
-        $alert = $query->get();      
+        $alert = $query->get();   
+
         return DataTables::of($alert)
         ->addIndexColumn()
         ->addColumn('location', function ($alert) {
