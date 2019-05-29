@@ -62,11 +62,8 @@ function callBackDataTable(){
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
-        },
-       
+        },       
         fnDrawCallback: function (oSettings, json) {
-            
-
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
@@ -79,9 +76,7 @@ function callBackDataTable(){
             {data: 'ac_off', name: 'ac_off'},
             {data: 'km', name: 'km'},
             {data: 'device_time', name: 'device_time'},
-
-        ],
-        
+        ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
