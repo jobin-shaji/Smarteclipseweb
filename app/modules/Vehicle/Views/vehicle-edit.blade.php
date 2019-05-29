@@ -142,7 +142,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">From Date</label>
-                        <input type="date" class="form-control {{ $errors->has('date_from') ? ' has-error' : '' }}" placeholder="From Date" name="date_from"> 
+                        <input type="text" class="form-control datetimepicker {{ $errors->has('date_from') ? ' has-error' : '' }}" placeholder="From Date"  name="date_from"> 
                       </div>
                       @if ($errors->has('date_from'))
                         <span class="help-block">
@@ -152,7 +152,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">To Date</label>
-                        <input type="date" class="form-control {{ $errors->has('date_to') ? ' has-error' : '' }}" placeholder="From Date" name="date_to"> 
+                        <input type="text" class="form-control datetimepicker {{ $errors->has('date_to') ? ' has-error' : '' }}" placeholder="TO Date"  name="date_to"> 
                       </div>
                       @if ($errors->has('date_to'))
                         <span class="help-block">
@@ -180,11 +180,4 @@
    </div>
  </div>
    
-@section('script')
-    <script>
-      $('#datetimepicker').datetimepicker({
-        format: 'yyyy-mm-dd hh:ii'
-      });
-    </script>
-@endsection
 @endsection

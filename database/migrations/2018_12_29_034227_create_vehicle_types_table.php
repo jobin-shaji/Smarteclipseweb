@@ -18,6 +18,9 @@ class CreateVehicleTypesTable extends Migration
             $table->string('name');
             $table->integer('status');
             $table->text('svg_icon');
+            $table->float('vehicle_scale');
+            $table->float('opacity');
+            $table->float('strokeWeight');
             $table->timestamps();
         });
     }
