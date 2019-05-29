@@ -30,12 +30,30 @@ class RouteDeviationReportController extends Controller
         if($from){
             $query = $query->whereBetween('created_at',[$from,$to]);
         }
-        $route_deviation = $query->get();      
+        $route_deviation = $query->get(); 
+        // dd($route_deviation);     
         return DataTables::of($route_deviation)
         ->addIndexColumn()
-        ->addColumn('location', function ($route_deviation) {            
-            $place=$route_deviation->latitude;
-            return $place;
+         ->addColumn('location', function ($route_deviation) {
+         $latitude= $route_deviation->latitude;
+         $longitude=$route_deviation->longitude;          
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $output = json_decode($geocodeFromLatLong);         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude
+            if(!empty($address)){
+                 $location=$address;
+            return $location;
+                
+            }
+        
+    }
+   
+           
         })
         ->make();
     }

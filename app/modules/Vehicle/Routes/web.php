@@ -28,6 +28,26 @@ Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicl
 Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
 
 
+Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicles.playback');
+
+Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
+
+
+// Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
+
+// Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
+
+
+
+
+//////////////////////////////////Route in vehicle//////////////////////////////
+
+Route::post('/vehicle-route/save_route','VehicleController@saveVehicleRoute')->name('vehicle-route.create.p');
+Route::get('/vehicle-route/{id}/edit','VehicleController@editVehicleRoute')->name('vehicle-route.edit');
+Route::post('/vehicle-route/{id}/edit','VehicleController@updateVehicleRoute')->name('vehicle-route.update.p');
+Route::get('/vehicle-route/{id}/view','VehicleController@viewVehicleRoute')->name('vehicle-route.view');
+Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->name('vehicle-route.delete');
+
 });
 
 

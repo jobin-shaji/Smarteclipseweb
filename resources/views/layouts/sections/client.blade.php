@@ -67,8 +67,8 @@
 
 <li class="treeview">
     <a href="#">
-      <i class="fa fa-bus"></i>
-      <span>Route</span>
+      <i class="fa fa-road"></i>
+      <span>Routes</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
       </span>

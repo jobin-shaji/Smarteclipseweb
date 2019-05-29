@@ -10,7 +10,7 @@ class VehicleType extends Model
 	public $timestamps = false;
 	
     protected $fillable = [
-        'name','status','svg_icon'
+        'name','status','svg_icon','vehicle_scale','opacity','strokeWeight'
     ];
 
 }

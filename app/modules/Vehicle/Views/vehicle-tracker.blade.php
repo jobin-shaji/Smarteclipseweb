@@ -17,6 +17,12 @@
   <div class="row">
     <div class="col-lg-12 col-sm-12">
       <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+       <input type="hidden" name="svg_con" id="svg_con" value="{{$vehicle_type->svg_icon}}">
+       <input type="hidden" name="vehicle_scale" id="vehicle_scale" value="{{$vehicle_type->vehicle_scale}}">
+        <input type="hidden" name="opacity" id="opacity" value="{{$vehicle_type->opacity}}">
+         <input type="hidden" name="strokeWeight" id="strokeWeight" value="{{$vehicle_type->strokeWeight}}">
+       <input type="hidden" name="lat" id="lat" value="{{$latitude}}">
+       <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
                       
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">

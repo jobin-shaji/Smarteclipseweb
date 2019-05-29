@@ -4,9 +4,11 @@
 namespace App\Modules\Vehicle\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Route\Models\Route;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\OtaResponse;
+use App\Modules\Vehicle\Models\VehicleRoute;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleOta;
 use App\Modules\Vehicle\Models\Document;
@@ -50,11 +52,16 @@ class VehicleController extends Controller {
                 if($vehicles->deleted_at == null){
                     return "
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/ota class='btn btn-xs btn-info'><i class='glyphicon glyphicon-th'></i> OTA </a>
+                    
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
+
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>
 
-                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Playback</a>
+
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='glyphicon glyphicon-map-marker'></i>Playback</a>
+
 
                      <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
 
@@ -150,12 +157,14 @@ class VehicleController extends Controller {
     public function edit(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
-        $client_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
         $vehicle = Vehicle::find($decrypted_id);
         if($vehicle == null){
             return view('Vehicle::404');
         }
-        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle]);
+        $routes=Route::where('client_id',$client_id)
+                        ->get();
+        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'routes' => $routes]);
     }
 
     // update vehicle
@@ -473,6 +482,88 @@ class VehicleController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle.ota',$encrypted_vehicle_ota_id));  
     }
+
+    // save vehicle route
+    public function saveVehicleRoute(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $rules = $this->vehicleRouteCreateRules();
+        $this->validate($request, $rules);
+        $vehicle_route = VehicleRoute::create([
+            'vehicle_id' => $request->vehicle_id,
+            'route_id' => $request->route_id,
+            'date_from' => $request->date_from,
+            'date_to' => $request->date_to,
+            'client_id' => $client_id,
+            'status' =>1,
+           ]);
+        $request->session()->flash('message', 'Vehicle Route scheduled successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+
+        return redirect(route('vehicle.edit',Crypt::encrypt($vehicle_route->vehicle_id)));
+    }
+
+    // edit vehicle route
+    public function editVehicleRoute(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $client_id=\Auth::user()->client->id;
+        $vehicle_route = VehicleRoute::find($decrypted_id);
+        if($vehicle_route == null){
+            return view('Vehicle::404');
+        }
+        $routes=Route::where('client_id',$client_id)
+                        ->get();
+        return view('Vehicle::vehicle-route-edit',['vehicle_route' => $vehicle_route,'routes' => $routes]);
+    }
+
+    // update vehicle route
+    public function updateVehicleRoute(Request $request)
+    {
+        $vehicle_route = VehicleRoute::find($request->id);
+        if($vehicle_route == null){
+           return view('Vehicle::404');
+        }
+        $rules = $this->vehicleRouteUpdateRules();
+        $this->validate($request, $rules);
+
+        $vehicle_route->route_id = $request->route_id;
+        $vehicle_route->date_from = $request->date_from;
+        $vehicle_route->date_to = $request->date_to;
+        $vehicle_route->save();
+
+        $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
+        $request->session()->flash('message', 'Vehicle route details updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle-route.edit',$encrypted_vehicle_route_id));  
+    }
+
+    // view page
+    public function viewVehicleRoute(Request $request)
+    {
+        $decrypted_route_id = Crypt::decrypt($request->id);
+        $route=Route::find($decrypted_route_id);
+        if($route==null){
+            return view('Route::404');
+        } 
+        return view('Route::route-details',['route' => $route]);
+    }
+
+    // update vehicle route
+    public function deleteVehicleRoute(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_route = VehicleRoute::find($decrypted_id);
+        if($vehicle_route == null){
+           return view('Vehicle::404');
+        }
+        $vehicle_route->delete();
+
+        $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
+        $request->session()->flash('message', 'Vehicle Route deleted successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle.edit',Crypt::encrypt($vehicle_route->vehicle_id)));
+    }
     
     // vehicle delete
     public function deleteVehicle(Request $request)
@@ -564,6 +655,9 @@ class VehicleController extends Controller {
         $vehicle_type = VehicleType::create([
             'name' => $request->name,
             'svg_icon' => $request->svg_icon,
+            'vehicle_scale' => $request->scale,
+            'opacity' => $request->opacity,
+            'strokeWeight' => $request->weight,
             'status' =>1,
            ]);
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
@@ -606,6 +700,11 @@ class VehicleController extends Controller {
 
         $vehicle_type->name = $request->name;
         $vehicle_type->svg_icon = $request->svg_icon;
+
+        $vehicle_type->vehicle_scale = $request->scale;
+        $vehicle_type->opacity = $request->opacity;
+        $vehicle_type->strokeWeight = $request->weight;
+
         $vehicle_type->save();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
@@ -733,9 +832,19 @@ class VehicleController extends Controller {
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
        
-         $decrypted_id = Crypt::decrypt($request->id);  
+         $decrypted_id = Crypt::decrypt($request->id);
+          $get_vehicle=Vehicle::find($decrypted_id);
+          // $dealers = Dealer::where('user_id', $decrypted)->first();  
+          $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+          $track_data=GpsData::select('latitude as latitude',
+                  'longitude as longitude',                
+                  'gsm_signal_strength as signalStrength'
+                  )         
+                  ->where('vehicle_id',$get_vehicle->id)
+                  ->orderBy('id','desc')
+                  ->first();
           
-        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id] );
+        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $track_data->latitude,'longitude' => $track_data->longitude] );
        
     }
     public function locationTrack(Request $request){
@@ -782,10 +891,7 @@ class VehicleController extends Controller {
       if($track_data){
 
         $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
-
-    $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-   
-
+        $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);   
                 $reponseData=array(
                             "latitude"=>$snapRoute['lat'],
                             "longitude"=>$snapRoute['lng'],
@@ -867,6 +973,364 @@ class VehicleController extends Controller {
             ->make();
     }
 
+     /////////////////////////////Vehicle Tracker/////////////////////////////
+    public function playback(Request $request){
+       
+         $decrypted_id = Crypt::decrypt($request->id);  
+          
+        return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
+       
+    }
+public function playbackHMap(Request $request){
+       
+         $decrypted_id = Crypt::decrypt($request->id);  
+          
+        return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
+       
+    }
+    // public function locationPlayback(Request $request){
+    //     $gpsdata=GpsData::Select(
+    //         'latitude as lat',
+    //         'longitude as lng', 
+    //         'heading as angle',
+    //         'speed'       
+    //     )
+    //     ->where('device_time', '>=',$request->from_time)
+    //     ->where('device_time', '<=',$request->to_time)
+    //     ->where('vehicle_id',$request->id)                
+    //     ->get();    
+    //     $playback=array();
+    //     $gps_playback=array();
+    //     if($gpsdata){
+    //         foreach ($gpsdata as $data) {
+    //             $playback[]=array(
+    //                 "lat"=>(float)$data->lat,
+    //                 "lng"=>(float)$data->lng
+    //             ); 
+
+    //             $gps_playback[]=array(
+    //                 "angle"=>$data->angle,
+    //                 "speed"=>$data->speed
+    //             ); 
+                
+    //         }
+    //         $response_data = array(
+    //             'status'  => 'success',
+    //             'message' => 'success',
+    //             'code'    =>1,                              
+    //             'polyline' => $playback,
+    //             'marker' => $gps_playback
+    //         );
+    //     }else{
+    //         $response_data = array(
+    //             'status'  => 'failed',
+    //             'message' => 'failed',
+    //             'code'    =>0
+    //         );
+    //     }
+    //     return response()->json($response_data); 
+    // }
+
+
+public function locationPlayback(Request $request){
+ 
+     $gpsdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'ignition as ign',
+            'device_time as datetime',
+            'speed'       
+        )
+        ->where('device_time', '>=',$request->from_time)
+        ->where('device_time', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id)                
+        ->get();    
+        $playback=array();
+       $playbackData=array();
+        if($gpsdata){
+            foreach ($gpsdata as $data) {
+
+                if($data->ign==1){
+                    $ignitionData="ON";
+                }else{
+                    $ignitionData="Off";
+                }
+                $playback[]=array(
+                    "lat"=>(float)$data->lat,
+                    "lng"=>(float)$data->lng
+                    // "Speed"=>$data->speed,
+                    //  "Ignition"=>$ignitionData,
+                    // "DateTime"=>$data->datetime
+                ); 
+                
+            }
+        }
+         $gpsvdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'ignition as ign',
+            'device_time as datetime',
+            'speed'       
+        )
+        ->where('device_time', '>=',$request->from_time)
+        ->where('device_time', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id) 
+        // ->orderBy('id','desc')               
+        ->get(); 
+        if($gpsvdata)
+        {
+
+
+            $vstartLat=(float)$gpsvdata[0]->lat;
+            $vstartLng=(float)$gpsvdata[0]->lng;
+            foreach ($gpsvdata as $vdata) {
+            $vlat=(float)$vdata->lat;
+            $vlng=(float)$vdata->lat;
+            $caluculate_distance_between_latlng=$this->distanceCalculation($vlat,$vlng,$vstartLat,$vstartLat);
+            // dd(MARKER_SELECT_POINT_DISTANCE);
+              // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
+                $vehicle_status="Running";
+                if($vdata->ign==1){
+                    $ignitionData="ON";
+                }else{
+                    $ignitionData="Off";
+                }
+                $playbackData[]=array(
+                    
+                    "lat"=>(float)$vdata->lat,
+                    "lng"=>(float)$vdata->lng,
+                    "angle"=>$vdata->angle,
+                    "Speed"=>$vdata->speed,
+                    "DateTime"=>$vdata->datetime,
+                    "Ignition"=>$ignitionData
+                ); 
+                $startLat=(float)$vdata->lat;
+                $startLng=(float)$vdata->lng;
+            // }
+            }           
+            $response_data = array(
+                'status'  => 'success',
+                'message' => 'success',
+                'code'    =>1,                              
+                'polyline' => $playback,
+                'markers' => $playbackData,
+                
+            );
+        }else{
+            $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0
+            );
+        }
+
+    // $playBackPolyLine=$this->playBackForLine($request->id,$request->from_time,$request->to_time);         
+    // $MarkData=$this->playBackForMark_Route($request->id,$request->from_time,$request->to_time);
+    // $reponseData =array(
+    //     "playbackpolyline"=>$playBackPolyLine,
+    //     "markerdata"=>$MarkData,
+    //     "playData"=>$MarkData
+    // );
+    // $response_data = array('status'  => 'success',
+    //     'message' => 'success',
+    //     'code'    =>1,                               
+    //     'polylineData' => $reponseData
+    // );
+   // dd($response_data['liveData']['ign']);
+    return response()->json($response_data); 
+}
+
+
+
+
+
+
+
+public function hmapLocationPlayback(Request $request){
+ 
+     $gpsdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'ignition as ign',
+            'device_time as datetime',
+            'speed'       
+        )
+        ->where('device_time', '>=',$request->from_time)
+        ->where('device_time', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id)                
+        ->get();    
+        $playback=array();
+        $playback_point= array();
+        $playback_round=array();
+       $playbackData=array();
+       $length=0;$counts=0;$count=0;
+        if($gpsdata){
+            $length=$gpsdata->count();
+            // dd($length);
+                if($length!=0)
+                {
+                    if($length>=150){
+                        $counts=$length/150;
+                    }
+                    else{
+                        $counts=$length;
+                    }
+                }
+                // dd($counts);
+                   
+                    if($counts!=0)
+                    {
+                      
+                        $count=$length/$counts;
+                        }
+                        else{
+                            $count=$counts;
+                        }  
+                   
+                //                 $counts=$length/150;
+          
+                // $count=$length/$counts;
+
+            // $count=$length/$counts;
+            $round_value=round($count);            
+            $startLat=(float)$gpsdata[0]->lat;
+            $startLng=(float)$gpsdata[0]->lng;
+            for($i=0;$i<$round_value; $i++)
+            {
+                $playback_round[]=$gpsdata[$i];
+            } 
+            $playback_point[]=array(
+                    "lat"=>(float)$gpsdata[0]->lat,
+                    "lng"=>(float)$gpsdata[0]->lng                    
+                );    
+            // dd($playback_round);
+            foreach ($playback_round as $data) {
+                // dd($data->lat);
+                $playback[]=array(
+                    "lat"=>(float)$data->lat,
+                    "lng"=>(float)$data->lng                    
+                ); 
+                  
+                $startLat=(float)$data->lat;
+                $startLng=(float)$data->lng; 
+            }
+            $response_data = array(
+                'status'  => 'success',
+                'message' => 'success',
+                'code'    =>1,                              
+                'polyline' => $playback,
+                'firstpoint' => $playback_point,
+            );
+        }else{
+            $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0
+            );
+        }    
+    return response()->json($response_data); 
+}
+public function playBackForLine($vehicleID,$fromDate,$toDate){
+
+    $playBackDataList=array();
+     $playback=array();
+
+     $gpsdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'gps_fix as gps',
+            'ignition as ign',
+            'speed'       
+        )
+        ->where('device_time', '>=',$fromDate)
+        ->where('device_time', '<=',$toDate)
+        ->where('vehicle_id',$vehicleID)                
+        ->get(); 
+        $startLat=(float)$gpsdata[0]->lat;
+    $startLng=(float)$gpsdata[0]->lng;
+     if($gpsdata){
+    foreach ($gpsdata as $data) {
+                $playback[]=array(
+                    "lat"=>(float)$data->lat,
+                    "lng"=>(float)$data->lng
+                ); 
+            }
+             $response_data = array(
+                'status'  => 'success',
+                'message' => 'success',
+                'code'    =>1,                              
+                'polyline' => $playback
+                
+            );
+       }
+     return response()->json($response_data); 
+     // return json_encode($playback);
+       // return response()->json($playback); 
+   }
+
+public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
+     $playBackDataList=array();
+      $playback = array();   
+     $gpsdata=GpsData::Select(
+        'latitude as lat',
+        'longitude as lng', 
+        'heading as angle',
+        'speed',                 
+        'main_power_status as power',
+        'gps_fix as gps',
+        'ignition as ign',
+        'gsm_signal_strength as signalStrength'
+    )
+    ->where('device_time', '>=',$fromDate)
+    ->where('device_time', '<=',$toDate)
+    ->where('vehicle_id',$vehicleID)                
+    ->get(); 
+    $vehicle_status="Running";    
+    $startLat=(float)$gpsdata[0]->lat;
+    $startLng=(float)$gpsdata[0]->lng;
+   
+    if($gpsdata)
+    {
+        foreach ($gpsdata as $vdata) {
+             $lat=(float)$vdata->lat;
+            $lng=(float)$vdata->lat;
+            $caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
+            // dd($caluculate_distance_between_latlng);
+            // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
+                $vehicle_status="Running";
+                if($vdata->ign==1){
+                    $ignitionData="ON";
+                }else{
+                    $ignitionData="Off";
+                }
+               
+                $playback[]=array(
+                    "lat"=>$startLat,
+                    "lng"=>$startLng,
+                    "angle"=>$vdata->angle,
+                    "Speed"=>$vdata->speed,
+                    "Ignition"=>$ignitionData
+                ); 
+                $startLat=$vdata->lat;
+                $startLng=$vdata->lng;
+            // }
+        }
+    }
+    return json_encode($playback);
+}
+  function distanceCalculation($lat1, $lon1, $lat2, $lon2) {
+  $theta = $lon1 - $lon2;
+  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+  $dist = acos($dist);
+  $dist = rad2deg($dist);
+  $miles = $dist * 60 * 1.1515;
+  return ($miles * 1.609344);
+  }
+
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()
@@ -889,11 +1353,38 @@ class VehicleController extends Controller {
         return  $rules;  
     }
 
+    // vehicle route create rules
+    public function vehicleRouteCreateRules()
+    {
+        $rules = [
+            'vehicle_id' => 'required',
+            'route_id' => 'required',
+            'date_from' => 'required',
+            'date_to' => 'required'
+        ];
+        return  $rules;
+    }
+
+    // vehicle route update rules
+    public function vehicleRouteUpdateRules()
+    {
+        $rules = [
+            'route_id' => 'required',
+            'date_from' => 'required',
+            'date_to' => 'required'
+        ];
+        return  $rules;
+    }
+
     // vehicle type create rules
     public function vehicleTypeCreateRules()
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'svg_icon' => 'required',
+            'weight' => 'required',
+            'scale' => 'required',
+            'opacity' => 'required'
         ];
         return  $rules;
     }
@@ -901,7 +1392,11 @@ class VehicleController extends Controller {
     public function vehicleTypeUpdateRules()
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'svg_icon' => 'required',
+            'weight' => 'required',
+            'scale' => 'required',
+            'opacity' => 'required'
         ];
         return  $rules;
     }

@@ -52,7 +52,7 @@ class DashboardController extends Controller
                     ->with('alertType:id,code,description')
                     ->with('vehicle:id,name,register_number')
                     ->where('client_id',$client_id)
-                    ->orderBy('id', 'desc')->take(10)
+                    ->orderBy('id', 'desc')->take(5)
                     ->get();
             $vehicles = Vehicle::select('id')
                     ->where('client_id',$client_id)
