@@ -5,14 +5,22 @@
       @yield('title')
   </title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-   <?php
+   <?php 
      $client = Auth::user()->client;
-   // $user = Auth::user();
-    if($client->count() > 0){
-      $id = $client->id;
-    }else{
+     if($client)
+     {
+      // $user = Auth::user();
+        if($client->count() > 0){
+          $id = $client->id;
+        }else{
+          $id = null;
+        }
+     }
+     else
+     {
       $id = null;
-    }
+     }
+   
   ?>
   <meta name="client" content="{{$id}}">
   <meta name="domain" content="{{url('/')}}">
