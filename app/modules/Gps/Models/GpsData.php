@@ -71,7 +71,6 @@ class GpsData extends Model
     {
     return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
     }
-
     public function gps()
     {
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
@@ -81,18 +80,13 @@ class GpsData extends Model
     {
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
     }
-
     public function alert()
     {
         return $this->hasOne('App\Modules\Alert\Models\AlertType','code','alert_id');
     }
-      public function sleep()
+    public function sleep()
     {
        return $this->hasMany('App\Modules\Gps\Models\GpsData','date','date');
         // ->where('vehicle_mode',"H");
     }
-
-
-
-
 }

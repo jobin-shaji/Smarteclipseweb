@@ -46,13 +46,11 @@ class AlertReportController extends Controller
         ->addIndexColumn()
         ->addColumn('location', function ($alert) {
          $latitude= $alert->latitude;
-         $longitude=$alert->longitude; 
-         
+         $longitude=$alert->longitude;          
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-            $output = json_decode($geocodeFromLatLong);
-         
+            $output = json_decode($geocodeFromLatLong);         
             $status = $output->status;
             //Get address from json data
             $address = ($status=="OK")?$output->results[1]->formatted_address:'';
