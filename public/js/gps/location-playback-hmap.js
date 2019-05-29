@@ -210,7 +210,7 @@ function createPlayback(firstpoint,polyData,length) {
   // console.log(polyData[0]);
   (function () {
 'use strict';
-   var sample = firstpoint;
+   var sample = polyData;
     // var sample = [
     //     {"lat":22.548545935598,"lng":88.280163708638},  
     //     {"lat":22.549975499646,"lng":88.278846582115},

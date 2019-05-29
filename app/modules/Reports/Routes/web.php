@@ -12,6 +12,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
 	// tracking report 
 	Route::get('/tracking-report','TrackingReportController@trackingReport')->name('tracking-report');
+	Route::post('/track-report-list','TrackingReportController@trackReportList')->name('track-report-list');
 
 	// route deviation report 
 	Route::get('/route-deviation-report','RouteDeviationReportController@routeDeviationReport')->name('route-deviation-report');
