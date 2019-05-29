@@ -700,6 +700,11 @@ class VehicleController extends Controller {
 
         $vehicle_type->name = $request->name;
         $vehicle_type->svg_icon = $request->svg_icon;
+
+        $vehicle_type->vehicle_scale = $request->scale;
+        $vehicle_type->opacity = $request->opacity;
+        $vehicle_type->strokeWeight = $request->weight;
+
         $vehicle_type->save();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
@@ -1387,7 +1392,11 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
     public function vehicleTypeUpdateRules()
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'svg_icon' => 'required',
+            'weight' => 'required',
+            'scale' => 'required',
+            'opacity' => 'required'
         ];
         return  $rules;
     }
