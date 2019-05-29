@@ -37,10 +37,10 @@
 
                     
          <div class="panel-heading">
-                  <label> From Date</label>
-                  <input type="text" id="fromDate" name="fromDate">
+                   <label> From Date</label>
+                  <input type="text" class="datetimepicker" id="fromDate" name="fromDate">
                   <label> To date</label>
-                  <input type="text" id="toDate" name="toDate">
+                  <input type="text" class="datetimepicker" id="toDate" name="toDate">
 
                   <button class="btn btn-xs btn-info" onclick="playback()"> <i class="fa fa-filter"></i> Playback </button>                 
               </div>               

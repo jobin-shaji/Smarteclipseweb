@@ -17,8 +17,8 @@ class CreateVehicleRoutesTable extends Migration
             $table->increments('id');
             $table->integer('vehicle_id');
             $table->integer('route_id');
-            $table->date('date_from');
-            $table->date('date_to');
+            $table->dateTime('date_from');
+            $table->dateTime('date_to');
             $table->integer('status');
             $table->integer('client_id');
             $table->timestamps();
