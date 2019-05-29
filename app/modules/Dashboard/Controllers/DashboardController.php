@@ -9,6 +9,7 @@ use App\Modules\Dealer\Models\Dealer;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Vehicle\Models\Vehicle;
@@ -54,7 +55,7 @@ class DashboardController extends Controller
                     ->where('client_id',$client_id)
                     ->orderBy('id', 'desc')->take(5)
                     ->get();
-            $vehicles = Vehicle::select('id')
+            $vehicles = Vehicle::select('id','register_number')
                     ->where('client_id',$client_id)
                     ->get();
             $single_vehicle = [];
@@ -83,7 +84,18 @@ class DashboardController extends Controller
                     ->whereIn('vehicle_id',$single_vehicle)
                     ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
                     ->get();
-            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents]); 
+
+                    $gps_data=GpsData::select([
+                        'latitude as latitude',
+                        'longitude as longitude' 
+                    ])                    
+                    ->whereIn('vehicle_id',$single_vehicle) 
+                    ->groupBy('vehicle_id')
+                    ->orderBy('id','desc')                 
+                    ->get();
+
+
+            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles,'gps_data' => $gps_data]); 
         }        
     }
     public function dashCount(Request $request){

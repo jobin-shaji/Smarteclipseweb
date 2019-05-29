@@ -201,8 +201,20 @@
              </div></div>
             <div id="map_canvas"></div>
              <ul id="locations">
-             
+            
+              @foreach ($vehicles as $vehicles )
+               
                 <li data-geo-lat="41.9786" data-geo-long="-87.9047">
+                             
+                  <h3>{{$vehicles->register_number}}</h3>                   
+                  <p class="longdesc">
+                    1111
+                  </p>
+                </li>
+                @endforeach
+
+             
+               <!--  <li data-geo-lat="41.9786" data-geo-long="-87.9047">
                   <h3>Kl-55-3644</h3>
                   <p class="longdesc">
                     1111
@@ -230,7 +242,7 @@
                     
                     4444444444444444444
                   </p>
-                </li>
+                </li> -->
 
                 
              </ul>
@@ -370,7 +382,6 @@
   <!-- ######################################################################## -->
   <link rel='stylesheet' type='text/css' href='css/dashboard/style.css' />
    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
-  <script type='text/javascript' src='js/example.js'></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
   <script type='text/javascript'>
   
