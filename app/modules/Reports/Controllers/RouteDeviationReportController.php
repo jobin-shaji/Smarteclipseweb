@@ -34,7 +34,7 @@ class RouteDeviationReportController extends Controller
         // dd($route_deviation);     
         return DataTables::of($route_deviation)
         ->addIndexColumn()
-         ->addColumn('location', function ($alert) {
+         ->addColumn('location', function ($route_deviation) {
          $latitude= $alert->latitude;
          $longitude=$alert->longitude;          
         if(!empty($latitude) && !empty($longitude)){
