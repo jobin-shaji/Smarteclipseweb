@@ -1,4 +1,9 @@
 
+// dateTimepicker
+$('.datetimepicker').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+      });
+
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }

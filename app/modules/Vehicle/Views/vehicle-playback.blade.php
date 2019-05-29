@@ -4,7 +4,7 @@
 
 <section class="content-header">
     <h1>
-        Playback
+        Playback111111111111
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
@@ -22,9 +22,9 @@
                       
          <div class="panel-heading">
                   <label> From Date</label>
-                  <input type="text" id="fromDate" name="fromDate">
+                  <input type="text" class="datetimepicker" id="fromDate" name="fromDate">
                   <label> To date</label>
-                  <input type="text" id="toDate" name="toDate">
+                  <input type="text" class="datetimepicker" id="toDate" name="toDate">
 
                   <button class="btn btn-xs btn-info" onclick="playback()"> <i class="fa fa-filter"></i> Playback </button>                 
               </div>               
