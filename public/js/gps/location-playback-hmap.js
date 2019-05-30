@@ -49,7 +49,7 @@ function getUrl() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(res) {
-               console.log(res.polyline);
+               playBack(res);
             },
             error: function(err) {
                 var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
@@ -59,8 +59,198 @@ function getUrl() {
     }); 
 }
 
+// ------------------fetch data from date time----------
 
-// ------------------featch data from date time----------
+function playBack(res){
+
+  var locationData=res.polyline;
+  var bSimulationRunning = false;
+  var svgMarkup = '<svg width="24" height="24" ' +
+  'xmlns="http://www.w3.org/2000/svg">' +
+  '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+  'height="22" /><text x="12" y="18" font-size="12pt" ' +
+  'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+  'fill="white">H</text></svg>';
+
+// Create an icon, an object holding the latitude and longitude, and a marker:
+  var icon = new H.map.Icon(svgMarkup),
+  coords = {lat: 51.5141, lng: -0.0999},
+  marker = new H.map.Marker(coords, {icon: icon});
+  marker.$id = "truckMarker";
+
+
+  // object with all route points
+  var currentRouteStrip = new H.geo.Strip();
+  // truck icon
+  var iSimulationIsAtPosition = 0;
+  // simulation walker
+  var simulationWalker = null;
+  var simulationGroup = new H.map.Group();
+  var routeGroup = new H.map.Group();
+  $(function(){ 
+      var routingParameters={};
+      var pointname;
+
+         var data=[{"lat":22.548545935598,"lng":88.280163708638},{"lat":22.5464236,"lng":88.2853837},{"lat":22.5428214,"lng":88.286547},{"lat":22.5410671,"lng":88.2887521},{"lat":22.539522,"lng":88.2903415},{"lat":22.51498,"lng":88.3104746},{"lat":22.5116714,"lng":88.3257219},{"lat":22.5035291,"lng":88.3407005},{"lat":22.5013464,"lng":88.346573},{"lat":22.5010609,"lng":88.3687496},{"lat":22.549975499646,"lng":88.278846582115},{"lat":22.5512341,"lng":88.2790673}];
+
+            $.each(data, function(i, item) {
+                pointname='waypoint'+i;
+                routingParameters[pointname]=''+item.lat+','+item.lng+'';
+              });
+
+               routingParameters = routingParameters;
+               routingParameters.mode='fastest;car';
+               routingParameters.representation= 'display';
+              routeDraw(routingParameters);
+
+      }); // end of doc ready
+}
+// -------------------------------------------------------
+
+
+function routeDraw(routingParameters){
+// Define a callback function to process the routing response:
+var onResult = function(result) {
+ var route,
+    routeShape,
+    startPoint,
+    endPoint,
+    linestring;
+  if(result.response.route) {
+  // Pick the first route from the response:
+  route = result.response.route[0];
+  // Pick the route's shape:
+  routeShape = route.shape;
+
+  // Create a linestring to use as a point source for the route line
+  linestring = new H.geo.LineString();
+
+
+  // Push all the points in the shape into the linestring:s
+  routeShape.forEach(function(point) {
+    var parts = point.split(',');
+    linestring.pushLatLngAlt(parts[0], parts[1]);
+    currentRouteStrip.pushLatLngAlt.apply(currentRouteStrip, point.split(',').map(function(item) { return parseFloat(item); }));
+
+  });
+
+  // Retrieve the mapped positions of the requested waypoints:
+  startPoint = route.waypoint[0].mappedPosition;
+  endPoint = route.waypoint[1].mappedPosition;
+
+  // Create a polyline to display the route:
+  var routeLine = new H.map.Polyline(linestring, {
+    style: { strokeColor: 'blue', lineWidth: 10 },
+    arrows: { fillColor: 'white', frequency: 2, width: 0.8, length: 0.7 }
+
+  });
+
+  // Create a marker for the start point:
+  var startMarker = new H.map.Marker({
+    lat: startPoint.latitude,
+    lng: startPoint.longitude
+  });
+
+  // Create a marker for the end point:
+  var endMarker = new H.map.Marker({
+    lat: endPoint.latitude,
+    lng: endPoint.longitude
+  });
+
+  // Add the route polyline and the two markers to the map:
+  map.addObjects([routeLine, startMarker, endMarker]);
+
+  // Set the map's viewport to make the whole route visible:
+  map.setViewBounds(routeLine.getBounds());
+    simulationWalker = new Walker(marker, currentRouteStrip);
+    simulationWalker.walk();
+  }
+};
+
+var router = platform.getRoutingService();
+router.calculateRoute(routingParameters, onResult,
+  function(error) {
+    alert(error.message);
+  });
+
+ 
+}
+
+var Walker = function (marker, path)
+  {
+    this.path = path;
+    this.marker = marker;
+    this.dir = -1;
+    this.isWalking = false;
+    this.options = {
+      search_radius: 1,
+      keyattribute: 'ID'
+    };
+    var that = this;
+    this.walk = function ()
+    {
+      // Get the next coordinate from the route and set the marker to this coordinate
+      var coord = path.extractPoint(iSimulationIsAtPosition);
+      map.addObject(marker);
+      marker.setPosition(coord);
+
+      // If we get to the end of the route reverse direction
+      if (!iSimulationIsAtPosition || iSimulationIsAtPosition === path.getPointCount() - 1) {
+        iSimulationIsAtPosition = 0;
+      }
+
+      iSimulationIsAtPosition += 1;
+
+      /* Recursively call this function with time that depends on the distance to the next point
+      * which makes the marker move in similar random fashion
+      */
+      that.timeout = setTimeout(that.walk, 300);
+      that.isWalking = true;
+
+      //gfe.checkProximity(document.getElementById('layerId').value, coord, that.options, onSimulationActivePositionChanged);
+
+    };
+
+    this.stop = function ()
+    {
+      clearTimeout(that.timeout);
+      this.isWalking = false;
+    };
+  };
+
+
+  // Helper for route simulation stop
+  function stopRouteSimulation()
+  {
+    // stop simulation
+    bSimulationRunning = false;
+   // document.getElementById("simulateRouteButton").value = "Simulate Asset";
+    if(simulationWalker)
+    {
+      simulationWalker.stop();
+    }
+  }
+
+// for listner
+    var group = new H.map.Group();
+    map.addObject(group);
+    group.addEventListener('tap', function (evt) {
+    var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), { 
+      content: evt.target.getData()
+    });
+     ui.addBubble(bubble);
+    }, false);
+// for listner
+
+  
+
+function addMarkerToGroup(group, coordinate, html) {
+  var userImg = new H.map.Icon('helo.png');
+  var marker = new H.map.Marker(coordinate,{icon:userImg});
+  marker.setData(html);
+  group.addObject(marker);
+}
+// ------------------------------------------------------------------
 
 
 
