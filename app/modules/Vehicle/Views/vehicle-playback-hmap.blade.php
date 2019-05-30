@@ -1,7 +1,9 @@
 @extends('layouts.gps')
 
 @section('content')
-<script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" 
+    <meta name="viewport" content="initial-scale=1.0, 
+      width=device-width" />
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" 
       type="text/javascript" charset="utf-8"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" 
       type="text/javascript" charset="utf-8"></script>
@@ -10,12 +12,6 @@
     <link rel="stylesheet" type="text/css" 
       href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
-        <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-clustering.js"></script>
-    <script type="text/javascript" src="https://js.cit.datalens.api.here.com/latest/mapsjs-datalens.js"></script>
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-    <!-- <script type="text/javascript" src="./dist/ui.js"></script> -->
-    <!-- <script type="text/javascript" src="./dist/index.js"></script> -->
-  <!-- map properties -->
 
 
       
