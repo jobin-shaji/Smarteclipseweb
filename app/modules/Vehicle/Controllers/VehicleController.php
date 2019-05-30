@@ -655,6 +655,9 @@ class VehicleController extends Controller {
         $vehicle_type = VehicleType::create([
             'name' => $request->name,
             'svg_icon' => $request->svg_icon,
+            'vehicle_scale' => $request->scale,
+            'opacity' => $request->opacity,
+            'strokeWeight' => $request->weight,
             'status' =>1,
            ]);
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
@@ -697,6 +700,11 @@ class VehicleController extends Controller {
 
         $vehicle_type->name = $request->name;
         $vehicle_type->svg_icon = $request->svg_icon;
+
+        $vehicle_type->vehicle_scale = $request->scale;
+        $vehicle_type->opacity = $request->opacity;
+        $vehicle_type->strokeWeight = $request->weight;
+
         $vehicle_type->save();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
@@ -824,9 +832,19 @@ class VehicleController extends Controller {
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
        
-         $decrypted_id = Crypt::decrypt($request->id);  
+         $decrypted_id = Crypt::decrypt($request->id);
+          $get_vehicle=Vehicle::find($decrypted_id);
+          // $dealers = Dealer::where('user_id', $decrypted)->first();  
+          $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+          $track_data=GpsData::select('latitude as latitude',
+                  'longitude as longitude',                
+                  'gsm_signal_strength as signalStrength'
+                  )         
+                  ->where('vehicle_id',$get_vehicle->id)
+                  ->orderBy('id','desc')
+                  ->first();
           
-        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id] );
+        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $track_data->latitude,'longitude' => $track_data->longitude] );
        
     }
     public function locationTrack(Request $request){
@@ -1362,7 +1380,11 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     public function vehicleTypeCreateRules()
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'svg_icon' => 'required',
+            'weight' => 'required',
+            'scale' => 'required',
+            'opacity' => 'required'
         ];
         return  $rules;
     }
@@ -1370,7 +1392,11 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     public function vehicleTypeUpdateRules()
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'svg_icon' => 'required',
+            'weight' => 'required',
+            'scale' => 'required',
+            'opacity' => 'required'
         ];
         return  $rules;
     }
