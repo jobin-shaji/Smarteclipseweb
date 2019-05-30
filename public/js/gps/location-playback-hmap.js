@@ -66,7 +66,7 @@ function playback() {
             },
             success: function(res) {
                 createPolyline(res.polyline); 
-                createPlayback(res.firstpoint,res.polyline,res.polyline.length);
+                // createPlayback(res.firstpoint,res.polyline,res.polyline.length);
                    // console.log(res.polyline[0]);   
             },
             error: function(err) {
