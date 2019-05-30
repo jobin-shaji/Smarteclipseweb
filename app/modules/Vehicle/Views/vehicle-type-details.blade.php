@@ -49,7 +49,7 @@
           @endif
            <div class="form-group has-feedback">
                 <label class="srequired">Weight</label>
-                <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="{{ $vehicle_type->strokeWeight }}" required> 
+                <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="{{ $vehicle_type->strokeWeight }}" disabled> 
               </div>
               @if ($errors->has('weight'))
                 <span class="help-block">
@@ -60,7 +60,7 @@
          <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label class="srequired">Scale</label>
-                <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="{{ $vehicle_type->vehicle_scale }}" required> 
+                <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="{{ $vehicle_type->vehicle_scale }}" disabled> 
               </div>
               @if ($errors->has('scale'))
                 <span class="help-block">
@@ -69,7 +69,7 @@
               @endif
               <div class="form-group has-feedback">
                 <label class="srequired">Opacity</label>
-                <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ $vehicle_type->opacity }}" required> 
+                <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ $vehicle_type->opacity }}" disabled> 
               </div>
               @if ($errors->has('opacity'))
                 <span class="help-block">

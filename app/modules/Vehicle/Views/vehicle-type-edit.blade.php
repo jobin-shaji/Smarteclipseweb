@@ -58,7 +58,6 @@
                     <strong class="error-text">{{ $errors->first('weight') }}</strong>
                 </span>
               @endif
-
         </div>
          <div class="col-md-6">
               <div class="form-group has-feedback">
@@ -70,7 +69,6 @@
                     <strong class="error-text">{{ $errors->first('scale') }}</strong>
                 </span>
               @endif
-
               <div class="form-group has-feedback">
                 <label class="srequired">Opacity</label>
                 <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ $vehicle_type->opacity }}" required> 
@@ -80,7 +78,6 @@
                     <strong class="error-text">{{ $errors->first('opacity') }}</strong>
                 </span>
               @endif
-
            </div>
     </div>
       <div class="row">

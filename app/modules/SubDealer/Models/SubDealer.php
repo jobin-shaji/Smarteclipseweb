@@ -11,7 +11,7 @@ class SubDealer extends Model
    
   // public function dealer()
   // {
-  //   return $this->belongsTo('App\Modules\Dealer\Models\Dealer','dealer_id','id');
+  //   return $this->belongsTo('App\Modules\Dealer\Models\Dealer');
   // } 
 
   public function user()
