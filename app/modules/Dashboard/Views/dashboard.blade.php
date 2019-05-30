@@ -189,53 +189,38 @@
             </div>
             <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
-      
+        </div>      
         <div class="row">
           <!-- alert report-start -->
           <div class="col-xs-6">
           <div id="page-wrap1">
-             <div id="more-info"><div>
-                <!-- <h2>More Info</h2> -->
-                <p>Hover over location on the left. (JavaScript must be enabled)</p>
+             <div id="more-info"><div>               
+                 <p>Hover over location on the left. (JavaScript must be enabled)</p>
              </div></div>
             <div id="map_canvas"></div>
-             <ul id="locations">
-             
-                <li data-geo-lat="41.9786" data-geo-long="-87.9047">
-                  <h3>Kl-55-3644</h3>
+             <ul id="locations">    
+              <!-- onmouseover="getLocationData(1)         -->
+               @foreach ($vehicles as $vehicles )  
+               @foreach ($gps_data as $gps_data)
+
+               <?php   
+              
+               $lat=floatval($gps_data['latitude']);
+               $lng=floatval($gps_data['longitude']);
+
+// echo $gps_data['latitude'];
+               ?>
+                <li data-geo-lat="{{$lat}}" data-geo-long="{{$lng}}" > 
+                 <h3>{{$gps_data['vehicle']['register_number']}}</h3>   
+                   
+                    @endforeach                        
+                                  
                   <p class="longdesc">
                     1111
                   </p>
                 </li>
-                
-                <li data-geo-lat="41.927118" data-geo-long="-87.697621">
-                  <h3>KL 30 P 1210</h3>
-  
-                  <p class="longdesc">
-                    22222222
-                  </p>
-                </li>
-                
-                <li data-geo-lat="41.921735" data-geo-long="-87.664688">
-                  <h3>KL 30 P 1010</h3>
-                  <p class="longdesc">
-                    33333333333
-                  </p>
-                </li>
-                
-                <li data-geo-lat="41.927568" data-geo-long="-87.705201">
-                  <h3>KL 30 P 2020</h3>
-                  <p class="longdesc">
-                    
-                    4444444444444444444
-                  </p>
-                </li>
-
-                
-             </ul>
-            
-      
+                @endforeach
+            </ul>    
           </div>
           </div>
           <div class="col-xs-6">
@@ -302,7 +287,6 @@
                                 <i class="fa fa-ellipsis-v"></i>
                                 <i class="fa fa-ellipsis-v"></i>
                               </span>
-                          
                           <!-- todo text -->
                           <span class="text-danger">{{$expired->documentType->name}} expired on {{$expired->expiry_date}}</span>
                           [<span class="text-primary" style="color:#000;">{{$expired->vehicle->name}} - {{$expired->vehicle->register_number}}</span>]
@@ -370,8 +354,8 @@
   <!-- ######################################################################## -->
   <link rel='stylesheet' type='text/css' href='css/dashboard/style.css' />
    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
-  <script type='text/javascript' src='js/example.js'></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
+
   <script type='text/javascript'>
   
     $(function() {
@@ -440,7 +424,68 @@
       $("#locations li:first").trigger("mouseenter");
       
     });
-
   </script>
+
+
+<!-- 
+<script>
+  $(document).ready(function() {
+
+// function getLocationData(id) { 
+  // alert(id);
+  $('##locations li').hover(function () { 
+    // document.getElementById('cash_recep').style.display = 'block';
+    var waybillId = $(this).val();
+    alert(waybillId);
+    var data={ waybillId : waybillId };
+    if(waybillId) {
+      $.ajax({
+        type:'POST',      
+        url: '/dashboard/getlocation',
+        data:data ,
+        async: true,
+        headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data) {
+            // console.log(data);
+          if(data){
+             //  $("#waybills").text(data.waybill_code); 
+             //  $("#etmid").text(data.etm); 
+             //  $("#total_passenger").text(data.passenger); 
+             //  $("#vehicle_no").text(data.vehicle); 
+             //   $("#vehicleTypeId").text(data.vehicleTypeId); 
+             //  $("#depot").text(data.depot); 
+             //  $("#conductor_name").text(data.conductor_name);
+             //  $("#driver_name").text(data.driver_name); 
+             //  $("#trip_count").text(data.trip_count); 
+             //  $("#ticketSale").text(data.totalCollection); 
+             //   $("#etm_collection").text(data.totalCollection); 
+             //   $("#net_amount").text(data.amountTotal);
+             //  $("#totalCollection").text(data.amountTotal); 
+             //  $("#total_ticket").text(data.passenger); 
+             //  $("#total_ticket_no").text(data.passenger);
+             //  $("#km").text(data.assigned_km);
+             //  $("#actualkm").text(data.km);
+             //  $("#penality_amount").text(data.penality);
+             //  $("#penality_count").text(data.penality_count);
+             // $("#expenseAmount").text(data.expenseAmount);
+             //  $("#startDate").text(data.startDate);
+             // $("#closing_date").text(data.closing_date);
+             //  $("#totalExpenses").text(data.totalExpenses);
+             //  $("#firstTicket").text(data.first_ticket);
+             //  $("#lastTicket").text(data.last_ticket);
+            }
+            else
+            {
+            }
+          }
+        });
+      }else{    
+    }
+  });
+});
+</script> -->
+
   <!-- ############################################################ -->
 @endsection
