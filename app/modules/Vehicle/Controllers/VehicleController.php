@@ -984,7 +984,7 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
        
     }
-public function playbackHMap(Request $request){
+    public function playbackHMap(Request $request){
        
          $decrypted_id = Crypt::decrypt($request->id);  
           
@@ -1035,7 +1035,7 @@ public function playbackHMap(Request $request){
     // }
 
 
-public function locationPlayback(Request $request){
+    public function locationPlayback(Request $request){
  
      $gpsdata=GpsData::Select(
             'latitude as lat',
@@ -1168,34 +1168,34 @@ public function hmapLocationPlayback(Request $request){
         $playback=array();
         $playback_point= array();
         $playback_round=array();
-       $playbackData=array();
-       $length=0;$counts=0;$count=0;
+        $playbackData=array();
+        $length=0;$counts=0;$count=0;
         if($gpsdata){
             $length=$gpsdata->count();
             // dd($length);
-                if($length!=0)
-                {
-                    if($length>=150){
-                        $counts=$length/150;
-                    }
-                    else{
-                        $counts=$length;
-                    }
+            if($length!=0)
+            {
+                if($length>=150){
+                    $counts=$length/150;
                 }
-                // dd($counts);
+                else{
+                    $counts=$length;
+                }
+            }
+            // dd($counts);
+               
+            if($counts!=0)
+            {
+              
+                $count=$length/$counts;
+            }
+            else{
+                    $count=$counts;
+            }  
                    
-                    if($counts!=0)
-                    {
-                      
-                        $count=$length/$counts;
-                        }
-                        else{
-                            $count=$counts;
-                        }  
-                   
-                //                 $counts=$length/150;
+            //$counts=$length/150;
           
-                // $count=$length/$counts;
+            // $count=$length/$counts;
 
             // $count=$length/$counts;
             $round_value=round($count);            
@@ -1239,9 +1239,9 @@ public function hmapLocationPlayback(Request $request){
 public function playBackForLine($vehicleID,$fromDate,$toDate){
 
     $playBackDataList=array();
-     $playback=array();
+    $playback=array();
 
-     $gpsdata=GpsData::Select(
+    $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng', 
             'heading as angle',
@@ -1255,13 +1255,13 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         ->get(); 
         $startLat=(float)$gpsdata[0]->lat;
     $startLng=(float)$gpsdata[0]->lng;
-     if($gpsdata){
-    foreach ($gpsdata as $data) {
+    if($gpsdata){
+        foreach ($gpsdata as $data) {
                 $playback[]=array(
                     "lat"=>(float)$data->lat,
                     "lng"=>(float)$data->lng
                 ); 
-            }
+        }
              $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',
@@ -1269,29 +1269,29 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
                 'polyline' => $playback
                 
             );
-       }
-     return response()->json($response_data); 
+    }
+    return response()->json($response_data); 
      // return json_encode($playback);
        // return response()->json($playback); 
    }
 
-public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
-     $playBackDataList=array();
-      $playback = array();   
-     $gpsdata=GpsData::Select(
-        'latitude as lat',
-        'longitude as lng', 
-        'heading as angle',
-        'speed',                 
-        'main_power_status as power',
-        'gps_fix as gps',
-        'ignition as ign',
-        'gsm_signal_strength as signalStrength'
-    )
-    ->where('device_time', '>=',$fromDate)
-    ->where('device_time', '<=',$toDate)
-    ->where('vehicle_id',$vehicleID)                
-    ->get(); 
+    public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
+        $playBackDataList=array();
+        $playback = array();   
+        $gpsdata=GpsData::Select(
+            'latitude as lat',
+            'longitude as lng', 
+            'heading as angle',
+            'speed',                 
+            'main_power_status as power',
+            'gps_fix as gps',
+            'ignition as ign',
+            'gsm_signal_strength as signalStrength'
+        )
+        ->where('device_time', '>=',$fromDate)
+        ->where('device_time', '<=',$toDate)
+        ->where('vehicle_id',$vehicleID)                
+        ->get(); 
     $vehicle_status="Running";    
     $startLat=(float)$gpsdata[0]->lat;
     $startLng=(float)$gpsdata[0]->lng;
@@ -1299,40 +1299,40 @@ public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
     if($gpsdata)
     {
         foreach ($gpsdata as $vdata) {
-             $lat=(float)$vdata->lat;
+            $lat=(float)$vdata->lat;
             $lng=(float)$vdata->lat;
             $caluculate_distance_between_latlng=$this->distanceCalculation($lat,$lng,$startLat,$startLng);
             // dd($caluculate_distance_between_latlng);
             // if($caluculate_distance_between_latlng >= MARKER_SELECT_POINT_DISTANCE){
-                $vehicle_status="Running";
-                if($vdata->ign==1){
-                    $ignitionData="ON";
-                }else{
-                    $ignitionData="Off";
-                }
-               
-                $playback[]=array(
-                    "lat"=>$startLat,
-                    "lng"=>$startLng,
-                    "angle"=>$vdata->angle,
-                    "Speed"=>$vdata->speed,
-                    "Ignition"=>$ignitionData
-                ); 
-                $startLat=$vdata->lat;
-                $startLng=$vdata->lng;
-            // }
+            $vehicle_status="Running";
+            if($vdata->ign==1){
+                $ignitionData="ON";
+            }else{
+                $ignitionData="Off";
+            }
+           
+            $playback[]=array(
+                "lat"=>$startLat,
+                "lng"=>$startLng,
+                "angle"=>$vdata->angle,
+                "Speed"=>$vdata->speed,
+                "Ignition"=>$ignitionData
+            ); 
+            $startLat=$vdata->lat;
+            $startLng=$vdata->lng;
+        // }
         }
     }
     return json_encode($playback);
-}
-  function distanceCalculation($lat1, $lon1, $lat2, $lon2) {
-  $theta = $lon1 - $lon2;
-  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-  $dist = acos($dist);
-  $dist = rad2deg($dist);
-  $miles = $dist * 60 * 1.1515;
-  return ($miles * 1.609344);
-  }
+    }
+    function distanceCalculation($lat1, $lon1, $lat2, $lon2) {
+      $theta = $lon1 - $lon2;
+      $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+      $dist = acos($dist);
+      $dist = rad2deg($dist);
+      $miles = $dist * 60 * 1.1515;
+      return ($miles * 1.609344);
+    }
 
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
