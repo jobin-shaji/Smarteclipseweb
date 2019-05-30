@@ -96,7 +96,10 @@ class RouteController extends Controller {
         if($route==null){
             return view('Route::404');
         } 
-        return view('Route::route-details',['route' => $route]);
+        $route_area=RouteArea::select('route_id','latitude','longitude')
+                                        ->where('route_id',$decrypted_id)
+                                        ->get();
+        return view('Route::route-details',['route' => $route,'route_area' => $route_area]);
     }
 
     // Route delete
