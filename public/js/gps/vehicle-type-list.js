@@ -32,6 +32,9 @@ function callBackDataTable(){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
+            {data: 'vehicle_scale', name: 'vehicle_scale'},
+            {data: 'opacity', name: 'opacity'},
+            {data: 'strokeWeight', name: 'strokeWeight'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         

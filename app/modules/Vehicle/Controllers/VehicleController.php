@@ -628,7 +628,10 @@ class VehicleController extends Controller {
 
         $vehicle_type = VehicleType::select(
                     'id',
-                    'name'
+                    'name',
+                    'vehicle_scale',
+                    'opacity',
+                    'strokeWeight'
                     )
                 ->get();
 

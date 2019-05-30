@@ -89,15 +89,19 @@ class DashboardController extends Controller
                         'latitude as latitude',
                         'longitude as longitude' 
                     ])                    
-                    ->whereIn('vehicle_id',$single_vehicle) 
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->with('vehicle:id,name,register_number') 
                     ->groupBy('vehicle_id')
                     ->orderBy('id','desc')                 
                     ->get();
 
-
+            // dd($gps_data);
             return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles,'gps_data' => $gps_data]); 
         }        
     }
+
+
+
     public function dashCount(Request $request){
         $user = $request->user();
         $dealers=Dealer::where('user_id',$user->id)->first();
@@ -135,5 +139,36 @@ class DashboardController extends Controller
                 'status' => 'dbcount'           
             ]);
         }       
+    }
+
+    public function getLocation(Request $request){
+        dd($request->id);
+        $gps_data=GpsData::select([
+            'latitude as latitude',
+            'longitude as longitude' 
+        ])                    
+        ->where('vehicle_id',$request->id) 
+        ->orderBy('id','desc')                 
+        ->get();
+        // if($gps_data){            
+        //     $response_data = array(
+        //         'status'  => 'success',
+        //         'latitude' => $gps_data->latitude,
+        //         'longitude' => $gps_data->longitude
+        //     );
+
+        // }
+        // else{
+        //         $response_data = array(
+        //         'status'  => 'failed',
+        //         'message' => 'failed',
+        //         'code'    =>0);
+        //      }
+             // dd($response_data['liveData']['ign']);
+        return response()->json($gps_data); 
+
+
+
+
     }
 }

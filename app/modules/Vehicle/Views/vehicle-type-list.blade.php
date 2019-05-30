@@ -40,6 +40,9 @@
                         <tr>
 	                      <th>#</th>
 	                      <th>vehicle Type</th>
+                        <th>Scale</th>
+                        <th>Opacity</th>
+                        <th>Stroke Weight</th>
 	                      <th style="width:160px;">Action</th>
                         </tr>
                         </thead>
