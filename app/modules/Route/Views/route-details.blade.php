@@ -29,8 +29,8 @@
     var map;
                   
        <?php if($route){ ?> 
-          lat= <?php echo $route->routeArea[0]['latitude']; ?>;
-          lng=<?php echo $route->routeArea[0]['longitude']; ?>;
+          lat= <?php echo $route_area[0]['latitude']; ?>;
+          lng=<?php echo $route_area[0]['longitude']; ?>;
           <?php }else{ ?>
             lat=10.014550;
             lng=76.293159;
@@ -62,7 +62,7 @@
       function LoadMap() { 
           <?php 
             $dataPacket=[];
-            foreach ($route->routeArea as $locData) {
+            foreach ($route_area as $locData) {
               $intLat=floatval($locData['latitude']);
               $intLng=floatval($locData['longitude']);
               $dataPacket[]=array("lat"=>$intLat,"lng"=>$intLng);
