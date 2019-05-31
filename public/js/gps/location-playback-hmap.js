@@ -20,7 +20,27 @@ function getUrl() {
   });
   var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
   var ui = H.ui.UI.createDefault(map, maptypes);
+   var currentRouteStrip = new H.geo.Strip();
+  var marker;
+  var bSimulationRunning = false;
 
+  var svgMarkup = '<svg width="24" height="24" ' + 
+  'xmlns="http://www.w3.org/2000/svg">' +
+  '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+  'height="22" /><text x="12" y="18" font-size="12pt" ' +
+  'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+  'fill="white">H</text></svg>';
+
+
+// Create an icon, an object holding the latitude and longitude, and a marker:
+  var icon = new H.map.Icon(svgMarkup),
+  coords = {lat: 51.5141, lng: -0.0999},
+  marker = new H.map.Marker(coords, {icon: icon});
+  marker.$id = "truckMarker";
+  var iSimulationIsAtPosition = 0;
+  var simulationWalker = null;
+  var simulationGroup = new H.map.Group();
+  var routeGroup = new H.map.Group();
 // -----Draw a map-----------------------------
 
 // ------------------featch data from date time----------
@@ -48,7 +68,7 @@ function getUrl() {
             headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(res) {
+            success: function(res) {  
                playBack(res);
             },
             error: function(err) {
@@ -58,29 +78,29 @@ function getUrl() {
         });       
     }); 
 }
-
+// M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805
 // ------------------fetch data from date time----------
 
 function playBack(res){
 
   var locationData=res.polyline;
-  var bSimulationRunning = false;
-  var svgMarkup = '<svg width="24" height="24" ' +
-  'xmlns="http://www.w3.org/2000/svg">' +
-  '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
-  'height="22" /><text x="12" y="18" font-size="12pt" ' +
-  'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
-  'fill="white">H</text></svg>';
+//   var bSimulationRunning = false;
+//   var svgMarkup = '<svg width="24" height="24" ' +
+//   'xmlns="http://www.w3.org/2000/svg">' +
+//   '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+//   'height="22" /><text x="12" y="18" font-size="12pt" ' +
+//   'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+//   'fill="white">H</text></svg>';
 
-// Create an icon, an object holding the latitude and longitude, and a marker:
-  var icon = new H.map.Icon(svgMarkup),
-  coords = {lat: 51.5141, lng: -0.0999},
-  marker = new H.map.Marker(coords, {icon: icon});
-  marker.$id = "truckMarker";
+// // Create an icon, an object holding the latitude and longitude, and a marker:
+//   var icon = new H.map.Icon(svgMarkup),
+//   coords = {lat: 51.5141, lng: -0.0999},
+//   marker = new H.map.Marker(coords, {icon: icon});
+//   marker.$id = "truckMarker";
 
 
   // object with all route points
-  var currentRouteStrip = new H.geo.Strip();
+ 
   // truck icon
   var iSimulationIsAtPosition = 0;
   // simulation walker
@@ -91,8 +111,9 @@ function playBack(res){
       var routingParameters={};
       var pointname;
 
-         var data=[{"lat":22.548545935598,"lng":88.280163708638},{"lat":22.5464236,"lng":88.2853837},{"lat":22.5428214,"lng":88.286547},{"lat":22.5410671,"lng":88.2887521},{"lat":22.539522,"lng":88.2903415},{"lat":22.51498,"lng":88.3104746},{"lat":22.5116714,"lng":88.3257219},{"lat":22.5035291,"lng":88.3407005},{"lat":22.5013464,"lng":88.346573},{"lat":22.5010609,"lng":88.3687496},{"lat":22.549975499646,"lng":88.278846582115},{"lat":22.5512341,"lng":88.2790673}];
-
+         // var data=[{"lat":22.548545935598,"lng":88.280163708638},{"lat":22.5464236,"lng":88.2853837},{"lat":22.5428214,"lng":88.286547},{"lat":22.5410671,"lng":88.2887521},{"lat":22.539522,"lng":88.2903415},{"lat":22.51498,"lng":88.3104746},{"lat":22.5116714,"lng":88.3257219},{"lat":22.5035291,"lng":88.3407005},{"lat":22.5013464,"lng":88.346573},{"lat":22.5010609,"lng":88.3687496},{"lat":22.549975499646,"lng":88.278846582115},{"lat":22.5512341,"lng":88.2790673}];
+         var data=locationData;
+         console.log(data);
             $.each(data, function(i, item) {
                 pointname='waypoint'+i;
                 routingParameters[pointname]=''+item.lat+','+item.lng+'';
@@ -101,6 +122,7 @@ function playBack(res){
                routingParameters = routingParameters;
                routingParameters.mode='fastest;car';
                routingParameters.representation= 'display';
+               console.log(routingParameters);
               routeDraw(routingParameters);
 
       }); // end of doc ready
@@ -109,6 +131,7 @@ function playBack(res){
 
 
 function routeDraw(routingParameters){
+
 // Define a callback function to process the routing response:
 var onResult = function(result) {
  var route,
@@ -127,6 +150,7 @@ var onResult = function(result) {
 
 
   // Push all the points in the shape into the linestring:s
+
   routeShape.forEach(function(point) {
     var parts = point.split(',');
     linestring.pushLatLngAlt(parts[0], parts[1]);
