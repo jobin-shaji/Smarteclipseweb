@@ -199,28 +199,19 @@
              </div></div>
             <div id="map_canvas"></div>
              <ul id="locations">    
-              <!-- onmouseover="getLocationData(1)         -->
-               @foreach ($vehicles as $vehicles )  
-               @foreach ($gps_data as $gps_data)
+                          
+                <li data-geo-lat="10.014550" data-geo-long="76.293159" >                 
+                 <h3>KL-05-2015</h3>   
 
-               <?php   
-              
-               $lat=floatval($gps_data['latitude']);
-               $lng=floatval($gps_data['longitude']);
-
-// echo $gps_data['latitude'];
-               ?>
-                <li data-geo-lat="{{$lat}}" data-geo-long="{{$lng}}" > 
-                 <h3>{{$gps_data['vehicle']['register_number']}}</h3>   
-                   
-                    @endforeach                        
+                                      
                                   
                   <p class="longdesc">
                     1111
                   </p>
                 </li>
-                @endforeach
+               
             </ul>    
+           
           </div>
           </div>
           <div class="col-xs-6">
