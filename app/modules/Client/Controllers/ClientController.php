@@ -52,10 +52,6 @@ class ClientController extends Controller {
             }
         }
 
-
-
-
-
               // $gps_transfer_item = UserAlerts::create([
               //     "alert_1" =>1, 
               //     "alert_2" =>1, 
