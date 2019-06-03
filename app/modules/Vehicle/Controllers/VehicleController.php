@@ -9,6 +9,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\OtaResponse;
 use App\Modules\Vehicle\Models\VehicleRoute;
+use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleOta;
 use App\Modules\Vehicle\Models\Document;
@@ -546,7 +547,10 @@ class VehicleController extends Controller {
         if($route==null){
             return view('Route::404');
         } 
-        return view('Route::route-details',['route' => $route]);
+        $route_area=RouteArea::select('route_id','latitude','longitude')
+                                        ->where('route_id',$decrypted_route_id)
+                                        ->get();
+        return view('Route::route-details',['route' => $route,'route_area' => $route_area]);
     }
 
     // update vehicle route

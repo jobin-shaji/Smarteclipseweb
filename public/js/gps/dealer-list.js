@@ -36,6 +36,7 @@ function callBackDataTable(){
             {data: 'address', name: 'address',searchable: false},           
             {data: 'user.mobile', name: 'user.mobile'},
             {data: 'user.email', name: 'user.email',searchable: false},
+            {data: 'working_status', name: 'working_status',searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
@@ -50,6 +51,21 @@ function delDealers(dealer){
 }
 function activateDealer(dealer){
     var url = 'dealer/activate';
+    var data = {
+        id : dealer
+    };
+    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+}
+
+function disableDealers(dealer){
+    var url = 'dealer/disable';
+    var data = {
+        id : dealer
+    };
+    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+}
+function enableDealer(dealer){
+    var url = 'dealer/enable';
     var data = {
         id : dealer
     };

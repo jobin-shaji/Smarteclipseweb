@@ -14,7 +14,7 @@
  <!-- end flash message -->
 <section class="content-header">
       <h1>
-        Dealer
+        Sub Dealer
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -26,7 +26,7 @@
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">   
-               <div class="panel-heading">Dealer  
+               <div class="panel-heading">Sub Dealer  
                     <a href="{{route('sub.dealer.create')}}">
                     <button class="btn btn-xs btn-primary pull-right">Add New Sub Dealer</button>
                     </a>

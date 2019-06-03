@@ -16,7 +16,7 @@ class SubDealer extends Model
 
   public function user()
   {
-    return $this->belongsTo('App\Modules\User\Models\User');
+    return $this->belongsTo('App\Modules\User\Models\User')->withTrashed();
   }
 
   // dealer

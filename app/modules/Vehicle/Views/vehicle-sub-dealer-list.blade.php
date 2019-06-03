@@ -42,7 +42,7 @@
                         <th>IMEI</th>
 	                      <th>E-SIM Number</th>
                         <th>Vehicle Type</th>
-                        <th>Client</th>
+                        <th>End User</th>
                         </tr>
                         </thead>
                     </table>

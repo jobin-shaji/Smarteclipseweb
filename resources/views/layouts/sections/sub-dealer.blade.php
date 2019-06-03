@@ -7,8 +7,8 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/client/create')}}"><i class="fa fa-plus"></i>Add Client</a></li>
-      <li><a href="{{url('/clients')}}"><i class="fa fa-list"></i> List Client</a></li>
+      <li><a href="{{url('/client/create')}}"><i class="fa fa-plus"></i>Add End User</a></li>
+      <li><a href="{{url('/clients')}}"><i class="fa fa-list"></i> List End User</a></li>
   </ul>
 </li>
 

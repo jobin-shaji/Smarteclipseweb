@@ -1,6 +1,6 @@
 @extends('layouts.gps')
 @section('title')
-    View Client
+    View End User
 @endsection
 @section('content')
 <!--  flash message -->
@@ -14,21 +14,21 @@
  <!-- end flash message -->
 <section class="content-header">
       <h1>
-       Client 
+       End User 
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"> Client List</li>
+        <li class="active"> End User List</li>
       </ol>
 </section>
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-              <div class="panel-heading">Client  
+              <div class="panel-heading">End User  
                     <a href="{{route('client.create')}}">
-                    <button class="btn btn-xs btn-primary pull-right">Add New Client</button>
+                    <button class="btn btn-xs btn-primary pull-right">Add New User</button>
                     </a>
                 </div>              
                 <div class="table-responsive">

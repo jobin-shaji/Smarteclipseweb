@@ -1,11 +1,11 @@
 @extends('layouts.gps') 
 @section('title')
-   client details
+   End User Details
 @endsection
 @section('content')
 
     <section class="content-header">
-     <h1>Client details</h1>
+     <h1>End User Details</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">

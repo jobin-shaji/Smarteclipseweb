@@ -2,6 +2,8 @@
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/client','ClientController@clientListPage')->name('client');
 	Route::post('/root-client-list','ClientController@getRootClient')->name('root-client-list');
+	Route::post('/client/disable','ClientController@disableClient')->name('client.disable');
+	Route::post('/client/enable','ClientController@enableClient')->name('client.enable');
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/dealer-client','ClientController@dealerClientListPage')->name('dealer-client');

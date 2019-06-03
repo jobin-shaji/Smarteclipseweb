@@ -3,11 +3,11 @@
 @section('content')
 <section class="content-header">
       <h1>
-        GPS List
+        GPS LIST
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">GPS List</li>
+        <li class="active">GPS LIST</li>
       </ol>
 </section>
 
@@ -16,7 +16,7 @@
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Gps List 
+                <div class="panel-heading">GPS LIST
                     <a href="{{route('gps.create')}}">
                     </a>
                 </div>

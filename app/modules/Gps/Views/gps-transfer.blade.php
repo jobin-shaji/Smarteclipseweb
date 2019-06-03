@@ -55,11 +55,17 @@
       <div class="form-group has-feedback">
         <label class="srequired">GPS</label>
         <div class="row">
-            @foreach ($devices as $device )
-              <div class="col-md-<?php echo $bootstrapColWidth; ?>">
-                  <input type="checkbox" name="gps_id[]" value="{{$device->id}}">{{$device->name}}||{{$device->imei}}
-              </div>
-            @endforeach
+
+               @forelse  ($devices as $device )
+                <div class="col-md-<?php echo $bootstrapColWidth; ?>">
+                    <input type="checkbox" name="gps_id[]" value="{{$device->id}}">{{$device->name}}||{{$device->imei}}
+                </div>
+              @empty
+                @section('script')
+                  <script>alert("No GPS Found");</script>
+                @endsection
+                <p style="font-size: 20px;padding-left: 15px;color: red;"><b>No GPS Found</b></p>
+              @endforelse
             <span class="glyphicon glyphicon-car form-control-feedback"></span>
 
         </div>
