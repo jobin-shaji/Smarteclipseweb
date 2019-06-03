@@ -12,5 +12,7 @@ Route::post('/dealer/{id}/update-password','DealerController@updatePassword')->n
 Route::get('/dealers/{id}/details','DealerController@details')->name('dealers.details');
 Route::post('/dealer/delete','DealerController@deleteDealer')->name('dealer.delete');
 Route::post('/dealer/activate','DealerController@activateDealer')->name('dealer.activate');
+Route::post('/dealer/disable','DealerController@disableDealer')->name('dealer.disable');
+Route::post('/dealer/enable','DealerController@enableDealer')->name('dealer.enable');
 });
 

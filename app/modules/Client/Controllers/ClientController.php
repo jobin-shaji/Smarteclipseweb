@@ -248,12 +248,63 @@ class ClientController extends Controller {
         )
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
-         ->with('user:id,email,mobile')
-         ->where('deleted_at',NULL)
+        ->with('user:id,email,mobile,deleted_at')
+        ->where('deleted_at',NULL)
         ->get();
         return DataTables::of($client)
-        ->addIndexColumn()           
+        ->addIndexColumn()  
+        ->addColumn('working_status', function ($client) {
+            if($client->user->deleted_at == null){ 
+            return "
+                <b style='color:#008000';>Enabled</b>
+                <button onclick=disableEndUser(".$client->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+            ";
+            }else{ 
+            return "
+                <b style='color:#FF0000';>Disabled</b>
+                <button onclick=enableEndUser(".$client->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
+            ";
+            }
+        })
+        ->rawColumns(['link','working_status'])             
         ->make();
+    }
+
+    //delete client details from table
+    public function disableClient(Request $request)
+    {
+        $client = User::find($request->id);
+        if($client == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Client does not exist'
+            ]);
+        }
+        $client->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Client disabled successfully'
+        ]);
+    }
+    // restore emplopyee
+    public function enableClient(Request $request)
+    {
+        $client = User::withTrashed()->find($request->id);
+        if($client==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Client does not exist'
+            ]);
+        }
+        $client->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Client enabled successfully'
+        ]);
     }
 
     public function dealerClientListPage()

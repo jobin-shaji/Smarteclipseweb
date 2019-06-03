@@ -27,13 +27,65 @@ class SubDealerController extends Controller {
         )
         ->withTrashed()
         ->with('dealer:id,user_id,name')
-        ->with('user:id,email,mobile')
+        ->with('user:id,email,mobile,deleted_at')
         ->where('deleted_at',NULL)
         ->get();
         return DataTables::of($subdealers)
-        ->addIndexColumn()           
+        ->addIndexColumn()      
+        ->addColumn('working_status', function ($subdealers) {
+            if($subdealers->user->deleted_at == null){ 
+            return "
+                <b style='color:#008000';>Enabled</b>
+                <button onclick=disableSubDealers(".$subdealers->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+            ";
+            }else{ 
+            return "
+                <b style='color:#FF0000';>Disabled</b>
+                <button onclick=enableSubDealer(".$subdealers->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
+            ";
+            }
+        })
+        ->rawColumns(['link','working_status'])     
         ->make();
     }
+
+    //delete sub_dealer details from table
+    public function disableSubDealer(Request $request)
+    {
+        $sub_dealer = User::find($request->id);
+        if($sub_dealer == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Sub Dealer does not exist'
+            ]);
+        }
+        $sub_dealer->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Sub Dealer disabled successfully'
+        ]);
+    }
+    // restore emplopyee
+    public function enableSubDealer(Request $request)
+    {
+        $sub_dealer = User::withTrashed()->find($request->id);
+        if($sub_dealer==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Sub Dealer does not exist'
+            ]);
+        }
+        $sub_dealer->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Sub Dealer enabled successfully'
+        ]);
+    }
+
     //employee creation page
     public function create()
     {

@@ -43,7 +43,7 @@
 	                      <th>E-SIM Number</th>
                         <th>Vehicle Type</th>
                         <th>Sub Dealer</th>
-                        <th>Client</th>
+                        <th>End User</th>
                         </tr>
                         </thead>
                     </table>

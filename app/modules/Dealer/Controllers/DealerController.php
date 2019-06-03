@@ -24,23 +24,37 @@ class DealerController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
-        ->with('user:id,email,mobile')
+        ->with('user:id,email,mobile,deleted_at')
         ->get();
         return DataTables::of($dealers)
         ->addIndexColumn()
+        ->addColumn('working_status', function ($dealers) {
+            if($dealers->user->deleted_at == null){ 
+            return "
+                <b style='color:#008000';>Enabled</b>
+                <button onclick=disableDealers(".$dealers->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+            ";
+            }else{ 
+            return "
+                <b style='color:#FF0000';>Disabled</b>
+                <button onclick=enableDealer(".$dealers->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
+            ";
+            }
+        })
         ->addColumn('action', function ($dealers) {
             if($dealers->deleted_at == null){ 
             return "
             <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
             <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-            <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+            <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>
+            ";
             }else{ 
             return "<a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>";
             }
         })
-        ->rawColumns(['link', 'action'])
+        ->rawColumns(['link', 'action','working_status'])
         ->make();
     }
     //dealer creation page
@@ -146,6 +160,43 @@ class DealerController extends Controller {
         $request->session()->flash('message','Dealer Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('dealers.change-password',$did));
+    }
+
+    //delete dealer details from table
+    public function disableDealer(Request $request)
+    {
+        $dealer = User::find($request->id);
+        if($dealer == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Dealer does not exist'
+            ]);
+        }
+        $dealer->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Dealer disabled successfully'
+        ]);
+    }
+    // restore emplopyee
+    public function enableDealer(Request $request)
+    {
+        $dealer = User::withTrashed()->find($request->id);
+        if($dealer==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Dealer does not exist'
+            ]);
+        }
+        $dealer->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Dealer enabled successfully'
+        ]);
     }
    
     //delete employee details from table

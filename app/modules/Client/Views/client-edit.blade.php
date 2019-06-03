@@ -1,10 +1,10 @@
 @extends('layouts.gps')
 @section('title')
-    Update client Details
+    Update End User Details
 @endsection
 @section('content')
     <section class="content-header">
-     <h1>Edit Client</h1>
+     <h1>Edit End User</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-edit">Client details</i> 
+            <i class="fa fa-edit">End User Details</i> 
           </h2>
            
           <?php 
