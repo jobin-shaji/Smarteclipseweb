@@ -198,7 +198,7 @@
                  <p>Hover over location on the left. (JavaScript must be enabled)</p>
              </div></div>
             <div id="map_canvas"></div>
-             <ul id="locations">    
+            <!--  <ul id="locations">    
                           
                 <li data-geo-lat="10.014550" data-geo-long="76.293159" >                 
                  <h3>KL-05-2015</h3>   
@@ -210,7 +210,19 @@
                   </p>
                 </li>
                
-            </ul>    
+            </ul>     -->
+               <ul id="locations">    
+              <!-- onmouseover="getLocationData(1)         -->
+               @foreach ($vehicles as $vehicles )  
+               <li data-geo-lat="10.014550" data-geo-long="76.293159" > 
+                 <h3>{{$vehicles['register_number']}}</h3>   
+                 <p class="longdesc">
+                    1111
+                  </p>
+                </li>
+                @endforeach
+            </ul> 
+
            
           </div>
           </div>

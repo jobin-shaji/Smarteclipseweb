@@ -27,9 +27,9 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
            <div class="panel-heading">Geofence  
-             <!--  <a href="{{route('dealer.create')}}">
-                <button class="btn btn-xs btn-primary pull-right">Add New Dealer</button>
-              </a> -->
+              <a href="{{route('fence')}}">
+                <button class="btn btn-xs btn-primary pull-right">Add Geofence</button>
+              </a>
             </div>
             <div class="table-responsive">
             <div class="panel-body">

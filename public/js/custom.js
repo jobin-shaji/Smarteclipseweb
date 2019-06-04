@@ -27,6 +27,9 @@ function toast(res){
      else if(res.status == 'cordinate'){
         initMap(res);
     } 
+    else if(res.status == 'geofence'){
+        window.location.href='geofence';
+    } 
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -48,7 +51,7 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-           
+           // console.log(res);
             toast(res);
             if (callBack){
                 if (callBack == 'callBackDataTables'){
