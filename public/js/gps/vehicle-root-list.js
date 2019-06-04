@@ -45,7 +45,8 @@ function callBackDataTable(){
             {data: 'vehicle_type.name', name: 'vehicle_type.name'},
             {data: 'dealer', name: 'dealer'},
             {data: 'sub_dealer', name: 'sub_dealer'},
-            {data: 'client.name', name: 'client.name'}
+            {data: 'client.name', name: 'client.name'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}, 
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
