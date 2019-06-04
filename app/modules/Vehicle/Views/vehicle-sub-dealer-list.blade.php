@@ -43,6 +43,7 @@
 	                      <th>E-SIM Number</th>
                         <th>Vehicle Type</th>
                         <th>End User</th>
+                        <th>Action</th>
                         </tr>
                         </thead>
                     </table>

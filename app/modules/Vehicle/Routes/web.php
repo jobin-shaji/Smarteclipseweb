@@ -22,12 +22,6 @@ Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')-
 
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
-
-Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
-
-Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
-
-
 // Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicles.playback');
 
 // Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
@@ -70,6 +64,17 @@ Route::get('/vehicle-root','VehicleController@vehicleRootList')->name('vehicle-r
 Route::post('/vehicle-root-list','VehicleController@getVehicleRootList')->name('vehicle-root-list');
 });
 
+///////////////////////////////Location track////////////////////////////////////
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
+
+Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
+});
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
 Route::group(['middleware' => ['web','auth','role:dealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 //Vehicle List
@@ -84,9 +89,6 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => '
 Route::get('/vehicle-sub-dealer','VehicleController@vehicleSubDealerList')->name('vehicle-sub-dealer');
 
 Route::post('/vehicle-sub-dealer-list','VehicleController@getVehicleSubDealerList')->name('vehicle-sub-dealer-list');
-
-
-
 
 });
 

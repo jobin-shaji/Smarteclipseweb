@@ -759,7 +759,6 @@ class VehicleController extends Controller {
                     'client_id',
                     'deleted_at'
                     )
-            ->withTrashed()
             ->with('client:id,name')
             ->with('vehicleType:id,name')
             ->with('gps:id,name,imei')
@@ -777,6 +776,15 @@ class VehicleController extends Controller {
                return $vehicle->client->subDealer->name;
                 
             })
+            ->addColumn('action', function ($vehicles) {
+                if($vehicles->deleted_at == null){
+                    return "
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
             ->make();
     }
 
@@ -834,6 +842,15 @@ class VehicleController extends Controller {
                return $vehicle->client->subDealer->name;
                 
             })
+            ->addColumn('action', function ($vehicles) {
+                if($vehicles->deleted_at == null){
+                    return "
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
             ->make();
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
@@ -977,6 +994,15 @@ class VehicleController extends Controller {
 
         return DataTables::of($vehicles)
             ->addIndexColumn()
+            ->addColumn('action', function ($vehicles) {
+                if($vehicles->deleted_at == null){
+                    return "
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
             ->make();
     }
 

@@ -43,7 +43,8 @@ function callBackDataTable(){
             {data: 'gps.imei', name: 'gps.imei'},
             {data: 'e_sim_number', name: 'e_sim_number'},
             {data: 'vehicle_type.name', name: 'vehicle_type.name'},
-            {data: 'client.name', name: 'client.name'}
+            {data: 'client.name', name: 'client.name'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}, 
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
