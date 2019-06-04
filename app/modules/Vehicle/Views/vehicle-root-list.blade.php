@@ -44,7 +44,7 @@
                         <th>Vehicle Type</th>
 	                      <th>Dealer</th>
                         <th>Sub Dealer</th>
-                        <th>Client</th>
+                        <th>End User</th>
                         </tr>
                         </thead>
                     </table>

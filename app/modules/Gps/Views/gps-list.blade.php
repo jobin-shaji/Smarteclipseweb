@@ -17,7 +17,7 @@
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Gps List 
+                <div class="panel-heading">GPS LIST
                     <a href="{{route('gps.create')}}">
                     <button class="btn btn-xs btn-primary pull-right">Add new gps</button>
                     </a>

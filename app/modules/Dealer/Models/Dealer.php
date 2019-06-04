@@ -11,7 +11,7 @@ class Dealer extends Model
 	// users of a depot
 	public function user()
     {
-    	return $this->belongsTo('App\Modules\User\Models\User','user_id','id');
+    	return $this->belongsTo('App\Modules\User\Models\User','user_id','id')->withTrashed();
     }
 
     // root
