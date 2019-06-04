@@ -25,7 +25,9 @@
         });
 
         var drawingManager = new google.maps.drawing.DrawingManager({
-          drawingMode: google.maps.drawing.OverlayType.MARKER,
+          drawingMode: google.maps.drawing.OverlayType.POLYGON,
+          // drawingMode: google.maps.drawing.OverlayType,
+
           drawingControl: true,
           drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_CENTER,
@@ -45,6 +47,10 @@
 
         google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
           addArrays(polygon);
+          drawingManager.setDrawingMode(null);
+          drawingManager.setOptions({
+            drawingControl: false
+          });
         });
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
@@ -58,7 +64,7 @@
             };
             backgroundPostData(url,data,'none',{alert:true});  
 
-            console.log(allPolly);
+            // console.log(allPolly);
           }
           else
           {
@@ -71,6 +77,13 @@
         });
    
     }
+
+
+
+
+
+
+
 
 
 function addArrays(polygon) {
