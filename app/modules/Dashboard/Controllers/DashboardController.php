@@ -95,8 +95,13 @@ class DashboardController extends Controller
                     ->orderBy('id','desc')                 
                     ->get();
 
+
+                     $get_vehicles = Vehicle::select('id','register_number')
+                    ->where('client_id',$client_id)
+                    ->get();
+                    // dd($get_vehicles->register_number);
             // dd($gps_data);
-            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles,'gps_data' => $gps_data]); 
+            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
         }        
     }
 

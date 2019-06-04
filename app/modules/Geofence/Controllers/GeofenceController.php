@@ -28,9 +28,16 @@ class GeofenceController extends Controller {
 				'fence_type_id' => 1
 			]);
 		}
-		return response()->json([
-            'status' => 1,
+// return response()->json([
+//     'redirect' => url('geofence')
+// ]);
+        // $request->session()->flash('message', 'New geofence created successfully!'); 
+        // $request->session()->flash('alert-class', 'alert-success'); 
+        // return redirect(route('geofence'));
+        return response()->json([
+            'status' => 'geofence',
             'title' => 'Success',
+            'redirect' => url('geofence'),
             'message' => 'Geofence added successfully'
         ]);
 	}
