@@ -1,11 +1,11 @@
 @extends('layouts.gps') 
 @section('title')
-    Create GPS
+    Create Device
 @endsection
 @section('content')
 
     <section class="content-header">
-        <h1>Create GPS</h1>
+        <h1>Create Device</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">

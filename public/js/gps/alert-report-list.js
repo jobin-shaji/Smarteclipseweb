@@ -10,17 +10,23 @@ function check(){
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
     }else{
-         var  data = {
-        client : $('meta[name = "client"]').attr('content'),
-        from_date : document.getElementById('fromDate').value,
-        to_date : document.getElementById('toDate').value
-    };
-      
+        var alert_id=$('#alert').val();
+         var client=$('meta[name = "client"]').attr('content');
+        var from_date = document.getElementById('fromDate').value;
+        var to_date = document.getElementById('toDate').value;
+        var data = { 'alertID':alert_id,'client':client, 'from_date':from_date , 'to_date':to_date};
         callBackDataTable(data);
+        //      var  data = {
+        //     client : $('meta[name = "client"]').attr('content'),
+        //     from_date : document.getElementById('fromDate').value,
+        //     to_date : document.getElementById('toDate').value,
+        // };      
+            // callBackDataTable(data);
     }
 }
-
-
+ $('#alert').on('change', function() {
+    check();
+ });
 
 function callBackDataTable(data=null){
      
@@ -51,6 +57,7 @@ function callBackDataTable(data=null){
             {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
             {data: 'location', name: 'location'},
             {data: 'device_time', name: 'device_time'},
+             {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         

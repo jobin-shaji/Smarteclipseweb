@@ -1,17 +1,17 @@
 <li class="treeview">
     <a href="#">
       <i class="fa fa-tablet"></i>
-      <span>GPS</span>
+      <span>Device</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/gps/create')}}"><i class="fa fa-plus"></i>Add GPS</a></li>
-      <li><a href="{{url('/gps')}}"><i class="fa fa-list"></i> List GPS</a></li>
-      <li><a href="{{url('/gps-transferred')}}"><i class="fa fa-list"></i>Transferred GPS List </a></li>
-      <li><a href="{{url('/gps-transfer/create')}}"><i class="fa fa-list"></i> GPS Transfer</a></li>
-      <li><a href="{{url('/gps-transfers')}}"><i class="fa fa-list"></i> GPS Transfer List</a></li>
+      <li><a href="{{url('/gps/create')}}"><i class="fa fa-plus"></i>Add Device</a></li>
+      <li><a href="{{url('/gps')}}"><i class="fa fa-list"></i> List Device</a></li>
+      <li><a href="{{url('/gps-transferred')}}"><i class="fa fa-list"></i>Transferred Device List </a></li>
+      <li><a href="{{url('/gps-transfer/create')}}"><i class="fa fa-list"></i> Device Transfer</a></li>
+      <li><a href="{{url('/gps-transfers')}}"><i class="fa fa-list"></i> Device Transfer List</a></li>
   </ul>
 </li>
 <li class="treeview">
