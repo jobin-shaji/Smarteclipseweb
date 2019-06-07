@@ -35,8 +35,8 @@
                               <th>Sl.No</th>
                               <th>Vehicle</th>
                               <th>Register Number</th>
-                              <th>Motion</th>
-                              <th>Sleep</th>
+                              <th>Run</th>
+                              <th>Idle</th>
                               <th>Halt</th>
                               <th>AC ON</th>
                               <th>AC OFF</th>

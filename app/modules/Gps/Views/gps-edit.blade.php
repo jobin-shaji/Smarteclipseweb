@@ -1,11 +1,11 @@
 @extends('layouts.gps') 
 @section('title')
-   Update gps details
+   Update device details
 @endsection
 @section('content')
 
     <section class="content-header">
-     <h1>Edit GPS</h1>
+     <h1>Edit Device</h1>
     </section>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-edit"> GPS details</i> 
+            <i class="fa fa-edit"> Device details</i> 
           </h2>
         </div>
         <!-- /.col -->
