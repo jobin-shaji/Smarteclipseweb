@@ -170,6 +170,27 @@ function getPolygonData(url, data, callBack, options) {
 
 
 
+function downloadAlertReport(){
+    
+    var url = 'alert-report/export';
+     var alert=$('#alert').val();
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'alert':alert,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content')
+        };
+        downloadFile(url,data);
+    }
+}
+
+
+
 
 
 

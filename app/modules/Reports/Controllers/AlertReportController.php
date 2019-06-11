@@ -3,23 +3,47 @@ namespace App\Modules\Reports\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
+use App\Modules\Alert\Models\AlertType;
+use App\Modules\Alert\Models\UserAlerts;
+use Illuminate\Support\Facades\Crypt;
+use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Geofence\Models\Geofence;
+use App\Modules\Gps\Models\GpsData;
 
 use DataTables;
 class AlertReportController extends Controller
 {
     public function alertReport()
     {
-        return view('Reports::alert-report');  
+        $client_id=\Auth::user()->client->id;
+        $user_alert = UserAlerts::select(
+            'alert_id'
+        )
+        ->where('client_id',$client_id)
+        ->where('status',1)
+        ->get();
+        $alert_id = [];
+        foreach($user_alert as $user_alert){
+            $alert_id[] = $user_alert->alert_id;
+        }
+        $AlertType=AlertType::select('id','code','description')
+        ->whereIn('id',$alert_id)
+        ->get();
+
+        return view('Reports::alert-report',['Alerts'=>$AlertType]);  
     }  
     public function alertReportList(Request $request)
     {
         $client= $request->client;
+         $alert_id= $request->alertID;
         
         $from = $request->from_date;
         $to = $request->to_date;
       
-       
-        $query =Alert::select(
+       if($alert_id==0)
+       {
+            $query =Alert::select(
             'id',
             'alert_type_id', 
             'device_time',    
@@ -34,11 +58,28 @@ class AlertReportController extends Controller
         ->with('vehicle:id,name,register_number')
         ->where('client_id',$client)
         ->where('status',1);
-
-        // ->with('tripsWithAmount');
+       }
+       else
+       {
+            $query =Alert::select(
+            'id',
+            'alert_type_id', 
+            'device_time',    
+            'vehicle_id',
+            'gps_id',
+            'client_id',  
+            'latitude',
+            'longitude', 
+            'status'
+        )
+        ->with('alertType:id,description')
+        ->with('vehicle:id,name,register_number')
+        ->where('client_id',$client)
+        ->where('alert_type_id',$alert_id)
+        ->where('status',1);
+       }        
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
-            // $query = $query->whereBetween('device_time',[$from,$to]);
         }
         $alert = $query->get();   
 
@@ -62,10 +103,29 @@ class AlertReportController extends Controller
             }
         
     }
-   
-           
-        })
+         })
+         ->addColumn('action', function ($alert) {              
+                    return "
+                    <a href=/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+                })
+            ->rawColumns(['link', 'action'])
         ->make();
+    }
+
+     public function location(Request $request){
+      $decrypted_id = Crypt::decrypt($request->id);
+      $get_alerts=Alert::find($decrypted_id);
+      $get_vehicle=Vehicle::find($decrypted_id);                   
+      return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts] );       
+    }
+     public function alertmap(Request $request){  
+       $alert_cord  =  Alert:: select(['latitude',
+            'longitude'])->where('id',$request->id)->first();  
+            return response()->json([
+                'alertmap' => $alert_cord,                
+                'status' => 'alerts'
+            ]);
+
     }
     // public function export(Request $request)
     // {
