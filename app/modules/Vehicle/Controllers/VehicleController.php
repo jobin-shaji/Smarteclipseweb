@@ -497,7 +497,7 @@ class VehicleController extends Controller {
             'date_to' => $request->date_to,
             'client_id' => $client_id,
             'status' =>1,
-           ]);
+        ]);
         $request->session()->flash('message', 'Vehicle Route scheduled successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
 
