@@ -2,7 +2,8 @@ $(document).ready(function () {
     callBackDataTable();
 });
 function callBackDataTable(){
-    var  data = {   
+    var  data = {
+        
     }; 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -12,7 +13,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'alert-types-list',
+            url: 'driver-list',
             type: 'POST',
             data: {
                 'data': data
@@ -25,32 +26,33 @@ function callBackDataTable(){
             if ( data['deleted_at'] ) {
                 $('td', row).css('background-color', 'rgb(243, 204, 204)');
             }
-        },
-       
+        },       
         fnDrawCallback: function (oSettings, json) {
-
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'code', name: 'code' },            
-            {data: 'description', name: 'description',searchable: false},
-            {data: 'image', name: 'image', orderable: false, searchable: false},                       
-            {data: 'action', name: 'action', orderable: false, searchable: false},           
-        ],        
+            
+            {data: 'name', name: 'name' },            
+            {data: 'address', name: 'address',searchable: false},           
+             {data: 'mobile', name: 'mobile'},             
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+           
+        ],
+        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
-function delAlertType(alert_type){
-    var url = 'alert-type/delete';
+function delDriver(driver){
+    var url = 'driver/delete';
     var data = {
-        uid : alert_type
+        uid : driver
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-function activateAlertType(alert_type){
-    var url = 'alert-type/activate';
+function activateDriver(driver){
+    var url = 'driver/activate';
     var data = {
-        id : alert_type
+        id : driver
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }

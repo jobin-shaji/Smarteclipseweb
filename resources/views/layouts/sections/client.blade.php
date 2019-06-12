@@ -25,6 +25,20 @@
       <li><a href="{{url('/vehicle')}}"><i class="fa fa-list"></i> List Vehicles</a></li>
   </ul>
 </li>
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-bus"></i>
+      <span>Driver</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+      <li><a href="/driver/create"><i class="fa fa-plus"></i>Add Driver</a></li>
+      <li><a href="{{url('/drivers')}}"><i class="fa fa-list"></i> List Driver</a></li>
+  </ul>
+</li>
+
 
 <li class="treeview">
     <a href="#">
@@ -92,6 +106,15 @@
       <li><a href="{{url('/alert-report')}}"><i class="fa fa-list"></i>Alert Report</a></li>
       <li><a href="{{url('/tracking-report')}}"><i class="fa fa-list"></i>Tracking Report</a></li>
       <li><a href="{{url('/route-deviation-report')}}"><i class="fa fa-list"></i>Route Deviation Report</a></li>
+
+      <li><a href="{{url('/harsh-braking-report')}}"><i class="fa fa-list"></i>Harsh Braking Report</a></li>
+      <li><a href="{{url('/sudden-acceleration-report')}}"><i class="fa fa-list"></i>Sudden Acceleration Report</a></li>
+      <li><a href="{{url('/total-km-report')}}"><i class="fa fa-list"></i>Total K.M Report</a></li>
+      <li><a href="{{url('/daily-km-report')}}"><i class="fa fa-list"></i>Daily K.M Report</a></li>
+      <li><a href="{{url('/over-speed-report')}}"><i class="fa fa-list"></i>Over Speed Report</a></li>
+      <li><a href="{{url('/zigzag-driving-report')}}"><i class="fa fa-list"></i>Zig-Zag Driving Report</a></li>
+      <li><a href="{{url('/accident-imapct-alert-report')}}"><i class="fa fa-list"></i>Accidents Impact Alerts  Report</a></li>
+      <li><a href="{{url('/terain-roads-condition-operation-temperature-report')}}"><i class="fa fa-list"></i>Terain/Roads Conditions & Operation Temperature Report</a></li>
   </ul>
 </li>
 

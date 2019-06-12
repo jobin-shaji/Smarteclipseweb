@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\AlertType;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use DataTables;
 
 class AlertController extends Controller {
@@ -79,9 +80,19 @@ class AlertController extends Controller {
     {
         $rules = $this->alert_rules();
         $this->validate($request, $rules);
+        $file=$request->path;
+        $getFileExt   = $file->getClientOriginalExtension();
+        $uploadedFile =   time().'.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'alerts';
+        $file->move($destinationPath,$uploadedFile);
+
+
+
         $alert_type = AlertType::create([
             'code' => $request->code,
-            'description' => $request->description,               
+            'description' => $request->description,  
+            'path' => $uploadedFile,             
             'status' => 1,               
         ]);
 
@@ -100,13 +111,18 @@ class AlertController extends Controller {
         $alert_type = AlertType::select(
             'id', 
             'code',                      
-            'description',        
+            'description',
+            'path',       
             'deleted_at'
         )
         ->withTrashed()        
         ->get();
         return DataTables::of($alert_type)
         ->addIndexColumn()
+        ->addColumn('image', function ($alert_type) {
+            return "
+           <img src='alerts/".$alert_type->path."' alt='Logo' style='height: 100px; width: 100px;' > ";          
+        })
         ->addColumn('action', function ($alert_type) {
             if($alert_type->deleted_at == null){ 
             return "
@@ -119,7 +135,7 @@ class AlertController extends Controller {
             <button onclick=activateAlertType(".$alert_type->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
-        ->rawColumns(['link', 'action'])
+        ->rawColumns(['link','image', 'action'])
         ->make();
     }
      //alert details view
@@ -148,7 +164,8 @@ class AlertController extends Controller {
          $alert_type = AlertType::select(
             'id', 
             'code',                      
-            'description',                                                       
+            'description',
+            'path',                                                       
             'deleted_at'
         )
         ->withTrashed()       
@@ -167,15 +184,25 @@ class AlertController extends Controller {
            return view('Alert::404');
         } 
         $rules = $this->alertUpdateRules($alert_type);
-        $this->validate($request, $rules);      
+        $this->validate($request, $rules);
+        $file=$request->path;
+        if($file!=null)
+        {
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;      
+            $destinationPath = 'alerts';
+            $file->move($destinationPath,$uploadedFile);
+            $alert_type->path = $uploadedFile;
+        }
         $alert_type->code = $request->code;
         $alert_type->description = $request->description;
-        $alert_type->save();
-      
+        $alert_type->save();      
         $did = encrypt($alert_type->id);
         $request->session()->flash('message', 'Alert Type updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('alert.types.edit',$did));  
+        return redirect(route('alert-types')); 
+       
+        // return redirect(route('alert.types.edit',$did));  
     }
      //delete alert details from table
     public function deleteAlertType(Request $request)
@@ -218,6 +245,7 @@ class AlertController extends Controller {
         $rules = [
             'code' => 'required|unique:alert_types',
             'description' => 'required',
+            'path' => 'required'
             
         ];
         return  $rules;
@@ -227,7 +255,7 @@ class AlertController extends Controller {
     {
         $rules = [
             'code' => 'required|unique:alert_types,code,'.$alert_type->id,
-            'description' => 'required'       
+            'description' => 'required'      
         ];
         return  $rules;
     }

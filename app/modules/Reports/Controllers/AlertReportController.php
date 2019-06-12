@@ -1,5 +1,10 @@
 <?php
 namespace App\Modules\Reports\Controllers;
+
+use App\Exports\AlertReportExport;
+use App\Exports\FormanyDriverReportExport;
+
+// alertReportExport
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
@@ -10,8 +15,10 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Gps\Models\GpsData;
-
+use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
+use Auth;
+
 class AlertReportController extends Controller
 {
     public function alertReport()
@@ -111,13 +118,16 @@ class AlertReportController extends Controller
             ->rawColumns(['link', 'action'])
         ->make();
     }
-
-     public function location(Request $request){
+    public function location(Request $request){
       $decrypted_id = Crypt::decrypt($request->id);
       $get_alerts=Alert::find($decrypted_id);
-      $get_vehicle=Vehicle::find($decrypted_id);                   
-      return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts] );       
+       $alert_icon  =  AlertType:: select(['description',
+            'path'])->where('id',$get_alerts->alert_type_id)->first();  
+      $get_vehicle=Vehicle::select(['register_number',
+            'vehicle_type_id'])->where('id',$get_alerts->vehicle_id)->first();                    
+      return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );       
     }
+
      public function alertmap(Request $request){  
        $alert_cord  =  Alert:: select(['latitude',
             'longitude'])->where('id',$request->id)->first();  
@@ -125,10 +135,14 @@ class AlertReportController extends Controller
                 'alertmap' => $alert_cord,                
                 'status' => 'alerts'
             ]);
-
     }
-    // public function export(Request $request)
-    // {
-    //     return Excel::download(new etmCollectionReportExport($request->id), 'etmCollection-report.xlsx');
-    // }
+    public function export(Request $request)
+    {    
+        return Excel::download(new AlertReportExport($request->id,$request->alert,$request->fromDate,$request->toDate), 'alert-report.xlsx');
+    }
+     public function formanydriverExport(Request $request)
+    {
+      return Excel::download(new FormanyDriverReportExport($request->id,$request->fromDate,$request->toDate), 'formany-driver-report.xlsx');
+    }
+
 }

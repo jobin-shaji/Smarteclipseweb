@@ -17,6 +17,9 @@
     <input type="hidden" name="hd_id" id="hd_id" value="{{$alert_id}}">
     <input type="hidden" name="lat" id="lat" value="{{$alertmap->latitude}}">
     <input type="hidden" name="lng" id="lng" value="{{$alertmap->longitude}}">
+    <input type="hidden" name="icon" id="icon" value="{{$alert_icon->path}}">
+    <input type="hidden" name="alert" id="alert" value="{{$alert_icon->description}}">
+    <input type="hidden" name="vehicle" id="vehicle" value="{{$get_vehicle->register_number}}">
      <div style="position: absolute;">
       <div id="map" style="position: "></div>
     </div>
