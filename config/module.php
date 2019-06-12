@@ -17,7 +17,8 @@ return  [
        'Geofence',
        'Reports',
        'UserAlert',
-       'Route'
+       'Route',
+       'Complaint'
 
     ]
 ]
