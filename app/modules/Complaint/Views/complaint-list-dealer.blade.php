@@ -27,9 +27,6 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
            <div class="panel-heading">Complaints  
-              <a href="{{route('complaint.create')}}">
-                <button class="btn btn-xs btn-primary pull-right">Add New Complaint</button>
-              </a>
             </div>
             <div class="table-responsive">
             <div class="panel-body">
@@ -37,13 +34,14 @@
                 <thead>
                   <tr>
                     <th>Sl.No</th>
-                    <th>Ticket Code</th>   
                     <th>GPS Name</th>                            
                     <th>IMEI</th>                              
                     <th>Complaint</th>                            
                     <th>Description</th>
                     <th>Date</th>
                     <th>Status</th>
+                    <th>Sub Dealer</th>
+                    <th>Client</th>
                   </tr>
                 </thead>
               </table>
@@ -54,7 +52,7 @@
     </div>
   </section>
 @section('script')
-    <script src="{{asset('js/gps/complaint-list.js')}}"></script>
+    <script src="{{asset('js/gps/complaint-list-dealer.js')}}"></script>
 @endsection
 @endsection
 

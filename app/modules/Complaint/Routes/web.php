@@ -3,6 +3,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 Route::get('/complaint/create','ComplaintController@create')->name('complaint.create');
 Route::post('/complaint/create','ComplaintController@save')->name('complaint.create.p');
+Route::post('/complaint/complaintType/','ComplaintController@findComplaintTypeWithCategory')->name('complaint.complaintType');
 
 });
 

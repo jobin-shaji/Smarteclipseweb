@@ -16,6 +16,7 @@ class CreateComplaintTypesTable extends Migration
         Schema::create('complaint_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('complaint_category')->comment = '0-hardware,1-software';
             $table->timestamps();
         });
     }

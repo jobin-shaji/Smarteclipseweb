@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Complaint\Models\Complaint;
 use App\Modules\Complaint\Models\ComplaintType;
+use App\Modules\Complaint\Models\ComplaintComment;
+use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -17,6 +20,10 @@ class ComplaintController extends Controller {
             return view('Complaint::complaint-list');
         }else if(\Auth::user()->hasRole('root')){
             return view('Complaint::complaint-list-root');
+        }else if(\Auth::user()->hasRole('dealer')){
+            return view('Complaint::complaint-list-dealer');
+        }else if(\Auth::user()->hasRole('sub_dealer')){
+            return view('Complaint::complaint-list-sub-dealer');
         }
     }
     
@@ -28,11 +35,13 @@ class ComplaintController extends Controller {
             $client_id=\Auth::user()->client->id;
             $complaints = Complaint::select(
                 'id', 
+                'ticket_code',
                 'gps_id',                      
                 'complaint_type_id',                   
-                'discription',                                        
+                'description',                                        
                 'created_at',
-                'status'
+                'status',
+                'response_by'
             )
             ->with('gps:id,name,imei')
             ->with('complaintType:id,name')
@@ -42,11 +51,13 @@ class ComplaintController extends Controller {
             ->addIndexColumn()
             ->addColumn('status', function ($complaints) {
                 if($complaints->status==0){
-                    return "Solved";
+                    $solved_user=$complaints->user->username;
+                    return "Resolved By ".$solved_user;
                 }else if($complaints->status==1){
                     return "Submitted";
                 }else{
-                    return "Rejected";
+                    $solved_user=$complaints->user->username;
+                    return "Accepted By ".$solved_user;
                 }
             })
             ->make();
@@ -98,6 +109,61 @@ class ComplaintController extends Controller {
             })
             ->rawColumns(['link', 'action'])
             ->make();
+        }else if(\Auth::user()->hasRole('dealer')){
+            $dealer_id=\Auth::user()->dealer->id;
+            $sub_dealers = SubDealer::select(
+                    'id'
+                    )
+                    ->where('dealer_id',$dealer_id)
+                    ->get();
+            $single_sub_dealers = [];
+            foreach($sub_dealers as $sub_dealer){
+                $single_sub_dealers[] = $sub_dealer->id;
+            }
+            $clients = Client::select(
+                    'id'
+                    )
+                    ->whereIn('sub_dealer_id',$single_sub_dealers)
+                    ->get();
+            $single_clients = [];
+            foreach($clients as $client){
+                $single_clients[] = $client->id;
+            }
+            $complaints = Complaint::select(
+                'id', 
+                'gps_id',                      
+                'complaint_type_id',                   
+                'discription',                                        
+                'created_at',
+                'status',
+                'client_id',
+                'solved_or_rejected_by'
+            )
+            ->whereIn('client_id',$single_clients)
+            ->with('client:id,name')
+            ->with('complaintType:id,name')
+            ->with('gps:id,name,imei')
+            ->get();
+
+        return DataTables::of($complaints)
+            ->addIndexColumn()
+            ->addColumn('status', function ($complaints) {
+                if($complaints->status==0){
+                    $solved_user=$complaints->user->username;
+                    return "Solved By ".$solved_user;
+                }else if($complaints->status==1){
+                    return "Received";
+                }else{
+                    $reject_user=$complaints->user->username;
+                    return "Rejected By ".$reject_user;
+                }
+            })
+            ->addColumn('sub_dealer',function($complaints){
+               $complaint = Complaint::find($complaints->id);
+               return $complaint->client->subDealer->name;
+                
+            })
+            ->make();
         }
     }
 
@@ -106,12 +172,15 @@ class ComplaintController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         $client_user_id=\Auth::user()->id;
+        $last_id=Complaint::max('id');
+        $ticket_code_id=$last_id+1;
+        $ticket_code='C'.'0'.'0'.$ticket_code_id;
         $devices=Gps::select('id','name','imei')
                 ->where('user_id',$client_user_id)
                 ->get();
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
-        return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type]);
+        return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type,'ticket_code'=>$ticket_code]);
     }
 
     //upload complaints to database table
@@ -121,12 +190,20 @@ class ComplaintController extends Controller {
         $rules = $this->complaint_create_rules();
         $this->validate($request, $rules);
         $complaint = Complaint::create([
+            'ticket_code' => $request->ticket_code,
             'gps_id' => $request->gps_id,
             'complaint_type_id' => $request->complaint_type_id,
-            'discription' => $request->discription,
+            'description' => $request->description,
             'client_id' => $client_id,
             'status' => 1
         ]);
+        if($complaint){
+            $complaint_comment = ComplaintComment::create([
+                'complaint_id' => $complaint->id,
+                'ticket_code' => $request->ticket_code,
+                'comment' => "Complaint registered"
+            ]);
+        }
         $request->session()->flash('message', 'New Complaint registered successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('complaint')); 
@@ -176,13 +253,27 @@ class ComplaintController extends Controller {
         ]);
     }
 
+    //for dependent dropdown 
+    public function findComplaintTypeWithCategory(Request $request)
+    {   
+        $categoryID=$request->categoryID;
+        $complaint_type = ComplaintType::select(
+                'id', 
+                'name'
+            )
+            ->where('complaint_category',$categoryID)
+            ->get();
+        return response()->json($complaint_type);
+    }
+
     //validation for complaint creation
     public function complaint_create_rules()
     {
         $rules = [
+            'ticket_code' => 'required',
             'gps_id' => 'required',       
             'complaint_type_id' => 'required',
-            'discription' => 'nullable'
+            'description' => 'nullable'
         ];
         return  $rules;
     }
