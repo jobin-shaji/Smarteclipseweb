@@ -42,7 +42,7 @@
   </ul>
 </li>
 
-<li class="treeview">
+<!-- <li class="treeview">
     <a href="#">
       <i class="fa fa-file-text"></i>
       <span>Complaints</span>
@@ -51,10 +51,9 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/complaint/create')}}"><i class="fa fa-plus"></i>Add Complaint</a></li>
       <li><a href="{{url('/complaint')}}"><i class="fa fa-list"></i> List Complaints</a></li>
   </ul>
-</li>
+</li> -->
 
 
 

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Complaint extends Model
 {
-    protected $fillable=[
-		'gps_id','complaint_type_id','discription','client_id','status'
+  protected $fillable=[
+		'ticket_code','gps_id','complaint_type_id','description','client_id','status'
 	];
 
 	public function gps()
@@ -27,6 +27,6 @@ class Complaint extends Model
 
     // user
     public function user(){
-        return $this->hasOne('App\Modules\User\Models\User','id','solved_or_rejected_by');
+        return $this->hasOne('App\Modules\User\Models\User','id','response_by');
     }
 }
