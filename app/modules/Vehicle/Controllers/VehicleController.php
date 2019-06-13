@@ -177,7 +177,6 @@ class VehicleController extends Controller {
         }
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
-
         $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->save();
 
@@ -186,7 +185,6 @@ class VehicleController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle.edit',$encrypted_vehicle_id));  
     }
-
     // details page
     public function details(Request $request)
     {

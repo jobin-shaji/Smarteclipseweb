@@ -23,7 +23,7 @@
         </div>
         <!-- /.col -->
       </div>
-     <form  method="POST" action="{{route('alert.type.create.p')}}">
+     <form  method="POST" action="{{route('alert.type.create.p')}}" enctype="multipart/form-data">
         {{csrf_field()}}
       <div class="row">
           <div class="col-md-6">
@@ -46,6 +46,17 @@
                  <span class="help-block">
                     <strong class="error-text">{{ $errors->first('description') }}</strong>
                  </span>
+              @endif
+                 <div class="form-group has-feedback">
+                <label class="srequired">Upload Icon
+                </label>
+                <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" > 
+                <span class="glyphicon glyphicon-car form-control-feedback"></span>
+              </div>
+              @if ($errors->has('path'))
+                <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('path') }}</strong>
+                </span>
               @endif
              
             </div>
