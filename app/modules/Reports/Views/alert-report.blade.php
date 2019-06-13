@@ -27,8 +27,8 @@
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
                   <button class="btn btn-xs btn-info" onclick="refresh()"> 
                     <i class="fa fa-filter"></i> Refresh </button>
-                 <button class="btn btn-xs btn-primary pull-right" onclick="downloadAlertReport()">
-                <i class="fa fa-file"></i> Download Excel</button>
+               <!--   <button class="btn btn-xs btn-primary pull-right" onclick="downloadAlertReport()">
+                <i class="fa fa-file"></i> Download Excel</button> -->
               </div>
 
                 <div class="table-responsive">

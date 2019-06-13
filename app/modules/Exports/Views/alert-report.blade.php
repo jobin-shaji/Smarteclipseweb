@@ -8,5 +8,15 @@
         <th>DateTime</th>
     </tr>
     </thead>
-    
+     <tbody>
+    @foreach($alertReportExport as $alertReportExport)
+        <tr>           
+            <td>{{ $loop->iteration }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>            
+        </tr>
+    @endforeach
+    </tbody>
 </table>

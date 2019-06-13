@@ -8,7 +8,7 @@ use App\Modules\Alert\Models\Alert;
 class AlertReportExport implements FromView
 {
 	protected $alertReportExport;
-	public function __construct($client,$alert,$from,$to)
+	public function __construct($client,$from,$to)
     {      
         // if($alert==0)
         // {
@@ -50,7 +50,9 @@ class AlertReportExport implements FromView
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
-         $this->alertReportExport = $query->get();   
+
+         $this->alertReportExport = $query->get(); 
+         // dd($this->alertReportExport);  
     }
     public function view(): View
 	{
