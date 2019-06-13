@@ -173,7 +173,17 @@ function getPolygonData(url, data, callBack, options) {
 function downloadAlertReport(){
     
     var url = 'alert-report/export';
-     var alert=$('#alert').val();
+    
+    var  alerts=$('#alert').val();
+     if(alerts==null)
+     {
+       var alert=0;
+     }
+     else
+     {
+       var alert=alerts;
+     }
+     // console.log(alert);
     var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
     if(fromDate){
@@ -183,13 +193,30 @@ function downloadAlertReport(){
         downloadFile(url,data);
     }else{
         var data = {
-        id : $('meta[name = "client"]').attr('content')
+        id : $('meta[name = "client"]').attr('content'),'alert':alert
         };
         downloadFile(url,data);
     }
 }
 
 
+function downloadformanyDriver(){
+    
+    var url = 'formany-driver-report/export';  
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content')
+        };
+        downloadFile(url,data);
+    }
+}
 
 
 

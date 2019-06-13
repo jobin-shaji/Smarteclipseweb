@@ -7,6 +7,6 @@ class AlertType extends Model
 {
     use SoftDeletes;    
 	protected $fillable=[
-		'code','description','status','deleted_at'
+		'code','description','status','path','deleted_at'
 	];
 }

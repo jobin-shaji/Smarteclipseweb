@@ -11,7 +11,6 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/alert-type/delete','AlertController@deleteAlertType')->name('alert.type.delete');
 	Route::post('/alert-type/activate','AlertController@activateAlertType')->name('alert.type.activate');
 
-
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {

@@ -38,7 +38,8 @@
                             <tr>
                               <th>Sl.No</th>
                               <th>Code</th>                            
-                              <th>Description</th>                              
+                              <th>Description</th>
+                              <th>Icon</th>                              
                              <th style="width:160px;">Action</th>
                             </tr>
                         </thead>

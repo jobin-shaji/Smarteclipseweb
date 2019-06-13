@@ -25,7 +25,7 @@
         </div>
         <!-- /.col -->
       </div>
-    <form  method="POST" action="{{route('alert.types.update.p',$alert_type->id)}}">
+    <form  method="POST" action="{{route('alert.types.update.p',$alert_type->id)}}" enctype="multipart/form-data">
         {{csrf_field()}}
       <div class="row">
         <div class="col-md-6">          
@@ -49,6 +49,19 @@
           <strong class="error-text">{{ $errors->first('description') }}</strong>
           </span>
         @endif
+        <div class="form-group has-feedback">
+          <label class="srequired">Upload Icon
+          </label>
+          <input type="file" class="form-control" placeholder="Choose File" name="path" value="{{$alert_type->path}}" > 
+          <span class="glyphicon glyphicon-car form-control-feedback"></span>
+        </div>
+        @if ($errors->has('path'))
+          <span class="help-block">
+            <strong class="error-text">{{ $errors->first('path') }}</strong>
+          </span>
+        @endif
+
+
          @endforeach
           <div class="col-md-3 ">
           <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
