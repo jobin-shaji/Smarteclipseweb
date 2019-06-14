@@ -1157,19 +1157,7 @@ class VehicleController extends Controller {
             );
         }
 
-    // $playBackPolyLine=$this->playBackForLine($request->id,$request->from_time,$request->to_time);         
-    // $MarkData=$this->playBackForMark_Route($request->id,$request->from_time,$request->to_time);
-    // $reponseData =array(
-    //     "playbackpolyline"=>$playBackPolyLine,
-    //     "markerdata"=>$MarkData,
-    //     "playData"=>$MarkData
-    // );
-    // $response_data = array('status'  => 'success',
-    //     'message' => 'success',
-    //     'code'    =>1,                               
-    //     'polylineData' => $reponseData
-    // );
-   // dd($response_data['liveData']['ign']);
+    
     return response()->json($response_data); 
 }
 
@@ -1192,14 +1180,18 @@ public function hmapLocationPlayback(Request $request){
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
         ->where('vehicle_id',$request->id)                
-        ->get();    
+        ->get();
+
         $playback=array();
         $playback_point= array();
         $playback_round=array();
         $playbackData=array();
-        $length=0;$counts=0;$count=0;
+        $length=0;
+        $counts=0;
+        $count=0;
         if($gpsdata){
             $length=$gpsdata->count();
+
             // dd($length);
             if($length!=0)
             {
@@ -1210,25 +1202,12 @@ public function hmapLocationPlayback(Request $request){
                     $counts=$length;
                 }
             }
-            // dd($counts);
-               
-            if($counts!=0)
-            {
-              
-                $count=$length/$counts;
-            }
-            else{
-                    $count=$counts;
-            }  
-                   
-            //$counts=$length/150;
           
-            // $count=$length/$counts;
-
-            // $count=$length/$counts;
-            $round_value=round($count);            
+            $round_value=round($counts);            
             $startLat=(float)$gpsdata[0]->lat;
             $startLng=(float)$gpsdata[0]->lng;
+            
+
             for($i=0;$i<$round_value; $i++)
             {
                 $playback_round[]=$gpsdata[$i];
@@ -1248,6 +1227,8 @@ public function hmapLocationPlayback(Request $request){
                 $startLat=(float)$data->lat;
                 $startLng=(float)$data->lng; 
             }
+
+           
             $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',
@@ -1262,6 +1243,8 @@ public function hmapLocationPlayback(Request $request){
                 'code'    =>0
             );
         }    
+
+
     return response()->json($response_data); 
 }
 public function playBackForLine($vehicleID,$fromDate,$toDate){

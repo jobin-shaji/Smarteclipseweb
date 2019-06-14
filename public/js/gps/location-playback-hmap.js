@@ -52,6 +52,7 @@ function getUrl() {
         var id = document.getElementById('vehicle_id').value;
         var from_time = document.getElementById('fromDate').value;
         var to_time = document.getElementById('toDate').value;
+        
         var data = {
             id: id,
             from_time: from_time,
@@ -113,7 +114,7 @@ function playBack(res){
 
          // var data=[{"lat":22.548545935598,"lng":88.280163708638},{"lat":22.5464236,"lng":88.2853837},{"lat":22.5428214,"lng":88.286547},{"lat":22.5410671,"lng":88.2887521},{"lat":22.539522,"lng":88.2903415},{"lat":22.51498,"lng":88.3104746},{"lat":22.5116714,"lng":88.3257219},{"lat":22.5035291,"lng":88.3407005},{"lat":22.5013464,"lng":88.346573},{"lat":22.5010609,"lng":88.3687496},{"lat":22.549975499646,"lng":88.278846582115},{"lat":22.5512341,"lng":88.2790673}];
          var data=locationData;
-         console.log(data);
+        
             $.each(data, function(i, item) {
                 pointname='waypoint'+i;
                 routingParameters[pointname]=''+item.lat+','+item.lng+'';
@@ -122,8 +123,7 @@ function playBack(res){
                routingParameters = routingParameters;
                routingParameters.mode='fastest;car';
                routingParameters.representation= 'display';
-               console.log(routingParameters);
-              routeDraw(routingParameters);
+                   routeDraw(routingParameters);
 
       }); // end of doc ready
 }
@@ -134,6 +134,7 @@ function routeDraw(routingParameters){
 
 // Define a callback function to process the routing response:
 var onResult = function(result) {
+  // console.log(result);
  var route,
     routeShape,
     startPoint,
