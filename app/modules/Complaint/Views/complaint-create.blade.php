@@ -28,6 +28,11 @@
       <div class="row">
           <div class="col-md-6">
               <div class="form-group has-feedback">
+                <label class="srequired">Ticket Code</label>
+                <input type="text" class="form-control" name="ticket_code" value="{{ $ticket_code}}" readonly> 
+              </div>
+
+              <div class="form-group has-feedback">
                 <label class="srequired">GPS</label>
                 <select class="form-control selectpicker" name="gps_id" data-live-search="true" title="Select GPS" required>
                   @foreach($devices as $gps)
@@ -43,27 +48,27 @@
               @endif 
 
               <div class="form-group has-feedback">
-                <label class="srequired">Complaint</label>
-                <select class="form-control {{ $errors->has('complaint_type_id') ? ' has-error' : '' }}" placeholder="Complaint" name="complaint_type_id" value="{{ old('complaint_type_id') }}" required>
-                  <option value="" selected disabled>Select Complaint</option>
-                  @foreach($complaint_type as $type)
-                  <option value="{{$type->id}}">{{$type->name}}</option>
-                  @endforeach
+                <label class="srequired">Complaint Category</label>
+                <select class="form-control" name="complaint_category" id="complaint_category" required>
+                <option value="">Select Complaint Category</option>
+                  <option value="0">Hardware</option>
+                  <option value="1">Software</option>
                 </select>
               </div>
-              @if ($errors->has('complaint_type_id'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('complaint_type_id') }}</strong>
-                </span>
-              @endif
+              
+              <div class="form-group has-feedback">
+                <label class="srequired">Complaint</label>
+                <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
+                </select>
+              </div>
 
               <div class="form-group has-feedback">
-                    <label>Discription</label>
-                    <input type="text" class="form-control {{ $errors->has('discription') ? ' has-error' : '' }}" placeholder="Discription" name="discription" value="{{ old('discription') }}">
+                    <label>Description</label>
+                    <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}">
               </div>
-              @if ($errors->has('discription'))
+              @if ($errors->has('description'))
                  <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('discription') }}</strong>
+                    <strong class="error-text">{{ $errors->first('description') }}</strong>
                  </span>
               @endif
             </div>
@@ -77,5 +82,8 @@
           </div>
     </form>
 </section>
+@section('script')
+    <script src="{{asset('js/gps/complaint-dependent-dropdown.js')}}"></script>
+@endsection
 <div class="clearfix"></div>
 @endsection

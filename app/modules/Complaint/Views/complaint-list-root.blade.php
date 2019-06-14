@@ -37,7 +37,7 @@
                     <th>GPS Name</th>                            
                     <th>IMEI</th>                              
                     <th>Complaint</th>                            
-                    <th>Discription</th>
+                    <th>Description</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Dealer</th>

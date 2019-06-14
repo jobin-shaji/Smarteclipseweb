@@ -31,19 +31,20 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'ticket_code', name: 'ticket_code'},
             {data: 'gps.name', name: 'gps.name'},
             {data: 'gps.imei', name: 'gps.imei'},
             {data: 'complaint_type.name', name: 'complaint_type.name'},
-            {data: 'description', name: 'description'},
+            {data: 'discription', name: 'discription'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'status', name: 'status'},         
+            {data: 'status', name: 'status'},   
+            {data: 'sub_dealer', name: 'sub_dealer'},
+            {data: 'client.name', name: 'client.name'},   
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-
 }
+
 
 
 
