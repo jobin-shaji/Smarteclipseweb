@@ -31,12 +31,13 @@
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                            <tr>
+                             <tr>
                               <th>Sl.No</th>
-                              <th>Vehicle Name</th>
-                              <th>Register Number</th>
-                              <th></th>
-                              <th>Time</th>      
+                              <th>Vehicle</th>
+                              <th>Alert Type</th>
+                              <th>Location</th>
+                              <th>DateTime</th>
+                              <th>Action</th>        
                             </tr>
                         </thead>
                     </table>
