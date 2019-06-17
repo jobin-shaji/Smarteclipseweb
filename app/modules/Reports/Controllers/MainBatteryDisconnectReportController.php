@@ -6,19 +6,21 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
-class SuddenAccelerationReportController extends Controller
+class MainBatteryDisconnectReportController extends Controller
 {
-    public function suddenAccelerationReport()
+    public function mainBatteryDisconnectReport()
     {
-        return view('Reports::sudden-acceleration-report');  
-    }  
-     public function suddenAccelerationReportList(Request $request)
+        return view('Reports::main-battery-disconnect-report');  
+    } 
+    public function mainBatteryDisconnectReportList(Request $request)
     {
         $client= $request->client;
-         // $alert_id= $request->alertID;        
+         // $alert_id= $request->alertID;
+        
         $from = $request->from_date;
         $to = $request->to_date;
-            
+      
+       
             $query =Alert::select(
             'id',
             'alert_type_id', 
@@ -33,8 +35,9 @@ class SuddenAccelerationReportController extends Controller
         ->with('alertType:id,description')
         ->with('vehicle:id,name,register_number')
         ->where('client_id',$client)
-        ->where('alert_type_id',2)
-        ->where('status',1);           
+        ->where('alert_type_id',11)
+        ->where('status',1);
+           
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
@@ -68,6 +71,5 @@ class SuddenAccelerationReportController extends Controller
             ->rawColumns(['link', 'action'])
         ->make();
     } 
-   
    
 }

@@ -22,7 +22,7 @@
                   <label> to date</label>
                   <input type="date" id="toDate" name="toDate">
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
-                  <button class="btn btn-xs btn-info" onclick="refresh()"> <i class="fa fa-filter"></i> Refresh </button>
+                
                  <button class="btn btn-xs btn-primary pull-right">
                 <i class="fa fa-file"></i> Download Excel</button>
               </div>
@@ -31,12 +31,13 @@
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                            <tr>
+                             <tr>
                               <th>Sl.No</th>
-                              <th>Vehicle Name</th>
-                              <th>Register Number</th>
-                              <th></th>
-                              <th>Time</th>      
+                              <th>Vehicle</th>
+                              <th>Alert Type</th>
+                              <th>Location</th>
+                              <th>DateTime</th>
+                              <th>Action</th>        
                             </tr>
                         </thead>
                     </table>
@@ -46,8 +47,8 @@
         </div>
     </div>
 </section>
-<!-- @section('script')
-    <script src="{{asset('js/gps/geofence-report-list.js')}}"></script>
-@endsection -->
+@section('script')
+    <script src="{{asset('js/gps/sudden-acceleration-list.js')}}"></script>
+@endsection
 @endsection
 
