@@ -15,9 +15,18 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
 
-	Route::get('/alerts','AlertController@alerts')->name('alerts');
+	Route::get('/alerts','AlertController@alertsView')->name('alerts');
 	Route::post('/alert-list','AlertController@alertsList')->name('alert-list');
 	Route::post('/alert/verify','AlertController@verifyAlert')->name('alert.verify');
 
+	Route::get('/packet','AlertController@packet')->name('packet');
+	Route::post('/packet/create','AlertController@save')->name('packet.create.p');
+
 });
 
+Route::group(['namespace' => 'App\Modules\Alert\Controllers' ] , function() {
+		Route::get('/packet','AlertController@packet')->name('packet');
+	Route::post('/packet/create','AlertController@save')->name('packet.create.p');
+	
+	
+});

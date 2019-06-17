@@ -71,7 +71,7 @@ function initMap(res) {
   
   
     var title ='<div id="content" style="width:150px;">' +
-    '<div style="background-color:#0C2161; color:#fff;font-weight:600"><spna style="padding:30px ;">Alert Map</span></div>'+  
+    '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">Alert Map</span></div>'+  
     '<div style="padding-top:5px;"><i class="fa fa-car"></i> '+vehicle+'</div>'+ 
     '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> '+description+'</div>'+ 
     '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> '+locationName+'</div>'+ 

@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\AlertType;
 use Illuminate\Support\Facades\Crypt;
+use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsData;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 
@@ -16,6 +18,7 @@ class AlertController extends Controller {
     //Display all alerts
 	public function alerts()
     {
+        
 		return view('Alert::alert-list');
 	}
 
@@ -69,6 +72,9 @@ class AlertController extends Controller {
             'message' => 'Alert verified successfully'
         ]);
      }
+
+
+    
 
      //alert creation page
     public function create()
@@ -239,6 +245,17 @@ class AlertController extends Controller {
             'title' => 'Success',
             'message' => 'Dealer restored successfully'
         ]);
+    }//
+
+
+
+       //Display all alerts
+    public function packet()
+    {
+        $devices=Gps::select('id','name','imei')                
+                ->get();
+       
+        return view('Alert::packet-list',['devices'=>$devices]);
     }
      //alert create rules 
     public function alert_rules(){

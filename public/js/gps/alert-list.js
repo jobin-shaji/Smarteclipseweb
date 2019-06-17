@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'alert-list',
+            url: '/alert-list',
             type: 'POST',
             data: {
                 'data': data
