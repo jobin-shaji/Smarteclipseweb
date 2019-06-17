@@ -49,7 +49,7 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/alerts')}}"><i class="fa fa-list"></i> List Alerts</a></li>
+      <li><a href="{{url('/alert')}}"><i class="fa fa-list"></i> List Alerts</a></li>
   </ul>
 </li>
 <li class="treeview">
