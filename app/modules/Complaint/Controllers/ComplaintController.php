@@ -13,6 +13,68 @@ use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class ComplaintController extends Controller {
 
+////////////////////////////COMPLAINT TYPE/////////////////////////////////////////////
+    //Display complaints details 
+    public function complaintTypeListPage()
+    {
+        return view('Complaint::complaint-type-list');
+    }
+
+    //returns complaints as json 
+    public function getComplaintTypes()
+    {
+        $complaint_type = ComplaintType::select(
+            'id', 
+            'name',
+            'complaint_category',
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->get();
+        return DataTables::of($complaint_type)
+        ->addIndexColumn()
+        ->addColumn('complaint_category', function ($complaint_type) {
+            if($complaint_type->complaint_category==0){
+                return "Hardware";
+            }else{
+                return "Software";
+            }
+        })
+        ->addColumn('action', function ($complaint_type) {
+            if($complaint_type->deleted_at == null){ 
+                return "
+                <button onclick=delComplaintType(".$complaint_type->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+            }else{                   
+                return "
+                <button onclick=activateComplaintType(".$complaint_type->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+    //complaint creation page
+    public function createComplaintType()
+    {
+        return view('Complaint::complaint-type-create');
+    }
+
+    //upload complaints to database table
+    public function saveComplaintType(Request $request)
+    {
+        $rules = $this->complaint_type_create_rules();
+        $this->validate($request, $rules);
+        $complaint_type = ComplaintType::create([
+            'name' => $request->name,
+            'complaint_category' => $request->complaint_category
+        ]);
+        
+        $request->session()->flash('message', 'New Complaint type created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('complaint-type')); 
+    }
+///////////////////////////////////////////////////////////////////////////////////////
+
     //Display complaints details 
     public function complaintListPage()
     {
@@ -264,6 +326,15 @@ class ComplaintController extends Controller {
             ->where('complaint_category',$categoryID)
             ->get();
         return response()->json($complaint_type);
+    }
+
+    public function complaint_type_create_rules()
+    {
+        $rules = [
+            'name' => 'required',  
+            'complaint_category' => 'required'
+        ];
+        return  $rules;
     }
 
     //validation for complaint creation

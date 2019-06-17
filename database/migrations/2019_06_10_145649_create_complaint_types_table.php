@@ -18,6 +18,7 @@ class CreateComplaintTypesTable extends Migration
             $table->string('name');
             $table->integer('complaint_category')->comment = '0-hardware,1-software';
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
