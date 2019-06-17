@@ -3,15 +3,13 @@
 @section('content')
 <section class="content-header">
       <h1>
-        Over Speed Report
+        Main Battery Disconnect Report
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Over Speed Report</li>
+        <li class="active">Main Battery Disconnect Report</li>
       </ol>
 </section>
-
-
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -22,7 +20,7 @@
                   <label> to date</label>
                   <input type="date" id="toDate" name="toDate">
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
-                  <button class="btn btn-xs btn-info" onclick="refresh()"> <i class="fa fa-filter"></i> Refresh </button>
+                
                  <button class="btn btn-xs btn-primary pull-right">
                 <i class="fa fa-file"></i> Download Excel</button>
               </div>
@@ -31,13 +29,13 @@
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                            <tr>
-                             <th>Sl.No</th>
+                             <tr>
+                              <th>Sl.No</th>
                               <th>Vehicle</th>
                               <th>Alert Type</th>
                               <th>Location</th>
                               <th>DateTime</th>
-                              <th>Action</th>       
+                              <th>Action</th>        
                             </tr>
                         </thead>
                     </table>
@@ -48,7 +46,7 @@
     </div>
 </section>
 @section('script')
-    <script src="{{asset('js/gps/over-speed-report-list.js')}}"></script>
+    <script src="{{asset('js/gps/main-battery-report-list.js')}}"></script>
 @endsection
 @endsection
 
