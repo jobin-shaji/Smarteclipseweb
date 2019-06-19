@@ -1,9 +1,11 @@
 $(document).ready(function () {
     callBackDataTable();
 });
-
 function check(){
-    if(document.getElementById('fromDate').value == ''){
+    if(document.getElementById('vehicle').value == ''){
+        alert('please select vehicle');
+    }
+    else if(document.getElementById('fromDate').value == ''){
         alert('please enter from date');
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
@@ -15,7 +17,8 @@ function check(){
 function callBackDataTable(){
     var  data = {
           from_date : document.getElementById('fromDate').value,
-          to_date : document.getElementById('toDate').value
+          to_date : document.getElementById('toDate').value,
+          vehicle : document.getElementById('vehicle').value,
     }; 
 
 

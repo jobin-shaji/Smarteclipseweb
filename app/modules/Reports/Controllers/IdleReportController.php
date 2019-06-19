@@ -14,7 +14,7 @@ class IdleReportController extends Controller
     } 
     public function idleReportList(Request $request)
     {
-        $client= $request->client;
+        $client_id= $request->client;
          // $alert_id= $request->alertID;
         
         $from = $request->from_date;
@@ -76,10 +76,11 @@ class IdleReportController extends Controller
             'key3',
             'value3',
             'gf_id',
-            'device_time',
-            \DB::raw('sum(distance) as distance')
+            'device_time'
+            // \DB::raw('sum(distance) as distance')
         )
         ->with('vehicle:id,name,register_number')
+        ->where('vehicle_mode','H')        
         ->where('client_id',$client_id)
         ->groupBy('date');
            

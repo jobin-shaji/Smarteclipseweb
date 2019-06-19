@@ -1,23 +1,28 @@
 $(document).ready(function () {
-    callBackDataTable();
+    // callBackDataTable();
 });
 
 function check(){
-    if(document.getElementById('fromDate').value == ''){
+     if(document.getElementById('vehicle').value == ''){
+        alert('please select Vehicle');
+    }
+    else if(document.getElementById('fromDate').value == ''){
         alert('please enter from date');
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
     }else{
-        callBackDataTable();
+         var client=$('meta[name = "client"]').attr('content');
+        var from_date = document.getElementById('fromDate').value;
+        var to_date = document.getElementById('toDate').value;
+        var vehicle = document.getElementById('vehicle').value;
+        var data = {'client':client,'vehicle':vehicle, 'from_date':from_date , 'to_date':to_date};
+        callBackDataTable(data);
+       
     }
 }
 
-function callBackDataTable(){
-    var  data = {
-          from_date : document.getElementById('fromDate').value,
-          to_date : document.getElementById('toDate').value
-    }; 
-
+function callBackDataTable(data=null){
+    
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -29,9 +34,7 @@ function callBackDataTable(){
         ajax: {
             url: 'geofence-report-list',
             type: 'POST',
-            data: {
-                'data': data
-            },
+            data:data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

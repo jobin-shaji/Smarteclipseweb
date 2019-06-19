@@ -1,30 +1,19 @@
 <?php
-namespace App\Modules\Reports\Controllers;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
+namespace App\Exports;
+
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
+use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
-use DataTables;
-class DailyKMReportController extends Controller
+class TrackReportExport implements FromView
 {
-    public function dailyKMReport()
-    {
-    	$client_id=\Auth::user()->client->id;
-    	 $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->get();
-        return view('Reports::daily-km-report',['vehicles'=>$vehicles]);  
-    }  
-    public function dailyKMReportList(Request $request)
-    {
-        $client_id=\Auth::user()->client->id;
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date'];
-        $vehicle = $request->data['vehicle'];
+	protected $trackReportExport;
+	public function __construct($client,$vehicle,$from,$to)
+    {  
 
-       
-       
-        $query =GpsData::select(
+      $query =GpsData::select(
             'client_id',
             'gps_id',
             'vehicle_id',
@@ -79,25 +68,35 @@ class DailyKMReportController extends Controller
             'key3',
             'value3',
             'gf_id',
-            // 'device_time',
-            \DB::raw('DATE(device_time) as date'),
+            'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number')
-         ->where('client_id',$client_id)
-        ->where('vehicle_id',$vehicle)
-        ->groupBy('date');        
+        ->with('vehicle:id,name,register_number');     
+        if($vehicle==0)
+       {         
+            $query = $query->where('client_id',$client)
+            ->groupBy('date');
+       }
+       else
+       {
+        $query = $query->where('client_id',$client)
+            ->where('vehicle_id',$vehicle)
+            ->groupBy('date'); 
+       }      
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
-        $track_report = $query->get();     
-        return DataTables::of($track_report)
-        ->addIndexColumn()        
-        // ->addColumn('km', function ($track_report) {                    
-        //     $km='-';
-        //     return $km;
-        // })
-        ->make();
+
+         $this->trackReportExport = $query->get(); 
+         // dd($this->trackReportExport);
+         // dd($this->alertReportExport);  
     }
-   
+    public function view(): View
+	{
+       return view('Exports::track-report', [
+            'trackReportExport' => $this->trackReportExport
+        ]);
+	}
+    
 }
+

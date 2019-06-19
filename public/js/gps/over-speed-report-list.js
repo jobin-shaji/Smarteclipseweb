@@ -10,27 +10,17 @@ function check(){
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
     }else{
-        // var alert_id=$('#alert').val();
-         var client=$('meta[name = "client"]').attr('content');
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
-        var data = {'client':client, 'from_date':from_date , 'to_date':to_date};
-        callBackDataTable(data);
-        //      var  data = {
-        //     client : $('meta[name = "client"]').attr('content'),
-        //     from_date : document.getElementById('fromDate').value,
-        //     to_date : document.getElementById('toDate').value,
-        // };      
-            // callBackDataTable(data);
+        callBackDataTable();
     }
 }
- $('#alert').on('change', function() {
-    check();
- });
 
 function callBackDataTable(data=null){
-     
-
+      var  data = {
+        client: $('meta[name = "client"]').attr('content'),
+        from_date : document.getElementById('fromDate').value,
+        to_date : document.getElementById('toDate').value,
+        vehicle : document.getElementById('vehicle').value,
+    }; 
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -41,7 +31,9 @@ function callBackDataTable(data=null){
         ajax: {
             url: 'over-speed-report-list',
             type: 'POST',
-            data:data,
+            data: {
+                'data': data
+            },
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

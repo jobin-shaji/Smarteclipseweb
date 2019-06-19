@@ -34,10 +34,14 @@
                              <tr>
                               <th>Sl.No</th>
                               <th>Vehicle</th>
-                              <th>Alert Type</th>
-                              <th>Location</th>
-                              <th>DateTime</th>
-                              <th>Action</th>        
+                              <th>Register Number</th>
+                              <th>Run</th>
+                              <th>Idle</th>
+                              <th>Halt</th>
+                              <th>AC ON</th>
+                              <th>AC OFF</th>
+                              <th>Total KM</th>
+                              <th>Date&Time</th>              
                             </tr>
                         </thead>
                     </table>
