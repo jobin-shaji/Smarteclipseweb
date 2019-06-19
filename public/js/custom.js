@@ -173,46 +173,58 @@ function getPolygonData(url, data, callBack, options) {
 function downloadAlertReport(){
     
     var url = 'alert-report/export';
-    
+    var  vehicles=$('#vehicle').val();
     var  alerts=$('#alert').val();
-     if(alerts==null)
+     if(alerts==null || vehicles==null)
      {
        var alert=0;
+       var vehicle=0;
      }
      else
      {
        var alert=alerts;
+       var vehicle=vehicles;
      }
      // console.log(alert);
     var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
     if(fromDate){
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'alert':alert,'fromDate':fromDate,'toDate':toDate
+        id : $('meta[name = "client"]').attr('content'),'alert':alert,'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
         downloadFile(url,data);
     }else{
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'alert':alert
+        id : $('meta[name = "client"]').attr('content'),'alert':alert,'vehicle':vehicle
         };
         downloadFile(url,data);
     }
 }
 
 
-function downloadformanyDriver(){
+function downloadGeofenceReport(){
     
-    var url = 'formany-driver-report/export';  
+    var url = 'geofence-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+     // console.log(alert);
     var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
     if(fromDate){
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'fromDate':fromDate,'toDate':toDate
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
         downloadFile(url,data);
     }else{
         var data = {
-        id : $('meta[name = "client"]').attr('content')
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
     }
@@ -220,5 +232,141 @@ function downloadformanyDriver(){
 
 
 
+function downloadTrackReport(){
+    
+    var url = 'track-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+     // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+function downloadRouteDeviationReport(){
+    
+    var url = 'route-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+     // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
 
+function downloadharshBrakingReport(){
+    
+    var url = 'harsh-braking-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+     // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
 
+function downloadSuddenAccelerationReport(){
+    
+    var url = 'sudden-acceleration-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+     // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+function downloadOverSpeedReport(){
+    
+    var url = 'over-speed-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}

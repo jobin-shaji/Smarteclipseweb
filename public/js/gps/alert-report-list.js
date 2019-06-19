@@ -4,17 +4,21 @@ $(document).ready(function () {
 });
 
 function check(){
-
-    if(document.getElementById('fromDate').value == ''){
+    if(document.getElementById('vehicle').value == ''){
+        alert('please enter vehicle');
+    }
+    else if(document.getElementById('fromDate').value == ''){
         alert('please enter from date');
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
     }else{
         var alert_id=$('#alert').val();
+        var vehicle_id=$('#vehicle').val();
+        
          var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('fromDate').value;
         var to_date = document.getElementById('toDate').value;
-        var data = { 'alertID':alert_id,'client':client, 'from_date':from_date , 'to_date':to_date};
+        var data = { 'alertID':alert_id,'vehicle_id':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
         callBackDataTable(data);
         //      var  data = {
         //     client : $('meta[name = "client"]').attr('content'),

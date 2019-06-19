@@ -52,12 +52,15 @@ function callBackDataTable(data=null){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-                   
-            {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
-            {data: 'location', name: 'location'},
+            {data: 'motion', name: 'motion'},
+            {data: 'sleep', name: 'sleep'},
+            {data: 'halt', name: 'halt'},
+            {data: 'ac_on', name: 'ac_on'},
+            {data: 'ac_off', name: 'ac_off'},
+            {data: 'km', name: 'km'},
             {data: 'device_time', name: 'device_time'},
-             {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         
