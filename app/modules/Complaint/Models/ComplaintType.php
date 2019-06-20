@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ComplaintType extends Model
 {
-	use SoftDeletes;    
+	use SoftDeletes; 
+	   
     protected $fillable=[
 		'name','complaint_category'
 	];

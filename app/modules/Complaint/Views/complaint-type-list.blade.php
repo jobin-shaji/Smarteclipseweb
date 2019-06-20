@@ -38,7 +38,8 @@
                   <tr>
                     <th>Sl.No</th>
                     <th>Complaint</th>   
-                    <th>Complaint Category</th>                            
+                    <th>Complaint Category</th>
+                    <th>Action</th>                            
                   </tr>
                 </thead>
               </table>

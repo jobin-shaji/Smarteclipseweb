@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Complaint\Models\Complaint;
 use App\Modules\Complaint\Models\ComplaintType;
-use App\Modules\Complaint\Models\ComplaintComment;
+use App\Modules\Complaint\Models\Comment;
+use App\Modules\Ticket\Models\Ticket;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
@@ -73,6 +74,45 @@ class ComplaintController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('complaint-type')); 
     }
+
+    //delete complaint type from table
+    public function deleteComplaintType(Request $request)
+    {
+        $complaint_type = ComplaintType::find($request->id);
+        if($complaint_type == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Complaint Type does not exist'
+            ]);
+        }
+        $complaint_type->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Complaint Type deleted successfully'
+        ]);
+    }
+
+    // restore complaint type
+    public function activateComplaintType(Request $request)
+    {
+        $complaint_type = ComplaintType::withTrashed()->find($request->id);
+        if($complaint_type==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Complaint Type does not exist'
+             ]);
+        }
+        $complaint_type->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Complaint Type restored successfully'
+        ]);
+    }
+
 ///////////////////////////////////////////////////////////////////////////////////////
 
     //Display complaints details 
@@ -122,6 +162,11 @@ class ComplaintController extends Controller {
                     return "Accepted By ".$solved_user;
                 }
             })
+            ->addColumn('action', function ($complaints) {
+                    return "
+                        <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>";
+            })
+            ->rawColumns(['link', 'action'])
             ->make();
         }else if(\Auth::user()->hasRole('root')){
             $complaints = Complaint::select(
@@ -248,21 +293,26 @@ class ComplaintController extends Controller {
     //upload complaints to database table
     public function save(Request $request)
     {
+        $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
         $rules = $this->complaint_create_rules();
         $this->validate($request, $rules);
-        $complaint = Complaint::create([
-            'ticket_code' => $request->ticket_code,
-            'gps_id' => $request->gps_id,
-            'complaint_type_id' => $request->complaint_type_id,
-            'description' => $request->description,
+        $ticket = Ticket::create([
+            'code' => $request->ticket_code,
             'client_id' => $client_id,
             'status' => 1
         ]);
-        if($complaint){
-            $complaint_comment = ComplaintComment::create([
-                'complaint_id' => $complaint->id,
-                'ticket_code' => $request->ticket_code,
+        
+        if($ticket){
+            $complaint = Complaint::create([
+                'ticket_id' => $ticket->id,
+                'gps_id' => $request->gps_id,
+                'complaint_type_id' => $request->complaint_type_id,
+                'description' => $request->description,
+                'client_id' => $client_id
+            ]);
+            $complaint_comment = Comment::create([
+                'user_id' => $user_id,
                 'comment' => "Complaint registered"
             ]);
         }
@@ -328,6 +378,19 @@ class ComplaintController extends Controller {
         return response()->json($complaint_type);
     }
 
+    //complaint details view
+    public function view(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $complaint=Complaint::find($decrypted); 
+        $complaint_comments=Comment::get();
+        if($complaint == null){
+           return view('Complaint::404');
+        }
+
+        return view('Complaint::complaint-view',['complaint' => $complaint,'complaint_comments' => $complaint_comments]);
+    }
+
     public function complaint_type_create_rules()
     {
         $rules = [
@@ -344,7 +407,7 @@ class ComplaintController extends Controller {
             'ticket_code' => 'required',
             'gps_id' => 'required',       
             'complaint_type_id' => 'required',
-            'description' => 'nullable'
+            'description' => 'required'
         ];
         return  $rules;
     }
