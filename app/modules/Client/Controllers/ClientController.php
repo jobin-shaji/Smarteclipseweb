@@ -344,7 +344,7 @@ class ClientController extends Controller {
         ->make();
     }
 
-     //delete Sub Dealer details from table
+    //delete Sub Dealer details from table
     public function deleteClient(Request $request)
     {
         $client = Client::find($request->uid);
@@ -383,10 +383,10 @@ class ClientController extends Controller {
             'message' => 'Client restored successfully'
         ]);
     }
- public function passwordUpdateRules(){
+    public function passwordUpdateRules(){
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
         return $rules;
-  }
+    }
 }
