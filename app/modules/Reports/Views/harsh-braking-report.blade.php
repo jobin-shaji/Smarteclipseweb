@@ -17,13 +17,21 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">
+                <div class="col-md-3">                     
+                      <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                      <option value="0">All</option>
+                       @foreach ($vehicles as $vehicles)
+                        <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
+                      @endforeach  
+                    </select>
+                  </div>
                   <label> from Date</label>
                   <input type="date" id="fromDate" name="fromDate">
                   <label> to date</label>
                   <input type="date" id="toDate" name="toDate">
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
-                  <button class="btn btn-xs btn-info" onclick="refresh()"> <i class="fa fa-filter"></i> Refresh </button>
-                 <button class="btn btn-xs btn-primary pull-right">
+                
+                 <button class="btn btn-xs btn-primary pull-right" onclick="downloadharshBrakingReport()">
                 <i class="fa fa-file"></i> Download Excel</button>
               </div>
 
@@ -47,8 +55,8 @@
         </div>
     </div>
 </section>
-<!-- @section('script')
-    <script src="{{asset('js/gps/geofence-report-list.js')}}"></script>
-@endsection -->
+@section('script')
+    <script src="{{asset('js/gps/harsh-braking-report-list.js')}}"></script>
+@endsection
 @endsection
 

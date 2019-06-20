@@ -15,7 +15,7 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
 
-	Route::get('/alerts','AlertController@alertsView')->name('alerts');
+	Route::get('/alert','AlertController@alerts')->name('alert');
 	Route::post('/alert-list','AlertController@alertsList')->name('alert-list');
 	Route::post('/alert/verify','AlertController@verifyAlert')->name('alert.verify');
 

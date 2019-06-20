@@ -34,7 +34,7 @@ Packet
               <div class="form-group has-feedback">
                 <label class="srequired">GPS</label>
               
-                   <select class="form-control selectpicker" id="gps_id" name="gps_id"  data-live-search="true" title="Select Gps" required onchange='callBackDataTable(this.value)'>
+                   <select class="form-control selectpicker" id="gps_id" name="gps_id"  data-live-search="true" title="Select Gps" required >
               
                 @foreach($devices as $gps)
                   <option value="{{$gps->imei}}">{{$gps->name}}||{{$gps->imei}}</option>

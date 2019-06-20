@@ -2,11 +2,11 @@
 namespace App\Modules\Reports\Controllers;
 
 use App\Exports\AlertReportExport;
-use App\Exports\FormanyDriverReportExport;
 
 // alertReportExport
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
@@ -15,7 +15,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Gps\Models\GpsData;
-use Maatwebsite\Excel\Facades\Excel;
+
 use DataTables;
 use Auth;
 
@@ -37,20 +37,21 @@ class AlertReportController extends Controller
         $AlertType=AlertType::select('id','code','description')
         ->whereIn('id',$alert_id)
         ->get();
-
-        return view('Reports::alert-report',['Alerts'=>$AlertType]);  
+        // $client_id=\Auth::user()->client->id;
+         $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+        return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles]);  
     }  
     public function alertReportList(Request $request)
     {
         $client= $request->client;
-         $alert_id= $request->alertID;
-        
+        $alert_id= $request->alertID;
+        $vehicle_id= $request->vehicle_id;            
         $from = $request->from_date;
         $to = $request->to_date;
-      
-       if($alert_id==0)
-       {
-            $query =Alert::select(
+
+        $query =Alert::select(
             'id',
             'alert_type_id', 
             'device_time',    
@@ -62,34 +63,35 @@ class AlertReportController extends Controller
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client)
-        ->where('status',1);
+        ->with('vehicle:id,name,register_number');
+       if($alert_id==0 && $vehicle_id==0)
+       {         
+            $query = $query->where('client_id',$client)
+            ->where('status',1);
+       }
+       else if($alert_id!=0 && $vehicle_id==0)
+       {          
+            $query = $query->where('client_id',$client)
+            ->where('alert_type_id',$alert_id)
+            ->where('status',1);
+       }
+       else if($alert_id==0 && $vehicle_id!=0)
+       {
+            $query = $query->where('client_id',$client)
+            ->where('vehicle_id',$vehicle_id)
+            ->where('status',1);
        }
        else
        {
-            $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'vehicle_id',
-            'gps_id',
-            'client_id',  
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client)
-        ->where('alert_type_id',$alert_id)
-        ->where('status',1);
+            $query = $query->where('client_id',$client)
+            ->where('alert_type_id',$alert_id)
+            ->where('vehicle_id',$vehicle_id)
+            ->where('status',1);
        }        
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
         $alert = $query->get();   
-
         return DataTables::of($alert)
         ->addIndexColumn()
         ->addColumn('location', function ($alert) {
@@ -139,11 +141,8 @@ class AlertReportController extends Controller
     public function export(Request $request)
     {
         // dd($request->fromDate);    
-        return Excel::download(new AlertReportExport($request->id,$request->alert,$request->fromDate,$request->toDate), 'alert-report.xlsx');
+        return Excel::download(new AlertReportExport($request->id,$request->alert,$request->vehicle,$request->fromDate,$request->toDate), 'alert-report.xlsx');
     }
-     public function formanydriverExport(Request $request)
-    {
-      return Excel::download(new FormanyDriverReportExport($request->id,$request->fromDate,$request->toDate), 'formany-driver-report.xlsx');
-    }
+    
 
 }

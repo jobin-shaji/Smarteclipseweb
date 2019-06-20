@@ -33,10 +33,11 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <th>Vehicle Name</th>
-                              <th>Register Number</th>
-                              <th></th>
-                              <th>Time</th>      
+                              <th>Vehicle</th>
+                              <th>Alert Type</th>
+                              <th>Location</th>
+                              <th>DateTime</th>
+                              <th>Action</th>             
                             </tr>
                         </thead>
                     </table>
@@ -46,8 +47,8 @@
         </div>
     </div>
 </section>
-<!-- @section('script')
-    <script src="{{asset('js/gps/geofence-report-list.js')}}"></script>
-@endsection -->
+@section('script')
+    <script src="{{asset('js/gps/accident-impact-alert-report-list.js')}}"></script>
+@endsection
 @endsection
 

@@ -4,37 +4,34 @@ $(document).ready(function () {
 });
 
 function check(){
-    if(document.getElementById('vehicle').value == ''){
-        alert('please enter vehicle');
+
+     if(document.getElementById('vehicle').value == ''){
+        alert('please select vehicle');
     }
     else if(document.getElementById('fromDate').value == ''){
         alert('please enter from date');
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
     }else{
-        var alert_id=$('#alert').val();
-        var vehicle_id=$('#vehicle').val();
-        
-         var client=$('meta[name = "client"]').attr('content');
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
-        var data = { 'alertID':alert_id,'vehicle_id':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
-        callBackDataTable(data);
-        //      var  data = {
-        //     client : $('meta[name = "client"]').attr('content'),
-        //     from_date : document.getElementById('fromDate').value,
-        //     to_date : document.getElementById('toDate').value,
-        // };      
-            // callBackDataTable(data);
+        // var alert_id=$('#alert').val();
+        // var client=$('meta[name = "client"]').attr('content');
+        // var from_date = document.getElementById('fromDate').value;
+        // var to_date = document.getElementById('toDate').value;
+        // var vehicle = document.getElementById('vehicle').value;
+        // var data = {'client':client,'vehicle':vehicle,'from_date':from_date ,'to_date':to_date};
+        callBackDataTable();
+       
     }
 }
- $('#alert').on('change', function() {
-    check();
- });
 
-function callBackDataTable(data=null){
-     
+function callBackDataTable(){
 
+    var  data = {
+        client: $('meta[name = "client"]').attr('content'),
+        from_date : document.getElementById('fromDate').value,
+        to_date : document.getElementById('toDate').value,
+        vehicle : document.getElementById('vehicle').value,
+    }; 
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -43,9 +40,11 @@ function callBackDataTable(data=null){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'alert-report-list',
+            url: 'harsh-braking-report-list',
             type: 'POST',
-            data:data,
+            data: {
+                'data': data
+            },
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

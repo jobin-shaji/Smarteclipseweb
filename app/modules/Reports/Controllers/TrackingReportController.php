@@ -1,21 +1,29 @@
 <?php
 namespace App\Modules\Reports\Controllers;
+use App\Exports\TrackReportExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Vehicle\Models\Vehicle;
 
 use DataTables;
 class TrackingReportController extends Controller
 {
     public function trackingReport()
     {
-        return view('Reports::tracking-report');  
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+        return view('Reports::tracking-report',['vehicles'=>$vehicles]);  
     }  
     public function trackReportList(Request $request)
     {
         $client_id=\Auth::user()->client->id;;
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date'];
+        $from = $request->from_date;
+        $to = $request->to_date;
+        $vehicle = $request->vehicle;
         $query =GpsData::select(
             'client_id',
             'gps_id',
@@ -74,9 +82,19 @@ class TrackingReportController extends Controller
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client_id)
-        ->groupBy('date');        
+        ->with('vehicle:id,name,register_number');     
+        if($vehicle==0)
+       {         
+            $query = $query->where('client_id',$client_id)
+            ->groupBy('date');
+       }
+       else
+       {
+        $query = $query->where('client_id',$client_id)
+            ->where('vehicle_id',$vehicle)
+            ->groupBy('date'); 
+       }
+               
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
@@ -115,8 +133,9 @@ class TrackingReportController extends Controller
         })
         ->make();
     }
-    // public function export(Request $request)
-    // {
-    //     return Excel::download(new etmCollectionReportExport($request->id), 'etmCollection-report.xlsx');
-    // }
+    public function export(Request $request)
+    {
+        // dd($request->fromDate);    
+        return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
+    }
 }

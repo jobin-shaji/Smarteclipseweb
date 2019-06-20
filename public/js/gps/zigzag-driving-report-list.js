@@ -1,28 +1,32 @@
+
 $(document).ready(function () {
-    // callBackDataTable();
+    callBackDataTable();
 });
 
 function check(){
-     if(document.getElementById('vehicle').value == ''){
-        alert('please select Vehicle');
-    }
-    else if(document.getElementById('fromDate').value == ''){
+
+    if(document.getElementById('fromDate').value == ''){
         alert('please enter from date');
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
     }else{
+        // var alert_id=$('#alert').val();
          var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('fromDate').value;
         var to_date = document.getElementById('toDate').value;
-        var vehicle = document.getElementById('vehicle').value;
-        var data = {'client':client,'vehicle':vehicle, 'from_date':from_date , 'to_date':to_date};
+        var data = {'client':client, 'from_date':from_date , 'to_date':to_date};
         callBackDataTable(data);
-       
+        //      var  data = {
+        //     client : $('meta[name = "client"]').attr('content'),
+        //     from_date : document.getElementById('fromDate').value,
+        //     to_date : document.getElementById('toDate').value,
+        // };      
+            // callBackDataTable(data);
     }
 }
-
+ 
 function callBackDataTable(data=null){
-    
+     
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -32,7 +36,7 @@ function callBackDataTable(data=null){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'geofence-report-list',
+            url: 'zigzag-driving-report-list',
             type: 'POST',
             data:data,
             headers: {
@@ -41,20 +45,35 @@ function callBackDataTable(data=null){
         },
        
         fnDrawCallback: function (oSettings, json) {
-            
 
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'alert.description', name: 'alert.description'},
+                   
+            {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
+            {data: 'location', name: 'location'},
             {data: 'device_time', name: 'device_time'},
-
+             {data: 'action', name: 'action', orderable: false, searchable: false}
+           
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+}
+
+
+
+function refresh(){
+    if(document.getElementById('fromDate').value == '' || document.getElementById('toDate').value == ''){
+        callBackDataTable();
+    }
+    else{                      
+    var from_date = document.getElementById('fromDate').value;
+    var to_date = document.getElementById('toDate').value;
+    var data = { 'agent':agent,'depot':depot, 'from_date':from_date , 'to_date':to_date};
+    callBackDataTable(data);
+    }   
 }
 
 

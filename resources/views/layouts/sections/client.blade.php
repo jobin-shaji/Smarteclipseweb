@@ -49,7 +49,7 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/alerts')}}"><i class="fa fa-list"></i> List Alerts</a></li>
+      <li><a href="{{url('/alert')}}"><i class="fa fa-list"></i> List Alerts</a></li>
   </ul>
 </li>
 <li class="treeview">
@@ -129,6 +129,9 @@
       <li><a href="{{url('/zigzag-driving-report')}}"><i class="fa fa-list"></i>Zig-Zag Driving Report</a></li>
       <li><a href="{{url('/accident-imapct-alert-report')}}"><i class="fa fa-list"></i>Accidents Impact Alerts  Report</a></li>
       <li><a href="{{url('/terain-roads-condition-operation-temperature-report')}}"><i class="fa fa-list"></i>Terain/Roads Conditions & Operation Temperature Report</a></li>
+       <!-- <li><a href="{{url('/idle-report')}}"><i class="fa fa-list"></i>Idle Report</a></li>
+      <li><a href="{{url('/offline-report')}}"><i class="fa fa-list"></i>Offline Report</a></li> -->
+      <li><a href="{{url('/mainbattery-disconnect-report')}}"><i class="fa fa-list"></i>Main Battery Disconnect Report</a></li>
   </ul>
 </li>
 

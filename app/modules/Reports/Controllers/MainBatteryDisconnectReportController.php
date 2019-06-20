@@ -6,15 +6,17 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
-class ZigZagDrivingReportController extends Controller
+class MainBatteryDisconnectReportController extends Controller
 {
-    public function zigZagDrivingReport()
+    public function mainBatteryDisconnectReport()
     {
-        return view('Reports::zig-zag-driving-report');  
-    }  
-   public function zigZagDrivingReportList(Request $request)
+        return view('Reports::main-battery-disconnect-report');  
+    } 
+    public function mainBatteryDisconnectReportList(Request $request)
     {
         $client= $request->client;
+         // $alert_id= $request->alertID;
+        
         $from = $request->from_date;
         $to = $request->to_date;
       
@@ -33,7 +35,7 @@ class ZigZagDrivingReportController extends Controller
         ->with('alertType:id,description')
         ->with('vehicle:id,name,register_number')
         ->where('client_id',$client)
-        ->where('alert_type_id',13)
+        ->where('alert_type_id',11)
         ->where('status',1);
            
         if($from){

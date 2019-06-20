@@ -1,34 +1,63 @@
 <?php
 namespace App\Modules\Reports\Controllers;
+use App\Exports\RouteDeviationReportExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Route\Models\RouteDeviation;
+use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
 class RouteDeviationReportController extends Controller
 {
     public function routeDeviationReport()
     {
-        return view('Reports::route-deviation-report');  
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+        return view('Reports::route-deviation-report',['vehicles'=>$vehicles]);  
     }  
     public function routeDeviationReportList(Request $request)
     {
         $client_id=\Auth::user()->client->id;;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
-        $query =RouteDeviation::select(
-            'id',
-            'vehicle_id', 
-            'route_id',    
-            'latitude',
-            'longitude',
-            'deviating_time',
-            'created_at'
-        )
-        ->with('vehicle:id,name,register_number')
-        ->with('route:id,name')
-        ->where('client_id',$client_id);
+        $vehicle = $request->data['vehicle'];
+        // dd($vehicle);
+        if($vehicle== null || $vehicle==0)
+        {
+            $query =RouteDeviation::select(
+                'id',
+                'vehicle_id', 
+                'route_id',    
+                'latitude',
+                'longitude',
+                'deviating_time',
+                'created_at'
+            )
+            ->with('vehicle:id,name,register_number')
+            ->with('route:id,name')       
+            ->where('client_id',$client_id);
+        }
+        else
+        {
+            $query =RouteDeviation::select(
+                'id',
+                'vehicle_id', 
+                'route_id',    
+                'latitude',
+                'longitude',
+                'deviating_time',
+                'created_at'
+            )
+            ->with('vehicle:id,name,register_number')
+            ->with('route:id,name')
+            ->where('vehicle_id',$vehicle)       
+            ->where('client_id',$client_id);  
+        }
+        
         if($from){
-            $query = $query->whereBetween('created_at',[$from,$to]);
+            $query = $query->whereBetween('deviating_time',[$from,$to]);
         }
         $route_deviation = $query->get(); 
         // dd($route_deviation);     
@@ -57,9 +86,8 @@ class RouteDeviationReportController extends Controller
         })
         ->make();
     }
-
-    // public function export(Request $request)
-    // {
-    //     return Excel::download(new etmCollectionReportExport($request->id), 'etmCollection-report.xlsx');
-    // }
+    public function export(Request $request)
+    {
+       return Excel::download(new RouteDeviationReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'route-deviation-report.xlsx');
+    }
 }
