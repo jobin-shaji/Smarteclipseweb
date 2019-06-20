@@ -5,28 +5,25 @@ $(document).ready(function () {
 
 function check(){
 
-    if(document.getElementById('fromDate').value == ''){
+    if(document.getElementById('vehicle').value == ''){
+        alert('please select vehicle');
+    }
+    else if(document.getElementById('fromDate').value == ''){
         alert('please enter from date');
     }else if(document.getElementById('toDate').value == ''){
         alert('please enter to date');
-    }else{
-        // var alert_id=$('#alert').val();
-         var client=$('meta[name = "client"]').attr('content');
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
-        var data = {'client':client, 'from_date':from_date , 'to_date':to_date};
-        callBackDataTable(data);
-        //      var  data = {
-        //     client : $('meta[name = "client"]').attr('content'),
-        //     from_date : document.getElementById('fromDate').value,
-        //     to_date : document.getElementById('toDate').value,
-        // };      
-            // callBackDataTable(data);
+    }else{        
+        callBackDataTable();
     }
 }
  
-function callBackDataTable(data=null){
-     
+function callBackDataTable(){
+    var data = {
+        client: $('meta[name = "client"]').attr('content'),
+        from_date : document.getElementById('fromDate').value,
+        to_date : document.getElementById('toDate').value,
+        vehicle : document.getElementById('vehicle').value,
+    }; 
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -38,7 +35,9 @@ function callBackDataTable(data=null){
         ajax: {
             url: 'accident-impact-alert-report-list',
             type: 'POST',
-            data:data,
+            data: {
+                'data': data
+            },
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

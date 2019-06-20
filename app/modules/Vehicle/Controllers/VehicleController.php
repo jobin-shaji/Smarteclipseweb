@@ -1195,8 +1195,9 @@ public function hmapLocationPlayback(Request $request){
             // dd($length);
             if($length!=0)
             {
+                dd($length);
                 if($length>=150){
-                    $counts=$length/150;
+                    $counts=$length/10;
                 }
                 else{
                     $counts=$length;

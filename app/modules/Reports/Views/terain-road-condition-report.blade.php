@@ -44,8 +44,8 @@
         </div>
     </div>
 </section>
-<!-- @section('script')
+@section('script')
     <script src="{{asset('js/gps/geofence-report-list.js')}}"></script>
-@endsection -->
+@endsection
 @endsection
 
