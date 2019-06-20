@@ -120,12 +120,6 @@ class ComplaintController extends Controller {
     {
         if(\Auth::user()->hasRole('client')){
             return view('Complaint::complaint-list');
-        }else if(\Auth::user()->hasRole('root')){
-            return view('Complaint::complaint-list-root');
-        }else if(\Auth::user()->hasRole('dealer')){
-            return view('Complaint::complaint-list-dealer');
-        }else if(\Auth::user()->hasRole('sub_dealer')){
-            return view('Complaint::complaint-list-sub-dealer');
         }
     }
     
@@ -137,139 +131,24 @@ class ComplaintController extends Controller {
             $client_id=\Auth::user()->client->id;
             $complaints = Complaint::select(
                 'id', 
-                'ticket_code',
+                'ticket_id',
                 'gps_id',                      
                 'complaint_type_id',                   
                 'description',                                        
-                'created_at',
-                'status',
-                'response_by'
+                'created_at'
             )
             ->with('gps:id,name,imei')
+            ->with('ticket:id,code')
             ->with('complaintType:id,name')
             ->where('client_id',$client_id)
             ->get();
             return DataTables::of($complaints)
             ->addIndexColumn()
-            ->addColumn('status', function ($complaints) {
-                if($complaints->status==0){
-                    $solved_user=$complaints->user->username;
-                    return "Resolved By ".$solved_user;
-                }else if($complaints->status==1){
-                    return "Submitted";
-                }else{
-                    $solved_user=$complaints->user->username;
-                    return "Accepted By ".$solved_user;
-                }
-            })
             ->addColumn('action', function ($complaints) {
                     return "
                         <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>";
             })
             ->rawColumns(['link', 'action'])
-            ->make();
-        }else if(\Auth::user()->hasRole('root')){
-            $complaints = Complaint::select(
-                'id', 
-                'gps_id',                      
-                'complaint_type_id',                   
-                'discription',                                        
-                'created_at',
-                'status',
-                'client_id',
-                'solved_or_rejected_by'
-            )
-            ->with('client:id,name')
-            ->with('complaintType:id,name')
-            ->with('gps:id,name,imei')
-            ->get();
-
-        return DataTables::of($complaints)
-            ->addIndexColumn()
-            ->addColumn('status', function ($complaints) {
-                if($complaints->status==0){
-                    $solved_user=$complaints->user->username;
-                    return "Solved By ".$solved_user;
-                }else if($complaints->status==1){
-                    return "Received";
-                }else{
-                    $reject_user=$complaints->user->username;
-                    return "Rejected By ".$reject_user;
-                }
-            })
-            ->addColumn('dealer',function($complaints){
-                $complaint = Complaint::find($complaints->id);
-                return $complaint->client->subDealer->dealer->name;
-                
-            })
-            ->addColumn('sub_dealer',function($complaints){
-               $complaint = Complaint::find($complaints->id);
-               return $complaint->client->subDealer->name;
-                
-            })
-            ->addColumn('action', function ($complaints) {
-                if($complaints->status==1){
-                    return "
-                        <button onclick=solveIssue(".$complaints->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Solve </button>
-                        <button onclick=rejectIssue(".$complaints->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Reject </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
-        }else if(\Auth::user()->hasRole('dealer')){
-            $dealer_id=\Auth::user()->dealer->id;
-            $sub_dealers = SubDealer::select(
-                    'id'
-                    )
-                    ->where('dealer_id',$dealer_id)
-                    ->get();
-            $single_sub_dealers = [];
-            foreach($sub_dealers as $sub_dealer){
-                $single_sub_dealers[] = $sub_dealer->id;
-            }
-            $clients = Client::select(
-                    'id'
-                    )
-                    ->whereIn('sub_dealer_id',$single_sub_dealers)
-                    ->get();
-            $single_clients = [];
-            foreach($clients as $client){
-                $single_clients[] = $client->id;
-            }
-            $complaints = Complaint::select(
-                'id', 
-                'gps_id',                      
-                'complaint_type_id',                   
-                'discription',                                        
-                'created_at',
-                'status',
-                'client_id',
-                'solved_or_rejected_by'
-            )
-            ->whereIn('client_id',$single_clients)
-            ->with('client:id,name')
-            ->with('complaintType:id,name')
-            ->with('gps:id,name,imei')
-            ->get();
-
-        return DataTables::of($complaints)
-            ->addIndexColumn()
-            ->addColumn('status', function ($complaints) {
-                if($complaints->status==0){
-                    $solved_user=$complaints->user->username;
-                    return "Solved By ".$solved_user;
-                }else if($complaints->status==1){
-                    return "Received";
-                }else{
-                    $reject_user=$complaints->user->username;
-                    return "Rejected By ".$reject_user;
-                }
-            })
-            ->addColumn('sub_dealer',function($complaints){
-               $complaint = Complaint::find($complaints->id);
-               return $complaint->client->subDealer->name;
-                
-            })
             ->make();
         }
     }
@@ -310,10 +189,6 @@ class ComplaintController extends Controller {
                 'complaint_type_id' => $request->complaint_type_id,
                 'description' => $request->description,
                 'client_id' => $client_id
-            ]);
-            $complaint_comment = Comment::create([
-                'user_id' => $user_id,
-                'comment' => "Complaint registered"
             ]);
         }
         $request->session()->flash('message', 'New Complaint registered successfully!'); 

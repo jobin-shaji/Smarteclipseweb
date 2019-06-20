@@ -43,7 +43,6 @@
                     <th>Complaint</th>                            
                     <th>Description</th>
                     <th>Date</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>

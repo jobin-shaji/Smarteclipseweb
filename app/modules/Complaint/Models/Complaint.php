@@ -15,6 +15,11 @@ class Complaint extends Model
   	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
 	}
 
+  public function ticket()
+  {
+    return $this->hasOne('App\Modules\Ticket\Models\Ticket','id','ticket_id');
+  }
+
 	public function complaintType()
 	{
   	return $this->hasOne('App\Modules\Complaint\Models\ComplaintType','id','complaint_type_id')->withTrashed();
