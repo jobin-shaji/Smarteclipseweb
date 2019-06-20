@@ -1,6 +1,6 @@
 $(document).ready(function () {
     callBackDataTable();
-    
+
 });
 
 
@@ -17,7 +17,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-list',
+            url: 'ota-type-list',
             type: 'POST',
             data: {
                 'data': data
@@ -37,33 +37,32 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name', searchable: false},
-            {data: 'imei', name: 'imei'},
-            {data: 'manufacturing_date', name: 'manufacturing_date'},
-            {data: 'brand', name: 'brand'},
-            {data: 'model_name', name: 'model_name'},
-            {data: 'version', name: 'version'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'name', name: 'name'},
+            {data: 'code', name: 'code'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-}
+ }
 
-function delGps(gps){
-    var url = 'gps/delete';
+ function deleteRoute(route){
+    var url = 'route/delete';
     var data = {
-        uid : gps
+        id : route
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
-function activateGps(gps){
-    var url = 'gps/activate';
+ function activateRoute(route){
+    var url = 'route/activate';
     var data = {
-        id : gps
+         id : route
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
+
+
+
 
 

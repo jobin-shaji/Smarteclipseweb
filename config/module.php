@@ -18,7 +18,9 @@ return  [
        'Reports',
        'UserAlert',
        'Route',
-       'Complaint'
+       'Complaint',
+       'Ota',
+       'Ticket'
 
     ]
 ]

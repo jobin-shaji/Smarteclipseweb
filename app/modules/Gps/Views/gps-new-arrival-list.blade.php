@@ -26,7 +26,7 @@
                             <tr>
                               <th>Sl.No</th>
                               <th>From User</th>
-                              <th>Received On</th>
+                              <th>Transferred On</th>
                               <th>Action</th>
                             </tr>
                         </thead>

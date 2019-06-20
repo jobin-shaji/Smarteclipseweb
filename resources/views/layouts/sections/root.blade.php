@@ -110,6 +110,20 @@
 
 <li class="treeview">
     <a href="#">
+      <i class="fa fa-plus-square"></i>
+      <span>Ota Types</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+    <li><a href="{{url('/ota-type/create')}}"><i class="fa fa-plus"></i>Add Ota Type</a></li>
+      <li><a href="{{url('/ota-type')}}"><i class="fa fa-list"></i> List Ota Types</a></li>
+  </ul>
+</li>
+
+<li class="treeview">
+    <a href="#">
       <i class="fa fa-file-text"></i>
       <span>Complaint Types</span>
       <span class="pull-right-container">
