@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateComplaintTypesTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateComplaintTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('complaint_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->integer('complaint_category')->comment = '0-hardware,1-software';
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateComplaintTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('complaint_types');
+        Schema::dropIfExists('notifications');
     }
 }

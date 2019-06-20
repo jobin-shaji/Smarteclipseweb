@@ -40,6 +40,8 @@ function callBackDataTable(){
             {data: 'name', name: 'name', searchable: false},
             {data: 'imei', name: 'imei'},
             {data: 'manufacturing_date', name: 'manufacturing_date'},
+            {data: 'brand', name: 'brand'},
+            {data: 'model_name', name: 'model_name'},
             {data: 'version', name: 'version'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],

@@ -28,8 +28,7 @@
       <div class="row">
           <div class="col-md-6">
               <div class="form-group has-feedback">
-                <label class="srequired">Ticket Code</label>
-                <input type="text" class="form-control" name="ticket_code" value="{{ $ticket_code}}" readonly> 
+                <input type="hidden" class="form-control" name="ticket_code" value="{{ $ticket_code}}" readonly> 
               </div>
 
               <div class="form-group has-feedback">
@@ -63,8 +62,8 @@
               </div>
 
               <div class="form-group has-feedback">
-                    <label>Description</label>
-                    <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}">
+                    <label class="srequired">Description</label>
+                    <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required>
               </div>
               @if ($errors->has('description'))
                  <span class="help-block">

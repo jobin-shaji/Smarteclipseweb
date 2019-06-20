@@ -4,9 +4,9 @@ namespace App\Modules\Complaint\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ComplaintComment extends Model
+class Comment extends Model
 {
     protected $fillable=[
-		'complaint_id','ticket_code','comment'
+		'user_id','comment'
 	];
 }

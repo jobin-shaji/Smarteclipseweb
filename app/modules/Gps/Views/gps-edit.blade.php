@@ -40,6 +40,29 @@
           @endif
 
           <div class="form-group has-feedback">
+            <label class="srequired">Manufacturing Date</label>
+            <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ $gps->manufacturing_date}}"> 
+            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+          </div>
+          @if ($errors->has('manufacturing_date'))
+            <span class="help-block">
+            <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
+            </span>
+          @endif
+
+          <div class="form-group has-feedback">
+            <label class="srequired">Model Name</label>
+            <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ $gps->model_name}}"> 
+            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+          </div>
+          @if ($errors->has('model_name'))
+            <span class="help-block">
+            <strong class="error-text">{{ $errors->first('model_name') }}</strong>
+            </span>
+          @endif
+        </div>
+        <div class="col-md-6">
+          <div class="form-group has-feedback">
             <label class="srequired">IMEI</label>
             <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}"> 
             <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
@@ -51,13 +74,13 @@
           @endif
 
           <div class="form-group has-feedback">
-            <label class="srequired">Manufacturing Date</label>
-            <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Purchase Date" name="manufacturing_date" value="{{ $gps->manufacturing_date}}"> 
+            <label class="srequired">Brand</label>
+            <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Brand" name="brand" value="{{ $gps->brand}}"> 
             <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
           </div>
-          @if ($errors->has('manufacturing_date'))
+          @if ($errors->has('brand'))
             <span class="help-block">
-            <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
+            <strong class="error-text">{{ $errors->first('brand') }}</strong>
             </span>
           @endif
 

@@ -108,17 +108,33 @@
   </ul>
 </li>
 
-<!-- <li class="treeview">
+<li class="treeview">
     <a href="#">
-      <i class="fa fa-file-text"></i>
-      <span>Complaints</span>
+      <i class="fa fa-plus-square"></i>
+      <span>Ota Types</span>
       <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
-      <li><a href="{{url('/complaint')}}"><i class="fa fa-list"></i> List Complaints</a></li>
+    <li><a href="{{url('/ota-type/create')}}"><i class="fa fa-plus"></i>Add Ota Type</a></li>
+      <li><a href="{{url('/ota-type')}}"><i class="fa fa-list"></i> List Ota Types</a></li>
   </ul>
-</li> -->
+</li>
+
+<li class="treeview">
+    <a href="#">
+      <i class="fa fa-file-text"></i>
+      <span>Complaint Types</span>
+      <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu" style="display: none;">
+    <li><a href="{{url('/complaint-type/create')}}"><i class="fa fa-plus"></i>Add Complaint Type</a></li>
+      <li><a href="{{url('/complaint-type')}}"><i class="fa fa-list"></i> List Complaint Types</a></li>
+  </ul>
+</li>
+
 
 

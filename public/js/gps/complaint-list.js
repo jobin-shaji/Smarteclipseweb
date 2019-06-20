@@ -31,13 +31,13 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'ticket_code', name: 'ticket_code'},
+            {data: 'ticket.code', name: 'ticket.code'},
             {data: 'gps.name', name: 'gps.name'},
             {data: 'gps.imei', name: 'gps.imei'},
             {data: 'complaint_type.name', name: 'complaint_type.name'},
             {data: 'description', name: 'description'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'status', name: 'status'},         
+            {data: 'action', name: 'action', orderable: false, searchable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
