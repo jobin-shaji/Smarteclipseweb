@@ -38,10 +38,13 @@ Route::post('/sudden-acceleration-report/export','SuddenAccelerationReportContro
 //total km report
 	Route::get('/total-km-report','TotalKMReportController@totalKMReport')->name('total-km-report');
 Route::post('/totalkm-report-list','TotalKMReportController@totalKMReportList')->name('totalkm-report-list');
+Route::post('/total-km-report/export','TotalKMReportController@export')->name('total.km.report.export');
+
 	
 //Daily KM report
 	Route::get('/daily-km-report','DailyKMReportController@dailyKMReport')->name('daily-km-report');
 Route::post('/dailykm-report-list','DailyKMReportController@dailyKMReportList')->name('dailykm-report-list');
+Route::post('/daily-km-report/export','DailyKMReportController@export')->name('daily.km.report.export');
 
 //over-speed-report
 	Route::get('/over-speed-report','OverSpeedReportController@overSpeedReport')->name('over-speed-report');
@@ -52,22 +55,29 @@ Route::post('/over-speed-report/export','OverSpeedReportController@export')->nam
 	Route::get('/zigzag-driving-report','ZigZagDrivingReportController@zigZagDrivingReport')->name('zigzag-driving-report');
 
 	Route::post('/zigzag-driving-report-list','ZigZagDrivingReportController@zigZagDrivingReportList')->name('zigzag-driving-report-list');
+	Route::post('/zigzag-driving-report/export','ZigZagDrivingReportController@export')->name('zigzag.driving.report.export');
+
 
 	//accident-imapct-alert-report
 	Route::get('/accident-imapct-alert-report','AccidentImpactAlertReportController@accidentImpactAlertReport')->name('accident-imapct-alert-report');
 Route::post('/accident-impact-alert-report-list','AccidentImpactAlertReportController@accidentImpactAlertReportList')->name('accident-impact-alert-report-list');
 
+	Route::post('/accident-imapct-alert-report/export','AccidentImpactAlertReportController@export')->name('accident.imapct.alert.report.export');
+
+
 
 	//accident-imapct-alert-report
 	Route::get('/terain-roads-condition-operation-temperature-report','TerainRoadsConditionOperationTemperatureReportController@terainRoadConditionReport')->name('terain-roads-condition-operation-temperature-report');
 	
-Route::get('/idle-report','IdleReportController@idleReport')->name('idle-report');
-Route::post('/idle-report-list','IdleReportController@idleReportList')->name('idle-report-list');
-
+	Route::get('/idle-report','IdleReportController@idleReport')->name('idle-report');
+	Route::post('/idle-report-list','IdleReportController@idleReportList')->name('idle-report-list');
+	Route::post('/idle-report/export','IdleReportController@export')->name('idle.report.export');
 
 Route::get('/offline-report','OfflineReportController@accidentImpactAlertReport')->name('offline-report');
+
 Route::get('/mainbattery-disconnect-report','MainBatteryDisconnectReportController@mainBatteryDisconnectReport')->name('mainbattery-disconnect-report');
 Route::post('/mainbattery-disconnect-report-list','MainBatteryDisconnectReportController@mainBatteryDisconnectReportList')->name('mainbattery-disconnect-report-list');
+Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectReportController@export')->name('main.battery.disconnect.report.export');
 
 
 });

@@ -59,7 +59,8 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'distance', name: 'distance'},
+            {data: 'km', name: 'km'},
+            {data: 'date', name: 'date'},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });

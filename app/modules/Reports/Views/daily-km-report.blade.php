@@ -10,8 +10,6 @@
         <li class="active">Daily KM Report</li>
       </ol>
 </section>
-
-
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -19,7 +17,7 @@
               <div class="panel-heading">
                 <div class="col-md-3">
                     
-                      <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                      <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">                
                         @foreach ($vehicles as $vehicles)
                         <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
                       @endforeach                      
@@ -30,8 +28,7 @@
                   <label> to date</label>
                   <input type="date" id="toDate" name="toDate">
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
-                  
-                 <button class="btn btn-xs btn-primary pull-right">
+                  <button class="btn btn-xs btn-primary pull-right" onclick="downloadDailyKMReport()">
                 <i class="fa fa-file"></i> Download Excel</button>
               </div>
 
@@ -43,7 +40,8 @@
                               <th>Sl.No</th>
                               <th>Vehicle</th>
                               <th>Register Number</th>                          
-                              <th>Total KM</th>     
+                              <th>Total KM</th> 
+                              <th>Date</th>    
                             </tr>
                         </thead>
                     </table>

@@ -17,13 +17,20 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">
+                <div class="col-md-3">                     
+                      <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                       @foreach ($vehicles as $vehicles)
+                        <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
+                      @endforeach  
+                    </select>
+                  </div>
                   <label> from Date</label>
                   <input type="date" id="fromDate" name="fromDate">
                   <label> to date</label>
                   <input type="date" id="toDate" name="toDate">
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
-                
-                 <button class="btn btn-xs btn-primary pull-right">
+                  <button class="btn btn-xs btn-info" onclick="refresh()"> <i class="fa fa-filter"></i> Refresh </button>
+                 <button class="btn btn-xs btn-primary pull-right" onclick="downloadIdleReport()">
                 <i class="fa fa-file"></i> Download Excel</button>
               </div>
 
@@ -31,17 +38,12 @@
                 <div class="panel-body">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                             <tr>
+                            <tr>
                               <th>Sl.No</th>
                               <th>Vehicle</th>
-                              <th>Register Number</th>
-                              <th>Run</th>
-                              <th>Idle</th>
-                              <th>Halt</th>
-                              <th>AC ON</th>
-                              <th>AC OFF</th>
-                              <th>Total KM</th>
-                              <th>Date&Time</th>              
+                              <th>Register Number</th>                              
+                              <th>Idle</th>                              
+                              <th>Date&Time</th>        
                             </tr>
                         </thead>
                     </table>
@@ -55,4 +57,3 @@
     <script src="{{asset('js/gps/idle-report-list.js')}}"></script>
 @endsection
 @endsection
-

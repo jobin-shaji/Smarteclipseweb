@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Exports;
+
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
-class OverSpeedReportExport implements FromView
+class MainBatteryDisconnectReportExport implements FromView
 {
-	protected $overspeedReportExport;
+	protected $mainBatteryDisconnectReportExport;
 	public function __construct($client,$vehicle,$from,$to)
     {  
          $query =Alert::select(
@@ -27,13 +28,13 @@ class OverSpeedReportExport implements FromView
         if($from==null || $to==null || $vehicle==null)
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',12)
+            ->where('alert_type_id',11)
             ->where('status',1);
         }   
         else if($vehicle==0)
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',12)
+            ->where('alert_type_id',11)
             ->where('status',1);
             if($from){
                 $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
@@ -42,19 +43,19 @@ class OverSpeedReportExport implements FromView
         else
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',12)
+            ->where('alert_type_id',11)
             ->where('vehicle_id',$vehicle)
             ->where('status',1);
             if($from){
                 $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
             }
         }
-        $this->overspeedReportExport = $query->get();          
+        $this->mainBatteryDisconnectReportExport = $query->get();          
     }
     public function view(): View
 	{
-       return view('Exports::over-speed-report', [
-            'overspeedReportExport' => $this->overspeedReportExport
+       return view('Exports::main-battery-disconnect-report', [
+            'mainBatteryDisconnectReportExport' => $this->mainBatteryDisconnectReportExport
         ]);
 	}
     

@@ -1,8 +1,16 @@
 
 // dateTimepicker
-$('.datetimepicker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss'
-      });
+ 
+
+    $( ".datetimepicker" ).datetimepicker({ 
+        format: 'YYYY-MM-DD HH:mm:ss',
+        maxDate: new Date() 
+    });
+
+    $( ".datepicker" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date() 
+ });
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
@@ -355,6 +363,160 @@ function downloadOverSpeedReport(){
     {
        var vehicle=vehicles;
     }
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+
+function downloadZigZagDrivingReport(){    
+    var url = 'zigzag-driving-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+
+function downloadAccidentImpactAlertReport(){    
+    var url = 'accident-imapct-alert-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+
+function downloadMainBatteryDisconnectReport(){    
+    var url = 'main-battery-disconnect-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+
+function downloadTotalKMReport(){    
+    var url = 'total-km-report/export';
+    var  vehicles=$('#vehicle').val();   
+    if(vehicles==null)
+    {
+       var vehicle=0;
+    }
+    else
+    {
+       var vehicle=vehicles;
+    }
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+function downloadDailyKMReport(){    
+    var url = 'daily-km-report/export';
+    var  vehicles=$('#vehicle').val();   
+    var vehicle=vehicles;
+   
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+function downloadIdleReport(){    
+    var url = 'idle-report/export';
+    var  vehicles=$('#vehicle').val();   
+    var vehicle=vehicles;
+   
     // console.log(alert);
     var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
