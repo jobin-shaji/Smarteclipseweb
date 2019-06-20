@@ -34,6 +34,8 @@ class GpsController extends Controller {
                 'name',
             	'imei',
             	'manufacturing_date',
+                'brand',
+                'model_name',
             	'version',
                 'deleted_at')
                 ->withTrashed()
@@ -129,6 +131,8 @@ class GpsController extends Controller {
             'name'=> $request->name,
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
+            'brand'=> $request->brand,
+            'model_name'=> $request->model_name,
             'version'=> $request->version,
             'user_id' => $root_id,
             'status'=>1
@@ -172,6 +176,8 @@ class GpsController extends Controller {
         $gps->name = $request->name;
         $gps->imei = $request->imei;
         $gps->manufacturing_date = $request->manufacturing_date;
+        $gps->brand = $request->brand;
+        $gps->model_name = $request->model_name;
         $gps->version = $request->version;
         $gps->save();
 
@@ -701,6 +707,8 @@ class GpsController extends Controller {
             'name' => 'required',
             'imei' => 'required|string|min:15|unique:gps',
             'manufacturing_date' => 'required',
+            'brand' => 'required',
+            'model_name' => 'required',
             'version' => 'required'
         ];
         return  $rules;

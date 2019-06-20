@@ -16,7 +16,7 @@ class Gps extends Model
         static::addGlobalScope(new DeleteScope);
     }
 
-    protected $fillable=[ 'name','imei','manufacturing_date','version','user_id','status'];
+    protected $fillable=[ 'name','imei','manufacturing_date','brand','model_name','version','user_id','status'];
 
     //join user table with gps table
     public function user()
