@@ -1013,11 +1013,8 @@ class VehicleController extends Controller {
        
     }
     public function playbackHMap(Request $request){
-       
-         $decrypted_id = Crypt::decrypt($request->id);  
-          
+        $decrypted_id = Crypt::decrypt($request->id);            
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
-       
     }
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
@@ -1038,12 +1035,10 @@ class VehicleController extends Controller {
     //                 "lat"=>(float)$data->lat,
     //                 "lng"=>(float)$data->lng
     //             ); 
-
     //             $gps_playback[]=array(
     //                 "angle"=>$data->angle,
     //                 "speed"=>$data->speed
-    //             ); 
-                
+    //             );            
     //         }
     //         $response_data = array(
     //             'status'  => 'success',
@@ -1188,29 +1183,29 @@ public function hmapLocationPlayback(Request $request){
         $playbackData=array();
         $length=0;
         $counts=0;
-        $count=0;
+        $count=0; 
+       
         if($gpsdata){
-            $length=$gpsdata->count();
-
-            // dd($length);
+            $length=$gpsdata->count(); 
             if($length!=0)
-            {
-                dd($length);
+            {               
                 if($length>=150){
-                    $counts=$length/10;
+                    $counts=$length/90;
+                    
                 }
                 else{
                     $counts=$length;
                 }
-            }
+           
+                    
+            $round_value=round($counts);   
           
-            $round_value=round($counts);            
             $startLat=(float)$gpsdata[0]->lat;
-            $startLng=(float)$gpsdata[0]->lng;
-            
+            $startLng=(float)$gpsdata[0]->lng; 
 
             for($i=0;$i<$round_value; $i++)
             {
+                
                 $playback_round[]=$gpsdata[$i];
             } 
             $playback_point[]=array(
@@ -1228,19 +1223,25 @@ public function hmapLocationPlayback(Request $request){
                 $startLat=(float)$data->lat;
                 $startLng=(float)$data->lng; 
             }
-
-           
-            $response_data = array(
-                'status'  => 'success',
-                'message' => 'success',
-                'code'    =>1,                              
-                'polyline' => $playback,
-                'firstpoint' => $playback_point,
-            );
+        }
+        else
+        {
+            $playback="empty";
+        }
+        // dd($playback);
+        $response_data = array(
+            'status'  => 'success',
+            'message' => 'success',
+            'code'    =>1,                              
+            'polyline' => $playback,
+            'firstpoint' => $playback_point,
+        );
         }else{
+
             $response_data = array(
                 'status'  => 'failed',
                 'message' => 'failed',
+                'polyline' => "empty",
                 'code'    =>0
             );
         }    

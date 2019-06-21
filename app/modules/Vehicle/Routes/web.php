@@ -22,9 +22,6 @@ Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')-
 
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
-// Route::get('/vehicles/{id}/playback','VehicleController@playback')->name('vehicles.playback');
-
-// Route::post('/vehicles/location-playback','VehicleController@locationPlayback')->name('vehicles.location-playback');
 
 
 Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
