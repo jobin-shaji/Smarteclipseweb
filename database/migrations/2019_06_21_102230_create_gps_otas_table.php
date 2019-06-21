@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOtaResponsesTable extends Migration
+class CreateGpsOtasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateOtaResponsesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ota_responses', function (Blueprint $table) {
+        Schema::create('gps_otas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('gps_id');
-            $table->text('response');
-            $table->dateTime('verified_at')->nullable();
+            $table->integer('ota_type_id');
+            $table->string('value')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateOtaResponsesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ota_responses');
+        Schema::dropIfExists('gps_otas');
     }
 }

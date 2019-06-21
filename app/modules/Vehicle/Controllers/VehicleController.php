@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
-use App\Modules\Vehicle\Models\OtaResponse;
+use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Vehicle\Models\VehicleRoute;
 use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\DocumentType;
-use App\Modules\Vehicle\Models\VehicleOta;
+use App\Modules\Ota\Models\OtaType;
+use App\Modules\Ota\Models\GpsOta;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
@@ -52,7 +53,6 @@ class VehicleController extends Controller {
             ->addColumn('action', function ($vehicles) {
                 if($vehicles->deleted_at == null){
                     return "
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/ota class='btn btn-xs btn-info'><i class='glyphicon glyphicon-th'></i> OTA </a>
                     
                     <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
 
@@ -97,7 +97,9 @@ class VehicleController extends Controller {
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
-        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices]);
+        $ota_types=OtaType::select('id','name','code','default_value')
+                ->get();
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types]);
     }
 
     // save vehicle
@@ -116,44 +118,39 @@ class VehicleController extends Controller {
             'status' =>1
         ]);
         if($vehicle){
-            $vehicle_ota = VehicleOta::create([
-                'client_id' => $client_id,
-                'vehicle_id' => $vehicle->id,
-                'PU' => "",
-                'EU' => "",
-                'EM' => "",
-                'EO' => "",
-                'ED' => "",
-                'APN' => "",
-                'ST' => "",
-                'SL' => "",
-                'HBT' => "",
-                'HAT' => "",
-                'RTT' => "",
-                'LBT' => "",
-                'VN' => "",
-                'UR' => "",
-                'URS' => "",
-                'URE' => "",
-                'URF' => "",
-                'URH' => "",
-                'VID' => "",
-                'FV' => "",
-                'DSL' => "",
-                'HT' => "",
-                'M1' => "",
-                'M2' => "",
-                'M3' => "",
-                'GF' => "",
-                'OM' => "",
-                'OU' => ""
-            ]);
+            $ota_array=[];
+            $ota_type__first_id=1;
+            foreach ($request->ota as $ota_value) {
+                $ota_type_id=$ota_type__first_id++;
+                $gps_ota = GpsOta::create([
+                    'gps_id' => $request->gps_id,
+                    'ota_type_id' => $ota_type_id,
+                    'value' => $ota_value
+                ]);
+                if($ota_value){
+                    $ota_type=OtaType::select('id','name','code','default_value')
+                                        ->where('id',$ota_type_id)
+                                        ->first();
+                    $string=$ota_type->code.":".$ota_value;
+                    array_push($ota_array,$string);
+                }
+            }
+            $ota_string = implode( ",", $ota_array );
+            $final_ota_string="SET ".$ota_string;
+            //add response to ota response table-start
+            $ota = new OtaResponse();
+            $ota->gps_id = $request->gps_id;
+            $ota->response = $final_ota_string;
+            $ota->created_at = now();
+            $ota->updated_at = null;
+            $ota->save();
+            //add response to ota response table-end
         }
         $request->session()->flash('message', 'New Vehicle created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle'));
     }
-    
+
     // edit vehicle
     public function edit(Request $request)
     {
@@ -306,12 +303,12 @@ class VehicleController extends Controller {
     {
         $decrypted_id = Crypt::decrypt($request->id);
         $client_id=\Auth::user()->id;
-        $vehicle_ota=VehicleOta::where('vehicle_id',$decrypted_id)
-                                ->first();
-        if($vehicle_ota == null){
+        $gps_ota=GpsOta::where('gps_id',$decrypted_id)
+                                ->get();
+        if($gps_ota == null){
             return view('Vehicle::404');
         }
-        return view('Vehicle::vehicle-ota',['vehicle_ota' => $vehicle_ota]);
+        return view('Vehicle::vehicle-ota',['gps_ota' => $gps_ota]);
     }
 
     // update vehicle ota

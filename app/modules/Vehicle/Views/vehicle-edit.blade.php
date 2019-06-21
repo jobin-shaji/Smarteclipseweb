@@ -22,6 +22,12 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-user-plus"></i> 
+              <?php 
+                $encript=Crypt::encrypt($vehicle->gps->id)
+              ?>
+              <a href="{{route('vehicle.ota',$encript)}}">
+                <button class="btn btn-xs btn-success pull-right">Update OTA</button>
+              </a>
           </h2>
         </div>
         <!-- /.col -->
