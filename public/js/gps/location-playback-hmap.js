@@ -69,8 +69,16 @@ function getUrl() {
             headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(res) {  
-               playBack(res);
+            success: function(res) { 
+              if(res.polyline=='empty')
+              {
+                alert("No data available");
+              }
+              else
+              {
+                playBack(res);
+              }
+               
             },
             error: function(err) {
                 var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
@@ -84,7 +92,8 @@ function getUrl() {
 
 function playBack(res){
 
-  var locationData=res.polyline;
+  var locationData=res.polyline;console.log(locationData);
+
 //   var bSimulationRunning = false;
 //   var svgMarkup = '<svg width="24" height="24" ' +
 //   'xmlns="http://www.w3.org/2000/svg">' +
@@ -132,14 +141,17 @@ function playBack(res){
 
 function routeDraw(routingParameters){
 
+
 // Define a callback function to process the routing response:
-var onResult = function(result) {
+var onResult = function(result) { 
+  console.log(result.response.route);
   // console.log(result);
  var route,
     routeShape,
     startPoint,
     endPoint,
     linestring;
+    // console.log(result.response.route);
   if(result.response.route) {
   // Pick the first route from the response:
   route = result.response.route[0];
