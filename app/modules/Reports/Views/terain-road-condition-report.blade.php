@@ -15,10 +15,10 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">
-                  <label> from Date</label>
-                  <input type="date" id="fromDate" name="fromDate">
+                   <label> from Date</label>
+                  <input type="text" class="datepicker" id="fromDate" name="fromDate">
                   <label> to date</label>
-                  <input type="date" id="toDate" name="toDate">
+                  <input type="text" class="datepicker" id="toDate" name="toDate">
                   <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
                   <button class="btn btn-xs btn-info" onclick="refresh()"> <i class="fa fa-filter"></i> Refresh </button>
                  <button class="btn btn-xs btn-primary pull-right">
