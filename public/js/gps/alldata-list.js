@@ -1,6 +1,85 @@
 $(document).ready(function () {
+
     callBackDataTable();
 });
+document.getElementById("geofence").style.visibility = "hidden";
+    var checkboxes = document.getElementsByName('checkbox1');
+    var checkOff = document.getElementsByName('check_off');
+    var checkall = document.getElementsByName('checkall');    
+    var gf = document.getElementsByName('check_GF');
+    var check_EO = document.getElementsByName('check_EO');
+    
+function checkAll(e) {
+   var checkboxes = document.getElementsByName('checkbox1');
+   if (e.checked) {
+        for (var i = 0; i < checkboxes.length; i++) { 
+           checkboxes[i].checked = true;
+           document.getElementById("geofence").style.visibility = "hidden";
+
+        }
+    } 
+    else {
+        for (var i = 0; i < checkboxes.length; i++) {
+           checkboxes[i].checked = false;
+        }
+   }
+ }
+ function checkEO(e) {
+    
+    if (e.checked) {
+       document.getElementById("geofence").style.visibility = "hidden";
+
+        for (var i = 0; i < checkboxes.length; i++) {  
+           checkOff[0].checked = true;
+           gf[0].disabled = true;
+           checkall[0].checked = false;
+            checkall[0].disabled = true;
+           checkboxes[i].disabled = true;
+           checkboxes[i].checked = false;
+           
+        }
+    } 
+    else {
+        for (var i = 0; i < checkboxes.length; i++) {
+            gf[0].disabled = false;
+           checkboxes[i].disabled = false; 
+           checkOff[0].checked = false;          
+        }
+   }
+ }
+ function checkGF(e) {
+  
+  var x = document.getElementById("geofence");
+  if(e.checked==true)
+    {
+        for (var i = 0; i < checkboxes.length; i++) 
+        {  
+           check_EO[0].disabled = true;
+           checkOff[0].disabled = true;
+           checkall[0].disabled = true;
+           checkall[0].checked = false;
+           checkboxes[i].disabled = true;
+           checkboxes[i].checked = false;
+           // checkboxes[i].checked = false;
+        }
+        x.style.visibility = "visible"; // or x.style.display = "none";
+    }
+    else
+    {
+        for (var i = 0; i < checkboxes.length; i++) 
+        {   
+            check_EO[0].disabled = false;
+           checkOff[0].disabled = false;
+           checkall[0].disabled = false;
+           checkall[0].checked = false;
+           checkboxes[i].disabled = false;
+           checkboxes[i].checked = false;
+        }
+        x.style.visibility = "hidden"; //or x.style.display = "block";
+    }
+ }
+
+
 
 
 function callBackDataTable(value){
@@ -8,8 +87,6 @@ function callBackDataTable(value){
     var  data = {
         gps : value    
     }; 
-
-
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,

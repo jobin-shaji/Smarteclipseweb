@@ -11,6 +11,8 @@ use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Dealer\Models\Dealer;
+use App\Modules\Ota\Models\OtaType;
+
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
@@ -658,8 +660,9 @@ class GpsController extends Controller {
 
     public function allgpsListPage()
     {
+        $ota = OtaType::all();
         $gps = Gps::all();
-        return view('Gps::alldata-list',['gps' => $gps]);
+        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota]);
     }
      public function getAllData(Request $request)
     {
