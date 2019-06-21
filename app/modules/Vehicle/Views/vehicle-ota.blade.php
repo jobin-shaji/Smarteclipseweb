@@ -18,7 +18,8 @@
 
     <section class="hilite-content">
       <!-- title row -->
-      <form  method="POST" action="{{route('vehicles.create.p')}}">
+      <form  method="POST" action="{{route('vehicles.ota.update.p',$gps_id)}}">
+        {{csrf_field()}}
         <div class="row">
             @foreach($gps_ota as $ota)
               <div class="col-md-6">
@@ -29,7 +30,6 @@
               </div>
             @endforeach
         </div>
-      </form>
           <div class="row">
             <!-- /.col -->
             <div class="col-md-3 ">
