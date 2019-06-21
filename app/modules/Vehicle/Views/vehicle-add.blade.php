@@ -107,7 +107,7 @@
             <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label>{{$ota_type->name}}</label>
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="{{$ota_type->name}}" name="ota[]" value="{{$ota_type->default_value}}"> 
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="{{$ota_type->name}}" name="ota[]" value="{{$ota_type->default_value}}" readonly> 
               </div>
             </div>
           @endforeach

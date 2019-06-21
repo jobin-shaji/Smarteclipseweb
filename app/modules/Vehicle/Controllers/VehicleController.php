@@ -118,7 +118,6 @@ class VehicleController extends Controller {
             'status' =>1
         ]);
         if($vehicle){
-            $ota_array=[];
             $ota_type__first_id=1;
             foreach ($request->ota as $ota_value) {
                 $ota_type_id=$ota_type__first_id++;
@@ -127,24 +126,7 @@ class VehicleController extends Controller {
                     'ota_type_id' => $ota_type_id,
                     'value' => $ota_value
                 ]);
-                if($ota_value){
-                    $ota_type=OtaType::select('id','name','code','default_value')
-                                        ->where('id',$ota_type_id)
-                                        ->first();
-                    $string=$ota_type->code.":".$ota_value;
-                    array_push($ota_array,$string);
-                }
             }
-            $ota_string = implode( ",", $ota_array );
-            $final_ota_string="SET ".$ota_string;
-            //add response to ota response table-start
-            $ota = new OtaResponse();
-            $ota->gps_id = $request->gps_id;
-            $ota->response = $final_ota_string;
-            $ota->created_at = now();
-            $ota->updated_at = null;
-            $ota->save();
-            //add response to ota response table-end
         }
         $request->session()->flash('message', 'New Vehicle created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
