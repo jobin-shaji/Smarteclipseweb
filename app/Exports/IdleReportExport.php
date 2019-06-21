@@ -1,31 +1,17 @@
 <?php
-namespace App\Modules\Reports\Controllers;
-use App\Exports\IdleReportExport;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Modules\Gps\Models\GpsData;
+namespace App\Exports;
+
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
-use Illuminate\Support\Facades\Crypt;
+use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
-use DataTables;
-class IdleReportController extends Controller
+class IdleReportExport implements FromView
 {
-    public function idleReport()
-    {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->get();
-        return view('Reports::idle-report',['vehicles'=>$vehicles]);  
-    } 
-    public function idleReportList(Request $request)
-    {
-        $client_id=\Auth::user()->client->id;;
-        $from = $request->from_date;
-        $to = $request->to_date;
-        $vehicle = $request->vehicle;
+	protected $idleReportExport;
+	public function __construct($client,$vehicle,$from,$to)
+    {   
         $query =GpsData::select(
             'client_id',
             'gps_id',
@@ -87,31 +73,26 @@ class IdleReportController extends Controller
         ->with('vehicle:id,name,register_number');     
         if($vehicle==0)
        {         
-            $query = $query->where('client_id',$client_id)
+            $query = $query->where('client_id',$client)
             ->groupBy('date');
        }
        else
        {
-        $query = $query->where('client_id',$client_id)
+        $query = $query->where('client_id',$client)
             ->where('vehicle_id',$vehicle)
             ->groupBy('date'); 
        }
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
-        $track_report = $query->get();     
-        return DataTables::of($track_report)
-        ->addIndexColumn()         
-        ->addColumn('sleep', function ($track_report) {  
-            $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
-            $sleep= gmdate("H:i:s",$v_mode);                   
-            return $sleep;
-        })        
-        ->make();
+        $this->idleReportExport = $query->get();          
     }
-    public function export(Request $request)
-    {
-       return Excel::download(new IdleReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Idle-report.xlsx');
-    }
-   
+    public function view(): View
+	{
+       return view('Exports::idle-report', [
+            'idleReportExport' => $this->idleReportExport
+        ]);
+	}
+    
 }
+

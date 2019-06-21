@@ -29,6 +29,9 @@
     <!-- datetime picker -->
     <script src="{{asset('js/moment-with-locales.js')}}"></script>
     <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
+
+
+   <!--  -->
     
     <!-- datetime picker -->
     {!! Toastr::render() !!}

@@ -1,8 +1,10 @@
 <?php
 namespace App\Modules\Reports\Controllers;
+use App\Exports\DailyKMReportExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\GpsData;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
 class DailyKMReportController extends Controller
@@ -20,10 +22,7 @@ class DailyKMReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
-        $vehicle = $request->data['vehicle'];
-
-       
-       
+        $vehicle = $request->data['vehicle'];      
         $query =GpsData::select(
             'client_id',
             'gps_id',
@@ -84,20 +83,38 @@ class DailyKMReportController extends Controller
             \DB::raw('sum(distance) as distance')
         )
         ->with('vehicle:id,name,register_number')
-         ->where('client_id',$client_id)
+        ->where('client_id',$client_id)
         ->where('vehicle_id',$vehicle)
-        ->groupBy('date');        
+        ->groupBy('date');   
+                  
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
-        $track_report = $query->get();     
-        return DataTables::of($track_report)
+        $dailykm_report = $query->get();     
+        return DataTables::of($dailykm_report)
         ->addIndexColumn()        
-        // ->addColumn('km', function ($track_report) {                    
-        //     $km='-';
-        //     return $km;
-        // })
+        ->addColumn('km', function ($dailykm_report) { 
+            $earthRadius = 6371000;
+            $lat_from=floatval($dailykm_report->first()->latitude);
+            $lng_from=floatval($dailykm_report->first()->longitude);
+            $lat_to=floatval($dailykm_report->latitude);
+            $lng_to=floatval($dailykm_report->longitude);
+            // dd($lat_from.",".$lng_from.",".$lat_to.",".$lng_to);
+            $latFrom = deg2rad($lat_from);
+            $lonFrom = deg2rad($lng_from);
+            $latTo = deg2rad($lat_to);
+            $lonTo = deg2rad($lng_to);
+            $latDelta = $latTo - $latFrom;
+            $lonDelta = $lonTo - $lonFrom;
+            $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+            cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+            return $angle * $earthRadius;                            
+        })
         ->make();
+    }
+    public function export(Request $request)
+    {
+       return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Daily-km-report.xlsx');
     }
    
 }

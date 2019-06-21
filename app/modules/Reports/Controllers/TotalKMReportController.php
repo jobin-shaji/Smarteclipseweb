@@ -1,7 +1,9 @@
 <?php
 namespace App\Modules\Reports\Controllers;
+use App\Exports\TotalKMReportExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
@@ -22,9 +24,6 @@ class TotalKMReportController extends Controller
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
         $vehicle = $request->data['vehicle'];
-
-       
-       
         $query =GpsData::select(
             'client_id',
             'gps_id',
@@ -72,32 +71,53 @@ class TotalKMReportController extends Controller
             'digital_input_status',
             'digital_output_status',
             'frame_number',
-            'checksum',
-            'key1',
-            'value1',
-            'key2',
-            'value2',
-            'key3',
-            'value3',
+            'checksum',            
             'gf_id',
-            'device_time',
-            \DB::raw('sum(distance) as distance')
+            'device_time'
+            // \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number')
-         ->where('client_id',$client_id)
-        ->where('vehicle_id',$vehicle)
-        ->groupBy('vehicle_id');        
+        ->with('vehicle:id,name,register_number');
+       if($vehicle==0)
+       {
+            $query = $query->where('client_id',$client_id)
+            ->groupBy('vehicle_id');
+       }
+       else
+       {
+            $query = $query->where('client_id',$client_id)
+            ->where('vehicle_id',$vehicle)
+            ->groupBy('vehicle_id');   
+       }             
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
-        $track_report = $query->get();     
-        return DataTables::of($track_report)
+        $totalkm_report = $query->get();     
+        return DataTables::of($totalkm_report)
         ->addIndexColumn()
         
-        // ->addColumn('km', function ($track_report) {                    
-        //     $km='-';
-        //     return $km;
-        // })
+        ->addColumn('km', function ($totalkm_report) { 
+
+        $earthRadius = 6371000;
+        $lat_from=floatval($totalkm_report->first()->latitude);
+        $lng_from=floatval($totalkm_report->first()->longitude);
+        $lat_to=floatval($totalkm_report->latitude);
+        $lng_to=floatval($totalkm_report->longitude);
+        // dd($lat_from.",".$lng_from.",".$lat_to.",".$lng_to);
+        $latFrom = deg2rad($lat_from);
+        $lonFrom = deg2rad($lng_from);
+        $latTo = deg2rad($lat_to);
+        $lonTo = deg2rad($lng_to);
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+        cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+        return $angle * $earthRadius;                            
+            
+        })
         ->make();
     }
+    public function export(Request $request)
+    {
+       return Excel::download(new TotalKMReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Total-km-report.xlsx');
+    } 
 }

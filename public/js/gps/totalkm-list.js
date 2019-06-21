@@ -33,13 +33,11 @@ function callBackDataTable(){
     var vehicle =document.getElementById('vehicle').value;
     var from_date =document.getElementById('fromDate').value;
     var to_date = document.getElementById('toDate').value;
-
     var  data = {
-            vehicle : vehicle,
-            from_date : from_date,
-            to_date : to_date
-        }; 
-
+        vehicle : vehicle,
+        from_date : from_date,
+        to_date : to_date
+    }; 
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -63,7 +61,7 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'distance', name: 'distance'},
+            {data: 'km', name: 'km'},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
