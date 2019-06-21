@@ -27,9 +27,7 @@
         <!-- /.col -->
       </div>
      <form  method="POST" action="{{route('alert.manager.create.p')}}">
-        {{csrf_field()}}
-      
-
+        {{csrf_field()}}      
       <?php
       $numOfCols = 4;
       $bootstrapColWidth = 12 / $numOfCols;
