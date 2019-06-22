@@ -12,7 +12,7 @@ class CreateIdleStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('idle_statuses', function (Blueprint $table{
+        Schema::create('idle_statuses', function (Blueprint $table){
             $table->increments('id');
             $table->integer('vehicle_id');
             $table->integer('status');
