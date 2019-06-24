@@ -19,14 +19,14 @@
     <section class="hilite-content">
       <!-- title row -->
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6">
           <h2 class="page-header">
             <i class="fa fa-user-plus"></i> 
               <?php 
                 $encript=Crypt::encrypt($vehicle->gps->id)
               ?>
               <a href="{{route('vehicle.ota',$encript)}}">
-                <button class="btn btn-xs btn-success pull-right">Update OTA</button>
+                <button class="btn btn-xs btn-success pull-right">Edit OTA</button>
               </a>
           </h2>
         </div>

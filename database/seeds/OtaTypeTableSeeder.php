@@ -32,7 +32,8 @@ class OtaTypeTableSeeder extends Seeder
 
         DB::table('ota_types')->insert([
             'name' => 'Emergency State Time Duration',
-            'code' => 'ED'
+            'code' => 'ED',
+            'default_value' => '30'
         ]);
 
         DB::table('ota_types')->insert([
@@ -47,7 +48,8 @@ class OtaTypeTableSeeder extends Seeder
 
         DB::table('ota_types')->insert([
             'name' => 'Speed Limit',
-            'code' => 'SL'
+            'code' => 'SL',
+            'default_value' => '70'
         ]);
 
         DB::table('ota_types')->insert([
@@ -67,12 +69,14 @@ class OtaTypeTableSeeder extends Seeder
 
         DB::table('ota_types')->insert([
             'name' => 'Low Battery Threshold',
-            'code' => 'LBT'
+            'code' => 'LBT',
+            'default_value' => '20'
         ]);
 
         DB::table('ota_types')->insert([
             'name' => 'Tilt Angle',
-            'code' => 'TA'
+            'code' => 'TA',
+            'default_value' => '45'
         ]);
 
         DB::table('ota_types')->insert([
@@ -82,32 +86,38 @@ class OtaTypeTableSeeder extends Seeder
 
         DB::table('ota_types')->insert([
             'name' => 'Data Update Rate in Motion Mode',
-            'code' => 'UR'
+            'code' => 'UR',
+            'default_value' => '20'
         ]);
 
         DB::table('ota_types')->insert([
             'name' => 'Data Update Rate in Halt Mode',
-            'code' => 'URT'
+            'code' => 'URT',
+            'default_value' => '1'
         ]);
 
         DB::table('ota_types')->insert([
             'name' => 'Data Update Rate in Sleep Mode',
-            'code' => 'URS'
+            'code' => 'URS',
+            'default_value' => '60'
         ]);
 
         DB::table('ota_types')->insert([
             'name' => 'Data Update Rate in Emergency Mode',
-            'code' => 'URE'
+            'code' => 'URE',
+            'default_value' => '5'
         ]);
 
         DB::table('ota_types')->insert([
             'name' => 'Data Update Rate of Full Packet',
-            'code' => 'URF'
+            'code' => 'URF',
+            'default_value' => '120'
         ]);
 
         DB::table('ota_types')->insert([
             'name' => 'Data Update Rate of Health Packets',
-            'code' => 'URH'
+            'code' => 'URH',
+            'default_value' => '60'
         ]);
 
         DB::table('ota_types')->insert([
@@ -122,7 +132,8 @@ class OtaTypeTableSeeder extends Seeder
 
         DB::table('ota_types')->insert([
             'name' => 'Default speed limit',
-            'code' => 'DSL'
+            'code' => 'DSL',
+            'default_value' => '70'
         ]);
 
         DB::table('ota_types')->insert([
