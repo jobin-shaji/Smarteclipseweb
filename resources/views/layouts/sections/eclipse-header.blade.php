@@ -1,10 +1,9 @@
-<header class="topbar" data-navbarbg="skin5">
+    <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 
                 <div class="navbar-header" data-logobg="skin5">
                     <!-- This is for the sidebar toggle which is visible on mobile only -->
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
@@ -42,11 +41,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item d-none d-md-block">
-                          <a class="nav-link sidebartoggler waves-effect waves-light menu_click" href="javascript:void(0)" data-sidebartype="mini-sidebar">
-                            <i class="mdi mdi-menu font-24"></i>
-                          </a>
-                        </li>
+                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light menu_click" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
                         <!-- ============================================================== -->
                         <!-- create new -->
                         <!-- ============================================================== -->
@@ -159,9 +154,8 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="profile.html"><i class="ti-user m-r-5 m-l-5"></i>My Profile</a>
                                 <div class="dropdown-divider"></div>
-
-                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout </a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>
+                                
                             </div>
                         </li>
                         <!-- ============================================================== -->
@@ -171,21 +165,3 @@
                 </div>
             </nav>
         </header>
-
-
-
-
- <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
-
-
-
-
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-    </form>
-
