@@ -317,14 +317,17 @@ class VehicleController extends Controller {
         }
         $ota_string = implode( ",", $ota_array );
         $final_ota_string="SET ".$ota_string;
-        //add response to ota response table-start
-        $ota = new OtaResponse();
-        $ota->gps_id = $gps_id;
-        $ota->response = $final_ota_string;
-        $ota->created_at = now();
-        $ota->updated_at = null;
-        $ota->save();
-        //add response to ota response table-end
+        if($ota_string){
+            //add response to ota response table-start
+            $ota = new OtaResponse();
+            $ota->gps_id = $gps_id;
+            $ota->response = $final_ota_string;
+            $ota->created_at = now();
+            $ota->updated_at = null;
+            $ota->save();
+            //add response to ota response table-end 
+        }
+        
         $request->session()->flash('message', 'OTA details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle'));  
