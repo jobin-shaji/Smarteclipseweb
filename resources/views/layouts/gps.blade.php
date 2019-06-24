@@ -12,6 +12,8 @@
             @include('layouts.sections.footer')
         </div>
     <!-- ./wrapper -->
+
+    <!--client demo-->
     <!-- jQuery 3 -->
 
     <script src="{{asset('js/jquery.min.js')}}"></script>
