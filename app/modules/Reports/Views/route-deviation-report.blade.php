@@ -1,4 +1,4 @@
-@extends('layouts.gps')
+@extends('layouts.gps-client')
 
 @section('content')
 <section class="content-header">

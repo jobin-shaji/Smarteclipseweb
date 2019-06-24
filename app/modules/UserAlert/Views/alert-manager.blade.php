@@ -1,13 +1,13 @@
-@extends('layouts.gps')
+@extends('layouts.gps-client')
 @section('title')
   Alert Manager
 @endsection
 
 @section('content')
 
-    <section class="content-header">
+  <!--   <section class="content-header">
         <h1>Alert Manager</h1>
-    </section>
+    </section> -->
     @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -17,9 +17,10 @@
     @endif  
 
 <section class="hilite-content">
+  
       <!-- title row -->
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-11">
           <h2 class="page-header">
             <i class="fa fa-home"></i> 
           </h2>
@@ -32,7 +33,8 @@
       $numOfCols = 4;
       $bootstrapColWidth = 12 / $numOfCols;
       ?>
-
+<div class="page-wrapper">
+    <div class="container-fluid">
       <div class="form-group has-feedback">
         <label >Alert</label>
        <div class="row">
@@ -56,6 +58,7 @@
         <!-- /.col -->
       </div>
     </form>
+  </div></div>
 </section>
  
 <div class="clearfix"></div>

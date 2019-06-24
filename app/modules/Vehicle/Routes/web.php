@@ -6,7 +6,7 @@ Route::group(['middleware' => ['web','auth','role:client'] ,'namespace' => 'App\
 Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
 
 Route::post('/vehicle-list','VehicleController@getVehicleList')->name('vehicle-list');
-Route::get('/vehicles/create','VehicleController@createVehicle')->name('vehicles.create');
+Route::get('/vehicles-create','VehicleController@createVehicle')->name('vehicles.create');
 Route::post('/vehicles/save_vehicle','VehicleController@saveVehicle')->name('vehicles.create.p');
 Route::get('/vehicles/{id}/edit','VehicleController@edit')->name('vehicle.edit');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');

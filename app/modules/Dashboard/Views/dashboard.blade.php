@@ -1,6 +1,7 @@
 
-@extends('layouts.gps')
+@extends('layouts.eclipse')
 @section('content')
+@role('root')
 <section class="content-header">
       <h1>
         Dashboard
@@ -13,7 +14,7 @@
 </section>
 <section class="content">
 <div class="row">
-  @role('root')
+  
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green bxs">
@@ -149,203 +150,259 @@
         </div>
    @endrole
    @role('client')
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green bxs">
-            <div class="inner">
-              <h3 id="client_gps"><div class="loader"></div></h3>
-              <p>GPS</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
-            <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow bxs">
-            <div class="inner">
-               <h3 id="client_vehicle"><div class="loader"></div></h3>
-              <p>Vehicle</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-model-s"></i>
-            </div>
-            <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-blue bxs">
-            <div class="inner">
-              <h3 id="geofence"><div class="loader"></div></h3>
-              <p>Geofence</p>
-            </div>
-            <div class="icon">
-              <!-- <i class="ion ion-person-add"></i> -->
-            </div>
-            <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>      
-        <div class="row">
-          <!-- alert report-start -->
-          <div class="col-xs-6">
-          <div id="page-wrap1">
-             <div id="more-info"><div>               
-                 <p>Hover over location on the left. (JavaScript must be enabled)</p>
-             </div></div>
-            <div id="map_canvas"></div>
-            <!--  <ul id="locations">    
-                          
-                <li data-geo-lat="10.014550" data-geo-long="76.293159" >                 
-                 <h3>KL-05-2015</h3>   
+   <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Sales Cards  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15714.260711999257!2d76.35214005!3d10.05269365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1560837024158!5m2!1sen!2sin" width="100%" height="1200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <div class="dashboard-main">
+              <div class="iconsbg">          
+<div class="col-md-6 col-lg-4 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white"></h1>
+                                <h2 class="text-white">Summary</h2>
+                            </div>
+                        </div>
+                    </div>
+ <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"></h1>
+                                <h1 class="text-white" style="color:#129a00!important">75</h1>
+                                <h4 class="text-white">Moving</h4>
+                            </div>
+                        </div>
+                    </div>
 
-                                      
-                                  
-                  <p class="longdesc">
-                    1111
-                  </p>
-                </li>
-               
-            </ul>     -->
-               <ul id="locations">    
-              <!-- onmouseover="getLocationData(1)         -->
-               @foreach ($vehicles as $vehicles )  
-               <li data-geo-lat="10.014550" data-geo-long="76.293159" > 
-                 <h3>{{$vehicles['register_number']}}</h3>   
-                 <p class="longdesc">
-                    1111
-                  </p>
-                </li>
-                @endforeach
-            </ul> 
+ <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"></h1>
+                                <h1 class="text-white" style="color: #0077ae!important">15</h1>
+                                <h4 class="text-white">Idling</h4>
+                            </div>
+                        </div>
+                    </div>
 
-           
-          </div>
-          </div>
-          <div class="col-xs-6">
-            <!-- documents report -start -->
-             <div class="box box-danger">
-              <div class="box-header ui-sortable-handle" style="cursor: move;">
-                <i class="fa fa-bell-o"></i>
-                <h3 class="box-title">Alert List</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                <ul class="list-group">
-                  @if($alerts)
-                    @foreach ($alerts as $alert )
-                    <li class="list-group-item">
-                    <!-- drag handle -->
-                    <span class="handle ui-sortable-handle">
-                      <i class="fa fa-ellipsis-v"></i>
-                      <i class="fa fa-ellipsis-v"></i>
-                    </span>
-                        
-                    <!-- todo text -->
-                    <span class="text">{{$alert->alertType->description}}</span>
-                    [<span class="text-primary" style="color:#000;"> {{$alert->vehicle->name}} - {{$alert->vehicle->register_number}}</span>]
-                        <?php 
-                              $alert_time=$alert->created_at;
-                              $alert_status=$alert->status;
-                         ?>
-                         <br>
-                        <!-- Emphasis label -->
-                        <small class="label label-danger" style="font-size: 13px;     margin: 0px 12px;"><i class="fa fa-clock-o"></i> {{$alert_time}}</small>
-                        @if($alert_status==0)
-                          <small class="label label-danger pull-right" style="font-size: 13px;"><?php echo "Pending"; ?></small>
-                        @else
-                          <small class="label label-success pull-right" style="font-size: 13px;"><?php echo "Success"; ?></small>
-                        @endif
-                        <!-- General tools such as edit or delete-->
-                      </li>
-                      @endforeach
-                    @else
-                      <h4 class="text-info"> Sorry!! waiting for alerts.....</h4>
-                    @endif
-                      
-                    </ul>
-                  </div>
-                  <!--Alert report-end -->
+ <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"></h1>
+                                <h1 class="text-white" style="color: #999!important">5</h1>
+                                <h4 class="text-white">Delayed</h4>
+                            </div>
+                        </div>
+                    </div>
+
+ <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"></h1>
+                                <h1 class="text-white" style="color:#fc4343!important">109</h1>
+                                <h4 class="text-white">Stopped</h4>
+                            </div>
+                        </div>
+                    </div>
+</div>
+<div class="card" style="float:left;width:50%!important">
+
+                            <table class="table" style="border:none!important;">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Vehicle Name</th>
+                                      <th scope="col">Vehicle Number</th>
+                                      <th scope="col">Dist. Covered</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>Truck</td>
+                                      <td>KL-07-6554</td>
+                                      <td>820Km</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>Car</td>
+                                      <td>KL-07-2254</td>
+                                      <td>6520Km</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>Bus</td>
+                                      <td>KL-07-954</td>
+                                      <td>520Km</td>
+                                    </tr>
+                                     <tr>
+                                      <th scope="row">4</th>
+                                      <td>Bus</td>
+                                      <td>KL-07-8854</td>
+                                      <td>1520Km</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">5</th>
+                                      <td>Truck</td>
+                                      <td>KL-07-954</td>
+                                      <td>7520Km</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">6</th>
+                                      <td>Car</td>
+                                     <td>KL-07-6454</td>
+                                      <td>5520Km</td>
+                                    </tr>
+                                     <tr>
+                                      <th scope="row">7</th>
+                                      <td>Bus</td>
+                                      <td>KL-07-3454</td>
+                                      <td>8520Km</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">8</th>
+                                      <td>Car</td>
+                                      <td>KL-07-1454</td>
+                                      <td>520Km</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">9</th>
+                                      <td>Truck</td>
+                                      <td>KL-07-7854</td>
+                                      <td>27820Km</td>
+                                    </tr>
+                                  </tbody>
+                            </table>
+                        </div>
+<div class="iconsbg1"> 
+<div class="row">
+     <div class="card card-hover" style="width:100%">
+                            <div class="box bg-success text-center">
+                                <h3 class="text-white" style="padding:3% 0 0!important;line-height:1">LIVE TRACK</h3>
+                            </div>
+                        </div>
+                                            <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/network-status.png">
+                                                   <h4 class="m-b-0 m-t-5">Network Status</h4>
+                                                   <medium class="font-light">Average</medium>
+                                                </div>
+                                            </div>
+                                             <div class="col-6 m-t-15"  style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/fuel-status.png">
+                                                   <h4 class="m-b-0 m-t-5">Fuel Status</h4>
+                                                   <medium class="font-light">12 L</medium>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/speed.png">
+                                                   <h4 class="m-b-0 m-t-5">Speed</h4>
+                                                   <medium class="font-light">60 Kmh</medium>
+                                                </div>
+                                            </div>
+                                             <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/odometer.png">
+                                                   <h4 class="m-b-0 m-t-5">Odometer</h4>
+                                                   <medium class="font-light">41223</medium>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/vehicle-status.png">
+                                                   <h4 class="m-b-0 m-t-5">Vehicle Status</h4>
+                                                   <medium class="font-light">Stopped</medium>
+                                                </div>
+                                            </div>
+                                         <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/sattelite.png">
+                                                   <h4 class="m-b-0 m-t-5">Satellite</h4>
+                                                   <medium class="font-light">10</medium>
+                                                </div>
+                                            </div>
+<div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/battery-status.png">
+                                                   <h4 class="m-b-0 m-t-5">Battery Status</h4>
+                                                   <medium class="font-light">12.3V</medium>
+                                                </div>
+                                            </div>
+<div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/towing-dash.png">
+                                                   <h4 class="m-b-0 m-t-5">Towing</h4>
+                                                   <medium class="font-light">Yes</medium>
+                                                </div>
+                                            </div>
+                                                         <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/immobilizer.png">
+                                                   <h4 class="m-b-0 m-t-5">Immobilizer</h4>
+                                                   <medium class="font-light">Yes/No</medium>
+                                                </div>
+                                            </div>
+                                                         
+
+   <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/location.png">
+                                                   <h4 class="m-b-0 m-t-5">Location</h4>
+                                                   <medium class="font-light">35/23345, htajndsnknlkd, Kalamassery</medium>
+                                                </div>
+                                            </div>
+
+                                        </div>     
+
+                                        </div>
+
                 </div>
-
-            <div class="box box-danger">
-                  <div class="box-header ui-sortable-handle" style="cursor: move;">
-                    <i class="fa fa-file"></i>
-                    <h3 class="box-title">Expired Documents List</h3>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                    <ul class="list-group">
-                      @if($expired_documents)
-                        @foreach ($expired_documents as $expired )
-                        <li class="list-group-item">
-                          <!-- drag handle -->
-                          <span class="handle ui-sortable-handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                              </span>
-                          <!-- todo text -->
-                          <span class="text-danger">{{$expired->documentType->name}} expired on {{$expired->expiry_date}}</span>
-                          [<span class="text-primary" style="color:#000;">{{$expired->vehicle->name}} - {{$expired->vehicle->register_number}}</span>]
-
-                          <div class="card-link pull-right">
-                            <?php $id=Crypt::encrypt($expired->vehicle_id); ?>
-                            <a href="{{route('vehicle.documents',$id)}}" class="c-link">View
-                            <i class="fa fa-angle-right"></i>
-                            </a>
-                            
-                          </div>
-                          <!-- General tools such as edit or delete-->
-                        </li>
-                       @endforeach
-                      @else
-                        <h4 class="text-info"> </h4>
-                      @endif
-                      
-                    </ul>
-                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                    <ul class="list-group">
-                      @if($expire_documents)
-                        @foreach ($expire_documents as $expired )
-                        <li class="list-group-item">
-                          <!-- drag handle -->
-                          <span class="handle ui-sortable-handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                              </span>
-                          
-                          <!-- todo text -->
-                          <span class="text-danger">{{$expired->documentType->name}} will expire on {{$expired->expiry_date}}</span>
-                          [<span class="text-primary" style="color:#000;">{{$expired->vehicle->name}} - {{$expired->vehicle->register_number}}</span>]
-
-                          <div class="card-link pull-right">
-                            <?php $id=Crypt::encrypt($expired->vehicle_id); ?>
-                            <a href="{{route('vehicle.documents',$id)}}" class="c-link">View
-                            <i class="fa fa-angle-right"></i>
-                            </a>
-                            
-                          </div>
-                          <!-- General tools such as edit or delete-->
-                        </li>
-                       @endforeach
-                      @else
-                        <h4 class="text-info"> </h4>
-                      @endif
-                      
-                    </ul>
-                  </div>
-                  <!--Documents report-end -->
+                  <!-- Column -->
                 </div>
-          </div>
+                <!-- ============================================================== -->
+                <!-- Sales chart -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12">
+                      
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- Sales chart -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Recent comment and chats -->
+                <!-- ============================================================== -->
+                               <!-- ============================================================== -->
+                <!-- Recent comment and chats -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
         </div>
-
-
   @endrole
 
 </div>
@@ -355,140 +412,6 @@
       <script src="{{asset('js/gps/dashb.js')}}"></script>
   @endsection
   <!-- ######################################################################## -->
-  <link rel='stylesheet' type='text/css' href='css/dashboard/style.css' />
-   <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
-
-  <script type='text/javascript'>
   
-    $(function() {
-    
-      var chicago = new google.maps.LatLng(41.924832, -87.697456),
-          pointToMoveTo, 
-          first = true,
-          curMarker = new google.maps.Marker({}),
-          $el;
-      
-      var myOptions = {
-          zoom: 10,
-          center: chicago,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-      
-      var map = new google.maps.Map($("#map_canvas")[0], myOptions);
-    
-      $("#locations li").mouseenter(function() {
-      
-        $el = $(this);
-                
-        if (!$el.hasClass("hover")) {
-        
-          $("#locations li").removeClass("hover");
-          $el.addClass("hover");
-        
-          if (!first) { 
-            
-            // Clear current marker
-            curMarker.setMap(); 
-            
-            // Set zoom back to Chicago level
-            // map.setZoom(10);
-          }
-          
-          // Move (pan) map to new location
-          pointToMoveTo = new google.maps.LatLng($el.attr("data-geo-lat"), $el.attr("data-geo-long"));
-          map.panTo(pointToMoveTo);
-          
-          // Add new marker
-          curMarker = new google.maps.Marker({
-              position: pointToMoveTo,
-              map: map
-          });
-          
-          // On click, zoom map
-          google.maps.event.addListener(curMarker, 'click', function() {
-             map.setZoom(14);
-          });
-          
-          // Fill more info area
-          $("#more-info")
-            .find("h2")
-              .html($el.find("h3").html())
-              .end()
-            .find("p")
-              .html($el.find(".longdesc").html());
-          
-          // No longer the first time through (re: marker clearing)        
-          first = false; 
-        }
-        
-      });
-      
-      $("#locations li:first").trigger("mouseenter");
-      
-    });
-  </script>
-
-
-<!-- 
-<script>
-  $(document).ready(function() {
-
-// function getLocationData(id) { 
-  // alert(id);
-  $('##locations li').hover(function () { 
-    // document.getElementById('cash_recep').style.display = 'block';
-    var waybillId = $(this).val();
-    alert(waybillId);
-    var data={ waybillId : waybillId };
-    if(waybillId) {
-      $.ajax({
-        type:'POST',      
-        url: '/dashboard/getlocation',
-        data:data ,
-        async: true,
-        headers: {
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success:function(data) {
-            // console.log(data);
-          if(data){
-             //  $("#waybills").text(data.waybill_code); 
-             //  $("#etmid").text(data.etm); 
-             //  $("#total_passenger").text(data.passenger); 
-             //  $("#vehicle_no").text(data.vehicle); 
-             //   $("#vehicleTypeId").text(data.vehicleTypeId); 
-             //  $("#depot").text(data.depot); 
-             //  $("#conductor_name").text(data.conductor_name);
-             //  $("#driver_name").text(data.driver_name); 
-             //  $("#trip_count").text(data.trip_count); 
-             //  $("#ticketSale").text(data.totalCollection); 
-             //   $("#etm_collection").text(data.totalCollection); 
-             //   $("#net_amount").text(data.amountTotal);
-             //  $("#totalCollection").text(data.amountTotal); 
-             //  $("#total_ticket").text(data.passenger); 
-             //  $("#total_ticket_no").text(data.passenger);
-             //  $("#km").text(data.assigned_km);
-             //  $("#actualkm").text(data.km);
-             //  $("#penality_amount").text(data.penality);
-             //  $("#penality_count").text(data.penality_count);
-             // $("#expenseAmount").text(data.expenseAmount);
-             //  $("#startDate").text(data.startDate);
-             // $("#closing_date").text(data.closing_date);
-             //  $("#totalExpenses").text(data.totalExpenses);
-             //  $("#firstTicket").text(data.first_ticket);
-             //  $("#lastTicket").text(data.last_ticket);
-            }
-            else
-            {
-            }
-          }
-        });
-      }else{    
-    }
-  });
-});
-</script> -->
-
   <!-- ############################################################ -->
 @endsection

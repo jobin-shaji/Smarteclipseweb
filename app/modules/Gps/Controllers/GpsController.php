@@ -427,6 +427,10 @@ class GpsController extends Controller {
     {
         return view('Gps::gps-client-list');
     } 
+    //  public function gpsClientListPage()
+    // {
+    //     return view('Gps::list-client-gps');
+    // } 
 
     //returns gps as json 
     public function getClientGps()

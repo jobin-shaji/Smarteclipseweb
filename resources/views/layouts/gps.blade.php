@@ -12,6 +12,8 @@
             @include('layouts.sections.footer')
         </div>
     <!-- ./wrapper -->
+
+    <!--client demo-->
     <!-- jQuery 3 -->
 
     <script src="{{asset('js/jquery.min.js')}}"></script>
@@ -33,6 +35,7 @@
 
    <!--  -->
     
+    
     <!-- datetime picker -->
     {!! Toastr::render() !!}
 
@@ -47,13 +50,5 @@
     <!-- <script src="{{asset('js/markerAnimate.js')}}"></script>
     <script src="{{asset('js/jquery_easing.js')}}"></script>
  -->
-
-
-
-
-
-
-
-  
     </body>
 </html>
