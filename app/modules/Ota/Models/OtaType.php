@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OtaType extends Model
 {
     use SoftDeletes; 
+
+    protected $fillable=[
+		'name','code','default_value'
+	];
 }

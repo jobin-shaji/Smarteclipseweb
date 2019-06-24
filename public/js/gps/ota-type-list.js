@@ -39,6 +39,7 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'code', name: 'code'},
+            {data: 'default_value', name: 'default_value'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
@@ -46,18 +47,18 @@ function callBackDataTable(){
     });
  }
 
- function deleteRoute(route){
-    var url = 'route/delete';
+ function deleteOtaType(id){
+    var url = 'ota-type/delete';
     var data = {
-        id : route
+        id : id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
- function activateRoute(route){
-    var url = 'route/activate';
+ function activateOtaType(id){
+    var url = 'ota-type/activate';
     var data = {
-         id : route
+         id : id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }

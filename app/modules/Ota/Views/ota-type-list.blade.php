@@ -38,7 +38,8 @@
                             <tr>
                               <th>Sl.No</th>                              
                               <th>Name</th>                            
-                              <th>Code</th>                              
+                              <th>Code</th>  
+                              <th>Default</th>                              
                               <th>Action</th>
                             </tr>
                         </thead>

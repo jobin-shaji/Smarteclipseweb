@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class CreateIdleStatusesTable extends Migration
+
+class CreateGpsOtasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +13,13 @@ class CreateIdleStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('idle_statuses', function (Blueprint $table){
+        Schema::create('gps_otas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vehicle_id');
-            $table->integer('status');
-            $table->dateTime('time');
+            $table->integer('gps_id');
+            $table->integer('ota_type_id');
+            $table->string('value')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateIdleStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('idle_statuses');
+        Schema::dropIfExists('gps_otas');
     }
 }

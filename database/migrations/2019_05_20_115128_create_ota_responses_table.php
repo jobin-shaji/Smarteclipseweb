@@ -15,11 +15,9 @@ class CreateOtaResponsesTable extends Migration
     {
         Schema::create('ota_responses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id');
-            $table->integer('vehicle_id');
-            $table->string('imei');
+            $table->integer('gps_id');
             $table->text('response');
-            $table->integer('status');
+            $table->dateTime('verified_at')->nullable();
             $table->timestamps();
         });
     }
