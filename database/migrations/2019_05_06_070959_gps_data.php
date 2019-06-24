@@ -64,12 +64,7 @@ class GpsData extends Migration
             $table->string('vehicle_register_num')->nullable();
             $table->string('frame_number')->nullable();
             $table->string('checksum')->nullable();
-            $table->string('key1')->nullable();
-            $table->string('value1')->nullable();
-            $table->string('key2')->nullable();
-            $table->string('value2')->nullable();
-            $table->string('key3')->nullable();
-            $table->string('value3')->nullable();
+            $table->text('response')->nullable();
             $table->string('gf_id')->nullable();
             $table->string('packet_type')->nullable();
             $table->string('packet_version')->nullable();
@@ -81,7 +76,7 @@ class GpsData extends Migration
             $table->integer('reply_number')->nullable();
             $table->string('crc')->nullable();
             $table->text('vlt_data')->nullable();
-            $table->dateTime('device_time');
+            $table->dateTime('device_time')->nullable();
 
             $table->timestamps();
         });
