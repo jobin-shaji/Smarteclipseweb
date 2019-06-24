@@ -1,5 +1,5 @@
 
-@extends('layouts.gps-client')
+@extends('layouts.eclipse')
 @section('content')
 @role('root')
 <section class="content-header">
@@ -165,7 +165,7 @@
                 <!-- Sales Cards  -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15714.260711999257!2d76.35214005!3d10.05269365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1560837024158!5m2!1sen!2sin" width="100%" height="1000" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15714.260711999257!2d76.35214005!3d10.05269365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1560837024158!5m2!1sen!2sin" width="100%" height="1200" frameborder="0" style="border:0" allowfullscreen></iframe>
                     <div class="dashboard-main">
               <div class="iconsbg">          
 <div class="col-md-6 col-lg-4 col-xlg-3">
@@ -287,6 +287,11 @@
                         </div>
 <div class="iconsbg1"> 
 <div class="row">
+     <div class="card card-hover" style="width:100%">
+                            <div class="box bg-success text-center">
+                                <h3 class="text-white" style="padding:3% 0 0!important;line-height:1">LIVE TRACK</h3>
+                            </div>
+                        </div>
                                             <div class="col-6 m-t-15" style="width:50%;float:left">
                                                 <div class="bg-dark p-10 text-white text-center">
                                                    <img src="assets/images/network-status.png">
@@ -329,11 +334,25 @@
                                                    <medium class="font-light">10</medium>
                                                 </div>
                                             </div>
-                                                         <div class="col-6 m-t-15" style="width:50%;float:left">
+<div class="col-6 m-t-15" style="width:50%;float:left">
                                                 <div class="bg-dark p-10 text-white text-center">
                                                    <img src="assets/images/battery-status.png">
                                                    <h4 class="m-b-0 m-t-5">Battery Status</h4>
                                                    <medium class="font-light">12.3V</medium>
+                                                </div>
+                                            </div>
+<div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/towing-dash.png">
+                                                   <h4 class="m-b-0 m-t-5">Towing</h4>
+                                                   <medium class="font-light">Yes</medium>
+                                                </div>
+                                            </div>
+                                                         <div class="col-6 m-t-15" style="width:50%;float:left">
+                                                <div class="bg-dark p-10 text-white text-center">
+                                                   <img src="assets/images/immobilizer.png">
+                                                   <h4 class="m-b-0 m-t-5">Immobilizer</h4>
+                                                   <medium class="font-light">Yes/No</medium>
                                                 </div>
                                             </div>
                                                          
@@ -377,7 +396,9 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-           
+            <footer class="footer text-center">
+                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
+            </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

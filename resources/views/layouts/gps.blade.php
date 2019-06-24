@@ -35,6 +35,7 @@
 
    <!--  -->
     
+    
     <!-- datetime picker -->
     {!! Toastr::render() !!}
 
@@ -49,13 +50,5 @@
     <!-- <script src="{{asset('js/markerAnimate.js')}}"></script>
     <script src="{{asset('js/jquery_easing.js')}}"></script>
  -->
-
-
-
-
-
-
-
-  
     </body>
 </html>

@@ -1,19 +1,24 @@
-@extends('layouts.gps')
+@extends('layouts.gps-client')
 
 @section('content')
 <section class="content-header">
-      <h1>
+     
+</section>
+
+
+<section class="content">
+
+   <div class="page-wrapper">
+
+    <div class="container-fluid">
+     <!--   <h1>
         Device User
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Device User</li>
-      </ol>
-</section>
-
-
-<section class="content">
+      </ol> -->
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -36,6 +41,8 @@
             </div>
         </div>
     </div>
+  </div>
+  </div>
 </section>
 @section('script')
     <script src="{{asset('js/gps/gps-user-list.js')}}"></script>

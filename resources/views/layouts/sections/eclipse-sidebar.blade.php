@@ -16,7 +16,7 @@
                 @include('layouts.sections.sub-dealer')
                 @endrole
                 @role('client')
-                @include('layouts.sections.client-demo')
+                @include('layouts.sections.eclipse-client-sidebar')
                 @endrole
             </ul>
         </nav>

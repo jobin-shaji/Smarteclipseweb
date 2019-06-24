@@ -1,4 +1,4 @@
-@extends('layouts.gps')
+@extends('layouts.eclipse')
 @section('title')
   All Vehicle
 @endsection
@@ -12,20 +12,11 @@
           </div>
         </div>
     @endif
- <!-- end flash message -->
-
- <section class="content-header">
-      <h1>
-        Vehicle
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Vehicle</li>
-      </ol>
-</section>
+ 
 
  <section class="content">
+   <div class="page-wrapper">
+    <div class="container-fluid">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -53,6 +44,8 @@
             </div>
         </div>
     </div>
+  </div>
+</div>
 </section>
 @section('script')
     <script src="{{asset('js/gps/vehicle-list.js')}}"></script>
