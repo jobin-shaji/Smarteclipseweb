@@ -24,13 +24,34 @@ function getUrl() {
   var marker;
   var bSimulationRunning = false;
 
-  var svgMarkup = '<svg width="24" height="24" ' + 
-  'xmlns="http://www.w3.org/2000/svg">' +
-  '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
-  'height="22" /><text x="12" y="18" font-size="12pt" ' +
-  'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
-  'fill="white">H</text></svg>';
+  // var svgMarkup = '<svg width="24" height="24" ' + 
+  // 'xmlns="http://www.w3.org/2000/svg">' +
+  // '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+  // 'height="22" /><text x="12" y="18" font-size="12pt" ' +
+  // 'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+  // 'fill="white">H</text></svg>';
 
+   var svgMarkup = '<svg'+
+   'xmlns:dc="http://purl.org/dc/elements/1.1/"'+
+   'xmlns:cc="http://creativecommons.org/ns#"'+
+   'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"'+
+   'xmlns:svg="http://www.w3.org/2000/svg"'+
+   'xmlns="http://www.w3.org/2000/svg"'+
+   'version="1.1"'+
+   'width="46.093765"'+
+   'height="63.352634">'+
+  '<g'+
+     'transform="translate(-8.9327811,-0.45623957)"'+
+     'id="layer1">'+
+    '<path'+
+       'd="M 22.15625,0 A 21.544797,22.053723 0 0 0 0,22.0625 21.544797,22.053723 0 0 0 10.40625,40.9375 c 1.062265,1.795846 11.125,19.40625 11.125,19.40625 l 12.125,-20.0625 A 21.544797,22.053723 0 0 0 43.09375,22.0625 21.544797,22.053723 0 0 0 22.15625,0 z"'+
+       'transform="translate(10.432788,1.9651232)"'+
+       'id="path5014"'+
+       'style="fill:#cccccc;fill-opacity:1;stroke:#6e6e6e;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />'+
+    
+  '</g>'+
+'</svg>';
+console.log(svgMarkup);
 
 // Create an icon, an object holding the latitude and longitude, and a marker:
   var icon = new H.map.Icon(svgMarkup),
@@ -283,6 +304,7 @@ var Walker = function (marker, path)
 
 function addMarkerToGroup(group, coordinate, html) {
   var userImg = new H.map.Icon('helo.png');
+  // console.log(userImg);
   var marker = new H.map.Marker(coordinate,{icon:userImg});
   marker.setData(html);
   group.addObject(marker);
