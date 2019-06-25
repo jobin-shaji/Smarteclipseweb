@@ -79,8 +79,10 @@ class IdleReportController extends Controller
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');     
-        if($vehicle==0)
+        ->with('vehicle:id,name,register_number')
+        ->where('vehicle_mode','H');
+            
+        if($vehicle==0 || $vehicle==null )
        {         
             $query = $query->where('client_id',$client_id)
             ->groupBy('date');
@@ -100,7 +102,7 @@ class IdleReportController extends Controller
         return DataTables::of($track_report)
         ->addIndexColumn()         
         ->addColumn('sleep', function ($track_report) {  
-            $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
+            $v_mode=$track_report->sleep->where('vehicle_mode','H')->count(); 
             $sleep= gmdate("H:i:s",$v_mode);                   
             return $sleep;
         })        

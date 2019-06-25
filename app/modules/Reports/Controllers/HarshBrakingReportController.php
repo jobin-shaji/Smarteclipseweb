@@ -21,7 +21,8 @@ class HarshBrakingReportController extends Controller
     } 
     public function harshBrakingReportList(Request $request)
     {
-        $client= $request->data['client'];
+
+        $client= $request->data['client']; 
         $vehicle= $request->data['vehicle'];
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];   
@@ -38,26 +39,27 @@ class HarshBrakingReportController extends Controller
         )
         ->with('alertType:id,description')
         ->with('vehicle:id,name,register_number');
-        if($from==null || $to==null || $vehicle==null)
-        {
-            $query = $query->where('client_id',$client)
-            ->where('alert_type_id',1)
-            ->where('status',1);
-        }   
-        else if($vehicle==0)
+        // if($vehicle==null)
+        // {
+        //     $query = $query->where('client_id',$client)
+        //     ->where('alert_type_id',1)
+        //     ->where('status',1);
+
+        // }   
+         if($vehicle==0 || $vehicle==null)
         {
             $query = $query->where('client_id',$client)
             ->where('alert_type_id',1)
             ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
+                $search_to_date=date("Y-m-d", strtotime($to)); 
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
+            }            
         }
         else
         {
-             $query = $query->where('client_id',$client)
+            $query = $query->where('client_id',$client)
             ->where('alert_type_id',1)
             ->where('vehicle_id',$vehicle)
             ->where('status',1);
@@ -65,8 +67,9 @@ class HarshBrakingReportController extends Controller
                $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            }
         }
-        $alert = $query->get();   
+        $alert = $query->get();      
         return DataTables::of($alert)
         ->addIndexColumn()
         ->addColumn('location', function ($alert) {
@@ -94,7 +97,8 @@ class HarshBrakingReportController extends Controller
         })
         ->rawColumns(['link', 'action'])
         ->make();
-    }
+   
+}
     public function export(Request $request)
     {
        return Excel::download(new HarshBrakingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'harsh-braking-report.xlsx');
