@@ -6,7 +6,7 @@
 </li>
 <li class="sidebar-item">
   <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-    <i class="mdi mdi-car"></i>
+    <i class="mdi mdi-tablet-ipad"></i>
     <span class="hide-menu">Device</span>
   </a>
   <ul aria-expanded="false" class="collapse  first-level">
@@ -29,7 +29,7 @@
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="{url('/gps-transfer/create')}}" class="sidebar-link">
+      <a href="{{url('/gps-transfer/create')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
         <span class="hide-menu">Device Transfer</span>
       </a>
@@ -43,20 +43,20 @@
    </ul>
 </li>
 <li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-tablet-ipad"></i>
-    <span class="hide-menu">Device</span>
+  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-user"></i>
+    <span class="hide-menu">Dealer</span>
   </a>
   <ul aria-expanded="false" class="collapse  first-level">
     <li class="sidebar-item">
-      <a href="{{url('/gps-new')}}" class="sidebar-link">
+      <a href="{{url('/dealer/create')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">New Arrivals</span>
+        <span class="hide-menu">Add Dealer</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="{{url('/gps-client')}}" class="sidebar-link">
+      <a href="{{url('/dealers')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Device</span>
+        <span class="hide-menu">List Dealer</span>
       </a>
     </li>
   </ul>
