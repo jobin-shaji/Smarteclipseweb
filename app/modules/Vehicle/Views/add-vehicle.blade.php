@@ -1,9 +1,8 @@
-@extends('layouts.gps-client')
+@extends('layouts.eclipse')
 @section('title')
   Add Vehicle
 @endsection
-@section('content')
-   
+@section('content')   
     @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">

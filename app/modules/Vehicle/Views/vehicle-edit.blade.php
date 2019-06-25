@@ -1,4 +1,4 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
    Update vehicle details
 @endsection
@@ -15,23 +15,48 @@
     </div>
     @endif  
 
-
+<div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+          
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+<div class="card-body">
     <section class="hilite-content">
       <!-- title row -->
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-8">
+           
           <h2 class="page-header">
             <i class="fa fa-user-plus"></i> 
-              <?php 
+             
+          </h2> 
+        
+        
+        </div>
+        <!-- /.col -->
+      </div>
+       <div class="row">
+            <!-- /.col -->
+            <div class="col-md-3 ">
+               <?php 
                 $encript=Crypt::encrypt($vehicle->gps->id)
               ?>
               <a href="{{route('vehicle.ota',$encript)}}">
                 <button class="btn btn-xs btn-success pull-right">Edit OTA</button>
               </a>
-          </h2>
-        </div>
-        <!-- /.col -->
-      </div>
+            </div>
+            <!-- /.col -->
+          </div>
    <form  method="POST" action="{{route('vehicles.update.p',$vehicle->id)}}">
         {{csrf_field()}}
       <div class="row">
@@ -63,14 +88,18 @@
  
 <div class="clearfix"></div>
 
-<section class="hilite-content">
-  <div class="row">
-    <div class="col-xs-8">
-      <div class="row">
+
+
+
+
+
+
+
+             <div class="row">
         <div class="col-md-6">
-        <h2 class="page-header">
+       
           <i class="fa fa-car"> Vehicle Routes</i> 
-        </h2>
+        
         </div>
         <div class="col-md-6">
         <div class="clearfix"></div>
@@ -78,7 +107,10 @@
 
         </div>
       </div>
-         <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                     
+                                            <div class="row"><div class="col-sm-12">
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                   <thead>
                       <tr>
@@ -110,10 +142,35 @@
                     @endforeach
                   </tbody>
               </table>
-           </div> 
-    </div>
-  </div>
-</section>
+            </div></div><div class="row"></div></div>
+                                </div>
+
+                            </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           <footer class="footer text-center">
+                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+
 
 
 <!-- add depot user -->
@@ -121,9 +178,14 @@
     <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header">    
+        <div class="row">
+                    <div class="col-md-12">
         <h4 class="modal-title">Vehicle Routes</h4>
+      </div>
+    </div>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
       </div>
       <div class="modal-body">
             <form  method="POST" action="{{route('vehicle-route.create.p')}}">
@@ -145,7 +207,10 @@
                             <strong class="error-text">{{ $errors->first('route_id') }}</strong>
                         </span>
                       @endif
-
+                    </div>
+                  </div>
+                       <div class="row">
+                    <div class="col-md-12">
                       <div class="form-group has-feedback">
                         <label class="srequired">From Date</label>
                         <input type="text" class="form-control datetimepicker {{ $errors->has('date_from') ? ' has-error' : '' }}" placeholder="From Date"  name="date_from"> 
@@ -155,7 +220,10 @@
                             <strong class="error-text">{{ $errors->first('date_from') }}</strong>
                         </span>
                       @endif
-
+                        </div>
+                  </div>
+                       <div class="row">
+                    <div class="col-md-12">
                       <div class="form-group has-feedback">
                         <label class="srequired">To Date</label>
                         <input type="text" class="form-control datetimepicker {{ $errors->has('date_to') ? ' has-error' : '' }}" placeholder="TO Date"  name="date_to"> 
