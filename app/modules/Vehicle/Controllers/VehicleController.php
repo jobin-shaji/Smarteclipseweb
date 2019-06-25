@@ -102,7 +102,7 @@ class VehicleController extends Controller {
     //     return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types]);
     // }
 
-     public function createVehicle()
+    public function createVehicle()
     {
         $client_id=\Auth::user()->client->id;
         $client_user_id=\Auth::user()->id;
