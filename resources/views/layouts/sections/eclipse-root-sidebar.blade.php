@@ -7,19 +7,37 @@
 <li class="sidebar-item">
   <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
     <i class="mdi mdi-car"></i>
-    <span class="hide-menu">Vehicle</span>
+    <span class="hide-menu">Device</span>
   </a>
   <ul aria-expanded="false" class="collapse  first-level">
     <li class="sidebar-item">
-      <a href="{{route('vehicles.create')}}" class="sidebar-link">
+      <a href="{{url('/gps/create')}}" class="sidebar-link">
         <i class="mdi mdi-note-plus"></i>
-        <span class="hide-menu">Add Vehicle</span>
+        <span class="hide-menu">Add Device</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="{{url('/vehicle')}}" class="sidebar-link">
+      <a href="{{url('/gps-transferred')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Vehicle</span>
+        <span class="hide-menu"> List Device</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="{{url('/gps-transferred')}}" class="sidebar-link">
+        <i class="mdi mdi-view-dashboard"></i>
+        <span class="hide-menu">Transferred Device List</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="{url('/gps-transfer/create')}}" class="sidebar-link">
+        <i class="mdi mdi-view-dashboard"></i>
+        <span class="hide-menu">Device Transfer</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="{{url('/gps-transfers')}}" class="sidebar-link">
+        <i class="mdi mdi-view-dashboard"></i>
+        <span class="hide-menu">Device Transfer List</span>
       </a>
     </li>
    </ul>
@@ -195,10 +213,4 @@
     </li>
   </ul>
 </li>
-                        
-<li class="sidebar-item">
-  <a class="sidebar-link waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false">
-    <i class="mdi mdi-comment-multiple-outline"></i>
-    <span class="hide-menu">Help & Support</span>
-  </a>
-</li>
+ 
