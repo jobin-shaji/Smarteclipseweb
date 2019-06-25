@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-Accident Impact Alert Report
+Parking Report
 @endsection
 @section('content')
 <div class="page-wrapper">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Total KM Report</h4>
+        <h4 class="page-title">  parking Report</h4>
       </div>
     </div>
   </div>
@@ -40,25 +40,25 @@ Accident Impact Alert Report
                             <input type="text" class="datepicker" id="toDate" name="toDate">
                           </div>
                           <div class="col-md-3">  
-                            <button class="btn btn-xs btn-primary " onclick="downloadAccidentImpactAlertReport()">
+                            <button class="btn btn-xs btn-primary " onclick="downloadIdleReport()">
                               <i class="fa fa-file"></i> Download Excel</button>                   
                               <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
                           </div>
                         </div>
                       </div>  
+                
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>
                               <th>Sl.No</th>
                               <th>Vehicle</th>
-                              <th>Alert Type</th>
-                              <th>Location</th>
-                              <th>DateTime</th>
-                              <th>Action</th>             
+                              <th>Register Number</th>                              
+                              <th>Parking</th>                              
+                              <th>Date&Time</th>        
                             </tr>
                         </thead>
                     </table>
-                </div>
+                 </div>
                   </div>
                 </div>
               </div>
@@ -71,9 +71,8 @@ Accident Impact Alert Report
     </div>
   </div>
 </div>
-
+</section>
 @section('script')
-    <script src="{{asset('js/gps/accident-impact-alert-report-list.js')}}"></script>
+    <script src="{{asset('js/gps/parking-report-list.js')}}"></script>
 @endsection
 @endsection
-

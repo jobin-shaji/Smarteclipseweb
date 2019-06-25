@@ -73,6 +73,11 @@ Route::post('/accident-impact-alert-report-list','AccidentImpactAlertReportContr
 	Route::post('/idle-report-list','IdleReportController@idleReportList')->name('idle-report-list');
 	Route::post('/idle-report/export','IdleReportController@export')->name('idle.report.export');
 
+Route::get('/parking-report','ParkingReportController@parkingReport')->name('parking-report');
+	Route::post('/parking-report-list','ParkingReportController@parkingReportList')->name('parking-report-list');
+	Route::post('/parking-report/export','ParkingReportController@export')->name('parking.report.export');
+
+
 Route::get('/offline-report','OfflineReportController@accidentImpactAlertReport')->name('offline-report');
 
 Route::get('/mainbattery-disconnect-report','MainBatteryDisconnectReportController@mainBatteryDisconnectReport')->name('mainbattery-disconnect-report');
