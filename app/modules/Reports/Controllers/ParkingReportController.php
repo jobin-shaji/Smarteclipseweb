@@ -1,28 +1,31 @@
 <?php
 namespace App\Modules\Reports\Controllers;
-use App\Exports\DailyKMReportExport;
+use App\Exports\ParkingReportExport;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modules\Gps\Models\GpsData;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Modules\Gps\Models\GpsData;
+use App\Modules\Alert\Models\Alert;
+use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
-class DailyKMReportController extends Controller
+class ParkingReportController extends Controller
 {
-    public function dailyKMReport()
-    {
-    	$client_id=\Auth::user()->client->id;
-    	 $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->get();
-        return view('Reports::daily-km-report',['vehicles'=>$vehicles]);  
-    }  
-    public function dailyKMReportList(Request $request)
+    public function parkingReport()
     {
         $client_id=\Auth::user()->client->id;
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date'];
-        $vehicle = $request->data['vehicle'];      
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+        return view('Reports::parking-report',['vehicles'=>$vehicles]);  
+    } 
+    public function parkingReportList(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;;
+        $from = $request->from_date;
+        $to = $request->to_date;
+        $vehicle = $request->vehicle;
         $query =GpsData::select(
             'client_id',
             'gps_id',
@@ -70,46 +73,44 @@ class DailyKMReportController extends Controller
             'digital_input_status',
             'digital_output_status',
             'frame_number',
-            'checksum',            
+            'checksum',
+            
             'gf_id',
-            // 'device_time',
-            \DB::raw('DATE(device_time) as date'),
+            'device_time',
             \DB::raw('sum(distance) as distance')
         )
         ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client_id)
-        ->where('vehicle_id',$vehicle)
-        ->groupBy('date');                     
+        ->where('vehicle_mode','S');
+            
+        if($vehicle==0 || $vehicle==null )
+       {         
+            $query = $query->where('client_id',$client_id)
+            ->groupBy('date');
+       }
+       else
+       {
+        $query = $query->where('client_id',$client_id)
+            ->where('vehicle_id',$vehicle)
+            ->groupBy('date'); 
+       }
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $dailykm_report = $query->get();     
-        return DataTables::of($dailykm_report)
-        ->addIndexColumn()        
-        ->addColumn('km', function ($dailykm_report) { 
-            $earthRadius = 6371000;
-            $lat_from=floatval($dailykm_report->first()->latitude);
-            $lng_from=floatval($dailykm_report->first()->longitude);
-            $lat_to=floatval($dailykm_report->latitude);
-            $lng_to=floatval($dailykm_report->longitude);
-            // dd($lat_from.",".$lng_from.",".$lat_to.",".$lng_to);
-            $latFrom = deg2rad($lat_from);
-            $lonFrom = deg2rad($lng_from);
-            $latTo = deg2rad($lat_to);
-            $lonTo = deg2rad($lng_to);
-            $latDelta = $latTo - $latFrom;
-            $lonDelta = $lonTo - $lonFrom;
-            $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
-            cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-            return $angle * $earthRadius;                            
-        })
+        $track_report = $query->get();     
+        return DataTables::of($track_report)
+        ->addIndexColumn()         
+        ->addColumn('sleep', function ($track_report) {  
+            $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
+            $sleep= gmdate("H:i:s",$v_mode);                   
+            return $sleep;
+        })        
         ->make();
     }
     public function export(Request $request)
     {
-       return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Daily-km-report.xlsx');
+       return Excel::download(new ParkingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Parking-report.xlsx');
     }
    
 }

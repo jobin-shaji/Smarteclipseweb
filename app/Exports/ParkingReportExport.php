@@ -7,9 +7,9 @@ use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
-class TotalKMReportExport implements FromView
+class ParkingReportExport implements FromView
 {
-	protected $totalkmReportExport;
+	protected $parkingReportExport;
 	public function __construct($client,$vehicle,$from,$to)
     {   
         $query =GpsData::select(
@@ -59,34 +59,38 @@ class TotalKMReportExport implements FromView
             'digital_input_status',
             'digital_output_status',
             'frame_number',
-            'checksum',            
+            'checksum',
+            'key1',
+            'value1',
+            'key2',
+            'value2',
+            'key3',
+            'value3',
             'gf_id',
-            'device_time'
-            // \DB::raw('sum(distance) as distance')
+            'device_time',
+            \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');
-       if($vehicle==0 || $vehicle==null)
-       {
+        ->with('vehicle:id,name,register_number');     
+        if($vehicle==0 || $vehicle==null )
+       {         
             $query = $query->where('client_id',$client)
-            ->groupBy('vehicle_id');
+            ->groupBy('date');
        }
        else
        {
-            $query = $query->where('client_id',$client)
+        $query = $query->where('client_id',$client)
             ->where('vehicle_id',$vehicle)
-            ->groupBy('vehicle_id');   
-       }             
+            ->groupBy('date'); 
+       }
         if($from){
-            $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
-        $this->totalkmReportExport = $query->get();          
+        $this->parkingReportExport = $query->get();          
     }
     public function view(): View
 	{
-       return view('Exports::total-km-report', [
-            'totalkmReportExport' => $this->totalkmReportExport
+       return view('Exports::parking-report', [
+            'parkingReportExport' => $this->parkingReportExport
         ]);
 	}
     

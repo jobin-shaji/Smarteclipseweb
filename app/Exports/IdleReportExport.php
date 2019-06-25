@@ -71,7 +71,7 @@ class IdleReportExport implements FromView
             \DB::raw('sum(distance) as distance')
         )
         ->with('vehicle:id,name,register_number');     
-        if($vehicle==0)
+        if($vehicle==0 || $vehicle==null )
        {         
             $query = $query->where('client_id',$client)
             ->groupBy('date');

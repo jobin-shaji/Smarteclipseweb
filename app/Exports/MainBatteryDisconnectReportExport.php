@@ -25,13 +25,7 @@ class MainBatteryDisconnectReportExport implements FromView
         )
         ->with('alertType:id,description')
         ->with('vehicle:id,name,register_number');
-        if($from==null || $to==null || $vehicle==null)
-        {
-            $query = $query->where('client_id',$client)
-            ->where('alert_type_id',11)
-            ->where('status',1);
-        }   
-        else if($vehicle==0)
+        if($vehicle==0 || $vehicle==null)
         {
             $query = $query->where('client_id',$client)
             ->where('alert_type_id',11)

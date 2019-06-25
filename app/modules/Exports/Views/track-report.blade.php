@@ -6,7 +6,7 @@
         <th>Register Number</th>
         <th>Run</th>
         <th>Idle</th>
-        <th>Halt</th>
+        <th>Sleep</th>
         <th>AC ON</th>
         <th>AC OFF</th>
         <th>Total KM</th>
@@ -34,9 +34,9 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $trackReportExport->vehicle->name }}</td>           
             <td>{{ $trackReportExport->vehicle->register_number }}</td>
-            <td>{{ $motion }}</td>
-            <td>{{ $sleep }}</td>
-            <td>{{ $halt }}</td>  
+            <td>{{ $motion }}</td>            
+            <td>{{ $halt }}</td>
+             <td>{{ $sleep }}</td> 
             <td>{{ $ac_on }}</td>  
             <td>{{ $ac_off }}</td>  
             <td>{{ $km }}</td>  

@@ -20,7 +20,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">List Vehicle</h4>                      
+                        <h4 class="page-title">Add Vehicle</h4>                      
                     </div>
                 </div>
             </div>           
@@ -33,7 +33,7 @@
                         <div class="card">
                             <form class="form-horizontal">
                                 <div class="card-body">
-                                    <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"><img src="assets/images/Vehicle.png" width="40" height="40"></span>VEHICLE INFO</h4>
+                                    <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"><img src="{{ url('/') }}/assets/images/Vehicle.png" width="40" height="40"></span>VEHICLE INFO</h4>
                                     <div class="form-group row" style="float:none!important">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                                          <div class="form-group has-feedback">
