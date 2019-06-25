@@ -47,6 +47,7 @@ class AlertReportController extends Controller
     {
         $client= $request->client;
         $alert_id= $request->alertID;
+
         $vehicle_id= $request->vehicle_id;            
         $from = $request->from_date;
         $to = $request->to_date;
@@ -63,9 +64,10 @@ class AlertReportController extends Controller
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number');
+        ->with('vehicle:id,name,register_number'); 
        if($alert_id==0 && $vehicle_id==0)
-       {         
+       {   
+
             $query = $query->where('client_id',$client)
             ->where('status',1);
        }
@@ -89,9 +91,12 @@ class AlertReportController extends Controller
             ->where('status',1);
        }        
         if($from){
-            $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
+          $search_from_date=date("Y-m-d", strtotime($from));
+          $search_to_date=date("Y-m-d", strtotime($to));
+          $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $alert = $query->get();   
+        $alert = $query->get();  
+        // dd($alert);
         return DataTables::of($alert)
         ->addIndexColumn()
         ->addColumn('location', function ($alert) {

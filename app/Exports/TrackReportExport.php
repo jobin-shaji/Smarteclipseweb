@@ -61,12 +61,7 @@ class TrackReportExport implements FromView
             'digital_output_status',
             'frame_number',
             'checksum',
-            'key1',
-            'value1',
-            'key2',
-            'value2',
-            'key3',
-            'value3',
+           
             'gf_id',
             'device_time',
             \DB::raw('sum(distance) as distance')
@@ -84,7 +79,9 @@ class TrackReportExport implements FromView
             ->groupBy('date'); 
        }      
         if($from){
-            $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
+             $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
 
          $this->trackReportExport = $query->get(); 
