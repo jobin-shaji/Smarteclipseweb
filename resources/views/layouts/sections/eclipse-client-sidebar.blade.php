@@ -181,6 +181,12 @@
         <span class="hide-menu">Idle Report</span>
       </a>
     </li>
+     <li class="sidebar-item">
+      <a href="{{url('/parking-report')}}" class="sidebar-link">
+        <i class="mdi mdi-view-dashboard"></i>
+        <span class="hide-menu">Parking Report</span>
+      </a>
+    </li>
     <li class="sidebar-item">
       <a href="{{url('/mainbattery-disconnect-report')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
