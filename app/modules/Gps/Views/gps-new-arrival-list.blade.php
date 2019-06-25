@@ -1,5 +1,4 @@
 @extends('layouts.gps')
-
 @section('content')
 <section class="content-header">
       <h1>
