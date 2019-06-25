@@ -35,10 +35,14 @@
                         </tr>
                         </thead>
                     </table>
-                                </div></div><div class="row"></div></div>
-                                </div>
+                </div>
+                
+                </div>
+                <div class="row"></div>
+                </div>
+                </div>
 
-                            </div>
+                </div>
              </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->

@@ -1,13 +1,15 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
    Vehicle details
 @endsection
 @section('content')
 
-    <section class="content-header">
-     <h1>Vehicle Details</h1>
-    </section>
-    @if(Session::has('message'))
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Vehicle Details</h4>
+           @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
           {{ Session::get('message') }}  
@@ -15,17 +17,25 @@
     </div>
     @endif  
 
-
-    <section class="hilite-content">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-bus"></i> 
-          </h2>
+            </div>
         </div>
-        <!-- /.col -->
-      </div>
+    </div>
+    <div class="container-fluid">
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+              <div class="row">
+                <div class="col-sm-12">
+                <section class="hilite-content">
+                <!-- title row -->
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h2 class="page-header">
+                      <i class="fa fa-bus"></i> 
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+                </div>
    
       <div class="row">
           <div class="col-md-6">
@@ -40,6 +50,7 @@
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{$vehicle->register_number}}" disabled> 
                 <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
               </div>
+            </div>
 
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
@@ -48,7 +59,8 @@
               </div>
 
            </div>
-
+         
+          <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label class="srequired">Vehicle Type</label>
@@ -66,8 +78,15 @@
         </div>
         
     
-</section>
- 
+                  </section>
+                </div>                
+              </div>
+            <div class="row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <div class="clearfix"></div>
 
 
