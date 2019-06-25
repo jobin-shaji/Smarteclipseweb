@@ -24,10 +24,13 @@
         @include('layouts.sections.eclipse-header')
 
         @include('layouts.sections.eclipse-sidebar')
-
+        
         @yield('content')
 
     </div>
+    <!-- <div class="page-wrapper">
+         @include('layouts.sections.eclipse-footer')
+ </div> -->
      <script src="{{ url('/') }}/assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ url('/') }}/assets/libs/popper.js/dist/umd/popper.min.js"></script>

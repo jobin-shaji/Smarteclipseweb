@@ -1,30 +1,45 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
     Create Device
 @endsection
 @section('content')
 
-    <section class="content-header">
-        <h1>Create Device</h1>
-    </section>
-    @if(Session::has('message'))
+
+
+  <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Create Device</h4>
+                       @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
           {{ Session::get('message') }}  
       </div>
     </div>
     @endif  
-
-<section class="hilite-content">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-tablet"></i> 
-          </h2>
-        </div>
-        <!-- /.col -->
-      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+<div class="card-body">
+                                <div class="table-responsive">
+                                    <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                     
+                                            <div class="row"><div class="col-sm-12">
      <form  method="POST" action="{{route('gps.create.p')}}">
         {{csrf_field()}}
       <div class="row">
@@ -50,6 +65,7 @@
                     <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
                 </span>
               @endif
+            </div>
 
               <div class="form-group has-feedback">
                 <label class="srequired">Model Name</label>
@@ -62,6 +78,7 @@
                 </span>
               @endif
 
+           </div>
            </div>
 
            <div class="col-md-6">
@@ -109,7 +126,33 @@
             <!-- /.col -->
           </div>
     </form>
-</section>
+< </div></div><div class="row"></div></div>
+                                </div>
+
+                            </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+        
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+
  
 <div class="clearfix"></div>
 
