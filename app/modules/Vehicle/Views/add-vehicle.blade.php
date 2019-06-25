@@ -1,4 +1,4 @@
-@extends('layouts.gps-client')
+@extends('layouts.eclipse')
 @section('title')
   Add Vehicle
 @endsection

@@ -3,7 +3,7 @@
   <i class="mdi mdi-car"></i>
   <span class="hide-menu">Vehicle</span></a>
    <ul aria-expanded="false" class="collapse  first-level">
-          <li class="sidebar-item"><a href="/vehicles-create" class="sidebar-link"><i class="mdi mdi-folder-plus"></i><span class="hide-menu">Add Vehicle</span></a></li>
+          <li class="sidebar-item"><a href="/vehicles/create" class="sidebar-link"><i class="mdi mdi-folder-plus"></i><span class="hide-menu">Add Vehicle</span></a></li>
           <li class="sidebar-item"><a href="{{url('/vehicle')}}" class="sidebar-link"><i class="mdi mdi-format-list-numbers"></i><span class="hide-menu">List Vehicle</span></a></li>
    </ul>
                         

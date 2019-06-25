@@ -38,14 +38,14 @@
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                         <tr>
-                          <th>#</th>
-                          <th>Vehicle Name</th>
-                          <th>Register Number</th>
-                          <th>GPS Name</th>
-                        <th>IMEI</th>
-                          <th>E-SIM Number</th>
-                        <th>Vehicle Type</th>
-                          <th style="width:160px;">Action</th>
+                            <th>#</th>
+                            <th>Vehicle Name</th>
+                            <th>Register Number</th>
+                            <th>GPS Name</th>
+                            <th>IMEI</th>
+                            <th>E-SIM Number</th>
+                            <th>Vehicle Type</th>
+                            <th style="width:160px;">Action</th>
                         </tr>
                         </thead>
                     </table>
