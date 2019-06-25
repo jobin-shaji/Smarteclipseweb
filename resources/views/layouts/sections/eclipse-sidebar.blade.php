@@ -14,10 +14,8 @@
 
   <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-tablet-ipad"></i><span class="hide-menu">Device</span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                          <li class="sidebar-item"><a href="{{url('/fence')}}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu">Geofence Creation</span></a></li>
-                          <li class="sidebar-item"><a href="{{url('/geofence')}}" class="sidebar-link"><i class="mdi mdi-map-marker-circle"></i><span class="hide-menu">List Geofence</span></a></li>
-                          <li class="sidebar-item"><a href="/driver-create" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu">Driver Creation</span></a></li>
-                          <li class="sidebar-item"><a href="{{url('/drivers')}}" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">List Drivers</span></a></li>
+                          <li class="sidebar-item"><a href="{{url('/gps-new')}}" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">New Arrivals</span></a></li>
+                          <li class="sidebar-item"><a href="{{url('/gps-client')}}" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">List Device</span></a></li>
                         </ul>
 </li>
 

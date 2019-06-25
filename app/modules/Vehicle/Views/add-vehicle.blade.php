@@ -91,7 +91,6 @@
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">GPS</label>
                                          <div class="form-group has-feedback">
                                          <select class="form-control selectpicker" name="gps_id" data-live-search="true" title="Select GPS" required>
-                                           <option value="">SELECT</option>
                     @foreach($devices as $gps)
                     <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
                     @endforeach
