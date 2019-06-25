@@ -150,41 +150,41 @@
         </div>
    @endrole
    @role('client')
-   <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Sales Cards  -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15714.260711999257!2d76.35214005!3d10.05269365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1560837024158!5m2!1sen!2sin" width="100%" height="1200" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    <div class="dashboard-main">
-              <div class="iconsbg">          
-<div class="col-md-6 col-lg-4 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-success text-center">
-                                <h1 class="font-light text-white"></h1>
-                                <h2 class="text-white">Summary</h2>
-                            </div>
-                        </div>
-                    </div>
- <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-cyan text-center">
-                                <h1 class="font-light text-white"></h1>
-                                <h1 class="text-white" style="color:#129a00!important">75</h1>
-                                <h4 class="text-white">Moving</h4>
-                            </div>
-                        </div>
-                    </div>
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Sales Cards  -->
+      <!-- ============================================================== -->
+      <div class="row">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15714.260711999257!2d76.35214005!3d10.05269365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1560837024158!5m2!1sen!2sin" width="100%" height="1200" frameborder="0" style="border:0" allowfullscreen></iframe>
+          <div class="dashboard-main">
+            <div class="iconsbg">          
+              <div class="col-md-6 col-lg-4 col-xlg-3">
+                <div class="card card-hover">
+                  <div class="box bg-success text-center">
+                    <h1 class="font-light text-white"></h1>
+                    <h2 class="text-white">Summary</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-2 col-xlg-3">
+                <div class="card card-hover">
+                  <div class="box bg-cyan text-center">
+                    <h1 class="font-light text-white"></h1>
+                    <h3 id="vehicle_motion"><div class="loader"></div></h3>
+                    <h4 class="text-white">Moving</h4>
+                  </div>
+                </div>
+              </div>
 
  <div class="col-md-6 col-lg-2 col-xlg-3">
                         <div class="card card-hover">
@@ -411,7 +411,5 @@
   @section('script')
       <script src="{{asset('js/gps/dashb.js')}}"></script>
   @endsection
-  <!-- ######################################################################## -->
-  
-  <!-- ############################################################ -->
+
 @endsection

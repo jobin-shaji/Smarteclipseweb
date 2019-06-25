@@ -111,7 +111,10 @@ class DashboardController extends Controller
         $user = $request->user();
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
-         $client=Client::where('user_id',$user->id)->first();
+        $client=Client::where('user_id',$user->id)->first();
+        $moving=GpsData::where('client_id',$client->id)->where('vehicle_mode','M')->groupBy('vehicle_id')->count();
+
+
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
@@ -139,8 +142,9 @@ class DashboardController extends Controller
         else if($user->hasRole('client')){
             return response()->json([
                 'gps' => Gps::where('user_id',$user->id)->count(),
-                 'vehicles' => Vehicle::where('client_id',$client->id)->count(),
-                 'geofence' => Geofence::where('user_id',$user->id)->count(),
+                'vehicles' => Vehicle::where('client_id',$client->id)->count(),
+                'geofence' => Geofence::where('user_id',$user->id)->count(),
+                'moving' => $moving,
                 'status' => 'dbcount'           
             ]);
         }       
