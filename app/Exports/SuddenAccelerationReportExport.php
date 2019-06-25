@@ -37,7 +37,9 @@ class SuddenAccelerationReportExport implements FromView
             ->where('alert_type_id',2)
             ->where('status',1);
             if($from){
-                $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
+                 $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
             }
         }
         else
@@ -47,7 +49,9 @@ class SuddenAccelerationReportExport implements FromView
             ->where('vehicle_id',$vehicle)
             ->where('status',1);
             if($from){
-                $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
+                 $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
             }
         }
         $this->suddenAccelerationReportExport = $query->get();          
