@@ -81,7 +81,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <span class="logo-lg"><b><img src="{{asset('images/logo.png')}}" height="40px"></b></span>
                             </li>
                         @else
                             <li class="nav-item dropdown">
