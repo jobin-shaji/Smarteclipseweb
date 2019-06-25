@@ -71,7 +71,7 @@
     <li class="sidebar-item">
       <a href="{{url('/route')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Vehicle</span>
+        <span class="hide-menu">List Route</span>
       </a>
     </li>
   </ul>
@@ -196,9 +196,9 @@
   </ul>
 </li>
                         
-<li class="sidebar-item">
+<!-- <li class="sidebar-item">
   <a class="sidebar-link waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false">
     <i class="mdi mdi-comment-multiple-outline"></i>
     <span class="hide-menu">Help & Support</span>
   </a>
-</li>
+</li> -->
