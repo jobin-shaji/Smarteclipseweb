@@ -33,7 +33,10 @@ class RouteDeviationReportExport implements FromView
         {
             $query = $query->where('client_id',$client);
             if($from){
-                $query = $query->whereBetween('deviating_time',[$from,$to]);
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+               
+                $query = $query->whereBetween('deviating_time',[$search_from_date,$search_to_date]);
             }
         }
         else
@@ -41,7 +44,10 @@ class RouteDeviationReportExport implements FromView
             $query = $query->where('vehicle_id',$vehicle)       
             ->where('client_id',$client);
             if($from){
-                $query = $query->whereBetween('deviating_time',[$from,$to]);
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+               
+                $query = $query->whereBetween('deviating_time',[$search_from_date,$search_to_date]);
             }  
         }        
         

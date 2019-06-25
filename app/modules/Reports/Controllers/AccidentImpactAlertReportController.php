@@ -40,6 +40,7 @@ class AccidentImpactAlertReportController extends Controller
         ->with('vehicle:id,name,register_number');
         if($from==null || $to==null || $vehicle==null)
         {
+
             $query = $query->where('client_id',$client)
             ->where('alert_type_id',21)
             ->where('status',1);
@@ -50,7 +51,9 @@ class AccidentImpactAlertReportController extends Controller
             ->where('alert_type_id',21)
             ->where('status',1);
             if($from){
-                $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);               
             }
         }
         else
@@ -60,7 +63,9 @@ class AccidentImpactAlertReportController extends Controller
             ->where('vehicle_id',$vehicle)
             ->where('status',1);
             if($from){
-                $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
+               $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
             }
         }
         $accidentimpactalert = $query->get();   

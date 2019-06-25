@@ -22,6 +22,7 @@ class GeofenceReportController extends Controller
     public function geofenceReportList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
+       
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
@@ -53,7 +54,10 @@ class GeofenceReportController extends Controller
             ->where('vehicle_id',$vehicle);
         }       
         if($from){
-            $query = $query->whereBetween('device_time',[$from,$to]);
+            // $query = $query->whereBetween('device_time',[$from,$to]);
+            $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
         $geofence = $query->get();      
         return DataTables::of($geofence)
