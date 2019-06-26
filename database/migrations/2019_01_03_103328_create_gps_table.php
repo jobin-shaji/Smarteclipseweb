@@ -34,6 +34,7 @@ class CreateGpsTable extends Migration
             $table->string('odometer')->nullable();
             $table->integer('satllite')->nullable();
             $table->string('battery_status')->nullable();
+            $table->string('heading')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
