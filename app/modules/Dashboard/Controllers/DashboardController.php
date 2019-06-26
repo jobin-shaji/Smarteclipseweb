@@ -211,7 +211,6 @@ class DashboardController extends Controller
             //Get address from json data
             $address = ($status=="OK")?$output->results[1]->formatted_address:'';
         }
-
          $battery_status=$gps->battery_status;
         if($network_status>=50)
         {

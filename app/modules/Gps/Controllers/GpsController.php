@@ -12,6 +12,7 @@ use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\Ota\Models\OtaType;
+use App\Modules\Gps\Models\VltData;
 
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -699,6 +700,30 @@ class GpsController extends Controller {
         ->make();
     }
 
+
+    public function vltdataListPage()
+    {
+        // $ota = OtaType::all();
+        // $gps = Gps::all();
+        return view('Gps::vltdata-list');
+    }
+
+     public function getVltData(Request $request)
+    {
+    
+      
+         $items = VltData::all();  
+              
+        return DataTables::of($items)
+        ->addIndexColumn()        
+         ->addColumn('forhuman', function ($items) {
+                $forhuman=0;
+                $forhuman=Carbon::parse($items->created_at)->diffForHumans();;
+                return $forhuman;
+             })
+        ->make();
+    }
+
     // gps transfer rule
     public function gpsTransferRule() {
         $rules = [
@@ -731,4 +756,7 @@ class GpsController extends Controller {
         ];
         return  $rules;
     } 
+
+
+
 }
