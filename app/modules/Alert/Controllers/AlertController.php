@@ -46,6 +46,21 @@ class AlertController extends Controller {
                 ->get();
         return DataTables::of($alert)
             ->addIndexColumn()
+             ->addColumn('address', function ($alert) {
+                 $latitude=$alert->latitude;
+                $longitude=$alert->longitude;
+            if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $output = json_decode($geocodeFromLatLong);         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        }
+
+
+            return  $address ;
+        })
             ->addColumn('action', function ($alert) {
             return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-ok'></i> Verify </button>";
         })
