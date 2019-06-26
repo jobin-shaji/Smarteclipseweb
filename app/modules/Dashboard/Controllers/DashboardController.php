@@ -235,12 +235,12 @@ class DashboardController extends Controller
             $response_data = array(
                 'status'  => 'vehicle_status',
                 'network_status' => $net_status,
-                'fuel_status' => $fuel_status,
-                'speed' => $speed,
-                'odometer' => $odometer,
+                'fuel_status' => $fuel_status.' L',
+                'speed' => $speed.' Kmh',
+                'odometer' => $odometer.' km',
                 'mode' => $vehcile_mode,
                 'satelite' => $satelite,
-                'battery_status' => $battery_status,
+                'battery_status' => $battery_status.' V',
                 'address' => $address
                 // 'longitude' => $gps_data->longitude
             );
