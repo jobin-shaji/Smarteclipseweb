@@ -165,7 +165,7 @@
       <!-- Sales Cards  -->
       <!-- ============================================================== -->
       <div class="row">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15714.260711999257!2d76.35214005!3d10.05269365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1560837024158!5m2!1sen!2sin" width="100%" height="1200" frameborder="0" style="border:0" allowfullscreen></iframe>
+        
           <div class="dashboard-main">
             <div class="iconsbg">          
               <div class="col-md-6 col-lg-4 col-xlg-3">
@@ -221,7 +221,7 @@
                         </div>
                     </div>
 </div>
-<div class="card" style="float:left;width:50%!important">
+<div class="card" style="float:left;width:100%!important">
 
                             <table class="table" style="border:none!important;">
                                   <thead>
@@ -237,7 +237,7 @@
                                    <body>
                                    @foreach ($vehicles as $vehicle)
                                     <tr>
-                                      <td><input type="radio" id="radio" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}"></td>
+                                      <td><input type="radio" id="radio" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}"></td>
                                       
                                        <td>{{$vehicle->register_number}}</td>
                                        <td>{{$vehicle->name}}</td>
@@ -254,7 +254,7 @@
             <h3 class="text-white" style="padding:3% 0 0!important;line-height:1">LIVE TRACK</h3>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/network-status.png">
               <h4 class="m-b-0 m-t-5">Network Status</h4>
@@ -263,7 +263,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15"  style="width:50%;float:left">
+        <div class="col-6 m-t-15"  style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/fuel-status.png">
               <h4 class="m-b-0 m-t-5">Fuel Status</h4>
@@ -272,7 +272,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/speed.png">
               <h4 class="m-b-0 m-t-5">Speed</h4>
@@ -281,7 +281,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/odometer.png">
               <h4 class="m-b-0 m-t-5">Odometer</h4>
@@ -290,7 +290,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/vehicle-status.png">
               <h4 class="m-b-0 m-t-5">Vehicle Status</h4>
@@ -299,7 +299,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/sattelite.png">
               <h4 class="m-b-0 m-t-5">Satellite</h4>
@@ -308,7 +308,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/battery-status.png">
               <h4 class="m-b-0 m-t-5">Battery Status</h4>
@@ -317,7 +317,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/towing-dash.png">
               <h4 class="m-b-0 m-t-5">Towing</h4>
@@ -326,7 +326,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/immobilizer.png">
               <h4 class="m-b-0 m-t-5">Immobilizer</h4>
@@ -335,7 +335,7 @@
             </medium>
           </div>
         </div>
-        <div class="col-6 m-t-15" style="width:50%;float:left">
+        <div class="col-6 m-t-15" style="width:20%;float:left">
           <div class="bg-dark p-10 text-white text-center">
           <img src="assets/images/location.png">
           <h4 class="m-b-0 m-t-5">Location</h4>
@@ -348,6 +348,15 @@
     </div>
 
                 </div>
+
+                <div class="dashboard-main">
+                <div id="map" style="width:100%; height:100%;"></div>
+              </div>
+
+
+
+
+
                   <!-- Column -->
                 </div>
                 <!-- ============================================================== -->
@@ -385,7 +394,13 @@
       
 </section>
   @section('script')
+     <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ"></script>
       <script src="{{asset('js/gps/dashb.js')}}"></script>
+      
+       @role('client')
+     <script src="{{asset('js/gps/dashb-client.js')}}"></script>
+    @endrole
   @endsection
 
 @endsection

@@ -110,9 +110,18 @@ class DashboardController extends Controller
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first();
-        $moving=Gps::where('user_id',$user->id)->where('mode','M')->count();
-        $idle=Gps::where('user_id',$user->id)->where('mode','H')->count();
-        $stop=Gps::where('user_id',$user->id)->where('mode','S')->count();
+        $vehicles = Vehicle::select('id','register_number','name','gps_id')
+                    ->where('client_id',$client->id)
+                    ->get();
+
+            $single_vehicle = [];
+            foreach($vehicles as $vehicle){
+                $single_vehicle[] = $vehicle->gps_id;
+            }
+
+        $moving=Gps::where('user_id',$user->id)->where('mode','M')->whereIn('id',$single_vehicle)->count();
+        $idle=Gps::where('user_id',$user->id)->where('mode','H')->whereIn('id',$single_vehicle)->count();
+        $stop=Gps::where('user_id',$user->id)->where('mode','S')->whereIn('id',$single_vehicle)->count();
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
@@ -272,9 +281,28 @@ class DashboardController extends Controller
         ->addIndexColumn()
          ->addColumn('km', function ($vehicles) {
                
-                    return "-";
-               
+                    return "-";               
             })
        ->make();
     }
+
+    public function dashVehicleTrack(Request $request){
+        $user = $request->user(); 
+        $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
+                    ->where('user_id',$user->id)
+                    ->orderBy('id','desc')                 
+                    ->get();
+        return response()->json($user_data); 
+    }
+
+      public function vehicleTrackList(Request $request)
+    {
+        $gpsID=$request->gps_id;   
+  
+        $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
+                    ->where('id',$gpsID)                 
+                    ->first();
+        return response()->json($user_data); 
+    }
+
 }
