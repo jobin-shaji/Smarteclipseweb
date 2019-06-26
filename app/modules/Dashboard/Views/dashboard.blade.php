@@ -180,7 +180,7 @@
                 <div class="card card-hover">
                   <div class="box bg-cyan text-center">
                     <h1 class="font-light text-white"></h1>
-                    <h3 id="vehicle_motion"><div class="loader"></div></h3>
+                    <h3 id="vehicle_motion"></h3>
                     <h4 class="text-white">Moving</h4>
                   </div>
                 </div>
@@ -190,7 +190,7 @@
                         <div class="card card-hover">
                             <div class="box bg-cyan text-center">
                                 <h1 class="font-light text-white"></h1>
-                                <h3 id="idle"><div class="loader"></div></h3>
+                                <h3 id="idle"></h3>
                                 <h4 class="text-white">Idling</h4>
                             </div>
                         </div>
@@ -237,10 +237,8 @@
                                        <td>{{$vehicle->register_number}}</td>
                                        <td>{{$vehicle->name}}</td>
                                         <td>80 </td>
-                                    </tr>
-                                      
+                                    </tr>                                      
                                       @endforeach  
-
                                   </tbody>
                             </table>
                         </div>
