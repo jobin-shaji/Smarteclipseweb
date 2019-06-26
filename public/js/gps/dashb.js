@@ -5,7 +5,9 @@ $(document).ready(function () {
      
      };
 
+
       backgroundPostData(url,data,'dbcount',{alert:false});
+
 
  //    window.setInterval(function(){
  //    	 backgroundPostData(url,data,'dbcount',{alert:false});  
@@ -37,7 +39,7 @@ function dbcount(res){
 function getVehicle(value)
 {  
 
-   var url = 'vehicle-detail';
+   var url = '/vehicle-detail';
      var data = { 
       gps_id : value
      };
