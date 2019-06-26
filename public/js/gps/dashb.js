@@ -29,6 +29,8 @@ function dbcount(res){
       
       
 }
+
+//updated 
 function getVehicle(value)
 {  
 
@@ -51,3 +53,5 @@ function vehicle_details(res){
      
       
 }
+
+
