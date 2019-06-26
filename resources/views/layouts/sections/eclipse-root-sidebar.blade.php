@@ -119,3 +119,41 @@
     </li>
   </ul>
 </li>
+<li class="sidebar-item">
+  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-bell-ring"></i>
+    <span class="hide-menu">Alert Types</span>
+  </a>
+  <ul aria-expanded="false" class="collapse  first-level">  
+    <li class="sidebar-item">
+      <a href="{{url('/alert-type/create')}}" class="sidebar-link">
+        <i class="mdi mdi-note-plus"></i>
+        <span class="hide-menu">Add Alert Type</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="{{url('/alert-types')}}" class="sidebar-link">
+        <i class="mdi mdi-view-dashboard"></i>
+        <span class="hide-menu">List Alert Type</span>
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="sidebar-item">
+  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-bell-ring"></i>
+    <span class="hide-menu">Ota Types</span>
+  </a>
+  <ul aria-expanded="false" class="collapse  first-level">  
+    <li class="sidebar-item">
+      <a href="{{url('/ota-type/create')}}" class="sidebar-link">
+        <i class="mdi mdi-note-plus"></i>
+        <span class="hide-menu">Add Ota Type</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="{{url('/ota-type')}}" class="sidebar-link">
+        <i class="mdi mdi-view-dashboard"></i>
+        <span class="hide-menu">List Ota Type</span>
+      </a>
+    </li>
+  </ul>
+</li>

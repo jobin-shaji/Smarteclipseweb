@@ -50,6 +50,7 @@ class GeofenceController extends Controller {
 
      public function getGeofence()
     {
+        $client_user_id=\Auth::user()->id;
         $geofence = Geofence::select(
             'id', 
             'user_id',                      
@@ -59,9 +60,10 @@ class GeofenceController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
+        ->where('user_id',$client_user_id)
         ->with('user:id,email,mobile')
         ->with('clients:id,user_id,name')
-       ->get();  
+        ->get();  
         return DataTables::of($geofence)
         ->addIndexColumn()
         ->addColumn('action', function ($geofence) {
