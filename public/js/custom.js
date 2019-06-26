@@ -17,6 +17,7 @@ function getUrl(){
 }
 
 function toast(res){
+    // alert(res.status);
     
    if(res.status == 1){
         toastr.success( res.message, res.title);
@@ -38,6 +39,9 @@ function toast(res){
     else if(res.status == 'geofence'){
         window.location.href='geofence';
     } 
+    else if(res.status == 'vehicle_status'){
+        vehicle_details(res);
+    }  
 }
 
 function backgroundPostData(url, data, callBack, options) { 
