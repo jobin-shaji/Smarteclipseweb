@@ -238,9 +238,9 @@
                                    @foreach ($vehicles as $vehicle)
                                     <tr>
                                       <td><input type="radio" id="radio" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}"></td>
-                                      
-                                       <td>{{$vehicle->register_number}}</td>
                                        <td>{{$vehicle->name}}</td>
+                                       <td>{{$vehicle->register_number}}</td>
+                                      
                                         <td>80 </td>
                                     </tr>                                      
                                       @endforeach  
