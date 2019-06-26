@@ -104,20 +104,15 @@ class DashboardController extends Controller
             return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
         }        
     }
-
-
-
-    public function dashCount(Request $request){
+    public function dashCount(Request $request)
+    {
         $user = $request->user();
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first();
         $moving=Gps::where('user_id',$user->id)->where('mode','M')->count();
-
-         $idle=Gps::where('user_id',$user->id)->where('mode','H')->count();
+        $idle=Gps::where('user_id',$user->id)->where('mode','H')->count();
         $stop=Gps::where('user_id',$user->id)->where('mode','S')->count();
-       
-
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
