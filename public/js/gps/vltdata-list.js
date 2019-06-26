@@ -30,9 +30,6 @@ function callBackDataTable(){
             {data: 'vltdata', name: 'vltdata', orderable: false, searchable: true},
             {data: 'created_at', name: 'created_at' ,orderable: true, searchable: false},
             {data: 'forhuman', name: 'forhuman' ,orderable: false, searchable: false},
-             
-           
-           
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

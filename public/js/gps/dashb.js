@@ -32,7 +32,7 @@ function dbcount(res){
 function getVehicle(value)
 {  
 
-   var url = '/vehicle-detail';
+   var url = 'vehicle-detail';
      var data = { 
       gps_id : value
      };
