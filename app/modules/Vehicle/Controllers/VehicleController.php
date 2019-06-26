@@ -78,30 +78,6 @@ class VehicleController extends Controller {
     }
 
     // create a new vehicle
-    // public function createVehicle()
-    // {
-    //     $client_id=\Auth::user()->client->id;
-    //     $client_user_id=\Auth::user()->id;
-    //     $vehicleTypes=VehicleType::select(
-    //             'id','name')->get();
-    //     $vehicle_device = Vehicle::select(
-    //             'gps_id'
-    //             )
-    //             ->where('client_id',$client_id)
-    //             ->get();
-    //     $single_gps = [];
-    //     foreach($vehicle_device as $device){
-    //         $single_gps[] = $device->gps_id;
-    //     }
-    //     $devices=Gps::select('id','name','imei')
-    //             ->where('user_id',$client_user_id)
-    //             ->whereNotIn('id',$single_gps)
-    //             ->get();
-    //     $ota_types=OtaType::select('id','name','code','default_value')
-    //             ->get();
-    //     return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types]);
-    // }
-
     public function createVehicle()
     {
         $client_id=\Auth::user()->client->id;
@@ -123,7 +99,7 @@ class VehicleController extends Controller {
                 ->get();
         $ota_types=OtaType::select('id','name','code','default_value')
                 ->get();
-        return view('Vehicle::add-vehicle',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types]);
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types]);
     }
 
     // save vehicle
