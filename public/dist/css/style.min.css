@@ -160,10 +160,14 @@ address {
     line-height: inherit
 }
 .needhelp{font-size:20px;float:right;color:#000;padding:1% 1% 0 1%;width:25%;}
-.dashboard-main{float:left;width:50%;background:#fff;margin:2%;position:absolute;}
+.dashboard-main{float:left;width:48%;background:#fff;margin:1%/*;position:absolute;*/}
 .iconsbg{background:#f5f0ea;width:96%;float:left;border-radius:9px;margin:2%;border:solid 1px #ddd}
-.iconsbg1{background:#f5f0ea;width:46%;float:left;border-radius:9px;margin:2%;border:solid 1px #ddd;padding:2%;}
+.iconsbg1{background:#f5f0ea;width:98%;float:left;border-radius:9px;margin:1%;border:solid 1px #ddd;padding:2%;}
 .iconsbg-Route-playback{background:#f5f0ea;width:96%;float:left;border-radius:9px;margin:2%;border:solid 1px #ddd;padding:0;}
+h4.m-b-0.m-t-5 {
+    font-size: 12px;
+    line-height: 16px;
+}
 dl,
 ol,
 ul {
@@ -10986,7 +10990,7 @@ ul.list-style-none li a:hover {
 }
 
 .card {
-    margin-bottom: 20px
+   /* margin-bottom: 20px*/
 }
 
 .card .card-subtitle {

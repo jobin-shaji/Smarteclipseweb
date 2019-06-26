@@ -68,6 +68,10 @@ function backgroundPostData(url, data, callBack, options) {
             if (callBack){
                 if (callBack == 'callBackDataTables'){
                     callBackDataTable();
+                }else if(callBack == 'vehicleTrack'){
+                    vehicleTrack(res);
+                }else if(callBack =='selectVehicleTrack'){
+                    selectVehicleTrack(res);
                 }
             }
         },
