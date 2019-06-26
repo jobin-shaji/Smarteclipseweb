@@ -7,7 +7,13 @@
                         @role('root')
                           @include('layouts.sections.eclipse-root-sidebar')
                         @endrole
-                         @role('client')
+                        @role('dealer')
+                          @include('layouts.sections.eclipse-dealer-sidebar')
+                        @endrole
+                        @role('sub_dealer')
+                          @include('layouts.sections.eclipse-sub-dealer-sidebar')
+                        @endrole
+                        @role('client')
                           @include('layouts.sections.eclipse-client-sidebar')
                         @endrole
 
