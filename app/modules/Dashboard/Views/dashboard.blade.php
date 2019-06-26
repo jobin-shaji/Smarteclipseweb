@@ -262,14 +262,14 @@
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/fuel-status.png">
               <h4 class="m-b-0 m-t-5">Fuel Status</h4>
-            <medium id="fuel_status" class="font-light"> L</medium>
+            <medium id="fuel_status" class="font-light"> </medium>L
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/speed.png">
               <h4 class="m-b-0 m-t-5">Speed</h4>
-            <medium id="speed" class="font-light"> Kmh</medium>
+            <medium id="speed" class="font-light"> </medium>Kmh
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
@@ -297,7 +297,7 @@
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/battery-status.png">
               <h4 class="m-b-0 m-t-5">Battery Status</h4>
-            <medium id="battery_status" class="font-light">V</medium>
+            <medium id="battery_status" class="font-light"></medium>V
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
