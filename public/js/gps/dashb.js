@@ -11,6 +11,7 @@ $(document).ready(function () {
 
  //    window.setInterval(function(){
  //    	 backgroundPostData(url,data,'dbcount',{alert:false});  
+
 	// }, 5000);
 });
 
