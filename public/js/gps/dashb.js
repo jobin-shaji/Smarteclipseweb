@@ -30,7 +30,7 @@ function dbcount(res){
       
 }
 
-//updated 
+//updated all
 function getVehicle(value)
 {  
 
