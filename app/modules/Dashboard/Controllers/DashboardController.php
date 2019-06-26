@@ -96,7 +96,7 @@ class DashboardController extends Controller
                     ->get();
 
 
-                     $get_vehicles = Vehicle::select('id','register_number')
+                     $get_vehicles = Vehicle::select('id','register_number','name','gps_id')
                     ->where('client_id',$client_id)
                     ->get();
                     // dd($get_vehicles->register_number);
@@ -112,8 +112,11 @@ class DashboardController extends Controller
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first();
-        $moving=GpsData::where('client_id',$client->id)->where('vehicle_mode','M')->groupBy('vehicle_id')->count();
+        $moving=Gps::where('user_id',$user->id)->where('mode','M')->count();
 
+         $idle=Gps::where('user_id',$user->id)->where('mode','H')->count();
+        $stop=Gps::where('user_id',$user->id)->where('mode','S')->count();
+       
 
         if($user->hasRole('root')){
             return response()->json([
@@ -145,13 +148,21 @@ class DashboardController extends Controller
                 'vehicles' => Vehicle::where('client_id',$client->id)->count(),
                 'geofence' => Geofence::where('user_id',$user->id)->count(),
                 'moving' => $moving,
+                'idle' => $idle,
+                'stop' => $stop,
                 'status' => 'dbcount'           
             ]);
         }       
     }
 
+
+
+
+
+
+
     public function getLocation(Request $request){
-        dd($request->id);
+      
         $gps_data=GpsData::select([
             'latitude as latitude',
             'longitude as longitude' 
@@ -179,5 +190,96 @@ class DashboardController extends Controller
 
 
 
+    }
+
+ public function vehicleDetails(Request $request){
+
+        $gps = Gps::find($request->gps_id);
+        $network_status=$gps->network_status;
+        $fuel_status=$gps->fuel_status;
+        $speed=$gps->speed;
+        $odometer=$gps->odometer;
+         $mode=$gps->mode;
+         $satelite=$gps->satllite;
+         $latitude=$gps->lat;
+         $longitude=$gps->lon;
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $output = json_decode($geocodeFromLatLong);         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        }
+         $battery_status=$gps->battery_status;
+        if($network_status>=50)
+        {
+            $net_status="Good";
+        }
+        else if($network_status<50 || $network_status>=20)
+        {
+            $net_status="Average";
+        }
+        else
+        {
+            $net_status="poor";
+        }
+        if($mode=="M")
+        {
+            $vehcile_mode="Running";
+        }
+        else if($mode=="H")
+        {
+            $vehcile_mode="Idle";
+        }
+        else 
+        {
+            $vehcile_mode="Stopped";
+        }
+        if($gps){     
+            $response_data = array(
+                'status'  => 'vehicle_status',
+                'network_status' => $net_status,
+                'fuel_status' => $fuel_status,
+                'speed' => $speed,
+                'odometer' => $odometer,
+                'mode' => $vehcile_mode,
+                'satelite' => $satelite,
+                'battery_status' => $battery_status,
+                'address' => $address
+                // 'longitude' => $gps_data->longitude
+            );
+        }
+        else{
+                $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0);
+             }
+            
+        return response()->json($response_data); 
+
+    }
+
+    public function vehicleList(Request $request)
+    {
+        $user = $request->user();       
+        $client=Client::where('user_id',$user->id)->first();
+        $query=Vehicle::select(
+            'id',
+            'name',
+            'register_number',
+            'client_id'
+        )
+        ->where('client_id',$client->id);
+        $vehicles = $query->get();       
+        return DataTables::of($vehicles)
+        ->addIndexColumn()
+         ->addColumn('km', function ($vehicles) {
+               
+                    return "-";
+               
+            })
+       ->make();
     }
 }

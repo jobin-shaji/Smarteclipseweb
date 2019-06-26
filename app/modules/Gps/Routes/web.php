@@ -61,4 +61,7 @@ Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 	
 	Route::get('/gps-data','GpsController@allgpsListPage')->name('gps-data');
 	Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
+
+	Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
+	Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
 });
