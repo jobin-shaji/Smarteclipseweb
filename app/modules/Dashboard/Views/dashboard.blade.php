@@ -255,70 +255,90 @@
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/network-status.png">
               <h4 class="m-b-0 m-t-5">Network Status</h4>
-            <medium id="network_status" class="font-light"></medium>
+            <medium id="network_status" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15"  style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/fuel-status.png">
               <h4 class="m-b-0 m-t-5">Fuel Status</h4>
-            <medium id="fuel_status" class="font-light"> </medium>L
+            <medium id="fuel_status" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/speed.png">
               <h4 class="m-b-0 m-t-5">Speed</h4>
-            <medium id="speed" class="font-light"> </medium>Kmh
+            <medium id="speed" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/odometer.png">
               <h4 class="m-b-0 m-t-5">Odometer</h4>
-            <medium id="odometer" class="font-light"></medium>
+            <medium id="odometer" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/vehicle-status.png">
               <h4 class="m-b-0 m-t-5">Vehicle Status</h4>
-            <medium id="mode" class="font-light"></medium>
+            <medium id="mode" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/sattelite.png">
               <h4 class="m-b-0 m-t-5">Satellite</h4>
-            <medium id="satelite" class="font-light"></medium>
+            <medium id="satelite" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/battery-status.png">
               <h4 class="m-b-0 m-t-5">Battery Status</h4>
-            <medium id="battery_status" class="font-light"></medium>V
+            <medium id="battery_status" class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/towing-dash.png">
               <h4 class="m-b-0 m-t-5">Towing</h4>
-            <medium class="font-light">No</medium>
+            <medium class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
             <img src="assets/images/immobilizer.png">
               <h4 class="m-b-0 m-t-5">Immobilizer</h4>
-            <medium class="font-light">No</medium>
+            <medium class="font-light">
+              <i class="fa fa-spinner" aria-hidden="true"></i>
+            </medium>
           </div>
         </div>
         <div class="col-6 m-t-15" style="width:50%;float:left">
           <div class="bg-dark p-10 text-white text-center">
           <img src="assets/images/location.png">
           <h4 class="m-b-0 m-t-5">Location</h4>
-          <medium id="address" class="font-light"></medium>
+          <medium id="address" class="font-light">
+            <i class="fa fa-spinner" aria-hidden="true"></i>
+          </medium>
           </div>
         </div>
       </div>     
