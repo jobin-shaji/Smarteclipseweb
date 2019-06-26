@@ -236,7 +236,7 @@
                                       
                                        <td>{{$vehicle->register_number}}</td>
                                        <td>{{$vehicle->name}}</td>
-                                        <td></td>
+                                        <td>80 </td>
                                     </tr>
                                       
                                       @endforeach  
