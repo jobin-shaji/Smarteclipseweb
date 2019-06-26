@@ -5,7 +5,7 @@
   </a>
 </li>
 <li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-tablet-ipad"></i>
+  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-circle"></i>
     <span class="hide-menu">Sub Dealer</span>
   </a>
   <ul aria-expanded="false" class="collapse  first-level">
@@ -57,7 +57,7 @@
 </li>
 
 <li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-tablet-ipad"></i>
+  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-circle"></i>
     <span class="hide-menu">End User</span>
   </a>
   <ul aria-expanded="false" class="collapse  first-level">  
