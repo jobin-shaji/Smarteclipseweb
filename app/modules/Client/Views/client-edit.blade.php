@@ -1,42 +1,53 @@
-@extends('layouts.gps')
+@extends('layouts.eclipse')
 @section('title')
     Update End User Details
 @endsection
 @section('content')
-    <section class="content-header">
-     <h1>Edit End User</h1>
-    </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
-      </div>
-    </div>
-    @endif  
-<section class="hilite-content">
-      <!-- title row -->
+
+<div class="page-wrapper">           
+  <div class="page-breadcrumb">
       <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-edit">End User Details</i> 
-          </h2>
-           
-          <?php 
-            $password=$client->password;
-            if($client){
-              $encript=Crypt::encrypt($user->id)
-          ?>
-          <a href="{{route('client.change-password',$encript)}}">
-            <button class="btn btn-xs btn-success pull-right">Password Change</button>
-          </a><?php } ?>
+          <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Add New User</h4>
+             @if(Session::has('message'))
+              <div class="pad margin no-print">
+                <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                  {{ Session::get('message') }}  
+                </div>
+              </div>
+            @endif
+            </div>
         </div>
-        <!-- /.col -->
-      </div>
+      </div>           
+      <div class="container-fluid">                    
+        <div class="card-body">
+          <div class="table-responsive">
+              <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <div class="col-sm-12">      
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h2 class="page-header">
+                          <div class="col-md-6">
+                          <i class="fa fa-edit">End User Details</i> 
+                            <?php 
+                              $password=$client->password;
+                              if($client){
+                                $encript=Crypt::encrypt($user->id)
+                            ?>
+                          </div>
+                          <div class="col-md-6">
+                        <a href="{{route('client.change-password',$encript)}}">
+                          <button class="btn btn-xs btn-success pull-right">Password Change</button>
+                          </a><?php } ?>
+                        </div>
+                        </h2>
+                      </div>
+                    </div>
     <form  method="POST" action="{{route('client.update.p',$user->id)}}">
         {{csrf_field()}}
-    <div class="row">
+      <div class="row">
         <div class="col-md-6">
-          
           <div class="form-group has-feedback">
             <label class="srequired">Name</label>
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $client->name}}"> 
@@ -47,9 +58,7 @@
             <strong class="error-text">{{ $errors->first('name') }}</strong>
             </span>
           @endif
-
-        
- <div class="form-group has-feedback">
+        <div class="form-group has-feedback">
           <label class="srequired">Mobile No.</label>
           <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
@@ -63,16 +72,20 @@
           <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
         </div>
       </div>
-     
-   
     </form>
 </section>
 
-
-<!-- add depot user -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>            
+  </div>
+<!-- 
  <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-    <!-- Modal content-->
+  
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -113,18 +126,16 @@
                         </div>
                     </div>
                       <div class="row">
-                        <!-- /.col -->
-                        <div class="col-md-3 ">
+                         <div class="col-md-3 ">
                           <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
                         </div>
-                        <!-- /.col -->
-                      </div>
+                        </div>
                 </form>
            
       </div>
     </div>
    </div>
- </div>
+ </div> -->
 <!-- add depot user -->
 
 <div class="clearfix"></div>

@@ -288,10 +288,36 @@ class DashboardController extends Controller
 
     public function dashVehicleTrack(Request $request){
         $user = $request->user(); 
-        $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
-                    ->where('user_id',$user->id)
-                    ->orderBy('id','desc')                 
-                    ->get();
+        //  $client=Client::where('user_id',$user->id)->first();
+        //  $query=Vehicle::select(
+        //     'id',
+        //     'name',
+        //     'register_number',
+        //     'client_id'
+        // )
+        // ->where('client_id',$client->id);
+        $user_data=Gps::Select('id','lat','lat_dir','lon','lon_dir')
+        ->where('user_id',$user->id)
+        // ->with('vehicle:id,name,register_number') 
+        ->orderBy('id','desc')                 
+        ->get();
+                    // dd($user_data);
+         //    $gps_id = [];
+         //    foreach($user_data as $gps){
+         //        $gps_id[] = $gps->id;
+         //    }
+
+        
+         // $vehicles = Vehicle::select('id','register_number','name','gps_id')
+         //            ->whereIn('gps_id',$gps_id)
+         //            ->get();
+                   
+         //    $response_data = array(               
+         //        'user_data' => $user_data,
+         //        'vehicles' => $vehicles
+         //        // 'longitude' => $gps_data->longitude
+         //    );
+         //    return response()->json($response_data); 
         return response()->json($user_data); 
     }
 
