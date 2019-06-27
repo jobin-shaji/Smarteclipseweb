@@ -1,95 +1,107 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
-   Update vehicle type details
+    Update Vehicle Type
 @endsection
 @section('content')
 
-    <section class="content-header">
-     <h1>Edit vehicle type</h1>
-    </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
-      </div>
-    </div>
-    @endif  
-<section class="hilite-content">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-edit"> vehicle type details</i> 
-          </h2>
-        </div>
-        <!-- /.col -->
-      </div>
-    <form  method="POST" action="{{route('vehicle-type.update.p',$vehicle_type->id)}}">
-        {{csrf_field()}}
+
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
     <div class="row">
-        <div class="col-md-6">
-          <div class="form-group has-feedback">
-            <label class="srequired">Name</label>
-            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_type->name}}"> 
-            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Update Vehicle Type</h4>
+        @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
           </div>
-          @if ($errors->has('name'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('name') }}</strong>
-            </span>
-          @endif
-
-          <div class="form-group has-feedback">
-            <label class="srequired">SVG Icon</label>
-            <input type="text" class="form-control {{ $errors->has('svg_icon') ? ' has-error' : '' }}" placeholder="SVG Icon" name="svg_icon" value="{{ $vehicle_type->svg_icon}}"> 
-            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-          </div>
-          @if ($errors->has('svg_icon'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('svg_icon') }}</strong>
-            </span>
-          @endif
-           <div class="form-group has-feedback">
-                <label class="srequired">Weight</label>
-                <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="{{ $vehicle_type->strokeWeight }}" required> 
-              </div>
-              @if ($errors->has('weight'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('weight') }}</strong>
-                </span>
-              @endif
-        </div>
-         <div class="col-md-6">
-              <div class="form-group has-feedback">
-                <label class="srequired">Scale</label>
-                <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="{{ $vehicle_type->vehicle_scale }}" required> 
-              </div>
-              @if ($errors->has('scale'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('scale') }}</strong>
-                </span>
-              @endif
-              <div class="form-group has-feedback">
-                <label class="srequired">Opacity</label>
-                <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ $vehicle_type->opacity }}" required> 
-              </div>
-              @if ($errors->has('opacity'))
-                <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('opacity') }}</strong>
-                </span>
-              @endif
-           </div>
-    </div>
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
-        </div>
-        <!-- /.col -->
+        @endif  
       </div>
-    </form>
-</section>
+    </div>
+  </div>
+            
+  <div class="card-body">
+    <div class="table-responsive">
+      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+          <div class="col-sm-12">
+            <form  method="POST" action="{{route('vehicle-type.update.p',$vehicle_type->id)}}">
+            {{csrf_field()}}
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Name</label>
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_type->name}}"> 
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                  </div>
+                  @if ($errors->has('name'))
+                    <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('name') }}</strong>
+                    </span>
+                  @endif
 
+                  <div class="form-group has-feedback">
+                    <label class="srequired">SVG Icon</label>
+                    <input type="text" class="form-control {{ $errors->has('svg_icon') ? ' has-error' : '' }}" placeholder="SVG Icon" name="svg_icon" value="{{ $vehicle_type->svg_icon}}"> 
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                  </div>
+                  @if ($errors->has('svg_icon'))
+                    <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('svg_icon') }}</strong>
+                    </span>
+                  @endif
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Weight</label>
+                    <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="{{ $vehicle_type->strokeWeight }}" required> 
+                  </div>
+                  @if ($errors->has('weight'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('weight') }}</strong>
+                    </span>
+                  @endif
+
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Scale</label>
+                    <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="{{ $vehicle_type->vehicle_scale }}" required> 
+                  </div>
+                  @if ($errors->has('scale'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('scale') }}</strong>
+                    </span>
+                  @endif
+                  
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Opacity</label>
+                    <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ $vehicle_type->opacity }}" required> 
+                  </div>
+                  @if ($errors->has('opacity'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('opacity') }}</strong>
+                    </span>
+                  @endif
+              </div>
+            </div>
+
+              
+              <div class="row">
+                <!-- /.col -->
+                <div class="col-md-3 ">
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+                </div>
+                <!-- /.col -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ 
 <div class="clearfix"></div>
+
 
 @endsection

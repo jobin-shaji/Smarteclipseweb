@@ -646,9 +646,13 @@ class VehicleController extends Controller {
                 
             })
             ->addColumn('action', function ($vehicles) {
+                $gps_id=$vehicles->gps_id;
                 if($vehicles->deleted_at == null){
-                    return "
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                    $gps_data_count = GpsData::where('gps_id',$gps_id)->count('id');
+                    if($gps_data_count!=0){
+                        return "
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                    }
                 }else{
                      return ""; 
                 }
