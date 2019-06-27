@@ -41,8 +41,8 @@ class MainBatteryDisconnectReportController extends Controller
         if($vehicle==0 || $vehicle==null)
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',11)
-            ->where('status',1);
+            ->where('alert_type_id',11);
+            // ->where('status',1);
             if($from){
                $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
@@ -53,8 +53,8 @@ class MainBatteryDisconnectReportController extends Controller
         {
             $query = $query->where('client_id',$client)
             ->where('alert_type_id',11)
-            ->where('vehicle_id',$vehicle)
-            ->where('status',1);
+            ->where('vehicle_id',$vehicle);
+            // ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));

@@ -68,27 +68,27 @@ class AlertReportController extends Controller
        if($alert_id==0 && $vehicle_id==0)
        {   
 
-            $query = $query->where('client_id',$client)
-            ->where('status',1);
+            $query = $query->where('client_id',$client);
+            // ->where('status',1);
        }
        else if($alert_id!=0 && $vehicle_id==0)
        {          
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',$alert_id)
-            ->where('status',1);
+            ->where('alert_type_id',$alert_id);
+            // ->where('status',1);
        }
        else if($alert_id==0 && $vehicle_id!=0)
        {
             $query = $query->where('client_id',$client)
-            ->where('vehicle_id',$vehicle_id)
-            ->where('status',1);
+            ->where('vehicle_id',$vehicle_id);
+            // ->where('status',1);
        }
        else
        {
             $query = $query->where('client_id',$client)
             ->where('alert_type_id',$alert_id)
-            ->where('vehicle_id',$vehicle_id)
-            ->where('status',1);
+            ->where('vehicle_id',$vehicle_id);
+            // ->where('status',1);
        }        
         if($from){
           $search_from_date=date("Y-m-d", strtotime($from));
