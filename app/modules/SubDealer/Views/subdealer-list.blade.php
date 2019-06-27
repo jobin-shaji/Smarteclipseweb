@@ -34,20 +34,20 @@
                         </a>
                       </div>           
                       <div class="table-responsive">
-                      <div class="panel-body">
-                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
-                      <thead>
-                      <tr>
-                      <th>Sl.No</th>                              
-                      <th>Name</th>                            
-                      <th>Address</th>                              
-                      <th>Mobile</th>                            
-                      <th>email</th>
-                      <th style="width:160px;">Action</th>
-                      </tr>
-                      </thead>
-                      </table>
-                      </div>
+                        <div class="panel-body">
+                          <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                            <thead>
+                              <tr>
+                                <th>Sl.No</th>                              
+                                <th>Name</th>                            
+                                <th>Address</th>                              
+                                <th>Mobile</th>                            
+                                <th>email</th>
+                                <th style="width:160px;">Action</th>
+                              </tr>
+                            </thead>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
