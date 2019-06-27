@@ -11,7 +11,7 @@ class SubDealerController extends Controller {
     //Display employee details 
     public function subdealerListPage()
     {
-        return view('SubDealer::sub-dealer-list');
+        return view('SubDealer::sub-dealer-root-list');
     }
     //returns employees as json 
     public function getSubDealers()

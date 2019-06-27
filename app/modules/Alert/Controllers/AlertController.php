@@ -152,7 +152,7 @@ class AlertController extends Controller {
             <a href=/alert-type/".Crypt::encrypt($alert_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
             <button onclick=delAlertType(".$alert_type->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
             }else{ 
-            return "<a href=/alert-type/".Crypt::encrypt($alert_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            return "
             <button onclick=activateAlertType(".$alert_type->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
