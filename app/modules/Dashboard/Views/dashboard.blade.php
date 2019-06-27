@@ -221,33 +221,8 @@
                         </div>
                     </div>
 </div>
-<div class="card" style="float:left;width:100%!important">
 
-                            <table class="table" style="border:none!important;">
-                                  <thead>
-                                    <tr>
-                                       <th scope="col"></th>
-                                      
-                                      <th scope="col">Vehicle Name</th>
-                                      <th scope="col">Vehicle Number</th>
-                                      <th scope="col">Dist. Covered</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                   <body>
-                                   @foreach ($vehicles as $vehicle)
-                                    <tr>
-                                      <td><input type="radio" id="radio" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}"></td>
-                                       <td>{{$vehicle->name}}</td>
-                                       <td>{{$vehicle->register_number}}</td>
-                                      
-                                        <td>80 </td>
-                                    </tr>                                      
-                                      @endforeach  
-                                  </tbody>
-                            </table>
-                        </div>
-    <div class="iconsbg1"> 
+ <div class="iconsbg1"> 
       <div class="row">
         <div class="card card-hover" style="width:100%">
           <div class="box bg-success text-center">
@@ -347,6 +322,33 @@
       </div>     
     </div>
 
+<div class="card" style="float:left;width:100%!important">
+
+                            <table class="table" style="border:none!important;">
+                                  <thead>
+                                    <tr>
+                                       <th scope="col"></th>
+                                      
+                                      <th scope="col">Vehicle Name</th>
+                                      <th scope="col">Vehicle Number</th>
+                                      <th scope="col">Dist. Covered</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                   <body>
+                                   @foreach ($vehicles as $vehicle)
+                                    <tr>
+                                      <td><input type="radio" id="radio" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}"></td>
+                                       <td>{{$vehicle->name}}</td>
+                                       <td>{{$vehicle->register_number}}</td>
+                                      
+                                        <td>80 </td>
+                                    </tr>                                      
+                                      @endforeach  
+                                  </tbody>
+                            </table>
+                        </div>
+   
                 </div>
 
                 <div class="dashboard-main">
