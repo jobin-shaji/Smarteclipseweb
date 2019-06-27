@@ -90,6 +90,17 @@
   @endrole
 
    @role('dealer')
+    <div class="page-wrapper">
+           
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+              <div class="card-body">
+                <div>
+                    <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
+                      <div class="row">
+                        <div class="col-sm-12">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green bxs">
@@ -116,6 +127,13 @@
             </div>
             <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
+        </div>
+        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+            </div>
         </div>
         <!-- ./col -->       
   @endrole
