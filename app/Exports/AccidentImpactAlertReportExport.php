@@ -28,8 +28,8 @@ class AccidentImpactAlertReportExport implements FromView
        if($vehicle==0 || $vehicle==null)
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',21)
-            ->where('status',1);
+            ->where('alert_type_id',21);
+            // ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
@@ -40,8 +40,8 @@ class AccidentImpactAlertReportExport implements FromView
         {
             $query = $query->where('client_id',$client)
             ->where('alert_type_id',21)
-            ->where('vehicle_id',$vehicle)
-            ->where('status',1);
+            ->where('vehicle_id',$vehicle);
+            // ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));

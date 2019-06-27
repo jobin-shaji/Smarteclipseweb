@@ -1,4 +1,4 @@
-@extends('layouts.gps')
+@extends('layouts.eclipse')
 @section('title')
     Update Dealer Details
 @endsection
@@ -14,6 +14,21 @@
     </div>
     @endif  
 <section class="hilite-content">
+     <div class="page-wrapper">
+    <div class="page-breadcrumb">
+      <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+          <h4 class="page-title">Sub Dealer details</h4> 
+          @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+            </div>
+          </div>
+          @endif                       
+        </div>
+      </div>
+    </div>
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
