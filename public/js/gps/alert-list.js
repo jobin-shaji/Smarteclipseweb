@@ -36,6 +36,7 @@ function callBackDataTable(){
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
             {data: 'latitude', name: 'latitude'},
+             {data: 'longitude', name: 'longitude'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],
