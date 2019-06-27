@@ -17,7 +17,7 @@
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="{{url('/gps-transferred')}}" class="sidebar-link">
+      <a href="{{url('/gps')}}" class="sidebar-link">
         <i class="mdi mdi-view-dashboard"></i>
         <span class="hide-menu"> List Device</span>
       </a>

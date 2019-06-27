@@ -37,7 +37,7 @@
                   <!-- /.col -->
                 </div>
    
-      <div class="row">
+        <div class="row">
           <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label class="srequired">Name</label>
@@ -50,38 +50,36 @@
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{$vehicle->register_number}}" disabled> 
                 <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
               </div>
-            </div>
 
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
                 <input type="text" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" disabled> 
                 <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
               </div>
-
-           </div>
+            </div>
+          </div>
          
           <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-feedback">
-                <label class="srequired">Vehicle Type</label>
-                <input type="text" class="form-control" value="{{$vehicle->vehicleType->name}}" disabled> 
-                <span class="glyphicon glyphicon-plus form-control-feedback"></span>
-              </div>
+                  <label class="srequired">Vehicle Type</label>
+                  <input type="text" class="form-control" value="{{$vehicle->vehicleType->name}}" disabled> 
+                  <span class="glyphicon glyphicon-plus form-control-feedback"></span>
+                </div>
 
-              <div class="form-group has-feedback">
-                <label class="srequired">GPS</label>
-                <input type="text" class="form-control" value="{{$vehicle->gps->name}} || {{$vehicle->gps->imei}}" disabled> 
-                <span class="glyphicon glyphicon-home form-control-feedback"></span>
-              </div>
+                <div class="form-group has-feedback">
+                  <label class="srequired">GPS</label>
+                  <input type="text" class="form-control" value="{{$vehicle->gps->name}} || {{$vehicle->gps->imei}}" disabled> 
+                  <span class="glyphicon glyphicon-home form-control-feedback"></span>
+                </div>
 
             </div>
-        </div>
+          </div>
         
     
                   </section>
                 </div>                
               </div>
-            <div class="row"></div>
           </div>
         </div>
       </div>
