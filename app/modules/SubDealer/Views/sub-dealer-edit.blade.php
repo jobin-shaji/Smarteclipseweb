@@ -3,22 +3,13 @@
     Update Dealer Details
 @endsection
 @section('content')
-    <section class="content-header">
-     <h1>Edit Sub Dealer</h1>
-    </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
-      </div>
-    </div>
-    @endif  
-<section class="hilite-content">
-     <div class="page-wrapper">
+ <div class="page-wrapper">
     <div class="page-breadcrumb">
       <div class="row">
+<section class="hilite-content">
+    
         <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">Sub Dealer details</h4> 
+          <h4 class="page-title">Edit Sub Dealer</h4> 
           @if(Session::has('message'))
           <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -29,10 +20,12 @@
         </div>
       </div>
     </div>
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
+     <div class="container-fluid">
+      <div class="card" style="margin:0 0 0 1%">
+        <div class="card-body wizard-content">
+          <div class="row">
+            <div class="col-xs-12">              
+              <h2 class="page-header">
             <i class="fa fa-edit">Sub Dealer details</i> 
           </h2>
            
@@ -44,16 +37,20 @@
           <a href="{{route('sub.dealers.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>
           </a><?php } ?>
-        </div>
-        <!-- /.col -->
-      </div>
+            </div>    
+          </div> 
+      <!-- title row -->
+    
     <form  method="POST" action="{{route('sub.dealers.update.p',$user->id)}}">
         {{csrf_field()}}
-    <div class="row">
-        <div class="col-md-6">
+    <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>SUB DEALER EDIT</h4>
+                  <div class="form-group row" style="float:none!important">
           
-          <div class="form-group has-feedback">
-            <label class="srequired">Name</label>
+         
+            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
+            <div class="form-group has-feedback">
             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealers->name}}"> 
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
@@ -62,10 +59,12 @@
             <strong class="error-text">{{ $errors->first('name') }}</strong>
             </span>
           @endif
+        </div>
 
-        
- <div class="form-group has-feedback">
-          <label class="srequired">Mobile No.</label>
+          <div class="form-group row" style="float:none!important">
+
+          <label class="srequired">Mobile No.</label> 
+          <div class="form-group has-feedback">
           <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
         </div>
@@ -74,11 +73,12 @@
           <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
           </span>
         @endif
+      </div>
           <div class="col-md-3 ">
           <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
         </div>
       </div>
-     
+     </div>
    
     </form>
 </section>
@@ -141,6 +141,10 @@
     </div>
    </div>
  </div>
+
+      </div>
+    </div>
+  </div>
 <!-- add depot user -->
 
 <div class="clearfix"></div>
