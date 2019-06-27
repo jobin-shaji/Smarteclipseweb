@@ -1,20 +1,29 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
    Change Password
 @endsection
-@section('content')
+@section('content') 
+ <div class="page-wrapper"> 
+  <section class="hilite-content">
+    <div class="page-breadcrumb"> 
 
-    <section class="content-header">
-    </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
+      <div class="row">
+          
+        <div class="col-12 d-flex no-block align-items-center">
+          <h4 class="page-title">Edit Sub Dealer</h4> 
+          @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+            </div>
+          </div>
+          @endif                       
+        </div>
       </div>
     </div>
-    @endif  
-    <section class="hilite-content">
-      <!-- title row -->
+     <div class="container-fluid">
+      <div class="card" style="margin:0 0 0 1%">
+        <div class="card-body wizard-content">      <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
@@ -27,17 +36,21 @@
       <form  method="POST" action="{{route('sub.dealer.update-password.p',$subdealer->user_id)}}">
           {{csrf_field()}}
       <input type="hidden" name="id" value="{{$subdealer->user_id}}"> 
-      <div class="row">
-        <div class="col-md-6">
-            
+      <div class="card">
+          <div class="card-body">
+             <div class="form-group row" style="float:none!important">
 
-            <div class="form-group has-feedback">
-              <label class="srequired">New Password</label>
-              <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
+          
+              <label for="fname" class="col-sm-3 text-right control-label col-form-label">New Password</label>  
+              <div class="form-group has-feedback">
+              <input type="password"  class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
-            <div class="form-group has-feedback">
-              <label class="srequired">Confirm password</label>
+          </div>
+            <div class="form-group row" style="float:none!important">
+           
+              <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm password</label> 
+              <div class="form-group has-feedback">
               <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
@@ -57,8 +70,14 @@
             <!-- /.col -->
           </div>
       </form>
+         </div>
+    </div>
+   </div>
+ 
 </section>
+</div>
 
+     
 <div class="clearfix"></div>
 
 @endsection

@@ -6,8 +6,7 @@
  <div class="page-wrapper">
     <div class="page-breadcrumb">
       <div class="row">
-<section class="hilite-content">
-    
+        <section class="hilite-content">    
         <div class="col-12 d-flex no-block align-items-center">
           <h4 class="page-title">Edit Sub Dealer</h4> 
           @if(Session::has('message'))
@@ -24,11 +23,13 @@
       <div class="card" style="margin:0 0 0 1%">
         <div class="card-body wizard-content">
           <div class="row">
-            <div class="col-xs-12">              
+            <div class="col-md-12">
+            <div class="col-md-6">               
               <h2 class="page-header">
             <i class="fa fa-edit">Sub Dealer details</i> 
           </h2>
-           
+           </div>
+            <div class="col-md-6"> 
           <?php 
             $password=$subdealers->password;
             if($subdealers){
@@ -37,50 +38,45 @@
           <a href="{{route('sub.dealers.change-password',$encript)}}">
             <button class="btn btn-xs btn-success pull-right">Password Change</button>
           </a><?php } ?>
+        </div>
             </div>    
           </div> 
-      <!-- title row -->
-    
-    <form  method="POST" action="{{route('sub.dealers.update.p',$user->id)}}">
+      <!-- title row -->   
+        <form  method="POST" action="{{route('sub.dealers.update.p',$user->id)}}">
         {{csrf_field()}}
-    <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>SUB DEALER EDIT</h4>
-                  <div class="form-group row" style="float:none!important">
-          
-         
-            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
-            <div class="form-group has-feedback">
-            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealers->name}}"> 
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>SUB DEALER EDIT</h4>
+            <div class="form-group row" style="float:none!important">
+              <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealers->name}}"> 
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+              </div>
+              @if ($errors->has('name'))
+              <span class="help-block">
+              <strong class="error-text">{{ $errors->first('name') }}</strong>
+              </span>
+              @endif
+            </div>
+            <div class="form-group row" style="float:none!important">
+              <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label> 
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+              </div>
+              @if ($errors->has('phone_number'))
+              <span class="help-block">
+              <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+              </span>
+              @endif
+            </div>
+            <div class="col-md-3 ">
+              <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
+            </div>
           </div>
-          @if ($errors->has('name'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('name') }}</strong>
-            </span>
-          @endif
         </div>
-
-          <div class="form-group row" style="float:none!important">
-
-          <label class="srequired">Mobile No.</label> 
-          <div class="form-group has-feedback">
-          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
-          <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-        </div>
-        @if ($errors->has('phone_number'))
-          <span class="help-block">
-          <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
-          </span>
-        @endif
-      </div>
-          <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
-        </div>
-      </div>
-     </div>
-   
-    </form>
+      </form>
 </section>
 
 
