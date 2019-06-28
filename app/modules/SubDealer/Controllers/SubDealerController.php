@@ -151,8 +151,7 @@ class SubDealerController extends Controller {
             <button onclick=delSubDealers(".$subdealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
-              
-                <a href=/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+
                 <button onclick=activateSubDealer(".$subdealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
