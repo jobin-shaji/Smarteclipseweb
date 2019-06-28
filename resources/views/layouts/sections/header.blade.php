@@ -23,7 +23,6 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-
                 <p>
                     {{ Auth::user()->name }}
                   <small>Member since {{ Auth::user()->created_at}}</small>

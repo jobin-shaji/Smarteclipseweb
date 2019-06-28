@@ -8,6 +8,7 @@ use App\Scopes\DeleteScope;
 class Gps extends Model
 {
 	use SoftDeletes;
+ 
 
     protected static function boot()
     {
@@ -15,6 +16,12 @@ class Gps extends Model
 
         static::addGlobalScope(new DeleteScope);
     }
+
+    // protected $encryptable = [
+    //     'code',
+    //     'keys',
+    //     'allergies'
+    // ];
 
     protected $fillable=[ 'name','imei','manufacturing_date','brand','model_name','version','user_id','status'];
 
@@ -28,8 +35,9 @@ class Gps extends Model
     {
     	return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
+    
     public function vehicle()
     {
-        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id');
+     return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id')->withTrashed();
     }
 }

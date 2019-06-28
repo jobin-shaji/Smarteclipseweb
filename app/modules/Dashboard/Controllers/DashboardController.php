@@ -12,6 +12,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Geofence\Models\Geofence;
+use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
@@ -288,43 +289,85 @@ class DashboardController extends Controller
 
     public function dashVehicleTrack(Request $request){
         $user = $request->user(); 
-        //  $client=Client::where('user_id',$user->id)->first();
-        //  $query=Vehicle::select(
+        $client=Client::where('user_id',$user->id)->first();
+        $vehicles = Vehicle::select(
+            'id',
+            'register_number',
+            'name',
+            'gps_id'
+        )
+        ->where('client_id',$client->id)
+        ->get();
+
+        $single_vehicle = [];
+        foreach($vehicles as $vehicle){
+            $single_vehicle[] = $vehicle->gps_id;
+        }    
+
+
+
+        // $user_data=Vehicle::Select(
+        //     'gps_id',
+
         //     'id',
         //     'name',
-        //     'register_number',
-        //     'client_id'
+        //     'register_number'
         // )
-        // ->where('client_id',$client->id);
-        $user_data=Gps::Select('id','lat','lat_dir','lon','lon_dir')
-        ->where('user_id',$user->id)
-        // ->with('vehicle:id,name,register_number') 
+        // ->with('gps:id,lat,lat_dir,lon,lon_dir') 
+        // ->whereIn('gps_id',$single_vehicle)        
+        // ->orderBy('id','desc')                 
+        // ->get(); 
+        // $encrypt = array(
+        //     'vehicle_id'  => Crypt::encrypt($user_data->id)
+            
+        // );
+// $encrypt=Crypt::encrypt($user_data->id);
+
+
+
+
+
+
+
+        // dd($single_vehicle);  
+        $user_data=Gps::Select(
+            'id',
+            'lat',
+            'lat_dir',
+            'lon',
+            'lon_dir'
+        )
+        ->with('vehicle:gps_id,id,name,register_number') 
+        ->whereIn('id',$single_vehicle)        
         ->orderBy('id','desc')                 
-        ->get();
-                    // dd($user_data);
-         //    $gps_id = [];
-         //    foreach($user_data as $gps){
-         //        $gps_id[] = $gps->id;
-         //    }
+        ->get(); 
 
-        
-         // $vehicles = Vehicle::select('id','register_number','name','gps_id')
-         //            ->whereIn('gps_id',$gps_id)
-         //            ->get();
-                   
-         //    $response_data = array(               
-         //        'user_data' => $user_data,
-         //        'vehicles' => $vehicles
-         //        // 'longitude' => $gps_data->longitude
-         //    );
-         //    return response()->json($response_data); 
-        return response()->json($user_data); 
+        $single_gps = [];
+        foreach($user_data as $user_vehicle){
+            $single_gps[] = Crypt::encrypt($user_vehicle->vehicle->id);
+        }    
+        if($user_data){     
+            $response_data = array(
+                'user_data'  => $user_data,
+                'vehicle' => $single_gps,
+                'status'=>'Status'
+               
+            );
+        }
+        else{
+                $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0);
+             }
+            
+        return response()->json($response_data); 
+        // dd($single_gps);
+        // return response()->json([$user_data]); 
     }
-
-      public function vehicleTrackList(Request $request)
+    public function vehicleTrackList(Request $request)
     {
-        $gpsID=$request->gps_id;   
-  
+        $gpsID=$request->gps_id;     
         $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
                     ->where('id',$gpsID)                 
                     ->first();
