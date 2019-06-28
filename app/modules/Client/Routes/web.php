@@ -23,3 +23,8 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::post('/client/activate','ClientController@activateClient')->name('client.activate');
 });
 
+Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+	Route::get('/client/profile','ClientController@userProfile')->name('client.profile');
+	Route::post('/client/profile','ClientController@saveUserProfile')->name('client.profile.p');
+});
+

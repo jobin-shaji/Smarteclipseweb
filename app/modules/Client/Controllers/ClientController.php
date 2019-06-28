@@ -383,6 +383,8 @@ class ClientController extends Controller {
             'message' => 'Client restored successfully'
         ]);
     }
+
+
     public function passwordUpdateRules(){
         $rules=[
             'password' => 'required|string|min:6|confirmed'
