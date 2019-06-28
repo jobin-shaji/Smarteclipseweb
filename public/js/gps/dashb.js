@@ -55,9 +55,12 @@ function vehicle_details(res){
       $('#battery_status').text(res.battery_status);
       var address=res.address;
       $('#address').text(address.substr(0,10));
+        
+  }
 
-     
-      
-}
+
+  $(document).ready(function(){
+   $('st-actionContainer').launchBtn( { openDuration: 500, closeDuration: 300 } );
+  });
 
 
