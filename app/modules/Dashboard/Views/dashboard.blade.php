@@ -181,6 +181,8 @@
           </div>
         </div>
    @endrole
+
+ <!-- -----------------------------------------------------------------------------   -->
    @role('client')
   <div class="page-wrapper">
     <!-- ============================================================== -->
@@ -201,12 +203,13 @@
           <div class="dashboard-main">
             <div class="iconsbg">          
               <div class="col-md-6 col-lg-4 col-xlg-3">
-                <div class="card card-hover">
-                  <div class="box bg-success text-center">
-                    <h1 class="font-light text-white"></h1>
-                    <h2 class="text-white">Summary</h2>
-                  </div>
-                </div>
+                <form  onsubmit="return locationSearch();" >
+                  <input type="text" name="place" id="search_place" placeholder="place.." >
+                  <input type="text" name="radius" id="radius" placeholder="radius" >
+                  <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+                                  
+              
               </div>
               <div class="col-md-6 col-lg-2 col-xlg-3">
                 <div class="card card-hover">
@@ -423,16 +426,16 @@
             <!-- ============================================================== -->
         </div>
   @endrole
+<!-- ----------------------------------------------------------------------------- -->
 
 </div>
       
 </section>
   @section('script')
      <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ"></script>
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places"></script>
       <script src="{{asset('js/gps/dashb.js')}}"></script>
-      
-       @role('client')
+    @role('client')
      <script src="{{asset('js/gps/dashb-client.js')}}"></script>
     @endrole
   @endsection

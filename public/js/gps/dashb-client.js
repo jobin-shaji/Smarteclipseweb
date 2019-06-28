@@ -20,11 +20,12 @@
 
 		    	 markers = [];
 		    	 
-			}, 1000);
+			}, 6000);
 
-
-
-
+        	 var input1 = document.getElementById('search_place'); 
+         	 autocomplete1 = new google.maps.places.Autocomplete(input1);
+        	 var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
+       
 
 	 	});
 
@@ -79,6 +80,7 @@
 		       });
 		       var infowindow = new google.maps.InfoWindow();
 		       google.maps.event.addListener(marker, 'click', function() {
+		       		getVehicle(2);
 		           infowindow.setContent(title);
 		           infowindow.open(map, this);
 		        });
@@ -88,12 +90,9 @@
 
 
      		 function setMapOnAll(map) {
-     		 	 
 			     for (var i = 0; i < markers.length; i++) {
 			         markers[i].setMap(map);
 			     }
-
-			     
 			 	}
 
 			 
@@ -114,6 +113,25 @@
 		    backgroundPostData(url,data,'selectVehicleTrack',{alert:false});
 
 	 	});
+
+	 	function locationSearch(){
+	 		var place_name=$('#search_place').val();
+	 		var radius=$('#search_place').val();
+	 		   var geocoder =  new google.maps.Geocoder();
+   			   geocoder.geocode( { 'address':place_name}, function(results, status) {
+	          if (status == google.maps.GeocoderStatus.OK) {
+	          	var lat=results[0].geometry.location.lat();
+	          	var lng=results[0].geometry.location.lng();
+	          	map.panTo(new google.maps.LatLng(lat,lng));
+	          	map.setZoom(16);
+	          } else {
+	            alert("Something got wrong " + status);
+	          }
+        	});
+	 	    return false;
+	 	}
+
+	 	
 
    
 
