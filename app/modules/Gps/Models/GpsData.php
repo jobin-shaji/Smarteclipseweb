@@ -75,7 +75,6 @@ class GpsData extends Model
     {
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
-
     public function vehicle()
     {
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
@@ -87,6 +86,5 @@ class GpsData extends Model
     public function sleep()
     {
        return $this->hasMany('App\Modules\Gps\Models\GpsData','date','date');
-        // ->where('vehicle_mode',"H");
     }
 }

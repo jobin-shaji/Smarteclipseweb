@@ -47,12 +47,15 @@
              for (i=0;i<JSONObject.length;i++){
              var lat=JSONObject[i].lat;
              var lng=JSONObject[i].lon;
+              var reg=JSONObject[i].vehicle;
+              console.log(reg);
              var loc=new google.maps.LatLng(lat,lng);
               var title ='<div id="content" style="width:150px;">' +
     '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">car</span></div>'+  
     '<div style="padding-top:5px;"><i class="fa fa-car"></i> </div>'+ 
     '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
     '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
+    '<div style="padding-top:5px;"><button>Track</button> </div>'+ 
     '</div>'; 
              car_color="#0C2161";
              addMarker(loc,title,car_color);
