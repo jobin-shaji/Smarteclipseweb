@@ -1,36 +1,35 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
-   Update vehicle document details
+    Update vehicle document details
 @endsection
 @section('content')
 
-    <section class="content-header">
-     <h1>Edit Vehicle Document</h1>
-    </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
+
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Update vehicle document details</h4>
+        @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
+          </div>
+        @endif  
       </div>
     </div>
-    @endif  
-
-
-    <section class="hilite-content">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-pencil"></i> 
-          </h2>
-        </div>
-        <!-- /.col -->
-      </div>
-   <form  method="POST" action="{{route('vehicle-doc.update.p',$vehicle_doc->id)}}" enctype="multipart/form-data">
-        {{csrf_field()}}
-      <div class="row">
-          <div class="col-md-6">
-              <input type="hidden" name="vehicle_id" value="{{$vehicle_doc->vehicle_id}}">
+  </div>
+            
+  <div class="card-body">
+    <div class="table-responsive">
+      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+          <div class="col-sm-12">
+            <form  method="POST" action="{{route('vehicle-doc.update.p',$vehicle_doc->id)}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="hidden" name="vehicle_id" value="{{$vehicle_doc->vehicle_id}}">
               <div class="form-group has-feedback">
                 <label class="srequired">Document Type</label>
                 <select class="form-control {{ $errors->has('document_type_id') ? ' has-error' : '' }}" placeholder="Document Type" name="document_type_id" value="{{ old('document_type_id') }}" required>
@@ -65,7 +64,7 @@
                   </div>
                   <div class="col-md-6">
                     @if($vehicle_doc->path)
-                      <img class="img-responsive" src="/documents/{{ $vehicle_doc->path }}" />
+                      <img width="150" height="100" src="/documents/{{ $vehicle_doc->path }}" />
                     @else
                     <p>No image found</p>
                     @endif
@@ -78,19 +77,29 @@
                 </span>
               @endif
 
+
+              </div>
             </div>
-        </div>
-          <div class="row">
-            <!-- /.col -->
-            <div class="col-md-3 ">
-              <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
-            </div>
-            <!-- /.col -->
+
+              <div class="row">
+                <!-- /.col -->
+                <div class="col-md-2 ">
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+                </div>
+                <!-- /.col -->
+              </div>
+            </form>
           </div>
-    </form>
-</section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
  
 <div class="clearfix"></div>
 
-@endsection
 
+@endsection

@@ -19,7 +19,7 @@
 		     var url = 'dash-vehicle-track';
 		     var data = {};   
 
-		   	 window.setInterval(function(){
+		   	 	window.setInterval(function(){
 		   	     setMapOnAll(map);
 		    	 backgroundPostData(url,data,'vehicleTrack',{alert:false}); 
 

@@ -12,9 +12,16 @@
                                                <!--End Logo icon -->
                          <!-- Logo text -->
                    <span class="logo-text">
-                           
-                             <img src="{{ url('/') }}/assets/images/Ray-Fleet.jpg" alt="homepage" class="light-logo" />
-                            
+                        @role('client')
+                            @if(\Auth::user()->client->logo)
+                              <img class="light-logo" width="50" height="50" src="/logo/{{ \Auth::user()->client->logo }}" />
+                            @else
+                                <p>No Logo Found</p>
+                            @endif
+                        @endrole
+                        @role('root|dealer|sub_dealer')
+                            <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />    
+                        @endrole                      
                         </span>
                         <!-- Logo icon -->
                         <!-- <b class="logo-icon"> -->
@@ -63,7 +70,7 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                      <!--   <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -74,22 +81,22 @@
                                 <a class="dropdown-item" href="alert_list.html">Towing <span>2</span></a>
                                 <a class="dropdown-item" href="alert_list.html">View All</a>
                                                             </div>
-                        </li>
+                        </li> -->
                         <!-- ============================================================== -->
                         <!-- End Comment -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
                                     <li>
-                                        <div class="">
+                                        <div class=""> -->
                                              <!-- Message -->
-                                            <a href="javascript:void(0)" class="link border-top">
+                                            <!-- <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>
                                                     <a href="list_vehicle.html"><div class="m-l-10">
@@ -99,9 +106,9 @@
                                                         <small class="font-light">KL-07-CK 1302 Expiring within 9 Days</small> 
                                                     </div></a>
                                                 </div>
-                                            </a>
+                                            </a> -->
                                             <!-- Message -->
-                                            <a href="javascript:void(0)" class="link border-top">
+                                           <!--  <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-info btn-circle"><i class="mdi mdi-plus-circle"></i></span>
                                                     <a href="list_vehicle.html"><div class="m-l-10">
@@ -111,9 +118,9 @@
                                                         <small class="font-light">KL-07-CK 1302 Expiring within 9 Days</small>
                                                     </div></a>
                                                 </div>
-                                            </a>
+                                            </a> -->
                                             <!-- Message -->
-                                            <a href="javascript:void(0)" class="link border-top">
+                                            <!-- <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
                                                  <a href="list_vehicle.html">   <div class="m-l-10">
@@ -123,9 +130,9 @@
                                                         <small class="font-light">KL-07-CB 1202 Expiring within 9 Days</small>
                                                     </div></a>
                                                 </div>
-                                            </a>
+                                            </a> -->
                                             <!-- Message -->
-                                            <a href="javascript:void(0)" class="link border-top">
+                                            <!-- <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
                                                    <a href="list_vehicle.html"> <div class="m-l-10">
@@ -140,7 +147,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> -->
                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ url('/') }}/assets/images/2.png" alt="user" class="rounded-circle" width="31"></a>
@@ -148,7 +155,7 @@
                                 <div class="dropdown-divider">
                                 </div>
                                 @role('client')
-                                    <a class="dropdown-item" href="profile.html">
+                                    <a class="dropdown-item" href="{{url('/client/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>My Profile</a>
                                 @endrole
                                 <div class="dropdown-divider"></div>
