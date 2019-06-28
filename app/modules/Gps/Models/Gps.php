@@ -8,6 +8,7 @@ use App\Scopes\DeleteScope;
 class Gps extends Model
 {
 	use SoftDeletes;
+ 
 
     protected static function boot()
     {
@@ -15,6 +16,12 @@ class Gps extends Model
 
         static::addGlobalScope(new DeleteScope);
     }
+
+    // protected $encryptable = [
+    //     'code',
+    //     'keys',
+    //     'allergies'
+    // ];
 
     protected $fillable=[ 'name','imei','manufacturing_date','brand','model_name','version','user_id','status'];
 

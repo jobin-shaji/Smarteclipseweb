@@ -12,6 +12,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Geofence\Models\Geofence;
+use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
@@ -302,6 +303,32 @@ class DashboardController extends Controller
         foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
         }    
+
+
+
+        // $user_data=Vehicle::Select(
+        //     'gps_id',
+
+        //     'id',
+        //     'name',
+        //     'register_number'
+        // )
+        // ->with('gps:id,lat,lat_dir,lon,lon_dir') 
+        // ->whereIn('gps_id',$single_vehicle)        
+        // ->orderBy('id','desc')                 
+        // ->get(); 
+        // $encrypt = array(
+        //     'vehicle_id'  => Crypt::encrypt($user_data->id)
+            
+        // );
+// $encrypt=Crypt::encrypt($user_data->id);
+
+
+
+
+
+
+
         // dd($single_vehicle);  
         $user_data=Gps::Select(
             'id',
@@ -313,9 +340,30 @@ class DashboardController extends Controller
         ->with('vehicle:gps_id,id,name,register_number') 
         ->whereIn('id',$single_vehicle)        
         ->orderBy('id','desc')                 
-        ->get();  
-        // dd($user_data);
-        return response()->json($user_data); 
+        ->get(); 
+
+        $single_gps = [];
+        foreach($user_data as $user_vehicle){
+            $single_gps[] = Crypt::encrypt($user_vehicle->vehicle->id);
+        }    
+        if($user_data){     
+            $response_data = array(
+                'user_data'  => $user_data,
+                'vehicle' => $single_gps,
+                'status'=>'Status'
+               
+            );
+        }
+        else{
+                $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0);
+             }
+            
+        return response()->json($response_data); 
+        // dd($single_gps);
+        // return response()->json([$user_data]); 
     }
     public function vehicleTrackList(Request $request)
     {

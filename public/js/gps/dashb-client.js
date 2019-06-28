@@ -1,8 +1,13 @@
+
+
  var latMap=20.593683;
  var lngMap=78.962883;
  var haightAshbury = {lat: latMap, lng: lngMap};
  var markers = [];
  var map;
+
+  // 'key' => env('APP_KEY'),
+  
  
 		$(document).ready(function () {
 
@@ -43,21 +48,26 @@
                rotation: 180 //<-- Car angle
           		};
 
-             var JSONObject = res;
+             var JSONObject = res.user_data;
+
+             var vehicle = res.vehicle;
              var marker, i;
              for (i=0;i<JSONObject.length;i++){
              var lat=JSONObject[i].lat;
              var lng=JSONObject[i].lon;
-              var reg=JSONObject[i].vehicle;
-              console.log(reg);
+	         var reg=JSONObject[i].vehicle.register_number;
+	         var vehicle_id=vehicle[i];
+	         console.log(vehicle_id);
+	         var vehicle_name=JSONObject[i].vehicle.name;
              var loc=new google.maps.LatLng(lat,lng);
-              var title ='<div id="content" style="width:150px;">' +
-    '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">car</span></div>'+  
-    '<div style="padding-top:5px;"><i class="fa fa-car"></i> </div>'+ 
-    '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
-    '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
-    '<div style="padding-top:5px;"><button>Track</button> </div>'+ 
+             var title ='<div id="content" style="width:150px;">' +
+    '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">'+vehicle_name+'</span></div>'+  
+    '<div style="padding-top:5px;"><i class="fa fa-car"></i>'+reg+' </div>'+ 
+    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
+    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
+    '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Track</a> <a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Playback</a></div>'+ 
     '</div>'; 
+
              car_color="#0C2161";
              addMarker(loc,title,car_color);
              
