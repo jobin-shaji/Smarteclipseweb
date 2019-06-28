@@ -384,11 +384,66 @@ class ClientController extends Controller {
         ]);
     }
 
+//////////////////////////////////////User Profile/////////////////////////////////////
 
+    //user profile view
+    public function userProfile()
+    {
+        $client_id = \Auth::user()->client->id;
+        $client_user_id = \Auth::user()->id;
+        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $user=User::find($client_user_id); 
+        if($client == null)
+        {
+           return view('Client::404');
+        }
+        return view('Client::client-profile',['client' => $client,'user' => $user]);
+    }
+
+    // update vehicle doc
+    public function saveUserLogo(Request $request)
+    {
+        $client = Client::find($request->id);
+        if($client == null){
+           return view('Client::404');
+        }
+        $rules = $this->logoUpdateRules();
+        $this->validate($request, $rules);
+
+        $file=$request->file('logo');
+        if($file){
+            $old_file = $client->logo;
+            if($old_file){
+                $myFile = "logo/".$old_file;
+                $delete_file=unlink($myFile);
+            }
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'logo';
+            $file->move($destinationPath,$uploadedFile);
+            $client->logo = $uploadedFile;
+            $client->save();
+        }
+        $request->session()->flash('message', 'Logo updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client.profile'));  
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
     public function passwordUpdateRules(){
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
         return $rules;
+    }
+
+    // logo update rules
+    public function logoUpdateRules()
+    {
+        $rules = [
+            'logo' => 'required'
+        ];
+        return  $rules;
     }
 }
