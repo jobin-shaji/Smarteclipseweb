@@ -8,7 +8,7 @@
   <div class="page-breadcrumb">
       <div class="row">
           <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Add New User</h4>
+              <h4 class="page-title">End User Details</h4>
              @if(Session::has('message'))
               <div class="pad margin no-print">
                 <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
