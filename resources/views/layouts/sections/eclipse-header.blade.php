@@ -13,7 +13,7 @@
                          <!-- Logo text -->
                    <span class="logo-text">
                            
-                             <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />
+                             <img src="{{ url('/') }}/assets/images/Ray-Fleet.jpg" alt="homepage" class="light-logo" />
                             
                         </span>
                         <!-- Logo icon -->
