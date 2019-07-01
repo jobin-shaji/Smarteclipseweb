@@ -73,7 +73,7 @@
                         <li class="nav-item search-box"> 
                         </li>
                          <li class="nav-item"> 
-                             <a class="nav-link waves-effect waves-dark" href="#">
+                             <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
@@ -140,7 +140,7 @@
                                 <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
                             </div>
                         </li>
-                          <li class="nav-item dropdown">
+<!--                           <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Complaints 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -148,9 +148,9 @@
                                 <a class="dropdown-item" href="{{url('/complaint/create')}}"> Add Complaint <span></span></a>                               
                                 <a class="dropdown-item" href="{{url('/complaint')}}"> List Complaints<span></span></a>                               
                             </div>
-                        </li>
+                        </li> -->
 
-                      
+
                     </ul>
                    @endrole
                     <!-- <ul class="needhelp">Need help?   18005322007 (toll free)</ul> -->
