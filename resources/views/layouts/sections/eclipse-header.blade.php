@@ -140,7 +140,7 @@
                                 <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
                             </div>
                         </li>
-                          <li class="nav-item dropdown">
+<!--                           <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Complaints 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -148,7 +148,7 @@
                                 <a class="dropdown-item" href="{{url('/complaint/create')}}"> Add Complaint <span></span></a>                               
                                 <a class="dropdown-item" href="{{url('/complaint')}}"> List Complaints<span></span></a>                               
                             </div>
-                        </li>
+                        </li> -->
 
 
                     </ul>
