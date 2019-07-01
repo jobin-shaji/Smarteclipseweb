@@ -25,6 +25,11 @@ class Vehicle extends Model
     	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
 
+    // driver
+    public function driver(){
+        return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id');
+    }
+
     // client
     public function client(){
         return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');

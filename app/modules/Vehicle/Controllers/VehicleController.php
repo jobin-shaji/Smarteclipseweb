@@ -11,6 +11,7 @@ use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Vehicle\Models\VehicleRoute;
 use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\DocumentType;
+use App\Modules\Vehicle\Models\VehicleDriverLog;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Ota\Models\GpsOta;
 use App\Modules\Vehicle\Models\Document;
@@ -41,12 +42,14 @@ class VehicleController extends Controller {
                     'register_number',
                     'gps_id',
                     'e_sim_number',
+                    'driver_id',
                     'vehicle_type_id',
                     'deleted_at'
                     )
             ->withTrashed()
             ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
+            ->with('driver:id,name')
             ->with('gps:id,name,imei')
             ->get();
 
@@ -179,6 +182,8 @@ class VehicleController extends Controller {
     public function update(Request $request)
     {
         $vehicle = Vehicle::find($request->id);
+        $old_driver=$vehicle->driver_id;
+        $new_driver_id=$request->driver_id;
         if($vehicle == null){
            return view('Vehicle::404');
         }
@@ -186,7 +191,15 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->driver_id = $request->driver_id;
-        $vehicle->save();
+        $vehicle_update=$vehicle->save();
+        if($vehicle_update && $request->driver_id){
+                $vehicle_driver_log = VehicleDriverLog::create([
+                'vehicle_id' => $vehicle->id,
+                'from_driver_id' => $old_driver,
+                'to_driver_id' => $new_driver_id,
+                'client_id' =>$vehicle->client_id
+            ]);
+        }
 
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Vehicle details updated successfully!'); 
