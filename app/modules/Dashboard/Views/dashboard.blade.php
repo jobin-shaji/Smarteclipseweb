@@ -205,9 +205,14 @@
                   <span class="menu-icon"></span>
                 </div>
                 <ul class="navbar-menu animate">
+                   <li>
+                    <span > Reports</span>
+                      
+                   
+                  </li>
                   <li>
-                    <a href="#about-us" class="animate">
-                      <span class="desc animate"> Who We Are </span>
+                    <a href="{{url('/geofence-report')}}" class="animate"> <span class="glyphicon glyphicon-user"></span>
+                      <span class="desc animate"> Geofence Report </span>
                       <span class="glyphicon glyphicon-user"></span>
                     </a>
                   </li>
