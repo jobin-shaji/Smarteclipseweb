@@ -21,39 +21,31 @@
         </div>
       </div>
     </div>
-      <div class="container-fluid">
-        <div class="card-body">
-          <section class="hilite-content">
+  <div class="container-fluid">
+    <div class="card-body">
+      <section class="hilite-content">
       <!-- title row -->
           <div class="row">
-        <div class="col-xs-8">
-           
-          <h2 class="page-header">
-            <i class="fa fa-user-plus"></i> 
-             
-          </h2> 
-        
-        
-        </div>
-        <!-- /.col -->
-      </div>
-       <div class="row">
-            <!-- /.col -->
-            <div class="col-md-3 ">
-               <?php 
-                $encript=Crypt::encrypt($vehicle->gps->id)
-              ?>
-              <a href="{{route('vehicle.ota',$encript)}}">
-                <button class="btn btn-xs btn-success pull-right">Edit OTA</button>
-              </a>
+            <div class="col-xs-8">
+              <h2 class="page-header">
+                <i class="fa fa-user-plus"></i> 
+              </h2> 
             </div>
-            <!-- /.col -->
           </div>
-   <form  method="POST" action="{{route('vehicles.update.p',$vehicle->id)}}">
+        <div class="row">
+          <div class="col-md-3 ">
+          <?php 
+            $encript=Crypt::encrypt($vehicle->gps->id)
+          ?>
+          <a href="{{route('vehicle.ota',$encript)}}">
+            <button class="btn btn-xs btn-success pull-right">Edit OTA</button>
+          </a>
+          </div>
+        </div>
+        <form  method="POST" action="{{route('vehicles.update.p',$vehicle->id)}}">
         {{csrf_field()}}
-      <div class="row">
-          <div class="col-md-6">
-
+          <div class="row">
+            <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" required> 
@@ -64,19 +56,30 @@
                     <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
                 </span>
               @endif
-            
-         
+
+              <div class="form-group has-feedback">
+                <label class="srequired">Driver</label>
+                <select class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}"  name="driver_id" value="{{ old('driver_id') }}" required>
+                  <option>Select Driver</option>
+                  @foreach($drivers as $driver)
+                  <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif>{{$driver->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+              @if ($errors->has('driver_id'))
+                <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
+                </span>
+              @endif
             </div>
-        </div>
+          </div>
           <div class="row">
-            <!-- /.col -->
             <div class="col-md-3 ">
               <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
             </div>
-            <!-- /.col -->
           </div>
-    </form>
-</section>
+        </form>
+      </section>
  
 <div class="clearfix"></div>
 
