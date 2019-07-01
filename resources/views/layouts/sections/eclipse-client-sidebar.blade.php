@@ -7,7 +7,7 @@
                    <li>
                     <a href="{{url('/daily-km-report')}}" class="animate">
                       <span class="desc animate">Daily Report </span>
-                      <span class=""><i class="fas fa-tachometer-alt"></i></span>
+                      <span class=""><img src="/Report-icons/Total-KM-report.png" width="30px" height="30px" /></span>
                     </a>
                   </li>
 
