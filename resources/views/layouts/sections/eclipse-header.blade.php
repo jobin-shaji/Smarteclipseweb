@@ -73,7 +73,7 @@
                         <li class="nav-item search-box"> 
                         </li>
                          <li class="nav-item"> 
-                             <a class="nav-link waves-effect waves-dark" href="#">
+                             <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
@@ -150,7 +150,7 @@
                             </div>
                         </li>
 
-                      
+
                     </ul>
                    @endrole
                     <!-- <ul class="needhelp">Need help?   18005322007 (toll free)</ul> -->
