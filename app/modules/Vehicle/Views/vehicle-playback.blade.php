@@ -1,7 +1,7 @@
 @extends('layouts.gps')
 
 @section('content')
-
+<div class="page-wrapper_new">
 <section class="content-header">
     <h1>
         Playback111111111111
@@ -12,6 +12,7 @@
         <li class="active">PlayBack</li>
     </ol>
 </section>
+
 <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
 <section class="content box">
   <div class="row">
@@ -33,6 +34,7 @@
     </div>
     </div>
 </section>
+</div>
 
 @section('script')
 

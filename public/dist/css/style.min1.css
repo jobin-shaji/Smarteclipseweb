@@ -2180,7 +2180,7 @@ pre code {
 .table-responsive {
     display: block;
     width: 100%;
-    overflow-x: auto;
+    /*overflow-x: auto;*/
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar
 }
@@ -3951,7 +3951,7 @@ input[type=submit].btn-block {
 .dropdown-item:hover {
     color: #16181b;
     text-decoration: none;
-    background-color: #f8f9fa
+    background-color: #f2981973
 }
 
 .dropdown-item.active,
@@ -16526,6 +16526,30 @@ h1.text-white i {
     padding-top: 6px;
     border-radius: 6px;
     margin-bottom: 18px;
+}
+
+div#zero_config_wrapper {
+    margin-top: 18px;
+    margin-left: -15pxx;
+    margin-left: 27px;
+}
+
+.profile_image {
+    margin-top: 34px;
+    padding-top: 7px;
+}
+
+
+li.nav-item.dropdown.show {
+    background: #f2981973;
+    color: #fff;
+}
+
+.nav-item:hover{
+
+  background: #f2981973 !important;
+  color: #fff;
+  
 }
 
 

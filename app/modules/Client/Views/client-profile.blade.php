@@ -6,6 +6,7 @@
 
 
 <div class="page-wrapper_new">
+  
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
@@ -20,11 +21,13 @@
       </div>
     </div>
   </div>
-  <div class="page-wrapper_cover">
-  <div class="card-body">
 
-    <div class="table-responsive">
-      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+        
+
+  
+      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
             <h2 class="page-header">
               <i class="fa fa-user"></i> 
@@ -48,17 +51,18 @@
                     <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
                   </div>       
 
+               </div>
+               </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+         </div>
+        
+    
     </div>
-  </div>
-
-   <div class="card-body">
-    <div class="table-responsive">
-      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+    <div class="col-lg-6 col-md-12">
+       
+  
+      <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image">  <div class="row">
           <div class="col-sm-12">
             <h2 class="page-header">
               <i class="fa fa-file"></i> 
@@ -88,21 +92,24 @@
                     </span>
                   @endif
 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3 ">
+                   </div>
+                   </div>
+                   <div class="row">
+                  <div class="col-md-3 ">
                 <button type="submit" class="btn btn-primary btn-md form-btn ">Upload</button>
+                 </div>
+                </div>
+               </form>
               </div>
             </div>
-            </form>
           </div>
-        </div>
-      </div>
+       
     </div>
+
   </div>
 
-</div>
+
+  <div class="page-wrapper_cover"></div>
 </div>
 
 
