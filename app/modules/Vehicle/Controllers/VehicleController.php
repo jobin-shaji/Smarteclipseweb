@@ -169,7 +169,10 @@ class VehicleController extends Controller {
         }
         $routes=Route::where('client_id',$client_id)
                         ->get();
-        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'routes' => $routes]);
+        $drivers=Driver::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
+        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'routes' => $routes,'drivers' => $drivers]);
     }
 
     // update vehicle
@@ -182,6 +185,7 @@ class VehicleController extends Controller {
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
         $vehicle->e_sim_number = $request->e_sim_number;
+        $vehicle->driver_id = $request->driver_id;
         $vehicle->save();
 
         $encrypted_vehicle_id = encrypt($vehicle->id);
@@ -1253,7 +1257,8 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     public function vehicleUpdateRules($vehicle)
     {
         $rules = [
-            'e_sim_number' => 'required|numeric'
+            'e_sim_number' => 'required|numeric',
+            'driver_id' => 'required',
         ];
         return  $rules;  
     }
