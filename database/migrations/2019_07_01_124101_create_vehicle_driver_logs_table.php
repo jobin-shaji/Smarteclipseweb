@@ -18,6 +18,7 @@ class CreateVehicleDriverLogsTable extends Migration
             $table->integer('vehicle_id');
             $table->integer('from_driver_id');
             $table->integer('to_driver_id');
+            $table->integer('client_id');
             $table->timestamps();
         });
     }
