@@ -28,6 +28,10 @@ Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('ve
 
 Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
 
+Route::get('/vehicle-driver-log','VehicleController@vehicleDriverLogList')->name('vehicle-driver-log');
+
+Route::post('/vehicle-driver-log-list','VehicleController@getVehicleDriverLogList')->name('vehicle-driver-log-list');
+
 
 
 
