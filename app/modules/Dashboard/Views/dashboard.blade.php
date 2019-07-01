@@ -195,9 +195,83 @@
 @endrole
 <!-- -----------------------------------------------------------------------------   -->
 @role('client')
-<div class="page-wrapper">
+
    <div class="container-fluid">
       <div class="row">
+
+        <div class="client_menu">
+           <nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+                <div class="navbar-toggler animate">
+                  <span class="menu-icon"></span>
+                </div>
+                <ul class="navbar-menu animate">
+                  <li>
+                    <a href="#about-us" class="animate">
+                      <span class="desc animate"> Who We Are </span>
+                      <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#blog" class="animate">
+                      <span class="desc animate"> What We Say </span>
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact-us" class="animate">
+                      <span class="desc animate"> How To Reach Us </span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                </ul>
+              </nav> 
+
+
+        </div>
          <!-- ============================================================== -->
           
 
@@ -209,6 +283,8 @@
 
             <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
             <div class="pageContainer">
+
+              <div class="col-lg-12">
                <div class="st-actionContainer right-bottom">
                   <div class="st-panel">
                      <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
@@ -265,12 +341,12 @@
                       <div class="col-lg-12 col-md-12">
                        <div class="container-fluid bg-light map_search">
                        <div class="row align-items-center justify-content-center">
-                              <div class="col-md-4 pt-3">
+                              <div class="col-lg-4 col-md-4 pt-3">
                                      <div class="form-group">
                                         <input type="text" id="search_place" class="form-control">
                                      </div>
                                   </div>
-                                  <div class="col-md-4 pt-3">
+                                  <div class="col-lg-4 col-md-4 pt-3">
                                       <div class="form-group">
                                         <select id="search_radius" class="form-control">
                                           <option selected>KM</option>
@@ -282,7 +358,7 @@
                                       </div>
                                   </div>
                                  
-                                  <div class="col-md-2">
+                                  <div class="col-lg-2 col-md-2">
                                    <button type="submit" class="btn btn-primary btn-block">
                                     <i class="fas fa-search"></i>
                                    </button>
@@ -294,6 +370,10 @@
                      </div>
                  
                </div>
+              </div>
+
+
+
             </div>
             <div class="dashboard-main-Right">
                <div class="iconsbg1234">
@@ -301,7 +381,11 @@
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
-                           <h1 class="text-white" style="color:#129a00!important"><img src="assets/images/moving.png" style="width:100%"></h1>
+                           <h1 class="text-white" style="color:#129a00!important">
+                            <!-- <img src="assets/images/moving.png" style="width:100%"> -->
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            
+                           </h1>
                            <span style="float:left;width:100%">
                            <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
@@ -312,7 +396,10 @@
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
-                           <h1 class="text-white" style="color: #0077ae!important"><img src="assets/images/idling.png" style="width:100%"></h1>
+                           <h1 class="text-white" style="color: #0077ae!important">
+                           <!--  <img src="assets/images/idling.png" style="width:100%"> -->
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          </h1>
                            <span style="float:left;width:100%">
                            <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
                            <!-- <h5 class="text-white">IDLE</h5></span> -->
@@ -323,7 +410,11 @@
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
-                           <h1 class="text-white" style="color: #999!important"><img src="assets/images/delayed.png" style="width:100%"></h1>
+                           <h1 class="text-white" style="color: #999!important">
+                            <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+
+                           </h1>
                            <span style="float:left;width:100%">
                            <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
                            <!-- <h5 class="text-white">DELAY</h5></span> -->
@@ -334,7 +425,11 @@
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
-                           <h1 class="text-white" style="color:#fc4343!important"><img src="assets/images/stopped.png" style="width:100%"></h1>
+                           <h1 class="text-white" style="color:#fc4343!important">
+                            <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+
+                           </h1>
                            <span style="float:left;width:100%">
                            <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
                            <!--  <h5 class="text-white">STOPPED</h5></span> -->
@@ -417,7 +512,7 @@
 
          </div>
       </div>
-   </div>
+  
    @endrole
    <!-- ----------------------------------------------------------------------------- -->
 </div>
@@ -430,9 +525,7 @@
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
 <style type="text/css">
- aside.left-sidebar {
-    display: none;
-}
+
 </style>
 
 @endrole
