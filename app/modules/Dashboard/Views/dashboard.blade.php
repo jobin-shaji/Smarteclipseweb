@@ -199,79 +199,108 @@
    <div class="container-fluid">
       <div class="row">
 
+
         <div class="client_menu">
            <nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
                 <div class="navbar-toggler animate">
                   <span class="menu-icon"></span>
                 </div>
                 <ul class="navbar-menu animate">
+                   
                   <li>
-                    <a href="#about-us" class="animate">
-                      <span class="desc animate"> Who We Are </span>
+                    <a href="{{url('/geofence-report')}}" class="animate"> <span class="glyphicon glyphicon-user"></span>
+                      <span class="desc animate"> Geofence Report </span>
                       <span class="glyphicon glyphicon-user"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#blog" class="animate">
-                      <span class="desc animate"> What We Say </span>
+                    <a href="{{url('/alert-report')}}" class="animate">
+                      <span class="desc animate"> Alert Report </span>
                       <span class="glyphicon glyphicon-info-sign"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/tracking-report')}}" class="animate">
+                      <span class="desc animate"> Tracking Report </span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/route-deviation-report')}}" class="animate">
+                      <span class="desc animate"> Route Deviation Report</span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/harsh-braking-report')}}" class="animate">
+                      <span class="desc animate"> Harsh Braking Report</span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/sudden-acceleration-report')}}" class="animate">
+                      <span class="desc animate"> Sudden Acceleration Report</span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/total-km-report')}}" class="animate">
+                      <span class="desc animate"> Total KM  Report </span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/daily-km-report')}}" class="animate">
+                      <span class="desc animate">Daily Report </span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/over-speed-report')}}" class="animate">
+                      <span class="desc animate"> Over Speed  Report </span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
                   <li>
-                    <a href="#contact-us" class="animate">
-                      <span class="desc animate"> How To Reach Us </span>
+                    <a href="{{url('/zigzag-driving-report')}}" class="animate">
+                      <span class="desc animate"> Zig-Zag Driving Report</span>
                       <span class="glyphicon glyphicon-comment"></span>
                     </a>
                   </li>
+
+                  <li>
+                    <a href="{{url('/accident-imapct-alert-report')}}" class="animate">
+                      <span class="desc animate"> Accident Impact Alert Report</span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                   <li>
+                    <a href="{{url('/idle-report')}}" class="animate">
+                      <span class="desc animate"> Idle Report</span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{url('/parking-report')}}" class="animate">
+                      <span class="desc animate"> Parking Report</span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{url('/mainbattery-disconnect-report')}}" class="animate">
+                      <span class="desc animate"> Main Battery Disconnect Report</span>
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                  </li>
+
                 </ul>
               </nav> 
 
 
         </div>
+
          <!-- ============================================================== -->
           
 
@@ -353,6 +382,7 @@
                                           <option>10 KM</option>
                                           <option>30 KM</option>
                                           <option>50 KM</option>
+                                          <option>75 KM</option>
                                           <option>100 KM</option>
                                         </select>
                                       </div>
@@ -387,7 +417,7 @@
                             
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
+                           <h1 id="moving" class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
                         </div>
                      </div>
@@ -401,7 +431,7 @@
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                           </h1>
                            <span style="float:left;width:100%">
-                           <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
+                           <h1  id="idle" class="text-white" style="font-size:26px;color:#fab03a!important"></h1>
                            <!-- <h5 class="text-white">IDLE</h5></span> -->
                         </div>
                      </div>
@@ -416,7 +446,7 @@
 
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
+                           <h1 id="stop"  class="text-white" style="font-size:26px;color:#fab03a!important"></h1>
                            <!-- <h5 class="text-white">DELAY</h5></span> -->
                         </div>
                      </div>
@@ -431,7 +461,7 @@
 
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1 class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
+                           <h1  class="text-white" style="font-size:26px;color:#fab03a!important">0</h1>
                            <!--  <h5 class="text-white">STOPPED</h5></span> -->
                         </div>
                      </div>

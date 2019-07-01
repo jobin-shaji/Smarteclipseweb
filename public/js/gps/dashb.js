@@ -28,7 +28,7 @@ function dbcount(res){
       $('#client_gps').text(res.gps);
       $('#client_vehicle').text(res.vehicles);
        $('#geofence').text(res.geofence);
-       $('#vehicle_motion').text(res.moving);
+       $('#moving').text(res.moving);
        $('#idle').text(res.idle);
        $('#stop').text(res.stop);
       

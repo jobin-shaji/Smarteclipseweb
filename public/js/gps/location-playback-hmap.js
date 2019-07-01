@@ -113,7 +113,8 @@ function getUrl() {
 
 function playBack(res){
 
-  var locationData=res.polyline;console.log(locationData);
+  var locationData=res.polyline;
+  // console.log(locationData);
 
 //   var bSimulationRunning = false;
 //   var svgMarkup = '<svg width="24" height="24" ' +
@@ -165,7 +166,7 @@ function routeDraw(routingParameters){
 
 // Define a callback function to process the routing response:
 var onResult = function(result) { 
-  console.log(result.response.route);
+  result.response.route;
   // console.log(result);
  var route,
     routeShape,

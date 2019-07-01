@@ -69,30 +69,90 @@
                    @role('client')
                    <ul class="navbar-nav float-left mr-auto">
                         <li class="nav-item d-none d-md-block">
-                            
+                       </li>                       
+                        <li class="nav-item search-box"> 
+                        </li>
+                         <li class="nav-item"> 
+                             <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Device
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/gps-new')}}"> New Arrivals <span></span></a>
+                                <a class="dropdown-item" href="{{url('/gps-client')}}"> List Device<span></span></a>                               
+                            </div>
+                        </li>
 
-                            
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Vehicle
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/vehicles/create"> Add Vehicle <span></span></a>
+                                <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>                               
+                            </div>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- create new -->
-                        <!-- ============================================================== -->
-                       
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                            </form>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Driver
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>
+                                <a class="dropdown-item" href="{{url('/drivers')}}"> List Driver<span></span></a>                               
+                            </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Alerts
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                               
+                                <a class="dropdown-item" href="{{url('/alert')}}"> List Alerts<span></span></a>                               
+                            </div>
+                        </li>
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> User Alerts
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>                               
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Manager<span></span></a>                               
+                            </div>
+                        </li>
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Geofence 
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/fence')}}"> Add Geofence <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/geofence')}}"> List Geofence<span></span></a>                               
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Routes 
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/route/create')}}"> Add Route <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
+                            </div>
+                        </li>
+<!--                           <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Complaints 
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/complaint/create')}}"> Add Complaint <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/complaint')}}"> List Complaints<span></span></a>                               
+                            </div>
+                        </li> -->
+
+
                     </ul>
                    @endrole
-
-
-
-
-
-
                     <!-- <ul class="needhelp">Need help?   18005322007 (toll free)</ul> -->
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
