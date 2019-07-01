@@ -11395,7 +11395,7 @@ ul.list-style-none li a:hover {
 }
 
 #navbarSupportedContent {
-    background: #eee!important
+    background: #fff!important
 }
 
 .search-box .app-search {
@@ -16490,6 +16490,10 @@ h1.text-white i {
 
     span.logo-text {
     margin-left: 25%;
+    }
+
+    .nav-item i.fa.fa-home {
+    font-size: 24px;
     }
 
 
