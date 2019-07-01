@@ -1,4 +1,30 @@
-<!-- <li class="sidebar-item"> 
+<!-- <nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+    <div class="navbar-toggler animate">
+      <span class="menu-icon"></span>
+    </div>
+    <ul class="navbar-menu animate">
+      <li>
+        <a href="#about-us" class="animate">
+          <span class="desc animate"> Who We Are </span>
+          <span class="glyphicon glyphicon-user"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#blog" class="animate">
+          <span class="desc animate"> What We Say </span>
+          <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#contact-us" class="animate">
+          <span class="desc animate"> How To Reach Us </span>
+          <span class="glyphicon glyphicon-comment"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+<li class="sidebar-item"> 
   <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/home')}}" aria-expanded="false">
     <i class="mdi mdi-view-dashboard"></i>
     <span class="hide-menu">Dashboard</span>
@@ -194,11 +220,11 @@
       </a>
     </li>
   </ul>
-</li> -->
+</li>
                         
-<!-- <li class="sidebar-item">
+<li class="sidebar-item">
   <a class="sidebar-link waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false">
     <i class="mdi mdi-comment-multiple-outline"></i>
     <span class="hide-menu">Help & Support</span>
   </a>
-</li> -->
+</li> --> 
