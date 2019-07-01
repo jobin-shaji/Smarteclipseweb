@@ -7,6 +7,6 @@ class Driver extends Model
 {
    use SoftDeletes;    
 	protected $fillable=[
-		'name','address','mobile','client_user_id','deleted_at'
+		'name','address','mobile','client_id','points','deleted_at'
 	];
 }
