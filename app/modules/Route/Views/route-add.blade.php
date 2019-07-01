@@ -13,7 +13,7 @@
 
 <section class="hilite-content">
       <!-- title row -->
-  <div class="page-wrapper">
+  <div class="page-wrapper_new">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
