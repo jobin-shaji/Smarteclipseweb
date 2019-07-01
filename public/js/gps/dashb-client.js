@@ -12,7 +12,7 @@
 		$(document).ready(function () {
 
 			  map = new google.maps.Map(document.getElementById('map'), {
-				 zoom: 5,
+				 zoom: 10,
 				 center: haightAshbury,
 				  mapTypeId: google.maps.MapTypeId.ROADMAP
 				});
