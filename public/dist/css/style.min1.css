@@ -724,7 +724,7 @@ pre code {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-right: -10px;
-    margin-left: -10px
+    /*margin-left: -10px*/
 }
 
 .no-gutters {
@@ -10770,6 +10770,7 @@ body {
     margin: 0;
     overflow-x: hidden;
     color: #3e5569;
+    overflow-y: scroll;
     background: #fff
 }
 

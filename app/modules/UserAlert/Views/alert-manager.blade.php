@@ -13,7 +13,7 @@
 
 <section class="hilite-content">
       <!-- title row -->
-  <div class="page-wrapper">
+  <div class="page-wrapper_new">
       <!-- ============================================================== -->
       <!-- Bread crumb and right sidebar toggle -->
       <!-- ============================================================== -->
@@ -27,7 +27,7 @@
     <form  method="POST" action="{{route('alert.manager.create.p')}}">
         {{csrf_field()}}      
     
-      <div class="page-wrapper">
+      <div class="page-wrapper_new">
         <label >Alerts</label>
           <div class="row">
             @foreach ($user_alert as $user_alert)
