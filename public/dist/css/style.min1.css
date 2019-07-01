@@ -16401,13 +16401,13 @@ h1.text-white i {
         margin: 0px;
         padding: 0px;
         border-width: 0px;
-        height: 54px;
+        height: 36px;
     }
     .navbar-minimal > .navbar-menu > li > a {
         position: relative;
         display: inline-block;
         color: rgb(255, 255, 255);
-        padding: 20px 23px;
+        padding: 9px 23px;
         text-align: left;
         cursor: pointer;
         border-bottom: 1px solid rgb(81, 81, 81);
