@@ -16312,13 +16312,13 @@ h1.text-white i {
     padding-top: 10px;
     border-radius: 4px;
 }
-.title {
+/*.title {
     font-size: 3em;
     font-weight: 700;
     text-shadow: 0px 0px 5px rgb(51, 51, 51);
     text-shadow: 0px 0px 5px rgba(51, 51, 51, 0.8);
     text-align: center;
-}
+}*/
 #fullscreen {
     position: fixed;
     top: 10px;
