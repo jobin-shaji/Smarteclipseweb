@@ -26,7 +26,8 @@ class DriverController extends Controller {
                 'name' => $request->name,            
                 'address' => $request->address,
                 'mobile' => $request->mobile,
-                'client_user_id' => $client_id,           
+                'client_id' => $client_id, 
+                'points' => 100          
             ]);
             // User::where('username', $request->username)->first()->assignRole('client');
         }
@@ -58,10 +59,10 @@ class DriverController extends Controller {
         'name',                   
         'address',
         'mobile',
-        'client_user_id',
+        'client_id',
         'deleted_at')
         ->withTrashed()
-        ->where('client_user_id',$client_id)
+        ->where('client_id',$client_id)
         ->get();
         return DataTables::of($driver)
         ->addIndexColumn()
