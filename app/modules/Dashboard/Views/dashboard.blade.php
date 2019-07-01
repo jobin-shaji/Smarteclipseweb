@@ -456,7 +456,7 @@
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
 <style type="text/css">
-
+  .container-fluid {padding-left: 0px !important}
 </style>
 
 @endrole
