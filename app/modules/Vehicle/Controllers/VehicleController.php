@@ -1050,9 +1050,9 @@ class VehicleController extends Controller {
 
 
 
-public function hmapLocationPlayback(Request $request){
- 
-     $gpsdata=GpsData::Select(
+    public function hmapLocationPlayback(Request $request)
+    { 
+        $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng', 
             'heading as angle',
@@ -1064,68 +1064,63 @@ public function hmapLocationPlayback(Request $request){
         ->where('device_time', '<=',$request->to_time)
         ->where('vehicle_id',$request->id)                
         ->get();
-
         $playback=array();
         $playback_point= array();
         $playback_round=array();
         $playbackData=array();
         $length=0;
         $counts=0;
-        $count=0; 
-       
+        $count=0;       
         if($gpsdata){
             $length=$gpsdata->count(); 
             if($length!=0)
-            {               
-                if($length>=150){
-                    $counts=$length/90;
-                    
+            {   
+                // $counts=$length;            
+                if($length>=150)
+                {
+                    $counts=$length/90;                    
                 }
-                else{
+                else
+                {
                     $counts=$length;
-                }
-           
-                    
-            $round_value=round($counts);   
-          
-            $startLat=(float)$gpsdata[0]->lat;
-            $startLng=(float)$gpsdata[0]->lng; 
-
-            for($i=0;$i<$round_value; $i++)
-            {
-                
-                $playback_round[]=$gpsdata[$i];
-            } 
-            $playback_point[]=array(
+                }                               
+                $round_value=round($counts);             
+                $startLat=(float)$gpsdata[0]->lat;
+                $startLng=(float)$gpsdata[0]->lng; 
+                for($i=0;$i<$round_value; $i++)
+                {                
+                    $playback_round[]=$gpsdata[$i];
+                } 
+                $playback_point[]=array(
                     "lat"=>(float)$gpsdata[0]->lat,
                     "lng"=>(float)$gpsdata[0]->lng                    
                 );    
-            // dd($playback_round);
-            foreach ($playback_round as $data) {
-                // dd($data->lat);
-                $playback[]=array(
-                    "lat"=>(float)$data->lat,
-                    "lng"=>(float)$data->lng                    
-                ); 
-                  
-                $startLat=(float)$data->lat;
-                $startLng=(float)$data->lng; 
+                // dd($playback_round);
+                foreach ($playback_round as $data) {
+                    // dd($data->lat);
+                    $playback[]=array(
+                        "lat"=>(float)$data->lat,
+                        "lng"=>(float)$data->lng                    
+                    );                   
+                    $startLat=(float)$data->lat;
+                    $startLng=(float)$data->lng; 
+                }
             }
+            else
+            {
+                $playback="empty";
+            }
+            // dd($playback);
+            $response_data = array(
+                'status'  => 'success',
+                'message' => 'success',
+                'code'    =>1,                              
+                'polyline' => $playback,
+                'firstpoint' => $playback_point,
+            );
         }
         else
         {
-            $playback="empty";
-        }
-        // dd($playback);
-        $response_data = array(
-            'status'  => 'success',
-            'message' => 'success',
-            'code'    =>1,                              
-            'polyline' => $playback,
-            'firstpoint' => $playback_point,
-        );
-        }else{
-
             $response_data = array(
                 'status'  => 'failed',
                 'message' => 'failed',
@@ -1133,10 +1128,8 @@ public function hmapLocationPlayback(Request $request){
                 'code'    =>0
             );
         }    
-
-
-    return response()->json($response_data); 
-}
+        return response()->json($response_data); 
+    }
 public function playBackForLine($vehicleID,$fromDate,$toDate){
 
     $playBackDataList=array();

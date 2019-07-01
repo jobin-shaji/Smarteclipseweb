@@ -57,6 +57,30 @@
              <div id="mapContainer" style="width:100%;height:500px;"></div>
         <!-- <div id="map" style="width:100%;height:500px;"></div> -->
     </div>
+    <div class="iconsbg12345">
+               <div class="row">
+                  <div class="card card-hover" style="width:100%;-webkit-box-shadow: 1px 1px 2px 3px #ccc;
+                     -moz-box-shadow: 1px 1px 2px 3px #ccc;
+                     box-shadow: 1px 1px 21px 1px #ccc">
+                     <div class="col-8 m-t-15">
+                        <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
+                           <img src="assets/images/network-status.png">
+                            <h4 class="m-b-0 m-t-5">Network Status</h4>
+                             <medium id="network_status" class="font-light">
+                              <i class="fa fa-spinner" aria-hidden="true"></i>
+
+                        </div>
+                     <!-- <div id="linechart" style="width: 900px; height: 500px"></div> -->
+                       
+                        
+                     
+                     
+                        
+                    
+                     </div>
+                  </div>
+               </div>
+            </div>
     </div>
 </section>
 </div>                
