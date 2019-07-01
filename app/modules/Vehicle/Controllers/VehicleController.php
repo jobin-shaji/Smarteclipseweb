@@ -14,6 +14,7 @@ use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Ota\Models\GpsOta;
 use App\Modules\Vehicle\Models\Document;
+use App\Modules\Driver\Models\Driver;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
@@ -116,9 +117,12 @@ class VehicleController extends Controller {
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
+        $drivers=Driver::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
         $ota_types=OtaType::select('id','name','code','default_value')
                 ->get();
-        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types]);
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types,'drivers'=>$drivers]);
     }
 
     // save vehicle
@@ -134,6 +138,7 @@ class VehicleController extends Controller {
             'vehicle_type_id' => $request->vehicle_type_id,
             'e_sim_number' => $request->e_sim_number,
             'gps_id' => $request->gps_id,
+            'driver_id' => $request->driver_id,
             'client_id' =>$client_id,
             'status' =>1
         ]);
@@ -1232,6 +1237,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
             'gps_id' => 'required',
+            'driver_id' => 'required',
             'e_sim_number' => 'required|numeric'
         ];
         return  $rules;

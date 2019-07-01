@@ -14,7 +14,7 @@
                    <span class="logo-text">
                         @role('client')
                             @if(\Auth::user()->client->logo)
-                              <img class="light-logo" width="50" height="50" src="/logo/{{ \Auth::user()->client->logo }}" />
+                              <img class="light-logo" width="50" height="50" src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
                                 <p>No Logo Found</p>
                             @endif
@@ -71,7 +71,7 @@
                         <li class="nav-item d-none d-md-block">
                             
 
-                            
+
                         </li>
                         <!-- ============================================================== -->
                         <!-- create new -->
@@ -80,10 +80,26 @@
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                            </form>
+                        <li class="nav-item search-box"> 
+
+                        </li>
+                        
+                        <li class="nav-item"> 
+                             <a class="nav-link waves-effect waves-dark" href="#">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item"> 
+                             <a class="nav-link waves-effect waves-dark" href="#">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item"> 
+                             <a class="nav-link waves-effect waves-dark" href="#">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </a>
                         </li>
                     </ul>
                    @endrole
