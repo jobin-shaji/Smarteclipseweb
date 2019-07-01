@@ -15,6 +15,7 @@ Geofence Report
     <div class="card-body">
       <div >
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+
           <div class="row">
             <div class="col-sm-12">
               <div class="col-md-12 col-md-offset-1">
@@ -22,8 +23,11 @@ Geofence Report
                   <div >
                     <div class="panel-body">
                       <div class="panel-heading">
+                        <div class="cover_div_search">
                         <div class="row">
-                          <div class="col-md-3">                     
+                          <div class="col-lg-3 col-md-3">
+                             <div class="form-group">    
+                            <label>Vehicle</label>                      
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="0">All</option>
                               @foreach ($vehicles as $vehicles)
@@ -31,20 +35,32 @@ Geofence Report
                               @endforeach  
                             </select>
                           </div>
-                          <div class="col-md-3">                     
+                           </div>
+                          <div class="col-lg-3 col-md-3"> 
+                            <div class="form-group">                      
                             <label> from Date</label>
-                            <input type="text" class="datepicker" id="fromDate" name="fromDate">
-                          </div>
-                          <div class="col-md-3">                     
-                            <label> to date</label>
-                            <input type="text" class="datepicker" id="toDate" name="toDate">
-                          </div>
-                          <div class="col-md-3">  
-                            <button class="btn btn-xs btn-primary " onclick="downloadGeofenceReport()">
-                              <i class="fa fa-file"></i> Download Excel</button>                   
-                              <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate">
                           </div>
                         </div>
+                          <div class="col-lg-3 col-md-3"> 
+                           <div class="form-group">                     
+                            <label> to date</label>
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate">
+                          </div>
+                          </div>
+
+                            <div class="col-lg-3 col-md-3 pt-4">  
+                           <div class="form-group">          
+                            <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
+
+                            <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadGeofenceReport()">
+                              <i class="fa fa-file"></i>Download Excel</button>                   
+                              
+                          </div>
+                          </div>
+                        
+                        </div>
+                      </div>
                       </div>
                       <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
