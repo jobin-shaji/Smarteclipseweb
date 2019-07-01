@@ -14,7 +14,7 @@
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 
 
-  <div class="page-wrapper">
+  <div class="page-wrapper_new">
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
