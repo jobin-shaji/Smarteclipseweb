@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-<div class="page-wrapper">
+<div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">

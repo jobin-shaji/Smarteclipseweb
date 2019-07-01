@@ -3,7 +3,7 @@
   New Arrival
 @endsection
 @section('content')
-<div class="page-wrapper">
+<div class="page-wrapper_new">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->

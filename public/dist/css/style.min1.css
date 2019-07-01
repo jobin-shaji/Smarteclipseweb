@@ -2831,7 +2831,7 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active,
 .show>.btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #4c32e9;
+    /*background-color: #4c32e9;*/
   }
 
 .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -10041,6 +10041,7 @@ button.bg-purple:hover {
 .form-group {
     margin-bottom: 1rem;
     float: left!important;
+    width: 97%;
     
 }
 
@@ -11548,7 +11549,8 @@ ul.list-style-none li a:hover {
 }
 
 .page-breadcrumb .page-title {
-    margin-bottom: 0px
+    margin-bottom: 0px;
+    margin: 0px 14px;
 }
 
 .page-breadcrumb .breadcrumb {
@@ -16495,5 +16497,34 @@ h1.text-white i {
     .nav-item i.fa.fa-home {
     font-size: 24px;
     }
+
+
+    .page-wrapper_new {
+    margin: 10px 46px;
+    }
+
+
+    button.btn.btn-sm.btn1.btn-primary.form-control {
+    width: 50%;
+    float: left;
+    }
+    button.btn.btn-sm.btn-info.btn2.form-control {
+    width: 20%;
+    float: left;
+}
+
+
+.cover_div_search {
+    padding-left: 16px;
+}
+
+.cover_div_search {
+    background: #ccc;
+    /* margin-left: 13px; */
+    padding-left: 19px;
+    padding-top: 6px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+}
 
 

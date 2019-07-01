@@ -3,7 +3,7 @@
 Daily KM Report
 @endsection
 @section('content')
-<div class="page-wrapper">
+<div class="page-wrapper_new box box-primary">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
@@ -22,8 +22,13 @@ Daily KM Report
                   <div >
                     <div class="panel-body">
                       <div class="panel-heading">
+                        
+                        <div class="cover_div_search">
                         <div class="row">
-                          <div class="col-md-3">                     
+                          
+                          <div class="col-lg-3 col-md-3"> 
+                          <div class="form-group">    
+                            <label>Vehicle</label>           
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <!-- <option value="0">All</option> -->
                               @foreach ($vehicles as $vehicles)
@@ -31,20 +36,41 @@ Daily KM Report
                               @endforeach  
                             </select>
                           </div>
-                          <div class="col-md-3">                     
-                            <label> from Date</label>
-                            <input type="text" class="datepicker" id="fromDate" name="fromDate">
                           </div>
-                          <div class="col-md-3">                     
-                            <label> to date</label>
-                            <input type="text" class="datepicker" id="toDate" name="toDate">
+
+                          <div class="col-lg-3 col-md-3">          
+                          <div class="form-group">          
+                            <label> From Date</label>
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate">
                           </div>
-                          <div class="col-md-3">  
-                            <button class="btn btn-xs btn-primary " onclick="downloadDailyKMReport()">
-                              <i class="fa fa-file"></i> Download Excel</button>                   
-                              <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> Filter </button>
                           </div>
+
+
+                          <div class="col-lg-3 col-md-3">  
+                           <div class="form-group">          
+
+                            <label> To date</label>
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate">
+                          </div>
+                          </div>
+
+
+                          <div class="col-lg-3 col-md-3 pt-4">  
+                           <div class="form-group">          
+                            <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
+
+                            <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadDailyKMReport()">
+                              <i class="fa fa-file"></i>Download Excel</button>                   
+                              
+                          </div>
+                          </div>
+
+
                         </div>
+
+                      </div>
+
+
                       </div>                  
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
