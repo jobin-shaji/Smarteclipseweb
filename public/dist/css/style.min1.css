@@ -16616,5 +16616,14 @@ button.btn.btn-sm.btn-info.form-control.btn-play-back {
 .playback_chart{
     display: none;
 }
+.dataTable a.btn {
+    padding: 6px;
+    margin: 1px;
+}
+
+.dataTable button{
+   padding: 6px;
+    margin: 1px; 
+}
 
 

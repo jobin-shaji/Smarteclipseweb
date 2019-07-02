@@ -62,16 +62,16 @@ class VehicleController extends Controller {
                     if($gps_data_count==0){
                         return "
                     
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='fa fa-edit'></i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='glyphicon glyphicon-map-marker'></i>Playback</a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='fas fa-car'></i></a>
+                            
 
+                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye'></i></a>
 
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
+                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='fas fa-times'></i></button>"; 
                     }else{
                         return "
                     
