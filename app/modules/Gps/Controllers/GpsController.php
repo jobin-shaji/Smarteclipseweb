@@ -337,27 +337,27 @@ class GpsController extends Controller {
     {
         $user_id=\Auth::user()->id;
         $devices=GpsTransfer::select(
-                            'id',
-                            'from_user_id',
-                            'dispatched_on',
-                            'accepted_on'
-                            )
-                            ->with('fromUser:id,username')
-                            ->where('to_user_id',$user_id)
-                            ->orderBy('id','DESC')
-                            ->get();
+            'id',
+            'from_user_id',
+            'dispatched_on',
+            'accepted_on'
+        )
+        ->with('fromUser:id,username')
+        ->where('to_user_id',$user_id)
+        ->orderBy('id','DESC')
+        ->get();
         return DataTables::of($devices)
             ->addIndexColumn()
             ->addColumn('action', function ($devices) {
                 if($devices->accepted_on == null)
                 {
                     return "
-                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Gps </a>
+                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info' data-toggle='tooltip' title='View  GPS'><i class='fas fa-eye'></i></a>
                     <button onclick=acceptGpsTransfer(".$devices->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Accept
                     </button>";
                 }else{
                     return "
-                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View Gps </a>
+                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'  data-toggle='tooltip' title='View  GPS'><i class='fas fa-eye'></i> </a>
                     <b style='color:#008000';>Accepted</b>";
                 }
                 
