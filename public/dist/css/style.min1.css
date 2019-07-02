@@ -16626,4 +16626,15 @@ button.btn.btn-sm.btn-info.form-control.btn-play-back {
     margin: 1px; 
 }
 
+.card-body {
+    min-height: 500px;
+}
+
+footer.footer.text-center {
+    border-top: solid 1px;
+}
+
+.page-wrapper_new {
+    min-height: 500px;
+}
 
