@@ -2927,8 +2927,8 @@ fieldset:disabled a.btn {
 
 .btn-info:hover {
     color: #fff;
-    background-color: #1b4584;
-    border-color: #193f7a
+    /*background-color: #1b4584;
+    border-color: #193f7a*/
 }
 
 .btn-info.focus,
@@ -2947,9 +2947,9 @@ fieldset:disabled a.btn {
 .btn-info:not(:disabled):not(.disabled).active,
 .btn-info:not(:disabled):not(.disabled):active,
 .show>.btn-info.dropdown-toggle {
-    color: #fff;
+    /*color: #fff;
     background-color: #193f7a;
-    border-color: #173a6f
+    border-color: #173a6f*/
 }
 
 .btn-info:not(:disabled):not(.disabled).active:focus,
@@ -16571,6 +16571,50 @@ li.nav-item.dropdown.show {
     text-align: left !important;
     margin: 0px 0px;
     padding-left: 43px;
+}
+
+img.light-logo {
+    width: 100%;
+    height: auto;
+}
+
+ul.navbar-menu.animate img {
+    margin-left: -12px;
+        width: 27px;
+}
+
+
+.panel-heading.playback_head {
+    padding-left: 46px;
+    height: 36px;
+    padding-top: 0px;
+    margin-top: 15px;
+    position: fixed;
+    z-index: 1;
+    /* border-radius: 45px; */
+}
+
+.cover_div_search.playback_page {
+    padding-top: 0px;
+    border-radius: 7px;
+}
+
+button.btn.btn-sm.btn-info.form-control.btn-play-back {
+  margin: 21px 0px 0px 0px;
+  height: 37px;
+}
+
+.card-body.map_card_body {
+    padding: 0px;
+    padding-top: 13px;
+}
+
+button.btn.btn-sm.btn-info.form-control.btn-play-back {
+    background: #f7b018;
+}
+
+.playback_chart{
+    display: none;
 }
 
 

@@ -26,7 +26,7 @@
         @include('layouts.sections.eclipse-sidebar')
 
         @yield('content')
-
+        
     </div>
 
      <script src="assets/libs/jquery/dist/jquery.min.js"></script>
