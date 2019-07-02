@@ -45,7 +45,7 @@
         <form  method="POST" action="{{route('vehicles.update.p',$vehicle->id)}}">
         {{csrf_field()}}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2">
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" required> 
