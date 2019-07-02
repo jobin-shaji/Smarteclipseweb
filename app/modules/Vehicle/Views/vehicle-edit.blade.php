@@ -21,6 +21,8 @@
         </div>
       </div>
     </div>
+
+
   <div class="container-fluid">
     <div class="card-body">
       <section class="hilite-content">
@@ -42,6 +44,7 @@
           </a>
           </div>
         </div>
+        
         <form  method="POST" action="{{route('vehicles.update.p',$vehicle->id)}}">
         {{csrf_field()}}
           <div class="row">

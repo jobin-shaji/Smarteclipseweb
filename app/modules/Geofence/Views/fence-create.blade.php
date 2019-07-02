@@ -43,9 +43,13 @@
                   <div class="row">
                     <div class="col-lg-11 col-sm-10">
                       <div class="form-group has-feedback">
+                         <div class="col-md-5">
+                         <div class="form-group">
+
                         <label class="srequired">Name</label>
                           <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="" required> 
-           
+                        </div>
+                      </div>
                       </div>
                       @if ($errors->has('name'))
                         <span class="help-block">
@@ -67,6 +71,9 @@
         </div>   
       </div>
     </div>
+    <footer class="footer text-center">
+    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+  </footer>
   </div>
 
 </section>

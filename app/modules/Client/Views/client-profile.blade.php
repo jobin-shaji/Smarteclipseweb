@@ -24,8 +24,6 @@
 
   <div class="row">
     <div class="col-lg-6 col-md-12">
-        
-
   
       <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
