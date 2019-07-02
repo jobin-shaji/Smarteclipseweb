@@ -2366,7 +2366,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 
 .form-group {
-    margin-bottom: 1rem
+    /*margin-bottom: 1rem*/
 }
 
 .form-text {
@@ -10039,9 +10039,9 @@ button.bg-purple:hover {
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    /*margin-bottom: 1rem;*/
     float: left!important;
-    width: 97%;
+    width: 93%;
     
 }
 
@@ -16501,7 +16501,8 @@ h1.text-white i {
 
 
     .page-wrapper_new {
-    margin: 10px 46px;
+    margin: 10px 52px;
+    padding: 0px 9px 0px 0px;
     }
 
 
@@ -16636,5 +16637,18 @@ footer.footer.text-center {
 
 .page-wrapper_new {
     min-height: 500px;
+    background: #f8f9fa;
+}
+
+.vehicle_details_row2 {
+    padding-top: 40px;
+}
+
+button.btn.btn-primary.address_btn {
+    margin-top: 25px;
+}
+
+.form-group.custom_fom_group {
+    padding: 10px;
 }
 
