@@ -62,7 +62,7 @@ class AlertController extends Controller {
         //     return  $address ;
         // })
             ->addColumn('action', function ($alert) {
-            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-ok'></i> Verify </button>";
+            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>";
         })
         ->rawColumns(['link', 'action'])
         ->make();
