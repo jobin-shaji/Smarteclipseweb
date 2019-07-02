@@ -47,7 +47,6 @@ function getUrl() {
 // ------------------featch data from date time----------
 
     function playback() {
-      alert(1);
     $(function() {
         // var baseurl = '/vehicles/location-playback';
         var url = '/vehicles/location-playback';
@@ -321,7 +320,8 @@ var chart = new CanvasJS.Chart("chartContainer", {
 
 
   function playbackChart(){
-    $('.playbackChart').css('display','block');
+
+    $(".playback_chart").show(100).animate("slow");
   }
 
 
