@@ -35,7 +35,10 @@
                   <div class="form-group has-feedback">
                     <label>Description</label>
                     <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{ $alert_type->description}}" disabled>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <label>Driver Point</label>
+                    <input type="text" class="form-control {{ $errors->has('driver_point') ? ' has-error' : '' }}" placeholder="Driver Point" name="driver_point" value="{{ $alert_type->driver_point}}" disabled>
                   </div>
                    
                   @endforeach

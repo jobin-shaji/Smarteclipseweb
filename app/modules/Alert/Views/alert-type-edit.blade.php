@@ -51,6 +51,16 @@
                   </span>
                 @endif
                 <div class="form-group has-feedback">
+                  <label class="srequired">Driver Point</label>
+                  <input type="text" class="form-control {{ $errors->has('driver_point') ? ' has-error' : '' }}" placeholder="Driver Point" name="driver_point" value="{{ $alert_type->driver_point}}">
+                  <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                </div>
+                @if ($errors->has('driver_point'))
+                  <span class="help-block">
+                  <strong class="error-text">{{ $errors->first('driver_point') }}</strong>
+                  </span>
+                @endif
+                <div class="form-group has-feedback">
                   <label class="srequired">Upload Icon
                   </label>
                   <input type="file" class="form-control" placeholder="Choose File" name="path" value="{{$alert_type->path}}" > 
