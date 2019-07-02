@@ -18,7 +18,7 @@ class CreateDriverBehavioursTable extends Migration
             $table->integer('vehicle_id');
             $table->integer('driver_id');
             $table->integer('gps_id');
-            $table->integer('alert_type_id');
+            $table->integer('alert_id');
             $table->integer('points');
             $table->timestamps();
             $table->softDeletes();
