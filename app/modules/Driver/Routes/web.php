@@ -14,5 +14,8 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::get('/driver/{id}/details','DriverController@details')->name('driver.details');
 	Route::post('/driver/delete','DriverController@deleteDriver')->name('driver.delete');
 	Route::post('/driver/activate','DriverController@activateDriver')->name('driver.activate');
+
+	Route::get('/performance-score','DriverController@performanceScore')->name('performance-score');
+	Route::post('/performance-score/{id}/edit','DriverController@updatePerformanceScore')->name('performance-score.update.p');
 });
 

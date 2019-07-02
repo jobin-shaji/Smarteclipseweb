@@ -3,6 +3,7 @@ namespace App\Modules\Driver\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\Subdealer\Models\Subdealer;
 use App\Modules\Driver\Models\Driver;
 use App\Modules\User\Models\User;
@@ -111,6 +112,43 @@ class DriverController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('driver.edit',$did));  
     }
+
+    public function performanceScore()
+    {
+        $client_id=\Auth::user()->client->id;
+        $client_alert_type_points = ClientAlertPoint::select(
+                                    'id', 
+                                    'alert_type_id',                   
+                                    'driver_point',
+                                    'client_id')
+                                    ->where('client_id',$client_id)
+                                    ->get();     
+        if($client_alert_type_points == null)
+        {
+           return view('Driver::404');
+        }
+        return view('Driver::driver-alert-type-score',['client_alert_type_points' => $client_alert_type_points,'client_id' => $client_id]);
+    }
+
+    // update alert type point
+    public function updatePerformanceScore(Request $request)
+    {
+        $alert_type__first_id=1;
+        $client_id=$request->id;
+        foreach ($request->points as $point) {
+            $alert_type_id=$alert_type__first_id++;
+            $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',$alert_type_id)
+                    ->first();
+            $alert_type_point->driver_point = $point;
+            $alert_type_point->save();
+        }
+        $request->session()->flash('message', 'Performance score updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('performance-score'));  
+    }
+
      //validation for employee updation
     public function driverUpdateRules($driver)
     {
