@@ -508,6 +508,34 @@ class VehicleController extends Controller {
         ]);
     }
 
+    // vehicle drivers list
+    public function vehicleDriverLogList()
+    {
+        
+       return view('Vehicle::vehicle-driver-log-list'); 
+    }
+
+    // vehicle drivers list data
+    public function getVehicleDriverLogList()
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicle_driver_log = VehicleDriverLog::select(
+                                'vehicle_id',
+                                'from_driver_id',
+                                'to_driver_id',
+                                'created_at'
+                                )
+                                ->where('client_id',$client_id)
+                                ->with('Fromdriver:id,name')
+                                ->with('Todriver:id,name')
+                                ->with('vehicle:id,name,register_number')
+                                ->get();
+
+        return DataTables::of($vehicle_driver_log)
+            ->addIndexColumn()
+            ->make();
+    }
+
 
     
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////
