@@ -36,15 +36,16 @@
               </div>
             @endforeach
           </div>  
-      </div>
-      
-      <div class="row">
+          <div class="row">
         <!-- /.col -->
         <div class="col-md-3">
           <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
         </div>
         <!-- /.col -->
       </div>
+      </div>
+      
+      
     </form>
        <footer class="footer text-center">
     All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
