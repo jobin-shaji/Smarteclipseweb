@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-<div class="page-wrapper">
+<div class="page-wrapper-new">
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
@@ -22,13 +22,17 @@
     </div>
     <div class="container-fluid">
     <div class="card-body">
+      <div class="card-body wizard-content">
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
               <div class="row">
                 <div class="col-sm-12">
                 <section class="hilite-content">
                 <!-- title row -->
-                <div class="row">
+             
+            <div class="card">
+              <div class="card-body">
+                   <div class="row">
                   <div class="col-xs-12">
                     <h2 class="page-header">
                       <i class="fa fa-bus"></i> 
@@ -36,7 +40,6 @@
                   </div>
                   <!-- /.col -->
                 </div>
-   
         <div class="row">
           <div class="col-md-6">
               <div class="form-group has-feedback">
@@ -75,7 +78,7 @@
 
             </div>
           </div>
-        
+        </div></div>
     
                   </section>
                 </div>                
@@ -83,7 +86,11 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
+    <footer class="footer text-center">
+    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+  </footer>
   </div>
 <div class="clearfix"></div>
 
