@@ -31,27 +31,7 @@ function getUrl() {
   'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
   'fill="white">H</text></svg>';
 
-//    var svgMarkup = '<svg'+
-//    'xmlns:dc="http://purl.org/dc/elements/1.1/"'+
-//    'xmlns:cc="http://creativecommons.org/ns#"'+
-//    'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"'+
-//    'xmlns:svg="http://www.w3.org/2000/svg"'+
-//    'xmlns="http://www.w3.org/2000/svg"'+
-//    'version="1.1"'+
-//    'width="46.093765"'+
-//    'height="63.352634">'+
-//   '<g'+
-//      'transform="translate(-8.9327811,-0.45623957)"'+
-//      'id="layer1">'+
-//     '<path'+
-//        'd="M 22.15625,0 A 21.544797,22.053723 0 0 0 0,22.0625 21.544797,22.053723 0 0 0 10.40625,40.9375 c 1.062265,1.795846 11.125,19.40625 11.125,19.40625 l 12.125,-20.0625 A 21.544797,22.053723 0 0 0 43.09375,22.0625 21.544797,22.053723 0 0 0 22.15625,0 z"'+
-//        'transform="translate(10.432788,1.9651232)"'+
-//        'id="path5014"'+
-//        'style="fill:#cccccc;fill-opacity:1;stroke:#6e6e6e;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />'+
-    
-//   '</g>'+
-// '</svg>';
-// console.log(svgMarkup);
+
 
 // Create an icon, an object holding the latitude and longitude, and a marker:
   var icon = new H.map.Icon(svgMarkup),
@@ -67,6 +47,7 @@ function getUrl() {
 // ------------------featch data from date time----------
 
     function playback() {
+      alert(1);
     $(function() {
         // var baseurl = '/vehicles/location-playback';
         var url = '/vehicles/location-playback';
@@ -98,6 +79,7 @@ function getUrl() {
               else
               {
                 playBack(res);
+                playbackChart();
               }
                
             },
@@ -114,24 +96,7 @@ function getUrl() {
 function playBack(res){
 
   var locationData=res.polyline;
-  // console.log(locationData);
-
-//   var bSimulationRunning = false;
-//   var svgMarkup = '<svg width="24" height="24" ' +
-//   'xmlns="http://www.w3.org/2000/svg">' +
-//   '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
-//   'height="22" /><text x="12" y="18" font-size="12pt" ' +
-//   'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
-//   'fill="white">H</text></svg>';
-
-// // Create an icon, an object holding the latitude and longitude, and a marker:
-//   var icon = new H.map.Icon(svgMarkup),
-//   coords = {lat: 51.5141, lng: -0.0999},
-//   marker = new H.map.Marker(coords, {icon: icon});
-//   marker.$id = "truckMarker";
-
-
-  // object with all route points
+ 
  
   // truck icon
   var iSimulationIsAtPosition = 0;
@@ -311,6 +276,55 @@ function addMarkerToGroup(group, coordinate, html) {
   group.addObject(marker);
 }
 // ------------------------------------------------------------------
+
+window.onload = function () {
+var dps = []; // dataPoints
+var chart = new CanvasJS.Chart("chartContainer", {
+    title :{
+      text: ""
+    },
+    axisY: {
+      includeZero: false
+    },      
+    data: [{
+      type: "line",
+    dataPoints: dps
+    }]
+  });
+
+  var xVal = 0;
+  var yVal = 100; 
+  var updateInterval = 1000;
+  var dataLength = 20; // number of dataPoints visible at any point
+
+  var updateChart = function (count) {
+  count = count || 1;
+  for (var j = 0; j < count; j++) {
+    yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+    dps.push({
+      x: xVal,
+      y: yVal
+    });
+    xVal++;
+  }
+
+  if (dps.length > dataLength) {
+    dps.shift();
+  }
+
+   chart.render();
+  };
+
+   updateChart(dataLength);
+   setInterval(function(){updateChart()}, updateInterval);
+  }
+
+
+  function playbackChart(){
+    $('.playbackChart').css('display','block');
+  }
+
+
 
 
 
