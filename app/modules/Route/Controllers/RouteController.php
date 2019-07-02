@@ -36,13 +36,13 @@ class RouteController extends Controller {
             ->addColumn('action', function ($route) {
                 if($route->deleted_at == null){
                     return "
-                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
 
-                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
+                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-times'></i></button>"; 
                 }else{
                      return "
-                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
+                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
+                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> </button>"; 
                 }
              })
             ->rawColumns(['link', 'action'])
