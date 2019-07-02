@@ -428,12 +428,14 @@
                               <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                        
-                        <div class="bg-dark p-10 text-white text-center" style="float: left;width:100%;border-radius: 0 0 20px 0;">
+                        <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0 0 20px 0;">
                            <img src="assets/images/immobilizer.png">
                             <h4 class="m-b-0 m-t-5">Location</h4>
                               <medium id="address" class="font-light">
                              <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
+                    
+
                      </div>
                   </div>
                </div>
