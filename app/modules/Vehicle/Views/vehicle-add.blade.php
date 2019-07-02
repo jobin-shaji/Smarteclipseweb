@@ -3,29 +3,41 @@
     Add Vehicle
   @endsection
 @section('content')   
-  @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-      {{ Session::get('message') }}  
-    </div>
-    </div>
-  @endif  
+  
 
-<section class="hilite-content">
-  <div class="page-wrapper_new">
-    <div class="page-breadcrumb">
-      <div class="row">
-        <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">Add Vehicle</h4>                      
-        </div>
+
+
+<div class="page-wrapper_new">
+  
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Add Vehicle</h4>
+         @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
+          </div>
+          </div>
+        @endif 
       </div>
-    </div>           
-  <div class="container-fluid">
-    <div class="card" style="margin:0 0 0 1%">
-      <div class="card-body wizard-content">
-        <form  method="POST" action="{{route('vehicles.create.p')}}">
+    </div>
+  </div>
+ <form  method="POST" action="{{route('vehicles.create.p')}}">
         {{csrf_field()}}
           <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"><img src="{{ url('/') }}/assets/images/vehicle.png" width="40" height="40"></span>VEHICLE INFO</h4>
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+  
+      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
+          <div class="col-sm-12">
+            <h2 class="page-header">
+              <i class="fa fa-user"></i> 
+            </h2>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body wizard-content">
+       
         <div class="form-group row" style="float:none!important">
           <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
           <div class="form-group has-feedback">
@@ -61,6 +73,26 @@
             </span>
           @endif
         </div>
+
+
+       
+
+      </div>       
+
+               </div>
+               </div>
+              </div>
+            </div>
+         </div>
+        
+    
+    </div>
+    <div class="col-lg-6 col-md-12">
+       
+  
+      <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image"> 
+
+        <div class="row">
 
         <div class="form-group row" style="float:none!important">
           <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle Type</label>
@@ -110,27 +142,54 @@
             </span>
           @endif 
         </div>
+        
+            </div>
+          </div>
+       
+    </div>
+<div class="col-lg-12 col-md-12">
+       
+  
+      <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image"> 
 
         <div class="row">
+
           @foreach($ota_types as $ota_type)
-            <div class="col-md-6">
+            <div class="col-md-5">
               <div class="form-group has-feedback">
                 <label>{{$ota_type->name}}</label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="{{$ota_type->name}}" name="ota[]" value="{{$ota_type->default_value}}" readonly> 
               </div>
             </div>
           @endforeach
-        </div>
 
+        
+
+        
+            </div>
+          </div>
+       
+    </div>
+
+  </div>
+
+    
         <div class="border-top">
           <div class="card-body">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
         </form>
-      </div>
-    </div>
-  </div>
+  <div class="page-wrapper_cover"></div>
+  <footer class="footer text-center">
+    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+  </footer>
 </div>
-</section>
+
+
+
+ 
+<div class="clearfix"></div>
+
+
 @endsection

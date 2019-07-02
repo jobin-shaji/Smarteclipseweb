@@ -1123,7 +1123,7 @@ class VehicleController extends Controller {
                 // $counts=$length;            
                 if($length>=150)
                 {
-                    $counts=$length/90;                    
+                    $counts=$length/10;                    
                 }
                 else
                 {

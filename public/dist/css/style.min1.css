@@ -3958,7 +3958,7 @@ input[type=submit].btn-block {
 .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #2962FF
+    /*background-color: #2962FF*/
 }
 
 .dropdown-item.disabled,
@@ -11546,7 +11546,7 @@ ul.list-style-none li a:hover {
 }
 
 .page-breadcrumb {
-    padding: 20px 20px 0 20px
+    padding: 20px 20px 0 50px
 }
 
 .page-breadcrumb .page-title {
@@ -16404,7 +16404,7 @@ h1.text-white i {
         margin: 0px;
         padding: 0px;
         border-width: 0px;
-        height: 36px;
+        height: 42px;
     }
     .navbar-minimal > .navbar-menu > li > a {
         position: relative;
@@ -16550,6 +16550,27 @@ li.nav-item.dropdown.show {
   background: #f2981973 !important;
   color: #fff;
   
+}
+
+.my-card
+{
+    position:absolute;
+    left:40%;
+    top:-20px;
+    border-radius:50%;
+}
+
+.st-panel {
+    width: 45% !important;
+}
+.location_details img{
+    text-align:left !important;
+}
+
+.bg-dark.p-10.text-white.text-center.location_details {
+    text-align: left !important;
+    margin: 0px 0px;
+    padding-left: 43px;
 }
 
 

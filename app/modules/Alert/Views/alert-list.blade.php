@@ -61,8 +61,8 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
-            </footer>
+            All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+          </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

@@ -6,7 +6,7 @@
 
      
 
-  <div class="page-wrapper">
+  <div class="page-wrapper_new">
     <div class="page-breadcrumb">
       <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
@@ -21,6 +21,8 @@
         </div>
       </div>
     </div>
+
+
   <div class="container-fluid">
     <div class="card-body">
       <section class="hilite-content">
@@ -42,10 +44,11 @@
           </a>
           </div>
         </div>
+        
         <form  method="POST" action="{{route('vehicles.update.p',$vehicle->id)}}">
         {{csrf_field()}}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2">
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" required> 
