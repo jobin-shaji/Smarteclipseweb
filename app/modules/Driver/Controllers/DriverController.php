@@ -70,14 +70,14 @@ class DriverController extends Controller {
         ->addColumn('action', function ($driver) {
         if($driver->deleted_at == null){ 
             return "
-            <a href=/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-             <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+            <a href=/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+             <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
               
-                <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+                <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View!'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
         ->rawColumns(['link', 'action'])
