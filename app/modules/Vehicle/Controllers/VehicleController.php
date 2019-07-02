@@ -64,36 +64,36 @@ class VehicleController extends Controller {
                     
                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='fa fa-edit'></i></a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='fas fa-car'></i></a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i></a>
                             
 
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye'></i></a>
+                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i></a>
 
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='fas fa-times'></i></button>"; 
+                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-times'></i></button>"; 
                     }else{
                         return "
                     
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success'><i class='glyphicon glyphicon-file'></i> Docs. </a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>
-
-
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success'><i class='glyphicon glyphicon-map-marker'></i>Playback</a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i></i></a>
 
 
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i></a>
 
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
+
+                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
+
+                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-times'></i> </button>"; 
                     }
                     
                 }else{
-                     return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
+                     return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> </a>
+                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> </button>"; 
                 }
              })
             ->rawColumns(['link', 'action'])

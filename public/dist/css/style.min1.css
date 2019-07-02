@@ -32,6 +32,10 @@ overflow-x: hidden; // hide horizontal
      padding:0!important; border-radius: 20px!important
 }
 
+.iconsbg1234 {
+    padding: 4%;
+}
+
 
 .full-height {
   height: 85vh;
@@ -45,7 +49,7 @@ overflow-x: hidden; // hide horizontal
     bottom: 10%;
 }
 
-.iconsbg12345{width:23%;border-radius:9px;margin:2%;padding:1%;position:absolute;right:0;margin:9% 0 0;}
+.iconsbg12345{width:23%;border-radius:9px;margin:2%;padding:2%;position:absolute;right:0;margin:9% 0 0;}
 
 
 
@@ -16527,6 +16531,7 @@ h1.text-white i {
     padding-top: 6px;
     border-radius: 6px;
     margin-bottom: 18px;
+    padding-bottom: 15px;
 }
 
 div#zero_config_wrapper {

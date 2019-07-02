@@ -4,20 +4,24 @@ Add Vehicle
 @endsection
 @section('content')   
 <div class="page-wrapper_new">
-   <div class="page-breadcrumb">
-      <div class="row">
-         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Add Vehicle</h4>
-            @if(Session::has('message'))
-            <div class="pad margin no-print">
-               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                  {{ Session::get('message') }}  
-               </div>
-            </div>
-            @endif 
-         </div>
+
+  
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Add Vehicle</h4>
+         @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
+          </div>
+          </div>
+        @endif 
       </div>
-   </div>
+    </div>
+  </div>
+
+     
    <form  method="POST" action="{{route('vehicles.create.p')}}">
       {{csrf_field()}}
       
@@ -71,6 +75,7 @@ Add Vehicle
                   </div>
                </div>
             </div>
+
          </div>
          <div class="col-lg-6 col-md-12">
             <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image vehicle_details_row2">
@@ -136,13 +141,20 @@ Add Vehicle
                   </div>
                   @endforeach
                </div>
+
+          </div>
+       
+    </div>
+
+     <div class="col-lg-12 col-md-12">
+            <div class="custom_fom_group">
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
          </div>
-         <div class="col-lg-12 col-md-12 border-top">
-            <button type="submit" class="btn btn-primary">Submit</button>
-         </div>
-      </div>
+
    </form>
+    </div>
+
    <div class="page-wrapper_cover"></div>
    <footer class="footer text-center">
       All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.

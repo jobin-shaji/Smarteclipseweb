@@ -3,6 +3,7 @@ namespace App\Modules\Driver\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\Subdealer\Models\Subdealer;
 use App\Modules\Driver\Models\Driver;
 use App\Modules\User\Models\User;
@@ -69,14 +70,14 @@ class DriverController extends Controller {
         ->addColumn('action', function ($driver) {
         if($driver->deleted_at == null){ 
             return "
-            <a href=/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-             <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
+            <a href=/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+             <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
               
-                <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
+                <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View!'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
         ->rawColumns(['link', 'action'])
@@ -111,6 +112,43 @@ class DriverController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('driver.edit',$did));  
     }
+
+    public function performanceScore()
+    {
+        $client_id=\Auth::user()->client->id;
+        $client_alert_type_points = ClientAlertPoint::select(
+                                    'id', 
+                                    'alert_type_id',                   
+                                    'driver_point',
+                                    'client_id')
+                                    ->where('client_id',$client_id)
+                                    ->get();     
+        if($client_alert_type_points == null)
+        {
+           return view('Driver::404');
+        }
+        return view('Driver::driver-alert-type-score',['client_alert_type_points' => $client_alert_type_points,'client_id' => $client_id]);
+    }
+
+    // update alert type point
+    public function updatePerformanceScore(Request $request)
+    {
+        $alert_type__first_id=1;
+        $client_id=$request->id;
+        foreach ($request->points as $point) {
+            $alert_type_id=$alert_type__first_id++;
+            $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',$alert_type_id)
+                    ->first();
+            $alert_type_point->driver_point = $point;
+            $alert_type_point->save();
+        }
+        $request->session()->flash('message', 'Performance score updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('performance-score'));  
+    }
+
      //validation for employee updation
     public function driverUpdateRules($driver)
     {

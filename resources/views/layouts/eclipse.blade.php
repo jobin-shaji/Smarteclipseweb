@@ -68,13 +68,11 @@
         
     <script type="text/javascript">+
     $( document ).ready(function() {
-            // $( ".menu_click" ).trigger( "click" );
-            $('[data-toggle="tooltip"]').tooltip(); 
+            $( ".menu_click" ).trigger( "click" );
             
         });
         
     </script>
-
 
        <!--  -->
     

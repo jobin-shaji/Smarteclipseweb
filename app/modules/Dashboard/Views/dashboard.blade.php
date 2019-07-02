@@ -289,7 +289,7 @@
                                       </div>
                                   </div>
                                  
-                                  <div class="col-lg-2 col-md-2">
+                                  <div class="col-lg-2 col-md-2 pt-3">
                                    <button type="submit" class="btn btn-primary btn-block">
                                     <i class="fas fa-search"></i>
                                    </button>
@@ -444,6 +444,9 @@
 
 
          </div>
+          <footer class="footer text-center">
+    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+  </footer>
       </div>
   
    @endrole
