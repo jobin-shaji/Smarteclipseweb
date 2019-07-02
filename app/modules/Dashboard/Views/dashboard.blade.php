@@ -289,7 +289,7 @@
                                       </div>
                                   </div>
                                  
-                                  <div class="col-lg-2 col-md-2">
+                                  <div class="col-lg-2 col-md-2 pt-3">
                                    <button type="submit" class="btn btn-primary btn-block">
                                     <i class="fas fa-search"></i>
                                    </button>
