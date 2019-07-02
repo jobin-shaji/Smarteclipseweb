@@ -5,7 +5,7 @@
 @section('content')
 
     
-  <div class="page-wrapper">
+  <div class="page-wrapper-new">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->

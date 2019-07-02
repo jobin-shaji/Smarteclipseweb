@@ -3,6 +3,7 @@ namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
@@ -20,7 +21,8 @@ class ClientController extends Controller {
     public function save(Request $request)
     {      
         $subdealer_id = \Auth::user()->subdealer->id; 
-        if($request->user()->hasRole('sub_dealer')){
+        if($request->user()->hasRole('sub_dealer'))
+        {
             $rules = $this->user_create_rules();
             $this->validate($request, $rules);
             $user = User::create([
@@ -38,49 +40,21 @@ class ClientController extends Controller {
             ]);
             User::where('username', $request->username)->first()->assignRole('client');
             
-            $alert = AlertType::all(); 
-             
+            $alert_types = AlertType::all(); 
             if($client){
-            foreach ($alert as $alert) {
-
-                $gps_transfer_item = UserAlerts::create([
-                  "alert_id" => $alert->id, 
-                  "client_id" => $client->id, 
-                  "status" => 1
-                ]);
-               
+                foreach ($alert_types as $alert_type) {
+                    $user_alerts = UserAlerts::create([
+                      "alert_id" => $alert_type->id, 
+                      "client_id" => $client->id, 
+                      "status" => 1
+                    ]);
+                    $client_alert_point = ClientAlertPoint::create([
+                      "alert_type_id" => $alert_type->id, 
+                      "driver_point" => $alert_type->driver_point, 
+                      "client_id" => $client->id
+                    ]);
+                }
             }
-        }
-
-              // $gps_transfer_item = UserAlerts::create([
-              //     "alert_1" =>1, 
-              //     "alert_2" =>1, 
-              //     "alert_3" =>1, 
-              //     "alert_4" =>1, 
-              //     "alert_5" =>1, 
-              //     "alert_6" =>1, 
-              //     "alert_7" =>1, 
-              //     "alert_8" =>1, 
-              //     "alert_9" =>1, 
-              //     "alert_10" =>1, 
-              //     "alert_11" =>1, 
-              //     "alert_12" =>1, 
-              //     "alert_13" =>1, 
-              //     "alert_14" =>1, 
-              //     "alert_15" =>1, 
-              //     "alert_16" =>1, 
-              //     "alert_17" =>1, 
-              //     "alert_18" =>1, 
-              //     "alert_19" =>1, 
-              //     "alert_20" =>1, 
-              //     "alert_21" =>1, 
-              //     "alert_22" =>1, 
-              //     "alert_23" =>1, 
-              //    "client_id" => $client->id, 
-              //     "status" => 1
-              //   ]);
-
-
         }
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New client created successfully!'); 

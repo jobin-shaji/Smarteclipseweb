@@ -88,10 +88,7 @@ class AlertController extends Controller {
         ]);
      }
 
-
-    
-
-     //alert creation page
+    //alert creation page
     public function create()
     {
        return view('Alert::alert-type-create');
@@ -108,11 +105,10 @@ class AlertController extends Controller {
         $destinationPath = 'alerts';
         $file->move($destinationPath,$uploadedFile);
 
-
-
         $alert_type = AlertType::create([
             'code' => $request->code,
             'description' => $request->description,  
+            'driver_point' => $request->driver_point,  
             'path' => $uploadedFile,             
             'status' => 1,               
         ]);
@@ -133,6 +129,7 @@ class AlertController extends Controller {
             'id', 
             'code',                      
             'description',
+            'driver_point',
             'path',       
             'deleted_at'
         )
@@ -167,7 +164,8 @@ class AlertController extends Controller {
         $alert_type = AlertType::select(
             'id', 
             'code',                      
-            'description',                
+            'description',  
+            'driver_point',              
             'deleted_at'
         )
         ->withTrashed()
@@ -182,10 +180,11 @@ class AlertController extends Controller {
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);   
-         $alert_type = AlertType::select(
+        $alert_type = AlertType::select(
             'id', 
             'code',                      
             'description',
+            'driver_point',
             'path',                                                       
             'deleted_at'
         )
@@ -217,6 +216,7 @@ class AlertController extends Controller {
         }
         $alert_type->code = $request->code;
         $alert_type->description = $request->description;
+        $alert_type->driver_point = $request->driver_point;
         $alert_type->save();      
         $did = encrypt($alert_type->id);
         $request->session()->flash('message', 'Alert Type updated successfully!');
@@ -277,6 +277,7 @@ class AlertController extends Controller {
         $rules = [
             'code' => 'required|unique:alert_types',
             'description' => 'required',
+            'driver_point' => 'required',
             'path' => 'required'
             
         ];
@@ -287,7 +288,8 @@ class AlertController extends Controller {
     {
         $rules = [
             'code' => 'required|unique:alert_types,code,'.$alert_type->id,
-            'description' => 'required'      
+            'description' => 'required',
+            'driver_point' => 'required'   
         ];
         return  $rules;
     }

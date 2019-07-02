@@ -5,7 +5,7 @@
 
 @section('content')
 
-<div class="page-wrapper">
+<div class="page-wrapper-new">
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
@@ -40,7 +40,7 @@
       <form  method="POST" action="{{route('vehicles.doc.p')}}" enctype="multipart/form-data">
         {{csrf_field()}}
       <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
               <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
               <div class="form-group has-feedback">
                 <label class="srequired">Document Type</label>
@@ -157,9 +157,9 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-           <footer class="footer text-center">
-                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
-            </footer>
+          <footer class="footer text-center">
+    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+  </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

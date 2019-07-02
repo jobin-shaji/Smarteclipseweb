@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlertTypesTable extends Migration
+class CreateClientAlertPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateAlertTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('alert_types', function (Blueprint $table) {
+        Schema::create('client_alert_points', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
-            $table->string('description');          
-            $table->integer('status');
-            $table->text('path');
+            $table->integer('alert_type_id');
+            $table->integer('client_id');
             $table->integer('driver_point');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +29,6 @@ class CreateAlertTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alert_types');
+        Schema::dropIfExists('client_alert_points');
     }
 }
