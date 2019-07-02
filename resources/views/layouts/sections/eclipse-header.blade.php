@@ -14,7 +14,7 @@
                    <span class="logo-text">
                         @role('client')
                             @if(\Auth::user()->client->logo)
-                              <img class="light-logo" width="50" height="50" src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
+                              <img class="light-logo"  src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
                                 <p>No Logo Found</p>
                             @endif
