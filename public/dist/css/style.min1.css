@@ -22,7 +22,7 @@ overflow-x: hidden; // hide horizontal
 .iconsbg1234{background:transparent;width:96%;float:left;margin:2%}
 
 .bg-cyan1234 {
-    background-color: #eee!important;
+    background-color: #fff!important;
     -webkit-box-shadow: 1px 1px 2px 3px #ccc;
     -moz-box-shadow: 1px 1px 2px 3px #ccc;
     box-shadow: 1px 1px 21px 1px #ccc
@@ -7241,7 +7241,8 @@ button.bg-danger:hover {
 }
 
 .bg-light {
-    background-color: #f8f9fa!important
+    background-color: #5d5d5d!important;
+    border-radius: 10px;
 }
 
 a.bg-light:focus,
@@ -7252,7 +7253,7 @@ button.bg-light:hover {
 }
 
 .bg-dark {
-    background-color: #eee!important
+    background-color: #fff!important
 }
 
 a.bg-dark:focus,
@@ -16661,15 +16662,15 @@ button.btn.btn-primary.address_btn {
 }
 
 .right-bottom3 {
-    background: #f8f9fa;
+    background: #5c5c5c;
     width: 100px;
     float: left;
     margin-left: 9px;
-    border-radius: 4px;
+    border-radius: 9px;
 }
 
 .driver_image img {
-    height: 50px;
+    height: 35px;
     padding: 0px;
     margin: 15px 26px;
 }
