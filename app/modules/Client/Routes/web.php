@@ -26,5 +26,8 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/client/profile','ClientController@userProfile')->name('client.profile');
 	Route::post('/client/{id}/profile','ClientController@saveUserLogo')->name('client.profile.p'); 
+
+	Route::get('/client/change-password','ClientController@userPasswordChange')->name('client.change-password');
+	Route::post('/client/{id}/change-password','ClientController@saveNewPassword')->name('client.change-password.p'); 
 });
 
