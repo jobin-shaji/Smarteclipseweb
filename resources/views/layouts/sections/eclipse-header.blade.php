@@ -250,8 +250,10 @@
                                 @role('client')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>My Profile</a>
+
+                                    <a class="dropdown-item" href="{{url('/client/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>Change Password</a>
                                 @endrole
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>
                                 
