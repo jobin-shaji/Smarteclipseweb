@@ -77,8 +77,9 @@ function getUrl() {
               }
               else
               {
+                // console.log(res);
                 playBack(res);
-                playbackChart();
+                playbackChart(res);
               }
                
             },
@@ -276,52 +277,103 @@ function addMarkerToGroup(group, coordinate, html) {
 }
 // ------------------------------------------------------------------
 
-window.onload = function () {
-var dps = []; // dataPoints
-var chart = new CanvasJS.Chart("chartContainer", {
-    title :{
-      text: ""
-    },
-    axisY: {
-      includeZero: false
-    },      
-    data: [{
-      type: "line",
-    dataPoints: dps
-    }]
-  });
+// window.onload = function () {
+// var dps = []; // dataPoints
+// var chart = new CanvasJS.Chart("chartContainer", {
+//     title :{
+//       text: ""
+//     },
+//     axisY: {
+//       includeZero: false
+//     },      
+//     data: [{
+//       type: "line",
+//     dataPoints: dps
+//     }]
+//   });
 
-  var xVal = 0;
-  var yVal = 100; 
-  var updateInterval = 1000;
-  var dataLength = 20; // number of dataPoints visible at any point
+//   var xVal = 0;
+//   var yVal = 100; 
+//   var updateInterval = 1000;
+//   var dataLength = 20; // number of dataPoints visible at any point
+
+//   var updateChart = function (count) {
+//   count = count || 1;
+//   for (var j = 0; j < count; j++) {
+//     yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+//     dps.push({
+//       x: xVal,
+//       y: yVal
+//     });
+//     xVal++;
+//   }
+
+//   if (dps.length > dataLength) {
+//     dps.shift();
+//   }
+
+//    chart.render();
+//   };
+
+//    updateChart(dataLength);
+//    setInterval(function(){updateChart()}, updateInterval);
+//   }
+
+
+  function playbackChart(res){
+     var charts=res.polyline;
+     var chart_length= charts.length;
+     // console.log(charts[0].speed);
+     var dps = []; 
+     var chart = new CanvasJS.Chart("chartContainer", {
+          title :{
+            text: ""
+          },
+          axisY: {
+           title: "speed",
+            includeZero: false
+          }, 
+
+          axisX:{
+           title: "Time",
+          valueFormatString:  ""   // move comma to change formatting
+          },     
+          data: [{
+            type: "line",
+          dataPoints: dps
+          }]
+        });
+
+        // var xVal = 0;
+        // var yVal = 100; 
+        var updateInterval = 1000;
+        var dataLength = 20; // number of dataPoints visible at any point
 
   var updateChart = function (count) {
-  count = count || 1;
-  for (var j = 0; j < count; j++) {
-    yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-    dps.push({
-      x: xVal,
-      y: yVal
-    });
-    xVal++;
-  }
+    // count = count || 1;
+    for (var j = 0; j < chart_length; j++) {
+     var yVal= charts[j].datetime
+      // yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
 
-  if (dps.length > dataLength) {
-    dps.shift();
-  }
+      dps.push({
+        x: charts[j].datetime,
+        y: charts[j].speed
+      });
+      charts.speed++;
+    }
 
-   chart.render();
-  };
+    if (dps.length > dataLength) {
+      dps.shift();
+    }
+
+     chart.render();
+    };
 
    updateChart(dataLength);
-   setInterval(function(){updateChart()}, updateInterval);
-  }
-
-
-  function playbackChart(){
+   // setInterval(function(){updateChart()}, updateInterval);
 
     $(".playback_chart").show(100).animate("slow");
+    // chartpolyline(chart);
   }
 
 
