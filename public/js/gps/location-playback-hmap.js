@@ -277,76 +277,10 @@ function addMarkerToGroup(group, coordinate, html) {
 }
 // ------------------------------------------------------------------
 
-// window.onload = function () {
-// var dps = []; // dataPoints
-// var chart = new CanvasJS.Chart("chartContainer", {
-//     title :{
-//       text: ""
-//     },
-//     axisY: {
-//       includeZero: false
-//     },      
-//     data: [{
-//       type: "line",
-//     dataPoints: dps
-//     }]
-//   });
-
-//   var xVal = 0;
-//   var yVal = 100; 
-//   var updateInterval = 1000;
-//   var dataLength = 20; // number of dataPoints visible at any point
-
-//   var updateChart = function (count) {
-//   count = count || 1;
-//   for (var j = 0; j < count; j++) {
-//     yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-//     dps.push({
-//       x: xVal,
-//       y: yVal
-//     });
-//     xVal++;
-//   }
-
-//   if (dps.length > dataLength) {
-//     dps.shift();
-//   }
-
-//    chart.render();
-//   };
-
-//    updateChart(dataLength);
-//    setInterval(function(){updateChart()}, updateInterval);
-//   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   function playbackChart(res){
      var charts=res.polyline;
+     console.log(charts);
      var chart_length= charts.length;
      // console.log(charts[0].speed);
      var dps = []; 
@@ -360,8 +294,9 @@ function addMarkerToGroup(group, coordinate, html) {
           }, 
 
           axisX:{
-           title: "Time",
-          valueFormatString:  ""   // move comma to change formatting
+            title: "timeline",
+            // gridThickness: 2,
+             valueFormatString: "YY/MM/DD H:i:s"
           },     
           data: [{
             type: "line",
@@ -370,33 +305,40 @@ function addMarkerToGroup(group, coordinate, html) {
         });
 
        // number of dataPoints visible at any point
- var xVal = 0;
+        var xVal = 0;
         var yVal = 100; 
         var updateInterval = 1000;
         var dataLength = 20;
   var updateChart = function (count) {
-    // count = count || 1;
-    for (var j = 0; j < chart_length; j++) {  
-
-     // var yVal= charts[j].datetime
-      yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-// console.log( charts[j].datetime);
-      dps.push({
-        x: xVal,
-        y: yVal
+  
+    var i=1;
+    $.each(charts, function(key,value) {
+        speed=value.speed;
+        datetime=value.datetime;
+        dps.push({
+        x: new Date(datetime),
+        y: speed
       });
-       xVal++;
-    }
-
+     });
+    // count = count || 1;
+    // for (var j = 0; j < chart_length; j++) {  
+    //  // var yVal= charts[j].datetime
+    //   // yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+    // datetime=charts[j].datetime;
+    // speed=charts[j].speed;
+    //   dps.push({
+    //     x: new Date(datetime),
+    //     y: speed
+    //   });
+    //    // xVal++;
+    // }
     if (dps.length > dataLength) {
       dps.shift();
     }
-
-     chart.render();
-    };
-
-   updateChart(dataLength);
-   setInterval(function(){updateChart()}, updateInterval);
+  chart.render();
+  };
+  updateChart(dataLength);
+  setInterval(function(){updateChart()}, updateInterval);
 
     $(".playback_chart").show(100).animate("slow");
     // chartpolyline(chart);
