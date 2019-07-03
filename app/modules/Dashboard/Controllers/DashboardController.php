@@ -321,7 +321,8 @@ class DashboardController extends Controller
         foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
         }    
-
+           
+            
 
 
         // $user_data=Vehicle::Select(
@@ -361,13 +362,19 @@ class DashboardController extends Controller
         ->get(); 
 
         $single_gps = [];
+        $single_gps_id=[];
         foreach($user_data as $user_vehicle){
             $single_gps[] = Crypt::encrypt($user_vehicle->vehicle->id);
-        }    
+            $single_gps_id[] = $user_vehicle->id;
+        }  
+
+        // $gps_data_count = GpsData::whereIn('gps_id',$single_gps_id)->count('id');
+        //      dd($gps_data_count);  
         if($user_data){     
             $response_data = array(
                 'user_data'  => $user_data,
                 'vehicle' => $single_gps,
+                // 'gps' => $gps_data_count,
                 'status'=>'Status'
                
             );
