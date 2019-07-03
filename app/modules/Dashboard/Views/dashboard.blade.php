@@ -340,7 +340,7 @@
                             
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1 id="moving" class="text-white" style="font-size:26px;color:#fab03a!important">36</h1>
+                           <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">36</h1>
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
                         </div>
                      </div>
@@ -354,7 +354,7 @@
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                           </h1>
                            <span style="float:left;width:100%">
-                           <h1  id="idle" class="text-white" style="font-size:26px;color:#fab03a!important"></h1>
+                           <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important"></h1>
                            <!-- <h5 class="text-white">IDLE</h5></span> -->
                         </div>
                      </div>
@@ -369,7 +369,7 @@
 
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1 id="stop"  class="text-white" style="font-size:26px;color:#fab03a!important"></h1>
+                           <h1 id="stop"  class="text-white" style="font-size:19px;color:#fab03a!important"></h1>
                            <!-- <h5 class="text-white">DELAY</h5></span> -->
                         </div>
                      </div>
@@ -384,7 +384,7 @@
 
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1  class="text-white" style="font-size:26px;color:#fab03a!important">0</h1>
+                           <h1  class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                            <!--  <h5 class="text-white">STOPPED</h5></span> -->
                         </div>
                      </div>
@@ -402,57 +402,57 @@
                      <div class="col-6 m-t-15">
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
                            <img src="assets/images/network-status.png">
-                            <h4 class="m-b-0 m-t-5">Network Status</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
                              <medium id="network_status" class="font-light">
                               <i class="fa fa-spinner" aria-hidden="true"></i>
 
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;" >
                            <img src="assets/images/fuel-status.png">
-                           <h4 class="m-b-0 m-t-5">Fuel Status</h4>
+                           <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
                            <medium id="fuel_status" class="font-light">
                           <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/speed.png">
-                           <h4 class="m-b-0 m-t-5">Speed</h4>
+                           <h4 class="m-b-0 m-t-5 score_data_text">Speed</h4>
                             <medium id="speed" class="font-light">
                            <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/odometer.png">
-                            <h4 class="m-b-0 m-t-5">Odometer</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Odometer</h4>
                              <medium id="odometer" class="font-light">
                              <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/vehicle-status.png">
-                            <h4 class="m-b-0 m-t-5">Vehicle Status</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                             <medium id="mode" class="font-light">
                             <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/sattelite.png">
-                            <h4 class="m-b-0 m-t-5">Satellite</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
                             <medium id="satelite" class="font-light">
                            <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/battery-status.png">
-                            <h4 class="m-b-0 m-t-5">Battery Status</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
                             <medium id="battery_status" class="font-light">
                               <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/towing-dash.png">
-                            <h4 class="m-b-0 m-t-5">Towing</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
                             <medium class="font-light">
                               <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                        
                         <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
                            <img src="assets/images/immobilizer.png">
-                            <h4 class="m-b-0 m-t-5">Location</h4>
+                            <h4 class="m-b-0 m-t-5 score_data_text">Location</h4>
                               <medium id="address" class="font-light">
                              <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>

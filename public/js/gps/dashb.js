@@ -54,7 +54,7 @@ function vehicle_details(res){
       $('#satelite').text(res.satelite);
       $('#battery_status').text(res.battery_status);
       var address=res.address;
-      $('#address').text(address.substr(0,10));
+      $('#address').text(address);
         
   }
 

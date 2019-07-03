@@ -64,7 +64,7 @@
     </div>
   </div>
 
-<div class="page-wrapper_cover"></div>
+
 </div>
  
 <div class="clearfix"></div>
