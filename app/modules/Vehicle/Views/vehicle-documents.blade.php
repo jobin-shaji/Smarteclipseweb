@@ -133,14 +133,14 @@
                           <td>{{$doc->expiry_date}}</td>
                           @if($doc->expiry_date)
                           <td>
-                            <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'><i class='glyphicon glyphicon-download'></i> Download </a>
-                            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a>
+                            <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
+                            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
+                            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                           </td>
                           @else
                           <td>
-                            <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'><i class='glyphicon glyphicon-download'></i> Download </a>
-                            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete</a>
+                            <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='Download'><i class='fa fa-download'></i></a>
+                            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger'  data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                           </td>
                           @endif
                       </tr>

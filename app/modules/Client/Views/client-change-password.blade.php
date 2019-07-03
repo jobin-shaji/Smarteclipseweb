@@ -1,11 +1,12 @@
 @extends('layouts.eclipse') 
 @section('title')
-    Change Password
+    User Profile
 @endsection
 @section('content')
 
 
-<div class="page-wrapper">
+<div class="page-wrapper_new">
+  
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
@@ -20,16 +21,20 @@
       </div>
     </div>
   </div>
-            
-  <div class="card-body">
-    <div class="table-responsive">
-      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+  
+      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            <form  method="POST" action="{{route('client.update-password.p',$client->user_id)}}">
-            {{csrf_field()}}
-            <input type="hidden" name="id" value="{{$client->user_id}}"> 
+            <h2 class="page-header">
+              <i class="fa fa-cog"></i> 
+            </h2>
               <div class="row">
+                <form  method="POST" action="{{route('client.update-password.p',$client->user_id)}}">
+                {{csrf_field()}}
                 <div class="col-md-6">
+                  <input type="hidden" name="id" value="{{$client->user_id}}">
                   <div class="form-group has-feedback">
                     <label class="srequired">New Password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
@@ -44,29 +49,23 @@
                     <span class="help-block">
                     <strong class="error-text">{{ $errors->first('password') }}</strong>
                     </span>
-                  @endif
+                  @endif   
 
+               </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-3 ">
+                    <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
+                 </div>
+                </div>
               </div>
             </div>
-
-              
-              <div class="row">
-                <!-- /.col -->
-                <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
-                </div>
-                <!-- /.col -->
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+         </div>
     </div>
   </div>
+
+<div class="page-wrapper_cover"></div>
 </div>
-
-
-
  
 <div class="clearfix"></div>
 

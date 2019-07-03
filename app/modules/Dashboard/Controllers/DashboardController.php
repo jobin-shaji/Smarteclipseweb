@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
+use App\Modules\Driver\Models\Driver;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsTransfer;
@@ -160,11 +161,28 @@ class DashboardController extends Controller
         }       
     }
 
-
-
-
-
-
+    //driver score
+    public function driverScore(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $drivers = Driver::select(
+                'id',
+                'name',
+                'points')
+                ->where('client_id',$client_id)
+                ->get();
+        $single_driver_name = [];
+        $single_driver_point = [];
+        foreach($drivers as $driver){
+            $single_driver_name[] = $driver->name;
+            $single_driver_point[] = $driver->points;
+        }
+        $score=array(
+                    "drive_data"=>$single_driver_name,
+                    "drive_score"=>$single_driver_point
+                );
+        return response()->json($score); 
+    }
 
     public function getLocation(Request $request){
       

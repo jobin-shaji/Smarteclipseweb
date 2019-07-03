@@ -71,7 +71,7 @@ class VehicleController extends Controller {
 
                          <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i></a>
 
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-times'></i></button>"; 
+                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i></button>"; 
                     }else{
                         return "
                     
@@ -87,7 +87,7 @@ class VehicleController extends Controller {
 
                          <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
 
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-times'></i> </button>"; 
+                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> </button>"; 
                     }
                     
                 }else{
@@ -156,9 +156,10 @@ class VehicleController extends Controller {
                 ]);
             }
         }
+        $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'New Vehicle created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle'));
+        return redirect(route('vehicle.documents',$encrypted_vehicle_id));
     }
 
     // edit vehicle
@@ -1103,7 +1104,8 @@ class VehicleController extends Controller {
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed'       
+            'speed',
+            'time'       
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
@@ -1123,7 +1125,7 @@ class VehicleController extends Controller {
                 // $counts=$length;            
                 if($length>=150)
                 {
-                    $counts=$length/10;                    
+                    $counts=$length/90;                    
                 }
                 else
                 {
@@ -1145,7 +1147,9 @@ class VehicleController extends Controller {
                     // dd($data->lat);
                     $playback[]=array(
                         "lat"=>(float)$data->lat,
-                        "lng"=>(float)$data->lng                    
+                        "lng"=>(float)$data->lng ,
+                        "speed"=>(float)$data->speed, 
+                        "datetime"=>$data->datetime,                    
                     );                   
                     $startLat=(float)$data->lat;
                     $startLng=(float)$data->lng; 

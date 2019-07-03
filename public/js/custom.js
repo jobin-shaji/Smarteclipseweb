@@ -72,6 +72,8 @@ function backgroundPostData(url, data, callBack, options) {
                     vehicleTrack(res);
                 }else if(callBack =='selectVehicleTrack'){
                     selectVehicleTrack(res);
+                }else if(callBack =='driverScore'){
+                    driverScore(res);
                 }
             }
         },
