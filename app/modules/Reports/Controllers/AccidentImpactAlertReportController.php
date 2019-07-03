@@ -41,7 +41,7 @@ class AccidentImpactAlertReportController extends Controller
         if($vehicle==0 || $vehicle==null)
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',21);
+            ->where('alert_type_id',14);
             // ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
@@ -52,7 +52,7 @@ class AccidentImpactAlertReportController extends Controller
         else
         {
             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',21)
+            ->where('alert_type_id',14)
             ->where('vehicle_id',$vehicle);
             // ->where('status',1);
             if($from){
