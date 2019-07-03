@@ -41,7 +41,7 @@
                <div class="col-lg-8 col-md-12">
                    <div class="form-group has-feedback">
                         <label class="srequired">Route Name</label>
-                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Route Name" name="name" value="{{ old('name') }}" required> 
+                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add route name" name="name" value="{{ old('name') }}" required> 
                       </div>
                       @if ($errors->has('name'))
                         <span class="help-block">

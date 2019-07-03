@@ -30,7 +30,7 @@ Create Geofence
                <div class="col-lg-8 col-md-12">
                   <div class="form-group">
                      
-                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Fence Name" name="name" id="name" value="" required> 
+                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add fence name" name="name" id="name" value="" required> 
                   </div>
                   @if ($errors->has('name'))
                   <span class="help-block">
