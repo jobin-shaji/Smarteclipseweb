@@ -103,8 +103,24 @@ function driverScore(res){
     // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
     '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Track</a> <a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Playback</a></div>'+ 
     '</div>'; 
-
-             car_color="#0C2161";
+    		var mode=JSONObject[i].mode;
+    		if(mode=='M')
+    		{
+    			car_color="#2DB05D";
+    		}
+    		else if(mode=='H')
+    		{
+    			 car_color="#5474F5";
+    		}
+    		else if(mode=='S')
+    		{
+    			car_color="#A1A3AB";
+    		}
+    		else
+    		{
+    			car_color="#DB2133";
+    		}
+             
              addMarker(loc,title,car_color);
              
            }
@@ -199,4 +215,14 @@ function driverScore(res){
 		}
 		});
 
-	 	
+	 	function moveing(vehicle_mode)
+	 	{
+	 		// alert(vehicle_mode);
+	 		var url = '/dashboard-track-vehicle-mode';
+				
+			var data = { 
+		      vehicle_mode : vehicle_mode
+		    };
+
+		    backgroundPostData(url,data,'vehicleTrack',{alert:false});
+	 	}

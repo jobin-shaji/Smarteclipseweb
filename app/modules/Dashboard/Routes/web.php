@@ -15,5 +15,5 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
         Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
         Route::post('/driver-score','DashboardController@driverScore')->name('driver.score');
 
-
+         Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
 });
