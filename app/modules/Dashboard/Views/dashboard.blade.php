@@ -341,7 +341,6 @@
                            </h1>
                            <span style="float:left;width:100%" >
                            <h1 id="moving"  class="text-white"  style="font-size:19px;color:#fab03a!important">36</h1>
-
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
                         </div>
                      </div>
