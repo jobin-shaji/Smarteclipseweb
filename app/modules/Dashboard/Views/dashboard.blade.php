@@ -300,9 +300,29 @@
                         </form>
                      </div>
                      <div class="right-bottom3">
-                      11111111111111111
+                        <div class="driver_image" id="diver_behavior">
+                          <img src="assets/images/driver_dash.png">
+                        </div>
                      </div>
-                 
+                     
+                      <div id="myModal" class="modal_for_dash">
+                       <!-- Modal content -->
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                <span class="close">×</span>
+                                
+                          <div class="container">  
+                            <div class="container">
+   
+                            
+                          </div>
+                          </div>
+                          </div>
+                          </div>
+                          
+                       <!-- Modal content -->
+                        </div>
+
                </div>
               </div>
 
