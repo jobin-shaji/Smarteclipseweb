@@ -271,12 +271,12 @@
                       <div class="col-lg-12 col-md-12">
                        <div class="container-fluid bg-light map_search">
                        <div class="row align-items-center justify-content-center">
-                              <div class="col-lg-4 col-md-4 pt-3">
+                              <div class="col-lg-4 col-md-4 ">
                                      <div class="form-group">
                                         <input type="text" id="search_place" class="form-control">
                                      </div>
                                   </div>
-                                  <div class="col-lg-4 col-md-4 pt-3">
+                                  <div class="col-lg-4 col-md-4 ">
                                       <div class="form-group">
                                         <select id="search_radius" class="form-control">
                                           <option selected>KM</option>
@@ -289,7 +289,7 @@
                                       </div>
                                   </div>
                                  
-                                  <div class="col-lg-2 col-md-2 pt-3">
+                                  <div class="col-lg-2 col-md-2 ">
                                    <button type="submit" class="btn btn-primary btn-block">
                                     <i class="fas fa-search"></i>
                                    </button>
@@ -450,7 +450,7 @@
                               <i class="fa fa-spinner" aria-hidden="true"></i>
                         </div>
                        
-                        <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0 0 20px 0;">
+                        <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
                            <img src="assets/images/immobilizer.png">
                             <h4 class="m-b-0 m-t-5">Location</h4>
                               <medium id="address" class="font-light">
