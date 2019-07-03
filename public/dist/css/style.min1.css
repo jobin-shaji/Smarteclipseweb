@@ -16767,6 +16767,11 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     margin-top: 19px;
 }
 
+.panel-heading.plaback_head_data_change input{
+    margin-top: 0px;
+ 
+}
+
 .playback_head button#savebutton {
     /* margin: 0px 9px; */
     margin-top: 13px;
@@ -16794,4 +16799,9 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 
 .cover_div_search.geofence_covered_search {
     margin-top: 10px;
+}
+
+.col-lg-4.col-md-4.cover_alert_manager {
+    background: #fff;
+    padding: 7px;
 }
