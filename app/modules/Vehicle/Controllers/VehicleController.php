@@ -156,9 +156,10 @@ class VehicleController extends Controller {
                 ]);
             }
         }
+        $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'New Vehicle created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle'));
+        return redirect(route('vehicle.documents',$encrypted_vehicle_id));
     }
 
     // edit vehicle
