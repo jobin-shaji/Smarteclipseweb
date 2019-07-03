@@ -10,10 +10,10 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
         Route::post('/dashboard-vehicle-list','DashboardController@vehicleList')->name('dashboard-vehicle-list');
 
         Route::post('/vehicle-detail','DashboardController@vehicleDetails')->name('vehicle.detail');
-          Route::post('/dash-vehicle-track','DashboardController@dashVehicleTrack')->name('dash.vehicle.track');
+        Route::post('/dash-vehicle-track','DashboardController@dashVehicleTrack')->name('dash.vehicle.track');
 
-
-            Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
+        Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
+        Route::post('/driver-score','DashboardController@driverScore')->name('driver.score');
 
 
 });

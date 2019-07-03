@@ -1,4 +1,40 @@
+$(document).ready(function () {
+     var url = 'driver-score';
+     var data = { 
+    
+     };
+      backgroundPostData(url,data,'driverScore',{alert:false});
+});
 
+function driverScore(res){
+	var ctx = document.getElementById("myChart").getContext('2d');
+	  var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	      labels: res.drive_data,
+	      datasets: [{
+	        label: '# Score',
+	        data: res.drive_score,
+	        backgroundColor:'rgba(255, 99, 132, 0.2)',
+	        borderColor:'rgba(255,99,132,1)',
+	        borderWidth: 1
+	      }]
+	    },
+	    options: {
+	    	title: {
+		      display: true,
+		      text: 'Driver Score'
+		    },
+	      	scales: {
+		        yAxes: [{
+		          ticks: {
+		            beginAtZero: true
+		          }
+		        }]
+	      	}
+	    }
+	  });
+}
 
  var latMap=20.593683;
  var lngMap=78.962883;
