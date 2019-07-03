@@ -7,7 +7,7 @@
 <!-- ============================================================== -->
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
-<div class="page-wrapper_new">
+<div class="page-wrapper_new_map">
   <!-- ============================================================== -->
   <!-- Bread crumb and right sidebar toggle -->
   <!-- ============================================================== -->
@@ -25,28 +25,26 @@
   <!-- ============================================================== -->
   <!-- Container fluid  -->
   <!-- ============================================================== -->
-  <div class="container-fluid">
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
-    <div class="card-body">
-      <div class="table-responsive">
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
-          <div class="row">
-            <div class="col-sm-12">
+ 
+                        
+         
+            
               <input type="hidden" name="hd_id" id="hd_id" value="{{$id}}">
-              <div id="map" style=" width:100%;height:500px;"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              <div id="map" style=" width:100%;height:520px; margin-top: 10px;"></div>
+       
+
+
+       <footer class="footer text-center">
+         All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+      </footer>
+  
                 
-  </div>
+ 
 
 </div>
-
-
 @endsection
 
   @section('script')
