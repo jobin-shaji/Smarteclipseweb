@@ -795,8 +795,18 @@ class VehicleController extends Controller {
                   ->where('vehicle_id',$get_vehicle->id)
                   ->orderBy('id','desc')
                   ->first();
-          
-        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $track_data->latitude,'longitude' => $track_data->longitude] );
+                  
+          if($track_data==null)
+          {
+            $latitude='010.053604';
+            $longitude='076.355095' ;
+          }
+          else
+          {
+            $latitude=$track_data->latitude;
+            $longitude= $track_data->longitude;
+          }
+        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
        
     }
     public function locationTrack(Request $request){
