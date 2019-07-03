@@ -320,6 +320,31 @@ function addMarkerToGroup(group, coordinate, html) {
 //   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   function playbackChart(res){
      var charts=res.polyline;
      var chart_length= charts.length;
@@ -344,22 +369,23 @@ function addMarkerToGroup(group, coordinate, html) {
           }]
         });
 
-        // var xVal = 0;
-        // var yVal = 100; 
+       // number of dataPoints visible at any point
+ var xVal = 0;
+        var yVal = 100; 
         var updateInterval = 1000;
-        var dataLength = 20; // number of dataPoints visible at any point
-
+        var dataLength = 20;
   var updateChart = function (count) {
     // count = count || 1;
-    for (var j = 0; j < chart_length; j++) {
-     var yVal= charts[j].datetime
-      // yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+    for (var j = 0; j < chart_length; j++) {  
 
+     // var yVal= charts[j].datetime
+      yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+// console.log( charts[j].datetime);
       dps.push({
-        x: charts[j].datetime,
-        y: charts[j].speed
+        x: xVal,
+        y: yVal
       });
-      charts.speed++;
+       xVal++;
     }
 
     if (dps.length > dataLength) {
@@ -370,7 +396,7 @@ function addMarkerToGroup(group, coordinate, html) {
     };
 
    updateChart(dataLength);
-   // setInterval(function(){updateChart()}, updateInterval);
+   setInterval(function(){updateChart()}, updateInterval);
 
     $(".playback_chart").show(100).animate("slow");
     // chartpolyline(chart);
