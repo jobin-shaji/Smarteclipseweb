@@ -2834,7 +2834,7 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
 .show>.btn-primary.dropdown-toggle {
-    color: #fff;
+    /*color: #fff;*/
     /*background-color: #4c32e9;*/
   }
 
@@ -16602,7 +16602,10 @@ ul.navbar-menu.animate img {
 
 .cover_div_search.playback_page {
     padding-top: 0px;
+    margin-left: 16px;
     border-radius: 7px;
+    padding-right: 11px;
+    opacity: 0.9;
 }
 
 button.btn.btn-sm.btn-info.form-control.btn-play-back {
@@ -16720,3 +16723,66 @@ button.btn.btn-primary.address_btn {
 
 /*--------------popup model--------------------*/
 
+
+.card.data_list_cover {
+    background: #f2f3f4;
+    position: fixed;
+    z-index: 1;
+    border-radius: 55px;
+    margin-top: 11px;
+}
+
+.card.data_list_cover.pull-right {
+    margin-left: 55px;
+}
+
+a.btn.btn-block.btn-social.btn-bitbucket.track_item {
+    background: #5d5d5d;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.col-sm-12.social-buttons i {
+    padding: 5px 8px;
+}
+
+a.btn.btn-block.btn-social.btn-bitbucket.track_item {
+    text-align: left;
+}
+
+.live_track_map {
+    margin-top: 9px;
+}
+
+.panel-heading.playback_head input {
+    margin-top: 19px;
+}
+
+.playback_head button#savebutton {
+    /* margin: 0px 9px; */
+    margin-top: 13px;
+    padding-top: 12px;
+    height: 36px;
+}
+
+.geofence_page{
+    padding-left: 46px;
+    height: 36px;
+    position: fixed;
+    z-index: 1;
+}
+.cbtn_undo{
+    position: absolute;
+    float: left;
+}
+.save_button_route{
+  float: left;
+}
+
+.geofence_covered_search {
+    width: 476px;
+}
+
+.cover_div_search.geofence_covered_search {
+    margin-top: 10px;
+}

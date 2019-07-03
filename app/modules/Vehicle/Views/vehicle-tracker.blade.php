@@ -1,19 +1,28 @@
-@extends('layouts.gps')
+@extends('layouts.eclipse')
 
 @section('content')
-
-<section class="content-header">
-    <h1>
-        Live Track
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Live Track</li>
-    </ol>
-</section>
-<input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
 <section class="content box">
+<div class="page-wrapper_new_map">
+
+  <div class="page-breadcrumb">
+      <div class="row">
+         <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Playback
+               <small>Control panel</small>
+            </h4>
+            @if(Session::has('message'))
+            <div class="pad margin no-print">
+               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                  {{ Session::get('message') }}  
+               </div>
+            </div>
+            @endif  
+         </div>
+      </div>
+   </div>
+
+<input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+
   <div class="row">
     <div class="col-lg-12 col-sm-12">
       <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
@@ -24,8 +33,8 @@
        <input type="hidden" name="lat" id="lat" value="{{$latitude}}">
        <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
                       
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
+                        <div class="card data_list_cover pull-right" style="width: 16rem;">
+                            <div class="card-body data_list_body">
                               <h2 class="card-title" id="user"></h2>
                                 
                               
@@ -51,19 +60,19 @@
 
 
                         <div class="col-sm-12 social-buttons">
-                            <a class="btn btn-block btn-social btn-bitbucket">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-car"></i><label id="vehicle_name"></label></a>
 
-                            <a class="btn btn-block btn-social btn-bitbucket">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
                             </a>
-                            <a class="btn btn-block btn-social btn-bitbucket">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label></b> K.M/H
                             </a>
-                            <a class="btn btn-block btn-social btn-bitbucket">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label></b>%
                             </a>
-                            <a class="btn btn-block btn-social btn-bitbucket">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-plug"></i>
                                 <span id="car_charging">
                                     <?php 
@@ -86,9 +95,17 @@
               </div>
           </div>
 
-        <div id="map" style="width:100%;height:500px;"></div>
+        <div id="map" class="live_track_map" style="width:100%;height:500px;"></div>
     </div>
     </div>
+
+<!-- -----------------footer-------------------- -->
+  <footer class="footer text-center">
+  All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
+  </footer>
+<!-- -----------------footer-------------------- -->
+
+  </div>
 </section>
 
 @section('script')
