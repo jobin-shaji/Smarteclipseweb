@@ -155,8 +155,8 @@ class ClientController extends Controller {
     //     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
-         $decrypted = Crypt::decrypt($request->id);
-          $client = Client::where('user_id', $decrypted)->first();
+        $decrypted = Crypt::decrypt($request->id);
+        $client = Client::where('user_id', $decrypted)->first();
          
         if($client == null){
            return view('Client::404');
@@ -178,7 +178,7 @@ class ClientController extends Controller {
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->save();
-        $request->session()->flash('message','Client Password updated successfully');
+        $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('client.change-password',$did));
     }
@@ -374,8 +374,54 @@ class ClientController extends Controller {
         return view('Client::client-profile',['client' => $client,'user' => $user]);
     }
 
-    // update vehicle doc
+    // update user logo
     public function saveUserLogo(Request $request)
+    {
+        $client = Client::find($request->id);
+        if($client == null){
+           return view('Client::404');
+        }
+        $rules = $this->logoUpdateRules();
+        $this->validate($request, $rules);
+
+        $file=$request->file('logo');
+        if($file){
+            $old_file = $client->logo;
+            if($old_file){
+                $myFile = "logo/".$old_file;
+                $delete_file=unlink($myFile);
+            }
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'logo';
+            $file->move($destinationPath,$uploadedFile);
+            $client->logo = $uploadedFile;
+            $client->save();
+        }
+        $request->session()->flash('message', 'Logo updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client.profile'));  
+    }
+
+//////////////////////////////////////User Change Password//////////////////////////////
+
+    //user change password view
+    public function userPasswordChange()
+    {
+        $client_id = \Auth::user()->client->id;
+        $client_user_id = \Auth::user()->id;
+        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $user=User::find($client_user_id); 
+        if($client == null)
+        {
+           return view('Client::404');
+        }
+        return view('Client::-chang',['client' => $client,'user' => $user]);
+    }
+
+    // update change password
+    public function saveUserNewPassword(Request $request)
     {
         $client = Client::find($request->id);
         if($client == null){
