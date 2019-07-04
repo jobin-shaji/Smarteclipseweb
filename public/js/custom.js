@@ -1,6 +1,5 @@
 
 // dateTimepicker
- 
 
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
@@ -74,6 +73,10 @@ function backgroundPostData(url, data, callBack, options) {
                     selectVehicleTrack(res);
                 }else if(callBack =='driverScore'){
                     driverScore(res);
+                }else if(callBack == 'emergencyAlert'){
+                    emergencyAlert(res);
+                }else if(callBack == 'getPlaceName'){
+                    getPlaceName(res);
                 }
             }
         },
@@ -85,6 +88,59 @@ function backgroundPostData(url, data, callBack, options) {
 
 }
 
+function emergencyState(){
+    var url = 'emergency-alert';
+    var data = { 
+    
+    };
+    backgroundPostData(url,data,'emergencyAlert',{alert:false});
+}
+
+function emergencyAlert(res){
+    if(res.length > 0){
+        var latitude=res[0].latitude;
+        var longitude=res[0].longitude;
+        getPlaceNameFromLatLng(latitude,longitude);
+        var modal = document.getElementById('emergency');
+        modal.style.display = "block";
+        document.getElementById("em_id").value = res[0].id;
+        document.getElementById("vehicle_id").value = res[0].vehicle.id;
+        $('#emergency_vehicle_number').text(res[0].vehicle.register_number);
+        $('#emergency_vehicle_time').text(res[0].device_time);
+       
+    }
+}
+
+function getPlaceNameFromLatLng(latitude,longitude){
+    var url = 'get-location';
+    var data = { 
+     'latitude':latitude,
+     'longitude':longitude
+    };
+    backgroundPostData(url,data,'getPlaceName',{alert:false});
+   
+}
+function getPlaceName(res){
+    $('#emergency_vehicle_location').text(res);
+}
+
+function verifyEmergency(){
+    var id = document.getElementById("em_id").value;
+    VerifyAlert(id);
+}
+function track(){
+    var vehicle_id = document.getElementById("vehicle_id").value;
+}
+
+function VerifyAlert(alert_id){
+    if(confirm('Are you sure want to verify this alert?')){
+        var url = 'alert/verify';
+        var data = {
+        id : alert_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
+}
 
 
 function downloadFile(url,data){
@@ -562,4 +618,16 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
+
+   
+    var url = 'emergency-alert';
+    var data = { 
+    
+    };
+    backgroundPostData(url,data,'emergencyAlert',{alert:false});
+
 });
+
+
+
+
