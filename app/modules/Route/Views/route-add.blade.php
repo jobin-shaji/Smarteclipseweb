@@ -36,6 +36,9 @@
 
     <div class="card-body map_card_body">
         <div class="panel-heading geofence_page">
+
+      <form method="POST" action="{{route('route.create.p')}}" onSubmit="return checkRouteValue();">
+         {{csrf_field()}}
          <div class="cover_div_search geofence_covered_search">
             <div class="row">
                <div class="col-lg-8 col-md-12">
@@ -55,6 +58,7 @@
                     </div>
                     
             </div>
+          </form>
          </div>
          </div>
 
