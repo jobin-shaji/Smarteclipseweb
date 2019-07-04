@@ -189,6 +189,15 @@ function driverScore(res){
 	          	var lng=results[0].geometry.location.lng();
 	          	map.panTo(new google.maps.LatLng(lat,lng));
 	          	map.setZoom(16);
+	          	var url = '/location-search';
+					
+				var data = { 
+			      lat : lat,
+			      lng:lng
+			    };
+
+		    	backgroundPostData(url,data,'',{alert:false});
+
 	          } else {
 	            alert("Something got wrong " + status);
 	          }
