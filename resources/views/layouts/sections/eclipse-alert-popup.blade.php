@@ -17,7 +17,7 @@
         <input type="hidden" id="em_id">
         <input type="hidden" id="vehicle_id">
         <button onclick="verifyEmergency()">Verify</button>
-        <!-- <button onclick="track_vehicle()">track</button> -->
+        <button onclick="track_vehicle()">track</button>
     </div>
   </div>
 </div>

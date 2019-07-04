@@ -622,11 +622,11 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
-    // var url = 'emergency-alert';
-    // var data = { 
+    var url = 'emergency-alert';
+    var data = { 
     
-    // };
-    // backgroundPostData(url,data,'emergencyAlert',{alert:false});
+    };
+    backgroundPostData(url,data,'emergencyAlert',{alert:false});
 
 });
 
