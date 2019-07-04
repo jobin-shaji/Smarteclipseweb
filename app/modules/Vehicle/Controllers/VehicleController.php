@@ -828,14 +828,13 @@ class VehicleController extends Controller {
                   'gsm_signal_strength as signalStrength'
                   )->where('device_time', '>=',$oneMinut_currentDateTime)
                   ->where('device_time', '<=',$currentDateTime)
-                  ->where('latitude','!=','000.000000')
-                  ->where('longitude','!=','000.000000')
+                  ->where('gps_fix',1)
                   ->where('vehicle_id',$request->id)
 
                   ->orderBy('id','desc')
                   ->first();
        if($track_data == null){
-        
+
              $track_data = GpsData::select('latitude',
                   'longitude',
                   'heading as angle',
@@ -844,11 +843,10 @@ class VehicleController extends Controller {
                   'main_power_status as power',
                   'gps_fix as gps',
                   'ignition as ign',
-                  'gsm_signal_strength as signalStrength'
-                  // \DB::raw("'$offline' as vehicleStatus")
+                  'gsm_signal_strength as signalStrength',
+                  \DB::raw("'$offline' as vehicleStatus")
                   )
-                  // ->where('latitude','!=','000.000000')
-                  // ->where('longitude','!=','000.000000')
+                  ->where('gps_fix',1)
                   ->where('vehicle_id',$request->id)
                   ->first();
                 }
