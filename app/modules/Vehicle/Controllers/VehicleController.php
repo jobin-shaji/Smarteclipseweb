@@ -1204,8 +1204,12 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'ignition as ign',
             'speed'       
         )
-        ->where('device_time', '>=',$fromDate)
-        ->where('device_time', '<=',$toDate)
+        // ->where('device_time', '>=',$fromDate)
+        // ->where('device_time', '<=',$toDate)
+        ->where('created_at', '>=',$fromDate)
+        ->where('created_at', '<=',$toDate)
+        ->where('gps_fix',1)
+
         ->where('vehicle_id',$vehicleID)                
         ->get(); 
         $startLat=(float)$gpsdata[0]->lat;
