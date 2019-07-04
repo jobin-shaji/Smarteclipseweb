@@ -42,6 +42,7 @@ function driverScore(res){
  var markers = [];
  var map;
  var map_flag;
+ var track_flag=0;
  
 
 
@@ -65,7 +66,9 @@ function driverScore(res){
 	// check each 10 sec
 
 		    window.setInterval(function(){
-		     getVehicleSequence();
+		     if(track_flag==0){
+		     	getVehicleSequence();
+		 	}
 	       }, 10000);
 	// check each 10 sec
 
@@ -115,8 +118,9 @@ function driverScore(res){
 	         var fillOpacity=JSONObject[i].opacity;
 	         var strokeWeight=JSONObject[i].strokeWeight;
              addMarker(loc,title,car_color,path,scale,fillOpacity,strokeWeight); 
-
-             // addVehicleToVehicleList(vehicle_name,reg,gpsID,JSONObject.length);
+             if(track_flag!=0){
+               addVehicleToVehicleList(vehicle_name,reg,gpsID);
+         	 }
            }
             setMapOnAll(map);
 
@@ -214,6 +218,7 @@ function driverScore(res){
 
 	 	function moving(vehicle_mode)
 	 	{
+	 		 track_flag=1;
 	 		$('#vehicle_card_cover').empty();
 	 		var url = '/dashboard-track-vehicle-mode';
 			var data = { 
@@ -239,42 +244,42 @@ function driverScore(res){
           setMapOnAll(null);
         }
 
-        // function addVehicleToVehicleList(vehicle_name,reg,gpsID,length){
+        function addVehicleToVehicleList(vehicle_name,reg,gpsID){
 
-        // 	for (i=1;i<=length;i++){
-       
-	       //       var vehicleData='<div class="border-card">'+
-        //          '<div class="card-type-icon with-border">'+
-        //          '<input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">'+
-        //           '</div>'+
-        //           '<div class="content-wrapper">'+
-        //               '<div class="label-group fixed">'+
-        //               '<p class="title">'+
-        //                 '<span><i class="fa fa-car"></i></span>'+
-        //               '</p>'+
-        //               '<p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>'+
-        //               '</div>'+
-        //               '<div class="min-gap"></div>'+
-        //           '<div class="label-group">'+
-        //               '<p class="title">'+
-        //                 '<span><i class="fas fa-arrow-alt-circle-left"></i></span>'+
-        //               '</p>'+
+     
+	             var vehicleData='<div class="border-card">'+
+                 '<div class="card-type-icon with-border">'+
+                 '<input type="radio" id="radio" id="gpsid" class="vehicle_gps_id" name="radio" onclick="getVehicle('+gpsID+')" value="'+gpsID+'">'+
+                  '</div>'+
+                  '<div class="content-wrapper">'+
+                      '<div class="label-group fixed">'+
+                      '<p class="title">'+
+                        '<span><i class="fa fa-car"></i></span>'+
+                      '</p>'+
+                      '<p class="caption" id="vehicle_name">'+vehicle_name+'</p>'+
+                      '</div>'+
+                      '<div class="min-gap"></div>'+
+                  '<div class="label-group">'+
+                      '<p class="title">'+
+                        '<span><i class="fas fa-arrow-alt-circle-left"></i></span>'+
+                      '</p>'+
 
-        //               '<p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>'+
-        //           '</div>'+
-        //           '<div class="min-gap"></div>'+
-        //           '<div class="label-group">'+
-        //                '<p class="title">'+
-        //                 '<span><i class="fas fa-tachometer-alt"></i></span>'+
-        //                '</p>'+
-        //               '<p class="caption">80</p>'+
-        //           '</div>'+
+                      '<p class="caption" id="register_number">'+reg+'</p>'+
+                  '</div>'+
+                  '<div class="min-gap"></div>'+
+                  '<div class="label-group">'+
+                       '<p class="title">'+
+                        '<span><i class="fas fa-tachometer-alt"></i></span>'+
+                       '</p>'+
+                      '<p class="caption">80</p>'+
+                  '</div>'+
 
-        //           '</div>'+                
-        //           '</div>';
-        //  	}
+                  '</div>'+                
+                  '</div>';
+         	
+         $("#vehicle_card_cover").append(vehicleData);
         	
         	
-        // }
+        }
 
 		
