@@ -15,9 +15,9 @@
         Location : <h4 id="emergency_vehicle_location"> </h4>
         Time : <h4 id="emergency_vehicle_time"></h4>
         <input type="hidden" id="em_id">
-        <input type="hidden" id="vehicle_id">
+        <input type="hidden" id="alert_vehicle_id">
         <button onclick="verifyEmergency()">Verify</button>
-        <button onclick="track_vehicle()">track</button>
+        <!-- <button onclick="track_vehicle()">track</button> -->
     </div>
   </div>
 </div>
