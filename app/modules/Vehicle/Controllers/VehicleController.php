@@ -829,6 +829,8 @@ class VehicleController extends Controller {
                   'gsm_signal_strength as signalStrength'
                   )->where('device_time', '>=',$oneMinut_currentDateTime)
                   ->where('device_time', '<=',$currentDateTime)
+                  ->where('latitude','!=','000.000000')
+                  ->where('longitude','!=','000.000000')
                   ->where('vehicle_id',$request->id)
 
                   ->orderBy('id','desc')
@@ -846,6 +848,8 @@ class VehicleController extends Controller {
                   \DB::raw("'$offline' as vehicleStatus")
                   
                   )->orderBy('id','desc')
+                  ->where('latitude','!=','000.000000')
+                  ->where('longitude','!=','000.000000')
                   ->where('vehicle_id',$request->id)
                   ->first();
                 }
