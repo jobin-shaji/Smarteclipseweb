@@ -51,6 +51,7 @@
                             <strong class="error-text">{{ $errors->first('name') }}</strong>
                         </span>
                   @endif
+                  <input type="hidden" class="form-control" name="points" id="locationLatLng" value="" required>
                </div>
                <div class="col-lg-4 col-sm-12 pt-3">
                        <button type="submit"  class="btn btn-primary btn-flat save_button_route" name="submit">Submit</button>
