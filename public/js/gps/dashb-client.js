@@ -41,99 +41,97 @@ function driverScore(res){
  var haightAshbury = {lat: latMap, lng: lngMap};
  var markers = [];
  var map;
+ var map_flag;
+ var track_flag=0;
+ 
+
 
   // 'key' => env('APP_KEY'),
   
  
 		$(document).ready(function () {
+			 map = new google.maps.Map(document.getElementById('map'), {
+			 zoom: 10,
+			 center: haightAshbury,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP
+			});
 
-			  map = new google.maps.Map(document.getElementById('map'), {
-				 zoom: 10,
-				 center: haightAshbury,
-				  mapTypeId: google.maps.MapTypeId.ROADMAP
-				});
-		     var url = 'dash-vehicle-track';
-		     var data = {};   
-
-		   	 	window.setInterval(function(){
-		   	     setMapOnAll(map);
-		    	 backgroundPostData(url,data,'vehicleTrack',{alert:false}); 
-
-		    	 markers = [];
-		    	 
-			}, 6000);
-
+			 map_flag=0;
+		   	 getVehicleSequence();
         	 var input1 = document.getElementById('search_place'); 
          	 autocomplete1 = new google.maps.places.Autocomplete(input1);
         	 var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-       
-
 	 	});
+	
+	// check each 10 sec
 
-	function vehicleTrack(res){
-		
+		    window.setInterval(function(){
+		     if(track_flag==0){
+		     	getVehicleSequence();
+		 	}
+	       }, 10000);
+	// check each 10 sec
 
+	function getVehicleSequence(){
 
-	          var icon = { // car icon
-               path: 'M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805',
-               scale: 0.4,
-               fillColor: "#0C2161", //<-- Car Color, you can change it 
-               fillOpacity: 1,
-               strokeWeight: 1,
-               anchor: new google.maps.Point(0, 5),
-               rotation: 180 //<-- Car angle
-          		};
+		 		var url = 'dash-vehicle-track';
+		     	var data = {};   
+		    	backgroundPostData(url,data,'vehicleTrack',{alert:false}); 
+		    	deleteMarkers();
+		    	 	
+		}
+
+	function vehicleTrack(res){	
 
              var JSONObject = res.user_data;
-
-             var vehicle = res.vehicle;
+             // console.log(JSONObject);
              var marker, i;
-             for (i=0;i<JSONObject.length;i++){
+
+
+              for (i=0;i<JSONObject.length;i++){
              var lat=JSONObject[i].lat;
              var lng=JSONObject[i].lon;
-	         var reg=JSONObject[i].vehicle.register_number;
-	         var vehicle_id=vehicle[i];
-	         console.log(vehicle_id);
-	         var vehicle_name=JSONObject[i].vehicle.name;
+             if(map_flag==0){
+             	map.panTo(new google.maps.LatLng(lat,lng));
+             	map.setZoom(13);
+             	// map_flag=1;
+              }
+             var gpsID=JSONObject[i].id;
+	         var reg=JSONObject[i].register_number;
+	         var vehicle_id=JSONObject[i].vehicle_id;
+	         var vehicle_name=JSONObject[i].vehicle_name;
              var loc=new google.maps.LatLng(lat,lng);
              var title ='<div id="content" style="width:150px;">' +
-    '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">'+vehicle_name+'</span></div>'+  
-    '<div style="padding-top:5px;"><i class="fa fa-car"></i>'+reg+' </div>'+ 
-    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
-    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
-    '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Track</a> <a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Playback</a></div>'+ 
-    '</div>'; 
+					    '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">'+vehicle_name+'</span></div>'+  
+					    '<div style="padding-top:5px;"><i class="fa fa-car"></i>'+reg+' </div>'+ 
+					    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
+					    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
+					    '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Track</a> <a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Playback</a></div>'+ 
+					    '</div>'; 
     		var mode=JSONObject[i].mode;
-    		if(mode=='M')
-    		{
-    			car_color="#2DB05D";
-    		}
-    		else if(mode=='H')
-    		{
-    			 car_color="#5474F5";
-    		}
-    		else if(mode=='S')
-    		{
-    			car_color="#A1A3AB";
-    		}
-    		else
-    		{
-    			car_color="#DB2133";
-    		}
-             
-             addMarker(loc,title,car_color);
-             
+    		if(mode=='M'){car_color="#2DB05D";}
+    		else if(mode=='H'){car_color="#5474F5";}
+    		else if(mode=='S'){car_color="#A1A3AB";}
+    		else{car_color="#DB2133";}
+    		 var path=JSONObject[i].vehicle_svg;    		
+	         var scale=JSONObject[i].vehicle_scale;
+	         var fillOpacity=JSONObject[i].opacity;
+	         var strokeWeight=JSONObject[i].strokeWeight;
+             addMarker(loc,title,car_color,path,scale,fillOpacity,strokeWeight); 
+             if(track_flag!=0){
+               addVehicleToVehicleList(vehicle_name,reg,gpsID);
+         	 }
            }
-        
-	     }
-	 	 function addMarker(location,title,car_color) {
+            setMapOnAll(map);
 
+	     }
+	 	 function addMarker(location,title,car_color,path,scale,fillOpacity,strokeWeight) {
        		var icon = { // car icon
-                   path: 'M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805',
-                   scale: 0.4,
+                   path: path,
+                   scale:scale,
                    fillColor: car_color, //<-- Car Color, you can change it 
-                   fillOpacity: 1,
-                   strokeWeight: 1,
+                   fillOpacity: fillOpacity,
+                   strokeWeight: strokeWeight,
                    anchor: new google.maps.Point(0, 5),
                    rotation: 180 //<-- Car angle
                };
@@ -155,10 +153,12 @@ function driverScore(res){
 
 
      		 function setMapOnAll(map) {
+     		 	
 			     for (var i = 0; i < markers.length; i++) {
 			         markers[i].setMap(map);
 			     }
-			 	}
+
+			 }
 
 			 
 
@@ -209,20 +209,77 @@ function driverScore(res){
 		  modal.style.display = "none";
 		}
 		window.onclick = function(event) {
+
 		  if (event.target == modal) {
 		    modal.style.display = "none";
 		  }
 		}
 		});
 
-	 	function moveing(vehicle_mode)
+	 	function moving(vehicle_mode)
 	 	{
-	 		// alert(vehicle_mode);
+	 		 track_flag=1;
+	 		$('#vehicle_card_cover').empty();
 	 		var url = '/dashboard-track-vehicle-mode';
-				
 			var data = { 
 		      vehicle_mode : vehicle_mode
 		    };
-
-		    backgroundPostData(url,data,'vehicleTrack',{alert:false});
+		    backgroundPostData(url,data,'selectVehicleModeTrack',{alert:false});
+		    
 	 	}
+
+		function selectVehicleModeTrack(res){
+		  // console.log(res);
+		  deleteMarkers();
+		  flag=0;
+		  vehicleTrack(res);
+		
+		}
+
+		function deleteMarkers() {
+	        clearMarkers();
+	        markers = [];
+	      }
+	    function clearMarkers() {
+          setMapOnAll(null);
+        }
+
+        function addVehicleToVehicleList(vehicle_name,reg,gpsID){
+
+     
+	             var vehicleData='<div class="border-card">'+
+                 '<div class="card-type-icon with-border">'+
+                 '<input type="radio" id="radio" id="gpsid" class="vehicle_gps_id" name="radio" onclick="getVehicle('+gpsID+')" value="'+gpsID+'">'+
+                  '</div>'+
+                  '<div class="content-wrapper">'+
+                      '<div class="label-group fixed">'+
+                      '<p class="title">'+
+                        '<span><i class="fa fa-car"></i></span>'+
+                      '</p>'+
+                      '<p class="caption" id="vehicle_name">'+vehicle_name+'</p>'+
+                      '</div>'+
+                      '<div class="min-gap"></div>'+
+                  '<div class="label-group">'+
+                      '<p class="title">'+
+                        '<span><i class="fas fa-arrow-alt-circle-left"></i></span>'+
+                      '</p>'+
+
+                      '<p class="caption" id="register_number">'+reg+'</p>'+
+                  '</div>'+
+                  '<div class="min-gap"></div>'+
+                  '<div class="label-group">'+
+                       '<p class="title">'+
+                        '<span><i class="fas fa-tachometer-alt"></i></span>'+
+                       '</p>'+
+                      '<p class="caption">80</p>'+
+                  '</div>'+
+
+                  '</div>'+                
+                  '</div>';
+         	
+         $("#vehicle_card_cover").append(vehicleData);
+        	
+        	
+        }
+
+		
