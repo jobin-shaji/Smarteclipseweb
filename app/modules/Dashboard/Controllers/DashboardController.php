@@ -193,21 +193,7 @@ class DashboardController extends Controller
         ->where('vehicle_id',$request->id) 
         ->orderBy('id','desc')                 
         ->get();
-        // if($gps_data){            
-        //     $response_data = array(
-        //         'status'  => 'success',
-        //         'latitude' => $gps_data->latitude,
-        //         'longitude' => $gps_data->longitude
-        //     );
-
-        // }
-        // else{
-        //         $response_data = array(
-        //         'status'  => 'failed',
-        //         'message' => 'failed',
-        //         'code'    =>0);
-        //      }
-             // dd($response_data['liveData']['ign']);
+      
         return response()->json($gps_data); 
 
 
@@ -308,76 +294,42 @@ class DashboardController extends Controller
     public function dashVehicleTrack(Request $request){
         $user = $request->user(); 
         $client=Client::where('user_id',$user->id)->first();
-        $vehicles = Vehicle::select(
-            'id',
-            'register_number',
-            'name',
-            'gps_id'
-        )
-        ->where('client_id',$client->id)
-        ->get();
+        // user list of vehicles
+            $vehicles = Vehicle::select(
+                'id',
+                'register_number',
+                'name',
+                'gps_id'
+             )
+            ->where('client_id',$client->id)
+            ->get();
+        // user list of vehicles
 
-        $single_vehicle = [];
-        foreach($vehicles as $vehicle){
+        // userID list of vehicles
+         $single_vehicle = [];
+         foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-        }    
-           
-            
-
-
-        // $user_data=Vehicle::Select(
-        //     'gps_id',
-
-        //     'id',
-        //     'name',
-        //     'register_number'
-        // )
-        // ->with('gps:id,lat,lat_dir,lon,lon_dir') 
-        // ->whereIn('gps_id',$single_vehicle)        
-        // ->orderBy('id','desc')                 
-        // ->get(); 
-        // $encrypt = array(
-        //     'vehicle_id'  => Crypt::encrypt($user_data->id)
-            
-        // );
-// $encrypt=Crypt::encrypt($user_data->id);
-
-
-
-
-
-
-
-        // dd($single_vehicle);  
-        $user_data=Gps::Select(
+         } 
+        // userID list of vehicles
+         $vehiles_details=Gps::Select(
             'id',
             'lat',
             'lat_dir',
             'lon',
             'lon_dir',
             'mode'
-        )
-        ->with('vehicle:gps_id,id,name,register_number') 
+          )
+        ->with('vehicle:gps_id,id,name,register_number')
         ->whereIn('id',$single_vehicle)        
         ->orderBy('id','desc')                 
         ->get(); 
 
-        $single_gps = [];
-        $single_gps_id=[];
-        foreach($user_data as $user_vehicle){
-            $single_gps[] = Crypt::encrypt($user_vehicle->vehicle->id);
-            $single_gps_id[] = $user_vehicle->id;
-        }  
-
-        // $gps_data_count = GpsData::whereIn('gps_id',$single_gps_id)->count('id');
-        //      dd($gps_data_count);  
-        if($user_data){     
-            $response_data = array(
-                'user_data'  => $user_data,
-                'vehicle' => $single_gps,
-                // 'gps' => $gps_data_count,
+        $response_track_data=$this->vehicleDataList($vehiles_details);
+     
+        if($response_track_data){     
+                 $response_data = array(
+                'user_data'  => $response_track_data,
                 'status'=>'Status'
-               
             );
         }
         else{
@@ -386,11 +338,39 @@ class DashboardController extends Controller
                 'message' => 'failed',
                 'code'    =>0);
              }
-            
         return response()->json($response_data); 
-        // dd($single_gps);
-        // return response()->json([$user_data]); 
     }
+
+
+     function vehicleDataList($vehiles_details){
+         $vehicleTrackData=array();
+        foreach ($vehiles_details as $vehicle_data) {
+         $vehicle_ecrypt_id=Crypt::encrypt($vehicle_data->vehicle->id);
+         $single_vehicle=Vehicle::find($vehicle_data->vehicle->id);
+         $single_vehicle_type= $single_vehicle->vehicleType;
+
+         $vehicleTrackData[]=array(
+                                    "id"=>$vehicle_data->id,
+                                    "lat"=>$vehicle_data->lat,
+                                    "lat_dir"=>$vehicle_data->lat_dir,
+                                    "lon"=>$vehicle_data->lon,
+                                    "lon_dir"=>$vehicle_data->lon_dir,
+                                    "mode"=>$vehicle_data->mode,
+                                    "vehicle_id"=>$vehicle_ecrypt_id,
+                                    "vehicle_name"=>$vehicle_data->vehicle->name,
+                                    "register_number"=>$vehicle_data->vehicle->register_number,
+                                    "vehicle_svg"=>$single_vehicle_type->svg_icon,
+                                    "vehicle_scale"=>$single_vehicle_type->vehicle_scale,
+                                    "opacity"=>$single_vehicle_type->opacity,
+                                    "strokeWeight"=>$single_vehicle_type->strokeWeight
+                                    );
+        
+      }
+      return $vehicleTrackData;
+    }
+
+
+
     public function vehicleTrackList(Request $request)
     {
         $gpsID=$request->gps_id;     
@@ -404,52 +384,46 @@ class DashboardController extends Controller
 
     public function vehicleMode(Request $request)
     {
-        $vehicle_mode=$request->vehicle_mode;           
-         $user = $request->user(); 
+        $vehicle_mode=$request->vehicle_mode;  
+        $user = $request->user(); 
         $client=Client::where('user_id',$user->id)->first();
-        $vehicles = Vehicle::select(
-            'id',
-            'register_number',
-            'name',
-            'gps_id'
-        )
-        ->where('client_id',$client->id)
-        ->get();
+        // user list of vehicles
+            $vehicles = Vehicle::select(
+                'id',
+                'register_number',
+                'name',
+                'gps_id'
+             )
+            ->where('client_id',$client->id)
+            ->get();
+        // user list of vehicles
 
-        $single_vehicle = [];
-        foreach($vehicles as $vehicle){
+        // userID list of vehicles
+         $single_vehicle = [];
+         foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-        }    
-        $user_data=Gps::Select(
+         } 
+        // userID list of vehicles
+         $vehiles_details=Gps::Select(
             'id',
             'lat',
             'lat_dir',
             'lon',
             'lon_dir',
             'mode'
-        )
-        ->with('vehicle:gps_id,id,name,register_number') 
-        ->whereIn('id',$single_vehicle)
+          )
+        ->with('vehicle:gps_id,id,name,register_number')
+        ->whereIn('id',$single_vehicle)  
         ->where('mode',$vehicle_mode)        
         ->orderBy('id','desc')                 
         ->get(); 
 
-        $single_gps = [];
-        $single_gps_id=[];
-        foreach($user_data as $user_vehicle){
-            $single_gps[] = Crypt::encrypt($user_vehicle->vehicle->id);
-            $single_gps_id[] = $user_vehicle->id;
-        }  
-
-        // $gps_data_count = GpsData::whereIn('gps_id',$single_gps_id)->count('id');
-        //      dd($gps_data_count);  
-        if($user_data){     
-            $response_data = array(
-                'user_data'  => $user_data,
-                'vehicle' => $single_gps,
-                // 'gps' => $gps_data_count,
+        $response_track_data=$this->vehicleDataList($vehiles_details);
+     
+        if($response_track_data){     
+                 $response_data = array(
+                'user_data'  => $response_track_data,
                 'status'=>'Status'
-               
             );
         }
         else{
@@ -458,8 +432,9 @@ class DashboardController extends Controller
                 'message' => 'failed',
                 'code'    =>0);
              }
-            
         return response()->json($response_data); 
+            
+       
     }
 
 }

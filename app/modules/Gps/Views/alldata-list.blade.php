@@ -6,10 +6,11 @@
      <form  method="POST" action="{{route('gps.create.p')}}">
         {{csrf_field()}}
       <div class="row">
+
           <div class="col-md-4">
           <div  style ="margin-left: 77px"class="form-group has-feedback">
               <label class="srequired">GPS</label>
-              <select class="form-control selectpicker" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
+              <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
                 <option value="">All</option>
                 @foreach($gps as $gps)
                 <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>

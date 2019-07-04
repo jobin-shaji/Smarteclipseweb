@@ -296,7 +296,7 @@ function addMarkerToGroup(group, coordinate, html) {
           axisX:{
             title: "timeline",
             // gridThickness: 2,
-             valueFormatString: "YY/MM/DD H:i:s"
+             valueFormatString: "YY:MM:DD H:i:s"
           },     
           data: [{
             type: "line",
@@ -313,24 +313,29 @@ function addMarkerToGroup(group, coordinate, html) {
   
     var i=1;
     $.each(charts, function(key,value) {
+       yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
         speed=value.speed;
         datetime=value.datetime;
         dps.push({
         x: new Date(datetime),
         y: speed
+       // x: xVal ,
+       // y: yVal
       });
+       xVal++;
+      
      });
     // count = count || 1;
-    // for (var j = 0; j < chart_length; j++) {  
+    // for (var j = 0; j < count; j++) {  
     //  // var yVal= charts[j].datetime
-    //   // yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-    // datetime=charts[j].datetime;
-    // speed=charts[j].speed;
+    //   yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+    // // datetime=charts[j].datetime;
+    // // speed=charts[j].speed;
     //   dps.push({
-    //     x: new Date(datetime),
-    //     y: speed
+    //     x: xVal ,
+    //     y: yVal
     //   });
-    //    // xVal++;
+    //    xVal++;
     // }
     if (dps.length > dataLength) {
       dps.shift();

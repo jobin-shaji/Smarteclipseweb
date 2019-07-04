@@ -220,20 +220,20 @@
                      <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
                         <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
                      </div>
-                     <div class="st-panel-contents" style="overflow:auto;">
+                     <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
 
                      @foreach ($vehicles as $vehicle)       
                     <div class="border-card">
 
                    <div class="card-type-icon with-border">
-                    <input type="radio" id="radio" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">
+                    <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">
                    </div>
                   <div class="content-wrapper">
                       <div class="label-group fixed">
                       <p class="title">
                         <span><i class="fa fa-car"></i></span>
                       </p>
-                      <p class="caption">{{$vehicle->name}}</p>
+                      <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
                       </div>
                       <div class="min-gap"></div>
                   <div class="label-group">
@@ -241,7 +241,7 @@
                         <span><i class="fas fa-arrow-alt-circle-left"></i></span>
                       </p>
 
-                      <p class="caption">{{$vehicle->register_number}}</p>
+                      <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                   </div>
                   <div class="min-gap"></div>
                   <div class="label-group">
@@ -330,7 +330,7 @@
             </div>
             <div class="dashboard-main-Right">
                <div class="iconsbg1234">
-                  <div class="col-md-6 col-lg-2 col-xlg-3">
+                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('M')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -339,13 +339,13 @@
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             
                            </h1>
-                           <span style="float:left;width:100%" >
+                           <span style="float:left;width:100%"  >
                            <h1 id="moving"  class="text-white"  style="font-size:19px;color:#fab03a!important">36</h1>
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 col-lg-2 col-xlg-3">
+                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('H')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -359,7 +359,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 col-lg-2 col-xlg-3">
+                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('S')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -390,7 +390,7 @@
                      </div>
                   </div>
                </div>
-            </div>
+           
 
 
 
@@ -462,6 +462,7 @@
                   </div>
                </div>
             </div>
+             </div>
 
 
 
