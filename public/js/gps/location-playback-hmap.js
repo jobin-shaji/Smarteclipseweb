@@ -129,6 +129,10 @@ function routeDraw(routingParameters){
 
 // Define a callback function to process the routing response:
 var onResult = function(result) { 
+  console.log(result)
+
+  if(result.hasOwnProperty('response')){
+
   result.response.route;
   // console.log(result);
  var route,
@@ -187,7 +191,16 @@ var onResult = function(result) {
     simulationWalker = new Walker(marker, currentRouteStrip);
     simulationWalker.walk();
   }
+
+}else{
+  alert("Something went wrong");
+}
+
 };
+
+
+
+
 
 var router = platform.getRoutingService();
 router.calculateRoute(routingParameters, onResult,
