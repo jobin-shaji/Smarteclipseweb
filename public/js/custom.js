@@ -103,7 +103,7 @@ function emergencyAlert(res){
         var modal = document.getElementById('emergency');
         modal.style.display = "block";
         document.getElementById("em_id").value = res.alerts[0].id;
-        document.getElementById("alert_vehicle_id").value = res.alerts[0].vehicle.id;
+        document.getElementById("alert_vehicle_id").value = res.vehicle;
         $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
         $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
         $('#emergency_vehicle_time').text(res.alerts[0].device_time);
@@ -130,7 +130,7 @@ function verifyEmergency(){
 }
 function track_vehicle(){
     var id = document.getElementById("alert_vehicle_id").value;
-    window.location.href = "/hai/";
+    window.location.href = "/vehicles/" + id+"/location";
 }
 
 function VerifyAlert(alert_id){
