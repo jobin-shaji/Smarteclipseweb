@@ -18,4 +18,6 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
         Route::post('/get-location','DashboardController@getLocationFromLatLng')->name('get.location');
 
          Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
+
+           Route::post('/location-search','DashboardController@locationSearch')->name('/location-search');
 });

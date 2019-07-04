@@ -95,9 +95,7 @@ function getUrl() {
 
 function playBack(res){
 
-  var locationData=res.polyline;
- 
- 
+  var locationData=res.polyline; 
   // truck icon
   var iSimulationIsAtPosition = 0;
   // simulation walker
@@ -279,74 +277,74 @@ function addMarkerToGroup(group, coordinate, html) {
 
 
   function playbackChart(res){
-     var charts=res.polyline;
-     console.log(charts);
-     var chart_length= charts.length;
-     // console.log(charts[0].speed);
-     var dps = []; 
-     var chart = new CanvasJS.Chart("chartContainer", {
-          title :{
-            text: ""
-          },
-          axisY: {
-           title: "speed",
-            includeZero: false
-          }, 
+  //    var charts=res.polyline;
+  //    console.log(charts);
+  //    var chart_length= charts.length;
+  //    // console.log(charts[0].speed);
+  //    var dps = []; 
+  //    var chart = new CanvasJS.Chart("chartContainer", {
+  //         title :{
+  //           text: ""
+  //         },
+  //         axisY: {
+  //          title: "speed",
+  //           includeZero: false
+  //         }, 
 
-          axisX:{
-            title: "timeline",
-            // gridThickness: 2,
-             valueFormatString: "YY:MM:DD H:i:s"
-          },     
-          data: [{
-            type: "line",
-          dataPoints: dps
-          }]
-        });
+  //         axisX:{
+  //           title: "timeline",
+  //           // gridThickness: 2,
+  //            valueFormatString: "YY:MM:DD H:i:s"
+  //         },     
+  //         data: [{
+  //           type: "line",
+  //         dataPoints: dps
+  //         }]
+  //       });
 
-       // number of dataPoints visible at any point
-        var xVal = 0;
-        var yVal = 100; 
-        var updateInterval = 1000;
-        var dataLength = 20;
-  var updateChart = function (count) {
+  //      // number of dataPoints visible at any point
+  //       var xVal = 0;
+  //       var yVal = 100; 
+  //       var updateInterval = 1000;
+  //       var dataLength = 20;
+  // var updateChart = function (count) {
   
-    var i=1;
-    $.each(charts, function(key,value) {
-       yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-        speed=value.speed;
-        datetime=value.datetime;
-        dps.push({
-        x: new Date(datetime),
-        y: speed
-       // x: xVal ,
-       // y: yVal
-      });
-       xVal++;
+  //   var i=1;
+  //   $.each(charts, function(key,value) {
+  //      yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+  //       speed=value.speed;
+  //       datetime=value.datetime;
+  //       dps.push({
+  //       x: new Date(datetime),
+  //       y: speed
+  //      // x: xVal ,
+  //      // y: yVal
+  //     });
+  //      xVal++;
       
-     });
-    // count = count || 1;
-    // for (var j = 0; j < count; j++) {  
-    //  // var yVal= charts[j].datetime
-    //   yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-    // // datetime=charts[j].datetime;
-    // // speed=charts[j].speed;
-    //   dps.push({
-    //     x: xVal ,
-    //     y: yVal
-    //   });
-    //    xVal++;
-    // }
-    if (dps.length > dataLength) {
-      dps.shift();
-    }
-  chart.render();
-  };
-  updateChart(dataLength);
-  setInterval(function(){updateChart()}, updateInterval);
+  //    });
+  //   // count = count || 1;
+  //   // for (var j = 0; j < count; j++) {  
+  //   //  // var yVal= charts[j].datetime
+  //   //   yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+  //   // // datetime=charts[j].datetime;
+  //   // // speed=charts[j].speed;
+  //   //   dps.push({
+  //   //     x: xVal ,
+  //   //     y: yVal
+  //   //   });
+  //   //    xVal++;
+  //   // }
+  //   if (dps.length > dataLength) {
+  //     dps.shift();
+  //   }
+  // chart.render();
+  // };
+  // updateChart(dataLength);
+  // setInterval(function(){updateChart()}, updateInterval);
 
-    $(".playback_chart").show(100).animate("slow");
-    // chartpolyline(chart);
+  //   $(".playback_chart").show(100).animate("slow");
+  //   // chartpolyline(chart);
   }
 
 
