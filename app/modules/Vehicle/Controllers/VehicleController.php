@@ -846,10 +846,9 @@ class VehicleController extends Controller {
                   'ignition as ign',
                   'gsm_signal_strength as signalStrength',
                   \DB::raw("'$offline' as vehicleStatus")
-                  
                   )->orderBy('id','desc')
-                  ->whereNotIn('latitude',['000.000000',null])
-                  ->whereNotIn('longitude',['000.000000',null])
+                  ->whereNotIn('latitude',['000.000000'])
+                  ->whereNotIn('longitude',['000.000000'])
                   ->where('vehicle_id',$request->id)
                   ->first();
                 }
