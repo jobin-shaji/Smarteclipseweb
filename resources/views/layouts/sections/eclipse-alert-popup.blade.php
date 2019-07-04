@@ -1,5 +1,5 @@
  
-<div id="alertModal" class="modal_for_dash" style="color: red">      
+<div id="emergency" class="modal_for_dash" style="color: red">      
   <div class="modal-content">
     <div class="modal-header">
       <div class="container">  
@@ -9,12 +9,15 @@
       </div>
     </div>
     <div class="modal-body" style="text-align: center;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/1200px-Achtung.svg.png" height="150" width="175"> <br><br>
-        <h4>Vehicle number : 165252</h4>
-        <h4>Location : aluva , punjappadam</h4>
-        <h4>Time : 12.30 am</h4>
-        <button>Verify</button>
-        <button>track</button>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/1200px-Achtung.svg.png" height="150" width="175"> <br>
+        Driver :  <h4 id="emergency_vehicle_driver"></h4>
+        Vehicle number :  <h4 id="emergency_vehicle_number"></h4>
+        Location : <h4 id="emergency_vehicle_location"> </h4>
+        Time : <h4 id="emergency_vehicle_time"></h4>
+        <input type="hidden" id="em_id">
+        <input type="hidden" id="vehicle_id">
+        <button onclick="verifyEmergency()">Verify</button>
+        <button onclick="track()">track</button>
     </div>
   </div>
 </div>

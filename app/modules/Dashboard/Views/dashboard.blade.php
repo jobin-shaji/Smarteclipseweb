@@ -390,9 +390,6 @@
                      </div>
                   </div>
                </div>
-           
-
-
 
             <div class="iconsbg12345">
                <div class="row">
@@ -451,10 +448,15 @@
                         </div>
                        
                         <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
-                           <img src="assets/images/immobilizer.png">
-                            <h4 class="m-b-0 m-t-5 score_data_text">Location</h4>
-                              <medium id="address" class="font-light">
+                          
+                            <h4 class="m-b-0 m-t-5 score_data_text">
+                             <img src="assets/images/location.png">
+                            Location
+
+                            </h4>
+                            <medium id="address" class="font-light">
                              <i class="fa fa-spinner" aria-hidden="true"></i>
+                            
                         </div>
                     
 
@@ -462,7 +464,12 @@
                   </div>
                </div>
             </div>
-             </div>
+
+             <!-- </div>
+
+            </div> -->
+
+
 
 
 
