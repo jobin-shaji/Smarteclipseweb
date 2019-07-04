@@ -184,6 +184,45 @@ class DashboardController extends Controller
         return response()->json($score); 
     }
 
+    //emergency alert
+    public function emergencyAlerts(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $alerts = Alert::select(
+                'id',
+                'alert_type_id',
+                'vehicle_id',
+                'latitude',
+                'longitude',
+                'device_time')
+                ->with('vehicle:id,name,register_number')
+                ->where('client_id',$client_id)
+                ->where('alert_type_id',21)
+                ->where('status',0)
+                ->get();
+        return response()->json($alerts); 
+    }
+
+    //get place namee
+    public function getLocationFromLatLng(Request $request)
+    {
+        $latitude = $request->latitude; 
+        $longitude = $request->longitude;
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $output = json_decode($geocodeFromLatLong);         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude
+            if(!empty($address)){
+                $location=$address;
+            }
+            return response()->json($location); 
+        }
+    }
+
     public function getLocation(Request $request){
       
         $gps_data=GpsData::select([
