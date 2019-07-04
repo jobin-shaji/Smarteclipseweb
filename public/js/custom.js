@@ -99,6 +99,7 @@ function emergencyAlert(res){
         modal.style.display = "block";
         document.getElementById("em_id").value = res[0].id;
         document.getElementById("vehicle_id").value = res[0].vehicle.id;
+        $('#emergency_vehicle_driver').text(res[0].vehicle.driver.name);
         $('#emergency_vehicle_number').text(res[0].vehicle.register_number);
         $('#emergency_vehicle_time').text(res[0].device_time);
        
@@ -124,9 +125,20 @@ function verifyEmergency(){
 }
 function track(){
     var vehicle_id = document.getElementById("vehicle_id").value;
+    vehicleTrack(vehicle_id);
 }
 
 function VerifyAlert(alert_id){
+    if(confirm('Are you sure want to verify this alert?')){
+        var url = 'alert/verify';
+        var data = {
+        id : alert_id
+        };
+        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
+    } 
+}
+
+function vehicleTrack(vehicle_id){
     if(confirm('Are you sure want to verify this alert?')){
         var url = 'alert/verify';
         var data = {
