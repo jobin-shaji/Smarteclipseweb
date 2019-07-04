@@ -63,7 +63,6 @@ function getMarkers() {
     var url = '/vehicles/location-track';
     var id = $("#vehicle_id_data").val();
 
-    
     // var id=1;
     var data = {
         id: id

@@ -57,7 +57,7 @@
                 </div>
              </div>
              </div>
-             <div id="chartContainer" class="playback_chart" style="height: 300px; width: 100%;"></div>
+             <!-- <div id="chartContainer" class="playback_chart" style="height: 300px; width: 100%;"></div> -->
           </div>
           <div id="mapContainer" style="width:100%;height:500px;"></div>
           
@@ -77,7 +77,7 @@
 </div>
 @section('script')
 <script src="{{asset('js/gps/ui.js')}}"></script>
-<script src="{{asset('js/canvasjs.min.js')}}"></script>
+<!-- <script src="{{asset('js/canvasjs.min.js')}}"></script> -->
 <script src="{{asset('js/gps/location-playback-hmap.js')}}"></script>
 
 @endsection
