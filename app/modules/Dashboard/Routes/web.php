@@ -17,5 +17,5 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
         Route::post('/emergency-alert','DashboardController@emergencyAlerts')->name('emergency.alerts');
         Route::post('/get-location','DashboardController@getLocationFromLatLng')->name('get.location');
 
-
+         Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
 });

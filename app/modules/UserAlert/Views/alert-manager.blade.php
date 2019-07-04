@@ -28,17 +28,17 @@
         {{csrf_field()}}      
     
       <div class="page-wrapper_new">
-        <label >Alerts</label>
+        
           <div class="row">
             @foreach ($user_alert as $user_alert)
-              <div class="col-md-3">
+              <div class="col-lg-4 col-md-4 cover_alert_manager">
                   <input type="checkbox" name="alert_id[]" value="{{$user_alert->alertType->id}}" @if ($user_alert->status==1) checked="checked"  @endif >{{$user_alert->alertType->description}}
               </div>
             @endforeach
           </div>  
           <div class="row">
         <!-- /.col -->
-        <div class="col-md-3">
+        <div class="col-md-10 col-md-3">
           <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
         </div>
         <!-- /.col -->

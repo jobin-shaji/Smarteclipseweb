@@ -30,7 +30,7 @@
    </div>
       <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
       <div class="card-body map_card_body">
-          <div class="panel-heading playback_head">
+          <div class="panel-heading playback_head plaback_head_data_change">
            <div class="col-lg-12 col-md-3">
              <div class="cover_div_search playback_page">
                 <div class="row">

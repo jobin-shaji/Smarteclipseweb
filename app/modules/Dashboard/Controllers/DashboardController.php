@@ -393,7 +393,8 @@ class DashboardController extends Controller
             'lat',
             'lat_dir',
             'lon',
-            'lon_dir'
+            'lon_dir',
+            'mode'
         )
         ->with('vehicle:gps_id,id,name,register_number') 
         ->whereIn('id',$single_vehicle)        
@@ -436,6 +437,68 @@ class DashboardController extends Controller
                     ->where('id',$gpsID)                 
                     ->first();
         return response()->json($user_data); 
+    }
+
+
+
+    public function vehicleMode(Request $request)
+    {
+        $vehicle_mode=$request->vehicle_mode;           
+         $user = $request->user(); 
+        $client=Client::where('user_id',$user->id)->first();
+        $vehicles = Vehicle::select(
+            'id',
+            'register_number',
+            'name',
+            'gps_id'
+        )
+        ->where('client_id',$client->id)
+        ->get();
+
+        $single_vehicle = [];
+        foreach($vehicles as $vehicle){
+            $single_vehicle[] = $vehicle->gps_id;
+        }    
+        $user_data=Gps::Select(
+            'id',
+            'lat',
+            'lat_dir',
+            'lon',
+            'lon_dir',
+            'mode'
+        )
+        ->with('vehicle:gps_id,id,name,register_number') 
+        ->whereIn('id',$single_vehicle)
+        ->where('mode',$vehicle_mode)        
+        ->orderBy('id','desc')                 
+        ->get(); 
+
+        $single_gps = [];
+        $single_gps_id=[];
+        foreach($user_data as $user_vehicle){
+            $single_gps[] = Crypt::encrypt($user_vehicle->vehicle->id);
+            $single_gps_id[] = $user_vehicle->id;
+        }  
+
+        // $gps_data_count = GpsData::whereIn('gps_id',$single_gps_id)->count('id');
+        //      dd($gps_data_count);  
+        if($user_data){     
+            $response_data = array(
+                'user_data'  => $user_data,
+                'vehicle' => $single_gps,
+                // 'gps' => $gps_data_count,
+                'status'=>'Status'
+               
+            );
+        }
+        else{
+                $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0);
+             }
+            
+        return response()->json($response_data); 
     }
 
 }
