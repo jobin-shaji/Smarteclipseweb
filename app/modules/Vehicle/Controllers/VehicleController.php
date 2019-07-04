@@ -824,13 +824,12 @@ class VehicleController extends Controller {
                   'created_at as dateTime',
                   'main_power_status as power',
                   'gps_fix as gps',
-
                   'ignition as ign',
                   'gsm_signal_strength as signalStrength'
                   )->where('device_time', '>=',$oneMinut_currentDateTime)
                   ->where('device_time', '<=',$currentDateTime)
-                  ->whereNotIn('latitude',['000.000000',null])
-                  ->whereNotIn('longitude',['000.000000',null])
+                  ->where('latitude','!=','000.000000')
+                  ->where('longitude','!=','000.000000')
                   ->where('vehicle_id',$request->id)
 
                   ->orderBy('id','desc')
@@ -847,8 +846,8 @@ class VehicleController extends Controller {
                   'gsm_signal_strength as signalStrength',
                   \DB::raw("'$offline' as vehicleStatus")
                   )->orderBy('id','desc')
-                  ->whereNotIn('latitude',['000.000000'])
-                  ->whereNotIn('longitude',['000.000000'])
+                  ->where('latitude','!=','000.000000')
+                  ->where('longitude','!=','000.000000')
                   ->where('vehicle_id',$request->id)
                   ->first();
                 }
