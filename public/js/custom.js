@@ -77,6 +77,8 @@ function backgroundPostData(url, data, callBack, options) {
                     emergencyAlert(res);
                 }else if(callBack == 'getPlaceName'){
                     getPlaceName(res);
+                }else if(callBack == 'verifyAlertResponse'){
+                    verifyAlertResponse(res);
                 }
             }
         },
@@ -86,14 +88,6 @@ function backgroundPostData(url, data, callBack, options) {
         }
     });
 
-}
-
-function emergencyState(){
-    var url = 'emergency-alert';
-    var data = { 
-    
-    };
-    backgroundPostData(url,data,'emergencyAlert',{alert:false});
 }
 
 function emergencyAlert(res){
@@ -138,8 +132,15 @@ function VerifyAlert(alert_id){
         var data = {
         id : alert_id
         };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
     } 
+}
+
+function verifyAlertResponse(res){
+    if(res){
+        var modal = document.getElementById('emergency');
+        modal.style.display = "none";
+    }
 }
 
 
@@ -618,8 +619,6 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
-
-   
     var url = 'emergency-alert';
     var data = { 
     
