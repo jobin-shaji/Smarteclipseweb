@@ -27,9 +27,7 @@ var vehicleColor = "#0C2161";
 // var vehicleScale = "0.5";
 var vehicleScale = vehicle_scale;
 
-function initMap() {
-
-
+$( document ).ready(function() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: start_lat,
@@ -56,12 +54,16 @@ function initMap() {
         icon: icon
     });
     getMarkers(map);
-}
+
+});
+
 
 function getMarkers() {
 
     var url = '/vehicles/location-track';
-    var id = document.getElementById('vehicle_id').value;
+    var id = $("#vehicle_id_data").val();
+  
+    
     // var id=1;
     var data = {
         id: id
@@ -77,6 +79,7 @@ function getMarkers() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
+            console.log(res);
             // console.log(res.liveData.ign);
             if (res.liveData.vehicleStatus == 'M') {
                 $("#online").show();
