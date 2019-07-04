@@ -810,7 +810,7 @@ class VehicleController extends Controller {
        
     }
     public function locationTrack(Request $request){
-
+    
      $get_vehicle=Vehicle::find($request->id);
 
      $currentDateTime=Date('Y-m-d H:i:s');
