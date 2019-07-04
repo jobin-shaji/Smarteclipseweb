@@ -18,8 +18,9 @@ class DriverController extends Controller {
     }
     //upload employee details to database table
     public function save(Request $request)
-    {      
-        $client_id=\Auth::user()->client->id;
+    {    
+
+        $client_id=\Auth::user()->client->id; 
         if($request->user()->hasRole('client')){
             $rules = $this->driver_create_rules();
             $this->validate($request, $rules);           
@@ -30,6 +31,7 @@ class DriverController extends Controller {
                 'client_id' => $client_id, 
                 'points' => 100          
             ]);
+
             // User::where('username', $request->username)->first()->assignRole('client');
         }
         $eid= encrypt($client->id);

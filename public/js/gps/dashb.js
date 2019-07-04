@@ -27,10 +27,10 @@ function dbcount(res){
       $('#subdealer_client').text(res.clients);
       $('#client_gps').text(res.gps);
       $('#client_vehicle').text(res.vehicles);
-       $('#geofence').text(res.geofence);
-       $('#moving').text(res.moving);
-       $('#idle').text(res.idle);
-       $('#stop').text(res.stop);
+      $('#geofence').text(res.geofence);
+      $('#moving').text(res.moving);
+      $('#idle').text(res.idle);
+      $('#stop').text(res.stop);
       
       
 }

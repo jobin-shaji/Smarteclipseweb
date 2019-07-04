@@ -62,7 +62,8 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-           // console.log(res);
+    
+
             toast(res);
             if (callBack){
                 if (callBack == 'callBackDataTables'){
@@ -79,6 +80,9 @@ function backgroundPostData(url, data, callBack, options) {
                     getPlaceName(res);
                 }else if(callBack == 'verifyAlertResponse'){
                     verifyAlertResponse(res);
+                }
+                else if(callBack =='selectVehicleModeTrack'){
+                    selectVehicleModeTrack(res);
                 }
             }
         },
