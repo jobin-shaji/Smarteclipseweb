@@ -201,7 +201,12 @@ class DashboardController extends Controller
                 ->where('alert_type_id',21)
                 ->where('status',0)
                 ->get();
-        return response()->json($alerts); 
+        $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
+        $response = [
+            'alerts' => $alerts,
+            'vehicle' => $vehicle_id
+        ];
+        return response()->json($response); 
     }
 
     //get place namee
