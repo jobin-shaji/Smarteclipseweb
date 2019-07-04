@@ -11,19 +11,13 @@ html, body {
   overflow-y: hidden; // hide vertical
 overflow-x: hidden; // hide horizontal  
 }
-.dashboard-main-Right{
-    right: 0;
-    width: 22.5%;
-    background: transparent;
-    margin: 0% 0.2% 0px 0;
-    position: absolute;
-}
+
 
 h4.m-b-0.m-t-5.score_data_text {
     font-size: 11px;
 }
 
-.iconsbg1234{background:transparent;width:96%;float:left;margin:2%}
+
 
 .bg-cyan1234 {
     background-color: #fff!important;
@@ -40,11 +34,6 @@ padding: 8px 0px 0px 0px;
      padding:0!important; border-radius: 12px!important
 }
 
-.iconsbg1234 {
-    padding: 6%;
-}
-
-
 .full-height {
   height: 85vh;
   
@@ -57,7 +46,7 @@ padding: 8px 0px 0px 0px;
     bottom: 10%;
 }
 
-.iconsbg12345{width:23%;border-radius:9px;margin:2%;padding-top: 2px !important; padding:2%;position:absolute;right:0;margin:9% 0 0;}
+
 
 
 
@@ -11388,11 +11377,6 @@ ul.list-style-none li a:hover {
     margin-right: 5px
 }
 
-.topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
-    padding: 0px 15px;
-    font-size: 0.875rem;
-    line-height: 64px;
-    }
 
 .topbar .top-navbar .navbar-nav>.nav-item:hover {
     background: rgba(0, 0, 0, 0.05)
@@ -11493,9 +11477,7 @@ ul.list-style-none li a:hover {
     .topbar .top-navbar .navbar-nav .dropdown {
         position: static
     }
-    .topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
-        padding: 0 10px
-    }
+  
     .topbar .top-navbar .navbar-header {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -16305,7 +16287,7 @@ label {
 }
 
 .right-bottom2 {
-    bottom: 5em;
+    bottom: em;
     left: 5em;
     float: left !important;
     width: 60%;
@@ -16437,6 +16419,7 @@ h1.text-white i {
     }
     .navbar-minimal > .navbar-menu > li > a:hover {
         background-color: rgb(242, 153, 25);
+        
     }
     .navbar-minimal > .navbar-menu > li > a > .glyphicon {
         float: right;
@@ -16585,12 +16568,7 @@ li.nav-item.dropdown.show {
 .bg-dark.p-10.text-white.text-center.location_details {
     text-align: left !important;
     margin: 0px 0px;
-    padding-left: 43px;
-}
-
-img.light-logo {
-    width: 100%;
-    height: auto;
+    padding-left: 54px;
 }
 
 ul.navbar-menu.animate img {

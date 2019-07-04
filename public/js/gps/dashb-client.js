@@ -242,12 +242,8 @@ function driverScore(res){
         // function addVehicleToVehicleList(vehicle_name,reg,gpsID,length){
 
         // 	for (i=1;i<=length;i++){
-        // 		$('#vehicle_name'+[i]).text(vehicle_name);
-	       //       // var vehicle_name=vehicle_name;
-	       //       // var reg_number=reg[2];
-
-
-	       //       '<div class="border-card">'+
+       
+	       //       var vehicleData='<div class="border-card">'+
         //          '<div class="card-type-icon with-border">'+
         //          '<input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">'+
         //           '</div>'+
@@ -274,12 +270,11 @@ function driverScore(res){
         //               '<p class="caption">80</p>'+
         //           '</div>'+
 
-        //           '</div>'+
-                
-        //           '</div>'+
+        //           '</div>'+                
+        //           '</div>';
         //  	}
         	
-        // 	$('#stop').text(res.stop);
+        	
         // }
 
 		
