@@ -482,4 +482,10 @@ class DashboardController extends Controller
        
     }
 
+     public function locationSearch(Request $request)
+    {
+       // dd($request->lat);
+    }
+
+
 }

@@ -96,7 +96,7 @@ function getUrl() {
 function playBack(res){
 
   var locationData=res.polyline;
- 
+ console.log(res.polyline);
  
   // truck icon
   var iSimulationIsAtPosition = 0;
