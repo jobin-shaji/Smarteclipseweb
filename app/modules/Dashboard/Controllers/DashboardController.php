@@ -195,7 +195,8 @@ class DashboardController extends Controller
                 'latitude',
                 'longitude',
                 'device_time')
-                ->with('vehicle:id,name,register_number')
+                ->with('vehicle:id,name,register_number,driver_id')
+                ->with('vehicle.driver')
                 ->where('client_id',$client_id)
                 ->where('alert_type_id',21)
                 ->where('status',0)
