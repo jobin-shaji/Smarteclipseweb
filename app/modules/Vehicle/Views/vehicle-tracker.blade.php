@@ -21,11 +21,11 @@
       </div>
    </div>
 
-<input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+
 
   <div class="row">
     <div class="col-lg-12 col-sm-12">
-      <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+      <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
        <input type="hidden" name="svg_con" id="svg_con" value="{{$vehicle_type->svg_icon}}">
        <input type="hidden" name="vehicle_scale" id="vehicle_scale" value="{{$vehicle_type->vehicle_scale}}">
         <input type="hidden" name="opacity" id="opacity" value="{{$vehicle_type->opacity}}">
@@ -111,7 +111,7 @@
 @section('script')
 
 <script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing" async defer></script>
 @endsection
 
 @endsection

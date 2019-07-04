@@ -95,17 +95,18 @@ function backgroundPostData(url, data, callBack, options) {
 }
 
 function emergencyAlert(res){
-    if(res.length > 0){
-        var latitude=res[0].latitude;
-        var longitude=res[0].longitude;
+    console.log(res);
+    if(res.alerts.length > 0){
+        var latitude=res.alerts[0].latitude;
+        var longitude=res.alerts[0].longitude;
         getPlaceNameFromLatLng(latitude,longitude);
         var modal = document.getElementById('emergency');
         modal.style.display = "block";
-        document.getElementById("em_id").value = res[0].id;
-        document.getElementById("vehicle_id").value = res[0].vehicle.id;
-        $('#emergency_vehicle_driver').text(res[0].vehicle.driver.name);
-        $('#emergency_vehicle_number').text(res[0].vehicle.register_number);
-        $('#emergency_vehicle_time').text(res[0].device_time);
+        document.getElementById("em_id").value = res.alerts[0].id;
+        document.getElementById("vehicle_id").value = res.alerts[0].vehicle.id;
+        $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
+        $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+        $('#emergency_vehicle_time').text(res.alerts[0].device_time);
        
     }
 }
@@ -127,22 +128,12 @@ function verifyEmergency(){
     var id = document.getElementById("em_id").value;
     VerifyAlert(id);
 }
-function track(){
-    var vehicle_id = document.getElementById("vehicle_id").value;
-    vehicleTrack(vehicle_id);
+function track_vehicle(){
+    var id = document.getElementById("vehicle_id").value;
+    window.location.href = "/hai/";
 }
 
 function VerifyAlert(alert_id){
-    if(confirm('Are you sure want to verify this alert?')){
-        var url = 'alert/verify';
-        var data = {
-        id : alert_id
-        };
-        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
-    } 
-}
-
-function vehicleTrack(vehicle_id){
     if(confirm('Are you sure want to verify this alert?')){
         var url = 'alert/verify';
         var data = {
@@ -635,11 +626,11 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
-    var url = 'emergency-alert';
-    var data = { 
+    // var url = 'emergency-alert';
+    // var data = { 
     
-    };
-    backgroundPostData(url,data,'emergencyAlert',{alert:false});
+    // };
+    // backgroundPostData(url,data,'emergencyAlert',{alert:false});
 
 });
 
