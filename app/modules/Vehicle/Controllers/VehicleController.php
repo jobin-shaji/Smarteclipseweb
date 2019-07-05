@@ -783,35 +783,31 @@ class VehicleController extends Controller {
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
-       
-         $decrypted_id = Crypt::decrypt($request->id);
-          $get_vehicle=Vehicle::find($decrypted_id);
-          // $dealers = Dealer::where('user_id', $decrypted)->first();  
-          $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
-          $track_data=GpsData::select('latitude as latitude',
+        $decrypted_id = Crypt::decrypt($request->id);
+        $get_vehicle=Vehicle::find($decrypted_id);
+        // $dealers = Dealer::where('user_id', $decrypted)->first();  
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+        $track_data=GpsData::select('latitude as latitude',
                   'longitude as longitude',                
                   'gsm_signal_strength as signalStrength'
                   )         
                   ->where('vehicle_id',$get_vehicle->id)
                   ->orderBy('id','desc')
-                  ->first();
-                  
-          if($track_data==null)
-          {
+                  ->first();   
+        if($track_data==null)
+        {
             $latitude='010.053604';
             $longitude='076.355095' ;
-          }
-          else
-          {
+        }
+        else
+        {
             $latitude=$track_data->latitude;
             $longitude= $track_data->longitude;
-          }
+        }
         return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
-       
     }
     public function locationTrack(Request $request){
      $get_vehicle=Vehicle::find($request->id);
-     dd($request->id);
      $currentDateTime=Date('Y-m-d H:i:s');
 
      $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
