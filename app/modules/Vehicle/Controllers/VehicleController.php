@@ -1100,7 +1100,7 @@ class VehicleController extends Controller {
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
         ->where('vehicle_id',$request->id)   
-        ->where('lat','>',0)             
+        ->where('latitude','>',0)             
         ->get();
         $playback=array();
         $playback_point= array();
