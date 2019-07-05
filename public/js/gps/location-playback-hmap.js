@@ -193,7 +193,7 @@ var onResult = function(result) {
   }
 
 }else{
-  alert("Something went wrong");
+  alert("No Playback Found");
 }
 
 };
