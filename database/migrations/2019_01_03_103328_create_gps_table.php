@@ -35,6 +35,11 @@ class CreateGpsTable extends Migration
             $table->integer('satllite')->nullable();
             $table->string('battery_status')->nullable();
             $table->string('heading')->nullable();
+            $table->dateTime('device_time');
+            $table->integer('main_power_status')->nullable();
+            $table->integer('ignition')->nullable();
+            $table->integer('gps_fix')->nullable();
+            $table->integer('gsm_signal_strength')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

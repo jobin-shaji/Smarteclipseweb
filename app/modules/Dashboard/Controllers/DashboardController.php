@@ -484,7 +484,14 @@ class DashboardController extends Controller
 
      public function locationSearch(Request $request)
     {
-       // dd($request->lat);
+         $lat=$request->lat;
+         $lon=$request->lon;     
+        // $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
+        //             ->where('lat',$lat)
+        //             ->where('lon',$lon)                
+        //             ->get();
+        //     dd($user_data);        
+        return response()->json(["lat"=>$lat,"lon"=>$lon]); 
     }
 
 
