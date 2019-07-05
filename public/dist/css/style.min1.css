@@ -25,6 +25,9 @@ h4.m-b-0.m-t-5.score_data_text {
     -moz-box-shadow: 1px 1px 2px 3px #ccc;
     box-shadow: 1px 1px 21px 1px #ccc
 }
+.bg-cyan1234 a:visited {
+    background-color: #cff270!important;
+    }
 
 .score_data_text{
 padding: 8px 0px 0px 0px;

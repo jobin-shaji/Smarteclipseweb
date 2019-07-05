@@ -340,7 +340,7 @@
                             
                            </h1>
                            <span style="float:left;width:100%"  >
-                           <h1 id="moving"  class="text-white"  style="font-size:19px;color:#fab03a!important">36</h1>
+                           <h1 id="moving"  class="text-white"  style="font-size:19px;color:#fab03a!important">0</h1>
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
                         </div>
                      </div>
@@ -374,7 +374,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 col-lg-2 col-xlg-3">
+                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('O')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -384,7 +384,7 @@
 
                            </h1>
                            <span style="float:left;width:100%">
-                           <h1  class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                           <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                            <!--  <h5 class="text-white">STOPPED</h5></span> -->
                         </div>
                      </div>
