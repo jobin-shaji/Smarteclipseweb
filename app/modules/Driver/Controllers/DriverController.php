@@ -19,7 +19,6 @@ class DriverController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {    
-
         $client_id=\Auth::user()->client->id; 
         if($request->user()->hasRole('client')){
             $rules = $this->driver_create_rules();
