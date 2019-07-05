@@ -84,6 +84,9 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack =='selectVehicleModeTrack'){
                     selectVehicleModeTrack(res);
                 }
+                 else if(callBack =='searchLocation'){
+                    searchLocation(res);
+                }
             }
         },
         error: function (err) {

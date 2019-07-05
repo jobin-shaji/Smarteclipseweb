@@ -69,7 +69,7 @@ function driverScore(res){
 		     if(track_flag==0){
 		     	getVehicleSequence();
 		 	}
-	       }, 10000);
+	       }, 100000);
 	// check each 10 sec
 
 	function getVehicleSequence(){
@@ -102,11 +102,12 @@ function driverScore(res){
 	         var vehicle_name=JSONObject[i].vehicle_name;
              var loc=new google.maps.LatLng(lat,lng);
              var title ='<div id="content" style="width:150px;">' +
-					    '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">'+vehicle_name+'</span></div>'+  
-					    '<div style="padding-top:5px;"><i class="fa fa-car"></i>'+reg+' </div>'+ 
+             			'<span style="width:10px;height:10px;background-color:#006400;border-radius:50%;padding: 0px 7px;margin-right:6px;"></span>Online'+
+					    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>'+vehicle_name+'</i></span></div>'+  
+					    '<div style="padding-top:5px; padding-left:16px;"><i class="fa fa-car"></i><span style="margin-right:5px;">:</span>'+reg+' </div>'+ 
 					    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
 					    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
-					    '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Track</a> <a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning"><i class="glyphicon glyphicon-map-marker"></i>Playback</a></div>'+ 
+					    '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning" style="background-color:#fff;"><i class="fa fa-car" style="color:#000;font-size: 18px;"></i></a><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>  </div>'+ 
 					    '</div>'; 
     		var mode=JSONObject[i].mode;
     		if(mode=='M'){car_color="#2DB05D";}
@@ -181,7 +182,7 @@ function driverScore(res){
 
 	 	function locationSearch(){
 	 		var place_name=$('#search_place').val();
-	 		var radius=$('#search_place').val();
+	 		var radius=$('#search_radius').val();
 	 		   var geocoder =  new google.maps.Geocoder();
    			   geocoder.geocode( { 'address':place_name}, function(results, status) {
 	          if (status == google.maps.GeocoderStatus.OK) {
@@ -193,7 +194,8 @@ function driverScore(res){
 					
 				var data = { 
 			      lat : lat,
-			      lng:lng
+			      lng:lng,
+			      radius:radius
 			    };
 
 		    	backgroundPostData(url,data,'searchLocation',{alert:false});
@@ -290,5 +292,20 @@ function driverScore(res){
         	
         	
         }
+
+
+		function searchLocation(res){
+		 
+		  
+		  if(res.status=="success"){
+		  		 deleteMarkers();
+		 		 flag=0;
+		 		 vehicleTrack(res);
+			}else{
+				alert('there is novehicle in this location');
+			}
+		
+		}
+
 
 		
