@@ -1097,11 +1097,11 @@ class VehicleController extends Controller {
             'time',
             'gps_fix'       
         )
-        ->where('device_time', '>=',$request->from_time)
-        ->where('device_time', '<=',$request->to_time)
+        ->where('created_at', '>=',$request->from_time)
+        ->where('created_at', '<=',$request->to_time)
         ->where('vehicle_id',$request->id)   
         ->where('latitude','>',0)  
-        ->orderBy('device_time')           
+        ->orderBy('created_at')           
         ->get();
         $playback=array();
         $playback_point= array();
