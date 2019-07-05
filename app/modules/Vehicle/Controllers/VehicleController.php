@@ -993,9 +993,10 @@ class VehicleController extends Controller {
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)                
+        ->where('vehicle_id',$request->id)    
+        ->where('gps_fix',1)            
         ->get();    
-        $playback=array();
+       $playback=array();
        $playbackData=array();
         if($gpsdata){
             foreach ($gpsdata as $data) {
@@ -1026,6 +1027,7 @@ class VehicleController extends Controller {
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
         ->where('vehicle_id',$request->id) 
+        ->where('gps_fix',1)            
         // ->orderBy('id','desc')               
         ->get(); 
         if($gpsvdata)
