@@ -130,6 +130,11 @@ class AlertTypeTableSeeder extends Seeder
             'description' => 'Alert Over the air parameter change'
         ]);
 
+        DB::table('alert_types')->insert([
+            'code' => '25',
+            'description' => 'Full Parameter Update'
+        ]);
+
 
 
 		
