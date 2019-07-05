@@ -807,10 +807,10 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
     }
     public function locationTrack(Request $request){
-    
      $get_vehicle=Vehicle::find($request->id);
-
+     dd($request->id);
      $currentDateTime=Date('Y-m-d H:i:s');
+
      $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
      $offline="Offline";
      $track_data=GpsData::select('latitude as latitude',
@@ -825,12 +825,12 @@ class VehicleController extends Controller {
                   'gsm_signal_strength as signalStrength'
                   )->where('device_time', '>=',$oneMinut_currentDateTime)
                   ->where('device_time', '<=',$currentDateTime)
-                  ->where('gps_fix',1)
+                  // ->where('gps_fix',1)
                   ->where('vehicle_id',$request->id)
 
                   ->orderBy('id','desc')
                   ->first();
-       if($track_data == null){
+            if($track_data == null){
 
              $track_data = GpsData::select('latitude',
                   'longitude',
@@ -843,7 +843,7 @@ class VehicleController extends Controller {
                   'gsm_signal_strength as signalStrength',
                   \DB::raw("'$offline' as vehicleStatus")
                   )
-                  ->where('gps_fix',1)
+                  // ->where('gps_fix',1)
                   ->where('vehicle_id',$request->id)
                   ->first();
                 }
