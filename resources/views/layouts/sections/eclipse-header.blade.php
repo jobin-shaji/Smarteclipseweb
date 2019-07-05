@@ -16,7 +16,7 @@
                             @if(\Auth::user()->client->logo)
                               <img class="light-logo"  src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
-                                <p>No Logo Found</p>
+                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />
                             @endif
                         @endrole
                         @role('root|dealer|sub_dealer')
