@@ -25,12 +25,11 @@
         </div>
     </div>           
     <div class="container-fluid">
-      <div class="card" style="margin:0 0 0 1%">
         <div class="card-body wizard-content">
           <form  method="POST" action="{{route('driver.update.p',$driver->id)}}">
             {{csrf_field()}}
-            <div class="card">
-              <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
                   <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>DRIVER INFO</h4>
                   <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
@@ -67,16 +66,15 @@
                       </span>
                     @endif
                   </div>
-              </div>
-            </div>
-            <div class="border-top">
-                <div class="card-body">
-                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
+              </div>
+            <div class="row">
+              <div class="col-lg-6">
+                      <button type="submit" class="btn btn-primary">Update</button>
+              </div>
             </div>
           </form>
         </div>
-      </div>
     </div>
     <footer class="footer text-center">
     All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
