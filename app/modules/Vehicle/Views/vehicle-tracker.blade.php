@@ -53,8 +53,8 @@
                         <span id="sleep" style="display: none;">
                             <i class="fa fa-circle" style="color:orange;" aria-hidden="true"></i> Sleep
                         </span>
-                        <span id="ofline" style="display: none;">
-                            <i class="fa fa-circle" style="color:red;" aria-hidden="true"></i> Offline
+                        <span id="offline" style="display: none;font-size: 13px;">
+                            <i class="fa fa-circle" style="color:red;" aria-hidden="true"></i> Last seen <span id="last_seen"></span>
                         </span>
                       </div>
 

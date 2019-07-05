@@ -83,28 +83,27 @@ function getMarkers() {
                     if (res.liveData.vehicleStatus == 'M') {
                         $("#online").show();
                         $("#halt").hide();
-                        $("#ofline").hide();
+                        $("#offline").hide();
                         $("#sleep").hide();
-
-
-
                         vehicleColor="#203a17";
                     } else if (res.liveData.vehicleStatus == 'H') {
                         $("#halt").show();
                         $("#online").hide();
-                        $("#ofline").hide();
+                        $("#offline").hide();
                         $("#sleep").hide();
-
                         vehicleColor="#c1c431";
 
                     } else if (res.liveData.vehicleStatus == 'S') {
                         $("#sleep").show();
                         $("#halt").hide();
                         $("#online").hide();
-                        $("#ofline").hide();
+                        $("#offline").hide();
                         vehicleColor="#ffa500";
                     } else {
-                        $("#ofline").show();
+                        if(res.liveData.last_seen){
+                            $('#last_seen').text(res.liveData.last_seen);
+                        }
+                        $("#offline").show();
                         $("#sleep").hide();
                         $("#halt").hide();
                         $("#online").hide();
@@ -112,10 +111,10 @@ function getMarkers() {
 
                     }
                     if (res.liveData.ign == 1) {
-                        document.getElementById("ignition").innerHTML = "Ignitio ON";
+                        document.getElementById("ignition").innerHTML = "Ignition ON";
                      }else
                       {
-                         document.getElementById("ignition").innerHTML = "Ignitio OFF";
+                         document.getElementById("ignition").innerHTML = "Ignition OFF";
                       }
                     // document.getElementById("user").innerHTML = res.client_name;
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
