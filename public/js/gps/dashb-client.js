@@ -196,7 +196,7 @@ function driverScore(res){
 			      lng:lng
 			    };
 
-		    	backgroundPostData(url,data,'',{alert:false});
+		    	backgroundPostData(url,data,'searchLocation',{alert:false});
 
 	          } else {
 	            alert("Something got wrong " + status);
