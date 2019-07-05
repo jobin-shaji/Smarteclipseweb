@@ -57,23 +57,7 @@ class VehicleController extends Controller {
         return DataTables::of($vehicles)
             ->addIndexColumn()
             ->addColumn('action', function ($vehicles) {
-                $gps_id=$vehicles->gps_id;
                 if($vehicles->deleted_at == null){
-                    $gps_data_count = GpsData::where('gps_id',$gps_id)->count('id');
-                    if($gps_data_count==0){
-                        return "
-                    
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
-
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
-
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i></a>
-                            
-
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i></a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i></button>"; 
-                    }else{
                         return "
                     
                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
@@ -89,7 +73,6 @@ class VehicleController extends Controller {
                          <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
 
                         <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> </button>"; 
-                    }
                     
                 }else{
                      return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>

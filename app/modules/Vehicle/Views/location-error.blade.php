@@ -4,7 +4,7 @@
 	<div class="card-body">
 	    <div class="pad margin no-print">
 	      <div class="callout callout-danger" style="margin-bottom: 0!important;">
-	      Location not found !!!
+	      No Data Reveived From GPS !!!
 	      </div>
 	    </div>
 	</div>
