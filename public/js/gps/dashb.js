@@ -31,6 +31,7 @@ function dbcount(res){
       $('#moving').text(res.moving);
       $('#idle').text(res.idle);
       $('#stop').text(res.stop);
+      $('#offline').text(res.offline);
       
       
 }
