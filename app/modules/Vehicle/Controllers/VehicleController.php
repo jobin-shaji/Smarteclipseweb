@@ -993,7 +993,8 @@ class VehicleController extends Controller {
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)    
+        ->where('vehicle_id',$request->id)   
+        ->where('latitude','>',0)    
         ->where('gps_fix',1)            
         ->get();    
        $playback=array();
