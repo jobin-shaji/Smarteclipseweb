@@ -1101,7 +1101,8 @@ class VehicleController extends Controller {
         ->where('created_at', '<=',$request->to_time)
         ->where('vehicle_id',$request->id)   
         ->where('latitude','>',0)  
-        ->orderBy('created_at')           
+        ->orderBy('created_at') 
+        ->limit(145);          
         ->get();
         $playback=array();
         $playback_point= array();
