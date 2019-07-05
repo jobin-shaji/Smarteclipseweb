@@ -485,12 +485,31 @@ class DashboardController extends Controller
      public function locationSearch(Request $request)
     {
          $lat=$request->lat;
-         $lon=$request->lon;     
-        // $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
-        //             ->where('lat',$lat)
-        //             ->where('lon',$lon)                
-        //             ->get();
-        //     dd($user_data);        
+         $lon=$request->lon;  
+
+
+
+       $haversine = "(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude))))";
+
+
+
+    // return $query
+        $distance=Gps::select('lat','lat_dir','lon','lon_dir')
+        ->selectRaw("{$haversine} AS distance")
+        ->whereRaw("{$haversine} < ?", 100)
+        ->get();
+        dd($distance);
+// SELECT id, ( 3959 * acos( cos( radians(37) ) * cos( radians( lat ) ) 
+//     * cos( radians( long ) - radians(-122) ) + sin( radians(37) ) * sin(radians(lat)) ) ) AS distance 
+// FROM myTable
+// HAVING distance < 50
+// ORDER BY distance 
+
+        $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
+                    ->where('lat',$lat)
+                    ->where('lon',$lon)                
+                    ->get();
+            dd($user_data);        
         return response()->json(["lat"=>$lat,"lon"=>$lon]); 
     }
 
