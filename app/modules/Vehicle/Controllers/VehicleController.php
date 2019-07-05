@@ -989,15 +989,13 @@ class VehicleController extends Controller {
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed',
-            'gps_fix'       
+            'speed'       
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)    
-        ->where('gps_fix',1)            
+        ->where('vehicle_id',$request->id)                
         ->get();    
-       $playback=array();
+        $playback=array();
        $playbackData=array();
         if($gpsdata){
             foreach ($gpsdata as $data) {
@@ -1023,13 +1021,11 @@ class VehicleController extends Controller {
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed',
-            'gps_fix' 
+            'speed'       
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
         ->where('vehicle_id',$request->id) 
-        ->where('gps_fix',1)            
         // ->orderBy('id','desc')               
         ->get(); 
         if($gpsvdata)
@@ -1098,11 +1094,13 @@ class VehicleController extends Controller {
             'ignition as ign',
             'device_time as datetime',
             'speed',
-            'time'       
+            'time',
+            'gps_fix'       
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)                
+        ->where('vehicle_id',$request->id)   
+        ->where('gps_fix',1)             
         ->get();
         $playback=array();
         $playback_point= array();
