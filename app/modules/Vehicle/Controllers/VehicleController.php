@@ -989,7 +989,8 @@ class VehicleController extends Controller {
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed'       
+            'speed',
+            'gps_fix'       
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
@@ -1022,7 +1023,8 @@ class VehicleController extends Controller {
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed'       
+            'speed',
+            'gps_fix' 
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
