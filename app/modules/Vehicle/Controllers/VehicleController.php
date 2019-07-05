@@ -808,7 +808,6 @@ class VehicleController extends Controller {
     }
     public function locationTrack(Request $request){
      $get_vehicle=Vehicle::find($request->id);
-     dd($request->id);
      $currentDateTime=Date('Y-m-d H:i:s');
 
      $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
