@@ -59,9 +59,9 @@ Add Vehicle
                                  @endif
                               </div>
                               <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">E-SIM Number</label>
+                              
                                  <div class="form-group has-feedback">
-                                    <input type="text" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ old('e_sim_number') }}" > 
+                                    <input type="hidden" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="11336655488" > 
                                  </div>
                                  @if ($errors->has('e_sim_number'))
                                  <span class="help-block">
@@ -69,6 +69,22 @@ Add Vehicle
                                  </span>
                                  @endif
                               </div>
+                              <div class="form-group row" style="float:none!important">
+                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Driver</label>
+                     <div class="form-group has-feedback">
+                        <select class="form-control selectpicker" name="driver_id" data-live-search="true" title="Select Driver" required>
+                           <option selected disabled>Select Driver</option>
+                           @foreach($drivers as $driver)
+                           <option value="{{$driver->id}}">{{$driver->name}}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     @if ($errors->has('driver_id'))
+                     <span class="help-block">
+                     <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
+                     </span>
+                     @endif 
+                  </div>
                            </div>
                         </div>
                      </div>
@@ -100,6 +116,7 @@ Add Vehicle
                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">GPS</label>
                      <div class="form-group has-feedback">
                         <select class="form-control selectpicker" name="gps_id" data-live-search="true" title="Select GPS" required>
+                           <option selected disabled>Select GPS</option>
                            @foreach($devices as $gps)
                            <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
                            @endforeach
@@ -111,21 +128,7 @@ Add Vehicle
                      </span>
                      @endif 
                   </div>
-                  <div class="form-group row" style="float:none!important">
-                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Driver</label>
-                     <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" name="driver_id" data-live-search="true" title="Select Driver" required>
-                           @foreach($drivers as $driver)
-                           <option value="{{$driver->id}}">{{$driver->name}}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     @if ($errors->has('driver_id'))
-                     <span class="help-block">
-                     <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
-                     </span>
-                     @endif 
-                  </div>
+                  
                </div>
             </div>
          </div>
@@ -135,8 +138,7 @@ Add Vehicle
                   @foreach($ota_types as $ota_type)
                   <div class="col-lg-6 col-md-5">
                      <div class="form-group has-feedback">
-                        <label>{{$ota_type->name}}</label>
-                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="{{$ota_type->name}}" name="ota[]" value="{{$ota_type->default_value}}" readonly> 
+                        <input type="hidden" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="{{$ota_type->name}}" name="ota[]" value="{{$ota_type->default_value}}" readonly> 
                      </div>
                   </div>
                   @endforeach
