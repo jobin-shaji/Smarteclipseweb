@@ -114,6 +114,16 @@ function emergencyAlert(res){
     }
 }
 
+function openPremium(){
+        var modal = document.getElementById('headerModal');
+        modal.style.display = "block";
+}
+
+function closePremium(){
+        var modal = document.getElementById('headerModal');
+        modal.style.display = "none";
+}
+
 function getPlaceNameFromLatLng(latitude,longitude){
     var url = 'get-location';
     var data = { 
