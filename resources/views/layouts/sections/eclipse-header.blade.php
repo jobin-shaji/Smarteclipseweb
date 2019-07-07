@@ -283,7 +283,7 @@
                        <!-- Modal content -->
                            <div class="modal-content">
                               <div class="modal-header" onclick="closePremium()">
-                                Go Premiuim Now <span class="close" >×</span>
+                                Go Premium Now <span class="close" >×</span>
                                 </div>
                           <div class="container">  <br>
                             <ul>
