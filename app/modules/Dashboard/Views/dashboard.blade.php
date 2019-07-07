@@ -281,10 +281,10 @@
                                         <select id="search_radius" class="form-control">
                                           <option selected>KM</option>
                                           <option value="10">10 KM</option>
-                                          <option value="30">30 KM</option>
+                                         <!--  <option value="30">30 KM</option>
                                           <option value="50">50 KM</option>
                                           <option value="75">75 KM</option>
-                                          <option value="100">100 KM</option>
+                                          <option value="100">100 KM</option> -->
                                         </select>
                                       </div>
                                   </div>
