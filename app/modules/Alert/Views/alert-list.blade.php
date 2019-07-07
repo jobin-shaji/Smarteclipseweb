@@ -30,9 +30,7 @@
                                 <th>Alert</th>
                                 <th>Vehicle Name</th>
                                 <th>Register Number</th>
-                                <th>Latitude</th>
-                                <th>Longitude</th>
-                                <!-- <th>Place</th> -->
+                                <th>Location</th>
                                 <th>DateTime</th>
                                 <th>Action</th>
                               </tr>
