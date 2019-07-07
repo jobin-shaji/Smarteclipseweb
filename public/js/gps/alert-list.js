@@ -31,7 +31,6 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'alert_type.code', name: 'alert_type.code'},
             {data: 'alert_type.description', name: 'alert_type.description'},
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
