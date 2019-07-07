@@ -26,7 +26,6 @@
                             <thead>
                               <tr>
                                 <th>Sl.No</th>
-                                <th>Alert Code</th>
                                 <th>Alert</th>
                                 <th>Vehicle Name</th>
                                 <th>Register Number</th>
