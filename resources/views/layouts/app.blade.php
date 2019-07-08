@@ -57,7 +57,6 @@
         toastr.options.escapeHtml = true;
         toastr.options.newestOnTop = false;
     </script>
-      <script src="{{asset('js/custom.js')}}"></script>
 </head>
 <body>
     <div id="app">

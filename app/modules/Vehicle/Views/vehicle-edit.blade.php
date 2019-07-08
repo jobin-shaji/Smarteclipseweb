@@ -35,8 +35,7 @@
           <div class="row">
             <div class="col-lg-3 col-md-4">
               <div class="form-group has-feedback">
-                <label class="srequired">E-SIM Number</label>
-                <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" required> 
+                <input type="hidden" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" required> 
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
               </div>
               @if ($errors->has('e_sim_number'))

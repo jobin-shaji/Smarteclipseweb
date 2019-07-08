@@ -120,10 +120,31 @@ class DashboardController extends Controller
             foreach($vehicles as $vehicle){
                 $single_vehicle[] = $vehicle->gps_id;
             }
+// if(strtotime($mysql_timestamp) > strtotime("-30 minutes")) {
+//  $this_is_new = true;
+// }
+         $currentDateTime=Date('Y-m-d H:i:s');
+         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
 
-        $moving=Gps::where('user_id',$user->id)->where('mode','M')->whereIn('id',$single_vehicle)->count();
-        $idle=Gps::where('user_id',$user->id)->where('mode','H')->whereIn('id',$single_vehicle)->count();
-        $stop=Gps::where('user_id',$user->id)->where('mode','S')->whereIn('id',$single_vehicle)->count();
+        $moving=Gps::where('user_id',$user->id)->where('mode','M')
+        ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$currentDateTime)
+        ->whereIn('id',$single_vehicle)->count();
+
+        $offline=Gps::where('user_id',$user->id)
+        ->where('device_time', '<=',$oneMinut_currentDateTime)
+        // ->where('device_time', '<=',$currentDateTime)
+        ->whereIn('id',$single_vehicle)->count();
+
+        $idle=Gps::where('user_id',$user->id)->where('mode','H')
+        ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$currentDateTime)
+        ->whereIn('id',$single_vehicle)->count();
+
+        $stop=Gps::where('user_id',$user->id)->where('mode','S')
+        ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$currentDateTime)
+        ->whereIn('id',$single_vehicle)->count();
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
@@ -156,6 +177,7 @@ class DashboardController extends Controller
                 'moving' => $moving,
                 'idle' => $idle,
                 'stop' => $stop,
+                'offline' => $offline,
                 'status' => 'dbcount'           
             ]);
         }       
@@ -355,6 +377,8 @@ class DashboardController extends Controller
          foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
          } 
+           $currentDateTime=Date('Y-m-d H:i:s');
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
         // userID list of vehicles
          $vehiles_details=Gps::Select(
             'id',
@@ -362,12 +386,15 @@ class DashboardController extends Controller
             'lat_dir',
             'lon',
             'lon_dir',
-            'mode'
+            'mode',
+            'device_time'
           )
         ->with('vehicle:gps_id,id,name,register_number')
+        
         ->whereIn('id',$single_vehicle)        
         ->orderBy('id','desc')                 
         ->get(); 
+        
 
         $response_track_data=$this->vehicleDataList($vehiles_details);
      
@@ -388,11 +415,28 @@ class DashboardController extends Controller
 
 
      function vehicleDataList($vehiles_details){
+        // dd($vehiles_details[0]->id);
          $vehicleTrackData=array();
         foreach ($vehiles_details as $vehicle_data) {
          $vehicle_ecrypt_id=Crypt::encrypt($vehicle_data->vehicle->id);
          $single_vehicle=Vehicle::find($vehicle_data->vehicle->id);
          $single_vehicle_type= $single_vehicle->vehicleType;
+
+        $currentDateTime=Date('Y-m-d H:i:s');
+        $device_time= $vehicle_data->device_time;
+        $oneMinut_currentDateTime=date($currentDateTime,strtotime("-2 minutes"));
+        $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
+
+
+         if($time_diff_minut<=2)
+         {
+            $modes=$vehicle_data->mode;
+         }
+         else
+         {
+           $modes= "O";
+         }
+
 
          $vehicleTrackData[]=array(
                                     "id"=>$vehicle_data->id,
@@ -400,14 +444,15 @@ class DashboardController extends Controller
                                     "lat_dir"=>$vehicle_data->lat_dir,
                                     "lon"=>$vehicle_data->lon,
                                     "lon_dir"=>$vehicle_data->lon_dir,
-                                    "mode"=>$vehicle_data->mode,
+                                    "mode"=>$modes,
                                     "vehicle_id"=>$vehicle_ecrypt_id,
                                     "vehicle_name"=>$vehicle_data->vehicle->name,
                                     "register_number"=>$vehicle_data->vehicle->register_number,
                                     "vehicle_svg"=>$single_vehicle_type->svg_icon,
                                     "vehicle_scale"=>$single_vehicle_type->vehicle_scale,
                                     "opacity"=>$single_vehicle_type->opacity,
-                                    "strokeWeight"=>$single_vehicle_type->strokeWeight
+                                    "strokeWeight"=>$single_vehicle_type->strokeWeight,
+                                    "device_time"=>$vehicle_data->device_time
                                     );
         
       }
@@ -429,7 +474,8 @@ class DashboardController extends Controller
 
     public function vehicleMode(Request $request)
     {
-        $vehicle_mode=$request->vehicle_mode;  
+        $vehicle_mode=$request->vehicle_mode;
+
         $user = $request->user(); 
         $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
@@ -447,22 +493,50 @@ class DashboardController extends Controller
          $single_vehicle = [];
          foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-         } 
+         }  
+
+        $currentDateTime=Date('Y-m-d H:i:s');
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
         // userID list of vehicles
-         $vehiles_details=Gps::Select(
+if($vehicle_mode=='O')
+{
+    $vehiles_details=Gps::Select(
             'id',
             'lat',
             'lat_dir',
             'lon',
             'lon_dir',
-            'mode'
+            'mode',
+            'device_time'
           )
         ->with('vehicle:gps_id,id,name,register_number')
-        ->whereIn('id',$single_vehicle)  
+        ->whereIn('id',$single_vehicle)       
+        // ->where('device_time', '>=',$oneMinut_currentDateTime)
+        // ->where('device_time', '<=',$currentDateTime)        
+        // ->where('mode',$vehicle_mode)        
+        ->orderBy('id','desc')                 
+        ->get(); 
+}
+else
+{
+    $vehiles_details=Gps::Select(
+            'id',
+            'lat',
+            'lat_dir',
+            'lon',
+            'lon_dir',
+            'mode',
+            'device_time'
+          )
+        ->with('vehicle:gps_id,id,name,register_number')
+        ->whereIn('id',$single_vehicle)       
+        ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$currentDateTime)        
         ->where('mode',$vehicle_mode)        
         ->orderBy('id','desc')                 
         ->get(); 
-
+}
+         
         $response_track_data=$this->vehicleDataList($vehiles_details);
      
         if($response_track_data){     
@@ -505,23 +579,31 @@ class DashboardController extends Controller
          $single_vehicle = [];
          foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-         }             
-        $vehiles_details=Gps::Select(
-           'id',
-            'lat',
-            'lat_dir',
-            'lon',
-            'lon_dir',
-            'mode',
-            \DB::raw( '(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance')
-           ) 
-         ->having('distance', '<=', 500)  
-         ->with('vehicle:gps_id,id,name,register_number')
-        ->whereIn('id',$single_vehicle)                
+         }        
+
+         DB::connection()->enableQueryLog();
+
+        $vehicles_details= DB::select('select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= 10000');
+
+        // $queries = DB::getQueryLog();
+        // $last_query = end($queries);
+        // dd($last_query);
+        // Gps::Select(
+        //    'id',
+        //     'lat',
+        //     'lat_dir',
+        //     'lon',
+        //     'lon_dir',
+        //     'mode',
+        //     \DB::raw( '')
+        //    ) 
+        //  ->having('distance', '<=', $radius)  
+        //  ->with('vehicle:gps_id,id,name,register_number')
+        // ->whereIn('id',$single_vehicle)                
                       
-        ->get();
+        // ->get();
        
-        $response_track_data=$this->vehicleDataList($vehiles_details);        
+        $response_track_data=$this->vehicleDataList($vehicles_details);        
        if($response_track_data){     
                  $response_data = array(
                 'user_data'  => $response_track_data,
@@ -535,6 +617,14 @@ class DashboardController extends Controller
                 'code'    =>0);
              }
         return response()->json($response_data); 
+    }
+
+    function twoDateTimeDiffrence($date1,$date2){
+        $date1 = strtotime($date1);  
+        $date2 = strtotime($date2);  
+        $diff = abs($date2 - $date1); 
+        $minutes = round($diff/60);
+        return $minutes;
     }
 
 

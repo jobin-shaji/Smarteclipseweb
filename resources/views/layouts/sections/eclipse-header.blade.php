@@ -142,6 +142,10 @@
                                 <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
                             </div>
                         </li>
+                        <li class="nav-item dropdown" >
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: green !important" onclick="openPremium()"> Go Premium    
+                            </a>
+                        </li>
 <!--                           <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Complaints 
                             </a>
@@ -274,3 +278,64 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
     </form>
+
+    <div id="headerModal" class="modal_for_dash">
+                       <!-- Modal content -->
+                           <div class="modal-content">
+                              <div class="modal-header" onclick="closePremium()">
+                                Go Premium Now <span class="close" >×</span>
+                                </div>
+                          <div class="container">  <br>
+                            <ul>
+                                <li>
+                                    FUEL STATUS ON WEB/MOBILE APPS 
+                                </li>
+                                <li>
+                                    IMMOBILIZER
+                                </li>
+                                <li>
+                                    DRIVER SCORE
+                                </li>
+                                <li>
+                                    UBI
+                                </li>
+                                <li>
+                                    HISTORY(ROUTE PLAYBACK,ALERTS)  UPTO 6 MONTHS
+                                </li>
+                                <li>
+                                    E TOLLING
+                                </li>
+                                <li>
+                                    TRAFFIC OFFENCE ALERTS
+                                </li>
+                                <li>
+                                    ROUTE DEVIATION ALERTS
+                                </li>
+                                <li>
+                                    RADAR
+                                </li>
+                                <li>
+                                    GEOFENCE    UPTO 5
+                                </li>
+                                <li>
+                                    AGGREGATION PLATFORM
+                                </li>
+                                <li>
+                                    SHARE LOCATION TO OTHER APPLICATIONS
+                                </li>
+                                <li>
+                                    DAILY REPORT SUMMARY TO REGISTERED EMAIL
+                                </li>
+                                <li>EMERGENCY ALERTS AS SMS/EMAIL/PUSH NOTIFICATIONS</li>
+                                <li>
+                                    THEFT MODE
+                                </li>
+                            </ul>
+                            <hr><div style="text-align: center;">
+                            Contact For assistance +91 9544313131
+                            </div><hr>
+                          </div>
+                          </div>
+                          
+                       <!-- Modal content -->
+                        </div>

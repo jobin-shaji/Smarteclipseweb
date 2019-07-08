@@ -1,5 +1,5 @@
-      var latMap=10.014550;
-      var lngMap=76.293159;
+      var latMap=25.402282;
+      var lngMap=51.189165;
       var map;
       var image ='';
       var path=[];

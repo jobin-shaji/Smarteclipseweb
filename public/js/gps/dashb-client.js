@@ -84,7 +84,7 @@ function driverScore(res){
 	function vehicleTrack(res){	
 
              var JSONObject = res.user_data;
-             // console.log(JSONObject);
+             console.log(JSONObject);
              var marker, i;
 
 
@@ -101,19 +101,24 @@ function driverScore(res){
 	         var vehicle_id=JSONObject[i].vehicle_id;
 	         var vehicle_name=JSONObject[i].vehicle_name;
              var loc=new google.maps.LatLng(lat,lng);
-             var title ='<div id="content" style="width:150px;">' +
-             			'<span style="width:10px;height:10px;background-color:#006400;border-radius:50%;padding: 0px 7px;margin-right:6px;"></span>Online'+
+             var mode=JSONObject[i].mode;
+             var color="";
+             var vehicle_status="";
+            if(mode=='M'){car_color="#2DB05D";vehicle_status="Online";}
+    		else if(mode=='H'){car_color="#5474F5";vehicle_status="Idle"}
+    		else if(mode=='S'){car_color="#A1A3AB";vehicle_status="Stop"}
+    		else{car_color="#DB2133";vehicle_status="Offline"}
+
+             var title ='<div id="content" style="width:150px;">' + 
+             			'<span style="margin-right:5px;"><i class="fa fa-circle" style="color:'+car_color+';" aria-hidden="true"></i></span>'+vehicle_status+
 					    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>'+vehicle_name+'</i></span></div>'+  
 					    '<div style="padding-top:5px; padding-left:16px;"><i class="fa fa-car"></i><span style="margin-right:5px;">:</span>'+reg+' </div>'+ 
 					    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+ 
 					    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+ 
 					    '<div style="padding-top:5px;"><a href=/vehicles/'+vehicle_id+'/playback class="btn btn-xs btn btn-warning" style="background-color:#fff;"><i class="fa fa-car" style="color:#000;font-size: 18px;"></i></a><a href=/vehicles/'+vehicle_id+'/location class="btn btn-xs btn btn-warning" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>  </div>'+ 
 					    '</div>'; 
-    		var mode=JSONObject[i].mode;
-    		if(mode=='M'){car_color="#2DB05D";}
-    		else if(mode=='H'){car_color="#5474F5";}
-    		else if(mode=='S'){car_color="#A1A3AB";}
-    		else{car_color="#DB2133";}
+    		
+    		
     		 var path=JSONObject[i].vehicle_svg;    		
 	         var scale=JSONObject[i].vehicle_scale;
 	         var fillOpacity=JSONObject[i].opacity;
