@@ -2,8 +2,8 @@
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
- var latMap=10.014550;
- var lngMap=76.293159;
+ var latMap=25.3548;
+ var lngMap=51.1839;
  var map;
 
 function initMap(res) {   
