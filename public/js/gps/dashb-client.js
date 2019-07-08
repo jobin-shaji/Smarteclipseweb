@@ -149,7 +149,7 @@ function driverScore(res){
 		       });
 		       var infowindow = new google.maps.InfoWindow();
 		       google.maps.event.addListener(marker, 'mouseover', function() {
-		       		getVehicle(2);
+		       		getVehicle(14);
 		           infowindow.setContent(title);
 		           infowindow.open(map, this);
 		        });
