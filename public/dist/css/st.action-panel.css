@@ -3,7 +3,7 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
 
 .st-actionContainer {
-	z-index: 999;
+	
 	position: fixed;
 	display: inline-block;
 }
