@@ -19,7 +19,7 @@ Create Geofence
       <div class="page-breadcrumb">
          <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-               <h4 class="page-title">Create Geofence</h4>
+               <h4 class="page-title">Please plot points on the map to create geo fence</h4>
             </div>
          </div>
       </div>
@@ -30,7 +30,7 @@ Create Geofence
                <div class="col-lg-8 col-md-12">
                   <div class="form-group">
                      
-                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Fence Name" name="name" id="name" value="" required> 
+                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add fence name" name="name" id="name" value="" required> 
                   </div>
                   @if ($errors->has('name'))
                   <span class="help-block">

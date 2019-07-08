@@ -1,6 +1,5 @@
 
 // dateTimepicker
- 
 
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
@@ -63,7 +62,8 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-           // console.log(res);
+    
+
             toast(res);
             if (callBack){
                 if (callBack == 'callBackDataTables'){
@@ -74,6 +74,18 @@ function backgroundPostData(url, data, callBack, options) {
                     selectVehicleTrack(res);
                 }else if(callBack =='driverScore'){
                     driverScore(res);
+                }else if(callBack == 'emergencyAlert'){
+                    emergencyAlert(res);
+                }else if(callBack == 'getPlaceName'){
+                    getPlaceName(res);
+                }else if(callBack == 'verifyAlertResponse'){
+                    verifyAlertResponse(res);
+                }
+                else if(callBack =='selectVehicleModeTrack'){
+                    selectVehicleModeTrack(res);
+                }
+                 else if(callBack =='searchLocation'){
+                    searchLocation(res);
                 }
             }
         },
@@ -85,6 +97,71 @@ function backgroundPostData(url, data, callBack, options) {
 
 }
 
+function emergencyAlert(res){
+    console.log(res);
+    if(res.alerts.length > 0){
+        var latitude=res.alerts[0].latitude;
+        var longitude=res.alerts[0].longitude;
+        getPlaceNameFromLatLng(latitude,longitude);
+        var modal = document.getElementById('emergency');
+        modal.style.display = "block";
+        document.getElementById("em_id").value = res.alerts[0].id;
+        document.getElementById("alert_vehicle_id").value = res.vehicle;
+        $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
+        $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+        $('#emergency_vehicle_time').text(res.alerts[0].device_time);
+       
+    }
+}
+
+function openPremium(){
+        var modal = document.getElementById('headerModal');
+        modal.style.display = "block";
+}
+
+function closePremium(){
+        var modal = document.getElementById('headerModal');
+        modal.style.display = "none";
+}
+
+function getPlaceNameFromLatLng(latitude,longitude){
+    var url = 'get-location';
+    var data = { 
+     'latitude':latitude,
+     'longitude':longitude
+    };
+    backgroundPostData(url,data,'getPlaceName',{alert:false});
+   
+}
+function getPlaceName(res){
+    $('#emergency_vehicle_location').text(res);
+}
+
+function verifyEmergency(){
+    var id = document.getElementById("em_id").value;
+    VerifyAlert(id);
+}
+function track_vehicle(){
+    var id = document.getElementById("alert_vehicle_id").value;
+    window.location.href = "/vehicles/" + id+"/location";
+}
+
+function VerifyAlert(alert_id){
+    if(confirm('Are you sure want to verify this alert?')){
+        var url = 'alert/verify';
+        var data = {
+        id : alert_id
+        };
+        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
+    } 
+}
+
+function verifyAlertResponse(res){
+    if(res){
+        var modal = document.getElementById('emergency');
+        modal.style.display = "none";
+    }
+}
 
 
 function downloadFile(url,data){
@@ -562,4 +639,14 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
+    // var url = 'emergency-alert';
+    // var data = { 
+    
+    // };
+    // backgroundPostData(url,data,'emergencyAlert',{alert:false});
+
 });
+
+
+
+

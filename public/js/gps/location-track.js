@@ -27,9 +27,7 @@ var vehicleColor = "#0C2161";
 // var vehicleScale = "0.5";
 var vehicleScale = vehicle_scale;
 
-function initMap() {
-
-
+$( document ).ready(function() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: start_lat,
@@ -56,15 +54,17 @@ function initMap() {
         icon: icon
     });
     getMarkers(map);
-}
+
+});
+
 
 function getMarkers() {
 
     var url = '/vehicles/location-track';
-    var id = document.getElementById('vehicle_id').value;
+    var id = $("#vehicle_id_data").val();
     // var id=1;
-    var data = {
-        id: id
+    data = {
+        id:id
     };
     var purl = getUrl() + '/' + url;
     var triangleCoords = [];
@@ -77,56 +77,57 @@ function getMarkers() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
+
+            if(res.hasOwnProperty('liveData')){
             // console.log(res.liveData.ign);
-            if (res.liveData.vehicleStatus == 'M') {
-                $("#online").show();
-                $("#halt").hide();
-                $("#ofline").hide();
-                $("#sleep").hide();
+                    if (res.liveData.vehicleStatus == 'M') {
+                        $("#online").show();
+                        $("#halt").hide();
+                        $("#offline").hide();
+                        $("#sleep").hide();
+                        vehicleColor="#203a17";
+                    } else if (res.liveData.vehicleStatus == 'H') {
+                        $("#halt").show();
+                        $("#online").hide();
+                        $("#offline").hide();
+                        $("#sleep").hide();
+                        vehicleColor="#c1c431";
 
+                    } else if (res.liveData.vehicleStatus == 'S') {
+                        $("#sleep").show();
+                        $("#halt").hide();
+                        $("#online").hide();
+                        $("#offline").hide();
+                        vehicleColor="#ffa500";
+                    } else {
+                        if(res.liveData.last_seen){
+                            $('#last_seen').text(res.liveData.last_seen);
+                        }
+                        $("#offline").show();
+                        $("#sleep").hide();
+                        $("#halt").hide();
+                        $("#online").hide();
+                        vehicleColor="#711307";
 
+                    }
+                    if (res.liveData.ign == 1) {
+                        document.getElementById("ignition").innerHTML = "Ignition ON";
+                     }else
+                      {
+                         document.getElementById("ignition").innerHTML = "Ignition OFF";
+                      }
+                    // document.getElementById("user").innerHTML = res.client_name;
+                    document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
+                    document.getElementById("car_speed").innerHTML = res.liveData.speed;
+                    document.getElementById("car_bettary").innerHTML = res.liveData.power;
+                    document.getElementById("car_location").innerHTML = res.liveData.place;
+                    document.getElementById("user").innerHTML = res.vehicle_name;
 
-                vehicleColor="#203a17";
-            } else if (res.liveData.vehicleStatus == 'H') {
-                $("#halt").show();
-                $("#online").hide();
-                $("#ofline").hide();
-                $("#sleep").hide();
+                    
 
-                vehicleColor="#c1c431";
-
-            } else if (res.liveData.vehicleStatus == 'S') {
-                $("#sleep").show();
-                $("#halt").hide();
-                $("#online").hide();
-                $("#ofline").hide();
-                vehicleColor="#ffa500";
-            } else {
-                $("#ofline").show();
-                $("#sleep").hide();
-                $("#halt").hide();
-                $("#online").hide();
-                vehicleColor="#711307";
-
+                    track(map, res);
+                    setTimeout(locate, 5000);
             }
-            if (res.liveData.ign == 1) {
-                document.getElementById("ignition").innerHTML = "Ignitio ON";
-             }else
-              {
-                 document.getElementById("ignition").innerHTML = "Ignitio OFF";
-              }
-            // document.getElementById("user").innerHTML = res.client_name;
-            document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-            document.getElementById("car_speed").innerHTML = res.liveData.speed;
-            document.getElementById("car_bettary").innerHTML = res.liveData.power;
-            document.getElementById("car_location").innerHTML = res.liveData.place;
-            document.getElementById("user").innerHTML = res.vehicle_name;
-
-            
-
-            track(map, res);
-            setTimeout(locate, 5000);
-
 
         },
         error: function(err) {

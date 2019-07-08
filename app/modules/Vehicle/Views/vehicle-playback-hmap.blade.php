@@ -30,7 +30,7 @@
    </div>
       <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
       <div class="card-body map_card_body">
-          <div class="panel-heading playback_head">
+          <div class="panel-heading playback_head plaback_head_data_change">
            <div class="col-lg-12 col-md-3">
              <div class="cover_div_search playback_page">
                 <div class="row">
@@ -57,7 +57,7 @@
                 </div>
              </div>
              </div>
-             <div id="chartContainer" class="playback_chart" style="height: 300px; width: 100%;"></div>
+             <!-- <div id="chartContainer" class="playback_chart" style="height: 300px; width: 100%;"></div> -->
           </div>
           <div id="mapContainer" style="width:100%;height:500px;"></div>
           
@@ -77,7 +77,7 @@
 </div>
 @section('script')
 <script src="{{asset('js/gps/ui.js')}}"></script>
-<script src="{{asset('js/canvasjs.min.js')}}"></script>
+<!-- <script src="{{asset('js/canvasjs.min.js')}}"></script> -->
 <script src="{{asset('js/gps/location-playback-hmap.js')}}"></script>
 
 @endsection

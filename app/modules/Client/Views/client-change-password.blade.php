@@ -30,10 +30,10 @@
             <h2 class="page-header">
               <i class="fa fa-cog"></i> 
             </h2>
-              <div class="row">
                 <form  method="POST" action="{{route('client.update-password.p',$client->user_id)}}">
                 {{csrf_field()}}
-                <div class="col-md-6">
+                <div class="row">
+                <div class="col-lg-6">
                   <input type="hidden" name="id" value="{{$client->user_id}}">
                   <div class="form-group has-feedback">
                     <label class="srequired">New Password</label>
@@ -58,13 +58,14 @@
                     <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
                  </div>
                 </div>
+              </form>
               </div>
             </div>
          </div>
     </div>
   </div>
 
-<div class="page-wrapper_cover"></div>
+
 </div>
  
 <div class="clearfix"></div>

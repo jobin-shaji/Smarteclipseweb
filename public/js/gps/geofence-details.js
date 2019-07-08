@@ -2,12 +2,13 @@
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
-var latMap=10.014550;
-      var lngMap=76.293159;
+ var latMap=25.3548;
+ var lngMap=51.1839;
+ var map;
 
 function initMap(res) {   
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
+          map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
           center:{lat: latMap, lng: lngMap},
           mapTypeId: 'terrain'
         });
@@ -27,16 +28,21 @@ function initMap(res) {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (res) {
+              var panLat=res.cordinates[0].lat;
+              var panLng=res.cordinates[0].lng;
+              var latLng = new google.maps.LatLng(panLat,panLng);
+              map.panTo(latLng); 
+
             
                 triangleCoords = res.cordinates;
 // console.log(triangleCoords[0]);
                   var bermudaTriangle = new google.maps.Polygon({
                     paths: triangleCoords,
-                    strokeColor: '#FF0000',
+                    strokeColor: '#5D5D5D',
                     strokeOpacity: 0.8,
                     strokeWeight: 2,
                     center: res.cordinates[0],
-                    fillColor: '#FF0000',
+                    fillColor: '#5D5D5D',
                     fillOpacity: 0.35
                   });
                   bermudaTriangle.setMap(map);

@@ -16,7 +16,7 @@
                             @if(\Auth::user()->client->logo)
                               <img class="light-logo"  src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
-                                <p>No Logo Found</p>
+                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />
                             @endif
                         @endrole
                         @role('root|dealer|sub_dealer')
@@ -142,6 +142,10 @@
                                 <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
                             </div>
                         </li>
+                        <li class="nav-item dropdown" >
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: green !important" onclick="openPremium()"> Go Premium    
+                            </a>
+                        </li>
 <!--                           <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Complaints 
                             </a>
@@ -241,6 +245,11 @@
                                 </ul>
                             </div>
                         </li> -->
+                        <li class="nav-item dropdown">
+                            @role('client')
+                              @include('layouts.sections.eclipse-alert-popup')
+                            @endrole
+                        </li>
                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ url('/') }}/assets/images/2.png" alt="user" class="rounded-circle" width="31"></a>
@@ -269,3 +278,78 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
     </form>
+
+    <div id="headerModal" class="modal_for_dash">
+          
+<div class="modal-content" style="max-width:28%;z-index:9999!important">
+<div class="modal-header" onclick="closePremium()">
+<span style="font-weight:600;padding:0 3%;color:#fb9a18;width:80%;font-size:18px">Go Premium Now</span> <span class="close">×</span>
+</div>
+                            <ul style="margin-left:-3%!important;font-weight: 600;font-size:.9em;line-height: 22px;">
+                                <span style="margin:3% 0 1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/fuel-pop.png')}}" width="22" height="22">
+                                &nbsp;FUEL STATUS ON WEB/MOBILE APPS 
+                                </li>
+                            </span>
+                                
+                              <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important;width:100%;"><img src="{{url('assets/images/immobilizer-pop.png')}}" width="22" height="22">
+                                &nbsp;IMMOBILIZER
+                                </li></span>
+                               <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/driver-score-pop.png')}}" width="22" height="22">
+                                &nbsp;DRIVER SCORE
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/ubi-pop.png')}}" width="22" height="22">
+                                &nbsp;UBI
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/route-playback-pop.png')}}" width="22" height="22">
+                                &nbsp;HISTORY(ROUTE PLAYBACK,ALERTS)  UPTO 6 MONTHS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/e-tolling-pop.png')}}" width="22" height="22">
+                                &nbsp;E TOLLING
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/traffic-offence-alert-pop.png')}}" width="22" height="22">
+                                &nbsp;TRAFFIC OFFENCE ALERTS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/route-deviation-aler-pop.png')}}" width="22" height="22">
+                                &nbsp;ROUTE DEVIATION ALERTS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/radar-pop.png')}}" width="22" height="22">
+                                &nbsp;RADAR
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/geofence-pop.png')}}" width="22" height="22">
+                                &nbsp;GEOFENCE    UPTO 5
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/aggregation-pop.png')}}" width="22" height="22">
+                                &nbsp;AGGREGATION PLATFORM
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important;width:100%;"><img src="{{url('assets/images/share-location.png')}}" width="22" height="22">
+                                &nbsp;SHARE LOCATION TO OTHER APPLICATIONS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/daily-report-pop.png')}}" width="22" height="22">
+                                &nbsp;DAILY REPORT SUMMARY TO REGISTERED EMAIL
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/sms-alert-pop.png')}}" width="22" height="22">
+                                &nbsp;EMERGENCY ALERTS AS SMS/EMAIL/PUSH NOTIFICATIONS</li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/theft-mode-pop.png')}}" width="22" height="22">
+                                &nbsp;THEFT MODE
+                                </li></span>
+                            </ul>
+<div style="padding:3% 6%;;font-weight:600;font-size:20px;color:#fb9a18;border-top: 1px solid #e9ecef">
+Contact for Assistance +91 9544313131</div>
+
+</div>   
+    </div>

@@ -7,7 +7,7 @@
   <div class="page-breadcrumb">
       <div class="row">
          <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Playback
+            <h4 class="page-title">Live Track
                <small>Control panel</small>
             </h4>
             @if(Session::has('message'))
@@ -21,11 +21,11 @@
       </div>
    </div>
 
-<input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+
 
   <div class="row">
     <div class="col-lg-12 col-sm-12">
-      <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+      <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
        <input type="hidden" name="svg_con" id="svg_con" value="{{$vehicle_type->svg_icon}}">
        <input type="hidden" name="vehicle_scale" id="vehicle_scale" value="{{$vehicle_type->vehicle_scale}}">
         <input type="hidden" name="opacity" id="opacity" value="{{$vehicle_type->opacity}}">
@@ -53,8 +53,8 @@
                         <span id="sleep" style="display: none;">
                             <i class="fa fa-circle" style="color:orange;" aria-hidden="true"></i> Sleep
                         </span>
-                        <span id="ofline" style="display: none;">
-                            <i class="fa fa-circle" style="color:red;" aria-hidden="true"></i> Offline
+                        <span id="offline" style="display: none;font-size: 13px;">
+                            <i class="fa fa-circle" style="color:red;" aria-hidden="true"></i> Last seen <span id="last_seen"></span>
                         </span>
                       </div>
 
@@ -111,7 +111,7 @@
 @section('script')
 
 <script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing" async defer></script>
 @endsection
 
 @endsection

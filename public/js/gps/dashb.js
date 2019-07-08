@@ -27,10 +27,11 @@ function dbcount(res){
       $('#subdealer_client').text(res.clients);
       $('#client_gps').text(res.gps);
       $('#client_vehicle').text(res.vehicles);
-       $('#geofence').text(res.geofence);
-       $('#moving').text(res.moving);
-       $('#idle').text(res.idle);
-       $('#stop').text(res.stop);
+      $('#geofence').text(res.geofence);
+      $('#moving').text(res.moving);
+      $('#idle').text(res.idle);
+      $('#stop').text(res.stop);
+      $('#offline').text(res.offline);
       
       
 }
@@ -54,7 +55,7 @@ function vehicle_details(res){
       $('#satelite').text(res.satelite);
       $('#battery_status').text(res.battery_status);
       var address=res.address;
-      $('#address').text(address.substr(0,10));
+      $('#address').text(address);
         
   }
 

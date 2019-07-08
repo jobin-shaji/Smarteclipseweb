@@ -22,6 +22,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -56,23 +57,7 @@ class VehicleController extends Controller {
         return DataTables::of($vehicles)
             ->addIndexColumn()
             ->addColumn('action', function ($vehicles) {
-                $gps_id=$vehicles->gps_id;
                 if($vehicles->deleted_at == null){
-                    $gps_data_count = GpsData::where('gps_id',$gps_id)->count('id');
-                    if($gps_data_count==0){
-                        return "
-                    
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
-
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
-
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i></a>
-                            
-
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i></a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i></button>"; 
-                    }else{
                         return "
                     
                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
@@ -88,7 +73,6 @@ class VehicleController extends Controller {
                          <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
 
                         <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> </button>"; 
-                    }
                     
                 }else{
                      return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
@@ -783,101 +767,103 @@ class VehicleController extends Controller {
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
-       
-         $decrypted_id = Crypt::decrypt($request->id);
-          $get_vehicle=Vehicle::find($decrypted_id);
-          // $dealers = Dealer::where('user_id', $decrypted)->first();  
-          $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
-          $track_data=GpsData::select('latitude as latitude',
-                  'longitude as longitude',                
-                  'gsm_signal_strength as signalStrength'
-                  )         
-                  ->where('vehicle_id',$get_vehicle->id)
-                  ->orderBy('id','desc')
-                  ->first();
-          
-        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $track_data->latitude,'longitude' => $track_data->longitude] );
-       
+        $decrypted_id = Crypt::decrypt($request->id);
+        $get_vehicle=Vehicle::find($decrypted_id);
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+        $track_data=Gps::select('lat as latitude',
+                              'lon as longitude'
+                              )         
+                              ->where('id',$get_vehicle->gps_id)
+                              ->first();   
+        if($track_data==null)
+        {
+            return view('Vehicle::location-error');
+        }
+        else if($track_data->latitude==null || $track_data->longitude==null)
+        {
+            return view('Vehicle::location-error');
+        }
+        else
+        {
+            $latitude=$track_data->latitude;
+            $longitude= $track_data->longitude;
+        }
+        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
     }
-    public function locationTrack(Request $request){
+    public function locationTrack(Request $request)
+    {
+        $get_vehicle=Vehicle::find($request->id);
+        $currentDateTime=Date('Y-m-d H:i:s');
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+        $offline="Offline";
+        $track_data=Gps::select('lat as latitude',
+                      'lon as longitude',
+                      'heading as angle',
+                      'mode as vehicleStatus',
+                      'speed',
+                      'device_time as dateTime',
+                      'main_power_status as power',
+                      'ignition as ign',
+                      'gsm_signal_strength as signalStrength'
+                      )
+                    ->where('device_time', '>=',$oneMinut_currentDateTime)
+                    ->where('device_time', '<=',$currentDateTime)
+                    ->where('id',$get_vehicle->gps_id)
+                    ->first();
+        $minutes=0;
+        if($track_data == null){
+            $track_data = Gps::select('lat as latitude',
+                              'lon as longitude',
+                              'heading as angle',
+                              'speed',
+                              'device_time as dateTime',
+                              'main_power_status as power',
+                              'ignition as ign',
+                              'gsm_signal_strength as signalStrength',
+                              \DB::raw("'$offline' as vehicleStatus")
+                              )
+                              ->where('id',$get_vehicle->gps_id)
+                              ->first();
+            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+        }
 
-     $get_vehicle=Vehicle::find($request->id);
+        if($track_data){
 
-     $currentDateTime=Date('Y-m-d H:i:s');
-     $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
-     $offline="Offline";
-     $track_data=GpsData::select('latitude as latitude',
-                  'longitude as longitude',
-                  'heading as angle',
-                  'vehicle_mode as vehicleStatus',
-                  'speed',
-                  'created_at as dateTime',
-                  'main_power_status as power',
-                  'gps_fix as gps',
-
-                  'ignition as ign',
-                  'gsm_signal_strength as signalStrength'
-                  )->where('device_time', '>=',$oneMinut_currentDateTime)
-                  ->where('device_time', '<=',$currentDateTime)
-                  ->where('vehicle_id',$request->id)
-
-                  ->orderBy('id','desc')
-                  ->first();
-       if($track_data==null){
-             $track_data=GpsData::select('latitude as latitude',
-                  'longitude as longitude',
-                  'heading as angle',
-                  'speed',
-                  'created_at as dateTime',
-                  'main_power_status as power',
-                  'gps_fix as gps',
-                  'ignition as ign',
-                  'gsm_signal_strength as signalStrength',
-                  \DB::raw("'$offline' as vehicleStatus")
-                  
-                  )->orderBy('id','desc')
-                  ->where('vehicle_id',$request->id)
-                  ->first();
-                }
-
-      if($track_data){
-
-        $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
-        $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);   
-                $reponseData=array(
-                            "latitude"=>$snapRoute['lat'],
-                            "longitude"=>$snapRoute['lng'],
-                            "angle"=>$track_data->angle,
-                            "vehicleStatus"=>$track_data->vehicleStatus,
-                            "speed"=>$track_data->speed,
-                            "dateTime"=>$track_data->dateTime,
-                            "power"=>$track_data->power,
-                            "gps"=>$track_data->gps,
-                            "ign"=>$track_data->ign,
-                            "signalStrength"=>$track_data->signalStrength,
-                            "fuel"=>"",
-                            "ac"=>"",
-                            "place"=>$plcaeName,
-                            "fuelquantity"=>""
-                          );
+            $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
+            $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+            $reponseData=array(
+                        "latitude"=>$snapRoute['lat'],
+                        "longitude"=>$snapRoute['lng'],
+                        "angle"=>$track_data->angle,
+                        "vehicleStatus"=>$track_data->vehicleStatus,
+                        "speed"=>$track_data->speed,
+                        "dateTime"=>$track_data->dateTime,
+                        "power"=>$track_data->power,
+                        "ign"=>$track_data->ign,
+                        "signalStrength"=>$track_data->signalStrength,
+                        "last_seen"=>$minutes,
+                        "fuel"=>"",
+                        "ac"=>"",
+                        "place"=>$plcaeName,
+                        "fuelquantity"=>""
+                      );
 
 
-                $response_data = array('status'  => 'success',
-                               'message' => 'success',
-                               'code'    =>1,
-                               'vehicle_type' => $get_vehicle->vehicleType->name,
-                               'client_name' => $get_vehicle->client->name,
-                               'vehicle_reg' => $get_vehicle->register_number,
-                               'vehicle_name' => $get_vehicle->name,
-                               'liveData' => $reponseData
-                                );
+            $response_data = array('status'  => 'success',
+                           'message' => 'success',
+                           'code'    =>1,
+                           'vehicle_type' => $get_vehicle->vehicleType->name,
+                           'client_name' => $get_vehicle->client->name,
+                           'vehicle_reg' => $get_vehicle->register_number,
+                           'vehicle_name' => $get_vehicle->name,
+                           'liveData' => $reponseData
+                            );
 
-             }else{
-
-                 $response_data = array('status'  => 'failed',
-                               'message' => 'failed',
-                                'code'    =>0);
-             }
+        }else{
+            $response_data = array('status'  => 'failed',
+                           'message' => 'failed',
+                            'code'    =>0);
+        }
              // dd($response_data['liveData']['ign']);
         return response()->json($response_data); 
     }
@@ -1105,11 +1091,15 @@ class VehicleController extends Controller {
             'ignition as ign',
             'device_time as datetime',
             'speed',
-            'time'       
+            'time',
+            'gps_fix'       
         )
-        ->where('device_time', '>=',$request->from_time)
-        ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)                
+        ->where('created_at', '>=',$request->from_time)
+        ->where('created_at', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id)   
+        ->where('latitude','>',0)  
+        ->orderBy('created_at') 
+        ->limit(145)        
         ->get();
         $playback=array();
         $playback_point= array();
@@ -1192,8 +1182,12 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'ignition as ign',
             'speed'       
         )
-        ->where('device_time', '>=',$fromDate)
-        ->where('device_time', '<=',$toDate)
+        // ->where('device_time', '>=',$fromDate)
+        // ->where('device_time', '<=',$toDate)
+        ->where('created_at', '>=',$fromDate)
+        ->where('created_at', '<=',$toDate)
+        ->where('gps_fix',1)
+
         ->where('vehicle_id',$vehicleID)                
         ->get(); 
         $startLat=(float)$gpsdata[0]->lat;
@@ -1375,24 +1369,24 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     }
 // --------------------------------------------------------------------------------
     function getPlacenameFromLatLng($latitude,$longitude){
-    if(!empty($latitude) && !empty($longitude)){
-        //Send request and receive json data by address
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4'); 
-        $output = json_decode($geocodeFromLatLong);
-     
-        $status = $output->status;
-        //Get address from json data
-        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-        //Return address of the given latitude and longitude
-        if(!empty($address)){
-            return $address;
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4'); 
+            $output = json_decode($geocodeFromLatLong);
+         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude
+            if(!empty($address)){
+                return $address;
+            }else{
+                return false;
+            }
         }else{
-            return false;
+            return false;   
         }
-    }else{
-        return false;   
     }
-  }
 /////////////// snap root for live data///////////////////////////////////
     function LiveSnapRoot($b_lat, $b_lng) {
         $lat = $b_lat;

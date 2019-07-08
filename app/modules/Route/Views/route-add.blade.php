@@ -36,18 +36,22 @@
 
     <div class="card-body map_card_body">
         <div class="panel-heading geofence_page">
+
+      <form method="POST" action="{{route('route.create.p')}}" onSubmit="return checkRouteValue();">
+         {{csrf_field()}}
          <div class="cover_div_search geofence_covered_search">
             <div class="row">
                <div class="col-lg-8 col-md-12">
                    <div class="form-group has-feedback">
                         <label class="srequired">Route Name</label>
-                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Route Name" name="name" value="{{ old('name') }}" required> 
+                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add route name" name="name" value="{{ old('name') }}" required> 
                       </div>
                       @if ($errors->has('name'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('name') }}</strong>
                         </span>
                   @endif
+                  <input type="hidden" class="form-control" name="points" id="locationLatLng" value="" required>
                </div>
                <div class="col-lg-4 col-sm-12 pt-3">
                        <button type="submit"  class="btn btn-primary btn-flat save_button_route" name="submit">Submit</button>
@@ -55,6 +59,7 @@
                     </div>
                     
             </div>
+          </form>
          </div>
          </div>
 

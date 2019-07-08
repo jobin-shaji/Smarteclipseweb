@@ -11,15 +11,13 @@ html, body {
   overflow-y: hidden; // hide vertical
 overflow-x: hidden; // hide horizontal  
 }
-.dashboard-main-Right{
-    right: 0;
-    width: 22.5%;
-    background: transparent;
-    margin: 0% 0.2% 0px 0;
-    position: absolute;
+
+
+h4.m-b-0.m-t-5.score_data_text {
+    font-size: 11px;
 }
 
-.iconsbg1234{background:transparent;width:96%;float:left;margin:2%}
+
 
 .bg-cyan1234 {
     background-color: #fff!important;
@@ -27,15 +25,17 @@ overflow-x: hidden; // hide horizontal
     -moz-box-shadow: 1px 1px 2px 3px #ccc;
     box-shadow: 1px 1px 21px 1px #ccc
 }
+.bg-cyan1234 a:visited {
+    background-color: #cff270!important;
+    }
+
+.score_data_text{
+padding: 8px 0px 0px 0px;
+}
 
 .box {
-     padding:0!important; border-radius: 20px!important
+     padding:0!important; border-radius: 12px!important
 }
-
-.iconsbg1234 {
-    padding: 4%;
-}
-
 
 .full-height {
   height: 85vh;
@@ -49,7 +49,7 @@ overflow-x: hidden; // hide horizontal
     bottom: 10%;
 }
 
-.iconsbg12345{width:23%;border-radius:9px;margin:2%;padding:2%;position:absolute;right:0;margin:9% 0 0;}
+
 
 
 
@@ -11380,11 +11380,6 @@ ul.list-style-none li a:hover {
     margin-right: 5px
 }
 
-.topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
-    padding: 0px 15px;
-    font-size: 0.875rem;
-    line-height: 64px;
-    }
 
 .topbar .top-navbar .navbar-nav>.nav-item:hover {
     background: rgba(0, 0, 0, 0.05)
@@ -11485,9 +11480,7 @@ ul.list-style-none li a:hover {
     .topbar .top-navbar .navbar-nav .dropdown {
         position: static
     }
-    .topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
-        padding: 0 10px
-    }
+  
     .topbar .top-navbar .navbar-header {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -16289,7 +16282,7 @@ label {
 }
 .label-group p.caption {
   font-weight: 400;
-  color: #aeaeae;
+  color: #5b5b5b;
 }
 
 .end-icon {
@@ -16297,7 +16290,7 @@ label {
 }
 
 .right-bottom2 {
-    bottom: 5em;
+    bottom: em;
     left: 5em;
     float: left !important;
     width: 60%;
@@ -16306,7 +16299,7 @@ label {
 }
 
 h1.text-white i {
-    font-size: 38px;
+    font-size: 32px;
 }
 
 .st-actionContainer{
@@ -16429,6 +16422,7 @@ h1.text-white i {
     }
     .navbar-minimal > .navbar-menu > li > a:hover {
         background-color: rgb(242, 153, 25);
+        
     }
     .navbar-minimal > .navbar-menu > li > a > .glyphicon {
         float: right;
@@ -16577,12 +16571,7 @@ li.nav-item.dropdown.show {
 .bg-dark.p-10.text-white.text-center.location_details {
     text-align: left !important;
     margin: 0px 0px;
-    padding-left: 43px;
-}
-
-img.light-logo {
-    width: 100%;
-    height: auto;
+    padding-left: 54px;
 }
 
 ul.navbar-menu.animate img {
@@ -16663,7 +16652,7 @@ button.btn.btn-primary.address_btn {
 
 .right-bottom3 {
     background: #5c5c5c;
-    width: 100px;
+    width: 78px;
     float: left;
     margin-left: 9px;
     border-radius: 9px;
@@ -16759,6 +16748,11 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     margin-top: 19px;
 }
 
+.panel-heading.plaback_head_data_change input{
+    margin-top: 0px;
+ 
+}
+
 .playback_head button#savebutton {
     /* margin: 0px 9px; */
     margin-top: 13px;
@@ -16786,4 +16780,9 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 
 .cover_div_search.geofence_covered_search {
     margin-top: 10px;
+}
+
+.col-lg-4.col-md-4.cover_alert_manager {
+    background: #fff;
+    padding: 7px;
 }
