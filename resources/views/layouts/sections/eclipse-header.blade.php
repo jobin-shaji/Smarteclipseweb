@@ -287,64 +287,64 @@
 </div>
                             <ul style="margin-left:-3%!important;font-weight: 600;font-size:.9em;line-height: 22px;">
                                 <span style="margin:3% 0 1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/fuel-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/fuel-pop.png')}}" width="22" height="22">
                                 &nbsp;FUEL STATUS ON WEB/MOBILE APPS 
                                 </li>
                             </span>
                                 
                               <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important;width:100%;"><img src="assets/images/immobilizer-pop.png" width="22" height="22">
+                                <li style="list-style: none!important;width:100%;"><img src="{{url('assets/images/immobilizer-pop.png')}}" width="22" height="22">
                                 &nbsp;IMMOBILIZER
                                 </li></span>
                                <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/driver-score-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/driver-score-pop.png')}}" width="22" height="22">
                                 &nbsp;DRIVER SCORE
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/ubi-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/ubi-pop.png')}}" width="22" height="22">
                                 &nbsp;UBI
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/route-playback-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/route-playback-pop.png')}}" width="22" height="22">
                                 &nbsp;HISTORY(ROUTE PLAYBACK,ALERTS)  UPTO 6 MONTHS
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/e-tolling-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/e-tolling-pop.png')}}" width="22" height="22">
                                 &nbsp;E TOLLING
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/traffic-offence-alert-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/traffic-offence-alert-pop.png')}}" width="22" height="22">
                                 &nbsp;TRAFFIC OFFENCE ALERTS
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/route-deviation-aler-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/route-deviation-aler-pop.png')}}" width="22" height="22">
                                 &nbsp;ROUTE DEVIATION ALERTS
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/radar-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/radar-pop.png')}}" width="22" height="22">
                                 &nbsp;RADAR
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/geofence-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/geofence-pop.png')}}" width="22" height="22">
                                 &nbsp;GEOFENCE    UPTO 5
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/aggregation-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/aggregation-pop.png')}}" width="22" height="22">
                                 &nbsp;AGGREGATION PLATFORM
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important;width:100%;"><img src="assets/images/share-location.png" width="22" height="22">
+                                <li style="list-style: none!important;width:100%;"><img src="{{url('assets/images/share-location.png')}}" width="22" height="22">
                                 &nbsp;SHARE LOCATION TO OTHER APPLICATIONS
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/daily-report-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/daily-report-pop.png')}}" width="22" height="22">
                                 &nbsp;DAILY REPORT SUMMARY TO REGISTERED EMAIL
                                 </li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/sms-alert-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/sms-alert-pop.png')}}" width="22" height="22">
                                 &nbsp;EMERGENCY ALERTS AS SMS/EMAIL/PUSH NOTIFICATIONS</li></span>
                                 <span style="margin:1% 0;float:left;width:100%;">
-                                <li style="list-style: none!important"><img src="assets/images/theft-mode-pop.png" width="22" height="22">
+                                <li style="list-style: none!important"><img src="{{url('assets/images/theft-mode-pop.png')}}" width="22" height="22">
                                 &nbsp;THEFT MODE
                                 </li></span>
                             </ul>
