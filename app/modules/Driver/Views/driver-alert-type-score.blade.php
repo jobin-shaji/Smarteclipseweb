@@ -9,7 +9,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h2 class="page-title">Performance Score</h2>
+                <h2 class="page-title">Update Performance Score</h2>
                 @if(Session::has('message'))
                 <div class="pad margin no-print">
                     <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
