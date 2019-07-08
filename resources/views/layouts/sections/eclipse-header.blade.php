@@ -280,62 +280,76 @@
     </form>
 
     <div id="headerModal" class="modal_for_dash">
-                       <!-- Modal content -->
-                           <div class="modal-content">
-                              <div class="modal-header" onclick="closePremium()">
-                                Go Premium Now <span class="close" >×</span>
-                                </div>
-                          <div class="container">  <br>
-                            <ul>
-                                <li>
-                                    FUEL STATUS ON WEB/MOBILE APPS 
+          
+<div class="modal-content" style="max-width:28%;z-index:9999!important">
+<div class="modal-header" onclick="closePremium()">
+<span style="font-weight:600;padding:0 3%;color:#fb9a18;width:80%;font-size:18px">Go Premium Now</span> <span class="close">×</span>
+</div>
+                            <ul style="margin-left:-3%!important;font-weight: 600;font-size:.9em;line-height: 22px;">
+                                <span style="margin:3% 0 1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/fuel-pop.png" width="22" height="22">
+                                &nbsp;FUEL STATUS ON WEB/MOBILE APPS 
                                 </li>
-                                <li>
-                                    IMMOBILIZER
-                                </li>
-                                <li>
-                                    DRIVER SCORE
-                                </li>
-                                <li>
-                                    UBI
-                                </li>
-                                <li>
-                                    HISTORY(ROUTE PLAYBACK,ALERTS)  UPTO 6 MONTHS
-                                </li>
-                                <li>
-                                    E TOLLING
-                                </li>
-                                <li>
-                                    TRAFFIC OFFENCE ALERTS
-                                </li>
-                                <li>
-                                    ROUTE DEVIATION ALERTS
-                                </li>
-                                <li>
-                                    RADAR
-                                </li>
-                                <li>
-                                    GEOFENCE    UPTO 5
-                                </li>
-                                <li>
-                                    AGGREGATION PLATFORM
-                                </li>
-                                <li>
-                                    SHARE LOCATION TO OTHER APPLICATIONS
-                                </li>
-                                <li>
-                                    DAILY REPORT SUMMARY TO REGISTERED EMAIL
-                                </li>
-                                <li>EMERGENCY ALERTS AS SMS/EMAIL/PUSH NOTIFICATIONS</li>
-                                <li>
-                                    THEFT MODE
-                                </li>
+                            </span>
+                                
+                              <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important;width:100%;"><img src="assets/images/immobilizer-pop.png" width="22" height="22">
+                                &nbsp;IMMOBILIZER
+                                </li></span>
+                               <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/driver-score-pop.png" width="22" height="22">
+                                &nbsp;DRIVER SCORE
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/ubi-pop.png" width="22" height="22">
+                                &nbsp;UBI
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/route-playback-pop.png" width="22" height="22">
+                                &nbsp;HISTORY(ROUTE PLAYBACK,ALERTS)  UPTO 6 MONTHS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/e-tolling-pop.png" width="22" height="22">
+                                &nbsp;E TOLLING
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/traffic-offence-alert-pop.png" width="22" height="22">
+                                &nbsp;TRAFFIC OFFENCE ALERTS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/route-deviation-aler-pop.png" width="22" height="22">
+                                &nbsp;ROUTE DEVIATION ALERTS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/radar-pop.png" width="22" height="22">
+                                &nbsp;RADAR
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/geofence-pop.png" width="22" height="22">
+                                &nbsp;GEOFENCE    UPTO 5
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/aggregation-pop.png" width="22" height="22">
+                                &nbsp;AGGREGATION PLATFORM
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important;width:100%;"><img src="assets/images/share-location.png" width="22" height="22">
+                                &nbsp;SHARE LOCATION TO OTHER APPLICATIONS
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/daily-report-pop.png" width="22" height="22">
+                                &nbsp;DAILY REPORT SUMMARY TO REGISTERED EMAIL
+                                </li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/sms-alert-pop.png" width="22" height="22">
+                                &nbsp;EMERGENCY ALERTS AS SMS/EMAIL/PUSH NOTIFICATIONS</li></span>
+                                <span style="margin:1% 0;float:left;width:100%;">
+                                <li style="list-style: none!important"><img src="assets/images/theft-mode-pop.png" width="22" height="22">
+                                &nbsp;THEFT MODE
+                                </li></span>
                             </ul>
-                            <hr><div style="text-align: center;">
-                            Contact For assistance +91 9544313131
-                            </div><hr>
-                          </div>
-                          </div>
-                          
-                       <!-- Modal content -->
-                        </div>
+<div style="padding:3% 6%;;font-weight:600;font-size:20px;color:#fb9a18;border-top: 1px solid #e9ecef">
+Contact for Assistance +91 9544313131</div>
+
+</div>   
+    </div>
