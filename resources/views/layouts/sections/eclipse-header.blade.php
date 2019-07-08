@@ -94,7 +94,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/vehicles/create"> Add Vehicle <span></span></a>
                                 <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>  
-                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver's History<span></span></a>                             
+                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver's Update History<span></span></a>                             
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -104,7 +104,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>
                                 <a class="dropdown-item" href="{{url('/drivers')}}"> List Driver<span></span></a>  
-                                <a class="dropdown-item" href="{{url('/performance-score')}}"> Performance Score<span></span></a>                              
+                                <a class="dropdown-item" href="{{url('/performance-score')}}"> Update Performance Score<span></span></a>                              
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -113,17 +113,12 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                
-                                <a class="dropdown-item" href="{{url('/alert')}}"> List Alerts<span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/alert')}}"> List Alerts<span></span></a>   
+
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                            
                             </div>
                         </li>
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Alert Manager
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>                               
-                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                               
-                            </div>
-                        </li>
+                        
                          <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Geofence 
                             </a>
