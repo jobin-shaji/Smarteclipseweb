@@ -344,10 +344,14 @@ class GpsController extends Controller {
         )
         ->with('fromUser:id,username')
         ->where('to_user_id',$user_id)
+        ->with('gpsTransferItems');
         ->orderBy('id','DESC')
         ->get();
         return DataTables::of($devices)
             ->addIndexColumn()
+            ->addColumn('count',function($gps_transfer){
+                return $gps_transfer->gpsTransferItems->count();
+             })
             ->addColumn('action', function ($devices) {
                 if($devices->accepted_on == null)
                 {
