@@ -585,23 +585,23 @@ else
 
         $vehicles_details= DB::select('select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= 10000');
 
-        // $queries = DB::getQueryLog();
-        // $last_query = end($queries);
-        // dd($last_query);
-        // Gps::Select(
-        //    'id',
-        //     'lat',
-        //     'lat_dir',
-        //     'lon',
-        //     'lon_dir',
-        //     'mode',
-        //     \DB::raw( '')
-        //    ) 
-        //  ->having('distance', '<=', $radius)  
-        //  ->with('vehicle:gps_id,id,name,register_number')
-        // ->whereIn('id',$single_vehicle)                
+        $queries = DB::getQueryLog();
+        $last_query = end($queries);
+        dd($last_query);
+        Gps::Select(
+           'id',
+            'lat',
+            'lat_dir',
+            'lon',
+            'lon_dir',
+            'mode',
+            \DB::raw('(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance ')
+           ) 
+         ->having('distance', '<=', $radius)  
+         ->with('vehicle:gps_id,id,name,register_number')
+        ->whereIn('id',$single_vehicle)                
                       
-        // ->get();
+        ->get();
        
         $response_track_data=$this->vehicleDataList($vehicles_details);        
        if($response_track_data){     
