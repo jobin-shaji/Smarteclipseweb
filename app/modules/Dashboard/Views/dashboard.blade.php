@@ -217,9 +217,9 @@
               <div class="col-lg-12">
                <div class="st-actionContainer right-bottom">
                   <div class="st-panel">
-                     <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
+                     <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
                         <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
-                     </div>
+                     </div> -->
                      <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
 
                      @foreach ($vehicles as $vehicle)       
@@ -281,10 +281,10 @@
                                         <select id="search_radius" class="form-control">
                                           <option selected>KM</option>
                                           <option value="10">10 KM</option>
-                                          <option value="30">30 KM</option>
+                                         <!--  <option value="30">30 KM</option>
                                           <option value="50">50 KM</option>
                                           <option value="75">75 KM</option>
-                                          <option value="100">100 KM</option>
+                                          <option value="100">100 KM</option> -->
                                         </select>
                                       </div>
                                   </div>
@@ -309,7 +309,7 @@
                        <!-- Modal content -->
                            <div class="modal-content">
                               <div class="modal-header">
-                                <span class="close">×</span>
+                                <span class="close"></span>
                                 
                           <div class="container">  
                             <div class="container">

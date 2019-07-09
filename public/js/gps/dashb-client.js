@@ -144,12 +144,12 @@ function driverScore(res){
    
 		       var marker = new google.maps.Marker({
 		           position: location,
-		           title:"Eclips",
+		           title:"",
 		           icon:icon
 		       });
 		       var infowindow = new google.maps.InfoWindow();
-		       google.maps.event.addListener(marker, 'click', function() {
-		       		getVehicle(2);
+		       google.maps.event.addListener(marker, 'mouseover', function() {
+		       		getVehicle(14);
 		           infowindow.setContent(title);
 		           infowindow.open(map, this);
 		        });

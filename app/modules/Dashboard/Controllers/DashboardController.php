@@ -275,10 +275,10 @@ class DashboardController extends Controller
         $fuel_status=$gps->fuel_status;
         $speed=$gps->speed;
         $odometer=$gps->odometer;
-         $mode=$gps->mode;
-         $satelite=$gps->satllite;
-         $latitude=$gps->lat;
-         $longitude=$gps->lon;
+        $mode=$gps->mode;
+        $satelite=$gps->satllite;
+        $latitude=$gps->lat;
+        $longitude=$gps->lon;
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 

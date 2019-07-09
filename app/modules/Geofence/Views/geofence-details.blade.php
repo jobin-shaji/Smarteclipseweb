@@ -32,7 +32,7 @@
                         
          
             
-              <input type="hidden" name="hd_id" id="hd_id" value="{{$id}}">
+              <input type="hidden" name="hd_id" id="g_id" value="{{$id}}">
               <div id="map" style=" width:100%;height:520px; margin-top: 10px;"></div>
        
 

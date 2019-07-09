@@ -2,8 +2,8 @@
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
- var latMap=10.014550;
- var lngMap=76.293159;
+ var latMap=25.3548;
+ var lngMap=51.1839;
  var map;
 
 function initMap(res) {   
@@ -13,7 +13,7 @@ function initMap(res) {
           mapTypeId: 'terrain'
         });
         var url = 'geofence/show';
-        var geo_id= document.getElementById('hd_id').value;
+        var geo_id= document.getElementById('g_id').value;
         var data = {
           id : geo_id
         };

@@ -824,9 +824,6 @@ class VehicleController extends Controller {
                               )
                               ->where('id',$get_vehicle->gps_id)
                               ->first();
-            // $datetime1 = strtotime($track_data->dateTime);
-            // $datetime2 = strtotime(Date('Y-m-d H:i:s'));
-            // $interval  = abs($datetime2 - $datetime1);
             $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
 
@@ -1094,11 +1091,15 @@ class VehicleController extends Controller {
             'ignition as ign',
             'device_time as datetime',
             'speed',
-            'time'       
+            'time',
+            'gps_fix'       
         )
-        ->where('device_time', '>=',$request->from_time)
-        ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)                
+        ->where('created_at', '>=',$request->from_time)
+        ->where('created_at', '<=',$request->to_time)
+        ->where('vehicle_id',$request->id)   
+        ->where('latitude','>',0)  
+        ->orderBy('created_at') 
+        ->limit(145)        
         ->get();
         $playback=array();
         $playback_point= array();
