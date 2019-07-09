@@ -115,7 +115,9 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/route/create')}}"> Add Route <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>  
+
+                                 <a class="dropdown-item" href="{{url('/assign/route-vehicle')}}"> Assign Route Vehicle<span></span></a>                               
                             </div>
                         </li>
                         <li class="nav-item dropdown">
