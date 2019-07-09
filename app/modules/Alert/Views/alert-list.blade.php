@@ -29,7 +29,7 @@
                                 <th>Alert</th>
                                 <th>Vehicle Name</th>
                                 <th>Register Number</th>
-                                <th>Location</th>
+                                <!-- <th>Location</th> -->
                                 <th>DateTime</th>
                                 <th>Action</th>
                               </tr>

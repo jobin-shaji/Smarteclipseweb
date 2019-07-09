@@ -34,7 +34,7 @@ function callBackDataTable(){
             {data: 'alert_type.description', name: 'alert_type.description'},
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'location', name: 'location'},
+            // {data: 'location', name: 'location'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],
