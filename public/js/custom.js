@@ -3,12 +3,12 @@
 
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
-        maxDate: new Date() 
+        // maxDate: new Date() 
     });
 
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        maxDate: new Date() 
+        // maxDate: new Date() 
  });
 
 function getUrl(){
