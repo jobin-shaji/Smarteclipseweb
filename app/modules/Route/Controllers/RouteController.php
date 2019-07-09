@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Route\Models\RouteArea;
+use App\Modules\Vehicle\Models\VehicleRoute;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use DataTables;
@@ -140,6 +142,67 @@ class RouteController extends Controller {
             'message' => 'Route restored successfully'
         ]);
     }
+
+    // assign route list
+    public function AssignRouteList()
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+        $routes=Route::select('id','name','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+         return view('Route::assign-route-vehicle-list',['vehicles'=>$vehicles,'routes'=>$routes]); 
+    }
+
+
+
+
+    public function getAssignRouteVehicleList(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+       // $client_id= $request->client;         
+        $vehicle_id= $request->vehicle_id;           
+        $routes = $request->route_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $fromDate = date("Y-m-d", strtotime($from_date));
+        $toDate = date("Y-m-d", strtotime($to_date));
+
+
+        $router = VehicleRoute::select('id','vehicle_id','route_id','date_from','date_to')
+        ->where('vehicle_id',$vehicle_id)
+        ->where('route_id',$routes)
+        ->where('client_id',$client_id)
+        ->get()->count();
+        if($router==0)
+        {
+             $route_area = VehicleRoute::create([
+                    'route_id' => $routes,
+                    'vehicle_id' => $vehicle_id,
+                    'date_from' => $fromDate,
+                    'date_to' => $toDate,
+                    'client_id' => $client_id,
+                    'status' => 1
+                ]);
+        }        
+        $route = VehicleRoute::select(
+                    'id',
+                    'vehicle_id',
+                    'route_id',
+                    'date_from',
+                     'date_to'                                      
+                    )
+        ->with('vehicleRoute:id,name')
+       ->with('vehicle:id,name,register_number')
+        ->where('client_id',$client_id)
+        ->get();
+        return DataTables::of($route)
+            ->addIndexColumn()          
+            ->make();
+    }
+
 
     //////////////////////////////////////RULES/////////////////////////////
     //route create rules
