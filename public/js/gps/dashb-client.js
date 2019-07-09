@@ -124,7 +124,7 @@ function driverScore(res){
 	         var scale=JSONObject[i].vehicle_scale;
 	         var fillOpacity=JSONObject[i].opacity;
 	         var strokeWeight=JSONObject[i].strokeWeight;
-             addMarker(loc,title,car_color,path,scale,fillOpacity,strokeWeight); 
+             addMarker(loc,title,car_color,path,scale,fillOpacity,strokeWeight,gpsID); 
              if(track_flag!=0){
                addVehicleToVehicleList(vehicle_name,reg,gpsID);
          	 }
@@ -132,7 +132,7 @@ function driverScore(res){
             setMapOnAll(map);
 
 	     }
-	 	 function addMarker(location,title,car_color,path,scale,fillOpacity,strokeWeight) {
+	 	 function addMarker(location,title,car_color,path,scale,fillOpacity,strokeWeight,gpsID) {
        		var icon = { // car icon
                    path: path,
                    scale:scale,
@@ -150,7 +150,8 @@ function driverScore(res){
 		       });
 		       var infowindow = new google.maps.InfoWindow();
 		       google.maps.event.addListener(marker, 'mouseover', function() {
-		       		getVehicle(14);
+		       	// alert(vehicle_id);
+		       		getVehicle(gpsID);
 		           infowindow.setContent(title);
 		           infowindow.open(map, this);
 		        });
