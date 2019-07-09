@@ -16,64 +16,53 @@ Create Geofence
       <!-- ============================================================== -->
       <!-- Bread crumb and right sidebar toggle -->
       <!-- ============================================================== -->
-      <div class="page-breadcrumb">
+      <div class="page-breadcrumb route_breadcumb">
          <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
+            <div class="col-lg-4 d-flex no-block align-items-center">
                <h4 class="page-title">Please plot points on the map to create geo fence</h4>
             </div>
-         </div>
-      </div>
-      <div class="card-body map_card_body">
-        <div class="panel-heading playback_head">
-         <div class="cover_div_search playback_page fencepage_head">
-            <div class="row">
-               <div class="col-lg-8 col-md-12">
-                  <div class="form-group">
+            <div class="col-lg-8">
+     
+                  <div style="float:left!important">
+                   <div class="form-group">
                      
                      <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add fence name" name="name" id="name" value="" required> 
                   </div>
-                  @if ($errors->has('name'))
-                  <span class="help-block">
-                  <strong class="error-text">{{ $errors->first('name') }}</strong>
-                  </span>
-                  @endif
                </div>
-               <div class="col-lg-4 col-md-12">
+<div style="float:left!important">
                   <div class="form-group">  
-                     <button class="btn btn-xs btn-info form-control btn-play-back" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i> SAVE FENCE</button>                                
+                     <button class="btn btn-xs btn-info form-control" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i> SAVE FENCE</button>                                
                   </div>
-               </div>
-            </div>
-         </div>
-         </div>
-        
-         <form onsubmit="return locationSearch();">
-         <div class="panel-heading playback_head2">
-         <div class="cover_div_search playback_page fencepage_head">
-            <div class="row">
-               <div class="col-lg-8 col-md-12">
-                  <div class="form-group">
-                     
-                     <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required> 
                   </div>
-                
-               </div>
-               <div class="col-lg-4 col-md-12">
-                  <div class="form-group">  
-                     <button class="btn btn-xs btn-info form-control btn-play-back" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                                
-                  </div>
-               </div>
-            </div>
+                               <div style="float:left!important;margin:0 0 0 3%">   
+<div class="form-group">
+                           <form onsubmit="return locationSearch();">
+                           <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  </form>
+                          </div>
+                       </div>
+<div style="float:left!important">
+                           <div class="form-group">  
+                           <button class="btn btn-xs btn-info form-control" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                                
+                        </div>
+                      </div> 
+                    </div>    
+   </div>
+                      
+
+              
+
+               </div>   
+             </div>
          </div>
-         </div>
-         </form>
 
 
-
-
-
-         <div id="map" style=" width:100%;height:540px;"></div>
       </div>
+      </div>
+
+
+     
+         <div id="map" style=" width:100%;height:540px;"></div>
+     
       <footer class="footer text-center">
          All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
       </footer>
