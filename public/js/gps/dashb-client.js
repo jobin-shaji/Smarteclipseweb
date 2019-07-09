@@ -94,6 +94,7 @@ function driverScore(res){
              if(map_flag==0){
              	map.panTo(new google.maps.LatLng(lat,lng));
              	map.setZoom(13);
+             	map.setOptions({ minZoom:5, maxZoom: 17 });
              	// map_flag=1;
               }
              var gpsID=JSONObject[i].id;
@@ -153,9 +154,26 @@ function driverScore(res){
 		           infowindow.setContent(title);
 		           infowindow.open(map, this);
 		        });
+
+		        google.maps.event.addListener(marker, 'mouseout', function() {
+		           infowindow.close(map, this);
+		        });
+
+
+
+
 		        markers.push(marker); 
 
      		  }
+
+     		  marker.on('mouseout', function (e) {
+     		  	alert(1);
+            		this.closePopup();
+       			 });
+
+
+
+
 
 
      		 function setMapOnAll(map) {
@@ -312,5 +330,6 @@ function driverScore(res){
 		
 		}
 
+		
 
 		

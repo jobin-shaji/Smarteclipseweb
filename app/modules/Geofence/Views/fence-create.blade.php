@@ -40,12 +40,35 @@ Create Geofence
                </div>
                <div class="col-lg-4 col-md-12">
                   <div class="form-group">  
-                     <button class="btn btn-xs btn-info form-control btn-play-back" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i>SAVE FENCE</button>                                
+                     <button class="btn btn-xs btn-info form-control btn-play-back" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i> SAVE FENCE</button>                                
                   </div>
                </div>
             </div>
          </div>
          </div>
+        
+         <form onsubmit="return locationSearch();">
+         <div class="panel-heading playback_head2">
+         <div class="cover_div_search playback_page fencepage_head">
+            <div class="row">
+               <div class="col-lg-8 col-md-12">
+                  <div class="form-group">
+                     
+                     <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required> 
+                  </div>
+                
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <div class="form-group">  
+                     <button class="btn btn-xs btn-info form-control btn-play-back" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                                
+                  </div>
+               </div>
+            </div>
+         </div>
+         </div>
+         </form>
+
+
 
 
 
@@ -58,7 +81,7 @@ Create Geofence
 </section>
 @section('script')
 <script src="{{asset('js/gps/geofence.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,places&callback=initMap"
    async defer></script>
 @endsection
 @endsection
