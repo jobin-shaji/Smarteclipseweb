@@ -11546,6 +11546,19 @@ ul.list-style-none li a:hover {
 .page-breadcrumb {
     padding: 20px 20px 0 50px
 }
+.page-breadcrumb1 {
+    padding: 0 20px 0 50px
+}
+.btn1 {
+    background: #f7b018;
+    border: none;
+    color: white;
+    padding: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    margin: 0 6px;
+}
 
 .page-breadcrumb .page-title {
     margin-bottom: 0px;
@@ -16581,13 +16594,20 @@ ul.navbar-menu.animate img {
 
 
 .panel-heading.playback_head {
-    padding-left: 46px;
+    padding-left: 5%;
     height: 36px;
     padding-top: 0px;
     margin-top: 15px;
     position: fixed;
     z-index: 1;
     /* border-radius: 45px; */
+}
+
+.panel-heading.playback_head2 {
+   position: fixed;
+    z-index: 1;
+    margin: 10% 0 0 5%;
+
 }
 
 .cover_div_search.playback_page {
@@ -16747,6 +16767,9 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 .panel-heading.playback_head input {
     margin-top: 19px;
 }
+.panel-heading.playback_head2 input {
+    margin-top: 19px;
+}
 
 .panel-heading.plaback_head_data_change input{
     margin-top: 0px;
@@ -16754,6 +16777,13 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 }
 
 .playback_head button#savebutton {
+    /* margin: 0px 9px; */
+    margin-top: 13px;
+    padding-top: 12px;
+    height: 36px;
+}
+
+.playback_head2 button#search_location {
     /* margin: 0px 9px; */
     margin-top: 13px;
     padding-top: 12px;
@@ -16786,3 +16816,20 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     background: #fff;
     padding: 7px;
 }
+
+.cover_search_button_route {
+    margin: 0px 0px 0px 0px !important;
+}
+
+
+.page-breadcrumb.page-breadcrumb1.route_breadcumb {
+    height: 47px;
+    padding: -2px !important;
+    margin-top: 10px;
+}
+
+.route_breadcumb .btn{
+    margin:  0px 6px !important;
+}
+
+
