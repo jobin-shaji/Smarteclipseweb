@@ -220,8 +220,16 @@ class VehicleController extends Controller {
     // save documents
     public function saveDocuments(Request $request)
     {
-        $rules = $this->documentCreateRules();
-        $this->validate($request, $rules);
+        $custom_messages = [
+        'path.required' => 'File cannot be blank'
+        ];
+        if($request->document_type_id == 1){
+            $rules = $this->documentCreateRules();
+        }else{
+            $rules = $this->cunstomDocCreateRules();
+        }
+     
+        $this->validate($request, $rules, $custom_messages);
         $file=$request->path;
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   time().'.'.$getFileExt;
@@ -259,8 +267,10 @@ class VehicleController extends Controller {
            return view('Vehicle::404');
         }
         $rules = $this->documentUpdateRules();
-        $this->validate($request, $rules);
-
+        $custom_messages = [
+        'path.required' => 'File cannot be blank'
+        ];
+        $this->validate($request, $rules,$custom_messages);
         $file=$request->path;
         if($file){
             $old_file = $vehicle_doc->path;
@@ -1350,6 +1360,17 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'nullable',
+            'path' => 'required'
+
+        ];
+        return  $rules;
+    }
+
+    public function cunstomDocCreateRules(){
+        $rules = [
+            'vehicle_id' => 'required',
+            'document_type_id' => 'required',
+            'expiry_date' => 'required',
             'path' => 'required'
 
         ];

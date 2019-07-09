@@ -46,7 +46,7 @@
                       <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
 
                       <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Document Type</label>
+                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Document Type </label>
                                  <div class="form-group has-feedback">
                                      <select class="form-control {{ $errors->has('document_type_id') ? ' has-error' : '' }}" placeholder="Document Type" name="document_type_id" value="{{ old('document_type_id') }}" required>
                           <option value="" selected disabled>Select Document Type</option>

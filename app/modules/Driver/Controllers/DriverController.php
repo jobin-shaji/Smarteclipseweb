@@ -116,19 +116,9 @@ class DriverController extends Controller {
 
     public function performanceScore()
     {
-        $client_id=\Auth::user()->client->id;
-        $client_alert_type_points = ClientAlertPoint::select(
-                                    'id', 
-                                    'alert_type_id',                   
-                                    'driver_point',
-                                    'client_id')
-                                    ->where('client_id',$client_id)
-                                    ->get();     
-        if($client_alert_type_points == null)
-        {
-           return view('Driver::404');
-        }
-        return view('Driver::driver-alert-type-score',['client_alert_type_points' => $client_alert_type_points,'client_id' => $client_id]);
+        $client =\Auth::user()->client;
+        $driver_points = $client->driver_points;
+       return view('Driver::driver-alert-type-score',['driver_points' => $driver_points,'client_id' => $client->id]);
     }
 
     // update alert type point
@@ -136,15 +126,42 @@ class DriverController extends Controller {
     {
         $alert_type__first_id=1;
         $client_id=$request->id;
-        foreach ($request->points as $point) {
-            $alert_type_id=$alert_type__first_id++;
-            $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+        $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
                     ->where('client_id',$client_id)
-                    ->where('alert_type_id',$alert_type_id)
+                    ->where('alert_type_id',1)
                     ->first();
-            $alert_type_point->driver_point = $point;
-            $alert_type_point->save();
-        }
+         $alert_type_point->driver_point = $request->harsh_braking;
+         $alert_type_point->save();
+         $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',12)
+                    ->first();
+         $alert_type_point->driver_point = $request->over_speed;
+         $alert_type_point->save();
+          $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',13)
+                    ->first();
+         $alert_type_point->driver_point = $request->tilt;
+         $alert_type_point->save();
+         $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',14)
+                    ->first();
+         $alert_type_point->driver_point = $request->impact;
+         $alert_type_point->save();
+         $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',15)
+                    ->first();
+         $alert_type_point->driver_point = $request->over_speed_gf_entry;
+         $alert_type_point->save();
+         $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',16)
+                    ->first();
+         $alert_type_point->driver_point = $request->over_speed_gf_exit;
+         $alert_type_point->save();
         $request->session()->flash('message', 'Performance score updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('performance-score'));  
@@ -193,6 +210,7 @@ class DriverController extends Controller {
         ]);
     }
 
+
     // restore emplopyee
     public function activateDriver(Request $request)
     {
@@ -213,5 +231,17 @@ class DriverController extends Controller {
             'message' => 'Driver restored successfully'
         ]);
     }
+//update driver performance
 
+
+     public function driverUpdateperformanceRules($driver)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'mobile' => 'required|numeric'
+            
+        ];
+        return  $rules;
+    }
 }

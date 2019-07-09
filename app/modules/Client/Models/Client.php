@@ -18,6 +18,13 @@ class Client extends Model
   {
     return $this->belongsTo('App\Modules\User\Models\User')->withTrashed();
   }
+  
+
+  
+    public function driver_points(){
+      return $this->hasMany('App\Modules\Client\Models\ClientAlertPoint','client_id','id')
+      ->whereIn('alert_type_id',[1,12,13,14,15,16]);
+    }
 
   // // client
   // public function subDealer()
