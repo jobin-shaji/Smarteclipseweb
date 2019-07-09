@@ -10,5 +10,9 @@ Route::get('/route/{id}/details','RouteController@details')->name('route.details
 Route::post('route/delete','RouteController@deleteRoute')->name('route.delete');
 Route::post('route/activate','RouteController@activateRoute')->name('route.activate');
 
+Route::get('/assign/route-vehicle','RouteController@AssignRouteList')->name('assign.route.vehicle');
+
+Route::post('/assign-route-vehicle-list','RouteController@getAssignRouteVehicleList')->name('assign-route-vehicle-list');
+
 
 });
