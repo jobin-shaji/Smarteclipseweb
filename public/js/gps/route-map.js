@@ -7,6 +7,8 @@
       var markersList=[];
       var lat;
       var lng;
+      var place_name="";
+
 
       function initMap() {
 
@@ -17,6 +19,9 @@
           center: heightAshbury,
           mapTypeId: 'roadmap'
         });
+         var input1 = document.getElementById('search_place'); 
+         autocomplete1 = new google.maps.places.Autocomplete(input1);
+         var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
 
         poly = new google.maps.Polyline({
             strokeColor: '#000000',
@@ -133,3 +138,22 @@
         $(function() {
           initMap();
         });
+
+    // ------------------------------------------
+
+    function locationSearch(){
+       place_name=$('#search_place').val();
+       var geocoder =  new google.maps.Geocoder();
+           geocoder.geocode( { 'address':place_name}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              var lat=results[0].geometry.location.lat();
+              var lng=results[0].geometry.location.lng();
+              map.panTo(new google.maps.LatLng(lat,lng));
+             
+            } else {
+              alert("Something got wrong " + status);
+            }
+          });
+        return false;
+    }
+  // ------------------------------------------------------
