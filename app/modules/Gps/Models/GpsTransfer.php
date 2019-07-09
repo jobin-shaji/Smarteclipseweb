@@ -40,6 +40,6 @@ class GpsTransfer extends Model
 
     public function gpsTransferItems()
     {
-        return $this->hasMany('App\Modules\Gps\Models\gpsTransferItems','gps_transfer_id','id');
+        return $this->hasMany('App\Modules\Gps\Models\GpsTransferItems','gps_transfer_id','id');
     }
 }
