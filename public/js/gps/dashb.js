@@ -14,6 +14,7 @@ $(document).ready(function () {
 
 	// }, 5000);
 });
+ var activeElement;
 
 function dbcount(res){
 	    $('#gps').text(res.gps);

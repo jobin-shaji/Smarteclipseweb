@@ -84,7 +84,7 @@ function driverScore(res){
 	function vehicleTrack(res){	
 
              var JSONObject = res.user_data;
-             console.log(JSONObject);
+
              var marker, i;
 
 
@@ -156,6 +156,7 @@ function driverScore(res){
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
+
 		           infowindow.close(map, this);
 		        });
 
@@ -166,10 +167,7 @@ function driverScore(res){
 
      		  }
 
-     		  marker.on('mouseout', function (e) {
-     		  	alert(1);
-            		this.closePopup();
-       			 });
+     		  
 
 
 
