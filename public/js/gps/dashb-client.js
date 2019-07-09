@@ -155,11 +155,10 @@ function driverScore(res){
 		           infowindow.open(map, this);
 		        });
 
-		        google.maps.event.addListener(marker, 'mouseout', function() {
+		        // google.maps.event.addListener(marker, 'mouseout', function() {
 
-		           infowindow.close(map, this);
-		        });
-
+		        //    infowindow.close(map, this);
+		        // });
 
 
 
