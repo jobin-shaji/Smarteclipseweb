@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <th>From User</th>
+                              <th>From </th>
                               <th>Transferred On</th>
                               <th>Count</th>
                               <th>Action</th>

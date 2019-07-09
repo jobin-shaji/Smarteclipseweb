@@ -344,7 +344,7 @@ class GpsController extends Controller {
         )
         ->with('fromUser:id,username')
         ->where('to_user_id',$user_id)
-        ->with('gpsTransferItems');
+        ->with('gpsTransferItems')
         ->orderBy('id','DESC')
         ->get();
         return DataTables::of($devices)
