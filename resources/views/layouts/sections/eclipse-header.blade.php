@@ -78,54 +78,30 @@
                             </a>
                         </li>
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Device
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/gps-new')}}"> New Arrivals <span></span></a>
-                                <a class="dropdown-item" href="{{url('/gps-client')}}"> List Device<span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/gps-client')}}"> List GPS<span></span></a>                               
                             </div>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Vehicle
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/vehicles/create"> Add Vehicle <span></span></a>
                                 <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>  
-                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver's History<span></span></a>                             
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Driver
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>
-                                <a class="dropdown-item" href="{{url('/drivers')}}"> List Driver<span></span></a>  
-                                <a class="dropdown-item" href="{{url('/performance-score')}}"> Performance Score<span></span></a>                              
+                                <a class="dropdown-item" href="{{url('/drivers')}}"> List Drivers<span></span></a>  
+                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver's Update History<span></span></a>                             
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Alerts
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                               
-                                <a class="dropdown-item" href="{{url('/alert')}}"> List Alerts<span></span></a>                               
-                            </div>
-                        </li>
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Alert Manager
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>                               
-                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                               
-                            </div>
-                        </li>
+                        
                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Geofence 
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
@@ -134,7 +110,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Routes 
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
@@ -142,8 +118,18 @@
                                 <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>                               
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                             
+                                <a class="dropdown-item" href="{{url('/performance-score')}}"> Update Performance Score<span></span></a>     
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                         
+                            </div>
+                        </li>
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: green !important" onclick="openPremium()"> Go Premium    
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: green !important" onclick="openPremium()"> GO PREMIUM    
                             </a>
                         </li>
 <!--                           <li class="nav-item dropdown">

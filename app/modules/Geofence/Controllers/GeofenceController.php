@@ -125,8 +125,9 @@ class GeofenceController extends Controller {
 
      public function geofenceShow(Request $request){  
             
-            $geofence  =  Geofence:: select(['cordinates'])->where('id',$request->id)->first();  
-            $cordinates=$geofence->cordinates; 
+            $coordinates  =  Geofence:: select(['id','cordinates'])->where('id',$request->id)->first();  
+            
+            $cordinates=$coordinates->cordinates; 
 
                $polygons = array();
                 foreach ($cordinates as $cord) {
@@ -140,6 +141,7 @@ class GeofenceController extends Controller {
                 'cordinates' => $polygons,                
                 'status' => 'cordinate'
             ]);
+
 
     }
 

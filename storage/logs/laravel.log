@@ -92,3 +92,47 @@
 #7 /var/www/html/laravel/pepsu/server.php(21): require_once('/var/www/html/l...')
 #8 {main}
 "} 
+[2019-07-08 17:30:47] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:168)
+[stacktrace]
+#0 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(102): Illuminate\\Log\\LogManager->resolve(NULL)
+#1 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(90): Illuminate\\Log\\LogManager->get(NULL)
+#2 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(498): Illuminate\\Log\\LogManager->driver()
+#3 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(114): Illuminate\\Log\\LogManager->error('Class 'Symfony\\\\...', Array)
+#4 /var/www/html/laravel/gps-/app/Exceptions/Handler.php(37): Illuminate\\Foundation\\Exceptions\\Handler->report(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError))
+#5 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(353): App\\Exceptions\\Handler->report(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError))
+#6 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(132): Illuminate\\Foundation\\Console\\Kernel->reportException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError))
+#7 /var/www/html/laravel/gps-/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#8 {main}
+"} 
+[2019-07-08 17:30:47] laravel.ERROR: Class 'Symfony\Component\Finder\Finder' not found {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Class 'Symfony\\Component\\Finder\\Finder' not found at /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php:88)
+[stacktrace]
+#0 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(65): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->getConfigurationFiles(Object(Illuminate\\Foundation\\Application))
+#1 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(39): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles(Object(Illuminate\\Foundation\\Application), Object(Illuminate\\Config\\Repository))
+#2 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(211): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap(Object(Illuminate\\Foundation\\Application))
+#3 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(297): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#4 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(120): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#5 /var/www/html/laravel/gps-/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#6 {main}
+"} 
+[2019-07-08 18:26:25] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:168)
+[stacktrace]
+#0 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(102): Illuminate\\Log\\LogManager->resolve(NULL)
+#1 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(90): Illuminate\\Log\\LogManager->get(NULL)
+#2 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(498): Illuminate\\Log\\LogManager->driver()
+#3 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(114): Illuminate\\Log\\LogManager->error('Class 'Symfony\\\\...', Array)
+#4 /var/www/html/laravel/gps-/app/Exceptions/Handler.php(37): Illuminate\\Foundation\\Exceptions\\Handler->report(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError))
+#5 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(353): App\\Exceptions\\Handler->report(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError))
+#6 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(132): Illuminate\\Foundation\\Console\\Kernel->reportException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError))
+#7 /var/www/html/laravel/gps-/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#8 {main}
+"} 
+[2019-07-08 18:26:25] laravel.ERROR: Class 'Symfony\Component\Finder\Finder' not found {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Class 'Symfony\\Component\\Finder\\Finder' not found at /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php:88)
+[stacktrace]
+#0 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(65): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->getConfigurationFiles(Object(Illuminate\\Foundation\\Application))
+#1 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(39): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles(Object(Illuminate\\Foundation\\Application), Object(Illuminate\\Config\\Repository))
+#2 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(211): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap(Object(Illuminate\\Foundation\\Application))
+#3 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(297): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#4 /var/www/html/laravel/gps-/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(120): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#5 /var/www/html/laravel/gps-/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#6 {main}
+"} 

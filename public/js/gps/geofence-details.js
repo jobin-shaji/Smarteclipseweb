@@ -13,7 +13,7 @@ function initMap(res) {
           mapTypeId: 'terrain'
         });
         var url = 'geofence/show';
-        var geo_id= document.getElementById('hd_id').value;
+        var geo_id= document.getElementById('g_id').value;
         var data = {
           id : geo_id
         };
