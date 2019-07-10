@@ -231,6 +231,32 @@ class DashboardController extends Controller
         return response()->json($response); 
     }
 
+    // emergency alert verification
+    public function verifyEmergencyAlert(Request $request)
+    {
+        $decrypted_vehicle_id = Crypt::decrypt($request->id); 
+        $alerts = Alert::where('alert_type_id',21)
+                ->where('status',0)
+                ->where('vehicle_id',$decrypted_vehicle_id)
+                ->get();
+        if($alerts == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Alert does not exist'
+            ]);
+        }
+        foreach ($alerts as $alert) {
+            $alert->status = 1;
+            $alert->save();
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Alert verified successfully'
+        ]);
+     }
+
     //get place namee
     public function getLocationFromLatLng(Request $request)
     {

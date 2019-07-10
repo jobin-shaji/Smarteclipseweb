@@ -15,6 +15,9 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
         Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
         Route::post('/driver-score','DashboardController@driverScore')->name('driver.score');
         Route::post('/emergency-alert','DashboardController@emergencyAlerts')->name('emergency.alerts');
+
+        Route::post('/emergency-alert/verify','DashboardController@verifyEmergencyAlert')->name('emergency-alert.verify');
+
         Route::post('/get-location','DashboardController@getLocationFromLatLng')->name('get.location');
 
          Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
