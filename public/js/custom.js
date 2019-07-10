@@ -116,9 +116,12 @@ function emergencyAlert(res){
         var vehicle_id=res.alerts[0].vehicle.id;
         if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
             $("#header-emergency").show();
-            $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
-            $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
-            $('#emergency_vehicle_time').text(res.alerts[0].device_time);
+            document.getElementById("header_em_id").value = res.alerts[0].id;
+            document.getElementById("header_alert_vehicle_id").value = res.vehicle;
+            document.getElementById("header_decrypt_vehicle_id").value = res.alerts[0].vehicle.id;
+            $('#header_emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
+            $('#header_emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            $('#header_emergency_vehicle_time').text(res.alerts[0].device_time);
         }else{
             var modal = document.getElementById('emergency');
             modal.style.display = "block";
@@ -154,6 +157,7 @@ function getPlaceNameFromLatLng(latitude,longitude){
 }
 function getPlaceName(res){
     $('#emergency_vehicle_location').text(res);
+    $('#header_emergency_vehicle_location').text(res);
 }
 
 function verifyEmergency(){
@@ -161,6 +165,13 @@ function verifyEmergency(){
     var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
     VerifyAlert(id,decrypt_id);
 }
+
+function verifyHeaderEmergency(){
+    var id = document.getElementById("header_alert_vehicle_id").value;
+    var decrypt_id = document.getElementById("header_decrypt_vehicle_id").value;
+    VerifyAlert(id,decrypt_id);
+}
+
 function track_vehicle(){
     var id = document.getElementById("alert_vehicle_id").value;
     window.location.href = "/vehicles/" + id+"/location";
@@ -183,6 +194,7 @@ function verifyAlertResponse(res){
     if(res){
         var modal = document.getElementById('emergency');
         modal.style.display = "none";
+        $("#header-emergency").hide();
     }
 }
 
