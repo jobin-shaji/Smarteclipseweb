@@ -163,7 +163,7 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                      <!--   <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -174,73 +174,46 @@
                                 <a class="dropdown-item" href="alert_list.html">Towing <span>2</span></a>
                                 <a class="dropdown-item" href="alert_list.html">View All</a>
                                                             </div>
-                        </li> -->
+                        </li>
                         <!-- ============================================================== -->
                         <!-- End Comment -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
+                        <li class="nav-item dropdown">
+                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
+
                                     <li>
-                                        <div class=""> -->
+                                        <div class="" >
                                              <!-- Message -->
-                                            <!-- <a href="javascript:void(0)" class="link border-top">
-                                                <div class="d-flex no-block align-items-center p-10">
-                                                    <span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>
-                                                    <a href="list_vehicle.html"><div class="m-l-10">
-                                                        <h5 class="m-b-0"> Expired Documents</h5> 
-                                                         <small class="font-light">KL-07-CK 5002 Expiring within 30 Days</small><br>
-                                                        <small class="font-light">KL-06-CK 812 Expiring within 26 Days</small><br>
-                                                        <small class="font-light">KL-07-CK 1302 Expiring within 9 Days</small> 
-                                                    </div></a>
-                                                </div>
-                                            </a> -->
+                                           <!--   <a href="javascript:void(0)" class="link border-top"> -->
+                                                <h5 class="m-b-0"> Expired Documents</h5>
+                                      
+                                                <div id="notification">
+                                            </div>
+                                            <!--  <h5 class="m-b-0"> Expire Documents</h5> -->
+                                            <div id="expire_notification">
+                                              
+
+                                                   
+                                               
+                                            </div>
+                                            <!-- </a>  -->
                                             <!-- Message -->
-                                           <!--  <a href="javascript:void(0)" class="link border-top">
-                                                <div class="d-flex no-block align-items-center p-10">
-                                                    <span class="btn btn-info btn-circle"><i class="mdi mdi-plus-circle"></i></span>
-                                                    <a href="list_vehicle.html"><div class="m-l-10">
-                                                        <h5 class="m-b-0">Insurance</h5> 
-                                                        <small class="font-light">KL-07-CK 5002 Expiring within 30 Days</small><br>
-                                                        <small class="font-light">KL-06-CK 812 Expiring within 26 Days</small><br>
-                                                        <small class="font-light">KL-07-CK 1302 Expiring within 9 Days</small>
-                                                    </div></a>
-                                                </div>
-                                            </a> -->
+                                             
                                             <!-- Message -->
-                                            <!-- <a href="javascript:void(0)" class="link border-top">
-                                                <div class="d-flex no-block align-items-center p-10">
-                                                    <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
-                                                 <a href="list_vehicle.html">   <div class="m-l-10">
-                                                        <h5 class="m-b-0">Pollution Certificate</h5> 
-                                                         <small class="font-light">KL-07-AK 602 Expiring within 20 Days</small><br>
-                                                        <small class="font-light">KL-06-BK 9012 Expiring within 16 Days</small><br>
-                                                        <small class="font-light">KL-07-CB 1202 Expiring within 9 Days</small>
-                                                    </div></a>
-                                                </div>
-                                            </a> -->
+                                          
                                             <!-- Message -->
-                                            <!-- <a href="javascript:void(0)" class="link border-top">
-                                                <div class="d-flex no-block align-items-center p-10">
-                                                    <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
-                                                   <a href="list_vehicle.html"> <div class="m-l-10">
-                                                        <h5 class="m-b-0">Fitness</h5> 
-                                                        <small class="font-light">KL-08-AP 602 Expiring within 20 Days</small><br>
-                                                        <small class="font-light">KL-07-BD 3012 Expiring within 16 Days</small><br>
-                                                        <small class="font-light">KL-07-CA 7202 Expiring within 9 Days</small>
-                                                    </div></a>
-                                                </div>
-                                            </a>
+                                            
                                         </div>
                                     </li>
                                 </ul>
                             </div>
-                        </li> -->
+                        </li> 
                         <li class="nav-item dropdown">
                             @role('client')
                               @include('layouts.sections.eclipse-alert-popup')
@@ -260,7 +233,7 @@
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>Change Password</a>
                                 @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>
+                                onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>
                                 
                             </div>
                         </li>
