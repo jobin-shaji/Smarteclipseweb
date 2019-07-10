@@ -64,9 +64,9 @@ function check(){
             {data: 'vehicle_route.name', name: 'vehicle_route.name'},
             {data: 'vehicle.name', name: 'vehicle.name'} ,
             {data: 'date_from', name: 'date_from'} ,
-            {data: 'date_to', name: 'date_to'}    
+            {data: 'date_to', name: 'date_to'},   
 
-             // {data: 'action', name: 'action', orderable: false, searchable: false}
+             {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         
