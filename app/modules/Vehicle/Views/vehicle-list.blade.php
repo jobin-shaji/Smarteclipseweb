@@ -52,7 +52,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
            <footer class="footer text-center">
-                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
+                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://vehiclest.com">VST</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
