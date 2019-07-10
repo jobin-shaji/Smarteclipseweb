@@ -22,7 +22,7 @@
 
    function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 25.354826, lng: 51.183884},
+          center: {lat: 25.354826, lng: 51.183884},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
           zoom: 12
         });
 
