@@ -18,9 +18,9 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::get('/alert','AlertController@alerts')->name('alert');
 	Route::post('/alert-list','AlertController@alertsList')->name('alert-list');
 	Route::post('/alert/verify','AlertController@verifyAlert')->name('alert.verify');
-
 	Route::get('/packet','AlertController@packet')->name('packet');
 	Route::post('/packet/create','AlertController@save')->name('packet.create.p');
+	  Route::post('/alert_notification', 'AlertController@notification')->name('alert_notification');
 
 });
 
