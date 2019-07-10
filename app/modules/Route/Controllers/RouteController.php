@@ -199,7 +199,12 @@ class RouteController extends Controller {
         ->where('client_id',$client_id)
         ->get();
         return DataTables::of($route)
-            ->addIndexColumn()          
+            ->addIndexColumn() 
+            ->addColumn('action', function ($route) {                
+            return "
+             <a href=/route/".Crypt::encrypt($route->route_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>";               
+             })
+            ->rawColumns(['link', 'action'])         
             ->make();
     }
 

@@ -171,27 +171,20 @@
                                 <a class="dropdown-item">Vehicle Number : <h4 id="emergency_vehicle_number"></h4></a>
                                 <a class="dropdown-item">Location : <h4 id="emergency_vehicle_location"></h4></a>
                                 <a class="dropdown-item">Time : <h4 id="emergency_vehicle_time"></h4></a>
-                                
                             </div>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
+                            <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="alert_list.html">Ignition - <span>10</span></a>
-                                <a class="dropdown-item" href="alert_list.html">Speed - <span>3</span></a>
-                                <a class="dropdown-item" href="alert_list.html">Geofence - <span>10</span></a>
-                                <a class="dropdown-item" href="alert_list.html">Towing <span>2</span></a>
-                                <a class="dropdown-item" href="alert_list.html">View All</a>
+                                <div id="alert_notification">
+                               
+                            </div>
+                                <a class="dropdown-item" href="{{url('/alert')}}">View All</a>
+
                                                             </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- Messages -->
-                        <!-- ============================================================== -->
+                        </li>                      
                         <li class="nav-item dropdown">
                             <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
                             </a>
@@ -199,32 +192,20 @@
                                 <ul class="list-style-none">
 
                                     <li>
-                                        <div class="" >
-                                             <!-- Message -->
-                                           <!--   <a href="javascript:void(0)" class="link border-top"> -->
-                                                <h5 class="m-b-0"> Expired Documents</h5>
-                                      
-                                                <div id="notification">
+                                        <div class="" >       
+                                            <h5 class="m-b-0" style="margin-top:10px;margin-left: 5px;">  Documents
+                                            </h5>
+                                      <div id="notification">
                                             </div>
-                                            <!--  <h5 class="m-b-0"> Expire Documents</h5> -->
-                                            <div id="expire_notification">
-                                              
-
-                                                   
-                                               
-                                            </div>
-                                            <!-- </a>  -->
-                                            <!-- Message -->
-                                             
-                                            <!-- Message -->
-                                          
-                                            <!-- Message -->
                                             
-                                        </div>
+                                            <div id="expire_notification" style="background-color: 'red'">
+                                            </div>
+                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </li> 
+                        @endrole
                         <li class="nav-item dropdown">
                             @role('client')
                               @include('layouts.sections.eclipse-alert-popup')

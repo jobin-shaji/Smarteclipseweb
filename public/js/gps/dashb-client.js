@@ -43,6 +43,7 @@ function driverScore(res){
  var map;
  var map_flag;
  var track_flag=0;
+ var map_popup=0;
  
 
 
@@ -154,12 +155,23 @@ function driverScore(res){
 		       		getVehicle(gpsID);
 		           infowindow.setContent(title);
 		           infowindow.open(map, this);
+		           map_popup=0;
 		        });
 
-		        // google.maps.event.addListener(marker, 'mouseout', function() {
+		       	google.maps.event.addListener(marker, 'click', function() {
+		       	// alert(vehicle_id);
+		       		getVehicle(gpsID);
+		           infowindow.setContent(title);
+		           infowindow.open(map, this);
+		           if(map_popup==1){map_popup=0;}else{ map_popup=1;}
+	
+		        });
 
-		        //    infowindow.close(map, this);
-		        // });
+		        google.maps.event.addListener(marker, 'mouseout', function() {
+		         if(map_popup==0){
+		           infowindow.close(map, this);
+		          }
+		        });
 
 
 

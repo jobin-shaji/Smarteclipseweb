@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\AlertType;
 use Illuminate\Support\Facades\Crypt;
+use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use Illuminate\Support\Facades\DB;
@@ -293,6 +294,51 @@ class AlertController extends Controller {
        
         return view('Alert::packet-list',['devices'=>$devices]);
     }
+
+    //Alert Notification
+
+    public function notification(Request $request)
+    {
+        $user = $request->user();  
+        $client=Client::where('user_id',$user->id)->first();
+        $client_id=$client->id;
+        $alert = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'vehicle_id',
+            'gps_id',
+            'client_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at'
+        )
+        ->with('alertType:id,code,description')
+        ->with('vehicle:id,name,register_number')
+        ->with('gps:id,name,imei')
+        ->with('client:id,name')
+        ->where('client_id',$client_id)
+        ->where('status',0)
+        ->orderBy('id','DESC')
+        ->limit(4)
+        ->get();
+        if($user->hasRole('client')){
+            return response()->json([                          
+                'alert' => $alert,
+                'status' => 'alertNotification'           
+            ]);
+        }  
+    }
+
+
+
+
+
+
+
+
+
      //alert create rules 
     public function alert_rules(){
         $rules = [
