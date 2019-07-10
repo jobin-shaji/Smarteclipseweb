@@ -1,5 +1,5 @@
-      var latMap=25.354826;//qatar-25.354826 kerala-9.931233
-      var lngMap=51.183884;//qatar-51.183884 kerala-76.267303
+      var latMap=9.931233;//qatar-25.354826 kerala-9.931233
+      var lngMap=76.267303;//qatar-51.183884 kerala-76.267303
       var map;
       var image ='';
       var path=[];
