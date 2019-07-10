@@ -105,18 +105,23 @@ function backgroundPostData(url, data, callBack, options) {
 }
 
 function emergencyAlert(res){
-    console.log(res);
     if(res.alerts.length > 0){
         var latitude=res.alerts[0].latitude;
         var longitude=res.alerts[0].longitude;
         getPlaceNameFromLatLng(latitude,longitude);
-        var modal = document.getElementById('emergency');
-        modal.style.display = "block";
-        document.getElementById("em_id").value = res.alerts[0].id;
-        document.getElementById("alert_vehicle_id").value = res.vehicle;
-        $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
-        $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
-        $('#emergency_vehicle_time').text(res.alerts[0].device_time);
+        var vehicle_id=res.alerts[0].vehicle.id;
+        if(localStorage.getItem("vehicle_id") == vehicle_id ){
+            alert(vehicle_id);
+        }else{
+            var modal = document.getElementById('emergency');
+            modal.style.display = "block";
+            document.getElementById("em_id").value = res.alerts[0].id;
+            document.getElementById("alert_vehicle_id").value = res.vehicle;
+            document.getElementById("decrypt_vehicle_id").value = res.alerts[0].vehicle.id;
+            $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
+            $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            $('#emergency_vehicle_time').text(res.alerts[0].device_time);
+        }
        
     }
 }
@@ -145,19 +150,23 @@ function getPlaceName(res){
 }
 
 function verifyEmergency(){
-    var id = document.getElementById("em_id").value;
-    VerifyAlert(id);
+    var id = document.getElementById("alert_vehicle_id").value;
+    var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
+    VerifyAlert(id,decrypt_id);
 }
 function track_vehicle(){
     var id = document.getElementById("alert_vehicle_id").value;
     window.location.href = "/vehicles/" + id+"/location";
 }
 
-function VerifyAlert(alert_id){
+function VerifyAlert(vehicle_id,decrypt_vehicle_id){
     if(confirm('Are you sure want to verify this alert?')){
-        var url = 'alert/verify';
+        if(typeof(Storage) !== "undefined") {
+            localStorage.setItem("vehicle_id", decrypt_vehicle_id);
+        }
+        var url = 'emergency-alert/verify';
         var data = {
-        id : alert_id
+        id : vehicle_id
         };
         backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
     } 
@@ -653,6 +662,10 @@ $(function () {
     // backgroundPostData(url,data,'emergencyAlert',{alert:false});
 
 });
+
+function clearLocalStorage(){
+    localStorage.removeItem("vehicle_id");
+}
 
 
 
