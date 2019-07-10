@@ -106,7 +106,8 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/fence')}}"> Add Geofence <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/geofence')}}"> List Geofence<span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/geofence')}}"> List Geofence<span></span></a>  
+                                 <a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}"> Assign Geofence <span></span></a>                             
                             </div>
                         </li>
                         <li class="nav-item dropdown">
