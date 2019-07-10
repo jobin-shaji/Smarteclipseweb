@@ -41,6 +41,10 @@ function toast(res){
     else if(res.status == 'vehicle_status'){
         vehicle_details(res);
     }  
+    else if(res.status == 'notification'){
+
+        notification(res);
+    } 
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -84,9 +88,12 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack =='selectVehicleModeTrack'){
                     selectVehicleModeTrack(res);
                 }
-                 else if(callBack =='searchLocation'){
+                else if(callBack =='searchLocation'){
                     searchLocation(res);
                 }
+                // else if(callBack =='notification'){
+                //     // searchLocation(res);
+                // }
             }
         },
         error: function (err) {
@@ -648,5 +655,48 @@ $(function () {
 });
 
 
+
+function documents(){  
+    var url = 'notification';
+    var data = {};   
+    backgroundPostData(url,data,'notification',{alert:false});           
+}
+function notification(res){
+    $("#notification").empty();
+   var expired_documents;
+
+    length=res.expired_documents.length;
+    for (var i = 0; i < length; i++) {
+     register_number=res.expired_documents[i].vehicle.register_number;
+      vehicle_name=res.expired_documents[i].vehicle.name;
+     document_name=res.expired_documents[i].document_type.name;
+      expiry_date=res.expired_documents[i].expiry_date;
+        var expired_documents='  <div class="d-flex no-block align-items-center p-10" >'+
+        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+        '<a href="list_vehicle.html"><div class="m-l-10">'+
+        '<small class="font-light">'+document_name+' expired on '+expiry_date+' </small><br>'+                                        
+        '<small class="font-light">'+vehicle_name+'</small><br>'+                                                                     
+        '<small class="font-light">'+register_number+'</small><br>'+                                    
+        '</div></a></div>';  
+        $("#notification").append(expired_documents);       
+    }  
+
+    expire_length=res.expire_documents.length;
+    for (var i = 0; i < expire_length; i++) {
+     expire_register_number=res.expire_length[i].vehicle.register_number;
+      expire_vehicle_name=res.expire_length[i].vehicle.name;
+     expire_document_name=res.expire_length[i].document_type.name;
+      expire_expiry_date=res.expire_length[i].expiry_date;
+        var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
+        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+        '<a href="list_vehicle.html"><div class="m-l-10" style="background-color="red">'+
+        '<small class="font-light">'+expire_document_name+' expires on '+expire_expiry_date+' </small><br>'+                                        
+        '<small class="font-light">'+expire_vehicle_name+'</small><br>'+                                                                     
+        '<small class="font-light">'+expire_register_number+'</small><br>'+                                    
+        '</div></a></div>';  
+        $("#expire_notification").append(expire_documents);       
+    }    
+}
+ 
 
 

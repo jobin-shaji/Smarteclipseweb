@@ -20,4 +20,6 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
          Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
 
            Route::post('/location-search','DashboardController@locationSearch')->name('/location-search');
+
+            Route::post('/notification', 'DashboardController@notification')->name('notification');
 });

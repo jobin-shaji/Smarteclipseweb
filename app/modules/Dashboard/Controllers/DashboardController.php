@@ -627,5 +627,55 @@ else
         return $minutes;
     }
 
+public function notification(Request $request)
+{
+
+
+          $user = $request->user();  
+           $client=Client::where('user_id',$user->id)->first();
+           $client_id=$client->id;
+           
+       
+            $vehicles = Vehicle::select('id','register_number')
+                    ->where('client_id',$client_id)
+                    ->get();
+            $single_vehicle = [];
+            foreach($vehicles as $vehicle){
+                $single_vehicle[] = $vehicle->id;
+            }
+            $expired_documents=Document::select([
+                'id',
+                'vehicle_id',
+                'document_type_id',
+                'expiry_date'
+            ])
+            ->with('vehicle:id,name,register_number')
+            ->with('documentType:id,name')
+            ->whereIn('vehicle_id',$single_vehicle)
+            ->whereDate('expiry_date', '<', date('Y-m-d'))
+            ->get();
+            $expire_documents=Document::select([
+                'id',
+                'vehicle_id',
+                'document_type_id',
+                'expiry_date'
+            ])
+            ->with('vehicle:id,name,register_number')
+            ->with('documentType:id,name')
+            ->whereIn('vehicle_id',$single_vehicle)
+            ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+            ->get();
+       if($user->hasRole('client')){
+            return response()->json([            
+                'expired_documents' => $expired_documents,
+                'expire_documents' => $expire_documents,
+                'status' => 'notification'           
+            ]);
+        }  
+
+
+
+
+}
 
 }
