@@ -163,16 +163,17 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
+                          @role('client')
                         <li class="nav-item dropdown">
                             <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="alert_list.html">Ignition - <span>10</span></a>
-                                <a class="dropdown-item" href="alert_list.html">Speed - <span>3</span></a>
-                                <a class="dropdown-item" href="alert_list.html">Geofence - <span>10</span></a>
-                                <a class="dropdown-item" href="alert_list.html">Towing <span>2</span></a>
+                                <div id="alert_notification">
+                               
+                            </div>
                                 <a class="dropdown-item" href="{{url('/alert')}}">View All</a>
+
                                                             </div>
                         </li>                      
                         <li class="nav-item dropdown">
@@ -195,6 +196,7 @@
                                 </ul>
                             </div>
                         </li> 
+                        @endrole
                         <li class="nav-item dropdown">
                             @role('client')
                               @include('layouts.sections.eclipse-alert-popup')
