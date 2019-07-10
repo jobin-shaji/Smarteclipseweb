@@ -674,11 +674,14 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
-    var url = 'emergency-alert';
-    var data = { 
-    
-    };
-    backgroundPostData(url,data,'emergencyAlert',{alert:false});
+  
+
+    setInterval(function() {
+        var url = 'emergency-alert';
+        var data = { 
+        };
+        backgroundPostData(url,data,'emergencyAlert',{alert:false});
+    }, 8000);
 
 });
 
