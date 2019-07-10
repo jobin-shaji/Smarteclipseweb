@@ -163,7 +163,16 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                          @role('client')
+                        <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="header-emergency" style="display: none;"><img src="{{ url('/') }}/assets/images/emergency.gif" alt="user" width="50"></a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="color: #FF0000">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Driver : <h4 id="emergency_vehicle_driver"></h4></a>
+                                <a class="dropdown-item">Vehicle Number : <h4 id="emergency_vehicle_number"></h4></a>
+                                <a class="dropdown-item">Location : <h4 id="emergency_vehicle_location"></h4></a>
+                                <a class="dropdown-item">Time : <h4 id="emergency_vehicle_time"></h4></a>
+                            </div>
+
                         <li class="nav-item dropdown">
                             <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>

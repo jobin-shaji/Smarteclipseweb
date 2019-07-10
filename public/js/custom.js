@@ -114,8 +114,11 @@ function emergencyAlert(res){
         var longitude=res.alerts[0].longitude;
         getPlaceNameFromLatLng(latitude,longitude);
         var vehicle_id=res.alerts[0].vehicle.id;
-        if(localStorage.getItem("vehicle_id") == vehicle_id ){
-            alert(vehicle_id);
+        if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
+            $("#header-emergency").show();
+            $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
+            $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            $('#emergency_vehicle_time').text(res.alerts[0].device_time);
         }else{
             var modal = document.getElementById('emergency');
             modal.style.display = "block";
@@ -166,7 +169,7 @@ function track_vehicle(){
 function VerifyAlert(vehicle_id,decrypt_vehicle_id){
     if(confirm('Are you sure want to verify this alert?')){
         if(typeof(Storage) !== "undefined") {
-            localStorage.setItem("vehicle_id", decrypt_vehicle_id);
+            localStorage.setItem("qwertasdfgzxcvb", decrypt_vehicle_id);
         }
         var url = 'emergency-alert/verify';
         var data = {
@@ -659,16 +662,16 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
-    // var url = 'emergency-alert';
-    // var data = { 
+    var url = 'emergency-alert';
+    var data = { 
     
-    // };
-    // backgroundPostData(url,data,'emergencyAlert',{alert:false});
+    };
+    backgroundPostData(url,data,'emergencyAlert',{alert:false});
 
 });
 
 function clearLocalStorage(){
-    localStorage.removeItem("vehicle_id");
+    localStorage.removeItem("qwertasdfgzxcvb");
 }
 
 
