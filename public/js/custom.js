@@ -45,6 +45,10 @@ function toast(res){
 
         notification(res);
     } 
+    else if(res.status == 'alertNotification'){
+
+        alertNotification(res);
+    } 
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -712,11 +716,25 @@ function notification(res){
     }    
 }
 
-// function documents(){  
-//     var url = 'notification';
-//     var data = {};   
-//     backgroundPostData(url,data,'notification',{alert:false});           
-// }
- 
+function alerts(){  
+    var url = 'alert-notification';
+    var data = {};   
+    backgroundPostData(url,data,'alertNotification',{alert:false});           
+}
+ function alertNotification(res){
+
+    console.log(res);
+    $("#alert_notification").empty();
+   // var expired_documents;
+
+    length=res.alert.length;
+    for (var i = 0; i < length; i++) {
+     description=res.alert[i].alert_type.description;
+    
+        var alert='<a class="dropdown-item" >'+description+'</a>';  
+        $("#alert_notification").append(alert);       
+    }  
+  
+}
 
 

@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/alert/verify','AlertController@verifyAlert')->name('alert.verify');
 	Route::get('/packet','AlertController@packet')->name('packet');
 	Route::post('/packet/create','AlertController@save')->name('packet.create.p');
-	  Route::post('/alert_notification', 'AlertController@notification')->name('alert_notification');
+	  Route::post('/alert-notification', 'AlertController@notification')->name('alert-notification');
 
 });
 
