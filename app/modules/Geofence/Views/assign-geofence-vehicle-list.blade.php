@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  All Routes
+  All Geofence
 @endsection
 @section('content')
 
@@ -8,7 +8,7 @@
   <div class="page-breadcrumb">
       <div class="row">
           <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Route List </h4>
+              <h4 class="page-title">Assign Geofence  List </h4>
             
           </div>
       </div>
@@ -35,11 +35,11 @@
                           </div>
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">                      
-                            <label>Route</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Route" id="vehicle_route" name="vehicle_route">
+                            <label>Geofence</label>                          
+                            <select class="form-control selectpicker" data-live-search="true" title="Select Geofence" id="vehicle_geofence" name="vehicle_geofence">
                               <option value="">Select</option>
-                              @foreach ($routes as $route)
-                              <option value="{{$route->id}}">{{$route->name}}</option>
+                              @foreach ($geofences as $geofence)
+                              <option value="{{$geofence->id}}">{{$geofence->name}}</option>
                               @endforeach  
                             </select>
                           </div>
@@ -58,7 +58,7 @@
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="check()">Route Schedule </button>
+                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="check()">Geofence Schedule </button>
                             </div>
                           </div>
                         </div>
@@ -68,11 +68,10 @@
                 <thead>
                   <tr>
                       <th>#</th>
-                      <th>Route Name</th>
+                      <th>Geofence Name</th>
                       <th >Vehicle</th>
-                      <th >Register Number</th>
+                       <th >Register Number</th>
                       <th >From Date</th>
-
                       <th >To date</th>
                       <th >Action</th>
 
@@ -95,5 +94,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/assign-route-vehicle-list.js')}}"></script>
+    <script src="{{asset('js/gps/assign-geofence-vehicle-list.js')}}"></script>
   @endsection
