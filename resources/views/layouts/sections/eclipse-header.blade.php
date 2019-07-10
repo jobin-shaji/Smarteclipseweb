@@ -172,7 +172,7 @@
                                 <a class="dropdown-item">Location : <h4 id="emergency_vehicle_location"></h4></a>
                                 <a class="dropdown-item">Time : <h4 id="emergency_vehicle_time"></h4></a>
                             </div>
-
+                        @role('client')
                         <li class="nav-item dropdown">
                             <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
                             </a>
