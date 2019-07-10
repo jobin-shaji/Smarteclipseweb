@@ -181,15 +181,15 @@
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <!-- <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
                                     <li>
-                                        <div class=""> -->
+                                        <div class="">
                                              <!-- Message -->
-                                            <!-- <a href="javascript:void(0)" class="link border-top">
+                                             <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>
                                                     <a href="list_vehicle.html"><div class="m-l-10">
@@ -201,7 +201,7 @@
                                                 </div>
                                             </a> -->
                                             <!-- Message -->
-                                           <!--  <a href="javascript:void(0)" class="link border-top">
+                                             <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-info btn-circle"><i class="mdi mdi-plus-circle"></i></span>
                                                     <a href="list_vehicle.html"><div class="m-l-10">
@@ -213,7 +213,7 @@
                                                 </div>
                                             </a> -->
                                             <!-- Message -->
-                                            <!-- <a href="javascript:void(0)" class="link border-top">
+                                           <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
                                                  <a href="list_vehicle.html">   <div class="m-l-10">
@@ -225,7 +225,7 @@
                                                 </div>
                                             </a> -->
                                             <!-- Message -->
-                                            <!-- <a href="javascript:void(0)" class="link border-top">
+                                            <a href="javascript:void(0)" class="link border-top">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
                                                    <a href="list_vehicle.html"> <div class="m-l-10">
@@ -240,7 +240,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li> -->
+                        </li> 
                         <li class="nav-item dropdown">
                             @role('client')
                               @include('layouts.sections.eclipse-alert-popup')
