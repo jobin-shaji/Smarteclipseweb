@@ -97,7 +97,8 @@
                                 <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>  
                                
                                 <a class="dropdown-item" href="{{url('/drivers')}}"> List Drivers<span></span></a>  
-                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver Update Log<span></span></a>                             
+                                <a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">Vehicle Documents<span></span></a>
+                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver Update Log<span></span></a>                              
                             </div>
                         </li>
                         
