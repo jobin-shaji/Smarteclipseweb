@@ -234,7 +234,7 @@ function driverScore(res){
 		    	backgroundPostData(url,data,'searchLocation',{alert:false});
 
 	          } else {
-	            alert("Something got wrong " + status);
+	            alert("Please enter a valid location");
 	          }
         	});
 	 	    return false;
