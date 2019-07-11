@@ -5,7 +5,8 @@
 @section('content')
 
 
-<div class="page-wrapper">
+<div class="page-wrapper page-wrapper-root">
+
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
@@ -21,9 +22,10 @@
     </div>
   </div>
             
-  <div class="card-body">
-    <div class="table-responsive">
-      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+
+
+       
+        <div class="row">
           <div class="col-sm-12">
             <form  method="POST" action="{{route('gps.create.p')}}">
             {{csrf_field()}}
@@ -112,9 +114,9 @@
             </form>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+   
+  
+
 </div>
 
 
