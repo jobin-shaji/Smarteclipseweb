@@ -3,6 +3,9 @@
   GPS LIST
 @endsection
 @section('content')
+
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1">
   <div class="page-breadcrumb">
       <div class="row">
           <div class="col-12 d-flex no-block align-items-center">
@@ -39,7 +42,8 @@
     </div>
                 
   </div>
-
+</div>
+</div>
 
 
 @endsection

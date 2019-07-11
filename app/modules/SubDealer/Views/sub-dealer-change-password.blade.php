@@ -3,7 +3,10 @@
    Change Password
 @endsection
 @section('content') 
- <div class="page-wrapper"> 
+
+
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1">
   <section class="hilite-content">
     <div class="page-breadcrumb"> 
 
@@ -69,14 +72,19 @@
            
             <!-- /.col -->
           </div>
+        </div>
+
       </form>
-         </div>
+         
     </div>
    </div>
- 
-</section>
-</div>
 
+ </div>
+
+</section>
+
+</div>
+</div>
      
 <div class="clearfix"></div>
 
