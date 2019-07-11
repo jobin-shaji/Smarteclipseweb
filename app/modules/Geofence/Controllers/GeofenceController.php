@@ -6,8 +6,10 @@ namespace App\Modules\Geofence\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Geofence\Models\Geofence;
+use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGeofence;
+use App\Modules\Vehicle\Models\VehicleRoute;
 use Illuminate\Support\Facades\Crypt;
-
 use DataTables;
 
 class GeofenceController extends Controller {
@@ -17,7 +19,6 @@ class GeofenceController extends Controller {
     {
 		return view('Geofence::fence-create');
 	}
-
 	public function saveFence(Request $request){
 
 		foreach ($request->polygons as $polygon) {
@@ -143,6 +144,72 @@ class GeofenceController extends Controller {
             ]);
 
 
+    }
+     public function AssignGeofenceList()
+    {
+         $user_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+        $geofence = Geofence::select('id','user_id','name','cordinates','fence_type_id','deleted_at')
+        ->where('user_id',$user_id)
+        ->get();
+         return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
+    }
+
+     public function getAssignGeofenceVehicleList(Request $request)
+    {
+
+        $client_id=\Auth::user()->client->id;
+       // $client_id= $request->client;         
+        $vehicle_id= $request->vehicle_id;         
+        $geofence = $request->geofence_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $fromDate = date("Y-m-d", strtotime($from_date));
+        $toDate = date("Y-m-d", strtotime($to_date));
+         if($vehicle_id!="")
+         {
+
+                $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to')
+                ->where('vehicle_id',$vehicle_id)
+                ->where('geofence_id',$geofence)
+                ->where('client_id',$client_id)
+                ->get()->count();
+
+
+                if($geofences==0)
+                {
+                     $route_area = VehicleGeofence::create([
+                            'geofence_id' => $geofence,
+                            'vehicle_id' => $vehicle_id,
+                            'date_from' => $fromDate,
+                            'date_to' => $toDate,
+                            'client_id' => $client_id,
+                            'status' => 1
+                        ]);
+                }  
+         }      
+        $geofence = VehicleGeofence::select(
+                    'id',
+                    'vehicle_id',
+                    'geofence_id',
+                    'date_from',
+                     'date_to'                                      
+                    )
+        ->with('vehicleGeofence:id,name')
+       ->with('vehicle:id,name,register_number')
+        ->where('client_id',$client_id)
+        ->get();
+        return DataTables::of($geofence)
+            ->addIndexColumn() 
+            ->addColumn('action', function ($geofence) {                
+            return "
+              <a href=/geofence/".Crypt::encrypt($geofence->geofence_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View Geofence</a> ";               
+             })
+            ->rawColumns(['link', 'action'])         
+            ->make();
     }
 
    

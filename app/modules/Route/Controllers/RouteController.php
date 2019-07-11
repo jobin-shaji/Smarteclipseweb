@@ -170,23 +170,25 @@ class RouteController extends Controller {
         $fromDate = date("Y-m-d", strtotime($from_date));
         $toDate = date("Y-m-d", strtotime($to_date));
 
-
-        $router = VehicleRoute::select('id','vehicle_id','route_id','date_from','date_to')
-        ->where('vehicle_id',$vehicle_id)
-        ->where('route_id',$routes)
-        ->where('client_id',$client_id)
-        ->get()->count();
-        if($router==0)
-        {
-             $route_area = VehicleRoute::create([
-                    'route_id' => $routes,
-                    'vehicle_id' => $vehicle_id,
-                    'date_from' => $fromDate,
-                    'date_to' => $toDate,
-                    'client_id' => $client_id,
-                    'status' => 1
-                ]);
-        }        
+        if($vehicle_id!="")
+         {
+            $router = VehicleRoute::select('id','vehicle_id','route_id','date_from','date_to')
+            ->where('vehicle_id',$vehicle_id)
+            ->where('route_id',$routes)
+            ->where('client_id',$client_id)
+            ->get()->count();
+            if($router==0)
+            {
+                 $route_area = VehicleRoute::create([
+                        'route_id' => $routes,
+                        'vehicle_id' => $vehicle_id,
+                        'date_from' => $fromDate,
+                        'date_to' => $toDate,
+                        'client_id' => $client_id,
+                        'status' => 1
+                    ]);
+            }   
+        }     
         $route = VehicleRoute::select(
                     'id',
                     'vehicle_id',
@@ -202,7 +204,7 @@ class RouteController extends Controller {
             ->addIndexColumn() 
             ->addColumn('action', function ($route) {                
             return "
-             <a href=/route/".Crypt::encrypt($route->route_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>";               
+             <a href=/route/".Crypt::encrypt($route->route_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i>View Routes </a>";               
              })
             ->rawColumns(['link', 'action'])         
             ->make();
