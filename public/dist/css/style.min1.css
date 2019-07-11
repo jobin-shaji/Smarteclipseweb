@@ -16848,4 +16848,15 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     margin:  0px 6px !important;
 }
 
-
+.page-wrapper-root {
+    min-height: 500px;
+    background: #f8f9fa;
+}
+.page-wrapper-root {
+    margin: 0 0 0 5.3%;
+    padding: 1% 9px 0px 2%;
+}
+.page-wrapper-root1 {
+    margin: 0 0 0 5.3%;
+    padding: 1% 9px 0px 2%;
+}

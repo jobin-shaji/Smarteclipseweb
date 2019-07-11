@@ -4,6 +4,9 @@
 @endsection
 @section('content')
 
+
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1">
     <section class="content-header">
      <h1>Vehicle type details</h1>
     </section>
@@ -83,6 +86,8 @@
 <!--  -->
     </form>
 </section>
+</div>
+</div>
 
 <div class="clearfix"></div>
 

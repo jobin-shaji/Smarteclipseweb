@@ -6,7 +6,8 @@
 
      
 
-  <div class="page-wrapper">
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1"> 
     <div class="page-breadcrumb">
       <div class="row">
         <div class="col-md-6 d-flex no-block align-items-center">
@@ -79,6 +80,7 @@
     </form>
 </section>
  
+</div>
 </div>
 </div>
 
