@@ -19,6 +19,8 @@
           center: heightAshbury,
           mapTypeId: 'roadmap'
         });
+        map.setOptions({ minZoom:5, maxZoom: 17 });
+        
          var input1 = document.getElementById('search_place'); 
          autocomplete1 = new google.maps.places.Autocomplete(input1);
          var searchBox1 = new google.maps.places.SearchBox(autocomplete1);

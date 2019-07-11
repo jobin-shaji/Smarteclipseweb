@@ -56,6 +56,7 @@ zoom: 10,
 center: haightAshbury,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 });
+ map.setOptions({ minZoom:5, maxZoom: 17 });
 
 map_flag=0;
    getVehicleSequence();
@@ -95,7 +96,7 @@ function vehicleTrack(res){
              if(map_flag==0){
              map.panTo(new google.maps.LatLng(lat,lng));
              map.setZoom(13);
-             map.setOptions({ minZoom:5, maxZoom: 17 });
+            
              // map_flag=1;
               }
              var gpsID=JSONObject[i].id;
