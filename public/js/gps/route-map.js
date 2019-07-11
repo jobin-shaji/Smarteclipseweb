@@ -1,3 +1,9 @@
+     var url = '/client-location';
+     var data = { 
+      
+     };
+     backgroundPostData(url,data,'loadMap',{alert:false});
+
       var latMap=25.402282;
       var lngMap=51.189165;
       var map;
@@ -10,10 +16,9 @@
       var place_name="";
 
 
-      function initMap() {
+      function loadMap(res) {
 
-
-        var heightAshbury = {lat: latMap, lng: lngMap};
+        var heightAshbury = {lat:res.latitude, lng:res.lng};
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 16,
           center: heightAshbury,
@@ -135,9 +140,9 @@
         }
 
 
-        $(function() {
-          initMap();
-        });
+        // $(function() {
+        //   initMap();
+        // });
 
     // ------------------------------------------
 
