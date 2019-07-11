@@ -335,7 +335,7 @@ function driverScore(res){
 		 		 flag=0;
 		 		 vehicleTrack(res);
 			}else{
-				alert('there is novehicle in this location');
+				alert('No vehicle found in this location');
 			}
 		
 		}
