@@ -693,24 +693,40 @@ pre code {
     .container {
         max-width: 540px
     }
+
+section.content-header.root_content_header {
+    margin-left: 6%;
+}
 }
 
 @media (min-width:768px) {
     .container {
         max-width: 720px
     }
+
+section.content-header.root_content_header {
+    margin-left: 6%;
+}
 }
 
 @media (min-width:992px) {
     .container {
         max-width: 960px
     }
+
+section.content-header.root_content_header {
+    margin-left: 6%;
+}
 }
 
 @media (min-width:1600px) {
     .container {
         max-width: 1140px
     }
+
+section.content-header.root_content_header {
+    margin-left: 6%;
+}
 }
 
 .container-fluid {
@@ -10717,7 +10733,7 @@ html[dir=ltr] body .p-l-0 {
         display: block
     }
     #main-wrapper.mini-sidebar .page-wrapper {
-        margin-left:0px
+        margin-left:0px;
     }
     #main-wrapper.mini-sidebar .sidebar-nav .has-arrow:after,
     #main-wrapper.mini-sidebar .sidebar-nav .hide-menu {
