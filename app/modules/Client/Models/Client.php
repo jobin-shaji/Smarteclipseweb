@@ -25,7 +25,9 @@ class Client extends Model
       return $this->hasMany('App\Modules\Client\Models\ClientAlertPoint','client_id','id')
       ->whereIn('alert_type_id',[1,12,13,14,15,16]);
     }
-
+public function all_driver_points(){
+      return $this->hasMany('App\Modules\Client\Models\ClientAlertPoint','client_id','id');
+    }
   // // client
   // public function subDealer()
   // {
