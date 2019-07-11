@@ -534,6 +534,56 @@ class VehicleController extends Controller {
             ->make();
     }
 
+    // vehicle documents list
+    public function allVehicleDocList()
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+                            ->where('client_id',$client_id)
+                            ->get();
+        return view('Vehicle::all-vehicle-doc-list',['vehicles'=>$vehicles]); 
+    }
+
+    // vehicle documents list data
+    public function getAllVehicleDocList(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $selected_vehicle_id= $request->vehicle_id; 
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+                            ->where('client_id',$client_id)
+                            ->get();
+        $vehicle_id=[];
+        foreach ($vehicles as $vehicle) {
+            $vehicle_id[]=$vehicle->id;
+        }
+        $vehicle_documents = Document::select(
+                                'vehicle_id',
+                                'document_type_id',
+                                'expiry_date',
+                                'path'
+                                )
+                                ->with('documentType:id,name')
+                                ->with('vehicle:id,name,register_number');
+                                if($selected_vehicle_id==null)
+                                { 
+                                   $vehicle_documents =$vehicle_documents->whereIn('vehicle_id',$vehicle_id);
+                                }
+                                else
+                                {
+                                    $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
+                                } 
+                                $vehicle_documents =$vehicle_documents->get();
+
+        return DataTables::of($vehicle_documents)
+            ->addIndexColumn()
+            ->addColumn('action', function ($vehicle_documents) {
+                $path = url('/documents').'/'.$vehicle_documents->path;
+                return "<a href= '".$path."' download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+             })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
 
     
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////
