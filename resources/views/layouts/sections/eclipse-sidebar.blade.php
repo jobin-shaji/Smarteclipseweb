@@ -1,4 +1,4 @@
-    @role('root|dealer|sub_dealer')
+    @role('dealer|sub_dealer|root')
   <aside class="left-sidebar" data-sidebarbg="skin5">
             <!-- Sidebar scroll-->
 
@@ -33,5 +33,6 @@
   </aside>
    @endrole
    @role('client')
+
       @include('layouts.sections.eclipse-client-sidebar')
     @endrole

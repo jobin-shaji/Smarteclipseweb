@@ -585,11 +585,10 @@ else
      public function locationSearch(Request $request)
     {
          $lat=$request->lat;
-         $lng=$request->lon;  
+         $lng=$request->lng; 
          $radius=$request->radius;
-
-          $user = $request->user(); 
-        $client=Client::where('user_id',$user->id)->first();
+         $user = $request->user(); 
+         $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
             $vehicles = Vehicle::select(
                 'id',
@@ -606,28 +605,31 @@ else
          foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
          }        
+        $sql='select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= '.$radius;
 
-         DB::connection()->enableQueryLog();
+        $vehicles_details= DB::select($sql);
+        dd($vehicles_details);
 
-        $vehicles_details= DB::select('select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= 10000');
+        $vehicles_details_data=collect($vehicles_details)->toArray()
+                            ->with('vehicle:gps_id,id,name,register_number')
+                            ->whereIn('id',$single_vehicle) 
+                            ->get();
 
-        $queries = DB::getQueryLog();
-        $last_query = end($queries);
-        dd($last_query);
-        Gps::Select(
-           'id',
-            'lat',
-            'lat_dir',
-            'lon',
-            'lon_dir',
-            'mode',
-            \DB::raw('(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance ')
-           ) 
-         ->having('distance', '<=', $radius)  
-         ->with('vehicle:gps_id,id,name,register_number')
-        ->whereIn('id',$single_vehicle)                
+
+        // Gps::Select(
+        //    'id',
+        //     'lat',
+        //     'lat_dir',
+        //     'lon',
+        //     'lon_dir',
+        //     'mode',
+        //     \DB::raw('(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance ')
+        //    ) 
+        //  ->having('distance', '<=', $radius)  
+        //  ->with('vehicle:gps_id,id,name,register_number')
+        // ->whereIn('id',$single_vehicle)                
                       
-        ->get();
+        // ->get();
        
         $response_track_data=$this->vehicleDataList($vehicles_details);        
        if($response_track_data){     
@@ -680,7 +682,18 @@ public function notification(Request $request)
             ->whereIn('vehicle_id',$single_vehicle)
             ->whereDate('expiry_date', '<', date('Y-m-d'))
             ->get();
-            $expire_documents=Document::select([
+            // $expire_documents=Document::select([
+            //     'id',
+            //     'vehicle_id',
+            //     'document_type_id',
+            //     'expiry_date'
+            // ])
+            // ->with('vehicle:id,name,register_number')
+            // ->with('documentType:id,name')
+            // ->whereIn('vehicle_id',$single_vehicle)
+            // ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+            // ->get();
+             $expire_documents=Document::select([
                 'id',
                 'vehicle_id',
                 'document_type_id',
@@ -689,7 +702,9 @@ public function notification(Request $request)
             ->with('vehicle:id,name,register_number')
             ->with('documentType:id,name')
             ->whereIn('vehicle_id',$single_vehicle)
-            ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+            ->where('expiry_date','>=', [date('Y-m-d')])
+            ->orderBy('expiry_date','DESC')
+            ->take(5)
             ->get();
        if($user->hasRole('client')){
             return response()->json([            
