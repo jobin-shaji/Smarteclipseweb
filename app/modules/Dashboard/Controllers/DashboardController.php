@@ -682,7 +682,18 @@ public function notification(Request $request)
             ->whereIn('vehicle_id',$single_vehicle)
             ->whereDate('expiry_date', '<', date('Y-m-d'))
             ->get();
-            $expire_documents=Document::select([
+            // $expire_documents=Document::select([
+            //     'id',
+            //     'vehicle_id',
+            //     'document_type_id',
+            //     'expiry_date'
+            // ])
+            // ->with('vehicle:id,name,register_number')
+            // ->with('documentType:id,name')
+            // ->whereIn('vehicle_id',$single_vehicle)
+            // ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+            // ->get();
+             $expire_documents=Document::select([
                 'id',
                 'vehicle_id',
                 'document_type_id',
@@ -691,7 +702,9 @@ public function notification(Request $request)
             ->with('vehicle:id,name,register_number')
             ->with('documentType:id,name')
             ->whereIn('vehicle_id',$single_vehicle)
-            ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+            ->where('expiry_date','>=', [date('Y-m-d')])
+            ->orderBy('expiry_date','DESC')
+            ->take(5)
             ->get();
        if($user->hasRole('client')){
             return response()->json([            
