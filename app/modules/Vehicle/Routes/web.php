@@ -33,6 +33,10 @@ Route::get('/vehicle-driver-log','VehicleController@vehicleDriverLogList')->name
 
 Route::post('/vehicle-driver-log-list','VehicleController@getVehicleDriverLogList')->name('vehicle-driver-log-list');
 
+Route::get('/all-vehicle-docs','VehicleController@allVehicleDocList')->name('all-vehicle-docs');
+
+Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->name('all-vehicle-docs-list');
+
 
 
 
