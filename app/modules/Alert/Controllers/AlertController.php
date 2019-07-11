@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\AlertType;
+use App\Modules\Alert\Models\UserAlerts;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use Illuminate\Support\Facades\DB;
 use DataTables;
@@ -19,8 +21,21 @@ class AlertController extends Controller {
     //Display all alerts
 	public function alerts()
     {
-        
-		return view('Alert::alert-list');
+         
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+         $userAlert = UserAlerts::select(
+                'id',
+                'client_id',
+                'alert_id',
+                'status',
+               )
+            ->with('alertType:id,code,description')                
+            ->where('client_id',$client_id)                
+            ->get();              
+		return view('Alert::alert-list',['vehicles'=>$vehicles,'userAlerts'=>$userAlert]);
 	}
 
 	//returns alerts as json 
