@@ -1,17 +1,18 @@
 $(document).ready(function () {
 
-    // callBackDataTable();
+    callBackDataTable();
 });
  
 function check(){
      if(document.getElementById('vehicle').value == ''){
         alert('please select Vehicle');
     }
-    else if(document.getElementById('fromDate').value == ''){
-        alert('please enter from date');
-    }else if(document.getElementById('toDate').value == ''){
-        alert('please enter to date');
-    }else{
+    // else if(document.getElementById('fromDate').value == ''){
+    //     alert('please enter from date');
+    // }else if(document.getElementById('toDate').value == ''){
+    //     alert('please enter to date');
+    // }
+    else{
          var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('fromDate').value;
         var to_date = document.getElementById('toDate').value;
