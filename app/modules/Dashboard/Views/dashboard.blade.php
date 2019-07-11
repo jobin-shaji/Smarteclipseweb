@@ -1,6 +1,9 @@
 @extends('layouts.eclipse')
 @section('content')
 @role('root')
+
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1">
 <section class="content-header root_content_header">
    <h3></h3>
    <ol class="breadcrumb">
@@ -92,10 +95,14 @@
       </a>
    </div>
 </section>
+</div>
+</div>
 <!-- ./col -->
 @endrole
 @role('dealer')
-<div class="page-wrapper">
+
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1">
 <div class="page-breadcrumb">
    <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
@@ -155,9 +162,14 @@
       </div>
    </div>
 </div>
+</div>
+</div>
 <!-- ./col -->       
 @endrole
 @role('sub_dealer')
+
+<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper-root1">
 <div class="col-lg-3 col-xs-6">
    <!-- small box -->
    <div class="small-box bg-green bxs">
@@ -189,6 +201,7 @@
       <a href="/clients" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
    </div>
 </div>
+</div></div>
 @endrole
 <!-- -----------------------------------------------------------------------------   -->
 @role('client')
