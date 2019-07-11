@@ -128,7 +128,8 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                              
-                                <a class="dropdown-item" href="{{url('/performance-score')}}">Alert Points <span></span></a>     
+                                <a class="dropdown-item" href="{{url('/performance-score')}}">Alert Points <span></span></a>   
+                                  <a class="dropdown-item" href="{{url('/performance-score-history')}}">Performance Score History <span></span></a>  
                                 <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                         
                             </div>
                         </li>

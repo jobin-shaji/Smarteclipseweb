@@ -46,6 +46,9 @@ class AlertController extends Controller {
         $vehicle_id= $request->vehicle_id;            
         $from = $request->from_date;
         $to = $request->to_date;
+
+
+        
         $alert = Alert::select(
                 'id',
                 'alert_type_id',
