@@ -92,9 +92,10 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
+                                 <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>
                                 <a class="dropdown-item" href="/vehicles/create"> Add Vehicle <span></span></a>
                                 <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>  
-                                <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>
+                               
                                 <a class="dropdown-item" href="{{url('/drivers')}}"> List Drivers<span></span></a>  
                                 <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver Update Log<span></span></a>                             
                             </div>

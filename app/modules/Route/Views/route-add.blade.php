@@ -41,7 +41,7 @@
                </div>
                <div class="col-lg-4 col-sm-12 cover_search_button_route">
                        <button type="submit"  class="btn btn-primary btn-flat save_button_route" name="submit">Save Route</button>
-                       <button type="button" onclick='clearlastdraw()'  class="btn btn-primary btn-flat cbtn_undo" name="reset">Undo</button>
+                       <button type="button" onclick='clearlastdraw()'  class="btn btn-primary btn-flat cbtn_undo" title="Clear the points in map" name="reset">Undo</button>
                     </div>
                   </form>
 

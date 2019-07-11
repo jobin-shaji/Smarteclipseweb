@@ -58,9 +58,7 @@
                               <div class="form-group row" style="float:none!important">
                                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                                  <div class="form-group has-feedback">
-                                    <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5>
-                                     {{ old('address') }}
-                                    </textarea>
+                                    <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
                                   </div>
                                    @if ($errors->has('address'))
                                 <span class="help-block">
