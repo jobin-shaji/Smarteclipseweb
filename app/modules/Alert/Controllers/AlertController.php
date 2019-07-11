@@ -39,9 +39,13 @@ class AlertController extends Controller {
 	}
 
 	//returns alerts as json 
-    public function alertsList()
+    public function alertsList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
+        $alert_id= $request->alert_id;
+        $vehicle_id= $request->vehicle_id;            
+        $from = $request->from_date;
+        $to = $request->to_date;
         $alert = Alert::select(
                 'id',
                 'alert_type_id',
@@ -56,10 +60,27 @@ class AlertController extends Controller {
                 ->with('alertType:id,code,description')
                 ->with('vehicle:id,name,register_number')
                 ->with('gps:id,name,imei')
-                ->with('client:id,name')
-                ->where('client_id',$client_id)
-                ->where('status',0)
-                ->get();
+                ->with('client:id,name');
+                if($alert_id==null && $vehicle_id==null)
+                { 
+                   $alert =$alert->where('client_id',$client_id)
+                    ->where('status',0);
+                }
+                else
+                {
+                    $alert =$alert->where('client_id',$client_id)
+                    ->where('alert_type_id',$alert_id)
+                    ->where('vehicle_id',$vehicle_id)
+                    ->where('status',0);
+                    if($from){
+                      $search_from_date=date("Y-m-d", strtotime($from));                      
+                      $search_to_date=date("Y-m-d", strtotime($to));
+                      $alert = $alert->whereDate('device_time', '>=', $search_from_date)
+                      ->whereDate('device_time', '<=', $search_to_date);
+                    }
+                   
+                } 
+                 $alert =$alert->get();
         return DataTables::of($alert)
             ->addIndexColumn()
         //      ->addColumn('address', function ($alert) {

@@ -39,7 +39,7 @@
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">
                             <label>Alert Type</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                            <select class="form-control selectpicker" data-live-search="true" title="Select Alert Type" id="alert" name="alert">
                               <option value="">select</option>
                                @foreach ($userAlerts as $userAlert)
                               <option value="{{$userAlert->id}}">{{$userAlert->alertType->description}}</option>
