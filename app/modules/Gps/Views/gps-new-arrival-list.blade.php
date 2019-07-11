@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <div class="page-wrapper_new">
+   
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -69,6 +70,7 @@
             <!-- End footer -->
             <!-- ============================================================== -->
         </div>
+
 @section('script')
     <script src="{{asset('js/gps/gps-new-arrival-list.js')}}"></script>
 @endsection

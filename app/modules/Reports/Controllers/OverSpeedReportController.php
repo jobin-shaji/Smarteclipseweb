@@ -25,7 +25,8 @@ class OverSpeedReportController extends Controller
         $client= $request->data['client'];
         $vehicle= $request->data['vehicle'];
         $from = $request->data['from_date'];
-        $to = $request->data['to_date'];  
+        $to = $request->data['to_date'];
+        // dd($vehicle);
         $query =Alert::select(
             'id',
             'alert_type_id', 
