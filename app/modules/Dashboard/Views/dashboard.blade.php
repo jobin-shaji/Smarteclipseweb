@@ -1,11 +1,8 @@
 @extends('layouts.eclipse')
 @section('content')
 @role('root')
-<section class="content-header">
-   <h1>
-      Dashboard
-      <small>Control panel</small>
-   </h1>
+<section class="content-header root_content_header">
+   <h3></h3>
    <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li class="active">Dashboard</li>
