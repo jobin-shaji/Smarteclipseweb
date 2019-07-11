@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Modules\Vehicle\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -217,6 +216,13 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-documents',['vehicle' => $vehicle,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
     }
 
+    //for dependent dropdown doc add
+    public function findDateFieldWithDocTypeID(Request $request)
+    {   
+        $docTypeID=$request->docTypeID;
+        return response()->json($docTypeID);
+    }
+
     // save documents
     public function saveDocuments(Request $request)
     {
@@ -226,7 +232,7 @@ class VehicleController extends Controller {
         if($request->document_type_id == 1){
             $rules = $this->documentCreateRules();
         }else{
-            $rules = $this->cunstomDocCreateRules();
+            $rules = $this->customDocCreateRules();
         }
      
         $this->validate($request, $rules, $custom_messages);
@@ -242,9 +248,10 @@ class VehicleController extends Controller {
             'expiry_date' => $request->expiry_date,
             'path' => $uploadedFile,
         ]);
+        $encrypted_vehicle_id = encrypt($request->vehicle_id);
         $request->session()->flash('message', 'Document stored successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle'));
+        return redirect(route('vehicle.documents',$encrypted_vehicle_id));
     }
 
     // edit vehicle doc
@@ -252,11 +259,7 @@ class VehicleController extends Controller {
     {
         $decrypted_id = Crypt::decrypt($request->id);
         $vehicle_doc = Document::find($decrypted_id);
-        $document_type=DocumentType::select('id','name')->get();
-        if($vehicle_doc == null){
-            return view('Vehicle::404');
-        }
-        return view('Vehicle::vehicle-document-edit',['vehicle_doc' => $vehicle_doc,'document_type'=>$document_type]);
+        return view('Vehicle::vehicle-document-edit',['vehicle_doc' => $vehicle_doc]);
     }
 
     // update vehicle doc
@@ -287,7 +290,6 @@ class VehicleController extends Controller {
         }
         
         $vehicle_doc->vehicle_id = $request->vehicle_id;
-        $vehicle_doc->document_type_id = $request->document_type_id;
         $vehicle_doc->expiry_date= $request->expiry_date;
         $vehicle_doc->save();
 
@@ -307,14 +309,15 @@ class VehicleController extends Controller {
         }
         $file=$vehicle_doc->path;
         if($file){
-            $old_file = $vehicle_doc->path;
-            $myFile = "documents/".$old_file;
-            $delete_file=unlink($myFile);
+            // $old_file = $vehicle_doc->path;
+            // $myFile = "documents/".$old_file;
+            // $delete_file=unlink($myFile);
             $vehicle_doc->delete(); 
         }
+        $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
         $request->session()->flash('message', 'Document deleted successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle')); 
+        return redirect(route('vehicle.documents',$encrypted_vehicle_id)); 
     }
 
     // Vehicle OTA
@@ -1366,7 +1369,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         return  $rules;
     }
 
-    public function cunstomDocCreateRules(){
+    public function customDocCreateRules(){
         $rules = [
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
@@ -1382,7 +1385,6 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     {
         $rules = [
             'vehicle_id' => 'required',
-            'document_type_id' => 'required',
             'expiry_date' => 'nullable'
 
         ];
