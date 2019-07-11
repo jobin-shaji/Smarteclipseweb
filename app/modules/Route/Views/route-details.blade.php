@@ -70,6 +70,8 @@
          zoom: 17,
         center: {lat: lat, lng: lng}
         });
+        map.setOptions({ minZoom:5, maxZoom: 17 });
+
 
         var myLatLng = {lat: lat, lng: lng};
         var marker = new google.maps.Marker({
