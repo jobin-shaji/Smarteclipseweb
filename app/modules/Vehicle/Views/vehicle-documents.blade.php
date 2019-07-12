@@ -61,7 +61,8 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label" id="expiry_heading" style="display: none;">Expiry Date</label> 
                           <div class="form-group has-feedback">
-                            <input type="date" class="form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" > 
+
+                            <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" > 
                           </div>
                           @if ($errors->has('expiry_date'))
                             <span class="help-block">
