@@ -30,4 +30,5 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
 });
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
     Route::post('/root-gps-sale','DashboardController@rootGpsSale')->name('root.gps.sale');
+    Route::post('/root-gps-user','DashboardController@rootGpsUsers')->name('root.gps.user');
 });
