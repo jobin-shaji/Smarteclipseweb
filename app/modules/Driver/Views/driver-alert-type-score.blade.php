@@ -5,20 +5,20 @@
 @section('content')
   
 <div class="page-wrapper_new">  
-  <div class="page-breadcrumb">
-    <div class="row">
-      <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">Update Driver Performance Score</h4>
-         @if(Session::has('message'))
+
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update Driver Performance Score</li>
+     </ol>
+       @if(Session::has('message'))
           <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-            {{ Session::get('message') }}  
+                {{ Session::get('message') }}  
+            </div>
           </div>
-          </div>
-        @endif 
-      </div>
-    </div>
-  </div>     
+        @endif  
+    </nav>
+     
     <form  method="POST" action="{{route('performance-score.update.p',$client_id)}}">
       {{csrf_field()}}
       

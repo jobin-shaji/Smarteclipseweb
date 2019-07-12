@@ -6,6 +6,12 @@ $(document).ready(function () {
    
      };
       backgroundPostData(url,data,'rootGpsSale',{alert:false});
+
+      var url = 'root-gps-user';
+     var data = {
+   
+     };
+      backgroundPostData(url,data,'rootGpsUser',{alert:false});
 });
 // rootGpsSale
 function rootGpsSale(res){

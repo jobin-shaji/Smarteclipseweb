@@ -46,7 +46,7 @@ class AlertController extends Controller {
         $vehicle_id= $request->vehicle_id;            
         $from = $request->from_date;
         $to = $request->to_date;
-
+          // dd($alert_id);
 
         
         $alert = Alert::select(
@@ -69,8 +69,10 @@ class AlertController extends Controller {
                    $alert =$alert->where('client_id',$client_id)
                     ->where('status',0);
                 }
+
                 else
                 {
+                  
                     $alert =$alert->where('client_id',$client_id)
                     ->where('alert_type_id',$alert_id)
                     ->where('vehicle_id',$vehicle_id)

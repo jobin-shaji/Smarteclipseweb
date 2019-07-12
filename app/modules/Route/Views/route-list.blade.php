@@ -8,17 +8,16 @@
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 <div class="page-wrapper_new">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route List</li>
+     </ol>
+    </nav>
+ 
   <!-- ============================================================== -->
   <!-- Bread crumb and right sidebar toggle -->
   <!-- ============================================================== -->
-  <div class="page-breadcrumb">
-      <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Route List </h4>
-            
-          </div>
-      </div>
-  </div>
+
   <!-- ============================================================== -->
   <!-- End Bread crumb and right sidebar toggle -->
   <!-- ============================================================== -->

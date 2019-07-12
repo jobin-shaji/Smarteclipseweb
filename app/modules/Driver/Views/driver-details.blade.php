@@ -14,16 +14,22 @@
 <section class="hilite-content">
   <!-- title row -->
   <div class="page-wrapper_new">
+     <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Driver Details</li>
+     </ol>
+       @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
+          </div>
+        @endif  
+    </nav>
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Driver Details</h4>                      
-            </div>
-        </div>
-    </div>           
+             
     <div class="container-fluid">
       <div class="card" style="margin:0 0 0 1%">
         <div class="card-body wizard-content">

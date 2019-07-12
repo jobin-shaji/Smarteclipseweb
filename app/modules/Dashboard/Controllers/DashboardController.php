@@ -753,4 +753,34 @@ public function notification(Request $request)
         return response()->json($gps_sale); 
     }
 
+
+  public function rootGpsUsers(Request $request)
+    {
+        // dd($request->id);
+        $root_id=\Auth::user()->root->id;
+        
+        $gps = Gps::select(
+                'id',
+                'name',
+                'imei',
+                \DB::raw('date_format(created_at, "%M") as month')               
+            )
+            ->orderBy("month","DESC") 
+            ->groupBy("month")  
+            ->get();
+          
+        $gps_month = [];
+        $gps_name = [];
+        foreach($gps as $gps_sale){
+            $gps_name[] = $gps_sale->name;
+            $gps_month[] = $gps_sale->month;
+        }
+        $gps_sale=array(
+                    "gps_name"=>$gps_name,
+                    "gps_month"=>$gps_month
+                );
+        return response()->json($gps_sale); 
+    }
+
+
 }

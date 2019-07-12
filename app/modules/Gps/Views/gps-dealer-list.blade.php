@@ -2,13 +2,12 @@
 @section('content')
 
 <div class="page-wrapper page-wrapper_new">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">GPS Dealer</h4>
-            </div>
-        </div>
-    </div>    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Dealer</li>
+      </ol>
+    </nav>
+  
     <div class="container-fluid">
         <div class="card-body">
             <div class="table-responsive">
