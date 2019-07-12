@@ -124,9 +124,10 @@ function backgroundPostData(url, data, callBack, options) {
                 }else if(callBack == 'loadMap'){
                     loadMap(res);
                 }
-                // else if(callBack =='notification'){
-                //     // searchLocation(res);
-                // }
+                else if(callBack =='rootGpsSale'){
+                    
+                    rootGpsSale(res);
+                }
             }
         },
         error: function (err) {
