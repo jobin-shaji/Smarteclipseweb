@@ -7,12 +7,18 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
    <?php 
      $client = Auth::user()->client;
+dd($client);
+     $user = Auth::user();
+     $root=$user->root->id;
+     $dealer=$user->dealer->id;
+     $sub_dealer=$user->dealer->id;
      if($client)
      {
       // $user = Auth::user();
         if($client->count() > 0){
           $id = $client->id;
-        }else{
+        }
+        else{
           $id = null;
         }
      }
