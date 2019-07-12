@@ -30,7 +30,7 @@
             <h2 class="page-header">
               <i class="fa fa-cog"></i> 
             </h2>
-                <form  method="POST" action="{{route('client.update-password.p',$client->user_id)}}">
+                <form  method="POST" action="{{route('client.update-password.subdealer',$client->user_id)}}">
                 {{csrf_field()}}
                 <div class="row">
                 <div class="col-lg-6">
