@@ -66,6 +66,8 @@
     <script src="{{asset('js/moment-with-locales.js')}}"></script>
     <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{asset('js/custom.js')}}"></script>
+    
     
         
     <script type="text/javascript">+
@@ -89,7 +91,6 @@
         toastr.options.escapeHtml = true;
         toastr.options.newestOnTop = false;
     </script>
-    <script src="{{asset('js/custom.js')}}"></script>
 
     </body>
 
