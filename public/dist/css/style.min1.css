@@ -11578,7 +11578,7 @@ ul.list-style-none li a:hover {
 
 .page-breadcrumb .page-title {
     margin-bottom: 0px;
-    margin: 0px 14px;
+    margin: 16px 14px;
 }
 
 .page-breadcrumb .breadcrumb {
@@ -16938,6 +16938,17 @@ padding: 15px 10px;
 
 .client_dashboard_grid{
     background: #DD4B39;
+}
+
+/*--------------------bredcrump-----------------------*/
+li.breadcrumb-item {
+    width:100%;
+    text-align: right;
+    color: #000;
+}
+
+li.breadcrumb-item a {
+    color: #90979D;
 }
 
 
