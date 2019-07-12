@@ -1,10 +1,21 @@
 // -------------------------------------------------------------
-$(document).ready(function () {
+
+$(document).ready(function () { 
+     var url = 'root-gps-sale';
+     var data = {
+   
+     };
+      backgroundPostData(url,data,'rootGpsSale',{alert:false});
+});
+// rootGpsSale
+function rootGpsSale(res){
+  console.log(res.gps_month);
+// $(document).ready(function () {
 var ctx = document.getElementById("rootChart").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ["Jan","Feb","Mar","Apr","May"],
+      labels: res.gps_month,
       datasets: [{
         label: '#:',
         data:[10,50,50,90,70],
@@ -27,6 +38,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       }
     }
   });
+}
 
 
   var ctx = document.getElementById("rootChartUser").getContext('2d');
@@ -57,7 +69,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     }
   });
 
-  });
+  // });
 
 
 // ----------------------------------------------------
