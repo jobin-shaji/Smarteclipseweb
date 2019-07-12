@@ -96,7 +96,7 @@ class ClientController extends Controller {
             return "
             <a href=/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password-subdealer class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <button onclick=delClient(".$client->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
@@ -168,6 +168,9 @@ class ClientController extends Controller {
     //update password
     public function updatePassword(Request $request)
     {
+        $client=\Auth::user()->sub_dealer;
+       
+
         $client=User::find($request->id);
         if($client== null){
             return view('SubDealer::404');
@@ -180,8 +183,46 @@ class ClientController extends Controller {
         $client->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
-        return  redirect(route('client.change-password',$did));
+        
+            return  redirect(route('client.change-password',$did));
+        
+        
     }
+
+      public function changeClientPassword(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $client = Client::where('user_id', $decrypted)->first();
+         
+        if($client == null){
+           return view('Client::404');
+        }
+        return view('Client::subdealer-client-change-password',['client' => $client]);
+    }
+
+      //update password
+    public function updateClientPassword(Request $request)
+    {
+       
+        $client=User::find($request->id);
+        if($client== null){
+            return view('SubDealer::404');
+        }
+        $did=encrypt($client->id);
+        // dd($request->password);
+        $rules=$this->updateDepotUserRuleChangePassword($client);
+        $this->validate($request,$rules);
+        $client->password=bcrypt($request->password);
+        $client->save();
+        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+       
+             return  redirect(route('client.change-password-subdealer',$did));
+       
+        
+    }
+
+
     public function updateDepotUserRuleChangePassword()
     {
         $rules=[
