@@ -121,6 +121,8 @@ function backgroundPostData(url, data, callBack, options) {
                 }
                 else if(callBack =='searchLocation'){
                     searchLocation(res);
+                }else if(callBack == 'loadMap'){
+                    loadMap(res);
                 }
                 else if(callBack =='rootGpsSale'){
                     

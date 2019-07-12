@@ -20,11 +20,20 @@
  var map;
  var place_name="";
 
-   function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 9.931233, lng: 76.267303},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
-          zoom: 12
 
+  var url = '/client-location';
+  var data = { };
+  backgroundPostData(url,data,'loadMap',{alert:false});
+
+  var latMap=25.402282;
+  var lngMap=51.189165;
+
+   function loadMap(res) {
+        latMap = res.latitude;
+        lngMap = res.longitude;
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: latMap, lng: lngMap},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
+          zoom: 12
         });
         map.setOptions({ minZoom:5, maxZoom: 17 });
 

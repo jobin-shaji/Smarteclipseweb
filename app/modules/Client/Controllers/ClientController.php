@@ -491,6 +491,14 @@ class ClientController extends Controller {
         return redirect(route('client.profile'));  
     }
 
+    public function clientLocation(Request $request){
+        $client = $request->user()->client;
+        return response()->json([
+            'latitude' => (float)$client->latitude,
+            'longitude' => (float)$client->longitude
+        ]);
+    }
+
 ///////////////////////////////////////////////////////////////////////////////////////
     public function passwordUpdateRules(){
         $rules=[
