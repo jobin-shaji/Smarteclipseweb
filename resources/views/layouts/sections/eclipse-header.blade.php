@@ -53,11 +53,13 @@
                     @role('root')
                         @include('layouts.sections.root-header')
                     @endrole 
+                     @role('dealer')
+                        @include('layouts.sections.dealer-header')
+                    @endrole 
+                     @role('sub_dealer')
+                        @include('layouts.sections.sub_dealer-header')
+                    @endrole 
 
-
-
-
-                   
                    @endrole
 
                    @role('client')
