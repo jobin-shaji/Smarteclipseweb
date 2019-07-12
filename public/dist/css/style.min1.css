@@ -16860,3 +16860,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     margin: 0 0 0 5.3%;
     padding: 1% 9px 0px 2%;
 }
+/*error-text is for validation message in required field*/
+.error-text{
+    color:  #FF0000;
+}
