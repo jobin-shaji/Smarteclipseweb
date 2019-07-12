@@ -64,17 +64,7 @@
 
 
       </div>
-  
-    <!-- ============================================================== -->
-    <!-- footer -->
-    <!-- ============================================================== -->
-    <footer class="footer text-center">
-        All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://vstmobility.com">VST</a>.
-    </footer>
-    <!-- ============================================================== -->
-    <!-- end footer -->
-    <!-- ============================================================== -->
-</div>
+
 @section('script')
 <script src="{{asset('js/gps/ui.js')}}"></script>
 <!-- <script src="{{asset('js/canvasjs.min.js')}}"></script> -->

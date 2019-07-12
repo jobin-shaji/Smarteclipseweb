@@ -62,10 +62,6 @@ Create Geofence
 
      
          <div id="map" style=" width:100%;height:540px;"></div>
-     
-      <footer class="footer text-center">
-         All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-      </footer>
    </div>
 </section>
 @section('script')
