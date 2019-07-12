@@ -24,6 +24,7 @@
      $root=$user->root;    
      $dealer=$user->dealer;
      $sub_dealer=$user->sub_dealer;
+
      if($client)
      {      
         if($client->count() > 0){
@@ -41,11 +42,16 @@
      {
       $id = $dealer->id;
      }
+
      else if($sub_dealer)
      {
+
       $id = $sub_dealer->id;
      }
-   
+     else
+     {
+      $id=null;
+     } 
   ?>
   <meta name="client" content="{{$id}}">
   <meta name="domain" content="{{url('/')}}">
