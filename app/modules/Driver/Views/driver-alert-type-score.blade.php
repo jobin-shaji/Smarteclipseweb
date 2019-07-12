@@ -134,9 +134,6 @@
     </div>
 
    <div class="page-wrapper_cover"></div>
-   <footer class="footer text-center">
-      All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-   </footer>
 </div>
 <div class="clearfix"></div>
 @endsection

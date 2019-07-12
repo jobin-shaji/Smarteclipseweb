@@ -81,9 +81,6 @@ Zig Zag Driving Report
       </div>
     </div>
   </div>
-   <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
 </div>
 @section('script')
     <script src="{{asset('js/gps/zigzag-driving-report-list.js')}}"></script>
