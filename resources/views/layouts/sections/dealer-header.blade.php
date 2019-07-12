@@ -13,48 +13,34 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps/create')}}">Add Device</a>
-                                <a class="dropdown-item" href="{{url('/gps')}}"> List Device</a>  
-                                 <a class="dropdown-item" href="{{url('/gps-transferred')}}"> Transferred Device List</a>  
-                                 <a class="dropdown-item" href="{{url('/gps-transfer/create')}}">Device Transfer</a> 
-                                 <a class="dropdown-item" href="{{url('/gps-transfers')}}">Device Transfer List</a>                          
+                                <a class="dropdown-item" href="{{url('/gps-new')}}"> New Arrivals</a>
+                                <a class="dropdown-item" href="{{url('/gps-dealer')}}"> List Device</a>  
+                                <a class="dropdown-item" href="{{url('/gps-transfer/create')}}"> Device Transfer</a>
+                                <a class="dropdown-item" href="{{url('/gps-transfers')}}"> Device Transfer List</a>                           
                             </div>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEALER
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SUB DEALER
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                               
-                                 <a class="dropdown-item" href="{{url('/dealer/create')}}">Add Dealer<span></span></a>
-                                   <a class="dropdown-item" href="{{url('/dealers')}}">List Dealer<span></span></a>
+                                 <a class="dropdown-item" href="{{url('/sub-dealer/create')}}">Add Sub Dealer<span></span></a>
+                                   <a class="dropdown-item" href="{{url('/subdealers')}}">List Sub Dealer<span></span></a>
                             </div>
                         </li>
-
-
-                        
-                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SUB DEALER 
+                           <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> END USER
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/sub-dealers')}}">List Sub Dealer<span></span></a> 
-
+                              
+                               
+                                   <a class="dropdown-item" href="{{url('/dealer-client')}}">List End User<span></span></a>
                             </div>
                         </li>
-
-
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE CATEGORY 
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">Add Vehicle Category<span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/vehicle-types')}}">List Vehicle Categories<span></span></a>                     
-                            </div>
-                        </li>
+                      
 
 
 
@@ -64,37 +50,8 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                              
-                                <a class="dropdown-item" href="{{url('/vehicle-root')}}">List Vehicles<span></span></a>   
+                                <a class="dropdown-item" href="{{url('/vehicle-dealer')}}">List Vehicles<span></span></a>   
                                                           
                             </div>
                         </li>
-
-                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ALERT TYPE
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/alert-type/create')}}">Add Alert Type<span></span></a>   
-                                <a class="dropdown-item" href="{{url('/alert-types')}}">List Alert Type<span></span></a>   
-                                                          
-                            </div>
-                        </li>
-
-                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">OTA TYPES
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/ota-type/create')}}">Add Ota Type<span></span></a>   
-                                <a class="dropdown-item" href="{{url('/ota-type')}}">List Ota Type<span></span></a>   
-                                                          
-                            </div>
-                        </li>
-
-
-                        
-                      
-
                     </ul>

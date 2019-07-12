@@ -7,12 +7,15 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
    <?php 
      $client = Auth::user()->client;
+
+     
      if($client)
      {
       // $user = Auth::user();
         if($client->count() > 0){
           $id = $client->id;
-        }else{
+        }
+        else{
           $id = null;
         }
      }
