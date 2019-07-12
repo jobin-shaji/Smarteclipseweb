@@ -695,7 +695,7 @@ pre code {
     }
 
 section.content-header.root_content_header {
-    margin-left: 6%;
+    /*margin-left: 6%;*/
 }
 }
 
@@ -705,7 +705,7 @@ section.content-header.root_content_header {
     }
 
 section.content-header.root_content_header {
-    margin-left: 6%;
+    /*margin-left: 6%;*/
 }
 }
 
@@ -715,7 +715,7 @@ section.content-header.root_content_header {
     }
 
 section.content-header.root_content_header {
-    margin-left: 6%;
+    /*margin-left: 6%;*/
 }
 }
 
@@ -10697,7 +10697,7 @@ html[dir=ltr] body .p-l-0 {
 .page-wrapper {
     background: #eeeeee;
     position: relative;
-    margin-left: 250px
+    /*margin-left: 250px*/
 }
 
 .page-wrapper>.container-fluid {
@@ -10711,9 +10711,9 @@ html[dir=ltr] body .p-l-0 {
 
 #main-wrapper {}
 
-#main-wrapper[data-sidebartype=full] .page-wrapper {
+/*#main-wrapper[data-sidebartype=full] .page-wrapper {
     margin-left: 250px
-}
+}*/
 
 @media (min-width:768px) {
     #main-wrapper {}
@@ -16853,7 +16853,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     background: #f8f9fa;
 }
 .page-wrapper-root {
-    margin: 0 0 0 5.3%;
+    /*margin: 0 0 0 5.3%;*/
     padding: 1% 9px 0px 2%;
 }
 .page-wrapper-root1 {
