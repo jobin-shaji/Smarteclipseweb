@@ -1,8 +1,12 @@
 @extends('layouts.eclipse')
 @section('content')
+
+<!-- --------------------------------------------------------------------------------
+   Root Dashboard
+-------------------------------------------------------------------------------- -->
 @role('root')
 
-<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
 <section class="content-header root_content_header">
    <h3></h3>
@@ -13,7 +17,7 @@
 </section>
 <section class="content">
    <div class="row">
-      <div class="col-lg-3 col-xs-6">
+      <div class="col-lg-2 col-xs-6 gps_dashboard_grid dash_grid">
          <!-- small box -->
          <div class="small-box bg-green bxs">
             <div class="inner">
@@ -29,7 +33,7 @@
          </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
+      <div class="col-lg-2 col-xs-6 dealer_dashboard_grid dash_grid" >
          <!-- small box -->
          <div class="small-box bg-yellow bxs">
             <div class="inner">
@@ -39,13 +43,14 @@
                <p>Dealers</p>
             </div>
             <div class="icon">
-               <i class="ion ion-person-add"></i>
+               <i class="fa fa-tablet"></i>
+              
             </div>
             <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
          </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
+      <div class="col-lg-2 col-xs-6 sub_dealer_dashboard_grid dash_grid">
          <!-- small box -->
          <div class="small-box bg-blue bxs">
             <div class="inner">
@@ -55,13 +60,13 @@
                <p>Sub Dealers</p>
             </div>
             <div class="icon">
-               <i class="ion ion-person-add"></i>
+               <i class="fa fa-tablet"></i>
             </div>
             <a href="/sub-dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
          </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
+      <div class="col-lg-2 col-xs-6 client_dashboard_grid dash_grid">
          <!-- small box -->
          <div class="small-box bg-green bxs">
             <div class="inner">
@@ -71,14 +76,14 @@
                <p>Clients</p>
             </div>
             <div class="icon">
-               <i class="ion ion-person-add"></i>
+               <i class="fa fa-tablet"></i>
             </div>
             <a href="/client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
          </div>
       </div>
       <!-- ./col -->
       <a href="">
-         <div class="col-md-3 col-sm-6 col-xs-12">
+        <!--  <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                <span class="info-box-icon bg-blue"><i class="ion ion-ios-gear-outline"></i></span>
                <div class="info-box-content">
@@ -91,14 +96,19 @@
                </div>
             </div>
             <!-- /.info-box -->
-         </div>
-      </a>
+         <!-- </div> -->
+      <!-- </a> -->
    </div>
 </section>
 </div>
 </div>
 <!-- ./col -->
 @endrole
+
+<!-- --------------------------------------------------------------------------------
+   Root Dashboard
+-------------------------------------------------------------------------------- -->
+
 @role('dealer')
 
 <div class="page-wrapper page-wrapper-root">
