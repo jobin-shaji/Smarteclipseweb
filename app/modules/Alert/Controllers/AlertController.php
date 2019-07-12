@@ -30,7 +30,7 @@ class AlertController extends Controller {
                 'id',
                 'client_id',
                 'alert_id',
-                'status',
+                'status'
                )
             ->with('alertType:id,code,description')                
             ->where('client_id',$client_id)                

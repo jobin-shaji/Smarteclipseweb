@@ -1,4 +1,27 @@
 
+
+ $(function () {
+           
+            $('#fromDate,#toDate').datetimepicker({
+                useCurrent: false,
+                minDate: moment()
+            });
+            $('#fromDate').datetimepicker().on('dp.change', function (e) {
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $('#toDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+            $('#toDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+                 $(this).data("DateTimePicker").hide();
+            });
+
+        });
 // dateTimepicker
 
     $( ".datetimepicker" ).datetimepicker({ 
@@ -9,6 +32,10 @@
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         // maxDate: new Date() 
+ });
+    $( ".date_expiry" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        minDate: new Date() 
  });
 
 function getUrl(){
@@ -719,10 +746,12 @@ function notification(res){
     expire_length=res.expire_documents.length;
  $("#expire_notification").empty();
     for (var i = 0; i < expire_length; i++) { 
+        
     expire_register_number=res.expire_documents[i].vehicle.register_number;
       expire_vehicle_name=res.expire_documents[i].vehicle.name;
      expire_document_name=res.expire_documents[i].document_type.name;
       expire_expiry_date=res.expire_documents[i].expiry_date;
+     
         var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
         '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
         '<div class="m-l-10" >'+
@@ -730,8 +759,19 @@ function notification(res){
         '<small class="font-light">'+expire_vehicle_name+'</small><br>'+                                                                     
         '<small class="font-light">'+expire_register_number+'</small><br>'+                                    
         '</div></div>';  
-        $("#expire_notification").append(expire_documents);       
-    }    
+         $("#expire_notification").append(expire_documents); 
+      } 
+
+       if(expire_length==0)
+      {
+        var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
+        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+        '<div class="m-l-10" >'+
+        '<small class="font-light"> No expired Documents</small><br>'+                                        
+                                       
+        '</div></div>';  
+         $("#expire_notification").append(expire_documents);   
+      }              
 }
 
 function alerts(){  
