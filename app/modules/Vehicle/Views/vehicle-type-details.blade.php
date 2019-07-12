@@ -7,16 +7,19 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
-    <section class="content-header">
-     <h1>Vehicle type details</h1>
-    </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
-      </div>
-    </div>
-    @endif  
+   <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle type details</li>
+         </ol>
+          @if(Session::has('message'))
+            <div class="pad margin no-print">
+               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                  {{ Session::get('message') }}  
+               </div>
+            </div>
+            @endif  
+        </nav>
+    
 <section class="hilite-content">
       <!-- title row -->
       <div class="row">

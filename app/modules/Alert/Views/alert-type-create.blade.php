@@ -8,21 +8,11 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
-  <div class="page-breadcrumb">
-    <div class="row">
-      <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Create Alert Types</h4>
-        @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}  
-            </div>
-          </div>
-        @endif  
-      </div>
-    </div>
-  </div>
-            
+   <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Alert Types </li>
+         </ol>
+        </nav>
   <div class="card-body">
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">

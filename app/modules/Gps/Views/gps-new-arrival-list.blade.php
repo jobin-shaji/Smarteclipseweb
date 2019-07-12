@@ -4,18 +4,13 @@
 @endsection
 @section('content')
 <div class="page-wrapper_new">
-   
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">New Arrival</h4>
-                      
-                    </div>
-                </div>
-            </div>
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/New Arrival</li>
+        
+      </ol>
+    </nav>
+            
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
