@@ -121,9 +121,6 @@
       </div>
     </div>
   </div>
-  <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://vstmobility.com">VST</a>.
-  </footer>
 </div>
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
