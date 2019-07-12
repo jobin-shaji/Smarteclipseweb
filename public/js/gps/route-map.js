@@ -1,5 +1,12 @@
-      var latMap=9.931233;//qatar-25.354826 kerala-9.931233
-      var lngMap=76.267303;//qatar-51.183884 kerala-76.267303
+
+     var url = '/client-location';
+     var data = { 
+      
+     };
+     backgroundPostData(url,data,'loadMap',{alert:false});
+
+      var latMap=25.402282;
+      var lngMap=51.189165;
       var map;
       var image ='';
       var path=[];
@@ -10,10 +17,10 @@
       var place_name="";
 
 
-      function initMap() {
-
-
-        var heightAshbury = {lat: latMap, lng: lngMap};
+      function loadMap(res) {
+        latMap = res.latitude;
+        lngMap = res.longitude
+        var heightAshbury = {lat:latMap, lng:lngMap};
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 16,
           center: heightAshbury,
@@ -137,9 +144,9 @@
         }
 
 
-        $(function() {
-          initMap();
-        });
+        // $(function() {
+        //   initMap();
+        // });
 
     // ------------------------------------------
 
