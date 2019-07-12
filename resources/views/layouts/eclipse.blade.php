@@ -27,6 +27,8 @@
         
         @yield('content')
 
+        @include('layouts.sections.eclipse-footer')
+
     </div>
     <!-- <div class="page-wrapper">
          @include('layouts.sections.eclipse-footer')

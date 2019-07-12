@@ -1,4 +1,27 @@
 
+
+ $(function () {
+           
+            $('#fromDate,#toDate').datetimepicker({
+                useCurrent: false,
+                minDate: moment()
+            });
+            $('#fromDate').datetimepicker().on('dp.change', function (e) {
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $('#toDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+            $('#toDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+                 $(this).data("DateTimePicker").hide();
+            });
+
+        });
 // dateTimepicker
 
     $( ".datetimepicker" ).datetimepicker({ 
@@ -9,6 +32,10 @@
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         // maxDate: new Date() 
+ });
+    $( ".date_expiry" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        minDate: new Date() 
  });
 
 function getUrl(){

@@ -4,11 +4,14 @@ $(document).ready(function () {
 
 function check(){
     if(document.getElementById('vehicle').value == ''){
-        alert('please select vehicle');
+        alert('Please select vehicle');
+    }else if(document.getElementById('status').value == ''){
+        alert('Please select status');
     }else{
-        var vehicle_id=$('#vehicle').val();      
+        var vehicle_id=$('#vehicle').val(); 
+        var status=$('#status').val();      
         var client=$('meta[name = "client"]').attr('content');
-        var data = {'vehicle_id':vehicle_id,'client':client};
+        var data = {'vehicle_id':vehicle_id,'status':status,'client':client};
         callBackDataTable(data);        
     }
 }
@@ -40,6 +43,7 @@ function callBackDataTable(data=null){
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
             {data: 'expiry_date', name: 'expiry_date'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         

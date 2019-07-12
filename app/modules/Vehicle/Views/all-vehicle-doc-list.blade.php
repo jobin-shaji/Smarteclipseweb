@@ -29,10 +29,22 @@
                            <div class="form-group">
                             <label>Vehicle</label>                          
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="">select</option>
+                              <option value="">Select Vehicle</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                               @endforeach  
+                            </select>
+                          </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3"> 
+                           <div class="form-group">
+                            <label>Status</label>                          
+                            <select class="form-control selectpicker" data-live-search="true" title="Select Status" id="status" name="status">
+                              <option value="">Select Status</option>
+                              <option value="all">All</option>
+                              <option value="valid">Valid</option>
+                              <option value="expiring">Expiring</option>
+                              <option value="expired">Expired</option>
                             </select>
                           </div>
                           </div>
@@ -52,6 +64,7 @@
                                 <th>Vehicle Name</th>
                                 <th>Register Number</th>
                                 <th>Expiry Date</th>
+                                <th>Status</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -62,9 +75,7 @@
                   </div>
                 </div>               
             </div>            
-            <footer class="footer text-center">
-            All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-          </footer>
+            
         </div>
 @endsection
     @section('script')
