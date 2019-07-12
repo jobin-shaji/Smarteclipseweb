@@ -25,4 +25,9 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
            Route::post('/location-search','DashboardController@locationSearch')->name('/location-search');
 
             Route::post('/notification', 'DashboardController@notification')->name('notification');
+
+            
+});
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
+    Route::post('/root-gps-sale','DashboardController@rootGpsSale')->name('root.gps.sale');
 });

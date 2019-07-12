@@ -189,7 +189,7 @@ class ClientController extends Controller {
         
     }
 
-      public function changeClientPassword(Request $request)
+    public function changeClientPassword(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
         $client = Client::where('user_id', $decrypted)->first();
