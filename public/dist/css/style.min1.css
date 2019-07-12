@@ -1505,7 +1505,7 @@ section.content-header.root_content_header {
         -ms-flex: 0 0 33.33333%;
         flex: 0 0 33.33333%;
         max-width:100%;
-        margin:2% 0;
+        margin:0;
     }
     .col-lg-5 {
         -webkit-box-flex: 0;
@@ -16857,10 +16857,17 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     padding: 1% 9px 0px 2%;
 }
 .page-wrapper-root1 {
-    margin: 0 0 0 5.3%;
-    padding: 1% 9px 0px 2%;
+   /* margin: 0 0 0 5.3%;
+    padding: 1% 9px 0px 2%;*/
 }
 /*error-text is for validation message in required field*/
 .error-text{
     color:  #FF0000;
 }
+
+.col-lg-4.col-md-4.cover_alert_manager {
+background: #fff;
+padding: 15px 10px;
+}
+
+
