@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">         
             <div class="page-breadcrumb">
                 <div class="row">

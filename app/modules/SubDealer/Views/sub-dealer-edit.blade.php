@@ -3,7 +3,7 @@
     Update Dealer Details
 @endsection
 @section('content')
- <div class="page-wrapper">
+ <div class="page-wrapper page-wrapper-root page-wrapper_new">
     <div class="page-breadcrumb">
       <div class="row">
         <section class="hilite-content">    
