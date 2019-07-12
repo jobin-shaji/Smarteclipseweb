@@ -202,52 +202,50 @@ class DriverController extends Controller {
                 'gps_id',
                 'alert_id',
                 'points',                
-                'created_at')
-               
-                ->with('alertType:id,code,description')
-                ->with('driver:id,name')
-                ->with('vehicle:id,name,register_number')
-                ->with('gps:id,name,imei')
-                ->with('client:id,name'); 
-                if($driver_id==null && $from==null && $to==null)
-                {
-                     $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle);
+                'created_at'
+            )               
+            ->with('alert:id,alert_type_id')
+            ->with('driver:id,name')
+            ->with('vehicle:id,name,register_number')
+            ->with('gps:id,name,imei')
+            ->with('client:id,name'); 
+            if($driver_id==null && $from==null && $to==null)
+            {
+                 $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle);
+            }
+            else if($driver_id!=null && $from==null && $to==null)
+            {
+                $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
+                ->where('driver_id',$driver_id);
+            }
+            else
+            {
+                $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
+                ->where('driver_id',$driver_id);
+                if($from){
+                  $search_from_date=date("Y-m-d", strtotime($from));                      
+                  $search_to_date=date("Y-m-d", strtotime($to));
+                  $performance_Score = $performance_Score->whereDate('created_at', '>=', $search_from_date)
+                  ->whereDate('created_at', '<=', $search_to_date);
                 }
-                else if($driver_id!=null && $from==null && $to==null)
-                {
-                    $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-                    ->where('driver_id',$driver_id);
-                }
-                else
-                {
-                    $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-                    ->where('driver_id',$driver_id);
-                    if($from){
-                          $search_from_date=date("Y-m-d", strtotime($from));                      
-                          $search_to_date=date("Y-m-d", strtotime($to));
-                          $performance_Score = $performance_Score->whereDate('created_at', '>=', $search_from_date)
-                          ->whereDate('created_at', '<=', $search_to_date);
-                    }
 
 
-                }       
-                 $performance_Score = $performance_Score->get();
-               
-
-
-        return DataTables::of($performance_Score)
+            }       
+             $performance_Score = $performance_Score->get();
+            return DataTables::of($performance_Score)
             ->addIndexColumn()
-        
+            ->addColumn('description', function ($performance_Score) {
+                $description=$performance_Score->alert->alertType->description;
+                return $description;
+                    
+            })            
             ->addColumn('action', function ($performance_Score) {
-
             return "<button onclick=VerifyAlert(".$performance_Score->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
              <a href=/alert/report/".Crypt::encrypt($performance_Score->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
-
-
      //validation for employee updation
     public function driverUpdateRules($driver)
     {

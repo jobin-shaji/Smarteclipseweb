@@ -23,8 +23,8 @@ class DriverBehaviour extends Model
 	  return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
 	}
 
-	public function alertType(){
-	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_id');
+	public function alert(){
+	  return $this->hasOne('App\Modules\Alert\Models\Alert','id','alert_id');
 	}
 	public function driver(){
 	  return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id');
