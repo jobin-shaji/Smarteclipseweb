@@ -204,7 +204,7 @@ class DriverController extends Controller {
                 'points',                
                 'created_at')
                
-                ->with('alertType:id,code,description')
+                ->with('alert:id,alert_type_id')
                 ->with('driver:id,name')
                 ->with('vehicle:id,name,register_number')
                 ->with('gps:id,name,imei')
