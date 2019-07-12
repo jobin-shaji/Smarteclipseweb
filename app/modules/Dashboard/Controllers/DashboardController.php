@@ -112,7 +112,12 @@ class DashboardController extends Controller
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first();
-        $vehicles = Vehicle::select('id','register_number','name','gps_id')
+       
+        if($client)
+        {
+
+
+            $vehicles = Vehicle::select('id','register_number','name','gps_id')
                     ->where('client_id',$client->id)
                     ->get();
 
@@ -145,6 +150,8 @@ class DashboardController extends Controller
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime)
         ->whereIn('id',$single_vehicle)->count();
+
+    }
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::all()->count(), 
