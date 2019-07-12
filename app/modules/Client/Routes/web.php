@@ -29,5 +29,6 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
 	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
 
+	Route::post('/client-location','ClientController@clientLocation')->name('client.location'); 
 });
 

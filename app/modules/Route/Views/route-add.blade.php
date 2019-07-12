@@ -70,32 +70,20 @@
             </div>
         </div>
     </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-    
-
-
- 
-
-         <!-------------------------------------------------------------- -->
-    
-         <!-- ------------------------------------------------------- -->
-
 
 
          <div id="map" style=" width:100%;height:540px;"></div>
       </div>
+     <footer class="footer text-center">
+    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
+  </footer>
   </div>
 
 </section>
 
 @section('script')
   <script src="{{asset('js/gps/route-map.js')}}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,places&callback=initMap"
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,places"
        async defer></script>
 @endsection
  @endsection
