@@ -1,16 +1,16 @@
     @role('dealer|sub_dealer|root')
-  <aside class="left-sidebar" data-sidebarbg="skin5">
+  <!-- <aside class="left-sidebar" data-sidebarbg="skin5"> -->
             <!-- Sidebar scroll-->
 
-            <div class="scroll-sidebar">
+            <!-- <div class="scroll-sidebar"> -->
             
 
                 <!-- Sidebar navigation-->
-                <nav class="sidebar-nav" id="left_sidebar_hide">
-                    <ul id="sidebarnav" class="p-t-30">
-                        @role('root')
+                <!-- <nav class="sidebar-nav" id="left_sidebar_hide"> -->
+                    <!-- <ul id="sidebarnav" class="p-t-30"> -->
+                       <!--  @role('root')
                           @include('layouts.sections.eclipse-root-sidebar')
-                        @endrole
+                        @endrole -->
                         @role('dealer')
                           @include('layouts.sections.eclipse-dealer-sidebar')
                         @endrole
@@ -22,15 +22,15 @@
 
                      
 
-                  </ul>
-              </nav>
+                  <!-- </ul> -->
+              <!-- </nav> -->
                 <!-- End Sidebar navigation -->
             
 
                    
-            </div>
+            <!-- </div> -->
             <!-- End Sidebar scroll-->
-  </aside>
+  <!-- </aside> -->
    @endrole
    @role('client')
 
