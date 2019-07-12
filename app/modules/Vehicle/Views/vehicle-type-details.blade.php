@@ -1,4 +1,4 @@
-@extends('layouts.gps') 
+@extends('layouts.eclipse') 
 @section('title')
    Vehicle type details
 @endsection
