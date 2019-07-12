@@ -17,7 +17,7 @@
 </section>
 <section class="content">
    <div class="row">
-      <div class="col-lg-2 col-xs-6 gps_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
          <!-- small box -->
          <div class="small-box bg-green bxs">
             <div class="inner">
@@ -33,7 +33,7 @@
          </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-2 col-xs-6 dealer_dashboard_grid dash_grid" >
+      <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
          <!-- small box -->
          <div class="small-box bg-yellow bxs">
             <div class="inner">
@@ -50,7 +50,7 @@
          </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-2 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
          <!-- small box -->
          <div class="small-box bg-blue bxs">
             <div class="inner">
@@ -66,7 +66,7 @@
          </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-2 col-xs-6 client_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
          <!-- small box -->
          <div class="small-box bg-green bxs">
             <div class="inner">
@@ -81,24 +81,16 @@
             <a href="/client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
          </div>
       </div>
-      <!-- ./col -->
-      <a href="">
-        <!--  <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-               <span class="info-box-icon bg-blue"><i class="ion ion-ios-gear-outline"></i></span>
-               <div class="info-box-content">
-                  <span class="info-box-text">Vehicle</span>
-                  <span class="info-box-number" id="stages">
-                     <h3 id="vehicle">
-                        <div class="loader"></div>
-                     </h3>
-                  </span>
-               </div>
-            </div>
-            <!-- /.info-box -->
-         <!-- </div> -->
-      <!-- </a> -->
+      
    </div>
+   <div class="row">
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChart" style="max-width: 100%; height: 200px;" ></canvas>  
+      </div>
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChartUser" style="max-width: 100%; height: 200px;" ></canvas>  
+      </div>
+    </div>
 </section>
 </div>
 </div>
@@ -109,13 +101,17 @@
    Root Dashboard
 -------------------------------------------------------------------------------- -->
 
+
+<!-- --------------------------------------------------------------------------------
+   Dealers
+-------------------------------------------------------------------------------- -->
 @role('dealer')
 
-<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
 <div class="page-breadcrumb">
    <div class="row">
-      <div class="col-12 d-flex no-block align-items-center">
+      <div class="col-12 d-flex no-block align-items-center ">
          <h4 class="page-title">Dashboard</h4>
          @if(Session::has('message'))
          <div class="pad margin no-print">
@@ -134,7 +130,7 @@
             <div class="row">
                <div class="col-sm-12">
                   <div class="row">
-                     <div class="col-lg-3 col-xs-6">
+                     <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
                         <!-- small box -->
                         <div class="small-box bg-green bxs">
                            <div class="inner">
@@ -150,7 +146,7 @@
                         </div>
                      </div>
                      <!-- ./col -->
-                     <div class="col-lg-3 col-xs-6">
+                     <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
                         <!-- small box -->
                         <div class="small-box bg-yellow bxs">
                            <div class="inner">
@@ -168,6 +164,17 @@
                   </div>
                </div>
             </div>
+
+              <div class="row">
+              <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
+              </div>
+              <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
+              </div>
+            </div>
+
+
          </div>
       </div>
    </div>
@@ -176,11 +183,19 @@
 </div>
 <!-- ./col -->       
 @endrole
+
+<!-- --------------------------------------------------------------------------------
+   Dealers
+-------------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------------
+   Sub-Dealers
+-------------------------------------------------------------------------------- -->
 @role('sub_dealer')
 
-<div class="page-wrapper page-wrapper-root">
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
-<div class="col-lg-3 col-xs-6">
+  <div class="row">
+<div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
    <!-- small box -->
    <div class="small-box bg-green bxs">
       <div class="inner">
@@ -196,7 +211,7 @@
    </div>
 </div>
 <!-- ./col -->
-<div class="col-lg-3 col-xs-6">
+<div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
    <!-- small box -->
    <div class="small-box bg-blue bxs">
       <div class="inner">
@@ -211,7 +226,20 @@
       <a href="/clients" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
    </div>
 </div>
-</div></div>
+</div>
+<div class="row">
+              <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
+              </div>
+              <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
+              </div>
+            </div>
+            
+</div>
+<!-- --------------------------------------------------------------------------------
+   Sub-Dealers
+-------------------------------------------------------------------------------- -->
 @endrole
 <!-- -----------------------------------------------------------------------------   -->
 @role('client')
@@ -503,14 +531,30 @@
 @section('script')
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places"></script>
+<script src="{{asset('js/gps/mdb.js')}}"></script>
 <script src="{{asset('js/gps/dashb.js')}}"></script>
 @role('client')
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
-<script src="{{asset('js/gps/mdb.js')}}"></script>
 <style type="text/css">
   .container-fluid {padding-left: 0px !important}
 </style>
 @endrole
+@role('root')
+<script src="{{asset('js/gps/dash-root.js')}}"></script>
+@endrole
+
+@role('dealer')
+<script src="{{asset('js/gps/dash-dealer.js')}}"></script>
+@endrole
+
+@role('sub_dealer')
+<script src="{{asset('js/gps/dash-sub-dealer.js')}}"></script>
+@endrole
+
+@role('root')
+<script src="{{asset('js/gps/dash-root.js')}}"></script>
+@endrole
+
 @endsection
 @endsection
