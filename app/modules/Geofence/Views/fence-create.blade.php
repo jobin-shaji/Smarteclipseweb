@@ -18,9 +18,7 @@ Create Geofence
       <!-- ============================================================== -->
       <div class="page-breadcrumb route_breadcumb">
          <div class="row">
-            <div class="col-lg-4 d-flex no-block align-items-center">
-               <h4 class="page-title">Please plot points on the map to create geo fence</h4>
-            </div>
+           
             <div class="col-lg-8">
      
                   <div style="float:left!important">
@@ -45,7 +43,10 @@ Create Geofence
                            <button class="btn btn-xs btn-info form-control" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                                
                         </div>
                       </div> 
-                    </div>    
+                    </div> 
+                     <div class="col-lg-4 d-flex no-block align-items-center" style="text-align:right;">
+               <h4 class="page-title">Please plot points on the map to create geo fence</h4>
+            </div>   
    </div>
                       
 
@@ -66,7 +67,7 @@ Create Geofence
 </section>
 @section('script')
 <script src="{{asset('js/gps/geofence.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,places"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,places&callback=initMap"
    async defer></script>
 @endsection
 @endsection

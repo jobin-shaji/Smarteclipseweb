@@ -21,10 +21,14 @@
  var place_name="";
 
 
+ function initMap(){
   var url = '/client-location';
   var data = { };
   backgroundPostData(url,data,'loadMap',{alert:false});
 
+ }
+
+  
   var latMap=25.402282;
   var lngMap=51.189165;
 
