@@ -96,7 +96,7 @@ class ClientController extends Controller {
             return "
             <a href=/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password-subdealer class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <button onclick=delClient(".$client->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
@@ -180,7 +180,7 @@ class ClientController extends Controller {
         $client->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
-        return  redirect(route('client.change-password',$did));
+        return  redirect(route('client.change-password-subdealer',$did));
     }
     public function updateDepotUserRuleChangePassword()
     {
