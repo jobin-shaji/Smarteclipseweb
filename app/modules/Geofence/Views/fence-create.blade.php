@@ -48,18 +48,8 @@ Create Geofence
                <h4 class="page-title">Please plot points on the map to create geo fence</h4>
             </div>   
    </div>
-                      
-
-              
-
-               </div>   
-             </div>
-         </div>
-
-
-      </div>
-      </div>
-
+                </div>   
+            
 
      
          <div id="map" style=" width:100%;height:540px;"></div>

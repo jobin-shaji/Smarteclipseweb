@@ -178,7 +178,7 @@
                                 <div id="alert_notification">
                                
                             </div>
-                                <a class="dropdown-item" href="{{url('/alert')}}">View All</a>
+                                <a class="dropdown-item" href="{{url('/alert')}}">View All Alerts</a>
 
                                                             </div>
                         </li>                      
@@ -197,6 +197,17 @@
                                             
                                             <div id="expire_notification" style="background-color: 'red'">
                                             </div>
+                                            <div >
+                                                 <div class="d-flex no-block align-items-center p-10"  >
+                                                <span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>
+                                                <div class="m-l-10" >
+                                                <a href="{{url('/all-vehicle-docs')}}"><small class="font-light">View All Documents</small></a><br>                                        
+                                                                               
+                                                </div>
+                                            </div>  
+
+                                            </div>
+                                             
                                          </div>
                                     </li>
                                 </ul>
