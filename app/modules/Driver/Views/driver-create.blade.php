@@ -85,9 +85,6 @@
         </div>  
       </form>
     </div>
-    <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-    </footer>
   </div>
 </section>
  @endsection

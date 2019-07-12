@@ -99,12 +99,6 @@
     </div>
     </div>
 
-<!-- -----------------footer-------------------- -->
-  <footer class="footer text-center">
-  All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://vstmobility.com">VST</a>.
-  </footer>
-<!-- -----------------footer-------------------- -->
-
   </div>
 </section>
 
