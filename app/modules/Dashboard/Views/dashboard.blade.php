@@ -8,13 +8,7 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
-<section class="content-header root_content_header">
-   <h3></h3>
-   <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
-   </ol>
-</section>
+
 <section class="content">
    <div class="row">
       <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
@@ -235,7 +229,7 @@
                 <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
               </div>
             </div>
-            
+
 </div>
 <!-- --------------------------------------------------------------------------------
    Sub-Dealers
