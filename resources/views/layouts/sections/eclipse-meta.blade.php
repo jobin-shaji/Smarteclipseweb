@@ -1,21 +1,57 @@
 <head>
   <meta name="csrf-token" content="{{ csrf_token() }}">
    <?php 
+     // $client = Auth::user()->client;
+     // if($client)
+     // {
+     //  // $user = Auth::user();
+     //    if($client->count() > 0){
+     //      $id = $client->id;
+     //    }else{
+     //      $id = null;
+     //    }
+     // }
+     // else
+     // {
+     //  $id = null;
+     // }
+   
+  ?>
+    <?php 
      $client = Auth::user()->client;
+
+     $user = Auth::user();
+     $root=$user->root;    
+     $dealer=$user->dealer;
+     $sub_dealer=$user->sub_dealer;
+
      if($client)
-     {
-      // $user = Auth::user();
+     {      
         if($client->count() > 0){
           $id = $client->id;
-        }else{
+        }
+        else{
           $id = null;
         }
      }
+     else if($root)
+     {
+      $id = $root->id;
+     }
+     else if($dealer)
+     {
+      $id = $dealer->id;
+     }
+
+     else if($sub_dealer)
+     {
+
+      $id = $sub_dealer->id;
+     }
      else
      {
-      $id = null;
-     }
-   
+      $id=null;
+     } 
   ?>
   <meta name="client" content="{{$id}}">
   <meta name="domain" content="{{url('/')}}">
