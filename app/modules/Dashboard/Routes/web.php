@@ -32,3 +32,12 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
     Route::post('/root-gps-sale','DashboardController@rootGpsSale')->name('root.gps.sale');
     Route::post('/root-gps-user','DashboardController@rootGpsUsers')->name('root.gps.user');
 });
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
+    Route::post('/dealer-gps-sale','DashboardController@dealerGpsSale')->name('dealer.gps.sale');
+    Route::post('/dealer-gps-user','DashboardController@dealerGpsUsers')->name('dealer.gps.user');
+});
+
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
+    Route::post('/sub-dealer-gps-sale','DashboardController@subDealerGpsSale')->name('sub-dealer.gps.sale');
+    Route::post('/sub-dealer-gps-user','DashboardController@subDealerGpsUsers')->name('sub-dealer.gps.user');
+});

@@ -15,8 +15,6 @@ $(document).ready(function () {
 });
 // rootGpsSale
 function rootGpsSale(res){
-  console.log(res.gps_month);
-// $(document).ready(function () {
 var ctx = document.getElementById("rootChart").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -24,7 +22,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       labels: res.gps_month,
       datasets: [{
         label: '#:',
-        data:[10,50,50,90,70],
+        data:res.gps_count,
         backgroundColor:'rgba(242,156,18, 0.2)',
         borderColor:'rgba(242,156,18,1)',
         borderWidth: 1
@@ -46,7 +44,8 @@ var ctx = document.getElementById("rootChart").getContext('2d');
   });
 }
 
-
+function rootGpsUser(res){
+  // console.log(res);
   var ctx = document.getElementById("rootChartUser").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'pie',
@@ -54,7 +53,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       labels: ["Dealers","Sub-dealers","Client"],
       datasets: [{
         label: '#:',
-        data:[40,80,50],
+        data:[res.dealer,res.sub_dealer,res.client],
         backgroundColor:'rgba(242,156,18, 0.2)',
         borderColor:'rgba(242,156,18,1)',
         borderWidth: 1
@@ -74,8 +73,6 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       }
     }
   });
+}
 
-  // });
-
-
-// ----------------------------------------------------
+ 
