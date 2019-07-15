@@ -219,33 +219,35 @@ class DashboardController extends Controller
     //emergency alert
     public function emergencyAlerts(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $alerts = Alert::select(
-                'id',
-                'alert_type_id',
-                'vehicle_id',
-                'latitude',
-                'longitude',
-                'device_time')
-                ->with('vehicle:id,name,register_number,driver_id')
-                ->with('vehicle.driver')
-                ->where('client_id',$client_id)
-                ->where('alert_type_id',21)
-                ->where('status',0)
-                ->get();
-        if(sizeof($alerts) == 0){
-            $response=[
-                'status' => 'failed'
-            ];
-        }else{
-            $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
-            $response = [
-                'status' => 'success',
-                'alerts' => $alerts,
-                'vehicle' => $vehicle_id
-            ];
-        }
-        return response()->json($response); 
+        if($request->user()->hasRole('client')){
+            $client_id=\Auth::user()->client->id;
+            $alerts = Alert::select(
+                    'id',
+                    'alert_type_id',
+                    'vehicle_id',
+                    'latitude',
+                    'longitude',
+                    'device_time')
+                    ->with('vehicle:id,name,register_number,driver_id')
+                    ->with('vehicle.driver')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',21)
+                    ->where('status',0)
+                    ->get();
+            if(sizeof($alerts) == 0){
+                $response=[
+                    'status' => 'failed'
+                ];
+            }else{
+                $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
+                $response = [
+                    'status' => 'success',
+                    'alerts' => $alerts,
+                    'vehicle' => $vehicle_id
+                ];
+            }
+            return response()->json($response);
+        } 
     }
 
     // emergency alert verification

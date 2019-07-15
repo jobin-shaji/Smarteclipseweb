@@ -10,10 +10,11 @@ use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Gps\Models\GpsLog;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Gps\Models\VltData;
-
+use App\Modules\Client\Models\Client;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
@@ -153,7 +154,7 @@ class GpsController extends Controller {
         if($gps == null){
            return view('Gps::404');
         }
-       return view('Gps::gps-details',['gps' => $gps]);
+        return view('Gps::gps-details',['gps' => $gps]);
     } 
 
     //edit gps details
@@ -410,19 +411,125 @@ class GpsController extends Controller {
     //returns gps as json 
     public function getSubDealerGps()
     {
-        $sub_dealer_id=\Auth::user()->id;
+        $sub_dealer_user_id=[];
+        $sub_dealer_user_id[]=\Auth::user()->id;
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $clients = Client::select(
+                'user_id'
+                )
+                ->where('sub_dealer_id',$sub_dealer_id)
+                ->get();
+        $single_clients_user_id = [];
+        foreach($clients as $client){
+            $single_clients_user_id[] = $client->user_id;
+        }
+        $subdealer_clients_group = array_merge($single_clients_user_id,$sub_dealer_user_id);
         $gps = Gps::select(
                 'id',
                 'name',
                 'imei',
                 'version',
+                'brand',
+                'model_name',
+                'user_id',
+                'status',
                 'deleted_at')
                 ->withTrashed()
-                ->where('user_id',$sub_dealer_id)
+                ->whereIn('user_id',$subdealer_clients_group)
+                ->with('user:id,username')
                 ->get();
         return DataTables::of($gps)
             ->addIndexColumn()
+            ->addColumn('action', function ($gps) {
+                if($gps->deleted_at == null){
+                    if($gps->status == 1){ 
+                        return "
+                            <b style='color:#008000';>Active</b>
+                            <a href=/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <button onclick=deactivateGpsStatus(".$gps->id.") class='btn btn-xs btn-danger'></i>Deactivate</button>
+                        ";
+                        }else{ 
+                        return "
+                            <b style='color:#FF0000';>Inactive</b>
+                            <a href=/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <button onclick=activateGpsStatus(".$gps->id.") class='btn btn-xs btn-success'> Activate </button>
+                        ";
+                        }
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
             ->make();
+    }
+
+    //deactivate gps
+    public function gpsStatusDeactivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+            ]);
+        }
+        $gps->status=0;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 0,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps deactivated successfully'
+        ]);
+    }
+    // activate gps
+    public function gpsStatusActivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+            ]);
+        }
+        $gps->status=1;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 1,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps activated successfully'
+        ]);
+    }
+
+    public function viewStatusLog(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps_logs = GpsLog::select(
+                'id',
+                'gps_id',
+                'status',
+                'user_id',
+                'created_at')
+                ->where('gps_id',$decrypted_id)
+                ->get();
+        return view('Gps::gps-status-log-view',['gps_logs' => $gps_logs]);
     }
 
     //////////////////////////GPS SUB DEALER///////////////////////////////////
