@@ -13,17 +13,17 @@
                   </li>
 
                   <li>
-                    <a href="{{url('/geofence-report')}}" class="animate"> <span class="glyphicon glyphicon-user"></span>
+                    <a href="{{url('/sms-usage')}}" class="animate"> <span class="glyphicon glyphicon-user"></span>
                       <span class="desc animate">SMS Ussage</span>
                       <span class=""><img src="{{ url('/') }}/Report-icons/sms-usage.png"  /></span>
                     </a>
                   </li>
-                  <li>
+                 <!--  <li>
                     <a href="{{url('/alert-report')}}" class="animate">
                       <span class="desc animate">Device Activation/Deactivation Log</span>
                       <span class=""><img src="{{ url('/') }}/Report-icons/device.png"  /></span>
                     </a>
-                  </li>
+                  </li> -->
                   
 
                 </ul>
