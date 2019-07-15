@@ -20,7 +20,8 @@ return  [
        'Route',
        'Complaint',
        'Ota',
-       'Ticket'
+       'Ticket',
+       'DataUssage'
 
     ]
 ]
