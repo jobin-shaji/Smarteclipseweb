@@ -615,7 +615,7 @@ else
         $sql='select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= '.$radius;
 
         $vehicles_details= DB::select($sql);
-        dd($vehicles_details);
+        // dd($vehicles_details);
 
         $vehicles_details_data=collect($vehicles_details)->toArray()
                             ->with('vehicle:gps_id,id,name,register_number')
@@ -758,28 +758,33 @@ public function notification(Request $request)
     {
         // dd($request->id);
         $root_id=\Auth::user()->root->id;
-        
-        $gps = Gps::select(
-                'id',
-                'name',
-                'imei',
-                \DB::raw('date_format(created_at, "%M") as month')               
-            )
-            ->orderBy("month","DESC") 
-            ->groupBy("month")  
-            ->get();
+        $dealer=Dealer::all()->count();
+        $sub_dealer=SubDealer::all()->count();
+        $client=Client::all()->count();
+
+        // $gps = Gps::select(
+        //         'id',
+        //         'name',
+        //         'imei',
+        //         \DB::raw('date_format(created_at, "%M") as month')               
+        //     )
+        //     ->orderBy("month","DESC") 
+        //     ->groupBy("month")  
+        //     ->get();
           
-        $gps_month = [];
-        $gps_name = [];
-        foreach($gps as $gps_sale){
-            $gps_name[] = $gps_sale->name;
-            $gps_month[] = $gps_sale->month;
-        }
-        $gps_sale=array(
-                    "gps_name"=>$gps_name,
-                    "gps_month"=>$gps_month
+        // $gps_month = [];
+        // $gps_name = [];
+        // foreach($gps as $gps_sale){
+        //     $gps_name[] = $gps_sale->name;
+        //     $gps_month[] = $gps_sale->month;
+        // }
+        $gps_user=array(
+                    "dealer"=>$dealer,
+                    "sub_dealer"=>$sub_dealer,
+                    "client"=>$client                   
                 );
-        return response()->json($gps_sale); 
+
+        return response()->json($gps_user); 
     }
 
 

@@ -15,7 +15,7 @@ $(document).ready(function () {
 });
 // rootGpsSale
 function rootGpsSale(res){
-  console.log(res.gps_month);
+  // console.log(res.gps_month);
 // $(document).ready(function () {
 var ctx = document.getElementById("rootChart").getContext('2d');
   var myChart = new Chart(ctx, {
@@ -46,7 +46,8 @@ var ctx = document.getElementById("rootChart").getContext('2d');
   });
 }
 
-
+function rootGpsUser(res){
+  console.log(res);
   var ctx = document.getElementById("rootChartUser").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'pie',
@@ -74,6 +75,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       }
     }
   });
+}
 
   // });
 
