@@ -14,5 +14,9 @@ class GpsTransferItems extends Model
     {
     	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
+     public function gpstransfer()
+    {
+    	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+    }
     
 }
