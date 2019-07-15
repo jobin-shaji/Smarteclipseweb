@@ -788,6 +788,8 @@ public function notification(Request $request)
         $dealer=Dealer::all()->count();
         $sub_dealer=SubDealer::all()->count();
         $client=Client::all()->count();
+
+        
         $gps_user=array(
                     "dealer"=>$dealer,
                     "sub_dealer"=>$sub_dealer,
