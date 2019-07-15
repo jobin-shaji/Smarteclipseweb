@@ -139,7 +139,7 @@ function backgroundPostData(url, data, callBack, options) {
 }
 
 function emergencyAlert(res){
-    if(res.alerts.length > 0){
+    if(res.status == 'success'){
         var latitude=res.alerts[0].latitude;
         var longitude=res.alerts[0].longitude;
         getPlaceNameFromLatLng(latitude,longitude);
