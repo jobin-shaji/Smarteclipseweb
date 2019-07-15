@@ -30,8 +30,8 @@ var vehicleScale = vehicle_scale;
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: start_lat,
-            lng: start_lng
+            lat: parseFloat(start_lat),
+            lng: parseFloat(start_lng)
         },
         zoom: 16,
         mapTypeId: 'roadmap'
