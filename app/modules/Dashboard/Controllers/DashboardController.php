@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
+use App\Modules\Gps\Models\GpsTransferItems;
+use App\Modules\User\Models\User;
+
 use DataTables;
 use DB;
 use Carbon\Carbon; 
@@ -730,24 +733,41 @@ public function notification(Request $request)
     {
         // dd($request->id);
         $root_id=\Auth::user()->root->id;
-        $gps = Gps::select(
+
+
+        // $gps = GpsTransferItems::select(
+        //         'id',
+        //         'gps_transfer_id',
+        //         'gps_id',
+        //         \DB::raw('date_format(created_at, "%M") as month')               
+        //     )
+        //     ->with('gps:id,name,imei')
+        //     ->with('gpsTransfer:id,name,imei')
+        //     ->orderBy("month","DESC") 
+        //     ->groupBy("month")  
+        //     ->get();
+
+          $gps = GpsTransfer::select(
                 'id',
-                'name',
-                'imei',
-                \DB::raw('date_format(created_at, "%M") as month')               
+                'from_user_id',
+                'to_user_id',
+                \DB::raw('date_format(accepted_on, "%M") as month'),
+                \DB::raw('count(date_format(accepted_on, "%M")) as count')               
             )
+            // ->with('gps:id,name,imei')
+            ->with('gpsTransferItems:id')
+            ->where('from_user_id', $root_id)
             ->orderBy("month","DESC") 
             ->groupBy("month")  
             ->get();
-          
         $gps_month = [];
-        $gps_name = [];
+        $gps_count = [];
         foreach($gps as $gps_sale){
-            $gps_name[] = $gps_sale->name;
+            $gps_count[] = $gps_sale->count;
             $gps_month[] = $gps_sale->month;
         }
         $gps_sale=array(
-                    "gps_name"=>$gps_name,
+                    "gps_count"=>$gps_count,
                     "gps_month"=>$gps_month
                 );
         return response()->json($gps_sale); 
@@ -757,35 +777,144 @@ public function notification(Request $request)
   public function rootGpsUsers(Request $request)
     {
         // dd($request->id);
-        $root_id=\Auth::user()->root->id;
+        $root_id=\Auth::user()->root->id;       
         $dealer=Dealer::all()->count();
         $sub_dealer=SubDealer::all()->count();
         $client=Client::all()->count();
-
-        // $gps = Gps::select(
-        //         'id',
-        //         'name',
-        //         'imei',
-        //         \DB::raw('date_format(created_at, "%M") as month')               
-        //     )
-        //     ->orderBy("month","DESC") 
-        //     ->groupBy("month")  
-        //     ->get();
-          
-        // $gps_month = [];
-        // $gps_name = [];
-        // foreach($gps as $gps_sale){
-        //     $gps_name[] = $gps_sale->name;
-        //     $gps_month[] = $gps_sale->month;
-        // }
         $gps_user=array(
                     "dealer"=>$dealer,
                     "sub_dealer"=>$sub_dealer,
                     "client"=>$client                   
                 );
-
         return response()->json($gps_user); 
     }
 
+    public function dealerGpsSale(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = GpsTransfer::select(
+            'id',
+            'from_user_id',
+            'to_user_id',
+            \DB::raw('date_format(accepted_on, "%M") as month'),
+            \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+        )
+        // ->with('gps:id,name,imei')
+        ->with('gpsTransferItems:id')
+        ->where('from_user_id', $user_id)
+        ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $dealer_gps_sale=array(
+                    "gps_count"=>$gps_count,
+                    "gps_month"=>$gps_month
+                );
+        return response()->json($dealer_gps_sale); 
+    }
 
+////////Dealer GPS User
+
+    public function dealerGpsUsers(Request $request)
+    {
+        // dd($request->id);
+        $dealer_id=\Auth::user()->dealer->id; 
+        $subdealer = SubDealer::select('id','name')
+        ->where('dealer_id',$dealer_id)
+        ->count();  
+        $sub_dealers = SubDealer::select('id','name')
+        ->where('dealer_id',$dealer_id)
+        ->get();
+        $single_sub_dealer = [];
+        foreach($sub_dealers as $sub_dealer){
+            $single_sub_dealer[] = $sub_dealer->id;
+        }
+
+        $client = Client::select('id','name')
+        ->whereIn('sub_dealer_id',$single_sub_dealer)
+        ->count();         
+        $dealer_gps_user=array(
+                   
+                    "sub_dealer"=>$subdealer,
+                    "client"=>$client                   
+                );
+        return response()->json($dealer_gps_user); 
+    }
+
+    //////Sub Dealer GPS Count
+     public function subDealerGpsSale(Request $request)
+    {
+        // dd($request->id);
+        $user_id=\Auth::user()->id;
+        $gps = GpsTransfer::select(
+            'id',
+            'from_user_id',
+            'to_user_id',
+            \DB::raw('date_format(accepted_on, "%M") as month'),
+            \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+        )
+        ->with('gpsTransferItems:id')
+        ->where('from_user_id', $user_id)
+        ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $sub_dealer_gps_sale=array(
+            "gps_count"=>$gps_count,
+            "gps_month"=>$gps_month
+        );
+        return response()->json($sub_dealer_gps_sale); 
+    }
+    //Sub Delaer gps users
+    public function subDealerGpsUsers(Request $request)
+    {
+       
+        $sub_dealer_id=\Auth::user()->subDealer->id;
+        $clients = Client::select('id','name','address','user_id')
+        ->where('sub_dealer_id',$sub_dealer_id)
+        ->get();
+         $single_client = [];
+         $client_count=[];
+        foreach($clients as $client){
+             $client_name[] = $client->name;
+            $single_client[] = $client->user_id;
+        }
+        $users=User::select('id')
+        ->whereIn('id',$single_client)
+        ->get();
+        $user_gps = [];
+        foreach($users as $user){
+            $user_gps[] = $user->id;
+        }
+        $gps = Gps::select(
+           'user_id',           
+            \DB::raw('count(id) as count')               
+        )
+        ->whereIn('user_id', $user_gps)
+        ->groupBy("user_id")  
+        ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $sub_dealer_gps_sale=array(
+            "client"=>$client_name,
+            "gps_count"=>$gps_count,
+            "gps_month"=>$gps_month
+        );
+        return response()->json($sub_dealer_gps_sale); 
+    }
+ 
 }
