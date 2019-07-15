@@ -1,13 +1,29 @@
 // -------------------------------------------------------------
-$(document).ready(function () {
+$(document).ready(function () { 
+     var url = 'dealer-gps-sale';
+     var data = {
+   
+     };
+      backgroundPostData(url,data,'dealerGpsSale',{alert:false});
+      
+    var url = 'dealer-gps-user';
+     var data = {   
+     };
+      backgroundPostData(url,data,'dealerGpsUser',{alert:false});
+     
+});
+function dealerGpsSale(res)
+{
+  // console.log(res);
+  // $(document).ready(function () {
 var ctx = document.getElementById("rootChart").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ["Jan","Feb","Mar","Apr","May"],
+     labels: res.gps_month,
       datasets: [{
         label: '#:',
-        data:[10,50,50,90,70],
+        data:res.gps_count,
         backgroundColor:'rgba(242,156,18, 0.2)',
         borderColor:'rgba(242,156,18,1)',
         borderWidth: 1
@@ -29,14 +45,16 @@ var ctx = document.getElementById("rootChart").getContext('2d');
   });
 
 
+}
+function dealerGpsUser(res){
   var ctx = document.getElementById("rootChartUser").getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ["Dealers","Sub-dealers","Client"],
+      labels: ["Sub-dealers","Client"],
       datasets: [{
         label: '#:',
-        data:[40,80,50],
+       data:[res.sub_dealer,res.client],
         backgroundColor:'rgba(242,156,18, 0.2)',
         borderColor:'rgba(242,156,18,1)',
         borderWidth: 1
@@ -56,8 +74,8 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       }
     }
   });
-
-  });
+}
+  // });
 
 
 // ----------------------------------------------------
