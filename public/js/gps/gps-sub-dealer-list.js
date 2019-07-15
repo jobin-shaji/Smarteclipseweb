@@ -39,10 +39,29 @@ function callBackDataTable(){
             {data: 'name', name: 'name', searchable: false},
             {data: 'imei', name: 'imei'},
             {data: 'version', name: 'version'},
+            {data: 'brand', name: 'brand'},
+            {data: 'model_name', name: 'model_name'},
+            {data: 'user.username', name: 'user.username'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},  
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+}
+
+function deactivateGpsStatus(gps_id){
+    var url = 'gps-status/deactivate';
+    var data = {
+        id : gps_id
+    };
+    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+}
+function activateGpsStatus(gps_id){
+    var url = 'gps-status/activate';
+    var data = {
+        id : gps_id
+    };
+    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
 
