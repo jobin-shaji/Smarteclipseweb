@@ -63,7 +63,7 @@ Add Vehicle
                               <div class="form-group row" style="float:none!important">
                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Driver</label>
                      <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" name="driver_id" data-live-search="true" title="Select Driver" required>
+                        <select class="form-control " name="driver_id" data-live-search="true" title="Select Driver" required>
                            <option selected disabled>Select Driver</option>
                            @foreach($drivers as $driver)
                            <option value="{{$driver->id}}">{{$driver->name}}</option>
@@ -106,7 +106,7 @@ Add Vehicle
                   <div class="form-group row" style="float:none!important">
                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">GPS</label>
                      <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" name="gps_id" data-live-search="true" title="Select GPS" required>
+                        <select class="form-control" name="gps_id" data-live-search="true" title="Select GPS" required>
                            <option selected disabled>Select GPS</option>
                            @foreach($devices as $gps)
                            <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
