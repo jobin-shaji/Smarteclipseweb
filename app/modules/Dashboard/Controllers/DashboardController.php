@@ -230,11 +230,18 @@ class DashboardController extends Controller
                 ->where('alert_type_id',21)
                 ->where('status',0)
                 ->get();
-        $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
-        $response = [
-            'alerts' => $alerts,
-            'vehicle' => $vehicle_id
-        ];
+        if(sizeof($alerts) == 0){
+            $response=[
+                'status' => 'failed'
+            ];
+        }else{
+            $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
+            $response = [
+                'status' => 'success',
+                'alerts' => $alerts,
+                'vehicle' => $vehicle_id
+            ];
+        }
         return response()->json($response); 
     }
 
