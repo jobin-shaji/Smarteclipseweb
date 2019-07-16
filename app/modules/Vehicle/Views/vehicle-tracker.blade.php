@@ -87,7 +87,9 @@
 
                             <hr>
                         </div>
+                         </b>
                   </div>
+
               </div>
           </div>
 
