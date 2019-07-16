@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function () { 
      var url = 'driver-score';
      var data = {
@@ -36,6 +39,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
   });
 }
 
+
+
+
+
 var latMap=20.593683;
 var lngMap=78.962883;
 var haightAshbury = {lat: latMap, lng: lngMap};
@@ -45,24 +52,26 @@ var map_flag;
 var track_flag=0;
 var map_popup=0;
 
-
-
-  // 'key' => env('APP_KEY'),
- 
-
-$(document).ready(function () {
+function initMap(){
 map = new google.maps.Map(document.getElementById('map'), {
 zoom: 10,
 center: haightAshbury,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 });
+var input1 = document.getElementById('search_place');
+    autocomplete1 = new google.maps.places.Autocomplete(input1);
+var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
 
-map_flag=0;
-   getVehicleSequence();
-        var input1 = document.getElementById('search_place');
-         autocomplete1 = new google.maps.places.Autocomplete(input1);
-        var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-});
+   map_flag=0;
+   getVehicleSequence(); 
+
+}
+
+
+
+
+  // 'key' => env('APP_KEY'),
+ 
 
 // check each 10 sec
 
