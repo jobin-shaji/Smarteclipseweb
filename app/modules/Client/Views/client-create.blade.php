@@ -160,12 +160,11 @@
      {
     
       var input1 = document.getElementById('search_place');
+
           autocomplete1 = new google.maps.places.Autocomplete(input1);
       var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
 
-   map_flag=0;
-   getVehicleSequence(); 
-
+  
      }
    </script>
 @endsection
