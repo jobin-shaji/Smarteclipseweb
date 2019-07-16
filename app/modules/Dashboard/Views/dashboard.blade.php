@@ -316,7 +316,7 @@
                        <div class="row align-items-center justify-content-center">
                               <div class="col-lg-4 col-md-4 ">
                                      <div class="form-group">
-                                        <input type="text" id="search_place" class="form-control">
+                                        <input type="text" id="search_place" class="form-control" value="aaaa">
                                      </div>
                                   </div>
                                   <div class="col-lg-4 col-md-4 ">
@@ -524,11 +524,14 @@
 </div>
 </section>
 @section('script')
-<script async defer
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places"></script>
+
+
+
 <script src="{{asset('js/gps/mdb.js')}}"></script>
 <script src="{{asset('js/gps/dashb.js')}}"></script>
 @role('client')
+<script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
 <style type="text/css">
