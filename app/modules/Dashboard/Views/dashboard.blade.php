@@ -316,7 +316,7 @@
                        <div class="row align-items-center justify-content-center">
                               <div class="col-lg-4 col-md-4 ">
                                      <div class="form-group">
-                                        <input type="text" id="search_place" class="form-control" value="aaaa">
+                                        <input type="text" id="search_place" class="form-control" value="">
                                      </div>
                                   </div>
                                   <div class="col-lg-4 col-md-4 ">
