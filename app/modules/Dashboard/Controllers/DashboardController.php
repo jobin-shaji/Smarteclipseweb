@@ -157,7 +157,7 @@ class DashboardController extends Controller
     }
         if($user->hasRole('root')){
             return response()->json([
-                'gps' => Gps::all()->count(), 
+                 'gps' => Gps::where('user_id',$user->id)->count(), 
                 'dealers' => Dealer::all()->count(), 
                 'subdealers' => SubDealer::all()->count(),
                 'clients' => Client::all()->count(),
