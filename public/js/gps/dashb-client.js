@@ -339,5 +339,8 @@ alert('No vehicle found in this location');
 }
 
 }
+$(document).ready(function(){
+   $('st-actionContainer').launchBtn( { openDuration: 500, closeDuration: 300 } );
+  });
 
 
