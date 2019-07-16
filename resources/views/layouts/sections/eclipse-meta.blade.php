@@ -63,7 +63,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="{{ url('/') }}image/png" sizes="16x16" href="assets/images/favicon.ico">
+    <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
     <title>GPS-Admin</title>
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
