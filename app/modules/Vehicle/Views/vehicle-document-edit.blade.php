@@ -42,7 +42,7 @@
                   <div class="form-group has-feedback">
                     
                     <label>Expiry Date</label>
-                    <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}"> 
+                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}"> 
                   </div>
                   @if ($errors->has('expiry_date'))
                     <span class="help-block">
