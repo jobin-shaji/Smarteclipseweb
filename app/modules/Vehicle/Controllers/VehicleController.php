@@ -173,7 +173,6 @@ class VehicleController extends Controller {
         }
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
-        $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
         if($vehicle_update && $request->driver_id){
@@ -1360,7 +1359,6 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     public function vehicleUpdateRules($vehicle)
     {
         $rules = [
-            'e_sim_number' => 'required|numeric',
             'driver_id' => 'required',
         ];
         return  $rules;  
