@@ -67,6 +67,18 @@
                       </span>
                       @endif
                     </div>
+                      <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">User Location</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('search_place'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('search_place') }}</strong>
+                      </span>
+                      @endif
+                    </div>
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                       <div class="form-group has-feedback">
@@ -140,5 +152,21 @@
 </div>
 
 <div class="clearfix"></div>
+@section('script')
+<script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
+   <script>
+     function initMap()
+     {
+    
+      var input1 = document.getElementById('search_place');
+          autocomplete1 = new google.maps.places.Autocomplete(input1);
+      var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
 
+   map_flag=0;
+   getVehicleSequence(); 
+
+     }
+   </script>
+@endsection
 @endsection

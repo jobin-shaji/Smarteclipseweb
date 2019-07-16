@@ -42,6 +42,10 @@
         format: 'DD-MM-YYYY',       
          minDate: moment().subtract(1,'d')
  });
+     $( ".manufacturing_date" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',       
+        maxDate: new Date()
+ });
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');

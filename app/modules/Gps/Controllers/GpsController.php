@@ -129,6 +129,8 @@ class GpsController extends Controller {
     public function save(Request $request)
     {
         $root_id=\Auth::user()->id;
+       $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
+       
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
         $gps = Gps::create([

@@ -66,7 +66,8 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Manufacturing Date</label>
-                    <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Purchase Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
+                    <input type="text" class="
+                    manufacturing_date form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Purchase Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
                     <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
                   </div>
                   @if ($errors->has('manufacturing_date'))
