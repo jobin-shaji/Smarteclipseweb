@@ -173,7 +173,6 @@ class VehicleController extends Controller {
         }
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
-        $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
         if($vehicle_update && $request->driver_id){
@@ -231,8 +230,10 @@ class VehicleController extends Controller {
         ];
         if($request->document_type_id == 1){
             $rules = $this->documentCreateRules();
+            $expiry_date=null;
         }else{
             $rules = $this->customDocCreateRules();
+            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
         }
      
         $this->validate($request, $rules, $custom_messages);
@@ -245,7 +246,7 @@ class VehicleController extends Controller {
         $documents = Document::create([
             'vehicle_id' => $request->vehicle_id,
             'document_type_id' => $request->document_type_id,
-            'expiry_date' => $request->expiry_date,
+            'expiry_date' => $expiry_date,
             'path' => $uploadedFile,
         ]);
         $encrypted_vehicle_id = encrypt($request->vehicle_id);
@@ -290,7 +291,7 @@ class VehicleController extends Controller {
         }
         
         $vehicle_doc->vehicle_id = $request->vehicle_id;
-        $vehicle_doc->expiry_date= $request->expiry_date;
+        $vehicle_doc->expiry_date= date("Y-m-d", strtotime($request->expiry_date));
         $vehicle_doc->save();
 
         $encrypted_vehicle_doc_id = encrypt($vehicle_doc->id);
@@ -593,7 +594,9 @@ class VehicleController extends Controller {
                 $current_date=date('Y-m-d');
                 $next_month_of_current_date=date('Y-m-d', strtotime("+30 days"));
                 $expiry_date=$vehicle_documents->expiry_date;
-                if($expiry_date < $current_date){
+                if($expiry_date==null){
+                    return "<b style='color:#008000';>Valid</b>";
+                }else if($expiry_date < $current_date){
                     return "<b style='color:#FF0000';>Expired</b>";
                 }else if($expiry_date >= $current_date && $expiry_date <= $next_month_of_current_date){
                     return "<b style='color:#FF8000';>Expiring</b>";
@@ -1360,7 +1363,6 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     public function vehicleUpdateRules($vehicle)
     {
         $rules = [
-            'e_sim_number' => 'required|numeric',
             'driver_id' => 'required',
         ];
         return  $rules;  

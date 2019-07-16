@@ -33,16 +33,17 @@ Create Geofence
                   </div>
                   </div>
                                <div style="float:left!important;margin:0 0 0 3%">   
-<div class="form-group">
+                      <div class="form-group">
                            <form onsubmit="return locationSearch();">
-                           <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  </form>
+                           <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
                           </div>
                        </div>
-<div style="float:left!important">
+                      <div style="float:left!important">
                            <div class="form-group">  
                            <button class="btn btn-xs btn-info form-control" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                                
                         </div>
                       </div> 
+                      </form>
                     </div> 
                      <div class="col-lg-4 d-flex no-block align-items-center" style="text-align:right;">
                <h4 class="page-title">Please plot points on the map to create geo fence</h4>
