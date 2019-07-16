@@ -20,7 +20,18 @@ class ClientController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {      
-        $subdealer_id = \Auth::user()->subdealer->id; 
+        $subdealer_id = \Auth::user()->subdealer->id;
+        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+
+        if($placeLatLng==null){
+              $request->session()->flash('message', 'Enter correct location'); 
+              $request->session()->flash('alert-class', 'alert-danger'); 
+              return redirect(route('client.create'));        
+        }
+
+        $location_lat=$placeLatLng['latitude'];
+        $location_lng=$placeLatLng['logitude'];
+        
         if($request->user()->hasRole('sub_dealer'))
         {
             $rules = $this->user_create_rules();
@@ -36,7 +47,9 @@ class ClientController extends Controller {
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
                 'name' => $request->name,            
-                'address' => $request->address,           
+                'address' => $request->address, 
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng          
             ]);
             User::where('username', $request->username)->first()->assignRole('client');
             
@@ -515,4 +528,27 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+
+#################################################
+    function getPlaceLatLng($address){
+
+        $data = urlencode($address);
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ";
+        $geocode_stats = file_get_contents($url);
+        $output_deals = json_decode($geocode_stats);
+        if ($output_deals->status != "OK") {
+            return null;
+        }
+        if ($output_deals) {
+            $latLng = $output_deals->results[0]->geometry->location;
+            $lat = $latLng->lat;
+            $lng = $latLng->lng;
+            $locationData = ["latitude" => $lat, "logitude" => $lng];
+            return $locationData;
+        } else {
+            return null;
+        }
+    }
+
+  #####################################################
 }
