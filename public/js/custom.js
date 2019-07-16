@@ -35,7 +35,8 @@
  });
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        minDate: new Date()
+        // minDate: new Date()
+         minDate: moment().subtract(1,'d')
  });
 
 function getUrl(){

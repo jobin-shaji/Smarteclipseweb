@@ -40,6 +40,7 @@
                   <div class="col-xs-12">
                   <input type="hidden" name="vehicle_id" value="{{$vehicle_doc->vehicle_id}}">
                   <div class="form-group has-feedback">
+                    
                     <label>Expiry Date</label>
                     <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}"> 
                   </div>
