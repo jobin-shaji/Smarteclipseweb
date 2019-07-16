@@ -60,7 +60,7 @@
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
         <!-- search option in dropdown -->
-    <script src="{{asset('js/bootstrap-select.js')}}"></script>
+    <!-- <script src="{{asset('js/bootstrap-select.js')}}"></script> -->
 
     <!-- datetime picker -->
     <script src="{{asset('js/moment-with-locales.js')}}"></script>
