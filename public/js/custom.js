@@ -35,7 +35,11 @@
  });
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        // minDate: new Date()
+        minDate: new Date()
+         
+ });
+     $( ".date_expiry_edit" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',       
          minDate: moment().subtract(1,'d')
  });
 
