@@ -33,6 +33,7 @@
           <div class="form-group has-feedback">
               <label class="srequired">To User</label>
               <select class="form-control selectpicker" id="to_user" name="to_user_id" data-live-search="true" title="Select Dealer" required>
+                <option value="">Select</option>
                 @foreach($entities as $entity)
                 <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                 @endforeach

@@ -84,12 +84,14 @@ class GpsController extends Controller {
                 'manufacturing_date',
                 'version',
                 'user_id',
-                'deleted_at')
+                'deleted_at'
+            )
                 ->withTrashed()
                 ->with('user:id,username')
                 ->whereNotIn('user_id',$user_id)
                 ->orWhere('user_id',null)
                 ->get();
+                dd($gps);
         return DataTables::of($gps)
             ->addIndexColumn()
             ->addColumn('user', function ($gps) {
@@ -576,15 +578,29 @@ class GpsController extends Controller {
     public function getListData() 
     {
         $user_id=\Auth::user()->id;
-        $gps_transfer = GpsTransfer::select('id', 'from_user_id', 'to_user_id','dispatched_on','accepted_on','deleted_at')
-            ->with('fromUser:id,username')
-            ->with('toUser:id,username')
-            ->where('from_user_id',$user_id)
-            ->withTrashed()
-            ->get();
+        $gps_transfer = GpsTransfer::select(
+            'id', 
+            'from_user_id', 
+            'to_user_id',
+            'dispatched_on',
+            'accepted_on',
+            'deleted_at'
+            // \DB::raw('count(id) as count') 
+        )
+        ->with('fromUser:id,username')
+        ->with('toUser:id,username')
+        ->with('gpsTransferItems')
+        ->where('from_user_id',$user_id)
+        ->withTrashed()
+        ->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
-        ->addColumn('action', function ($gps_transfer) {
+        ->addColumn('count', function ($gps_transfer) 
+        {
+            return $gps_transfer->gpsTransferItems->count();
+        })
+        ->addColumn('action', function ($gps_transfer) 
+        {
             if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
             {
                 return "
@@ -598,7 +614,7 @@ class GpsController extends Controller {
                 <b style='color:#FF0000';>Cancelled</b>";
             }
             else{
-                 return "
+                return "
                 <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#008000';>Transferred</b>";
             }
