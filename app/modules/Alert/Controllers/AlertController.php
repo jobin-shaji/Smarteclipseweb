@@ -237,7 +237,7 @@ class AlertController extends Controller {
         if($alert_type == null){
             return view('Alert::404');
         }
-        return view('Alert::Alert-type-details',['alert_type' => $alert_type]);
+        return view('Alert::alert-type-details',['alert_type' => $alert_type]);
     }
     //for edit page of Alert Type
     public function edit(Request $request)
