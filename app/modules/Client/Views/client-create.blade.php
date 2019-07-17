@@ -118,7 +118,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                       <div class="form-group has-feedback">
-                        <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password">
+                        <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                       </div>
                     </div>

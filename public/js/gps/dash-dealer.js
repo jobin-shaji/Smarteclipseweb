@@ -32,7 +32,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     options: {
     title: {
       display: true,
-      text: 'GPS Sale'
+      text: 'GPS SALE'
     },
       scales: {
         yAxes: [{

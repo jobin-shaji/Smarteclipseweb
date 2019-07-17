@@ -44,22 +44,24 @@
                     <label class="srequired">Name</label>
                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealers->name}}"> 
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                  </div>
-                  @if ($errors->has('name'))
+                      @if ($errors->has('name'))
                     <span class="help-block">
                     <strong class="error-text">{{ $errors->first('name') }}</strong>
                     </span>
                   @endif
+                  </div>
+                
                 <div class="form-group has-feedback">
                   <label class="srequired">Mobile No.</label>
                   <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
                   <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-                </div>
-                @if ($errors->has('phone_number'))
+                   @if ($errors->has('phone_number'))
                   <span class="help-block">
                   <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
                   </span>
                 @endif
+                </div>
+               
 
               </div>
             </div>

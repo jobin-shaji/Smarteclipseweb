@@ -21,7 +21,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     data: {
       labels: res.gps_month,
       datasets: [{
-        label: '#:',
+        label: 'Gps Sale',
         data:res.gps_count,
         backgroundColor:'rgba(242,156,18, 0.2)',
         borderColor:'rgba(242,156,18,1)',
@@ -31,7 +31,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     options: {
     title: {
       display: true,
-      text: 'GPS Sale'
+      text: 'GPS SALE'
     },
       scales: {
         yAxes: [{
