@@ -43,6 +43,7 @@ function callBackDataTable(){
             {data: 'from_user.username', name: 'from_user.username'},
             {data: 'to_user.username', name: 'to_user.username'},
             {data: 'dispatched_on', name: 'dispatched_on'},
+            {data: 'count', name: 'count'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
         

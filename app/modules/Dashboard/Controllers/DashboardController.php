@@ -808,7 +808,9 @@ public function notification(Request $request)
             'from_user_id',
             'to_user_id',
             \DB::raw('date_format(accepted_on, "%M") as month'),
-            \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+            // \DB::raw('count(date_format(accepted_on, "%M")) as count')    
+            \DB::raw('count(id) as count')  
+
         )
         // ->with('gps:id,name,imei')
         ->with('gpsTransferItems:id')

@@ -29,6 +29,7 @@
                       <th>From User</th>
                       <th>To User</th>
                       <th>Dispatched On</th>
+                      <th>Count</th>
                       <th>Action</th>
                   </tr>
                 </thead>

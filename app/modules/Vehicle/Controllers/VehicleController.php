@@ -559,34 +559,34 @@ class VehicleController extends Controller {
             $vehicle_id[]=$vehicle->id;
         }
         $vehicle_documents = Document::select(
-                                'vehicle_id',
-                                'document_type_id',
-                                'expiry_date',
-                                'path'
-                                )
-                                ->with('documentType:id,name')
-                                ->with('vehicle:id,name,register_number');
-                                if($selected_vehicle_id==null && $selected_status==null)
-                                { 
-                                   $vehicle_documents =$vehicle_documents->whereIn('vehicle_id',$vehicle_id);
-                                }
-                                else if($selected_status=="valid"){
-                                    $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
-                                    ->whereDate('expiry_date', '>', date('Y-m-d'));
-                                }
-                                else if($selected_status=="expiring"){
-                                    $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
-                                    ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+30 days"))]);
-                                }
-                                else if($selected_status=="expired"){
-                                    $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
-                                    ->whereDate('expiry_date', '<', date('Y-m-d'));
-                                }
-                                else
-                                {
-                                    $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
-                                } 
-                                $vehicle_documents =$vehicle_documents->get();
+        'vehicle_id',
+        'document_type_id',
+        'expiry_date',
+        'path'
+        )
+        ->with('documentType:id,name')
+        ->with('vehicle:id,name,register_number');
+        if($selected_vehicle_id==null && $selected_status==null)
+        { 
+           $vehicle_documents =$vehicle_documents->whereIn('vehicle_id',$vehicle_id);
+        }
+        else if($selected_status=="valid"){
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
+            ->whereDate('expiry_date', '>', date('Y-m-d'));
+        }
+        else if($selected_status=="expiring"){
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
+            ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+30 days"))]);
+        }
+        else if($selected_status=="expired"){
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
+            ->whereDate('expiry_date', '<', date('Y-m-d'));
+        }
+        else
+        {
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
+        } 
+        $vehicle_documents =$vehicle_documents->get();
 
         return DataTables::of($vehicle_documents)
             ->addIndexColumn()
@@ -745,21 +745,20 @@ class VehicleController extends Controller {
     public function getVehicleRootList()
     {
         $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'e_sim_number',
-                    'vehicle_type_id',
-                    'client_id',
-                    'deleted_at'
-                    )
+                'id',
+                'name',
+                'register_number',
+                'gps_id',
+                'e_sim_number',
+                'vehicle_type_id',
+                'client_id',
+                'deleted_at'
+            )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
             ->with('gps:id,name,imei')
             ->get();
-
-        return DataTables::of($vehicles)
+            return DataTables::of($vehicles)
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
@@ -837,15 +836,15 @@ class VehicleController extends Controller {
                return $vehicle->client->subDealer->name;
                 
             })
-            ->addColumn('action', function ($vehicles) {
-                if($vehicles->deleted_at == null){
-                    return "
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-                }else{
-                     return ""; 
-                }
-            })
-            ->rawColumns(['link', 'action'])
+            // ->addColumn('action', function ($vehicles) {
+            //     if($vehicles->deleted_at == null){
+            //         return "
+            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+            //     }else{
+            //          return ""; 
+            //     }
+            // })
+            ->rawColumns(['link'])
             ->make();
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
@@ -991,15 +990,15 @@ class VehicleController extends Controller {
 
         return DataTables::of($vehicles)
             ->addIndexColumn()
-            ->addColumn('action', function ($vehicles) {
-                if($vehicles->deleted_at == null){
-                    return "
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-                }else{
-                     return ""; 
-                }
-            })
-            ->rawColumns(['link', 'action'])
+            // ->addColumn('action', function ($vehicles) {
+            //     if($vehicles->deleted_at == null){
+            //         return "
+            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+            //     }else{
+            //          return ""; 
+            //     }
+            // })
+            ->rawColumns(['link'])
             ->make();
     }
 
