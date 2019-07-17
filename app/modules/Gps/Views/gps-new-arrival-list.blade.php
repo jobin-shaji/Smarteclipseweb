@@ -10,22 +10,12 @@
         
       </ol>
     </nav>
-            
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-<div class="card-body">
-                                <div class="table-responsive">
-                                    <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                                     
-                                            <div class="row"><div class="col-sm-12">
+          <div class="container-fluid">
+              <div class="card-body">
+                <div class="table-responsive">
+                    <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                         
+                    <div class="row">
+                        <div class="col-sm-12">
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>

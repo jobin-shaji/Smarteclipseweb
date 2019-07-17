@@ -4,7 +4,7 @@
 <div class="page-wrapper_new">
 <section class="content-header">
     <h1>
-        Playback111111111111
+        Playback
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">

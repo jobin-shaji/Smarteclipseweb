@@ -9,6 +9,13 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Sub Dealer</li>
     </ol>
+      @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+          </div>
+        </div>
+        @endif 
   </nav>    
      <div class="container-fluid">
       <div class="card" style="margin:0 0 0 1%">
