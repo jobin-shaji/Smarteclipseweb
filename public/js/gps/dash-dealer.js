@@ -63,7 +63,7 @@ function dealerGpsUser(res){
     options: {
     title: {
       display: true,
-      text: 'GPS Sale'
+      text: 'GPS User'
     },
       scales: {
         yAxes: [{
