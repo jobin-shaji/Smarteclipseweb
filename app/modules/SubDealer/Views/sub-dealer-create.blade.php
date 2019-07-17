@@ -12,6 +12,13 @@ Create Sub Dealer
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create  Sub Dealer</li>
     </ol>
+      @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+          </div>
+        </div>
+        @endif 
   </nav>
            
     <div class="container-fluid">
@@ -92,7 +99,7 @@ Create Sub Dealer
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                   <div class="form-group has-feedback">
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password">
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                   </div>
                 </div>

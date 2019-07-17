@@ -275,7 +275,7 @@ class DealerController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|unique:users',
+            'mobile' => 'required|numeric|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;

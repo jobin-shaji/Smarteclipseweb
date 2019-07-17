@@ -53,12 +53,14 @@
               </span>
             @endif
         </div>
+
+        <div class="col-md-3 ">
+              <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+            </div>
         </div>
           <div class="row">
             <!-- /.col -->
-            <div class="col-md-3 ">
-              <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
-            </div>
+            
            
             <!-- /.col -->
           </div>

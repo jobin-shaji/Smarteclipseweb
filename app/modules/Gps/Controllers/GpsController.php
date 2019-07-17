@@ -22,49 +22,48 @@ use Auth;
 use DataTables;
 
 class GpsController extends Controller {
-
     //Display all gps
 	public function gpsListPage()
     {
         return view('Gps::gps-list');
 	}
-
 	//returns gps as json 
     public function getGps()
     {
         $user_id=\Auth::user()->id;
         $gps = Gps::select(
-                'id',
-                'name',
-            	'imei',
-            	'manufacturing_date',
-                'brand',
-                'model_name',
-            	'version',
-                'deleted_at')
-                ->withTrashed()
-                ->where('user_id',$user_id)
-                ->get();
+            'id',
+            'name',
+        	'imei',
+        	'manufacturing_date',
+            'brand',
+            'model_name',
+        	'version',
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->where('user_id',$user_id)
+        ->get();
         return DataTables::of($gps)
-            ->addIndexColumn()
-            ->addColumn('action', function ($gps) {
-                if($gps->deleted_at == null){
-                    // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
-                    return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
-                    </button>";
-                }else{
-                     return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
-                    </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        ->addIndexColumn()
+        ->addColumn('action', function ($gps) {
+            if($gps->deleted_at == null){
+                // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
+                return "
+                <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                </button>";
+            }else{
+                 return "
+                <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
+                </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
 
     //Display all transferred gps
@@ -91,7 +90,7 @@ class GpsController extends Controller {
                 ->whereNotIn('user_id',$user_id)
                 ->orWhere('user_id',null)
                 ->get();
-                dd($gps);
+                
         return DataTables::of($gps)
             ->addIndexColumn()
             ->addColumn('user', function ($gps) {
@@ -865,7 +864,7 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'name' => 'required',
+            'name' => 'required|unique:gps',
             'imei' => 'required|string|min:15|unique:gps',
             'manufacturing_date' => 'required',
             'brand' => 'required',

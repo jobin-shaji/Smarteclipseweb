@@ -294,7 +294,7 @@ class SubDealerController extends Controller {
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
-            'mobile' => 'required|unique:users',
+            'mobile' => 'required|numeric|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];

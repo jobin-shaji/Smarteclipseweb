@@ -32,52 +32,57 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
-                  </div>
-                  @if ($errors->has('name'))
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required>
+                    @if ($errors->has('name'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('name') }}</strong>
                     </span>
-                  @endif
+                  @endif 
+                  </div>
+                  
 
                   <div class="form-group has-feedback">
                     <label class="srequired">SVG Icon</label>
                     <input type="text" class="form-control {{ $errors->has('svg_icon') ? ' has-error' : '' }}" placeholder="SVG Icon" name="svg_icon" value="{{ old('svg_icon') }}" required> 
-                  </div>
-                  @if ($errors->has('svg_icon'))
+                     @if ($errors->has('svg_icon'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('svg_icon') }}</strong>
                     </span>
                   @endif
+                  </div>
+                 
                     <div class="form-group has-feedback">
                     <label class="srequired">Weight</label>
                     <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="{{ old('weight') }}" required> 
-                  </div>
-                  @if ($errors->has('weight'))
+                      @if ($errors->has('weight'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('weight') }}</strong>
                     </span>
                   @endif
+                  </div>
+                
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scale</label>
                     <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="{{ old('scale') }}" required> 
-                  </div>
-                  @if ($errors->has('scale'))
+                     @if ($errors->has('scale'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scale') }}</strong>
                     </span>
                   @endif
+                  </div>
+                 
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Opacity</label>
                     <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ old('opacity') }}" required> 
-                  </div>
-                  @if ($errors->has('opacity'))
+                    @if ($errors->has('opacity'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('opacity') }}</strong>
                     </span>
                   @endif
+                  </div>
+                  
               </div>
             </div>
 
