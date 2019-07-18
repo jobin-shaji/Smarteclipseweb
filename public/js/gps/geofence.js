@@ -22,6 +22,7 @@
 
 
  function initMap(){
+  // alert(1);
   var url = '/client-location';
   var data = { };
   backgroundPostData(url,data,'loadMap',{alert:false});
@@ -33,6 +34,7 @@
   var lngMap=51.189165;
 
    function loadMap(res) {
+    // console.log(res);
         latMap = res.latitude;
         lngMap = res.longitude;
         map = new google.maps.Map(document.getElementById('map'), {
@@ -50,11 +52,13 @@
           drawingMode: google.maps.drawing.OverlayType.POLYGON,
           // drawingMode: google.maps.drawing.OverlayType,
 
+
           drawingControl: true,
           drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_CENTER,
             drawingModes: [ 'polygon']
           },
+
           markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
           circleOptions: {
             fillColor: '#ffff00',
@@ -65,14 +69,31 @@
             zIndex: 1
           }
         });
+        // console.log(drawingManager);
         drawingManager.setMap(map);
 
-        google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
-          addArrays(polygon);
-          drawingManager.setDrawingMode(null);
+
+       google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
+         
+          var vertices = polygon.getPath();
+          var len = vertices.getLength();
+          if(len>=10)
+          {
+             alert("Only 10 points allowed");
+             polygon.setMap(null);
+          }
+          else
+          {
+             addArrays(polygon);
+            drawingManager.setDrawingMode(null);
           drawingManager.setOptions({
             drawingControl: false
           });
+    // google.maps.event.addListener(map, 'click', clearSelection);          
+          }
+         
+          
+
         });
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
@@ -101,7 +122,12 @@
     }
 
 
-
+function clearSelection() {
+    if (selectedShape) {
+      selectedShape.setEditable(false);
+      selectedShape = null;
+    }
+  }
 
 
 
@@ -109,6 +135,7 @@
 
 
 function addArrays(polygon) {
+
   var vertices = polygon.getPath();
   var contentString = "";
   poly = [];
@@ -119,6 +146,9 @@ function addArrays(polygon) {
     cord = [ xy.lat(),xy.lng()];
     poly.push(cord);
   }
+  // for (var j = 0, parts = [], max = 10 - 1; j < 3; j = j + max)
+  //       parts.push(vertices.slice(j, j + max + 1));
+
   allPolly.push(poly);
 }
 

@@ -171,32 +171,32 @@ class GeofenceController extends Controller {
         $toDate = date("Y-m-d", strtotime($to_date));
          if($vehicle_id!="")
          {
-
-                $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to')
-                ->where('vehicle_id',$vehicle_id)
-                ->where('geofence_id',$geofence)
-                ->where('client_id',$client_id)
-                ->get()->count();
-
-
-                if($geofences==0)
-                {
-                     $route_area = VehicleGeofence::create([
-                            'geofence_id' => $geofence,
-                            'vehicle_id' => $vehicle_id,
-                            'date_from' => $fromDate,
-                            'date_to' => $toDate,
-                            'client_id' => $client_id,
-                            'status' => 1
-                        ]);
-                }  
+            $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to')
+            ->where('vehicle_id',$vehicle_id)
+            ->where('geofence_id',$geofence)
+            ->where('client_id',$client_id)
+            ->get()
+            ->count();
+            if($geofences==0)
+            {
+                 $route_area = VehicleGeofence::create([
+                        'geofence_id' => $geofence,
+                        'vehicle_id' => $vehicle_id,
+                        'date_from' => $fromDate,
+                        'date_to' => $toDate,
+                        'client_id' => $client_id,
+                        'status' => 1
+                    ]);
+            }  
          }      
         $geofence = VehicleGeofence::select(
                     'id',
                     'vehicle_id',
                     'geofence_id',
-                    'date_from',
-                     'date_to'                                      
+                    \DB::raw('DATE(date_from) as date_from'),
+                    \DB::raw('DATE(date_to) as date_to')
+                    // 'date_from',
+                    //  'date_to'                                      
                     )
         ->with('vehicleGeofence:id,name')
        ->with('vehicle:id,name,register_number')
