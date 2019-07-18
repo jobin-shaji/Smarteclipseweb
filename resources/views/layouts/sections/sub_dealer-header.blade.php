@@ -40,4 +40,12 @@
                                 <a class="dropdown-item" href="{{url('/vehicle-sub-dealer')}}">List Vehicles<span></span></a>                                                             
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                             <a class="dropdown-item" href="{{url('/log-report')}}">Log Report<span></span></a>
+                            </div>
+                        </li>
                     </ul>

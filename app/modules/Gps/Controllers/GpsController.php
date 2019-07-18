@@ -531,6 +531,7 @@ class GpsController extends Controller {
                 'user_id',
                 'created_at')
                 ->where('gps_id',$decrypted_id)
+                ->with('gps:id,name,imei')
                 ->get();
         return view('Gps::gps-status-log-view',['gps_logs' => $gps_logs]);
     }
