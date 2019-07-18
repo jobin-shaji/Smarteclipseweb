@@ -94,7 +94,10 @@
                                
                                 <a class="dropdown-item" href="{{url('/drivers')}}"> List Drivers<span></span></a>  
                                 <a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">Vehicle Documents<span></span></a>
-                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver Update Log<span></span></a>                              
+                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver Update Log<span></span></a>
+                                 <a class="dropdown-item" href="{{url('/performance-score-history')}}">Driver Performance Score History <span></span></a> 
+
+
                             </div>
                         </li>
                         
@@ -126,7 +129,7 @@
                                 <div class="dropdown-divider"></div>
                              
                                 <a class="dropdown-item" href="{{url('/performance-score')}}">Alert Points <span></span></a>   
-                                  <a class="dropdown-item" href="{{url('/performance-score-history')}}">Performance Score History <span></span></a>  
+                                  
                                 <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                         
                             </div>
                         </li>

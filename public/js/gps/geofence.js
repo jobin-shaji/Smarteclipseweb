@@ -15,13 +15,14 @@
  //      zoom: 10,
  //      center: { lng: 13.4, lat: 52.51 }
  //    });
-
+var overlays = [];
  var allPolly = [];
  var map;
  var place_name="";
-
+var vertices;
 
  function initMap(){
+  // alert(1);
   var url = '/client-location';
   var data = { };
   backgroundPostData(url,data,'loadMap',{alert:false});
@@ -33,6 +34,7 @@
   var lngMap=51.189165;
 
    function loadMap(res) {
+    // console.log(res);
         latMap = res.latitude;
         lngMap = res.longitude;
         map = new google.maps.Map(document.getElementById('map'), {
@@ -44,20 +46,20 @@
            var input1 = document.getElementById('search_place'); 
            autocomplete1 = new google.maps.places.Autocomplete(input1);
            var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-
-
         var drawingManager = new google.maps.drawing.DrawingManager({
           drawingMode: google.maps.drawing.OverlayType.POLYGON,
           // drawingMode: google.maps.drawing.OverlayType,
+
 
           drawingControl: true,
           drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_CENTER,
             drawingModes: [ 'polygon']
           },
+
           markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
           circleOptions: {
-            fillColor: '#ffff00',
+            fillColor: '#CD1C40',
             fillOpacity: 1,
             strokeWeight: 5,
             clickable: false,
@@ -65,14 +67,26 @@
             zIndex: 1
           }
         });
+        // console.log(drawingManager);
         drawingManager.setMap(map);
+         google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
+          var vertices = polygon.getPath();
+          var len = vertices.getLength();
+           // overlays.push(polygon);
+          if(len>=10)
+          {
+             alert("Only 10 points allowed");
+             polygon.setMap(null);
+          }
+          else
+          {
 
-        google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
-          addArrays(polygon);
-          drawingManager.setDrawingMode(null);
-          drawingManager.setOptions({
-            drawingControl: false
-          });
+              addArrays(polygon);
+              drawingManager.setDrawingMode(null);
+              drawingManager.setOptions({
+              drawingControl: false
+            });
+          }
         });
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
@@ -92,23 +106,22 @@
           {
             alert("Plese Enter Name");
           }
-        
-           
-         
-         
         });
-   
     }
 
+function removeLineSegment() {
 
+  var url = '/client-location';
+  var data = { };
+  backgroundPostData(url,data,'loadMap',{alert:false});
+  // var lastOverlay = overlays.length > 0 ? overlays[overlays.length - 1] : null;   
+  // if (lastOverlay && lastOverlay.type === "polygon") {
+  //  lastOverlay.overlay.setMap(null);
 
-
-
-
-
-
-
+  // }
+}
 function addArrays(polygon) {
+
   var vertices = polygon.getPath();
   var contentString = "";
   poly = [];
@@ -119,10 +132,9 @@ function addArrays(polygon) {
     cord = [ xy.lat(),xy.lng()];
     poly.push(cord);
   }
-  allPolly.push(poly);
+ // overlays.push(event);
+   allPolly.push(poly);
 }
-
-
 function locationSearch(){
 
        place_name=$('#search_place').val();
