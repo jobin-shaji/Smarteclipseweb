@@ -33,7 +33,6 @@
       	                      <th>Register Number</th>
       	                      <th>GPS Name</th>
                               <th>IMEI</th>
-      	                      <th>E-SIM Number</th>
                               <th>Vehicle Type</th>
                               <th>Sub Dealer</th>
                               <th>End User</th>

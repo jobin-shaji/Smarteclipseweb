@@ -41,6 +41,9 @@ function callBackDataTable(){
             {data: 'imei', name: 'imei'},
             {data: 'manufacturing_date', name: 'manufacturing_date'},
             {data: 'version', name: 'version'},
+            {data: 'e_sim_number', name: 'e_sim_number'},
+            {data: 'brand', name: 'brand'},
+            {data: 'model_name', name: 'model_name'},
             {data: 'user', name: 'user'},
             
         ],

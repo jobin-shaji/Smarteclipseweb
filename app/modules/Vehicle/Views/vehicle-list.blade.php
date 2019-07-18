@@ -36,7 +36,6 @@
                             <th>Register Number</th>
                             <th>GPS Name</th>
                             <th>IMEI</th>
-                            <th>E-SIM Number</th>
                             <th>Driver</th>
                             <th>Vehicle Type</th>
                             <th style="width:160px;">Action</th>
