@@ -33,7 +33,7 @@
           <div class="form-group has-feedback">
               <label class="srequired">To User</label>
               <select class="form-control selectpicker" id="to_user" name="to_user_id" data-live-search="true" title="Select Dealer" required>
-                <option value="">Select</option>
+                <option value="">Select User</option>
                 @foreach($entities as $entity)
                 <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                 @endforeach
@@ -53,7 +53,7 @@
         <div class="row">
 
                @forelse  ($devices as $device )
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <input type="checkbox" name="gps_id[]" value="{{$device->id}}">{{$device->name}}||{{$device->imei}}
                 </div>
               @empty
