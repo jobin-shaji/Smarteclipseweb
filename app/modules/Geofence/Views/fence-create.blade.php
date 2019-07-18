@@ -30,13 +30,19 @@ Create Geofence
 <div style="float:left!important">
                   <div class="form-group">  
                      <button class="btn btn-xs btn-info form-control" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i> SAVE FENCE</button>
-                     <button type="button" onclick='clearlastdraw()'  class="btn btn-primary btn-flat cbtn_undo" title="Clear the points in map" name="reset">Undo</button>                                
+                     </div>
+                  </div>
+                     <div style="float:left!important">
+                  <div class="form-group">  
+                     <button type="button" onclick='removeLineSegment()'  class="btn btn-primary btn-flat cbtn_undo_geofence" title="Clear the points in map" name="reset">Undo</button>                                
                   </div>
                   </div>
                                <div style="float:left!important;margin:0 0 0 16%">   
                       <div class="form-group">
                            <form onsubmit="return locationSearch();">
                            <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
+
+                        
                           </div>
                        </div>
                       <div style="float:left!important">

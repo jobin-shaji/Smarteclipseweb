@@ -16816,6 +16816,10 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     position: absolute;
     float: left;
 }
+.cbtn_undo_geofence{
+    position: absolute;
+    float: left;
+}
 .save_button_route{
   float: left;
 }

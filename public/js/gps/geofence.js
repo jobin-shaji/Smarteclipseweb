@@ -15,11 +15,11 @@
  //      zoom: 10,
  //      center: { lng: 13.4, lat: 52.51 }
  //    });
-
+var overlays = [];
  var allPolly = [];
  var map;
  var place_name="";
-
+var vertices;
 
  function initMap(){
   // alert(1);
@@ -46,8 +46,6 @@
            var input1 = document.getElementById('search_place'); 
            autocomplete1 = new google.maps.places.Autocomplete(input1);
            var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-
-
         var drawingManager = new google.maps.drawing.DrawingManager({
           drawingMode: google.maps.drawing.OverlayType.POLYGON,
           // drawingMode: google.maps.drawing.OverlayType,
@@ -71,12 +69,10 @@
         });
         // console.log(drawingManager);
         drawingManager.setMap(map);
-
-
-       google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
-         
+         google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
           var vertices = polygon.getPath();
           var len = vertices.getLength();
+           // overlays.push(polygon);
           if(len>=10)
           {
              alert("Only 10 points allowed");
@@ -84,16 +80,13 @@
           }
           else
           {
-             addArrays(polygon);
-            drawingManager.setDrawingMode(null);
-          drawingManager.setOptions({
-            drawingControl: false
-          });
-    // google.maps.event.addListener(map, 'click', clearSelection);          
-          }
-         
-          
 
+              addArrays(polygon);
+              drawingManager.setDrawingMode(null);
+              drawingManager.setOptions({
+              drawingControl: false
+            });
+          }
         });
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
@@ -113,27 +106,20 @@
           {
             alert("Plese Enter Name");
           }
-        
-           
-         
-         
         });
-   
     }
 
+function removeLineSegment() {
 
-function clearSelection() {
-    if (selectedShape) {
-      selectedShape.setEditable(false);
-      selectedShape = null;
-    }
-  }
+  var url = '/client-location';
+  var data = { };
+  backgroundPostData(url,data,'loadMap',{alert:false});
+  // var lastOverlay = overlays.length > 0 ? overlays[overlays.length - 1] : null;   
+  // if (lastOverlay && lastOverlay.type === "polygon") {
+  //  lastOverlay.overlay.setMap(null);
 
-
-
-
-
-
+  // }
+}
 function addArrays(polygon) {
 
   var vertices = polygon.getPath();
@@ -146,13 +132,9 @@ function addArrays(polygon) {
     cord = [ xy.lat(),xy.lng()];
     poly.push(cord);
   }
-  // for (var j = 0, parts = [], max = 10 - 1; j < 3; j = j + max)
-  //       parts.push(vertices.slice(j, j + max + 1));
-
-  allPolly.push(poly);
+ // overlays.push(event);
+   allPolly.push(poly);
 }
-
-
 function locationSearch(){
 
        place_name=$('#search_place').val();
