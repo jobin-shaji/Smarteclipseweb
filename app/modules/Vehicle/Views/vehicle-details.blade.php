@@ -44,12 +44,6 @@
                 <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{$vehicle->register_number}}" disabled> 
                 <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
               </div>
-
-              <div class="form-group has-feedback">
-                <label class="srequired">E-SIM Number</label>
-                <input type="text" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{$vehicle->e_sim_number}}" disabled> 
-                <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
-              </div>
             </div>
           </div>
          

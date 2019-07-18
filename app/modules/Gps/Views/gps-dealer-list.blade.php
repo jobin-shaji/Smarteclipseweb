@@ -21,6 +21,9 @@
                                     <th>Name</th>
                                     <th>IMEI</th>
                                     <th>Version</th>
+                                    <th>Brand</th>
+                                    <th>Model Name</th>
+                                    <th>User</th>
                                   </tr>
                               </thead>
                           </table>
