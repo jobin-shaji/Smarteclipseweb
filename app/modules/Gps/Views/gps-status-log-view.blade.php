@@ -25,6 +25,8 @@
                                             <thead>
                                               <tr>
                                                 <th>#</th>
+                                                <th>GPS</th>
+                                                <th>Imei</th>
                                                 <th>Status</th>
                                                 <th>Updated By</th>
                                                 <th>DateTime</th>
@@ -34,6 +36,9 @@
                                               @foreach($gps_logs as $gps_log)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
+                                                <td>{{$gps_log->gps->name}}</td>
+                                                  <td>{{$gps_log->gps->imei}}
+                                                  </td>
                                                 <td>
                                                   <?php
                                                   $status_value=$gps_log->status;
