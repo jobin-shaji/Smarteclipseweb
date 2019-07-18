@@ -10,10 +10,12 @@ use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Gps\Models\GpsLog;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Gps\Models\VltData;
-
+use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Client\Models\Client;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
@@ -21,49 +23,49 @@ use Auth;
 use DataTables;
 
 class GpsController extends Controller {
-
     //Display all gps
 	public function gpsListPage()
     {
         return view('Gps::gps-list');
 	}
-
 	//returns gps as json 
     public function getGps()
     {
         $user_id=\Auth::user()->id;
         $gps = Gps::select(
-                'id',
-                'name',
-            	'imei',
-            	'manufacturing_date',
-                'brand',
-                'model_name',
-            	'version',
-                'deleted_at')
-                ->withTrashed()
-                ->where('user_id',$user_id)
-                ->get();
+            'id',
+            'name',
+        	'imei',
+        	'manufacturing_date',
+            'e_sim_number',
+            'brand',
+            'model_name',
+        	'version',
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->where('user_id',$user_id)
+        ->get();
         return DataTables::of($gps)
-            ->addIndexColumn()
-            ->addColumn('action', function ($gps) {
-                if($gps->deleted_at == null){
-                    // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
-                    return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
-                    </button>";
-                }else{
-                     return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
-                    </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        ->addIndexColumn()
+        ->addColumn('action', function ($gps) {
+            if($gps->deleted_at == null){
+                // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
+                return "
+                <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                </button>";
+            }else{
+                 return "
+                <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
+                </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
 
     //Display all transferred gps
@@ -82,13 +84,18 @@ class GpsController extends Controller {
                 'imei',
                 'manufacturing_date',
                 'version',
+                'e_sim_number',
+                'brand',
+                'model_name',
                 'user_id',
-                'deleted_at')
+                'deleted_at'
+            )
                 ->withTrashed()
                 ->with('user:id,username')
                 ->whereNotIn('user_id',$user_id)
                 ->orWhere('user_id',null)
                 ->get();
+                
         return DataTables::of($gps)
             ->addIndexColumn()
             ->addColumn('user', function ($gps) {
@@ -128,12 +135,15 @@ class GpsController extends Controller {
     public function save(Request $request)
     {
         $root_id=\Auth::user()->id;
+       $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
+       
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
         $gps = Gps::create([
             'name'=> $request->name,
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
+            'e_sim_number'=> $request->e_sim_number,
             'brand'=> $request->brand,
             'model_name'=> $request->model_name,
             'version'=> $request->version,
@@ -153,7 +163,7 @@ class GpsController extends Controller {
         if($gps == null){
            return view('Gps::404');
         }
-       return view('Gps::gps-details',['gps' => $gps]);
+        return view('Gps::gps-details',['gps' => $gps]);
     } 
 
     //edit gps details
@@ -179,6 +189,7 @@ class GpsController extends Controller {
         $gps->name = $request->name;
         $gps->imei = $request->imei;
         $gps->manufacturing_date = $request->manufacturing_date;
+        $gps->e_sim_number = $request->e_sim_number;
         $gps->brand = $request->brand;
         $gps->model_name = $request->model_name;
         $gps->version = $request->version;
@@ -384,15 +395,42 @@ class GpsController extends Controller {
     //returns gps as json 
     public function getDealerGps()
     {
-        $dealer_user_id=\Auth::user()->id;
+        $dealer_user_id=[];
+        $dealer_user_id[]=\Auth::user()->id;
+        $dealer_id=\Auth::user()->dealer->id;
+        $sub_dealers = SubDealer::select(
+                'id','user_id'
+                )
+                ->where('dealer_id',$dealer_id)
+                ->get();
+        $single_sub_dealers = [];
+        $single_sub_dealers_user_id = [];
+        foreach($sub_dealers as $sub_dealer){
+            $single_sub_dealers[] = $sub_dealer->id;
+            $single_sub_dealers_user_id[] = $sub_dealer->user_id;
+        }
+        $clients = Client::select(
+                'id','user_id'
+                )
+                ->whereIn('sub_dealer_id',$single_sub_dealers)
+                ->get();
+        $single_clients_user_id = [];
+        foreach($clients as $client){
+            $single_clients_user_id[] = $client->user_id;
+        }
+        $dealer_subdealer_clients_group = array_merge($single_sub_dealers_user_id,$single_clients_user_id,$dealer_user_id);
         $gps = Gps::select(
                 'id',
                 'name',
                 'imei',
                 'version',
+                'brand',
+                'model_name',
+                'user_id',
                 'deleted_at')
                 ->withTrashed()
-                ->where('user_id',$dealer_user_id)
+                ->whereIn('user_id',$dealer_subdealer_clients_group)
+                ->with('user:id,username')
                 ->get();
         return DataTables::of($gps)
             ->addIndexColumn()
@@ -410,19 +448,126 @@ class GpsController extends Controller {
     //returns gps as json 
     public function getSubDealerGps()
     {
-        $sub_dealer_id=\Auth::user()->id;
+        $sub_dealer_user_id=[];
+        $sub_dealer_user_id[]=\Auth::user()->id;
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $clients = Client::select(
+                'user_id'
+                )
+                ->where('sub_dealer_id',$sub_dealer_id)
+                ->get();
+        $single_clients_user_id = [];
+        foreach($clients as $client){
+            $single_clients_user_id[] = $client->user_id;
+        }
+        $subdealer_clients_group = array_merge($single_clients_user_id,$sub_dealer_user_id);
         $gps = Gps::select(
                 'id',
                 'name',
                 'imei',
                 'version',
+                'brand',
+                'model_name',
+                'user_id',
+                'status',
                 'deleted_at')
                 ->withTrashed()
-                ->where('user_id',$sub_dealer_id)
+                ->whereIn('user_id',$subdealer_clients_group)
+                ->with('user:id,username')
                 ->get();
         return DataTables::of($gps)
             ->addIndexColumn()
+            ->addColumn('action', function ($gps) {
+                if($gps->deleted_at == null){
+                    if($gps->status == 1){ 
+                        return "
+                            <b style='color:#008000';>Active</b>
+                            <a href=/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <button onclick=deactivateGpsStatus(".$gps->id.") class='btn btn-xs btn-danger'></i>Deactivate</button>
+                        ";
+                        }else{ 
+                        return "
+                            <b style='color:#FF0000';>Inactive</b>
+                            <a href=/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <button onclick=activateGpsStatus(".$gps->id.") class='btn btn-xs btn-success'> Activate </button>
+                        ";
+                        }
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
             ->make();
+    }
+
+    //deactivate gps
+    public function gpsStatusDeactivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+            ]);
+        }
+        $gps->status=0;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 0,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps deactivated successfully'
+        ]);
+    }
+    // activate gps
+    public function gpsStatusActivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+            ]);
+        }
+        $gps->status=1;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 1,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps activated successfully'
+        ]);
+    }
+
+    public function viewStatusLog(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps_logs = GpsLog::select(
+                'id',
+                'gps_id',
+                'status',
+                'user_id',
+                'created_at')
+                ->where('gps_id',$decrypted_id)
+                ->with('gps:id,name,imei')
+                ->get();
+        return view('Gps::gps-status-log-view',['gps_logs' => $gps_logs]);
     }
 
     //////////////////////////GPS SUB DEALER///////////////////////////////////
@@ -446,6 +591,9 @@ class GpsController extends Controller {
                 'name',
                 'imei',
                 'version',
+                'e_sim_number',
+                'brand',
+                'model_name',
                 'deleted_at')
                 ->withTrashed()
                 ->where('user_id',$client_id)
@@ -467,15 +615,29 @@ class GpsController extends Controller {
     public function getListData() 
     {
         $user_id=\Auth::user()->id;
-        $gps_transfer = GpsTransfer::select('id', 'from_user_id', 'to_user_id','dispatched_on','accepted_on','deleted_at')
-            ->with('fromUser:id,username')
-            ->with('toUser:id,username')
-            ->where('from_user_id',$user_id)
-            ->withTrashed()
-            ->get();
+        $gps_transfer = GpsTransfer::select(
+            'id', 
+            'from_user_id', 
+            'to_user_id',
+            'dispatched_on',
+            'accepted_on',
+            'deleted_at'
+            // \DB::raw('count(id) as count') 
+        )
+        ->with('fromUser:id,username')
+        ->with('toUser:id,username')
+        ->with('gpsTransferItems')
+        ->where('from_user_id',$user_id)
+        ->withTrashed()
+        ->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
-        ->addColumn('action', function ($gps_transfer) {
+        ->addColumn('count', function ($gps_transfer) 
+        {
+            return $gps_transfer->gpsTransferItems->count();
+        })
+        ->addColumn('action', function ($gps_transfer) 
+        {
             if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
             {
                 return "
@@ -489,7 +651,7 @@ class GpsController extends Controller {
                 <b style='color:#FF0000';>Cancelled</b>";
             }
             else{
-                 return "
+                return "
                 <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#008000';>Transferred</b>";
             }
@@ -574,7 +736,7 @@ class GpsController extends Controller {
         $devices=array();
         foreach($gps_items as $gps_item){
             $single_gps= $gps_item->gps_id;
-            $devices[]=Gps::select('id','name','imei','version')
+            $devices[]=Gps::select('id','name','imei','version','e_sim_number','brand','model_name')
                         ->where('id',$single_gps)
                         ->first();
         }
@@ -740,9 +902,10 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'name' => 'required',
-            'imei' => 'required|string|min:15|unique:gps',
+            'name' => 'required|unique:gps',
+            'imei' => 'required|numeric|min:15|unique:gps',
             'manufacturing_date' => 'required',
+            'e_sim_number' => 'required|numeric|unique:gps',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required'
@@ -753,9 +916,12 @@ class GpsController extends Controller {
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
-            'name' => 'required',
-            'imei' => 'required|string|min:15|unique:gps,imei,'.$gps->id,
+            'name' => 'required|unique:gps,name,'.$gps->id,
+            'imei' => 'required|numeric|min:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
+            'e_sim_number' => 'required|numeric|unique:gps,e_sim_number,'.$gps->id,
+            'brand' => 'required',
+            'model_name' => 'required',
             'version' => 'required',
         ];
         return  $rules;

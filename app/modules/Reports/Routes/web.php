@@ -87,3 +87,9 @@ Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectRepor
 
 });
 
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
+
+	Route::get('/log-report','DeviceLogReportController@logReport')->name('log-report');
+	Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+	// Route::post('/track-report/export','TrackingReportController@export')->name('track.report.export');
+});

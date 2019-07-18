@@ -7,11 +7,12 @@ function check(){
     if(document.getElementById('vehicle').value == ''){
         alert('please enter vehicle');
     }
-    else if(document.getElementById('fromDate').value == ''){
-        alert('please enter from date');
-    }else if(document.getElementById('toDate').value == ''){
-        alert('please enter to date');
-    }else{
+    // else if(document.getElementById('fromDate').value == ''){
+    //     alert('please enter from date');
+    // }else if(document.getElementById('toDate').value == ''){
+    //     alert('please enter to date');
+    // }
+    else{
         var alert_id=$('#alert').val();
         var vehicle_id=$('#vehicle').val();
         

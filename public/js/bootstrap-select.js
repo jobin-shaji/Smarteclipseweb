@@ -296,12 +296,12 @@
   var htmlEscape = createEscaper(escapeMap);
   var htmlUnescape = createEscaper(unescapeMap);
 
-  // var Selectpicker = function (element, options) {
+  var Selectpicker = function (element, options) {
   //   // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
-  //   if (!valHooks.useDefault) {
-  //     $.valHooks.select.set = valHooks._set;
-  //     valHooks.useDefault = true;
-  //   }
+    if (!valHooks.useDefault) {
+      $.valHooks.select.set = valHooks._set;
+      valHooks.useDefault = true;
+    }
 
     this.$element = $(element);
     this.$newElement = null;
@@ -1664,7 +1664,7 @@
 
         if (!that.options.liveSearch) {
           index = $items.index($items.find('a').filter(':focus').parent());
-	    } else {
+      } else {
           index = $items.index($items.filter('.active'));
         }
 

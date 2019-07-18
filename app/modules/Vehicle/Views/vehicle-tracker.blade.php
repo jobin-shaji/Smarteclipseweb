@@ -3,24 +3,20 @@
 @section('content')
 <section class="content box">
 <div class="page-wrapper_new_map">
-
-  <div class="page-breadcrumb">
-      <div class="row">
-         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Live Track
-               <small>Control panel</small>
-            </h4>
-            @if(Session::has('message'))
+  <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Live Track</li>
+         </ol>
+          @if(Session::has('message'))
             <div class="pad margin no-print">
                <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
                   {{ Session::get('message') }}  
                </div>
             </div>
             @endif  
-         </div>
-      </div>
-   </div>
+        </nav>
 
+  
 
 
   <div class="row">
@@ -91,7 +87,9 @@
 
                             <hr>
                         </div>
+                         </b>
                   </div>
+
               </div>
           </div>
 
@@ -99,19 +97,13 @@
     </div>
     </div>
 
-<!-- -----------------footer-------------------- -->
-  <footer class="footer text-center">
-  All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
-  </footer>
-<!-- -----------------footer-------------------- -->
-
   </div>
 </section>
 
 @section('script')
 
 <script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
 @endsection
 
 @endsection

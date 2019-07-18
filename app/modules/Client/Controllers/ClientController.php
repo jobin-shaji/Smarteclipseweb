@@ -20,7 +20,18 @@ class ClientController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {      
-        $subdealer_id = \Auth::user()->subdealer->id; 
+        $subdealer_id = \Auth::user()->subdealer->id;
+        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+
+        if($placeLatLng==null){
+              $request->session()->flash('message', 'Enter correct location'); 
+              $request->session()->flash('alert-class', 'alert-danger'); 
+              return redirect(route('client.create'));        
+        }
+
+        $location_lat=$placeLatLng['latitude'];
+        $location_lng=$placeLatLng['logitude'];
+        
         if($request->user()->hasRole('sub_dealer'))
         {
             $rules = $this->user_create_rules();
@@ -36,7 +47,9 @@ class ClientController extends Controller {
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
                 'name' => $request->name,            
-                'address' => $request->address,           
+                'address' => $request->address, 
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng          
             ]);
             User::where('username', $request->username)->first()->assignRole('client');
             
@@ -69,7 +82,7 @@ class ClientController extends Controller {
     {
         $rules = [
             'username' => 'required|unique:users',
-            'mobile' => 'required|unique:users',
+            'mobile' => 'required|numeric|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
@@ -96,7 +109,7 @@ class ClientController extends Controller {
             return "
             <a href=/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+              <a href=/client/".Crypt::encrypt($client->user_id)."/change-password-subdealer class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <button onclick=delClient(".$client->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
@@ -168,6 +181,9 @@ class ClientController extends Controller {
     //update password
     public function updatePassword(Request $request)
     {
+        $client=\Auth::user()->sub_dealer;
+       
+
         $client=User::find($request->id);
         if($client== null){
             return view('SubDealer::404');
@@ -180,8 +196,46 @@ class ClientController extends Controller {
         $client->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
-        return  redirect(route('client.change-password',$did));
+        
+            return  redirect(route('client.change-password',$did));
+        
+        
     }
+
+    public function changeClientPassword(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $client = Client::where('user_id', $decrypted)->first();
+         
+        if($client == null){
+           return view('Client::404');
+        }
+        return view('Client::subdealer-client-change-password',['client' => $client]);
+    }
+
+      //update password
+    public function updateClientPassword(Request $request)
+    {
+       
+        $client=User::find($request->id);
+        if($client== null){
+            return view('SubDealer::404');
+        }
+        $did=encrypt($client->id);
+        // dd($request->password);
+        $rules=$this->updateDepotUserRuleChangePassword($client);
+        $this->validate($request,$rules);
+        $client->password=bcrypt($request->password);
+        $client->save();
+        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+       
+             return  redirect(route('client.change-password-subdealer',$did));
+       
+        
+    }
+
+
     public function updateDepotUserRuleChangePassword()
     {
         $rules=[
@@ -450,6 +504,14 @@ class ClientController extends Controller {
         return redirect(route('client.profile'));  
     }
 
+    public function clientLocation(Request $request){
+        $client = $request->user()->client;
+        return response()->json([
+            'latitude' => (float)$client->latitude,
+            'longitude' => (float)$client->longitude
+        ]);
+    }
+
 ///////////////////////////////////////////////////////////////////////////////////////
     public function passwordUpdateRules(){
         $rules=[
@@ -466,4 +528,27 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+
+#################################################
+    function getPlaceLatLng($address){
+
+        $data = urlencode($address);
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ";
+        $geocode_stats = file_get_contents($url);
+        $output_deals = json_decode($geocode_stats);
+        if ($output_deals->status != "OK") {
+            return null;
+        }
+        if ($output_deals) {
+            $latLng = $output_deals->results[0]->geometry->location;
+            $lat = $latLng->lat;
+            $lng = $latLng->lng;
+            $locationData = ["latitude" => $lat, "logitude" => $lng];
+            return $locationData;
+        } else {
+            return null;
+        }
+    }
+
+  #####################################################
 }

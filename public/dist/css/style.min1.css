@@ -693,24 +693,40 @@ pre code {
     .container {
         max-width: 540px
     }
+
+section.content-header.root_content_header {
+    /*margin-left: 6%;*/
+}
 }
 
 @media (min-width:768px) {
     .container {
         max-width: 720px
     }
+
+section.content-header.root_content_header {
+    /*margin-left: 6%;*/
+}
 }
 
 @media (min-width:992px) {
     .container {
         max-width: 960px
     }
+
+section.content-header.root_content_header {
+    /*margin-left: 6%;*/
+}
 }
 
 @media (min-width:1600px) {
     .container {
         max-width: 1140px
     }
+
+section.content-header.root_content_header {
+    margin-left: 6%;
+}
 }
 
 .container-fluid {
@@ -1489,7 +1505,7 @@ pre code {
         -ms-flex: 0 0 33.33333%;
         flex: 0 0 33.33333%;
         max-width:100%;
-        margin:2% 0;
+        margin:0;
     }
     .col-lg-5 {
         -webkit-box-flex: 0;
@@ -10681,7 +10697,7 @@ html[dir=ltr] body .p-l-0 {
 .page-wrapper {
     background: #eeeeee;
     position: relative;
-    margin-left: 250px
+    /*margin-left: 250px*/
 }
 
 .page-wrapper>.container-fluid {
@@ -10695,9 +10711,9 @@ html[dir=ltr] body .p-l-0 {
 
 #main-wrapper {}
 
-#main-wrapper[data-sidebartype=full] .page-wrapper {
+/*#main-wrapper[data-sidebartype=full] .page-wrapper {
     margin-left: 250px
-}
+}*/
 
 @media (min-width:768px) {
     #main-wrapper {}
@@ -10717,7 +10733,7 @@ html[dir=ltr] body .p-l-0 {
         display: block
     }
     #main-wrapper.mini-sidebar .page-wrapper {
-        margin-left:0px
+        margin-left:0px;
     }
     #main-wrapper.mini-sidebar .sidebar-nav .has-arrow:after,
     #main-wrapper.mini-sidebar .sidebar-nav .hide-menu {
@@ -11562,7 +11578,7 @@ ul.list-style-none li a:hover {
 
 .page-breadcrumb .page-title {
     margin-bottom: 0px;
-    margin: 0px 14px;
+    margin: 16px 14px;
 }
 
 .page-breadcrumb .breadcrumb {
@@ -16831,5 +16847,114 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 .route_breadcumb .btn{
     margin:  0px 6px !important;
 }
+
+.page-wrapper-root {
+    min-height: 500px;
+    background: #f8f9fa;
+}
+.page-wrapper-root {
+    /*margin: 0 0 0 5.3%;*/
+    padding: 1% 9px 0px 2%;
+}
+.page-wrapper-root1 {
+   /* margin: 0 0 0 5.3%;
+    padding: 1% 9px 0px 2%;*/
+}
+/*error-text is for validation message in required field*/
+.error-text{
+    color:  #FF0000;
+}
+
+.col-lg-4.col-md-4.cover_alert_manager {
+background: #fff;
+padding: 15px 10px;
+}
+
+/*----------------------------------------dashboard root---------------------*/
+
+.gps_dashboard_grid {
+    background: #41A659;
+
+}
+.dash_grid{
+  font-size: 15px;
+  color:#fff;
+  border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    margin-left:30px !important;
+    border-radius: 5px;
+     max-width: 22%;
+}
+
+
+.dash_grid .icon {
+    -webkit-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    z-index: 0;
+    font-size: 90px;
+    color: rgba(0,0,0,0.15);
+}
+
+.small-box>.small-box-footer {
+    position: relative;
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255,255,255,0.8);
+    display: block;
+    z-index: 10;
+    background: rgba(0,0,0,0.1);
+    text-decoration: none;
+    margin-bottom: -15px;
+
+}
+
+.small-box>.inner {
+    padding: 10px;
+}
+
+.small-box {
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.dealer_dashboard_grid {
+    background: #56C1EF;
+}
+
+.sub_dealer_dashboard_grid{
+    background: #F29C12;
+}
+
+.client_dashboard_grid{
+    background: #DD4B39;
+}
+
+/*--------------------bredcrump-----------------------*/
+li.breadcrumb-item {
+    width:100%;
+    text-align: right;
+    color: #000;
+}
+
+li.breadcrumb-item a {
+    color: #90979D;
+}
+
+.callout.callout-success {
+    color: #338c33;
+}
+
+
 
 

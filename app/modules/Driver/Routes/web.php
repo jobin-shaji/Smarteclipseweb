@@ -17,5 +17,8 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	Route::get('/performance-score','DriverController@performanceScore')->name('performance-score');
 	Route::post('/performance-score/{id}/edit','DriverController@updatePerformanceScore')->name('performance-score.update.p');
+
+	Route::get('/performance-score-history','DriverController@performanceScoreHistory')->name('performance.score.history');
+	Route::post('/performance-score-history-list','DriverController@performanceScoreHistoryList')->name('performance-score-history-list');
 });
 

@@ -3,14 +3,20 @@
   GPS LIST
 @endsection
 @section('content')
-  <div class="page-breadcrumb">
-      <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">GPS LIST</h4>
-            
-          </div>
-      </div>
-  </div>
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+  
+  <div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+  
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS LIST</li>
+  </ol>
+</nav>
+
+
   <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive">
@@ -25,6 +31,7 @@
                       <th>Name</th>
                       <th>IMEI</th>
                       <th>Manufacturing Date</th>
+                      <th>E-SIM Number</th>
                       <th>Brand</th>
                       <th>Model Name</th>
                       <th>Version</th>
@@ -39,7 +46,8 @@
     </div>
                 
   </div>
-
+</div>
+</div>
 
 
 @endsection

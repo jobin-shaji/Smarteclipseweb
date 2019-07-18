@@ -5,15 +5,15 @@
 @section('content')
 
 
-<div class="page-wrapper">
-  <div class="page-breadcrumb">
-      <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Vehicle Type List </h4>
-            
-          </div>
-      </div>
-  </div>
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+   <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Type List </li>
+         </ol>
+        </nav>    
+ 
 
   <div class="container-fluid">
     <div class="card-body">
@@ -42,7 +42,7 @@
                 
   </div>
 </div>
-
+</div>
 
 @endsection
 

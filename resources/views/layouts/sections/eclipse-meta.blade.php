@@ -1,21 +1,56 @@
 <head>
   <meta name="csrf-token" content="{{ csrf_token() }}">
    <?php 
+     // $client = Auth::user()->client;
+     // if($client)
+     // {
+     //  // $user = Auth::user();
+     //    if($client->count() > 0){
+     //      $id = $client->id;
+     //    }else{
+     //      $id = null;
+     //    }
+     // }
+     // else
+     // {
+     //  $id = null;
+     // }
+   
+  ?>
+    <?php 
      $client = Auth::user()->client;
+
+     $user = Auth::user();
+     $root=$user->root;    
+     $dealer=$user->dealer;
+     $sub_dealer=$user->subDealer;
      if($client)
-     {
-      // $user = Auth::user();
+     {      
         if($client->count() > 0){
           $id = $client->id;
-        }else{
+        }
+        else{
           $id = null;
         }
      }
+     else if($root)
+     {
+      $id = $root->id;
+     }
+     else if($dealer)
+     {
+      $id = $dealer->id;
+     }
+
+     else if($sub_dealer)
+     {
+
+      $id = $sub_dealer->id;
+     }
      else
      {
-      $id = null;
-     }
-   
+      $id=null;
+     } 
   ?>
   <meta name="client" content="{{$id}}">
   <meta name="domain" content="{{url('/')}}">
@@ -27,7 +62,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="{{ url('/') }}image/png" sizes="16x16" href="assets/images/favicon.ico">
+    <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
     <title>GPS-Admin</title>
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
@@ -35,6 +70,11 @@
     <link href="{{ url('/') }}/dist/css/style.min1.css" rel="stylesheet">
     
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
+
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"> -->
+
 
 
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>

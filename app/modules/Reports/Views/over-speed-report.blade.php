@@ -7,7 +7,7 @@ Over Speed Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Daily KM Report</h4>
+        <h4 class="page-title"> Over Speed Report</h4>
       </div>
     </div>
   </div>
@@ -81,9 +81,6 @@ Over Speed Report
       </div>
     </div>
   </div>
-   <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
 </div>
 
 @section('script')

@@ -26,8 +26,10 @@ class GeofenceReportController extends Controller
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
-        if($vehicle==0)
+      
+        if($vehicle==0 || $vehicle==null)
         {
+            
             $query =GpsData::select(
                 'id',
                 'vehicle_id', 

@@ -5,15 +5,21 @@
 @section('content')
 
     <section class="content-header">
-     <h1>Edit Vehicle</h1>
-    </section>
-    @if(Session::has('message'))
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Vehicle</li> 
+            @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
           {{ Session::get('message') }}  
       </div>
     </div>
     @endif  
+         </ol>
+        </nav>
+   
+    </section>
+   
 
 
     <section class="hilite-content">

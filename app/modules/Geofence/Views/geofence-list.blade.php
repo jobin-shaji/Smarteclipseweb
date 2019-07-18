@@ -8,24 +8,12 @@
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 <div class="page-wrapper_new">
-  <!-- ============================================================== -->
-  <!-- Bread crumb and right sidebar toggle -->
-  <!-- ============================================================== -->
-  <div class="page-breadcrumb">
-      <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Geofence List</h4>
-            
-          </div>
-      </div>
-  </div>
-  <!-- ============================================================== -->
-  <!-- End Bread crumb and right sidebar toggle -->
-  <!-- ============================================================== -->
-  <!-- ============================================================== -->
-  <!-- Container fluid  -->
-  <!-- ============================================================== -->
-  <div class="container-fluid">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Geofence List</li>
+     </ol>
+    </nav>
+    <div class="container-fluid">
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
@@ -52,18 +40,6 @@
     </div>
                 
   </div>
-  <!-- ============================================================== -->
-  <!-- End Container fluid  -->
-  <!-- ============================================================== -->
-  <!-- ============================================================== -->
-  <!-- footer -->
-  <!-- ============================================================== -->
-  <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
-  <!-- ============================================================== -->
-  <!-- End footer -->
-  <!-- ============================================================== -->
 </div>
 
 

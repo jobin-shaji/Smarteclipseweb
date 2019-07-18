@@ -8,13 +8,20 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
 <div class="page-wrapper_new">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Driver's Update History</h4>
-            </div>
+     <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Driver's Update History</li>
+          
+          </ol>
+            @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+          </div>
         </div>
-    </div>
+        @endif 
+        </nav>
+   
     <div class="container-fluid">
     <div class="card-body">
         <div class="table-responsive">
@@ -42,18 +49,6 @@
 
                 </div>
              </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-           <footer class="footer text-center">
-                All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="https://wrappixel.com">VST</a>.
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
 
 

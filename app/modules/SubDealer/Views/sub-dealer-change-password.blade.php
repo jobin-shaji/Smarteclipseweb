@@ -3,24 +3,17 @@
    Change Password
 @endsection
 @section('content') 
- <div class="page-wrapper"> 
-  <section class="hilite-content">
-    <div class="page-breadcrumb"> 
 
-      <div class="row">
-          
-        <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">Edit Sub Dealer</h4> 
-          @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-              {{ Session::get('message') }}  
-            </div>
-          </div>
-          @endif                       
-        </div>
-      </div>
-    </div>
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+  <section class="hilite-content">
+     <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Sub Dealer</li>
+    </ol>
+  </nav>
+   
      <div class="container-fluid">
       <div class="card" style="margin:0 0 0 1%">
         <div class="card-body wizard-content">      <!-- title row -->
@@ -60,23 +53,30 @@
               </span>
             @endif
         </div>
+
+        <div class="col-md-3 ">
+              <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+            </div>
         </div>
           <div class="row">
             <!-- /.col -->
-            <div class="col-md-3 ">
-              <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
-            </div>
+            
            
             <!-- /.col -->
           </div>
+        </div>
+
       </form>
-         </div>
+         
     </div>
    </div>
- 
-</section>
-</div>
 
+ </div>
+
+</section>
+
+</div>
+</div>
      
 <div class="clearfix"></div>
 

@@ -27,18 +27,17 @@ var vehicleColor = "#0C2161";
 // var vehicleScale = "0.5";
 var vehicleScale = vehicle_scale;
 
-$( document ).ready(function() {
-    map = new google.maps.Map(document.getElementById('map'), {
+function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: start_lat,
-            lng: start_lng
+            lat: parseFloat(start_lat),
+            lng: parseFloat(start_lng)
         },
         zoom: 16,
         mapTypeId: 'roadmap'
 
-    });
-
-    var icon = { // car icon
+    });  
+     var icon = { // car icon
         path: vehiclePath,
         scale: parseFloat(vehicleScale),
         fillColor: vehicleColor, //<-- Car Color, you can change it 
@@ -54,8 +53,8 @@ $( document ).ready(function() {
         icon: icon
     });
     getMarkers(map);
+}
 
-});
 
 
 function getMarkers() {

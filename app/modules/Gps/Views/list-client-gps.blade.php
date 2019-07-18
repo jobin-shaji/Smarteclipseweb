@@ -20,14 +20,13 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">List Vehicle</h4>
-                      
-                    </div>
-                </div>
-            </div>           
+             <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Client Gps</li>
+              </ol>
+            </nav>
+
+                     
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->

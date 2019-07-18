@@ -10,8 +10,10 @@ function initMap(res) {
           map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
           center:{lat: latMap, lng: lngMap},
-          mapTypeId: 'terrain'
+          mapTypeId: 'terrain',
+
         });
+        map.setOptions({ minZoom:5, maxZoom: 17 });
         var url = 'geofence/show';
         var geo_id= document.getElementById('g_id').value;
         var data = {

@@ -14,6 +14,7 @@ Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
+Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateFieldWithDocTypeID')->name('vehicles.findDateFieldWithDocTypeID');
 Route::get('/vehicles/{id}/documents','VehicleController@vehicleDocuments')->name('vehicle.documents');
 Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
@@ -31,6 +32,10 @@ Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlaybac
 Route::get('/vehicle-driver-log','VehicleController@vehicleDriverLogList')->name('vehicle-driver-log');
 
 Route::post('/vehicle-driver-log-list','VehicleController@getVehicleDriverLogList')->name('vehicle-driver-log-list');
+
+Route::get('/all-vehicle-docs','VehicleController@allVehicleDocList')->name('all-vehicle-docs');
+
+Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->name('all-vehicle-docs-list');
 
 
 

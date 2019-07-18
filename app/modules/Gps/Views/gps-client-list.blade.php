@@ -4,13 +4,12 @@
 @endsection
 @section('content')
 <div class="page-wrapper_new">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">List Devices</h4>
-            </div>
-        </div>
-    </div>    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Devices</li>
+      </ol>
+    </nav>
+       
     <div class="container-fluid">
         <div class="card-body">
             <div class="table-responsive">
@@ -24,6 +23,9 @@
                                   <th>Name</th>
                                   <th>IMEI</th>
                                   <th>Version</th>
+                                  <th>E-SIM Number</th>
+                                  <th>Brand</th>
+                                  <th>Model Name</th>
                                 </tr>
                             </thead>
                         </table>
@@ -34,9 +36,6 @@
             </div>
         </div>
     </div>
-    <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
 </div>
 @section('script')
     <script src="{{asset('js/gps/gps-user-list.js')}}"></script>

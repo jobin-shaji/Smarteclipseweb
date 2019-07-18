@@ -14,6 +14,7 @@ $(document).ready(function () {
 
 	// }, 5000);
 });
+ var activeElement;
 
 function dbcount(res){
 	    $('#gps').text(res.gps);
@@ -60,8 +61,6 @@ function vehicle_details(res){
   }
 
 
-  $(document).ready(function(){
-   $('st-actionContainer').launchBtn( { openDuration: 500, closeDuration: 300 } );
-  });
+  
 
 

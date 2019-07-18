@@ -3,21 +3,23 @@
     View End User
 @endsection
 @section('content')
-<div class="page-wrapper">           
-  <div class="page-breadcrumb">
-      <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">End User List</h4>
-             @if(Session::has('message'))
-              <div class="pad margin no-print">
-                <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                  {{ Session::get('message') }}  
-                </div>
-              </div>
-            @endif
-            </div>
+
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/End User List</li>
+     </ol>
+     @if(Session::has('message'))
+      <div class="pad margin no-print">
+        <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
         </div>
-      </div>           
+      </div>
+    @endif       
+    </nav>          
+         
       <div class="container-fluid">
         <div class="panel-heading">  
               <a href="{{route('client.create')}}">
@@ -47,6 +49,7 @@
           </div>
         </div>
     </div>            
+</div>
 </div>
 @section('script')
     <script src="{{asset('js/gps/client-list.js')}}"></script>

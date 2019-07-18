@@ -21,7 +21,9 @@ return  [
        'Complaint',
        'Ota',
        'Ticket',
-       'Premium'
+       'Premium',
+       'DataUsage',
+       'SmsUsage'
     ]
 ]
 

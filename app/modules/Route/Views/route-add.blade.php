@@ -22,9 +22,7 @@
              <form method="POST" action="{{route('route.create.p')}}" onSubmit="return checkRouteValue();" style="    width: 100%;">
          {{csrf_field()}}
             <div class="col-12 d-flex no-block align-items-center">
-              <div class="col-lg-3">
-                <h4 class="page-title">Create Route</h4>
-               </div>
+              
                 <div class="col-lg-5">
                   <form method="POST" action="{{route('route.create.p')}}" onSubmit="return checkRouteValue();">
                      <div class="col-lg-8 col-md-12">
@@ -41,7 +39,7 @@
                </div>
                <div class="col-lg-4 col-sm-12 cover_search_button_route">
                        <button type="submit"  class="btn btn-primary btn-flat save_button_route" name="submit">Save Route</button>
-                       <button type="button" onclick='clearlastdraw()'  class="btn btn-primary btn-flat cbtn_undo" name="reset">Undo</button>
+                       <button type="button" onclick='clearlastdraw()'  class="btn btn-primary btn-flat cbtn_undo" title="Clear the points in map" name="reset">Undo</button>
                     </div>
                   </form>
 
@@ -66,53 +64,17 @@
 
                 </div>
                  </form>
-              
+              <div class="col-lg-3">
+                <h4 class="page-title" style="text-align: right;">Create Route</h4>
+               </div>
             </div>
         </div>
     </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-    
-
-
- 
-
-         <!-------------------------------------------------------------- -->
-    
-         <!-- ------------------------------------------------------- -->
-
 
 
          <div id="map" style=" width:100%;height:540px;"></div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
-  </div>
 
 </section>
 

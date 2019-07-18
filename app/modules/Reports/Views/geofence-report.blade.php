@@ -29,6 +29,7 @@ Geofence Report
                              <div class="form-group">    
                             <label>Vehicle</label>                      
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                              <option value="">Select</option>
                               <option value="0">All</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
@@ -85,9 +86,6 @@ Geofence Report
       </div>
     </div>
   </div>
-   <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
 </div>
 </section>
 @section('script')

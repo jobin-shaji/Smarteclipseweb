@@ -4,21 +4,23 @@ Create Sub Dealer
 @endsection
 @section('content')   
 <section class="hilite-content">
-  <div class="page-wrapper">
-    <div class="page-breadcrumb">
-      <div class="row">
-        <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">Create  Sub Dealer</h4> 
-          @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+   <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create  Sub Dealer</li>
+    </ol>
+      @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
               {{ Session::get('message') }}  
-            </div>
           </div>
-          @endif                       
         </div>
-      </div>
-    </div>           
+        @endif 
+  </nav>
+           
     <div class="container-fluid">
       <div class="card" style="margin:0 0 0 1%">
         <div class="card-body wizard-content">
@@ -97,7 +99,7 @@ Create Sub Dealer
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                   <div class="form-group has-feedback">
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password">
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                   </div>
                 </div>
@@ -125,6 +127,7 @@ Create Sub Dealer
       </div>
     </div>
   </div>
+</div>
 </section> 
 <div class="clearfix"></div>                    
 @endsection

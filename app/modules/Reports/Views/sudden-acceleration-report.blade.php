@@ -8,7 +8,7 @@
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title"> Harsh Braking Report</h4>
+        <h4 class="page-title"> Sudden Acceleration Report</h4>
       </div>
     </div>
   </div>
@@ -82,9 +82,6 @@
       </div>
     </div>
   </div>
-   <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
 </div>
 @section('script')
     <script src="{{asset('js/gps/sudden-acceleration-list.js')}}"></script>

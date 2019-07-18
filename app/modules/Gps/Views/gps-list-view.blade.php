@@ -1,14 +1,14 @@
 @extends('layouts.eclipse')
 
 @section('content')
-<div class="page-wrapper-new">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title"> GPS LIST</h4>
-            </div>
-        </div>
-    </div>
+<div class="page-wrapper page-wrapper_new">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS LIST</li>
+        
+      </ol>
+    </nav>
+ 
     <div class="container-fluid">
     <div class="card-body">
         <div class="table-responsive">
@@ -32,6 +32,9 @@
                                                 <th>Name</th>
                                                 <th>IMEI</th>
                                                 <th>Version</th>
+                                                <th>E-SIM Number</th>
+                                                <th>Brand</th>
+                                                <th>Model Name</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -41,6 +44,9 @@
                                                 <td>{{$device->name}}</td>
                                                 <td>{{$device->imei}}</td>
                                                 <td>{{$device->version}}</td>
+                                                <td>{{$device->e_sim_number}}</td>
+                                                <td>{{$device->brand}}</td>
+                                                <td>{{$device->model_name}}</td>
                                               </tr>
                                               @endforeach
                                             </tbody>
@@ -57,10 +63,7 @@
             </div>
           </div>
         </div>
-      </div>
-       <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>           
+      </div>           
     </div>
 
 

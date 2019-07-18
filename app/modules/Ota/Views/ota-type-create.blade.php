@@ -5,22 +5,23 @@
 @section('content')
 
 
-<div class="page-wrapper">
-  <div class="page-breadcrumb">
-    <div class="row">
-      <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Create Ota Type</h4>
-        @if(Session::has('message'))
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+  <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Create Ota Type</li>
+
+         </ol>
+          @if(Session::has('message'))
           <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
                 {{ Session::get('message') }}  
             </div>
           </div>
         @endif  
-      </div>
-    </div>
-  </div>
-            
+        </nav>
+   
   <div class="card-body">
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
@@ -32,30 +33,33 @@
                   <div class="form-group has-feedback">
                     <label class="srequired">Name</label>
                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
-                  </div>
-                  @if ($errors->has('name'))
+                     @if ($errors->has('name'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('name') }}</strong>
                     </span>
                   @endif
+                  </div>
+                 
                   <div class="form-group has-feedback">
                         <label class="srequired">Code</label>
                         <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" name="code" value="{{ old('code') }}" required>
-                  </div>
-                  @if ($errors->has('code'))
+                         @if ($errors->has('code'))
                      <span class="help-block">
                         <strong class="error-text">{{ $errors->first('code') }}</strong>
                      </span>
                   @endif
+                  </div>
+                 
                   <div class="form-group has-feedback">
                         <label>Default</label>
                         <input type="text" class="form-control {{ $errors->has('default_value') ? ' has-error' : '' }}" placeholder="Default Value" name="default_value" value="{{ old('default_value') }}">
+                         @if ($errors->has('default_value'))
+                           <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('default_value') }}</strong>
+                           </span>
+                          @endif
                   </div>
-                  @if ($errors->has('default_value'))
-                     <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('default_value') }}</strong>
-                     </span>
-                  @endif
+                 
               </div>
             </div>
 
@@ -73,6 +77,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 

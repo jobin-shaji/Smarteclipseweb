@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
+use App\Modules\Gps\Models\GpsTransferItems;
+use App\Modules\User\Models\User;
+
 use DataTables;
 use DB;
 use Carbon\Carbon; 
@@ -112,7 +115,12 @@ class DashboardController extends Controller
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first();
-        $vehicles = Vehicle::select('id','register_number','name','gps_id')
+       
+        if($client)
+        {
+
+
+            $vehicles = Vehicle::select('id','register_number','name','gps_id')
                     ->where('client_id',$client->id)
                     ->get();
 
@@ -145,9 +153,11 @@ class DashboardController extends Controller
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime)
         ->whereIn('id',$single_vehicle)->count();
+
+    }
         if($user->hasRole('root')){
             return response()->json([
-                'gps' => Gps::all()->count(), 
+                 'gps' => Gps::where('user_id',$user->id)->count(), 
                 'dealers' => Dealer::all()->count(), 
                 'subdealers' => SubDealer::all()->count(),
                 'clients' => Client::all()->count(),
@@ -209,27 +219,62 @@ class DashboardController extends Controller
     //emergency alert
     public function emergencyAlerts(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $alerts = Alert::select(
-                'id',
-                'alert_type_id',
-                'vehicle_id',
-                'latitude',
-                'longitude',
-                'device_time')
-                ->with('vehicle:id,name,register_number,driver_id')
-                ->with('vehicle.driver')
-                ->where('client_id',$client_id)
-                ->where('alert_type_id',21)
-                ->where('status',0)
-                ->get();
-        $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
-        $response = [
-            'alerts' => $alerts,
-            'vehicle' => $vehicle_id
-        ];
-        return response()->json($response); 
+        if($request->user()->hasRole('client')){
+            $client_id=\Auth::user()->client->id;
+            $alerts = Alert::select(
+                    'id',
+                    'alert_type_id',
+                    'vehicle_id',
+                    'latitude',
+                    'longitude',
+                    'device_time')
+                    ->with('vehicle:id,name,register_number,driver_id')
+                    ->with('vehicle.driver')
+                    ->where('client_id',$client_id)
+                    ->where('alert_type_id',21)
+                    ->where('status',0)
+                    ->get();
+            if(sizeof($alerts) == 0){
+                $response=[
+                    'status' => 'failed'
+                ];
+            }else{
+                $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
+                $response = [
+                    'status' => 'success',
+                    'alerts' => $alerts,
+                    'vehicle' => $vehicle_id
+                ];
+            }
+            return response()->json($response);
+        } 
     }
+
+    // emergency alert verification
+    public function verifyEmergencyAlert(Request $request)
+    {
+        $decrypted_vehicle_id = Crypt::decrypt($request->id); 
+        $alerts = Alert::where('alert_type_id',21)
+                ->where('status',0)
+                ->where('vehicle_id',$decrypted_vehicle_id)
+                ->get();
+        if($alerts == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Alert does not exist'
+            ]);
+        }
+        foreach ($alerts as $alert) {
+            $alert->status = 1;
+            $alert->save();
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Alert verified successfully'
+        ]);
+     }
 
     //get place namee
     public function getLocationFromLatLng(Request $request)
@@ -559,11 +604,10 @@ else
      public function locationSearch(Request $request)
     {
          $lat=$request->lat;
-         $lng=$request->lon;  
+         $lng=$request->lng; 
          $radius=$request->radius;
-
-          $user = $request->user(); 
-        $client=Client::where('user_id',$user->id)->first();
+         $user = $request->user(); 
+         $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
             $vehicles = Vehicle::select(
                 'id',
@@ -580,28 +624,31 @@ else
          foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
          }        
+        $sql='select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= '.$radius;
 
-         DB::connection()->enableQueryLog();
+        $vehicles_details= DB::select($sql);
+        // dd($vehicles_details);
 
-        $vehicles_details= DB::select('select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= 10000');
+        $vehicles_details_data=collect($vehicles_details)->toArray()
+                            ->with('vehicle:gps_id,id,name,register_number')
+                            ->whereIn('id',$single_vehicle) 
+                            ->get();
 
-        $queries = DB::getQueryLog();
-        $last_query = end($queries);
-        dd($last_query);
-        Gps::Select(
-           'id',
-            'lat',
-            'lat_dir',
-            'lon',
-            'lon_dir',
-            'mode',
-            \DB::raw('(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance ')
-           ) 
-         ->having('distance', '<=', $radius)  
-         ->with('vehicle:gps_id,id,name,register_number')
-        ->whereIn('id',$single_vehicle)                
+
+        // Gps::Select(
+        //    'id',
+        //     'lat',
+        //     'lat_dir',
+        //     'lon',
+        //     'lon_dir',
+        //     'mode',
+        //     \DB::raw('(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance ')
+        //    ) 
+        //  ->having('distance', '<=', $radius)  
+        //  ->with('vehicle:gps_id,id,name,register_number')
+        // ->whereIn('id',$single_vehicle)                
                       
-        ->get();
+        // ->get();
        
         $response_track_data=$this->vehicleDataList($vehicles_details);        
        if($response_track_data){     
@@ -627,5 +674,260 @@ else
         return $minutes;
     }
 
+public function notification(Request $request)
+{
 
+
+          $user = $request->user();  
+           $client=Client::where('user_id',$user->id)->first();
+           $client_id=$client->id;
+           
+       
+            $vehicles = Vehicle::select('id','register_number')
+                    ->where('client_id',$client_id)
+                    ->get();
+            $single_vehicle = [];
+            foreach($vehicles as $vehicle){
+                $single_vehicle[] = $vehicle->id;
+            }
+            $expired_documents=Document::select([
+                'id',
+                'vehicle_id',
+                'document_type_id',
+                'expiry_date'
+            ])
+            ->with('vehicle:id,name,register_number')
+            ->with('documentType:id,name')
+            ->whereIn('vehicle_id',$single_vehicle)
+            ->whereDate('expiry_date', '<', date('Y-m-d'))
+            ->get();
+            // $expire_documents=Document::select([
+            //     'id',
+            //     'vehicle_id',
+            //     'document_type_id',
+            //     'expiry_date'
+            // ])
+            // ->with('vehicle:id,name,register_number')
+            // ->with('documentType:id,name')
+            // ->whereIn('vehicle_id',$single_vehicle)
+            // ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+            // ->get();
+             $expire_documents=Document::select([
+                'id',
+                'vehicle_id',
+                'document_type_id',
+                'expiry_date'
+            ])
+            ->with('vehicle:id,name,register_number')
+            ->with('documentType:id,name')
+            ->whereIn('vehicle_id',$single_vehicle)
+            ->where('expiry_date','>=', [date('Y-m-d')])
+            ->orderBy('expiry_date','DESC')
+            ->take(5)
+            ->get();
+       if($user->hasRole('client')){
+            return response()->json([            
+                'expired_documents' => $expired_documents,
+                'expire_documents' => $expire_documents,
+                'status' => 'notification'           
+            ]);
+        }  
+
+
+
+
+}
+
+  public function rootGpsSale(Request $request)
+    {
+        // dd($request->id);
+        $root_id=\Auth::user()->root->id;
+
+
+        // $gps = GpsTransferItems::select(
+        //         'id',
+        //         'gps_transfer_id',
+        //         'gps_id',
+        //         \DB::raw('date_format(created_at, "%M") as month')               
+        //     )
+        //     ->with('gps:id,name,imei')
+        //     ->with('gpsTransfer:id,name,imei')
+        //     ->orderBy("month","DESC") 
+        //     ->groupBy("month")  
+        //     ->get();
+
+          $gps = GpsTransfer::select(
+                'id',
+                'from_user_id',
+                'to_user_id',
+                \DB::raw('date_format(accepted_on, "%M") as month'),
+                \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+            )
+            // ->with('gps:id,name,imei')
+            ->with('gpsTransferItems:id')
+            ->where('from_user_id', $root_id)
+            ->orderBy("month","DESC") 
+            ->groupBy("month")  
+            ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $gps_sale=array(
+                    "gps_count"=>$gps_count,
+                    "gps_month"=>$gps_month
+                );
+        return response()->json($gps_sale); 
+    }
+
+
+  public function rootGpsUsers(Request $request)
+    {
+        // dd($request->id);
+        $root_id=\Auth::user()->root->id;       
+        $dealer=Dealer::all()->count();
+        $sub_dealer=SubDealer::all()->count();
+        $client=Client::all()->count();
+
+        
+        $gps_user=array(
+                    "dealer"=>$dealer,
+                    "sub_dealer"=>$sub_dealer,
+                    "client"=>$client                   
+                );
+        return response()->json($gps_user); 
+    }
+
+    public function dealerGpsSale(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = GpsTransfer::select(
+            'id',
+            'from_user_id',
+            'to_user_id',
+            \DB::raw('date_format(accepted_on, "%M") as month'),
+            // \DB::raw('count(date_format(accepted_on, "%M")) as count')    
+            \DB::raw('count(id) as count')  
+
+        )
+        // ->with('gps:id,name,imei')
+        ->with('gpsTransferItems:id')
+        ->where('from_user_id', $user_id)
+        ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $dealer_gps_sale=array(
+                    "gps_count"=>$gps_count,
+                    "gps_month"=>$gps_month
+                );
+        return response()->json($dealer_gps_sale); 
+    }
+
+////////Dealer GPS User
+
+    public function dealerGpsUsers(Request $request)
+    {
+        // dd($request->id);
+        $dealer_id=\Auth::user()->dealer->id; 
+        $subdealer = SubDealer::select('id','name')
+        ->where('dealer_id',$dealer_id)
+        ->count();  
+        $sub_dealers = SubDealer::select('id','name')
+        ->where('dealer_id',$dealer_id)
+        ->get();
+        $single_sub_dealer = [];
+        foreach($sub_dealers as $sub_dealer){
+            $single_sub_dealer[] = $sub_dealer->id;
+        }
+
+        $client = Client::select('id','name')
+        ->whereIn('sub_dealer_id',$single_sub_dealer)
+        ->count();         
+        $dealer_gps_user=array(
+                   
+                    "sub_dealer"=>$subdealer,
+                    "client"=>$client                   
+                );
+        return response()->json($dealer_gps_user); 
+    }
+
+    //////Sub Dealer GPS Count
+     public function subDealerGpsSale(Request $request)
+    {
+        // dd($request->id);
+        $user_id=\Auth::user()->id;
+        $gps = GpsTransfer::select(
+            'id',
+            'from_user_id',
+            'to_user_id',
+            \DB::raw('date_format(accepted_on, "%M") as month'),
+            \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+        )
+        ->with('gpsTransferItems:id')
+        ->where('from_user_id', $user_id)
+        ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $sub_dealer_gps_sale=array(
+            "gps_count"=>$gps_count,
+            "gps_month"=>$gps_month
+        );
+        return response()->json($sub_dealer_gps_sale); 
+    }
+    //Sub Delaer gps users
+    public function subDealerGpsUsers(Request $request)
+    {
+       
+        $sub_dealer_id=\Auth::user()->subDealer->id;
+        $clients = Client::select('id','name','address','user_id')
+        ->where('sub_dealer_id',$sub_dealer_id)
+        ->get();
+         $single_client = [];
+         $client_count=[];
+        foreach($clients as $client){
+             $client_name[] = $client->name;
+            $single_client[] = $client->user_id;
+        }
+        $users=User::select('id')
+        ->whereIn('id',$single_client)
+        ->get();
+        $user_gps = [];
+        foreach($users as $user){
+            $user_gps[] = $user->id;
+        }
+        $gps = Gps::select(
+           'user_id',           
+            \DB::raw('count(id) as count')               
+        )
+        ->whereIn('user_id', $user_gps)
+        ->groupBy("user_id")  
+        ->get();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $sub_dealer_gps_sale=array(
+            "client"=>$client_name,
+            "gps_count"=>$gps_count,
+            "gps_month"=>$gps_month
+        );
+        return response()->json($sub_dealer_gps_sale); 
+    }
+ 
 }

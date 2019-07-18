@@ -5,21 +5,15 @@
 @section('content')
 
 
-<div class="page-wrapper">
-  <div class="page-breadcrumb">
-    <div class="row">
-      <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Dealer Details</h4>
-        @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}  
-            </div>
-          </div>
-        @endif  
-      </div>
-    </div>
-  </div>
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Dealer Details</li>
+    </ol>
+  </nav>
+ 
             
   <div class="card-body">
     <div class="table-responsive">
@@ -52,8 +46,7 @@
     </div>
   </div>
 </div>
-
-
+</div>
 
  
 <div class="clearfix"></div>

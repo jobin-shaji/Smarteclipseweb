@@ -31,6 +31,12 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	//gps dealer list
 	Route::get('/gps-sub-dealer','GpsController@gpsSubDealerListPage')->name('gps-sub-dealer');
 	Route::post('/gps-sub-dealer-list','GpsController@getSubDealerGps')->name('gps-sub-dealer-list');
+
+	//gps activate-deactivate
+	Route::post('/gps-status/deactivate','GpsController@gpsStatusDeactivate')->name('gps-status.deactivate');
+	Route::post('/gps-status/activate','GpsController@gpsStatusActivate')->name('gps-status.activate');
+	//view log 
+	Route::get('/gps/{id}/status-log','GpsController@viewStatusLog')->name('gps.status-log');
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {

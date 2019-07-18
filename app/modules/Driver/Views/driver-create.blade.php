@@ -13,16 +13,18 @@
 <section class="hilite-content">
   <!-- title row -->
   <div class="page-wrapper_new">
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Create Driver</h4>                      
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Driver</li>
+     </ol>
+       @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
             </div>
-        </div>
-    </div> 
+          </div>
+        @endif  
+    </nav>
     <form  method="POST" action="{{route('driver.create.p')}}">
       {{csrf_field()}}
       <div class="row">
@@ -58,9 +60,7 @@
                               <div class="form-group row" style="float:none!important">
                                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                                  <div class="form-group has-feedback">
-                                    <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5>
-                                     {{ old('address') }}
-                                    </textarea>
+                                    <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
                                   </div>
                                    @if ($errors->has('address'))
                                 <span class="help-block">
@@ -87,9 +87,6 @@
         </div>  
       </form>
     </div>
-    <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-    </footer>
   </div>
 </section>
  @endsection

@@ -1,3 +1,7 @@
+
+    
+    
+
       var latMap=25.402282;
       var lngMap=51.189165;
       var map;
@@ -9,19 +13,37 @@
       var lng;
       var place_name="";
 
+      function initMap(){
+       
+         var url = '/client-location';
+         var data = { 
+      
+        };
+         backgroundPostData(url,data,'loadMap',{alert:false});
+      }
 
-      function initMap() {
 
 
-        var heightAshbury = {lat: latMap, lng: lngMap};
+
+      function loadMap(res) {
+
+         latMap = res.latitude;
+        lngMap = res.longitude
+        var heightAshbury = {lat:latMap, lng:lngMap};
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 16,
           center: heightAshbury,
           mapTypeId: 'roadmap'
         });
+
          var input1 = document.getElementById('search_place'); 
          autocomplete1 = new google.maps.places.Autocomplete(input1);
          var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
+
+
+        map.setOptions({ minZoom:5, maxZoom: 17 }); 
+       
+        
 
         poly = new google.maps.Polyline({
             strokeColor: '#000000',
@@ -135,9 +157,9 @@
         }
 
 
-        $(function() {
-          initMap();
-        });
+        // $(function() {
+        //   initMap();
+        // });
 
     // ------------------------------------------
 

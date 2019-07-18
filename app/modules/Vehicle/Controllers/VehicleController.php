@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Modules\Vehicle\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -42,7 +41,6 @@ class VehicleController extends Controller {
                     'name',
                     'register_number',
                     'gps_id',
-                    'e_sim_number',
                     'driver_id',
                     'vehicle_type_id',
                     'deleted_at'
@@ -123,7 +121,6 @@ class VehicleController extends Controller {
             'name' => $request->name,
             'register_number' => $request->register_number,
             'vehicle_type_id' => $request->vehicle_type_id,
-            'e_sim_number' => $request->e_sim_number,
             'gps_id' => $request->gps_id,
             'driver_id' => $request->driver_id,
             'client_id' =>$client_id,
@@ -174,7 +171,6 @@ class VehicleController extends Controller {
         }
         $rules = $this->vehicleUpdateRules($vehicle);
         $this->validate($request, $rules);
-        $vehicle->e_sim_number = $request->e_sim_number;
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
         if($vehicle_update && $request->driver_id){
@@ -217,6 +213,13 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-documents',['vehicle' => $vehicle,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
     }
 
+    //for dependent dropdown doc add
+    public function findDateFieldWithDocTypeID(Request $request)
+    {   
+        $docTypeID=$request->docTypeID;
+        return response()->json($docTypeID);
+    }
+
     // save documents
     public function saveDocuments(Request $request)
     {
@@ -225,8 +228,10 @@ class VehicleController extends Controller {
         ];
         if($request->document_type_id == 1){
             $rules = $this->documentCreateRules();
+            $expiry_date=null;
         }else{
-            $rules = $this->cunstomDocCreateRules();
+            $rules = $this->customDocCreateRules();
+            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
         }
      
         $this->validate($request, $rules, $custom_messages);
@@ -239,12 +244,13 @@ class VehicleController extends Controller {
         $documents = Document::create([
             'vehicle_id' => $request->vehicle_id,
             'document_type_id' => $request->document_type_id,
-            'expiry_date' => $request->expiry_date,
+            'expiry_date' => $expiry_date,
             'path' => $uploadedFile,
         ]);
+        $encrypted_vehicle_id = encrypt($request->vehicle_id);
         $request->session()->flash('message', 'Document stored successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle'));
+        return redirect(route('vehicle.documents',$encrypted_vehicle_id));
     }
 
     // edit vehicle doc
@@ -252,11 +258,7 @@ class VehicleController extends Controller {
     {
         $decrypted_id = Crypt::decrypt($request->id);
         $vehicle_doc = Document::find($decrypted_id);
-        $document_type=DocumentType::select('id','name')->get();
-        if($vehicle_doc == null){
-            return view('Vehicle::404');
-        }
-        return view('Vehicle::vehicle-document-edit',['vehicle_doc' => $vehicle_doc,'document_type'=>$document_type]);
+        return view('Vehicle::vehicle-document-edit',['vehicle_doc' => $vehicle_doc]);
     }
 
     // update vehicle doc
@@ -287,8 +289,7 @@ class VehicleController extends Controller {
         }
         
         $vehicle_doc->vehicle_id = $request->vehicle_id;
-        $vehicle_doc->document_type_id = $request->document_type_id;
-        $vehicle_doc->expiry_date= $request->expiry_date;
+        $vehicle_doc->expiry_date= date("Y-m-d", strtotime($request->expiry_date));
         $vehicle_doc->save();
 
         $encrypted_vehicle_doc_id = encrypt($vehicle_doc->id);
@@ -307,14 +308,15 @@ class VehicleController extends Controller {
         }
         $file=$vehicle_doc->path;
         if($file){
-            $old_file = $vehicle_doc->path;
-            $myFile = "documents/".$old_file;
-            $delete_file=unlink($myFile);
+            // $old_file = $vehicle_doc->path;
+            // $myFile = "documents/".$old_file;
+            // $delete_file=unlink($myFile);
             $vehicle_doc->delete(); 
         }
+        $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
         $request->session()->flash('message', 'Document deleted successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle')); 
+        return redirect(route('vehicle.documents',$encrypted_vehicle_id)); 
     }
 
     // Vehicle OTA
@@ -531,6 +533,83 @@ class VehicleController extends Controller {
             ->make();
     }
 
+    // vehicle documents list
+    public function allVehicleDocList()
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+                            ->where('client_id',$client_id)
+                            ->get();
+        return view('Vehicle::all-vehicle-doc-list',['vehicles'=>$vehicles]); 
+    }
+
+    // vehicle documents list data
+    public function getAllVehicleDocList(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $selected_vehicle_id= $request->vehicle_id; 
+        $selected_status= $request->status; 
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+                            ->where('client_id',$client_id)
+                            ->get();
+        $vehicle_id=[];
+        foreach ($vehicles as $vehicle) {
+            $vehicle_id[]=$vehicle->id;
+        }
+        $vehicle_documents = Document::select(
+        'vehicle_id',
+        'document_type_id',
+        'expiry_date',
+        'path'
+        )
+        ->with('documentType:id,name')
+        ->with('vehicle:id,name,register_number');
+        if($selected_vehicle_id==null && $selected_status==null)
+        { 
+           $vehicle_documents =$vehicle_documents->whereIn('vehicle_id',$vehicle_id);
+        }
+        else if($selected_status=="valid"){
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
+            ->whereDate('expiry_date', '>', date('Y-m-d'));
+        }
+        else if($selected_status=="expiring"){
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
+            ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+30 days"))]);
+        }
+        else if($selected_status=="expired"){
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
+            ->whereDate('expiry_date', '<', date('Y-m-d'));
+        }
+        else
+        {
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
+        } 
+        $vehicle_documents =$vehicle_documents->get();
+
+        return DataTables::of($vehicle_documents)
+            ->addIndexColumn()
+            ->addColumn('status', function ($vehicle_documents) {
+                $current_date=date('Y-m-d');
+                $next_month_of_current_date=date('Y-m-d', strtotime("+30 days"));
+                $expiry_date=$vehicle_documents->expiry_date;
+                if($expiry_date==null){
+                    return "<b style='color:#008000';>Valid</b>";
+                }else if($expiry_date < $current_date){
+                    return "<b style='color:#FF0000';>Expired</b>";
+                }else if($expiry_date >= $current_date && $expiry_date <= $next_month_of_current_date){
+                    return "<b style='color:#FF8000';>Expiring</b>";
+                }else{
+                    return "<b style='color:#008000';>Valid</b>";
+                }
+             })
+            ->addColumn('action', function ($vehicle_documents) {
+                $path = url('/documents').'/'.$vehicle_documents->path;
+                return "<a href= '".$path."' download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+             })
+            ->rawColumns(['link', 'action','status'])
+            ->make();
+    }
+
 
     
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////
@@ -664,21 +743,19 @@ class VehicleController extends Controller {
     public function getVehicleRootList()
     {
         $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'e_sim_number',
-                    'vehicle_type_id',
-                    'client_id',
-                    'deleted_at'
-                    )
+                'id',
+                'name',
+                'register_number',
+                'gps_id',
+                'vehicle_type_id',
+                'client_id',
+                'deleted_at'
+            )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
             ->with('gps:id,name,imei')
             ->get();
-
-        return DataTables::of($vehicles)
+            return DataTables::of($vehicles)
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
@@ -691,13 +768,9 @@ class VehicleController extends Controller {
                 
             })
             ->addColumn('action', function ($vehicles) {
-                $gps_id=$vehicles->gps_id;
                 if($vehicles->deleted_at == null){
-                    $gps_data_count = GpsData::where('gps_id',$gps_id)->count('id');
-                    if($gps_data_count!=0){
                         return "
                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-                    }
                 }else{
                      return ""; 
                 }
@@ -741,7 +814,6 @@ class VehicleController extends Controller {
                     'name',
                     'register_number',
                     'gps_id',
-                    'e_sim_number',
                     'vehicle_type_id',
                     'client_id',
                     'deleted_at'
@@ -760,19 +832,15 @@ class VehicleController extends Controller {
                return $vehicle->client->subDealer->name;
                 
             })
-            ->addColumn('action', function ($vehicles) {
-                $gps_id=$vehicles->gps_id;
-                if($vehicles->deleted_at == null){
-                    $gps_data_count = GpsData::where('gps_id',$gps_id)->count('id');
-                    if($gps_data_count!=0){
-                        return "
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-                    }
-                }else{
-                     return ""; 
-                }
-            })
-            ->rawColumns(['link', 'action'])
+            // ->addColumn('action', function ($vehicles) {
+            //     if($vehicles->deleted_at == null){
+            //         return "
+            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+            //     }else{
+            //          return ""; 
+            //     }
+            // })
+            ->rawColumns(['link'])
             ->make();
     }
     /////////////////////////////Vehicle Tracker/////////////////////////////
@@ -904,7 +972,6 @@ class VehicleController extends Controller {
                     'name',
                     'register_number',
                     'gps_id',
-                    'e_sim_number',
                     'vehicle_type_id',
                     'client_id',
                     'deleted_at'
@@ -918,19 +985,15 @@ class VehicleController extends Controller {
 
         return DataTables::of($vehicles)
             ->addIndexColumn()
-            ->addColumn('action', function ($vehicles) {
-                $gps_id=$vehicles->gps_id;
-                if($vehicles->deleted_at == null){
-                    $gps_data_count = GpsData::where('gps_id',$gps_id)->count('id');
-                    if($gps_data_count!=0){
-                        return "
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-                    }
-                }else{
-                     return ""; 
-                }
-            })
-            ->rawColumns(['link', 'action'])
+            // ->addColumn('action', function ($vehicles) {
+            //     if($vehicles->deleted_at == null){
+            //         return "
+            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+            //     }else{
+            //          return ""; 
+            //     }
+            // })
+            ->rawColumns(['link'])
             ->make();
     }
 
@@ -1085,11 +1148,6 @@ class VehicleController extends Controller {
     
     return response()->json($response_data); 
 }
-
-
-
-
-
 
 
     public function hmapLocationPlayback(Request $request)
@@ -1290,8 +1348,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
             'gps_id' => 'required',
-            'driver_id' => 'required',
-            'e_sim_number' => 'required|numeric'
+            'driver_id' => 'required'
         ];
         return  $rules;
     }
@@ -1299,7 +1356,6 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     public function vehicleUpdateRules($vehicle)
     {
         $rules = [
-            'e_sim_number' => 'required|numeric',
             'driver_id' => 'required',
         ];
         return  $rules;  
@@ -1366,7 +1422,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         return  $rules;
     }
 
-    public function cunstomDocCreateRules(){
+    public function customDocCreateRules(){
         $rules = [
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
@@ -1382,7 +1438,6 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     {
         $rules = [
             'vehicle_id' => 'required',
-            'document_type_id' => 'required',
             'expiry_date' => 'nullable'
 
         ];

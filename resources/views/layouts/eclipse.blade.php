@@ -27,6 +27,8 @@
         
         @yield('content')
 
+        @include('layouts.sections.eclipse-footer')
+
     </div>
     <!-- <div class="page-wrapper">
          @include('layouts.sections.eclipse-footer')
@@ -58,12 +60,14 @@
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
         <!-- search option in dropdown -->
-    <script src="{{asset('js/bootstrap-select.js')}}"></script>
+    <!-- <script src="{{asset('js/bootstrap-select.js')}}"></script> -->
 
     <!-- datetime picker -->
     <script src="{{asset('js/moment-with-locales.js')}}"></script>
     <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{asset('js/custom.js')}}"></script>
+    
     
         
     <script type="text/javascript">+
@@ -87,7 +91,6 @@
         toastr.options.escapeHtml = true;
         toastr.options.newestOnTop = false;
     </script>
-    <script src="{{asset('js/custom.js')}}"></script>
 
     </body>
 

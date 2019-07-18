@@ -6,10 +6,12 @@
         GPS
         <small>Control panel</small>
       </h1>
+      <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">GPS Data</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Data</li>
       </ol>
+    </nav>
+     
 </section>
 <section class="content">
   <div class="row">

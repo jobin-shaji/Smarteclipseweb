@@ -8,36 +8,16 @@
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 <div class="page-wrapper_new_map">
-  <!-- ============================================================== -->
-  <!-- Bread crumb and right sidebar toggle -->
-  <!-- ============================================================== -->
-  <div class="page-breadcrumb">
-      <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Route View</h4>
-            
-          </div>
-      </div>
-  </div>
-  <!-- ============================================================== -->
-  <!-- End Bread crumb and right sidebar toggle -->
-  <!-- ============================================================== -->
-  <!-- ============================================================== -->
-  <!-- Container fluid  -->
-  <!-- ============================================================== -->
-
-    <!-- ============================================================== -->
-    <!-- Start Page Content -->
-    <!-- ============================================================== -->
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route View</li>
+     </ol>
+    </nav>
  
-
               <div id="map" style=" width:100%;height:520px; margin-top:10px;"></div>
          
                 
   </div>
-  <footer class="footer text-center">
-    All Rights Reserved by VST Mobility Solutions. Designed and Developed by <a href="http://vstmobility.com">VST</a>.
-  </footer>
 </div>
 
 
@@ -70,6 +50,8 @@
          zoom: 17,
         center: {lat: lat, lng: lng}
         });
+        map.setOptions({ minZoom:5, maxZoom: 17 });
+
 
         var myLatLng = {lat: lat, lng: lng};
         var marker = new google.maps.Marker({

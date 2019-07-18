@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\AlertType;
+use App\Modules\Alert\Models\UserAlerts;
 use Illuminate\Support\Facades\Crypt;
+use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use Illuminate\Support\Facades\DB;
 use DataTables;
@@ -18,14 +21,34 @@ class AlertController extends Controller {
     //Display all alerts
 	public function alerts()
     {
-        
-		return view('Alert::alert-list');
+         
+        $client_id=\Auth::user()->client->id;
+        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+         $userAlert = UserAlerts::select(
+                'id',
+                'client_id',
+                'alert_id',
+                'status'
+               )
+            ->with('alertType:id,code,description')                
+            ->where('client_id',$client_id)                
+            ->get();              
+		return view('Alert::alert-list',['vehicles'=>$vehicles,'userAlerts'=>$userAlert]);
 	}
 
 	//returns alerts as json 
-    public function alertsList()
+    public function alertsList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
+        $alert_id= $request->alert_id;
+        $vehicle_id= $request->vehicle_id;            
+        $from = $request->from_date;
+        $to = $request->to_date;
+          // dd($alert_id);
+
+        
         $alert = Alert::select(
                 'id',
                 'alert_type_id',
@@ -40,10 +63,29 @@ class AlertController extends Controller {
                 ->with('alertType:id,code,description')
                 ->with('vehicle:id,name,register_number')
                 ->with('gps:id,name,imei')
-                ->with('client:id,name')
-                ->where('client_id',$client_id)
-                ->where('status',0)
-                ->get();
+                ->with('client:id,name');
+                if($alert_id==null && $vehicle_id==null)
+                { 
+                   $alert =$alert->where('client_id',$client_id)
+                    ->where('status',0);
+                }
+
+                else
+                {
+                  
+                    $alert =$alert->where('client_id',$client_id)
+                    ->where('alert_type_id',$alert_id)
+                    ->where('vehicle_id',$vehicle_id)
+                    ->where('status',0);
+                    if($from){
+                      $search_from_date=date("Y-m-d", strtotime($from));                      
+                      $search_to_date=date("Y-m-d", strtotime($to));
+                      $alert = $alert->whereDate('device_time', '>=', $search_from_date)
+                      ->whereDate('device_time', '<=', $search_to_date);
+                    }
+                   
+                } 
+                 $alert =$alert->get();
         return DataTables::of($alert)
             ->addIndexColumn()
         //      ->addColumn('address', function ($alert) {
@@ -61,27 +103,29 @@ class AlertController extends Controller {
 
         //     return  $address ;
         // })
-            ->addColumn('location', function ($alert) {
-                 $latitude= $alert->latitude;
-                 $longitude=$alert->longitude;          
-                if(!empty($latitude) && !empty($longitude)){
-                    //Send request and receive json data by address
-                    $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                    $output = json_decode($geocodeFromLatLong);         
-                    $status = $output->status;
-                    //Get address from json data
-                    $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                    //Return address of the given latitude and longitude
-                    if(!empty($address)){
-                         $location=$address;
-                    return $location;
+            // ->addColumn('location', function ($alert) {
+            //      $latitude= $alert->latitude;
+            //      $longitude=$alert->longitude;          
+            //     if(!empty($latitude) && !empty($longitude)){
+            //         //Send request and receive json data by address
+            //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            //         $output = json_decode($geocodeFromLatLong);         
+            //         $status = $output->status;
+            //         //Get address from json data
+            //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //         //Return address of the given latitude and longitude
+            //         if(!empty($address)){
+            //              $location=$address;
+            //         return $location;
                         
-                    }
+            //         }
                 
-                }
-            })
+            //     }
+            // })
             ->addColumn('action', function ($alert) {
-            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>";
+
+            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
+             <a href=/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();
@@ -193,7 +237,7 @@ class AlertController extends Controller {
         if($alert_type == null){
             return view('Alert::404');
         }
-        return view('Alert::Alert-type-details',['alert_type' => $alert_type]);
+        return view('Alert::alert-type-details',['alert_type' => $alert_type]);
     }
     //for edit page of Alert Type
     public function edit(Request $request)
@@ -291,6 +335,51 @@ class AlertController extends Controller {
        
         return view('Alert::packet-list',['devices'=>$devices]);
     }
+
+    //Alert Notification
+
+    public function notification(Request $request)
+    {
+        $user = $request->user();  
+        $client=Client::where('user_id',$user->id)->first();
+        $client_id=$client->id;
+        $alert = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'vehicle_id',
+            'gps_id',
+            'client_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at'
+        )
+        ->with('alertType:id,code,description')
+        ->with('vehicle:id,name,register_number')
+        ->with('gps:id,name,imei')
+        ->with('client:id,name')
+        ->where('client_id',$client_id)
+        ->where('status',0)
+        ->orderBy('id','DESC')
+        ->limit(4)
+        ->get();
+        if($user->hasRole('client')){
+            return response()->json([                          
+                'alert' => $alert,
+                'status' => 'alertNotification'           
+            ]);
+        }  
+    }
+
+
+
+
+
+
+
+
+
      //alert create rules 
     public function alert_rules(){
         $rules = [

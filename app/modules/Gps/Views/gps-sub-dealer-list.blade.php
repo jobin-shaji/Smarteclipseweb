@@ -1,14 +1,14 @@
 @extends('layouts.eclipse')
 @section('content')
 
-<div class="page-wrapper">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Gps Sub Dealers List </h4>
-            </div>
-        </div>
-    </div>    
+<div class="page-wrapper page-wrapper_new">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Gps Sub Dealers List </li>
+        
+      </ol>
+    </nav>
+  
     <div class="container-fluid">
         <div class="card-body">
             <div class="table-responsive">
@@ -22,6 +22,10 @@
                                     <th>Name</th>
                                     <th>IMEI</th>
                                     <th>Version</th>
+                                    <th>Brand</th>
+                                    <th>Model Name</th>
+                                    <th>User</th>
+                                    <th>Action</th>
                                   </tr>
                               </thead>
                           </table>

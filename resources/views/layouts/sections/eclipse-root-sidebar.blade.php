@@ -1,159 +1,33 @@
-<li class="sidebar-item"> 
-  <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/home')}}" aria-expanded="false">
-    <i class="mdi mdi-view-dashboard"></i>
-    <span class="hide-menu">Dashboard</span>
-  </a>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-    <i class="mdi mdi-tablet-ipad"></i>
-    <span class="hide-menu">Device</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">
-    <li class="sidebar-item">
-      <a href="{{url('/gps/create')}}" class="sidebar-link">
-        <i class="mdi mdi-note-plus"></i>
-        <span class="hide-menu">Add Device</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/gps')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu"> List Device</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/gps-transferred')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">Transferred Device List</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/gps-transfer/create')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">Device Transfer</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/gps-transfers')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">Device Transfer List</span>
-      </a>
-    </li>
-   </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-circle"></i>
-    <span class="hide-menu">Dealer</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">
-    <li class="sidebar-item">
-      <a href="{{url('/dealer/create')}}" class="sidebar-link">
-        <i class="mdi mdi-note-plus"></i>
-        <span class="hide-menu">Add Dealer</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/dealers')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Dealer</span>
-      </a>
-    </li>
-  </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-circle"></i>
-    <span class="hide-menu">Sub Dealer</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">  
-    <li class="sidebar-item">
-      <a href="{{url('/sub-dealers')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Sub Dealer</span>
-      </a>
-    </li>
-  </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-circle"></i>
-    <span class="hide-menu">End User</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">  
-    <li class="sidebar-item">
-      <a href="{{url('/client')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List End User</span>
-      </a>
-    </li>
-  </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-car"></i>
-    <span class="hide-menu">Vehicle Category</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">  
-    <li class="sidebar-item">
-      <a href="{{url('/vehicle-type/create')}}" class="sidebar-link">
-        <i class="mdi mdi-note-plus"></i>
-        <span class="hide-menu">Add Vehicle Category</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/vehicle-types')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Vehicle Categories</span>
-      </a>
-    </li>
-  </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-car"></i>
-    <span class="hide-menu">Vehicle</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">  
-    <li class="sidebar-item">
-      <a href="{{url('/vehicle-root')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Vehicles</span>
-      </a>
-    </li>
-  </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-bell-ring"></i>
-    <span class="hide-menu">Alert Types</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">  
-    <li class="sidebar-item">
-      <a href="{{url('/alert-type/create')}}" class="sidebar-link">
-        <i class="mdi mdi-note-plus"></i>
-        <span class="hide-menu">Add Alert Type</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/alert-types')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Alert Type</span>
-      </a>
-    </li>
-  </ul>
-</li>
-<li class="sidebar-item">
-  <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-looks"></i>
-    <span class="hide-menu">Ota Types</span>
-  </a>
-  <ul aria-expanded="false" class="collapse  first-level">  
-    <li class="sidebar-item">
-      <a href="{{url('/ota-type/create')}}" class="sidebar-link">
-        <i class="mdi mdi-note-plus"></i>
-        <span class="hide-menu">Add Ota Type</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a href="{{url('/ota-type')}}" class="sidebar-link">
-        <i class="mdi mdi-view-dashboard"></i>
-        <span class="hide-menu">List Ota Type</span>
-      </a>
-    </li>
-  </ul>
-</li>
+        <div class="client_menu">
+           <nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+                <div class="navbar-toggler animate">
+                  <span class="menu-icon"></span>
+                </div>
+                <ul class="navbar-menu animate">
+                  
+                   <li>
+                    <a href="{{url('/data-usage')}}" class="animate">
+                      <span class="desc animate">Data Usage</span>
+                      <span class=""><img src="{{ url('/') }}/Report-icons/data-usage.png"  /></span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="{{url('/sms-usage')}}" class="animate"> <span class="glyphicon glyphicon-user"></span>
+                      <span class="desc animate">SMS Ussage</span>
+                      <span class=""><img src="{{ url('/') }}/Report-icons/sms-usage.png"  /></span>
+                    </a>
+                  </li>
+                 <!--  <li>
+                    <a href="{{url('/alert-report')}}" class="animate">
+                      <span class="desc animate">Device Activation/Deactivation Log</span>
+                      <span class=""><img src="{{ url('/') }}/Report-icons/device.png"  /></span>
+                    </a>
+                  </li> -->
+                  
+
+                </ul>
+              </nav> 
+
+
+        </div>
