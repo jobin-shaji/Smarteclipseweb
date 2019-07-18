@@ -1,24 +1,28 @@
 $(document).ready(function () {
     callBackDataTable();
+    
 });
 
-// function check(){
-//          var client=$('meta[name = "dealer"]').attr('content');
-//         var from_date = document.getElementById('fromDate').value;
-//         var to_date = document.getElementById('toDate').value;
-//         var data = {'client':client, 'from_date':from_date , 'to_date':to_date};
-//         callBackDataTable(data);
+
+function check(){
+        //  var client=$('meta[name = "dealer"]').attr('content');
+        var from_date = document.getElementById('fromDate').value;
+        var to_date = document.getElementById('toDate').value;
+        var data = {'from_date':from_date , 'to_date':to_date};
+        callBackDataTable(data);
        
-//     }
+    }
 
 
-function callBackDataTable(){
-    var  data = {
-         // dealer : $('meta[name = "dealer"]').attr('content'),
-           client:$('meta[name = "client"]').attr('content')
-         //  from_date : document.getElementById('fromDate').value,
-         // to_date : document.getElementById('toDate').value    
-    }; 
+function callBackDataTable(data=null){
+    
+    // var  data = {
+    //      // dealer : $('meta[name = "dealer"]').attr('content'),
+    //        // sub_dealer:$('meta[name = "client"]').attr('content')
+    //       from_date : document.getElementById('fromDate').value,
+    //      to_date : document.getElementById('toDate').value    
+    // }; 
+    // console.log(data);
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -29,9 +33,7 @@ function callBackDataTable(){
         ajax: {
             url: 'log-report-list',
             type: 'POST',
-            data: {
-                'data': data
-            },
+            data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

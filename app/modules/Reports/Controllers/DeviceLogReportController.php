@@ -9,8 +9,8 @@ use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
-
 use App\Modules\Gps\Models\GpsLog;
+use Auth;
 use DataTables;
 class DeviceLogReportController extends Controller {
     public function logReport ()
@@ -18,9 +18,10 @@ class DeviceLogReportController extends Controller {
         return view('Reports::log-report');
     }   
     public function logReportList(Request $request)
-    {
-        $subdealer=$request->client;
-        dd($subdealer);
+    { 
+       $subdealer=\Auth::user()->id;
+        $from = $request->from_date;
+        $to = $request->to_date;
        $gps_logs = GpsLog::select(
             'id',
             'gps_id',
@@ -30,8 +31,16 @@ class DeviceLogReportController extends Controller {
         )  
         ->where('user_id',$subdealer)              
         ->with('gps:id,name,imei')
-        ->with('user:id,username')
-        ->get();
+        ->with('user:id,username');
+        if($from)
+        {
+             $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $gps_logs = $gps_logs->whereDate('created_at', '>=', $search_from_date)
+                ->whereDate('created_at', '<=', $search_to_date);
+        }
+        $gps_logs=$gps_logs->get(); 
+       
         return DataTables::of($gps_logs)
         ->addIndexColumn()
           ->addColumn('status', function ($gps_logs) {
