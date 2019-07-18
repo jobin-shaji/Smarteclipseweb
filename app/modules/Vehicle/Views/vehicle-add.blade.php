@@ -57,32 +57,21 @@ Add Vehicle
                                  @endif
                               </div>
                               <div class="form-group row" style="float:none!important">
-                              
+                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Driver</label>
                                  <div class="form-group has-feedback">
-                                    <input type="hidden" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="11336655488" > 
+                                    <select class="form-control " name="driver_id" data-live-search="true" title="Select Driver" required>
+                                       <option selected disabled>Select Driver</option>
+                                       @foreach($drivers as $driver)
+                                       <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                       @endforeach
+                                    </select>
                                  </div>
-                                 @if ($errors->has('e_sim_number'))
+                                 @if ($errors->has('driver_id'))
                                  <span class="help-block">
-                                 <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
+                                 <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
                                  </span>
-                                 @endif
+                                 @endif 
                               </div>
-                              <div class="form-group row" style="float:none!important">
-                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Driver</label>
-                     <div class="form-group has-feedback">
-                        <select class="form-control " name="driver_id" data-live-search="true" title="Select Driver" required>
-                           <option selected disabled>Select Driver</option>
-                           @foreach($drivers as $driver)
-                           <option value="{{$driver->id}}">{{$driver->name}}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     @if ($errors->has('driver_id'))
-                     <span class="help-block">
-                     <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
-                     </span>
-                     @endif 
-                  </div>
                            </div>
                         </div>
                      </div>

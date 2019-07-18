@@ -41,7 +41,6 @@ function callBackDataTable(){
             {data: 'register_number', name: 'register_number'},
             {data: 'gps.name', name: 'gps.name'},
             {data: 'gps.imei', name: 'gps.imei'},
-            {data: 'e_sim_number', name: 'e_sim_number'},
             {data: 'vehicle_type.name', name: 'vehicle_type.name'},
             {data: 'client.name', name: 'client.name'},
             // {data: 'action', name: 'action', orderable: false, searchable: false}, 

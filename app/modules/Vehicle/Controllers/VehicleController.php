@@ -41,7 +41,6 @@ class VehicleController extends Controller {
                     'name',
                     'register_number',
                     'gps_id',
-                    'e_sim_number',
                     'driver_id',
                     'vehicle_type_id',
                     'deleted_at'
@@ -122,7 +121,6 @@ class VehicleController extends Controller {
             'name' => $request->name,
             'register_number' => $request->register_number,
             'vehicle_type_id' => $request->vehicle_type_id,
-            'e_sim_number' => $request->e_sim_number,
             'gps_id' => $request->gps_id,
             'driver_id' => $request->driver_id,
             'client_id' =>$client_id,
@@ -749,7 +747,6 @@ class VehicleController extends Controller {
                 'name',
                 'register_number',
                 'gps_id',
-                'e_sim_number',
                 'vehicle_type_id',
                 'client_id',
                 'deleted_at'
@@ -817,7 +814,6 @@ class VehicleController extends Controller {
                     'name',
                     'register_number',
                     'gps_id',
-                    'e_sim_number',
                     'vehicle_type_id',
                     'client_id',
                     'deleted_at'
@@ -976,7 +972,6 @@ class VehicleController extends Controller {
                     'name',
                     'register_number',
                     'gps_id',
-                    'e_sim_number',
                     'vehicle_type_id',
                     'client_id',
                     'deleted_at'
@@ -1353,8 +1348,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
             'gps_id' => 'required',
-            'driver_id' => 'required',
-            'e_sim_number' => 'required|numeric'
+            'driver_id' => 'required'
         ];
         return  $rules;
     }

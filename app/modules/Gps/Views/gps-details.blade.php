@@ -41,19 +41,20 @@
               <div class="form-group has-feedback">
                 <label>Name</label>
                 <input type="text" class="form-control" value="{{ $gps->name}}" disabled>
-                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
               </div>
 
               <div class="form-group has-feedback">
                 <label>IMEI</label>
                 <input type="text" class="form-control" value="{{ $gps->imei}}" disabled> 
-                <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
               </div>
 
               <div class="form-group has-feedback">
                 <label>Manufacturing Date</label>
                 <input type="text" class="form-control" value="{{ $gps->manufacturing_date}}" disabled> 
-                <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+              </div>
+              <div class="form-group has-feedback">
+                <label class="srequired">E-SIM Number</label>
+                <input type="text" class="form-control" name="e_sim_number" value="{{$gps->e_sim_number}}" disabled> 
               </div>
             </div>
           </div>
@@ -63,19 +64,16 @@
                 <div class="form-group has-feedback">
                 <label>Brand</label>
                 <input type="text" class="form-control" value="{{ $gps->brand}}" disabled> 
-                <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
               </div>
 
               <div class="form-group has-feedback">
                 <label>Model Name</label>
                 <input type="text" class="form-control" value="{{ $gps->model_name}}" disabled> 
-                <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
               </div>
 
               <div class="form-group has-feedback">
                 <label>Version</label>
-                <input type="text" class="form-control" value="{{ $gps->version}}" disabled> 
-                <span class="glyphicon glyphicon-book form-control-feedback"></span>
+                <input type="text" class="form-control" value="{{ $gps->version}}" disabled>
               </div>
 
             </div>

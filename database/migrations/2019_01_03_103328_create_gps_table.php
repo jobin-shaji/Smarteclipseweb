@@ -18,6 +18,7 @@ class CreateGpsTable extends Migration
             $table->string('name');
             $table->string('imei');
             $table->date('manufacturing_date');
+            $table->bigInteger('e_sim_number');
             $table->string('brand');
             $table->string('model_name');
             $table->string('version');

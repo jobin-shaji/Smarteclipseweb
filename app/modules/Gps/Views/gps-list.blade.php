@@ -31,6 +31,7 @@
                       <th>Name</th>
                       <th>IMEI</th>
                       <th>Manufacturing Date</th>
+                      <th>E-SIM Number</th>
                       <th>Brand</th>
                       <th>Model Name</th>
                       <th>Version</th>
