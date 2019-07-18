@@ -40,11 +40,11 @@ function initMap(res) {
 // console.log(triangleCoords[0]);
                   var bermudaTriangle = new google.maps.Polygon({
                     paths: triangleCoords,
-                    strokeColor: '#5D5D5D',
+                    strokeColor: '#CD1C40',
                     strokeOpacity: 0.8,
                     strokeWeight: 2,
                     center: res.cordinates[0],
-                    fillColor: '#5D5D5D',
+                    fillColor: '#CD1C40',
                     fillOpacity: 0.35
                   });
                   bermudaTriangle.setMap(map);

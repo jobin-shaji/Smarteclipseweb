@@ -59,7 +59,7 @@ var vertices;
 
           markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
           circleOptions: {
-            fillColor: '#ffff00',
+            fillColor: '#CD1C40',
             fillOpacity: 1,
             strokeWeight: 5,
             clickable: false,
