@@ -13,4 +13,8 @@ class GpsLog extends Model
     {
     	return $this->belongsTo('App\Modules\User\Models\User','user_id');
     }
+     public function gps()
+    {
+    	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+    }
 }

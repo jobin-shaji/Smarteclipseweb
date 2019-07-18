@@ -23,8 +23,7 @@
      $user = Auth::user();
      $root=$user->root;    
      $dealer=$user->dealer;
-     $sub_dealer=$user->sub_dealer;
-
+     $sub_dealer=$user->subDealer;
      if($client)
      {      
         if($client->count() > 0){
