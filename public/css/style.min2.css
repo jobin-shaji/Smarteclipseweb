@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-/*@import url(icons/font-awesome/css/fontawesome-all.css);
-@import url(icons/themify-icons/themify-icons.css);
-@import url(icons/material-design-iconic-font/css/materialdesignicons.min.css);*/
+
 .search-box .app-search .form-control {
     border-radius: 0px
 }
@@ -4719,7 +4717,7 @@ input[type=submit].btn-block {
 }
 
 .navbar {
-    position:fixed;
+    position:absolute;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -9434,7 +9432,7 @@ button.bg-purple:hover {
     }
     .pt-md-5,
     .py-md-5 {
-        padding-top: 7rem!important
+        padding-top:5.5rem!important
     }
     .pr-md-5,
     .px-md-5 {
@@ -16382,3 +16380,5 @@ p {
 .btn{font-size:18px!important;color:#fff!important;}
 
 }
+
+
