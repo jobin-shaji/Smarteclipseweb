@@ -134,7 +134,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: green !important" onclick="openPremium()"> GO PREMIUM    
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> GO PREMIUM    
                             </a>
                         </li>
 <!--                           <li class="nav-item dropdown">
