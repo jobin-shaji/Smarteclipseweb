@@ -440,6 +440,11 @@ class ClientController extends Controller {
 
         $file=$request->file('logo');
         if($file){
+            $old_file = $client->logo;
+            if($old_file){
+                $myFile = "logo/".$old_file;
+                $delete_file=unlink($myFile);
+            }
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
             //Move Uploaded File
@@ -450,7 +455,7 @@ class ClientController extends Controller {
         }
         $request->session()->flash('message', 'Logo updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('client.profile'));  
+        return redirect(route('client.profile'));   
     }
 
 //////////////////////////////////////User Change Password//////////////////////////////
