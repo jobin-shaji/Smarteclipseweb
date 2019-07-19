@@ -17,27 +17,33 @@
  //    });
 var overlays = [];
  var allPolly = [];
+  var selectedShape;
+    var polygon;
+    var drawingManager;
  var map;
  var place_name="";
 var vertices;
 
  function initMap(){
-  // alert(1);
-  var url = '/client-location';
-  var data = { };
-  backgroundPostData(url,data,'loadMap',{alert:false});
 
- }
 
-  
-  var latMap=25.402282;
-  var lngMap=51.189165;
 
-   function loadMap(res) {
+ //  // alert(1);
+ //  var url = '/client-location';
+ //  var data = { };
+ //  backgroundPostData(url,data,'loadMap',{alert:false});
 
-    // console.log(res);
-        latMap = res.latitude;
-        lngMap = res.longitude;
+ // }
+ var latMap = parseFloat(document.getElementById('lat').value);
+var lngMap = parseFloat(document.getElementById('lng').value);
+  // var latMap=25.402282;
+  // var lngMap=51.189165;
+
+//    function loadMap(res) {
+// console.log(res);
+//     // console.log(res);
+//         latMap = res.latitude;
+//         lngMap = res.longitude;
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: latMap, lng: lngMap},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
           zoom: 12
@@ -84,11 +90,12 @@ var vertices;
 
               addArrays(polygon);
               drawingManager.setDrawingMode(null);
-              drawingManager.setOptions({
-              drawingControl: false
-            });
+            //   drawingManager.setOptions({
+            //   drawingControl: false
+            // });
           }
         });
+
 
         google.maps.event.addDomListener(savebutton, 'click', function() {
           var name= document.getElementById('name').value;
@@ -108,13 +115,45 @@ var vertices;
             alert("Plese Enter Name");
           }
         });
+
+ // setSelection(newShape);
+        google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+      drawingManager.setDrawingMode(null);
+        // Add an event listener on this new shape, and make clickable
+        //Click = selected
+        var newShape = e.overlay;
+        newShape.type = e.type;
+        setSelection(newShape);
+      });
+         
+     
+    }
+    function deleteSelectedShape() {
+      selectedShape.setMap(null);
+       selectedShape.setOptions({
+              // drawingControl: false
+            });
+     
+    }
+    function clearSelection() {
+      if (selectedShape) {
+        selectedShape.setEditable(false);
+        selectedShape = null;
+      }
+    }
+    //set selection to a shape
+    function setSelection(shape) {
+      clearSelection();
+      selectedShape = shape;
+      shape.setEditable(true);
     }
 
 function removeLineSegment() {
+  allPolly =[];
+  deleteSelectedShape();
 
-  location.reload();
-  
-}
+  }
+
 function addArrays(polygon) {
 
   var vertices = polygon.getPath();

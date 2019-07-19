@@ -17,7 +17,15 @@ class GeofenceController extends Controller {
     //Display all etms
 	public function create()
     {
-		return view('Geofence::fence-create');
+        $client=\Auth::user()->client;
+        // $client = $request->user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude;
+        // return response()->json([
+        //     'latitude' => (float)$client->latitude,
+        //     'longitude' => (float)$client->longitude
+        // ]);
+		return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
 	}
 	public function saveFence(Request $request){
 
