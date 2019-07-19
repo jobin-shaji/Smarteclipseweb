@@ -34,6 +34,7 @@ var vertices;
   var lngMap=51.189165;
 
    function loadMap(res) {
+
     // console.log(res);
         latMap = res.latitude;
         lngMap = res.longitude;
@@ -111,14 +112,8 @@ var vertices;
 
 function removeLineSegment() {
 
-  var url = '/client-location';
-  var data = { };
-  backgroundPostData(url,data,'loadMap',{alert:false});
-  // var lastOverlay = overlays.length > 0 ? overlays[overlays.length - 1] : null;   
-  // if (lastOverlay && lastOverlay.type === "polygon") {
-  //  lastOverlay.overlay.setMap(null);
-
-  // }
+  location.reload();
+  
 }
 function addArrays(polygon) {
 

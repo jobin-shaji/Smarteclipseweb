@@ -62,6 +62,7 @@ class DashboardController extends Controller
                     ->get();
             $vehicles = Vehicle::select('id','register_number')
                     ->where('client_id',$client_id)
+                    // ->where('client_id',$client_id)
                     ->get();
             $single_vehicle = [];
             foreach($vehicles as $vehicle){
@@ -99,10 +100,19 @@ class DashboardController extends Controller
                     ->groupBy('vehicle_id')
                     ->orderBy('id','desc')                 
                     ->get();
-
-
+                    $user_id=\Auth::user()->id;
+                     $get_gpss = Gps::select('id','name','imei','lat','lon')
+                    ->whereNotNull('lat')
+                    ->whereNotNull('lon')
+                    ->where('user_id',$user_id)                        
+                    ->get();
+                     $single_gps = [];
+                    foreach($get_gpss as $get_gps){
+                        $single_gps[] = $get_gps->id;
+                    }
                      $get_vehicles = Vehicle::select('id','register_number','name','gps_id')
                     ->where('client_id',$client_id)
+                    ->whereIn('gps_id',$single_gps)
                     ->get();
                     // dd($get_vehicles->register_number);
             // dd($gps_data);
@@ -135,21 +145,29 @@ class DashboardController extends Controller
          $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
 
         $moving=Gps::where('user_id',$user->id)->where('mode','M')
+        ->whereNotNull('lat')
+        ->whereNotNull('lon')
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime)
         ->whereIn('id',$single_vehicle)->count();
 
         $offline=Gps::where('user_id',$user->id)
+        ->whereNotNull('lat')
+        ->whereNotNull('lon')
         ->where('device_time', '<=',$oneMinut_currentDateTime)
         // ->where('device_time', '<=',$currentDateTime)
         ->whereIn('id',$single_vehicle)->count();
 
         $idle=Gps::where('user_id',$user->id)->where('mode','H')
+        ->whereNotNull('lat')
+        ->whereNotNull('lon')
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime)
         ->whereIn('id',$single_vehicle)->count();
 
         $stop=Gps::where('user_id',$user->id)->where('mode','S')
+        ->whereNotNull('lat')
+        ->whereNotNull('lon')
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime)
         ->whereIn('id',$single_vehicle)->count();
