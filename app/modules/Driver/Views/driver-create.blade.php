@@ -80,7 +80,7 @@
          <div class="col-lg-6 col-md-12">
             <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
               <div class="row">
-                 <button type="submit" class="btn btn-primary address_btn">Submit</button>
+                 <button type="submit" class="btn btn-primary address_btn">Create</button>
               </div>
             </div>
           </div>
