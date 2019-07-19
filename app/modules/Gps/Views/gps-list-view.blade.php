@@ -32,7 +32,6 @@
                                                 <th>Name</th>
                                                 <th>IMEI</th>
                                                 <th>Version</th>
-                                                <th>E-SIM Number</th>
                                                 <th>Brand</th>
                                                 <th>Model Name</th>
                                               </tr>
@@ -44,7 +43,6 @@
                                                 <td>{{$device->name}}</td>
                                                 <td>{{$device->imei}}</td>
                                                 <td>{{$device->version}}</td>
-                                                <td>{{$device->e_sim_number}}</td>
                                                 <td>{{$device->brand}}</td>
                                                 <td>{{$device->model_name}}</td>
                                               </tr>

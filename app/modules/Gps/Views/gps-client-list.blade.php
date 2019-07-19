@@ -23,7 +23,6 @@
                                   <th>Name</th>
                                   <th>IMEI</th>
                                   <th>Version</th>
-                                  <th>E-SIM Number</th>
                                   <th>Brand</th>
                                   <th>Model Name</th>
                                 </tr>

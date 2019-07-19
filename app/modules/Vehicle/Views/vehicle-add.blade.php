@@ -137,7 +137,7 @@ Add Vehicle
 
      <div class="col-lg-12 col-md-12">
             <div class="custom_fom_group">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Create</button>
             </div>
          </div>
 </div>

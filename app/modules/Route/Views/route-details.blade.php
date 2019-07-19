@@ -13,12 +13,21 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route View</li>
      </ol>
     </nav>
- 
-              <div id="map" style=" width:100%;height:520px; margin-top:10px;"></div>
-         
-                
+    <div class="row">
+      <div class="col-md-4">
+        <label>Route Name : {{$route->name}}</label>
+      </div>
+      <div class="col-md-4">
+        <label>Created By : {{$route->client->name}}</label>
+      </div>
+      <div class="col-md-4">
+        <label>Created On : {{$route->created_at}}</label>
+      </div>
+    </div>
+
+    <div id="map" style=" width:100%;height:520px; margin-top:10px;"></div>       
+
   </div>
-</div>
 
 
 @endsection
