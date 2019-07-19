@@ -20,7 +20,6 @@
                         <div class="col-sm-12 social-buttons">
                             <a class="track_route_item">
                                 <i >name :</i><label id="route_name">{{$route->name}}</label></a>
-
                             <a class="btn btn-block btn-social btn-bitbucket track_route_item">
                                 <i >created By :</i> <b><label id="user"></label></b>
                             </a>
