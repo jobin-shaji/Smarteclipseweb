@@ -111,7 +111,7 @@
               <div class="row">
                 <!-- /.col -->
                 <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Create</button>
                 </div>
                 <!-- /.col -->
               </div>

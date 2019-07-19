@@ -8,14 +8,12 @@ Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
 Route::post('/vehicle-list','VehicleController@getVehicleList')->name('vehicle-list');
 Route::get('/vehicles/create','VehicleController@createVehicle')->name('vehicles.create');
 Route::post('/vehicles/save_vehicle','VehicleController@saveVehicle')->name('vehicles.create.p');
-Route::get('/vehicles/{id}/edit','VehicleController@edit')->name('vehicle.edit');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
 Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles.details');
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
 Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateFieldWithDocTypeID')->name('vehicles.findDateFieldWithDocTypeID');
-Route::get('/vehicles/{id}/documents','VehicleController@vehicleDocuments')->name('vehicle.documents');
 Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
