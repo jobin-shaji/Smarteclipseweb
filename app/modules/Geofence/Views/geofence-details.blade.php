@@ -16,6 +16,27 @@
  
             
               <input type="hidden" name="hd_id" id="g_id" value="{{$id}}">
+              <div class="card geofence data_list_cover pull-right" style="width: 16rem;">
+                    <div class="card-body data_list_body">                 
+                     <div class="cover_ofline"><b>
+                        <div class="col-sm-12 social-buttons">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
+                                <i >name :</i><label id="geofence_name"></label></a>
+
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
+                                <i >created By :</i> <b><label id="user"></label></b>
+                            </a>
+                             <a class="btn btn-block btn-social btn-bitbucket track_item">
+                                <i >created At :</i> <b><label id="created_date"></label></b>
+                            </a>
+                        </div>
+                      </b>
+                    </div>
+                  </div>
+                         
+                  </div>
+
+           
               <div id="map" style=" width:100%;height:520px; margin-top: 10px;"></div>
 
 </div>
