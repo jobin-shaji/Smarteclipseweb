@@ -14,17 +14,17 @@
      </ol>
     </nav>
 
-      <div class="card geofence data_list_cover pull-right" style="width: 16rem;">
+      <div class="card geofence data_list_cover pull-right" style="width: 20rem;">
                     <div class="card-body data_list_body">                 
                      <div class="cover_ofline"><b>
                         <div class="col-sm-12 social-buttons">
-                            <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i >name :</i><label id="geofence_name">{{$route->name}}</label></a>
+                            <a class="track_route_item">
+                                <i >name :</i><label id="route_name">{{$route->name}}</label></a>
 
-                            <a class="btn btn-block btn-social btn-bitbucket track_item">
+                            <a class="btn btn-block btn-social btn-bitbucket track_route_item">
                                 <i >created By :</i> <b><label id="user"></label></b>
                             </a>
-                             <a class="btn btn-block btn-social btn-bitbucket track_item">
+                             <a class="btn btn-block btn-social btn-bitbucket track_route_item">
                                 <i >created At :</i> <b><label id="created_date"></label></b>
                             </a>
                         </div>
