@@ -34,13 +34,16 @@ Create Geofence
                   </div>
                      <div style="float:left!important">
                   <div class="form-group">  
-                     <button type="button" onclick='removeLineSegment()'  class="btn btn-primary btn-flat cbtn_undo_geofence" title="Clear the points in map" name="reset">Undo</button>                                
+                     <button type="button" onclick='removeLineSegment()'  class="btn btn-primary btn-flat cbtn_undo_geofence" title="Clear the points in map" name="reset">Refresh</button>                                
                   </div>
                   </div>
                                <div style="float:left!important;margin:0 0 0 16%">   
                       <div class="form-group">
                            <form onsubmit="return locationSearch();">
                            <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
+                            <input type="hidden" class="form-control" placeholder="Search Place" name="lat" id="lat" value="{{$lat}}" required>  
+
+          <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
 
                         
                           </div>
