@@ -440,11 +440,6 @@ class ClientController extends Controller {
 
         $file=$request->file('logo');
         if($file){
-            $old_file = $client->logo;
-            if($old_file){
-                $myFile = "logo/".$old_file;
-                $delete_file=unlink($myFile);
-            }
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
             //Move Uploaded File
