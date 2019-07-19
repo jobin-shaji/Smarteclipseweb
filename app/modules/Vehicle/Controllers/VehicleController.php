@@ -58,24 +58,18 @@ class VehicleController extends Controller {
                 if($vehicles->deleted_at == null){
                         return "
                     
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/documents class='btn btn-xs btn-success' data-toggle='tooltip' title='Document'><i class='fa fa-file'></i></a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
+                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i> Playback</a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i></i></a>
+                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>
 
-
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i></a>
-
-
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> </button>"; 
+                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
                     
                 }else{
-                     return "<a href=/vehicles/".Crypt::encrypt($vehicles->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> </a>
-                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> </button>"; 
+                     return "
+                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> View </a>
+                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -140,24 +134,7 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'New Vehicle created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.documents',$encrypted_vehicle_id));
-    }
-
-    // edit vehicle
-    public function edit(Request $request)
-    {
-        $decrypted_id = Crypt::decrypt($request->id);
-        $client_id=\Auth::user()->client->id;
-        $vehicle = Vehicle::find($decrypted_id);
-        if($vehicle == null){
-            return view('Vehicle::404');
-        }
-        $routes=Route::where('client_id',$client_id)
-                        ->get();
-        $drivers=Driver::select('id','name')
-                ->where('client_id',$client_id)
-                ->get();
-        return view('Vehicle::vehicle-edit',['vehicle' => $vehicle,'routes' => $routes,'drivers' => $drivers]);
+        return redirect(route('vehicles.details',$encrypted_vehicle_id));
     }
 
     // update vehicle
@@ -185,24 +162,20 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Vehicle details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.edit',$encrypted_vehicle_id));  
+        return redirect(route('vehicles.details',$encrypted_vehicle_id));  
     }
     // details page
     public function details(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
-        $vehicle=Vehicle::find($decrypted_id);
-        if($vehicle==null){
-            return view('Vehicle::404');
-        } 
-        return view('Vehicle::vehicle-details',['vehicle' => $vehicle]);
-    }
-
-    // upload vehicle documents
-    public function vehicleDocuments(Request $request)
-    {
-        $decrypted_id = Crypt::decrypt($request->id);
+        $client_id=\Auth::user()->client->id;
         $vehicle = Vehicle::find($decrypted_id);
+        if($vehicle == null){
+            return view('Vehicle::404');
+        }
+        $drivers=Driver::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
         $docTypes=DocumentType::select(
                 'id','name')->get();
         $vehicleDocs=Document::select(
@@ -210,7 +183,7 @@ class VehicleController extends Controller {
                 ->where('vehicle_id',$vehicle->id)
                 ->with('documentType:id,name')
                 ->get();
-        return view('Vehicle::vehicle-documents',['vehicle' => $vehicle,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
+        return view('Vehicle::vehicle-details',['vehicle' => $vehicle,'drivers' => $drivers,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
     }
 
     //for dependent dropdown doc add
@@ -250,7 +223,7 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($request->vehicle_id);
         $request->session()->flash('message', 'Document stored successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.documents',$encrypted_vehicle_id));
+        return redirect(route('vehicles.details',$encrypted_vehicle_id));
     }
 
     // edit vehicle doc
@@ -316,7 +289,7 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
         $request->session()->flash('message', 'Document deleted successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.documents',$encrypted_vehicle_id)); 
+        return redirect(route('vehicles.details',$encrypted_vehicle_id)); 
     }
 
     // Vehicle OTA
