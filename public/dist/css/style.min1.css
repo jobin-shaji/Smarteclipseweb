@@ -16958,7 +16958,22 @@ li.breadcrumb-item a {
 .callout.callout-success {
     color: #338c33;
 }
+.card.geofence.data_list_cover.pull-right {
+    height: 219px;
+}
 
+
+.card.data_route_list_cover {
+    background: #f2f3f4;
+    position: fixed;
+    z-index: 1;
+    border-radius: 55px;
+    margin-top: 11px;
+}
+
+.card.data_route_list_cover.pull-right {
+    margin-left: 55px;
+}
 
 
 
