@@ -13,31 +13,19 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route View</li>
      </ol>
     </nav>
+    <div class="row">
+      <div class="col-md-4">
+        <label>Route Name : {{$route->name}}</label>
+      </div>
+      <div class="col-md-4">
+        <label>Created By : {{$route->client->name}}</label>
+      </div>
+      <div class="col-md-4">
+        <label>Created On : {{$route->created_at}}</label>
+      </div>
+    </div>
 
-      <div class="card geofence data_list_cover pull-right" style="width: 20rem;">
-                    <div class="card-body data_list_body">                 
-                     <div class="cover_ofline"><b>
-                        <div class="col-sm-12 social-buttons">
-                            <a class="track_route_item">
-                                <i >name :</i><label id="route_name">{{$route->name}}</label></a>
-
-                            <a class="btn btn-block btn-social btn-bitbucket track_route_item">
-                                <i >created By :</i> <b><label id="user"></label></b>
-                            </a>
-                             <a class="btn btn-block btn-social btn-bitbucket track_route_item">
-                                <i >created At :</i> <b><label id="created_date"></label></b>
-                            </a>
-                        </div>
-                      </b>
-                    </div>
-                  </div>
-                         
-                  </div>
-
- 
-              <div id="map" style=" width:100%;height:520px; margin-top:10px;"></div>
-         
-                
+    <div id="map" style=" width:100%;height:520px; margin-top:10px;"></div>       
   </div>
 </div>
 
