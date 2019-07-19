@@ -37,7 +37,7 @@
                 </div>
    
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-8 col-md-12">
               <div class="form-group has-feedback">
                 <label>Name</label>
                 <input type="text" class="form-control" value="{{ $gps->name}}" disabled>
@@ -56,12 +56,8 @@
                 <label class="srequired">E-SIM Number</label>
                 <input type="text" class="form-control" name="e_sim_number" value="{{$gps->e_sim_number}}" disabled> 
               </div>
-            </div>
-          </div>
-         
-          <div class="row">
-            <div class="col-md-6">
-                <div class="form-group has-feedback">
+
+               <div class="form-group has-feedback">
                 <label>Brand</label>
                 <input type="text" class="form-control" value="{{ $gps->brand}}" disabled> 
               </div>
@@ -75,9 +71,14 @@
                 <label>Version</label>
                 <input type="text" class="form-control" value="{{ $gps->version}}" disabled>
               </div>
+            </div>
+            <div class="col-lg-2 col-md-12">
+            {!! QrCode::size(380)->encoding('UTF-8')->generate('imei 123456789 Product-ID 10101'); !!}
+
 
             </div>
           </div>
+         
         
     
                   </section>
