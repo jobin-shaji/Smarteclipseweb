@@ -248,12 +248,17 @@ class VehicleController extends Controller {
         $this->validate($request, $rules,$custom_messages);
         $file=$request->path;
         if($file){
+            $old_file = $vehicle_doc->path;
+            $myFile = "documents/".$old_file;
+            $delete_file=unlink($myFile);
+            if($delete_file){
                 $getFileExt   = $file->getClientOriginalExtension();
                 $uploadedFile =   time().'.'.$getFileExt;
                 //Move Uploaded File
                 $destinationPath = 'documents';
                 $file->move($destinationPath,$uploadedFile);
                 $vehicle_doc->path = $uploadedFile;
+            }
         }
         
         $vehicle_doc->vehicle_id = $request->vehicle_id;
