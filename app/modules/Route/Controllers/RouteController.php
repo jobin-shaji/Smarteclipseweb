@@ -38,13 +38,13 @@ class RouteController extends Controller {
             ->addColumn('action', function ($route) {
                 if($route->deleted_at == null){
                     return "
-                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
+                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
 
-                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i></button>"; 
+                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
                 }else{
                      return "
-                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> </a>
-                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> </button>"; 
+                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
+                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -99,7 +99,6 @@ class RouteController extends Controller {
             return view('Route::404');
         } 
         $route_area=RouteArea::select('route_id','latitude','longitude')
-        
                                         ->where('route_id',$decrypted_id)
                                         ->get();
         return view('Route::route-details',['route' => $route,'route_area' => $route_area]);

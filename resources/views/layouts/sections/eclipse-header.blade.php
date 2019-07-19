@@ -230,7 +230,7 @@
                                 </div>
                                 @role('client')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
-                                        <i class="ti-user m-r-5 m-l-5"></i>My Profile</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
 
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>Change Password</a>

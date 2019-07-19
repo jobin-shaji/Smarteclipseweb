@@ -591,7 +591,6 @@ class GpsController extends Controller {
                 'name',
                 'imei',
                 'version',
-                'e_sim_number',
                 'brand',
                 'model_name',
                 'deleted_at')

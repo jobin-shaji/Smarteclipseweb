@@ -18,4 +18,9 @@ class Route extends Model
     {
         return $this->hasMany('App\Modules\Route\Models\RouteArea','id','route_id');
     }
+
+    // client
+    public function client(){
+        return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
+    }
 }
