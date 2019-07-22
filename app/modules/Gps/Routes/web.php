@@ -17,6 +17,12 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-data-count','GpsController@gpsDataCount')->name('gps.data.count');
 
 
+	
+
+
+
+
+
 });
 
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
