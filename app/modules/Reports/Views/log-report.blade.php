@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-    View End User
+    Device Activation Log Report
 @endsection
 @section('content')
 
@@ -10,7 +10,7 @@
 
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Log Report</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device Activation Log Report</li>
      </ol>
        
     </nav>  

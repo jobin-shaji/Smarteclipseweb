@@ -171,12 +171,13 @@ class ServicerController extends Controller {
          
     }
 
+
     public function AssignServicerList()
     {
 
         return view('Servicer::assign-servicer-list');
     }
-      public function getAssignServicerList()
+    public function getAssignServicerList()
     {
         $user_id=\Auth::user()->id;
 
@@ -216,17 +217,80 @@ class ServicerController extends Controller {
 
     public function SubDealerAssignServicer()
     {
-        $user_id=\Auth::user()->id;
-        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
-        // ->where('user_id',$user_id)
+        $sub_dealer_id=\Auth::user()->subDealer->id;
+        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
+        ->where('sub_dealer_id',$sub_dealer_id)
         ->where('status',0)
-        ->where('type',1)
+        ->where('type',2)
         ->get();
-        $clients = Client::select('id','name','user_id')
+        $clients = Client::select('id','name','user_id','sub_dealer_id')
+        ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
-        return view('Servicer::assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
+        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
     }
+    public function saveSubDealerAssignServicer(Request $request)
+    {
+        $rules = $this->servicerJobRules();
+        $this->validate($request, $rules);
+        $job_date=date("Y-m-d", strtotime($request->job_date));        
+        $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
+        $user_id=\Auth::user()->id;
+                $servicer = ServicerJob::create([
+                'servicer_id' => $request->servicer,
+                'client_id' => $request->client,
+                'job_id' => $job_id,
+                'job_type' => $request->job_type,
+                'user_id' => $user_id,
+                'description' => $request->description,
+                'job_date' => $job_date,                
+                'status' => 0,            
+            ]); 
+            $request->session()->flash('message', 'Assign  servicer successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('sub-dealer.assign.servicer'));  
+    }
+    public function SubDealerAssignServicerList()
+    {
 
+        return view('Servicer::sub-dealer-assign-servicer-list');
+    }
+     public function getSubDealerAssignServicerList()
+    {
+        $user_id=\Auth::user()->id;
+
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_date',               
+            'created_at',
+            'status'
+        )
+        ->where('user_id',$user_id)
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+         ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }
+                       
+         })            
+        ->rawColumns(['link'])
+        ->make();
+    }
     public function servicerCreateRules()
     {
         $rules = [
