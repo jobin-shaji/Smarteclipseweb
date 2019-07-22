@@ -455,7 +455,7 @@ class ClientController extends Controller {
         }
         $request->session()->flash('message', 'Logo updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('client.profile'));  
+        return redirect(route('client.profile'));   
     }
 
 //////////////////////////////////////User Change Password//////////////////////////////

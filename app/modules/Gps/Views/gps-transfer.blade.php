@@ -38,7 +38,6 @@
                 <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                 @endforeach
               </select>
-              <span class="glyphicon glyphicon-car form-control-feedback"></span>
           </div>     
           @if ($errors->has('to_user'))
             <span class="help-block">
