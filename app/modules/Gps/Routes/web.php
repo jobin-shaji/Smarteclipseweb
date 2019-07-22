@@ -20,6 +20,12 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-transfer-root-dropdown','GpsController@getDealerDetailsRoot')->name('gps-transfer-root-dropdown');
 
 
+	
+
+
+
+
+
 });
 
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
