@@ -723,6 +723,47 @@ class GpsController extends Controller {
         return redirect(route('gps-transfers'));
     }
 
+    // create root gps transfer
+    public function createRootGpsTransfer(Request $request) 
+    {
+        $user = \Auth::user();
+        $root = $user->root;
+        $devices = Gps::select('id', 'name', 'imei','user_id')
+                        ->where('user_id',$user->id)
+                        ->get();
+        $entities = $root->dealers;
+
+        return view('Gps::root-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+    }
+
+    public function getDealerDetailsRoot(Request $request)
+    {
+        $dealer_user_id=$request->dealer_user_id;
+        $dealer_user_detalis=User::find($dealer_user_id);
+        $dealer_details = Dealer::select('id', 'name', 'address','user_id')
+                        ->where('user_id',$dealer_user_id)
+                        ->first();
+        $dealer_address=$dealer_details->address;
+        $dealer_mobile=$dealer_user_detalis->mobile;
+        return response()->json(array(
+              'response' => 'success',
+              'dealer_address' => $dealer_address,
+              'dealer_mobile' => $dealer_mobile
+        )); 
+    }
+
+    // save root gps transfer
+    public function proceedRootGpsTransfer(Request $request) 
+    {
+        $dealer_detalis=Dealer::find($request->dealer_id);
+        $dealer_user_id=$dealer_detalis->name;
+        $address=$request->address;
+        $mobile=$request->mobile;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $order_number=uniqid();
+        return view('Gps::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'order_number' => $order_number]);
+    }
+
     public function viewGpsTransfer(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);

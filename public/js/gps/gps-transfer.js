@@ -61,6 +61,26 @@ function cancelGpsTransfer(gps_transfer_id){
     } 
 }
 
+$('.dealerData').on('change', function() {
+    var dealerUserID=this.value;
+    var data = { dealer_user_id : dealerUserID };
+    $.ajax({
+        type:'POST',
+        url: '/gps-transfer-root-dropdown',
+        data:data ,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            var dealer_address=res.dealer_address;
+            var dealer_mobile=res.dealer_mobile;
+            $("#address").val(dealer_address);
+            $("#mobile").val(dealer_mobile); 
+        }
+    });
+  });
+
 
 
 
