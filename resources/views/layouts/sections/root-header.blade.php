@@ -30,15 +30,14 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >DEALERS</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">ADD DEALER</a></li>
-                                <li><a class="dropdown-item" href="#">LIST DEALERS</a></li>
+                                <li><a class="dropdown-item" href="{{url('/dealer/create')}}">ADD DEALER</a></li>
+                                <li><a class="dropdown-item" href="{{url('/dealers')}}">LIST DEALERS</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SUB DEALERS</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">ADD SUB DEALER</a></li>
-                                <li><a class="dropdown-item" href="#">LIST SUB DEALERS</a></li>
+                                <li><a class="dropdown-item" href="{{url('/sub-dealers')}}">LIST SUB DEALERS</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
@@ -50,19 +49,6 @@
                         </li>
                     </ul>
                         </li>
-
-
-                        
-                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SUB DEALER 
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/sub-dealers')}}">List Sub Dealer<span></span></a> 
-
-                            </div>
-                        </li>
-
 
 
                         <li class="nav-item dropdown">
