@@ -73,13 +73,15 @@
               </div>
             </div>
             <div class="col-lg-2 col-md-12">
-            {!! QrCode::size(380)->encoding('UTF-8')->generate('imei 123456789 Product-ID 10101'); !!}
+            <?php 
+             $qr='imei:'.$gps->imei.' ProductID:'.$gps->model_name.'Manufacturing Date:'.$gps->manufacturing_date;
+            ?>
+       
+            {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
 
 
             </div>
           </div>
-         
-        
     
                   </section>
                 </div>                
