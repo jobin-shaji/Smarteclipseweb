@@ -16956,11 +16956,21 @@ li.breadcrumb-item a {
 }
 
 .callout.callout-success {
+   
     color: #338c33;
+    background: #c5e0c9;
+    padding: 15px;
+    width: 25%;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 .card.geofence.data_list_cover.pull-right {
     height: 219px;
 }
+
+/*.callout.callout-success {
+  
+}*/
 
 
 .card.data_route_list_cover {
