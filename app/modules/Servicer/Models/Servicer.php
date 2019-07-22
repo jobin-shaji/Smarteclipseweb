@@ -15,7 +15,13 @@ class Servicer extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'address','status','type','user_id'
+        'name', 'address','status','type','user_id','sub_dealer_id'
     ];
+
+    public function user()
+  	{
+    	return $this->belongsTo('App\Modules\User\Models\User')->withTrashed();
+  	}
+
 
 }
