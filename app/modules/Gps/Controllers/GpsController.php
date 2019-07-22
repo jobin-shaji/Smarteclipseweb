@@ -158,6 +158,11 @@ class GpsController extends Controller {
     //view gps details
     public function details(Request $request)
     {
+
+         \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+
         $decrypted_id = Crypt::decrypt($request->id);
         $gps = Gps::find($decrypted_id);
         if($gps == null){
