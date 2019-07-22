@@ -6,9 +6,23 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::get('/servicers','ServicerController@list')->name('servicer.list');
 
 	Route::get('/servicer/{id}/details','ServicerController@details')->name('servicer.details');
-
 	Route::post('/servicer/delete','ServicerController@delete')->name('servicer.delete');
 	Route::post('/servicer/activate','ServicerController@activate')->name('servicer.activate');
 
+	Route::get('/assign-servicer','ServicerController@AssignServicer')->name('assign.servicer');
+	Route::post('/assign-servicer-save','ServicerController@saveAssignServicer')->name('assign.servicer.save');
+
+	Route::get('/assign-servicer-list','ServicerController@AssignServicerList')->name('assign.servicer.list');
+	Route::post('/list-assign-servicer','ServicerController@getAssignServicerList')->name('list.assign.servicer');
+});
+
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+
+	Route::get('/sub-dealer-assign-servicer','ServicerController@SubDealerAssignServicer')->name('sub.dealer.assign.servicer');
+	Route::post('/assign-servicer-save','ServicerController@saveAssignServicer')->name('assign.servicer.save');
+
+	Route::get('/assign-servicer-list','ServicerController@AssignServicerList')->name('assign.servicer.list');
+	Route::post('/list-assign-servicer','ServicerController@getAssignServicerList')->name('list.assign.servicer');
+	
 });
 

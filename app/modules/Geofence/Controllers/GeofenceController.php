@@ -170,7 +170,7 @@ class GeofenceController extends Controller {
          return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
     }
 
-     public function getAssignGeofenceVehicleList(Request $request)
+    public function getAssignGeofenceVehicleList(Request $request)
     {
 
         $client_id=\Auth::user()->client->id;

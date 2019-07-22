@@ -5,8 +5,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Gps\Models\Gps;
+use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Servicer\Models\Servicer;
+use App\Modules\Servicer\Models\ServicerJob;
+
 use App\Modules\User\Models\User;
+use App\Modules\Client\Models\Client;
 use DataTables;
 
 class ServicerController extends Controller {
@@ -126,7 +131,102 @@ class ServicerController extends Controller {
             ->rawColumns(['link', 'action'])
             ->make();
     }
-    
+
+
+
+    public function AssignServicer()
+    {
+        $user_id=\Auth::user()->id;
+        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
+        // ->where('user_id',$user_id)
+        ->where('status',0)
+        ->where('type',1)
+        ->get();
+        $clients = Client::select('id','name','user_id')
+        ->get();
+        return view('Servicer::assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
+    }
+    public function saveAssignServicer(Request $request)
+    {
+        $rules = $this->servicerJobRules();
+        $this->validate($request, $rules);
+        $job_date=date("Y-m-d", strtotime($request->job_date));
+        
+        $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
+        $user_id=\Auth::user()->id;
+                $servicer = ServicerJob::create([
+                'servicer_id' => $request->servicer,
+                'client_id' => $request->client,
+                'job_id' => $job_id,
+                'job_type' => $request->job_type,
+                'user_id' => $user_id,
+                'description' => $request->description,
+                'job_date' => $job_date,                
+                'status' => 0,            
+            ]); 
+            $request->session()->flash('message', 'Assign  servicer successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('assign.servicer'));  
+       
+         
+    }
+
+    public function AssignServicerList()
+    {
+
+        return view('Servicer::assign-servicer-list');
+    }
+      public function getAssignServicerList()
+    {
+        $user_id=\Auth::user()->id;
+
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_date',               
+            'created_at',
+            'status'
+        )
+        ->where('user_id',$user_id)
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+         ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }
+                       
+         })            
+        ->rawColumns(['link'])
+        ->make();
+    }
+
+    public function SubDealerAssignServicer()
+    {
+        $user_id=\Auth::user()->id;
+        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
+        // ->where('user_id',$user_id)
+        ->where('status',0)
+        ->where('type',1)
+        ->get();
+        $clients = Client::select('id','name','user_id')
+        ->get();
+        return view('Servicer::assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
+    }
+
     public function servicerCreateRules()
     {
         $rules = [
@@ -136,6 +236,18 @@ class ServicerController extends Controller {
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
             'mobile' => 'required'
+        ];
+        return  $rules;
+    }
+    
+    public function servicerJobRules()
+    {
+        $rules = [
+            'servicer' => 'required',
+            'client' => 'required',
+            'job_type' => 'required',
+            'description' => 'required',
+            'job_date' => 'required'            
         ];
         return  $rules;
     }
