@@ -36,15 +36,26 @@ class ServicerController extends Controller {
 
         $user->assignRole('servicer');
 
-        $servicer = Servicer::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'type' => 1,
-            'status' => 0,
-            'user_id' => $user->id
-        ]);
+        if($request->user()->hasRole('root')){
+            $servicer = Servicer::create([
+                'name' => $request->name,
+                'address' => $request->address,
+                'type' => 1,
+                'status' => 0,
+                'user_id' => $user->id
+            ]);
+        }else{
+             $servicer = Servicer::create([
+                'name' => $request->name,
+                'address' => $request->address,
+                'type' => 2,
+                'status' => 0,
+                'sub_dealer_id' => $request->user()->id,
+                'user_id' => $user->id
+            ]);
+        }
 
-        $request->session()->flash('message', 'New user servicer successfully!'); 
+        $request->session()->flash('message', 'New servicer successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('servicer.details',encrypt($servicer->id)));
     }
@@ -54,21 +65,56 @@ class ServicerController extends Controller {
         return view('Servicer::list'); 
     }
 
-    public function delete()
+    public function edit(Request $request){
+        $servicer = Servicer::find(decrypt($request->id));
+        if($servicer == null){
+           return view('User::404');
+        }
+        return view('Servicer::edit',compact('servicer'));
+    }
+
+    public function update(Request $request)
     {
-        $route=Route::find($request->id);
-        if($route == null){
+        $servicer = Servicer::find($request->id);
+        if($servicer == null){
+           return view('User::404');
+        }
+
+        $rules = $this->servicerUpdateRules($servicer->user);
+        $this->validate($request,$rules);
+
+  
+        $servicer->name = $request->name;
+        $servicer->address = $request->address;
+        $servicer->save();
+
+        $user = User::find($servicer->user->id);
+        $user->email = $request->email;
+        $user->mobile = $request->mobile;
+        $user->save();
+
+        $request->session()->flash('message', 'Servicer details updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+
+        return redirect()->route('servicer.details',['id' => encrypt($servicer->id)]);
+
+    }
+
+    public function delete(Request $request)
+    {
+        $servicer=Servicer::find($request->id);
+        if($servicer == null){
            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Route does not exist'
+                'message' => 'Servicer does not exist'
             ]);
         }
-        $route->delete(); 
+        $servicer->delete(); 
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Route deleted successfully'
+            'message' => 'Servicer deleted successfully'
         ]);
     }
 
@@ -82,50 +128,55 @@ class ServicerController extends Controller {
         return view('Servicer::details',compact('servicer'));
     }
 
-    public function activate()
+    public function activate(Request $request)
     {
-        $route = Route::withTrashed()->find($request->id);
-        if($route==null){
+        $servicer = Servicer::withTrashed()->find($request->id);
+        if($servicer==null){
              return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Route does not exist'
+                'message' => 'Servicer does not exist'
              ]);
         }
-        $route->restore();
+        $servicer->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Route restored successfully'
+            'message' => 'Servicer restored successfully'
         ]);
     }
 
-
-
-    // data for list page
-    public function getServicerList()
+    public function p_List(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $route = Route::select(
+        $servicer = Servicer::select(
                     'id',
                     'name',
+                    'address',
+                    'user_id',
                     'deleted_at'
                     )
-            ->withTrashed()
-            ->where('client_id',$client_id)
-            ->get();
-        return DataTables::of($route)
+            ->with('user')
+            ->withTrashed();
+        if($request->user()->hasRole('root')){
+            $servicer = $servicer->where('type',1);
+        }else{
+            $servicer = $servicer->where('type',2)->where('sub_dealer_id',$request->user()->id);
+        }
+        $servicer->get();
+        return DataTables::of($servicer)
             ->addIndexColumn()
-            ->addColumn('action', function ($route) {
-                if($route->deleted_at == null){
+            ->addColumn('action', function ($servicer) {
+                if($servicer->deleted_at == null){
                     return "
-                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
+                    <a href=/servicer/".Crypt::encrypt($servicer->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
 
-                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
+                    <button onclick=delServicer(".$servicer->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>
+                    <a href=/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>"; 
                 }else{
                      return "
-                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
-                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
+                    <a href=/servicer/".Crypt::encrypt($servicer->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
+                    <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
+
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -312,6 +363,17 @@ class ServicerController extends Controller {
             'job_type' => 'required',
             'description' => 'required',
             'job_date' => 'required'            
+        ];
+        return  $rules;
+    }
+
+    public function servicerUpdateRules($user)
+    {
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'address' => 'required',
+            'mobile' => 'required'
         ];
         return  $rules;
     }
