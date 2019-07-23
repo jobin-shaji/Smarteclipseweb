@@ -8,36 +8,46 @@
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
-                          <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-new')}}">New Arrivals</a>
-                                <a class="dropdown-item" href="{{url('/gps-sub-dealer')}}"> List Device</a>  
+                                <a class="dropdown-item" href="{{url('/gps-new')}}">NEW ARRIVALS</a>
+                                <a class="dropdown-item" href="{{url('/gps-sub-dealer')}}">LIST DEVICES</a>  
                                 
-                                 <a class="dropdown-item" href="{{url('/gps-transfer/create')}}">Device Transfer</a> 
-                                 <a class="dropdown-item" href="{{url('/gps-transfers')}}">Device Transfer List</a>                          
+                                 <a class="dropdown-item" href="{{url('/gps-transfer/create')}}">TRANSFER DEVICE</a> 
+                                 <a class="dropdown-item" href="{{url('/gps-transfers')}}">DEVICE TRANSFER LOG </a>                          
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> END USER
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                              
-                                 <a class="dropdown-item" href="{{url('/client/create')}}">Add End User<span></span></a>
-                                   <a class="dropdown-item" href="{{url('/clients')}}">List End User<span></span></a>
-                            </div>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
+                                </a>
+                                <ul class="dropdown-menu multi-level">
+                                    <li class="dropdown-submenu">
+                                        <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>
+                                        <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{url('/client/create')}}">ADD END USER</a></li>
+                                        <li><a class="dropdown-item" href="{{url('/clients')}}">LIST END USERS</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SERVICE ENGINEERS</a>
+                                        <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{url('create-servicer')}}">ADD SERVICE ENGINEER</a></li>
+                                        <li><a class="dropdown-item" href="{{url('/servicers')}}">LIST SERVICE ENGINEERS</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                             </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                              
-                                <a class="dropdown-item" href="{{url('/vehicle-sub-dealer')}}">List Vehicles<span></span></a>                                                             
+                                <a class="dropdown-item" href="{{url('/vehicle-sub-dealer')}}">LIST VEHICLES<span></span></a>                                                             
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -45,7 +55,7 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                             <a class="dropdown-item" href="{{url('/log-report')}}">Log Report<span></span></a>
+                             <a class="dropdown-item" href="{{url('/log-report')}}">DEVICE ACTIVATION REPORT<span></span></a>
                             </div>
                         </li>
                     </ul>
