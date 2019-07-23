@@ -360,6 +360,14 @@ function getPolygonData(url, data, callBack, options) {
 
 }
 
+function downloadRegisterGps(id){
+    var url = 'register-gps/download';
+    var data = {
+        id:id
+    };
+    downloadFile(url,data);
+     
+}
 
 
 function downloadAlertReport(){

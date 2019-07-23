@@ -16,6 +16,13 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-data-list','GpsController@getGpsData')->name('gps-data-list');
 	Route::post('/gps-data-count','GpsController@gpsDataCount')->name('gps.data.count');
 
+	Route::post('/register-gps/download','GpsController@downloadGpsDataTransfer')->name('register-gps.download');
+
+
+
+
+	
+
 
 	
 

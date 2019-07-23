@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Auth;
 use DataTables;
+use PDF;
 
 class GpsController extends Controller {
     //Display all gps
@@ -930,6 +931,17 @@ class GpsController extends Controller {
         ];
         return  $rules;
     } 
+
+
+
+    public function downloadGpsDataTransfer(Request $request){
+
+        $gps = Gps::find($request->id);
+        
+        $pdf = PDF::loadView('Gps::gps-details',['gps' => $gps]);
+        return $pdf->download('abcd.pdf');
+
+    }
 
 
 
