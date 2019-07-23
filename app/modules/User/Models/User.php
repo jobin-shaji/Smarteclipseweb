@@ -53,6 +53,10 @@ class User extends Authenticatable
     {
         return $this->hasone('App\Modules\Client\Models\Client','user_id','id');
     }
+     public function servicer()
+    {
+        return $this->hasone('App\Modules\Servicer\Models\Servicer','user_id','id');
+    }
 
 
     public function dealercount()
