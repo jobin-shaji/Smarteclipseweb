@@ -515,6 +515,145 @@ class ServicerController extends Controller {
         return view('Servicer::servicer-cerificate');
     }
 
+
+
+
+
+     public function JobHistoryList()
+    {
+
+        return view('Servicer::job-history-list');
+    }
+    public function getJobsHistoryList()
+    {
+        $user_id=\Auth::user()->servicer->id;
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_complete_date', 
+             \DB::raw('Date(job_date) as job_date'),                 
+            'created_at',
+            'status'
+        )
+        ->where('servicer_id',$user_id)
+        ->whereNotNull('job_complete_date')
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+         ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }
+                       
+         }) 
+         ->addColumn('action', function ($servicer_job) {
+          
+                return "
+                <a href=/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+     public function jobHistoryDetails(Request $request)
+    {
+
+        $decrypted = Crypt::decrypt($request->id); 
+
+        $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+        $client_id=$servicer_job->client_id;
+          $vehicle_device = Vehicle::select(
+            'gps_id',
+            'id',
+            'register_number',
+            'name'
+            )
+            ->where('client_id',$client_id)
+            ->get();
+
+
+        $servicer_id=\Auth::user()->servicer->id;
+        $client = Client::select(
+            'user_id'
+            )
+            ->where('id',$client_id)
+            ->first();
+            $client_user_id=$client->user_id;
+        $vehicleTypes=VehicleType::select(
+                'id','name')->get();
+        $vehicle_device = Vehicle::select(
+                'gps_id',
+                'id',
+                'register_number',
+                'name'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+
+        $single_gps = [];
+        foreach($vehicle_device as $device){
+            $single_gps[] = $device->gps_id;
+        } 
+
+        $devices=Gps::select('id','name','imei')
+                ->where('user_id',$client_user_id)
+                ->whereNotIn('id',$single_gps)
+                ->get();
+       if($servicer_job == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device,'vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
+    }
+
+
+    public function servicerJobHistory(Request $request)
+    {
+        $servicer_job_id = $request->servicer_job_id;
+ // dd($servicer_job_id);
+       
+         
+
+          $vehicle = Vehicle::select(
+                    'name',
+                    'register_number',
+                    'vehicle_type_id',
+                    'gps_id',
+                    'client_id',
+                    'servicer_job_id'               
+                    )
+        ->with('gps:id,name,imei')
+       // ->with('vehicle:id,name,register_number')
+        ->where('servicer_job_id',$servicer_job_id)
+        ->get();
+        return DataTables::of($vehicle)
+            ->addIndexColumn() 
+            
+            ->rawColumns(['link'])         
+            ->make();
+ 
+        
+    }
+
+
+
+
+
+
+
     public function servicerCreateRules()
     {
         $rules = [
