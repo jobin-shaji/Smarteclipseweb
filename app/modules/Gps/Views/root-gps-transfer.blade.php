@@ -86,7 +86,7 @@
         <label class="srequired">GPS List</label>
         <div class="row">
           <div class="col-md-12 col-lg-6">
-            <input type="text" name="gps_id[]" id="gps_id" value="">
+            <input type="hidden" name="gps_id[]" id="gps_id" value="">
               <table class="table table-bordered  table-striped " style="width:100%">
                 <thead>
                     <tr>

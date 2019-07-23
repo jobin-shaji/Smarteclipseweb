@@ -18,19 +18,19 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer'] , 'namespace
  
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 
-	Route::get('/assign-servicer','ServicerController@AssignServicer')->name('assign.servicer');
+	Route::get('/assign-servicer','ServicerController@assignServicer')->name('assign.servicer');
 	Route::post('/assign-servicer-save','ServicerController@saveAssignServicer')->name('assign.servicer.save');
 
-	Route::get('/assign-servicer-list','ServicerController@AssignServicerList')->name('assign.servicer.list');
+	Route::get('/assign-servicer-list','ServicerController@assignServicerList')->name('assign.servicer.list');
 	Route::post('/list-assign-servicer','ServicerController@getAssignServicerList')->name('list.assign.servicer');
 
 });
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 
-	Route::get('/sub-dealer-assign-servicer','ServicerController@SubDealerAssignServicer')->name('sub-dealer.assign.servicer');
+	Route::get('/sub-dealer-assign-servicer','ServicerController@subDealerAssignServicer')->name('sub-dealer.assign.servicer');
 	Route::post('/sub-dealer-assign-servicer-save','ServicerController@saveSubDealerAssignServicer')->name('sub-dealer.assign.servicer.save');
 
-	Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
+	Route::get('/sub-dealer-assign-servicer-list','ServicerController@subDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 	
 });
@@ -38,13 +38,27 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 
-	Route::get('/job-list','ServicerController@JobList')->name('job.list');
+	Route::get('/job-list','ServicerController@jobList')->name('job.list');
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
 	
 	Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
 
+	Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
+
+	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
+
+	Route::get('/job-complete-certificate','ServicerController@jobCompleteCertificate')->name('job-complete.certificate');
+
 	// Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
+
+	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history-list');
+	Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');
+	Route::get('/job-history/{id}/details','ServicerController@jobHistoryDetails')->name('job.history.details');
+
+	Route::post('/servicer/vehicles/history','ServicerController@servicerJobHistory')->name('servicer.vehicles.history');
+
+	
 	
 });
 
