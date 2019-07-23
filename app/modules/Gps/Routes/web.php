@@ -15,10 +15,27 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::get('/gps/{id}/data','GpsController@data')->name('gps.data');
 	Route::post('/gps-data-list','GpsController@getGpsData')->name('gps-data-list');
 	Route::post('/gps-data-count','GpsController@gpsDataCount')->name('gps.data.count');
+<<<<<<< HEAD
+
+	Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
+
+
+
+
+
+	
+
+
+	
+
+
+
+=======
 	Route::get('/gps-transfer-root/create','GpsController@createRootGpsTransfer')->name('gps-transfer-root.create');
 	Route::post('/gps-transfer-root-dropdown','GpsController@getDealerDetailsFromRoot')->name('gps-transfer-root-dropdown');
 	Route::post('/gps-transfer-root','GpsController@proceedRootGpsTransfer')->name('gps-transfer-root.transfer.p');
 	Route::post('/gps-transfer-root-proceed','GpsController@proceedConfirmRootGpsTransfer')->name('gps-transfer-root-proceed.create.p');
+>>>>>>> f8feedf4661feaad32d0f9e554f31bfdf9778c54
 
 
 });

@@ -145,8 +145,8 @@ class AlertReportController extends Controller
     }
     public function export(Request $request)
     {
-        // dd($request->fromDate);    
-        return Excel::download(new AlertReportExport($request->id,$request->alert,$request->vehicle,$request->fromDate,$request->toDate), 'alert-report.xlsx');
+        $gps_id=$request->$request;   
+   
     }
     
 
