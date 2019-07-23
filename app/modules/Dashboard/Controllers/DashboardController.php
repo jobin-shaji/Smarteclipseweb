@@ -47,7 +47,11 @@ class DashboardController extends Controller
         }
         else if(\Auth::user()->hasRole('sub_dealer')){
             return view('Dashboard::dashboard');  
-        }else if(\Auth::user()->hasRole('client')){
+        }
+         else if(\Auth::user()->hasRole('servicer')){
+            return view('Dashboard::dashboard');  
+        }
+        else if(\Auth::user()->hasRole('client')){
             $client_id=\Auth::user()->client->id;
             $alerts = Alert::select(
                     'id',
