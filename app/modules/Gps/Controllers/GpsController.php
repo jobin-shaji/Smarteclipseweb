@@ -22,7 +22,7 @@ use Carbon\Carbon;
 use PDF;
 use Auth;
 use DataTables;
-use PDF;
+
 
 class GpsController extends Controller {
     //Display all gps
