@@ -19,7 +19,7 @@
                                 <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />
                             @endif
                         @endrole
-                        @role('root|dealer|sub_dealer')
+                        @role('root|dealer|sub_dealer|servicer')
                             <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />    
                         @endrole                      
                         </span>
@@ -48,7 +48,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                   
-                    @role('root|dealer|sub_dealer')
+                    @role('root|dealer|sub_dealer|servicer')
 
                     @role('root')
                         @include('layouts.sections.root-header')
@@ -58,6 +58,9 @@
                     @endrole 
                      @role('sub_dealer')
                         @include('layouts.sections.sub_dealer-header')
+                    @endrole 
+                     @role('servicer')
+                        @include('layouts.sections.servicer-header')
                     @endrole 
 
                    @endrole

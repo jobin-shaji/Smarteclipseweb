@@ -23,7 +23,8 @@ return  [
        'Ticket',
        'Premium',
        'DataUsage',
-       'SmsUsage'
+       'SmsUsage',
+       'Servicer'
     ]
 ]
 
