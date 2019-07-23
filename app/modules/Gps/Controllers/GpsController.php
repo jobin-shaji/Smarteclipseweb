@@ -163,13 +163,14 @@ class GpsController extends Controller {
          \QrCode::size(500)
           ->format('png')
           ->generate(public_path('images/qrcode.png'));
-
+        $eid=$request->id;
         $decrypted_id = Crypt::decrypt($request->id);
         $gps = Gps::find($decrypted_id);
         if($gps == null){
            return view('Gps::404');
         }
-        return view('Gps::gps-details',['gps' => $gps]);
+
+        return view('Gps::gps-details',['gps' => $gps,'eid' => $eid]);
     } 
 
     //edit gps details
@@ -936,9 +937,18 @@ class GpsController extends Controller {
 
     public function downloadGpsDataTransfer(Request $request){
 
-        $gps = Gps::find($request->id);
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $eid=$request->id;
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps = Gps::find($decrypted_id);
         
-        $pdf = PDF::loadView('Gps::gps-details',['gps' => $gps]);
+        if($gps == null){
+           return view('Gps::404');
+        }
+
+        $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
         return $pdf->download('abcd.pdf');
 
     }

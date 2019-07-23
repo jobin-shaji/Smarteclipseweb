@@ -32,7 +32,9 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <div class="download_button pull-right">
-                      <button class="btn" onclick="downloadRegisterGps($gps->id)"><i class="fa fa-download"></i> Download</button>
+                      <a href=/gps/{{$eid}}/download>
+                        <button class="btn"><i class="fa fa-download"></i>Download</button>
+                      </a>
                     </div>
                     <h2 class="page-header">
                       <i class="fa fa-bus"></i> 
