@@ -83,7 +83,7 @@
             </div>
             <div class="col-lg-2 col-md-12">
             <?php 
-             $qr='imei:'.$gps->imei.' ProductID:'.$gps->model_name.'Manufacturing Date:'.$gps->manufacturing_date;
+              $qr=$gps->imei;
             ?>
        
             {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
