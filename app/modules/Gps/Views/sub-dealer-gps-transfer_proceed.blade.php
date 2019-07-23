@@ -26,19 +26,19 @@
         <div class="card-body">
           <section class="hilite-content">
        
-<form  method="POST" action="{{route('gps-transfer-root-proceed.create.p')}}">
+<form  method="POST" action="{{route('gps-transfer-sub-dealer-proceed.create.p')}}">
         {{csrf_field()}}
       <div class="row">
         <div class="col-md-12">
           <div class="form-group has-feedback">
-            <label>Dealer Name</label>
-            <select class="form-control"  name="dealer_user_id" readonly>
-              <option value="{{$dealer_user_id}}">{{$dealer_name}}</option>
+            <label>Client Name</label>
+            <select class="form-control"  name="client_user_id" readonly>
+              <option value="{{$client_user_id}}">{{$client_name}}</option>
             </select>
           </div>
 
           <div class="form-group has-feedback">
-            <label>Dealer Address</label>
+            <label>Client Address</label>
             <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
           </div>
 
@@ -70,7 +70,7 @@
           <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
         </div>
         <div class="col-md-1 ">
-          <a href="{{ route('gps-transfer-root.create') }}">
+          <a href="{{ route('gps-transfer-sub-dealer.create') }}">
             <button type="button" class="btn btn-md ">Cancel</button>
           </a>
         </div>
