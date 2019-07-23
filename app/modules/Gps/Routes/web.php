@@ -19,6 +19,7 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-transfer-root-dropdown','GpsController@getDealerDetailsFromRoot')->name('gps-transfer-root-dropdown');
 	Route::post('/gps-transfer-root','GpsController@proceedRootGpsTransfer')->name('gps-transfer-root.transfer.p');
 	Route::post('/gps-transfer-root-proceed','GpsController@proceedConfirmRootGpsTransfer')->name('gps-transfer-root-proceed.create.p');
+	
 
 
 });
@@ -69,6 +70,7 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'
 	Route::post('/gps-transfer/cancel','GpsController@cancelGpsTransfer')->name('gps.cancel');
 	Route::get('/gps-transfer/{id}/label','GpsController@gpsTransferLabel')->name('gps-transfer.label');
 	Route::post('gps-transfer-label/export','GpsController@exportGpsTransferLabel')->name('gps-transfer-label.export');
+	Route::post('/gps-scan','GpsController@getScannedGps')->name('gps-scan');
 
 	//gps new arrivals in dealer
 	Route::get('/gps-new','GpsController@newGpsListPage')->name('gps-new');
