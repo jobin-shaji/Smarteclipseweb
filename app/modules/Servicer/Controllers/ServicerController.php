@@ -10,6 +10,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
 
+use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
 use DataTables;
@@ -360,12 +361,13 @@ class ServicerController extends Controller {
             'job_type',
             'user_id',
             'description',
-            // 'job_date', 
+            'job_complete_date', 
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
             'status'
         )
         ->where('servicer_id',$user_id)
+        ->whereNull('job_complete_date')
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
@@ -394,16 +396,125 @@ class ServicerController extends Controller {
     }
     public function jobDetails(Request $request)
     {
+
         $decrypted = Crypt::decrypt($request->id); 
 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
-        // $user=User::find($decrypted); 
+        $client_id=$servicer_job->client_id;
+          $vehicle_device = Vehicle::select(
+            'gps_id',
+            'id',
+            'register_number',
+            'name'
+            )
+            ->where('client_id',$client_id)
+            ->get();
 
-        if($servicer_job == null){
+
+        $servicer_id=\Auth::user()->servicer->id;
+        $client = Client::select(
+            'user_id'
+            )
+            ->where('id',$client_id)
+            ->first();
+            $client_user_id=$client->user_id;
+        $vehicleTypes=VehicleType::select(
+                'id','name')->get();
+        $vehicle_device = Vehicle::select(
+                'gps_id',
+                'id',
+                'register_number',
+                'name'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+
+        $single_gps = [];
+        foreach($vehicle_device as $device){
+            $single_gps[] = $device->gps_id;
+        } 
+
+        $devices=Gps::select('id','name','imei')
+                ->where('user_id',$client_user_id)
+                ->whereNotIn('id',$single_gps)
+                ->get();
+       if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job]);
+        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device,'vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
     }
+
+
+    public function ServicerJobSave(Request $request)
+    { 
+        // dd($request->id);
+        $rules = $this->servicercompleteJobRules();
+        $this->validate($request,$rules);      
+        $job_completed_date=date("Y-m-d", strtotime($request->job_completed_date)); 
+        $servicer_job = ServicerJob::find($request->id);
+        $servicer_job->job_complete_date = $job_completed_date;
+        // $servicer->address = $request->address;
+        $servicer_job->save();
+
+
+        $request->session()->flash('message', 'Assign  servicer successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('job.list'));  
+        // return redirect(route('job-complete.certificate'));  
+    }
+    // save vehicle
+    public function servicerSaveVehicle(Request $request)
+    {
+
+        // $client_id=\Auth::user()->servicer->id;
+       // $client_id= $request->client;         
+        $name= $request->name;         
+        $register_number = $request->register_number;
+        $vehicle_type_id = $request->vehicle_type_id;
+        $gps_id = $request->gps_id;
+        $client_id = $request->client_id;
+        $servicer_job_id = $request->servicer_job_id;
+ // dd($servicer_job_id);
+        if($gps_id!=null)
+        {
+            $route_area = Vehicle::create([
+                'name' => $name,
+                'register_number' => $register_number,
+                'vehicle_type_id' => $vehicle_type_id,
+                'gps_id' => $gps_id,
+                'client_id' => $client_id,
+                'servicer_job_id' => $servicer_job_id,
+                'status' => 1
+            ]);
+        }
+         
+
+          $vehicle = Vehicle::select(
+                    'name',
+                    'register_number',
+                    'vehicle_type_id',
+                    'gps_id',
+                    'client_id',
+                    'servicer_job_id'               
+                    )
+        ->with('gps:id,name,imei')
+       // ->with('vehicle:id,name,register_number')
+        ->where('servicer_job_id',$servicer_job_id)
+        ->get();
+        return DataTables::of($vehicle)
+            ->addIndexColumn() 
+            
+            ->rawColumns(['link'])         
+            ->make();
+ 
+        
+    }
+     public function JobCompleteCertificate()
+    {
+
+        return view('Servicer::servicer-cerificate');
+    }
+
     public function servicerCreateRules()
     {
         $rules = [
@@ -436,6 +547,25 @@ class ServicerController extends Controller {
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'address' => 'required',
             'mobile' => 'required'
+        ];
+        return  $rules;
+    }
+       public function servicerVehicleCreateRules()
+    {
+        $rules = [
+            'name' => 'required',
+            'register_number' => 'required|unique:vehicles',
+            'vehicle_type_id' => 'required',
+            'gps_id' => 'required'
+            
+        ];
+        return  $rules;
+    }
+     public function servicercompleteJobRules()
+    {
+        $rules = [
+          
+            'job_completed_date' => 'required'            
         ];
         return  $rules;
     }

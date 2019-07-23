@@ -43,6 +43,12 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	
 	Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
 
+	Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
+
+	Route::post('/job-complete-save/{id}','ServicerController@ServicerJobSave')->name('job.complete.save');
+
+	Route::get('/job-complete-certificate','ServicerController@JobCompleteCertificate')->name('job-complete.certificate');
+
 	// Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 	

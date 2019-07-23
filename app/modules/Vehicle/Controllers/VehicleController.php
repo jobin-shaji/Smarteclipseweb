@@ -1315,33 +1315,40 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
 //
     // servicer vehicle create
 
-    public function servicercreateVehicle()
+    public function servicercreateVehicle(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $client_user_id=\Auth::user()->id;
+        $client_id = Crypt::decrypt($request->id);
+        $servicer_id=\Auth::user()->servicer->id;
+        $client = Client::select(
+            'user_id'
+            )
+            ->where('id',$client_id)
+            ->first();
+            $client_user_id=$client->user_id;
         $vehicleTypes=VehicleType::select(
                 'id','name')->get();
         $vehicle_device = Vehicle::select(
-                'gps_id'
+                'gps_id',
+                'id',
+                'register_number',
+                'name'
                 )
                 ->where('client_id',$client_id)
                 ->get();
+
         $single_gps = [];
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
-        }
+        } 
+
         $devices=Gps::select('id','name','imei')
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
-        $drivers=Driver::select('id','name')
-                ->where('client_id',$client_id)
-                ->get();
-        $ota_types=OtaType::select('id','name','code','default_value')
-                ->get();
-        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types,'drivers'=>$drivers]);
+           // dd($client_id);
+        return view('Vehicle::servicer-vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
     }
-
+ 
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()
@@ -1488,6 +1495,12 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         return $userData;
 
     }
+
+
+    // servicer vehicle create 
+
+       // vehicle create rules
+ 
 /////////////// snap root for live data///////////////////////////////////
 
 }
