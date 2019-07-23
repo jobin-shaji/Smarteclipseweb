@@ -238,6 +238,10 @@
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>Change Password</a>
                                 @endrole
+                                @role('root|dealer|sub_dealer')
+                                    <a class="dropdown-item">
+                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>
                                 
