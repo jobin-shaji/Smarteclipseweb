@@ -186,7 +186,7 @@ class ServicerController extends Controller {
 
 
 
-    public function AssignServicer()
+    public function assignServicer()
     {
         $user_id=\Auth::user()->id;
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
@@ -224,7 +224,7 @@ class ServicerController extends Controller {
     }
 
 
-    public function AssignServicerList()
+    public function assignServicerList()
     {
 
         return view('Servicer::assign-servicer-list');
@@ -268,7 +268,7 @@ class ServicerController extends Controller {
         ->make();
     }
 
-    public function SubDealerAssignServicer()
+    public function subDealerAssignServicer()
     {
         $sub_dealer_id=\Auth::user()->subDealer->id;
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
@@ -302,7 +302,7 @@ class ServicerController extends Controller {
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('sub-dealer.assign.servicer'));  
     }
-    public function SubDealerAssignServicerList()
+    public function subDealerAssignServicerList()
     {
 
         return view('Servicer::sub-dealer-assign-servicer-list');
@@ -345,7 +345,7 @@ class ServicerController extends Controller {
         ->rawColumns(['link'])
         ->make();
     }
-    public function JobList()
+    public function jobList()
     {
 
         return view('Servicer::job-list');
@@ -445,7 +445,7 @@ class ServicerController extends Controller {
     }
 
 
-    public function ServicerJobSave(Request $request)
+    public function servicerJobSave(Request $request)
     { 
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
@@ -509,7 +509,7 @@ class ServicerController extends Controller {
  
         
     }
-     public function JobCompleteCertificate()
+     public function jobCompleteCertificate()
     {
 
         return view('Servicer::servicer-cerificate');
@@ -519,7 +519,7 @@ class ServicerController extends Controller {
 
 
 
-     public function JobHistoryList()
+     public function jobHistoryList()
     {
 
         return view('Servicer::job-history-list');
@@ -623,27 +623,22 @@ class ServicerController extends Controller {
     public function servicerJobHistory(Request $request)
     {
         $servicer_job_id = $request->servicer_job_id;
- // dd($servicer_job_id);
-       
-         
-
-          $vehicle = Vehicle::select(
-                    'name',
-                    'register_number',
-                    'vehicle_type_id',
-                    'gps_id',
-                    'client_id',
-                    'servicer_job_id'               
-                    )
+        $vehicle = Vehicle::select(
+            'name',
+            'register_number',
+            'vehicle_type_id',
+            'gps_id',
+            'client_id',
+            'servicer_job_id'               
+        )
         ->with('gps:id,name,imei')
        // ->with('vehicle:id,name,register_number')
         ->where('servicer_job_id',$servicer_job_id)
         ->get();
         return DataTables::of($vehicle)
-            ->addIndexColumn() 
-            
-            ->rawColumns(['link'])         
-            ->make();
+        ->addIndexColumn()         
+        ->rawColumns(['link'])         
+        ->make();
  
         
     }
