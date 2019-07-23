@@ -830,4 +830,13 @@ function alerts(){
   
 }
 
+function downloadLabel(id){
+    var url = 'gps-transfer-label/export';
+    var data = {
+        id : id
+    };
+  downloadFile(url,data);
+}
+
+
 
