@@ -13,7 +13,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a>
             <a class="dropdown-item" href="{{url('/gps')}}">LIST DEVICE</a>  
-            <a class="dropdown-item" href="{{url('/gps-transfer/create')}}">TRANSFER DEVICES</a> 
+            <a class="dropdown-item" href="{{url('/gps-transfer-root/create')}}">TRANSFER DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transfers')}}">DEVICE TRANSFER LOG</a> 
             <a class="dropdown-item" href="{{url('/gps-transferred')}}">TRANSFERRED DEVICES</a>
         </div>

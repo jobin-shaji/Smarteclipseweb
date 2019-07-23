@@ -26,24 +26,55 @@
         <div class="card-body">
           <section class="hilite-content">
        
-<form  method="POST" action="{{route('gps-transfer.create.p')}}">
+<form  method="POST" action="{{route('gps-transfer-sub-dealer.transfer.p')}}">
         {{csrf_field()}}
       <div class="row">
         <div class="col-md-12">
           <div class="form-group has-feedback">
-              <label class="srequired">To User</label>
-              <select class="form-control selectpicker" id="to_user" name="to_user_id" data-live-search="true" title="Select Dealer" required>
-                <option value="">Select User</option>
+              <label class="srequired">Client Name</label>
+              <select class="form-control selectpicker clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
+                <option value="">Select Client</option>
                 @foreach($entities as $entity)
                 <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                 @endforeach
               </select>
           </div>     
-          @if ($errors->has('to_user'))
+          @if ($errors->has('client_user_id'))
             <span class="help-block">
-                <strong class="error-text">{{ $errors->first('to_user') }}</strong>
+                <strong class="error-text">{{ $errors->first('client_user_id') }}</strong>
             </span>
           @endif 
+
+          <div class="form-group has-feedback">
+            <label class="srequired">Address</label>
+            <input type="text" name="address"  id="address"  value="" class="form-control" placeholder="Address" readonly>
+            <input type="hidden" name="client_name"  id="client_name"  value="" class="form-control">
+          </div>
+          @if ($errors->has('address'))
+            <span class="help-block">
+                <strong class="error-text">{{ $errors->first('address') }}</strong>
+            </span>
+          @endif
+
+          <div class="form-group has-feedback">
+            <label class="srequired">Mobile No</label>
+            <input type="text" name="mobile" id="mobile" value="" class="form-control" placeholder="Mobile No" readonly >
+          </div>
+          @if ($errors->has('mobile'))
+            <span class="help-block">
+                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+            </span>
+          @endif
+
+          <div class="form-group has-feedback">
+            <label class="srequired">Scanned Employee Code</label>
+            <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" required> 
+          </div>
+          @if ($errors->has('scanned_employee_code'))
+          <span class="help-block">
+          <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
+          </span>
+          @endif
         </div>
       </div>
 
@@ -66,7 +97,7 @@
         <div class="row">
         <!-- /.col -->
         <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+          <button type="submit" class="btn btn-primary btn-md form-btn ">Transfer</button>
         </div>
         <!-- /.col -->
       </div>
