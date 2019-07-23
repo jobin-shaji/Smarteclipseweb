@@ -97,3 +97,8 @@ Route::post('/vehicle-sub-dealer-list','VehicleController@getVehicleSubDealerLis
 });
 
 
+Route::group(['middleware' => ['web','auth','role:servicer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::get('/servicer/vehicles/{id}/create','VehicleController@createVehicle')->name('servicer.vehicles.create');
+Route::post('/vehicles/save_vehicle','VehicleController@saveVehicle')->name('vehicles.create.p');
+
+});

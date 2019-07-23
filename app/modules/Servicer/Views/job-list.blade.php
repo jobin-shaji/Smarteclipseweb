@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  Assign Servicer
+  Servicer Job List
 @endsection
 @section('content')
 
@@ -22,16 +22,14 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                      <th>#</th>
-                      <th >Job Code</th>
-                      <th >Service Engieer</th>
-                       <th >Client</th>
-                      
-                      <th >Job Type</th>
-                      <!-- <th >User</th> -->
-                      <th >Description</th>
-                      <th >Job Date</th>
-                      
+                    <th>#</th>
+                    <th >Job Code</th>
+                    <th >Client</th>                      
+                    <th >Job Type</th>
+                    <th >Assigne</th>
+                    <th >Description</th>
+                    <th >Job Date</th> 
+                    <th >Action</th>                      
                   </tr>
                 </thead>
               </table>
@@ -47,5 +45,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/sub-dealer-assign-servicer-list.js')}}"></script>
+    <script src="{{asset('js/gps/job-list.js')}}"></script>
   @endsection

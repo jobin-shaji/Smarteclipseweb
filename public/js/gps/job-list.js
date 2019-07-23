@@ -15,7 +15,7 @@ $(document).ready(function () {
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/list-assign-servicer',
+            url: '/list-jobs',
             type: 'POST',
             data: {
                 'data': data
@@ -30,16 +30,15 @@ $(document).ready(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-             {data: 'job_id', name: 'job_id'},
-            {data: 'servicer.name', name: 'servicer.name'},
+            {data: 'job_id', name: 'job_id'},
+          
+            // {data: 'servicer.name', name: 'servicer.name'},
             {data: 'clients.name', name: 'clients.name'},
-           
             {data: 'job_type', name: 'job_type'},
-            // {data: 'user.username', name: 'user.username'},
+            {data: 'user.username', name: 'user.username'},
             {data: 'description', name: 'description'},
             {data: 'job_date', name: 'job_date'},   
-
-             // {data: 'action', name: 'action', orderable: false, searchable: false}
+            {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         
