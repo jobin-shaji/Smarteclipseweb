@@ -982,6 +982,7 @@ class VehicleController extends Controller {
         $decrypted_id = Crypt::decrypt($request->id);            
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
     }
+
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
@@ -1310,6 +1311,35 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
       $dist = rad2deg($dist);
       $miles = $dist * 60 * 1.1515;
       return ($miles * 1.609344);
+    }
+//
+    // servicer vehicle create
+
+    public function servicercreateVehicle()
+    {
+        $client_id=\Auth::user()->client->id;
+        $client_user_id=\Auth::user()->id;
+        $vehicleTypes=VehicleType::select(
+                'id','name')->get();
+        $vehicle_device = Vehicle::select(
+                'gps_id'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+        $single_gps = [];
+        foreach($vehicle_device as $device){
+            $single_gps[] = $device->gps_id;
+        }
+        $devices=Gps::select('id','name','imei')
+                ->where('user_id',$client_user_id)
+                ->whereNotIn('id',$single_gps)
+                ->get();
+        $drivers=Driver::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
+        $ota_types=OtaType::select('id','name','code','default_value')
+                ->get();
+        return view('Vehicle::vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'ota_types'=>$ota_types,'drivers'=>$drivers]);
     }
 
     //////////////////////////////////////RULES/////////////////////////////

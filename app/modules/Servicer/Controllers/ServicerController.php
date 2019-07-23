@@ -240,7 +240,8 @@ class ServicerController extends Controller {
             'job_type',
             'user_id',
             'description',
-            'job_date',               
+            // 'job_date',
+             \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
             'status'
         )
@@ -305,7 +306,7 @@ class ServicerController extends Controller {
 
         return view('Servicer::sub-dealer-assign-servicer-list');
     }
-     public function getSubDealerAssignServicerList()
+    public function getSubDealerAssignServicerList()
     {
         $user_id=\Auth::user()->id;
 
@@ -317,7 +318,8 @@ class ServicerController extends Controller {
             'job_type',
             'user_id',
             'description',
-            'job_date',               
+            // 'job_date', 
+             \DB::raw('Date(job_date) as job_date'),                
             'created_at',
             'status'
         )
@@ -341,6 +343,66 @@ class ServicerController extends Controller {
          })            
         ->rawColumns(['link'])
         ->make();
+    }
+    public function JobList()
+    {
+
+        return view('Servicer::job-list');
+    }
+    public function getJobsList()
+    {
+        $user_id=\Auth::user()->servicer->id;
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            // 'job_date', 
+             \DB::raw('Date(job_date) as job_date'),                 
+            'created_at',
+            'status'
+        )
+        ->where('servicer_id',$user_id)
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+         ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }
+                       
+         }) 
+         ->addColumn('action', function ($servicer_job) {
+          
+                return "
+                <a href=/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+    public function jobDetails(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+
+        $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+        // $user=User::find($decrypted); 
+
+        if($servicer_job == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::job-details',['servicer_job' => $servicer_job]);
     }
     public function servicerCreateRules()
     {
