@@ -13,7 +13,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'servicer-list',
+            url: 'servicers-list',
             type: 'POST',
             data: {
                 'data': data
@@ -31,11 +31,10 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            
             {data: 'name', name: 'name' },            
             {data: 'address', name: 'address',searchable: false},           
-            {data: 'servicer.mobile', name: 'servicer.mobile'},
-            {data: 'servicer.email', name: 'servicer.email',searchable: false},         
+            {data: 'user.mobile', name: 'user.mobile'},
+            {data: 'user.email', name: 'user.email',searchable: false},         
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
         ],
@@ -43,17 +42,17 @@ function callBackDataTable(){
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
-function delServicer(client){
-    var url = 'client/delete';
+function delServicer(servicer){
+    var url = 'servicer/delete';
     var data = {
-        uid : client
+        id : servicer
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-function activateServicer(client){
-    var url = 'client/activate';
+function activateServicer(servicer){
+    var url = 'servicer/activate';
     var data = {
-        id : client
+        id : servicer
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
