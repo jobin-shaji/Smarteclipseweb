@@ -30,3 +30,14 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	
 });
 
+
+Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+
+	Route::get('/job-list','ServicerController@SubDealerAssignServicer')->name('job.list');
+	Route::post('/sub-dealer-assign-servicer-save','ServicerController@saveSubDealerAssignServicer')->name('sub-dealer.assign.servicer.save');
+
+	// Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
+	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
+	
+});
+

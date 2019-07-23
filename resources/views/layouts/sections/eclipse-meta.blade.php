@@ -50,6 +50,7 @@
      else
      {
       $id=null;
+
      } 
   ?>
   <meta name="client" content="{{$id}}">
