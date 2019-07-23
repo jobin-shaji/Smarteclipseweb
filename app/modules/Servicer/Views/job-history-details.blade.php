@@ -24,7 +24,7 @@
                 <div class="row">
                   <div class="col-sm-6">      
                  
-                    <form  method="POST" action="{{route('job.complete.save',$servicer_job->id)}}">
+                    <form  method="POST" action="">
                     {{csrf_field()}}
                     <div class="card">
                     <div class="card-body">                    
@@ -33,6 +33,7 @@
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
                       <div class="form-group has-feedback">
                        <input type="text" class="form-control {{ $errors->has('client') ? ' has-error' : '' }}"  name="client" value="{{$servicer_job->clients->name}}" required readonly>
+                        <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('client'))
@@ -84,7 +85,7 @@
                      <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Job Complete Date</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" date_expiry form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value=" " required >
+                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{date('d-m-Y', strtotime($servicer_job->job_complete_date))}} " required readonly="" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_completed_date'))
@@ -97,11 +98,7 @@
                    
                    
                     </div>
-                    <div class="row">
-                      <div class="col-md-3 ">
-                        <button type="submit" class="btn btn-primary btn-md form-btn ">Create</button>
-                      </div>
-                    </div>
+                   
                   </div>
                 </form>
               </div>
@@ -113,89 +110,7 @@
       <!-- {{csrf_field()}} -->
       
       <div class="row">
-         <div class="col-lg-6 col-md-12">
-            <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <h2 class="page-header">
-                        
-                        <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
-                        <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" > 
-                     </h2>
-                     <div class="row">
-                        <div class="col-md-6">
-                           <div class="card-body_vehicle wizard-content">
-                              <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
-                                 <div class="form-group has-feedback">
-                                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" > 
-                                 </div>
-                                 @if ($errors->has('name'))
-                                 <span class="help-block">
-                                 <strong class="error-text">{{ $errors->first('name') }}</strong>
-                                 </span>
-                                 @endif
-                              </div>
-                              <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-md-6 text-right control-label col-form-label">Register Number</label>
-                                 <div class="form-group has-feedback">
-                                    <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" id="register_number" >
-                                 </div>
-                                 @if ($errors->has('register_number'))
-                                 <span class="help-block">
-                                 <strong class="error-text">{{ $errors->first('register_number') }}</strong>
-                                 </span>
-                                 @endif
-                              </div> 
-                               <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-5 text-right control-label col-form-label">Vehicle Type</label>
-                                 <div class="form-group has-feedback">
-                                    <select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="vehicle_type_id" value="{{ old('vehicle_type_id') }}"  id="vehicle_type_id" required>
-                                        <option value="" selected disabled>Select Vehicle Type</option>
-                                         @foreach($vehicleTypes as $type)
-                                         <option value="{{$type->id}}">{{$type->name}}</option>
-                                         @endforeach
-                                    </select>
-                                 </div>
-                                 @if ($errors->has('vehicle_type_id'))
-                                 <span class="help-block">
-                                 <strong class="error-text">{{ $errors->first('vehicle_type_id') }}</strong>
-                                 </span>
-                                 @endif
-                              </div>
-                              <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-5 text-right control-label col-form-label">GPS</label>
-                                 <div class="form-group has-feedback">
-                                    <select class="form-control" name="gps_id"  id="gps_id"data-live-search="true" title="Select GPS" required>
-                                        <option selected disabled>Select GPS</option>
-                                         @foreach($devices as $gps)
-                                         <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
-                                         @endforeach
-                                    </select>
-                                 </div>
-                                 @if ($errors->has('gps_id'))
-                                 <span class="help-block">
-                                 <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
-                                 </span>
-                                 @endif 
-                              </div>
-
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-              <div class="col-lg-12 col-md-12">
-            <div class="custom_fom_group">
-              <button style="margin-top: 19px;" class="btn btn-sm btn-info btn3 form-control" onclick="create_vehicle()">Tag GPS to Vehicle </button>
-              <!-- <button type="submit" class="btn btn-primary">Create Vehicle</button> -->
-            </div>
-         </div>
-
-
-
-         </div>
+      
          <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
@@ -223,5 +138,5 @@
 
 @endsection
  @section('script')
-    <script src="{{asset('js/gps/servicer-vehicle-create.js')}}"></script>
+    <script src="{{asset('js/gps/servicer-vehicle-history.js')}}"></script>
   @endsection

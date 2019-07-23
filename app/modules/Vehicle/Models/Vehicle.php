@@ -12,7 +12,7 @@ class Vehicle extends Model
 
     // vehicle fillable data
 	protected $fillable = [
-        'name','register_number','gps_id','driver_id', 'vehicle_type_id', 'e_sim_number','status','client_id'
+        'name','register_number','gps_id','driver_id', 'vehicle_type_id', 'e_sim_number','status','client_id','servicer_job_id'
     ];
 
     // vehicle type of vehicle
