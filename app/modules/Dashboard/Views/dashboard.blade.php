@@ -237,6 +237,58 @@
    Sub-Dealers
 -------------------------------------------------------------------------------- -->
 @endrole
+
+@role('servicer')
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+
+<section class="content">
+   <div class="row">
+      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+         <!-- small box -->
+         <div class="small-box bg-green bxs">
+            <div class="inner">
+               <h3 id="gps">
+                  <div class="loader"></div>
+               </h3>
+               <p>GPS</p>
+            </div>
+            <div class="icon">
+               <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+         </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
+         <!-- small box -->
+         <div class="small-box bg-yellow bxs">
+            <div class="inner">
+               <h3 id="dealer">
+                  <div class="loader"></div>
+               </h3>
+               <p>Dealers</p>
+            </div>
+            <div class="icon">
+               <i class="fa fa-tablet"></i>
+              
+            </div>
+            <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+         </div>
+      </div>
+      <!-- ./col -->
+      
+      <!-- ./col -->
+      
+   </div>
+   
+</section>
+</div>
+</div>
+<!-- ./col -->
+@endrole
+
 <!-- -----------------------------------------------------------------------------   -->
 @role('client')
 

@@ -17,6 +17,8 @@ class CreateGpsTransfersTable extends Migration
             $table->increments('id');
             $table->integer('from_user_id');
             $table->integer('to_user_id');
+            $table->string('order_number');
+            $table->string('scanned_employee_code');
             $table->dateTime('dispatched_on');
             $table->dateTime('accepted_on')->nullable();
             $table->timestamps();

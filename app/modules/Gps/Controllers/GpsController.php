@@ -19,6 +19,7 @@ use App\Modules\Client\Models\Client;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
+use PDF;
 use Auth;
 use DataTables;
 use PDF;
@@ -634,6 +635,7 @@ class GpsController extends Controller {
         ->with('toUser:id,username')
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
+        ->orderBy('id','DESC')
         ->withTrashed()
         ->get();
         return DataTables::of($gps_transfer)
@@ -647,6 +649,7 @@ class GpsController extends Controller {
             if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
             {
                 return "
+                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                 <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=cancelGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
                 </button>";
@@ -658,6 +661,7 @@ class GpsController extends Controller {
             }
             else{
                 return "
+                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                 <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#008000';>Transferred</b>";
             }
@@ -666,46 +670,74 @@ class GpsController extends Controller {
         ->make();
     }
 
-    // create gps transfer
-    public function createGpsTransfer(Request $request) 
+    // create root gps transfer
+    public function createRootGpsTransfer(Request $request) 
     {
-        if($request->user()->hasRole('root')){
-            $user = \Auth::user();
-            $root = $user->root;
-            $devices = Gps::select('id', 'name', 'imei','user_id')
-                            ->where('user_id',$user->id)
-                            ->get();
-            $entities = $root->dealers;
-        }else if($request->user()->hasRole('dealer')){
-            $user = \Auth::user();
-            $dealer = $user->dealer;
-            $devices = Gps::select('id', 'name', 'imei','user_id')
-                            ->where('user_id',$user->id)
-                            ->get();
-            $entities = $dealer->subDealers;
-        }else if($request->user()->hasRole('sub_dealer')){
-            $user = \Auth::user();
-            $sub_dealer=$user->subdealer;
-            $devices = Gps::select('id', 'name', 'imei','user_id')
-                            ->where('user_id',$user->id)
-                            ->get();
-            $entities = $sub_dealer->clients;
-        }
-        
-        return view('Gps::gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        $user = \Auth::user();
+        $root = $user->root;
+        $devices = Gps::select('id', 'name', 'imei','user_id')
+                        ->where('user_id',$user->id)
+                        ->get();
+        $entities = $root->dealers;
+
+        return view('Gps::root-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
-    // save gps transfer
-    public function saveGpsTransfer(Request $request) 
+
+    //get address and mobile details based on dealer selection
+    public function getDealerDetailsFromRoot(Request $request)
+    {
+        $dealer_user_id=$request->dealer_user_id;
+        $dealer_user_detalis=User::find($dealer_user_id);
+        $dealer_details = Dealer::select('id', 'name', 'address','user_id')
+                        ->where('user_id',$dealer_user_id)
+                        ->first();
+        $dealer_name=$dealer_details->name;
+        $dealer_address=$dealer_details->address;
+        $dealer_mobile=$dealer_user_detalis->mobile;
+        return response()->json(array(
+              'response' => 'success',
+              'dealer_name' => $dealer_name,
+              'dealer_address' => $dealer_address,
+              'dealer_mobile' => $dealer_mobile
+        )); 
+    }
+
+    // proceed gps transfer for confirmation
+    public function proceedRootGpsTransfer(Request $request) 
+    {
+        $rules = $this->gpsRootTransferRule();
+        $this->validate($request, $rules);
+        $dealer_user_id=$request->dealer_user_id;
+        $dealer_name=$request->dealer_name;
+        $address=$request->address;
+        $mobile=$request->mobile;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $gps_array = $request->gps_id;
+        $gps_list=[];
+        foreach ($gps_array as $gps_id) {
+            $gps_list[]=$gps_id;
+        }
+        $devices = Gps::select('id', 'name', 'imei')
+                        ->whereIn('id',$gps_list)
+                        ->get();
+        return view('Gps::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+    }
+
+    // save root gps transfer/transfer gps from root to dealer
+    public function proceedConfirmRootGpsTransfer(Request $request) 
     {
         $from_user_id = \Auth::user()->id;
-        $rules = $this->gpsTransferRule();
-        $this->validate($request, $rules);
         $gps_array = $request->gps_id;
-        $to_user_id = $request->to_user_id;
+        $to_user_id = $request->dealer_user_id;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $uniqid=uniqid();
+        $order_number=$uniqid.date("Y-m-d h:i:s");
         if($gps_array){
             $gps_transfer = GpsTransfer::create([
               "from_user_id" => $from_user_id, 
               "to_user_id" => $to_user_id,
+              "order_number" => $order_number,
+              "scanned_employee_code" => $scanned_employee_code,
               "dispatched_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_gps_transfer=$gps_transfer->id;
@@ -724,12 +756,197 @@ class GpsController extends Controller {
                 }
             }
         }
-        
+        $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
         $request->session()->flash('message', 'Gps Transfer successfully completed!');
         $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('gps-transfers'));
+        return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
     }
 
+    // create dealer gps transfer
+    public function createDealerGpsTransfer(Request $request) 
+    {
+        $user = \Auth::user();
+        $dealer = $user->dealer;
+        $devices = Gps::select('id', 'name', 'imei','user_id')
+                        ->where('user_id',$user->id)
+                        ->get();
+        $entities = $dealer->subDealers;
+
+        return view('Gps::dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+    }
+
+    //get address and mobile details based on subdealer selection
+    public function getSubDealerDetailsFromDealer(Request $request)
+    {
+        $sub_dealer_user_id=$request->sub_dealer_user_id;
+        $sub_dealer_user_detalis=User::find($sub_dealer_user_id);
+        $sub_dealer_details = SubDealer::select('id', 'name', 'address','user_id')
+                        ->where('user_id',$sub_dealer_user_id)
+                        ->first();
+        $sub_dealer_name=$sub_dealer_details->name;
+        $sub_dealer_address=$sub_dealer_details->address;
+        $sub_dealer_mobile=$sub_dealer_user_detalis->mobile;
+        return response()->json(array(
+              'response' => 'success',
+              'sub_dealer_name' => $sub_dealer_name,
+              'sub_dealer_address' => $sub_dealer_address,
+              'sub_dealer_mobile' => $sub_dealer_mobile
+        )); 
+    }
+
+    // proceed gps transfer for confirmation
+    public function proceedDealerGpsTransfer(Request $request) 
+    {
+        $rules = $this->gpsDealerTransferRule();
+        $this->validate($request, $rules);
+        $sub_dealer_user_id=$request->sub_dealer_user_id;
+        $sub_dealer_name=$request->sub_dealer_name;
+        $address=$request->address;
+        $mobile=$request->mobile;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $gps_array = $request->gps_id;
+        $gps_list=[];
+        foreach ($gps_array as $gps_id) {
+            $gps_list[]=$gps_id;
+        }
+        $devices = Gps::select('id', 'name', 'imei')
+                        ->whereIn('id',$gps_list)
+                        ->get();
+        return view('Gps::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+    }
+
+    // save dealer gps transfer/transfer gps from dealer to sub dealer
+    public function proceedConfirmDealerGpsTransfer(Request $request) 
+    {
+        $from_user_id = \Auth::user()->id;
+        $gps_array = $request->gps_id;
+        $to_user_id = $request->sub_dealer_user_id;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $uniqid=uniqid();
+        $order_number=$uniqid.date("Y-m-d h:i:s");
+        if($gps_array){
+            $gps_transfer = GpsTransfer::create([
+              "from_user_id" => $from_user_id, 
+              "to_user_id" => $to_user_id,
+              "order_number" => $order_number,
+              "scanned_employee_code" => $scanned_employee_code,
+              "dispatched_on" => date('Y-m-d H:i:s')
+            ]);
+            $last_id_in_gps_transfer=$gps_transfer->id;
+        }
+        if($last_id_in_gps_transfer){
+            foreach ($gps_array as $gps_id) {
+                $gps_transfer_item = GpsTransferItems::create([
+                  "gps_id" => $gps_id, 
+                  "gps_transfer_id" => $last_id_in_gps_transfer
+                ]);
+                if($gps_transfer_item){
+                    //update gps table
+                    $gps = Gps::find($gps_id);
+                    $gps->user_id =null;
+                    $gps->save();
+                }
+            }
+        }
+        $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+        $request->session()->flash('message', 'Gps Transfer successfully completed!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
+    }
+
+    // create sub dealer gps transfer
+    public function createSubDealerGpsTransfer(Request $request) 
+    {
+        $user = \Auth::user();
+        $sub_dealer=$user->subdealer;
+        $devices = Gps::select('id', 'name', 'imei','user_id')
+                        ->where('user_id',$user->id)
+                        ->get();
+        $entities = $sub_dealer->clients;
+
+        return view('Gps::sub-dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+    }
+
+    //get address and mobile details based on client selection
+    public function getClientDetailsFromSubDealer(Request $request)
+    {
+        $client_user_id=$request->client_user_id;
+        $client_user_detalis=User::find($client_user_id);
+        $client_details = Client::select('id', 'name', 'address','user_id')
+                        ->where('user_id',$client_user_id)
+                        ->first();
+        $client_name=$client_details->name;
+        $client_address=$client_details->address;
+        $client_mobile=$client_user_detalis->mobile;
+        return response()->json(array(
+              'response' => 'success',
+              'client_name' => $client_name,
+              'client_address' => $client_address,
+              'client_mobile' => $client_mobile
+        )); 
+    }
+
+    // proceed gps transfer for confirmation
+    public function proceedSubDealerGpsTransfer(Request $request) 
+    {
+        $rules = $this->gpsSubDealerTransferRule();
+        $this->validate($request, $rules);
+        $client_user_id=$request->client_user_id;
+        $client_name=$request->client_name;
+        $address=$request->address;
+        $mobile=$request->mobile;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $gps_array = $request->gps_id;
+        $gps_list=[];
+        foreach ($gps_array as $gps_id) {
+            $gps_list[]=$gps_id;
+        }
+        $devices = Gps::select('id', 'name', 'imei')
+                        ->whereIn('id',$gps_list)
+                        ->get();
+        return view('Gps::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+    }
+
+    // save dealer gps transfer/transfer gps from sub dealer to client
+    public function proceedConfirmSubDealerGpsTransfer(Request $request) 
+    {
+        $from_user_id = \Auth::user()->id;
+        $gps_array = $request->gps_id;
+        $to_user_id = $request->client_user_id;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $uniqid=uniqid();
+        $order_number=$uniqid.date("Y-m-d h:i:s");
+        if($gps_array){
+            $gps_transfer = GpsTransfer::create([
+              "from_user_id" => $from_user_id, 
+              "to_user_id" => $to_user_id,
+              "order_number" => $order_number,
+              "scanned_employee_code" => $scanned_employee_code,
+              "dispatched_on" => date('Y-m-d H:i:s')
+            ]);
+            $last_id_in_gps_transfer=$gps_transfer->id;
+        }
+        if($last_id_in_gps_transfer){
+            foreach ($gps_array as $gps_id) {
+                $gps_transfer_item = GpsTransferItems::create([
+                  "gps_id" => $gps_id, 
+                  "gps_transfer_id" => $last_id_in_gps_transfer
+                ]);
+                if($gps_transfer_item){
+                    //update gps table
+                    $gps = Gps::find($gps_id);
+                    $gps->user_id =null;
+                    $gps->save();
+                }
+            }
+        }
+        $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+        $request->session()->flash('message', 'Gps Transfer successfully completed!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
+    }
+
+    //view gps transfer list
     public function viewGpsTransfer(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
@@ -821,6 +1038,121 @@ class GpsController extends Controller {
         ]);
     }
 
+    //label for transferred gps
+    public function gpsTransferLabel(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $decrypted_id = Crypt::decrypt($request->id);
+        if($request->user()->hasRole('root')){
+            $gps_transfer = GpsTransfer::find($decrypted_id);
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                            ->where('gps_transfer_id',$decrypted_id)
+                            ->get();
+            $role_details = Dealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->to_user_id)
+                                ->first();
+            $user_details = User::select('id', 'mobile')
+                                ->where('id',$role_details->user_id)
+                                ->first();
+            if($gps_transfer == null){
+               return view('Gps::404');
+            }
+           return view('Gps::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+        }else if($request->user()->hasRole('dealer')){
+            $gps_transfer = GpsTransfer::find($decrypted_id);
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                            ->where('gps_transfer_id',$decrypted_id)
+                            ->get();
+            $role_details = SubDealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->to_user_id)
+                                ->first();
+            $user_details = User::select('id', 'mobile')
+                                ->where('id',$role_details->user_id)
+                                ->first();
+            if($gps_transfer == null){
+               return view('Gps::404');
+            }
+           return view('Gps::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+        }else if($request->user()->hasRole('sub_dealer')){
+            $gps_transfer = GpsTransfer::find($decrypted_id);
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                            ->where('gps_transfer_id',$decrypted_id)
+                            ->get();
+            $role_details = Client::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->to_user_id)
+                                ->first();
+            $user_details = User::select('id', 'mobile')
+                                ->where('id',$role_details->user_id)
+                                ->first();
+            if($gps_transfer == null){
+               return view('Gps::404');
+            }
+           return view('Gps::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+        }
+    }
+
+    public function exportGpsTransferLabel(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $gps_transfer_id=$request->id;
+        if($request->user()->hasRole('root')){
+            $gps_transfer = GpsTransfer::find($gps_transfer_id);
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                            ->where('gps_transfer_id',$gps_transfer_id)
+                            ->get();
+            $role_details = Dealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->to_user_id)
+                                ->first();
+            $user_details = User::select('id', 'mobile')
+                                ->where('id',$role_details->user_id)
+                                ->first();
+            view()->share('gps_transfer',$gps_transfer);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $headers = array(
+                      'Content-Type'=> 'application/pdf'
+                    );
+            return $pdf->download('pdfview.pdf',$headers);
+        }else if($request->user()->hasRole('dealer')){
+            $gps_transfer = GpsTransfer::find($gps_transfer_id);
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                            ->where('gps_transfer_id',$gps_transfer_id)
+                            ->get();
+            $role_details = SubDealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->to_user_id)
+                                ->first();
+            $user_details = User::select('id', 'mobile')
+                                ->where('id',$role_details->user_id)
+                                ->first();
+            view()->share('gps_transfer',$gps_transfer);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $headers = array(
+                      'Content-Type'=> 'application/pdf'
+                    );
+            return $pdf->download('pdfview.pdf',$headers);
+        }else if($request->user()->hasRole('sub_dealer')){
+            $gps_transfer = GpsTransfer::find($gps_transfer_id);
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                            ->where('gps_transfer_id',$gps_transfer_id)
+                            ->get();
+            $role_details = Client::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->to_user_id)
+                                ->first();
+            $user_details = User::select('id', 'mobile')
+                                ->where('id',$role_details->user_id)
+                                ->first();
+            view()->share('gps_transfer',$gps_transfer);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $headers = array(
+                      'Content-Type'=> 'application/pdf'
+                    );
+            return $pdf->download('pdfview.pdf',$headers);
+        }
+    }
+
     // gps user details
     public function userData(Request $request) 
     {
@@ -902,6 +1234,33 @@ class GpsController extends Controller {
           'gps_id' => 'required',
           'from_user_id' => 'nullable',
           'to_user_id' => 'required'];
+        return $rules;
+    }
+
+    // root gps transfer rule
+    public function gpsRootTransferRule(){
+        $rules = [
+          'gps_id' => 'required',
+          'dealer_user_id' => 'required',
+          'scanned_employee_code' => 'required',];
+        return $rules;
+    }
+
+    // dealer gps transfer rule
+    public function gpsDealerTransferRule(){
+        $rules = [
+          'gps_id' => 'required',
+          'sub_dealer_user_id' => 'required',
+          'scanned_employee_code' => 'required',];
+        return $rules;
+    }
+
+    // sub dealer gps transfer rule
+    public function gpsSubDealerTransferRule(){
+        $rules = [
+          'gps_id' => 'required',
+          'client_user_id' => 'required',
+          'scanned_employee_code' => 'required',];
         return $rules;
     }
 

@@ -13,13 +13,18 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer'] , 'namespace
 	Route::post('/servicer/delete','ServicerController@delete')->name('servicer.delete');
 	Route::post('/servicer/activate','ServicerController@activate')->name('servicer.activate');
 
+	
+});
+ 
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+
 	Route::get('/assign-servicer','ServicerController@AssignServicer')->name('assign.servicer');
 	Route::post('/assign-servicer-save','ServicerController@saveAssignServicer')->name('assign.servicer.save');
 
 	Route::get('/assign-servicer-list','ServicerController@AssignServicerList')->name('assign.servicer.list');
 	Route::post('/list-assign-servicer','ServicerController@getAssignServicerList')->name('list.assign.servicer');
-});
 
+});
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 
 	Route::get('/sub-dealer-assign-servicer','ServicerController@SubDealerAssignServicer')->name('sub-dealer.assign.servicer');
@@ -27,6 +32,19 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 	Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
+	
+});
+
+
+Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+
+	Route::get('/job-list','ServicerController@JobList')->name('job.list');
+	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
+	
+	Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
+
+	// Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
+	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 	
 });
 
