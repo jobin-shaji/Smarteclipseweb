@@ -18,7 +18,9 @@
         @endif 
       </ol>
     </nav>
-    
+
+      
+   
     <div class="container-fluid">
     <div class="card-body">
         <div class="table-responsive">
@@ -29,12 +31,19 @@
                 <!-- title row -->
                 <div class="row">
                   <div class="col-xs-12">
+                    <div class="download_button pull-right">
+                      <a href=/gps/{{$eid}}/download>
+                        <button class="btn"><i class="fa fa-download"></i>Download</button>
+                      </a>
+                    </div>
                     <h2 class="page-header">
                       <i class="fa fa-bus"></i> 
                     </h2>
+
                   </div>
                   <!-- /.col -->
                 </div>
+
    
           <div class="row">
             <div class="col-lg-8 col-md-12">

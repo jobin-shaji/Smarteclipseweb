@@ -362,6 +362,7 @@ function getPolygonData(url, data, callBack, options) {
 
 
 
+
 function downloadAlertReport(){
     
     var url = 'alert-report/export';

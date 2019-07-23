@@ -17097,4 +17097,11 @@ border-radius: 6px 0 6px 6px;
 }
 
 
+.download_button.pull-right {
+    float: left;
+    position: absolute;
+    right: 82px;
+}
+
+
 
