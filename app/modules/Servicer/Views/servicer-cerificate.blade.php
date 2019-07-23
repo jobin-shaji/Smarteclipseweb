@@ -12,9 +12,10 @@
               <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4" style=" background-color: white">
 
                 <div style="width:800px; height:600px; padding:20px; text-align:center; border: 10px solid #787878">
-                  <span style="font-size:10px; font-weight:bold">SUB DEALER/OEM ICON</span>
-                  <div style="width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #787878">
-                         <span style="font-size:30px; font-weight:bold">INSTALLATION CERTIFICATE</span>
+                 
+                  <div style="width:750px; height:550px; padding:20px;  border: 5px solid #787878">
+                     <span style="font-size:10px; font-weight:bold; text-align:right;">SUB DEALER/OEM ICON</span>
+                         <span style="font-size:30px; font-weight:bold;text-align:center;">INSTALLATION CERTIFICATE</span>
                          <br><br>
                          <span style="font-size:25px"><i>This is to certify that</i></span>
                          <br><br>
