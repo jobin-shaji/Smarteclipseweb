@@ -35,16 +35,17 @@ class OtaController extends Controller {
         return DataTables::of($ota_type)
             ->addIndexColumn()
             ->addColumn('action', function ($ota_type) {
+                $b_url = \URL::to('/');
                 if($ota_type->deleted_at == null){
                     return "
 
-                    <a href=/ota-type/".Crypt::encrypt($ota_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/ota-type/".Crypt::encrypt($ota_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/ota-type/".Crypt::encrypt($ota_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url."/ota-type/".Crypt::encrypt($ota_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=deleteOtaType(".$ota_type->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>"; 
                 }else{
                      return "
-                    <a href=/ota-type/".Crypt::encrypt($ota_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/ota-type/".Crypt::encrypt($ota_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/ota-type/".Crypt::encrypt($ota_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url"/ota-type/".Crypt::encrypt($ota_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateOtaType(".$ota_type->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
                 }
              })

@@ -42,15 +42,16 @@ class DealerController extends Controller {
             }
         })
         ->addColumn('action', function ($dealers) {
+             $b_url = \URL::to('/');
             if($dealers->deleted_at == null){ 
             return "
-            <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-            <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <a href=/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+            <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+            <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
             <button onclick=delDealers(".$dealers->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>
             ";
             }else{ 
-            return "<a href=/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            return "<a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
             <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>";
             }
         })

@@ -123,9 +123,9 @@ class AlertController extends Controller {
             //     }
             // })
             ->addColumn('action', function ($alert) {
-
+                 $b_url = \URL::to('/');
             return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
-             <a href=/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+             <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();
@@ -205,11 +205,12 @@ class AlertController extends Controller {
            <img src='alerts/".$alert_type->path."' alt='Logo' style='height: 100px; width: 100px;' > ";          
         })
         ->addColumn('action', function ($alert_type) {
+             $b_url = \URL::to('/');
             if($alert_type->deleted_at == null){ 
             return "
            
-            <a href=/alert-type/".Crypt::encrypt($alert_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <a href=/alert-type/".Crypt::encrypt($alert_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+            <a href=".$b_url."/alert-type/".Crypt::encrypt($alert_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <a href=".$b_url."/alert-type/".Crypt::encrypt($alert_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
             <button onclick=delAlertType(".$alert_type->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
             }else{ 
             return "
