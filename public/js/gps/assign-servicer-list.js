@@ -15,7 +15,7 @@ $(document).ready(function () {
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/list-assign-servicer',
+            url: 'list-assign-servicer',
             type: 'POST',
             data: {
                 'data': data
