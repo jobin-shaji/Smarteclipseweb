@@ -23,101 +23,93 @@
       </ol>
     </nav>
     
-        <div class="card-body">
-          <section class="hilite-content">
-       
-<form  method="POST" action="{{route('gps-transfer-dealer.transfer.p')}}">
-        {{csrf_field()}}
-      <div class="row">
-        <div class="col-md-12 col-lg-6">
-          <div class="form-group has-feedback">
-              <label class="srequired">Sub Dealer Name</label>
-              <select class="form-control selectpicker subDealerData" id="to_user" name="sub_dealer_user_id" data-live-search="true" title="Select Sub Dealer" required>
-                <option value="">Select Sub Dealer</option>
-                @foreach($entities as $entity)
-                <option value="{{$entity->user->id}}">{{$entity->name}}</option>
-                @endforeach
-              </select>
-          </div>     
-          @if ($errors->has('sub_dealer_user_id'))
-            <span class="help-block">
-                <strong class="error-text">{{ $errors->first('sub_dealer_user_id') }}</strong>
-            </span>
-          @endif 
+    <div class="card-body">
+      <section class="hilite-content">
+        <form  method="POST" action="{{route('gps-transfer-dealer.transfer.p')}}">
+                {{csrf_field()}}
+              <div class="row">
+                <div class="col-md-12 col-lg-6">
+                  <div class="form-group has-feedback">
+                      <label class="srequired">Sub Dealer Name</label>
+                      <select class="form-control selectpicker subDealerData" id="to_user" name="sub_dealer_user_id" data-live-search="true" title="Select Sub Dealer" required>
+                        <option value="">Select Sub Dealer</option>
+                        @foreach($entities as $entity)
+                        <option value="{{$entity->user->id}}">{{$entity->name}}</option>
+                        @endforeach
+                      </select>
+                  </div>     
+                  @if ($errors->has('sub_dealer_user_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('sub_dealer_user_id') }}</strong>
+                    </span>
+                  @endif 
 
-          <div class="form-group has-feedback">
-            <label class="srequired">Address</label>
-            <input type="text" name="address"  id="address"  value="" class="form-control" placeholder="Address" readonly>
-            <input type="hidden" name="sub_dealer_name"  id="sub_dealer_name"  value="" class="form-control">
-          </div>
-          @if ($errors->has('address'))
-            <span class="help-block">
-                <strong class="error-text">{{ $errors->first('address') }}</strong>
-            </span>
-          @endif
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Address</label>
+                    <input type="text" name="address"  id="address"  value="" class="form-control" placeholder="Address" readonly>
+                    <input type="hidden" name="sub_dealer_name"  id="sub_dealer_name"  value="" class="form-control">
+                  </div>
+                  @if ($errors->has('address'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('address') }}</strong>
+                    </span>
+                  @endif
 
-          <div class="form-group has-feedback">
-            <label class="srequired">Mobile No</label>
-            <input type="text" name="mobile" id="mobile" value="" class="form-control" placeholder="Mobile No" readonly >
-          </div>
-          @if ($errors->has('mobile'))
-            <span class="help-block">
-                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
-            </span>
-          @endif
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Mobile No</label>
+                    <input type="text" name="mobile" id="mobile" value="" class="form-control" placeholder="Mobile No" readonly >
+                  </div>
+                  @if ($errors->has('mobile'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                    </span>
+                  @endif
 
-          <div class="form-group has-feedback">
-            <label class="srequired">Scanned Employee Code</label>
-            <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" required> 
-          </div>
-          @if ($errors->has('scanned_employee_code'))
-          <span class="help-block">
-          <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
-          </span>
-          @endif
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Scanned Employee Code</label>
+                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" required> 
+                  </div>
+                  @if ($errors->has('scanned_employee_code'))
+                  <span class="help-block">
+                  <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
+                  </span>
+                  @endif
+
+                  <div class="form-group has-feedback">
+                    <label class="srequired">GPS List</label>
+                      <input type="hidden" name="gps_id[]" id="gps_id" value="">
+                      <table class="table table-bordered  table-striped " style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>GPS Name</th>
+                            <th>IMEI</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+  
+                        </tbody>
+                      </table>
+                      @if ($errors->has('gps_id'))
+                        <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                        </span>
+                      @endif
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                  <video id="preview" style="height:50%; width: 50%;"></video>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3 ">
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Transfer</button>
+                </div>
+              </div>
+            </form>
+          </section>
         </div>
-        <div class="col-md-12 col-lg-6">
-          <video id="preview"></video>
-        </div>
-      </div>
-
-      <div class="form-group has-feedback">
-        <label class="srequired">GPS List</label>
-        <div class="row">
-          <div class="col-md-12 col-lg-6">
-            <input type="hidden" name="gps_id[]" id="gps_id" value="">
-              <table class="table table-bordered  table-striped " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>GPS Name</th>
-                        <th>IMEI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="row">
-        <!-- /.col -->
-        <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn ">Transfer</button>
-        </div>
-        <!-- /.col -->
-      </div>
-      </div>     
-      @if ($errors->has('gps_id'))
-        <span class="help-block">
-            <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
-        </span>
-      @endif 
-
-    </form>
-</section>
- 
-</div>
-</div>
+  </div>
 </div>
 
 <div class="clearfix"></div>

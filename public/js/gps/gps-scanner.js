@@ -23,7 +23,6 @@ var items = [];
                       $("#gps_id").val(items); 
                       var markup = "<tr><td>" + gps_name + "</td><td>" + gps_imei + "</td></tr>";
                       $("table tbody").append(markup);
-                      alert("Success");
                   }
               }else{
                 alert("Gps device already tranferred");
