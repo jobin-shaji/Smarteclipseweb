@@ -36,6 +36,8 @@
                                         <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="{{url('create-servicer')}}">ADD SERVICE ENGINEER</a></li>
                                         <li><a class="dropdown-item" href="{{url('/servicers')}}">LIST SERVICE ENGINEERS</a></li>
+                                        <li><a class="dropdown-item" href="{{url('/sub-dealer-assign-servicer')}}">CREATE JOB</a></li>
+                                         <li><a class="dropdown-item" href="{{url('/sub-dealer-assign-servicer-list')}}">LIST JOBS</a></li>
                                         </ul>
                                     </li>
                                 </ul>
