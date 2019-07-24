@@ -304,7 +304,7 @@ function downloadFile(url,data){
 
                             // safari doesn't support this yet
                             if (typeof a.download === 'undefined') {
-                                window.location = downloadUrl;
+                                // window.location = downloadUrl;
                             } else {
                                 a.href = downloadUrl;
                                 a.download = filename;
