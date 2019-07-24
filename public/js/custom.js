@@ -263,7 +263,7 @@ function verifyAlertResponse(res){
 
 function downloadFile(url,data){
 
-    var purl = getUrl() + '/'+url ;
+    var purl = $('meta[name = "domain"]').attr('content') + '/'+url ;
 
     $.ajax({
             cache: false,
