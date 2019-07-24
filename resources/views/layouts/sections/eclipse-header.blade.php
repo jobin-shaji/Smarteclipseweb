@@ -76,13 +76,23 @@
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
-                          <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/gps-new')}}"> New Arrivals <span></span></a>
                                 <a class="dropdown-item" href="{{url('/gps-client')}}"> List GPS<span></span></a>                               
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOS
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/sos-new')}}"> New Arrivals <span></span></a>
+                                <a class="dropdown-item" href="{{url('/sos-client')}}"> List SOS<span></span></a>                               
                             </div>
                         </li>
 
