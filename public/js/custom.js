@@ -263,7 +263,7 @@ function verifyAlertResponse(res){
 
 function downloadFile(url,data){
 
-    var purl = $('meta[name = "domain"]').attr('content') + '/'+url ;
+    var purl = getUrl() + '/'+url ;
 
     $.ajax({
             cache: false,
@@ -304,7 +304,7 @@ function downloadFile(url,data){
 
                             // safari doesn't support this yet
                             if (typeof a.download === 'undefined') {
-                                window.location = downloadUrl;
+                                // window.location = downloadUrl;
                             } else {
                                 a.href = downloadUrl;
                                 a.download = filename;
