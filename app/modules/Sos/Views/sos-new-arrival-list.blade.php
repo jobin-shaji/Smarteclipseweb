@@ -6,7 +6,7 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Gps New Arrival</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Sos New Arrival</li>
         
       </ol>
     </nav>
@@ -31,20 +31,10 @@
                                 </div>
 
                             </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
             </div>
         </div>
 
 @section('script')
-    <script src="{{asset('js/gps/gps-new-arrival-list.js')}}"></script>
+    <script src="{{asset('js/gps/sos-new-arrival-list.js')}}"></script>
 @endsection
 @endsection
