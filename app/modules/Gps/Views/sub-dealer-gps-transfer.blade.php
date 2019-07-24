@@ -29,7 +29,7 @@
 <form  method="POST" action="{{route('gps-transfer-sub-dealer.transfer.p')}}">
         {{csrf_field()}}
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-lg-6">
           <div class="form-group has-feedback">
               <label class="srequired">Client Name</label>
               <select class="form-control selectpicker clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
@@ -76,23 +76,28 @@
           </span>
           @endif
         </div>
+        <div class="col-md-12 col-lg-6">
+          <video id="preview"></video>
+        </div>
       </div>
 
       <div class="form-group has-feedback">
-        <label class="srequired">GPS</label>
+        <label class="srequired">GPS List</label>
         <div class="row">
-
-               @forelse  ($devices as $device )
-                <div class="col-md-3">
-                    <input type="checkbox" name="gps_id[]" value="{{$device->id}}">{{$device->name}}||{{$device->imei}}
-                </div>
-              @empty
-                @section('script')
-                  <script>alert("No GPS Found");</script>
-                @endsection
-                <p style="font-size: 20px;padding-left: 15px;color: red;"><b>No GPS Found</b></p>
-              @endforelse
-
+          <div class="col-md-12 col-lg-6">
+            <input type="hidden" name="gps_id[]" id="gps_id" value="">
+              <table class="table table-bordered  table-striped " style="width:100%">
+                <thead>
+                    <tr>
+                        <th>GPS Name</th>
+                        <th>IMEI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+          </div>
         </div>
         <div class="row">
         <!-- /.col -->
@@ -119,6 +124,7 @@
 
 @section('script')
     <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
+    <script src="{{asset('js/gps/gps-scanner.js')}}"></script>
 @endsection
    
 @endsection

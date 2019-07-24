@@ -680,7 +680,35 @@ class GpsController extends Controller {
                         ->get();
         $entities = $root->dealers;
 
-        return view('Gps::root-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Gps::root-gps-transfer', ['devices' => $devices,'entities' => $entities]);
+    }
+
+    //get scanned gps and check gps status
+    public function getScannedGps(Request $request)
+    {
+        $device_imei=$request->imei;
+        $user = \Auth::user();
+        $device = Gps::select('id', 'name', 'imei','user_id')
+                        ->where('user_id',$user->id)
+                        ->where('imei',$device_imei)
+                        ->first();
+        if($device==null){
+            return response()->json(array(
+                'status' => 0,
+                'title' => 'Error',
+            ));
+        }else{
+            $gps_id=$device->id;
+            $gps_name=$device->name;
+            $gps_imei=$device->imei;
+            return response()->json(array(
+                'status' => 1,
+                'title' => 'success',
+                'gps_id' => $gps_id,
+                'gps_name' => $gps_name,
+                'gps_imei' => $gps_imei
+            ));
+        } 
     }
 
     //get address and mobile details based on dealer selection
@@ -712,7 +740,8 @@ class GpsController extends Controller {
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
-        $gps_array = $request->gps_id;
+        $gps_array_list = $request->gps_id;
+        $gps_array=explode(",",$gps_array_list[0]);
         $gps_list=[];
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
@@ -804,7 +833,8 @@ class GpsController extends Controller {
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
-        $gps_array = $request->gps_id;
+        $gps_array_list = $request->gps_id;
+        $gps_array=explode(",",$gps_array_list[0]);
         $gps_list=[];
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
@@ -896,7 +926,8 @@ class GpsController extends Controller {
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
-        $gps_array = $request->gps_id;
+        $gps_array_list = $request->gps_id;
+        $gps_array=explode(",",$gps_array_list[0]);
         $gps_list=[];
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
@@ -1226,15 +1257,6 @@ class GpsController extends Controller {
                 return $forhuman;
              })
         ->make();
-    }
-
-    // gps transfer rule
-    public function gpsTransferRule() {
-        $rules = [
-          'gps_id' => 'required',
-          'from_user_id' => 'nullable',
-          'to_user_id' => 'required'];
-        return $rules;
     }
 
     // root gps transfer rule
