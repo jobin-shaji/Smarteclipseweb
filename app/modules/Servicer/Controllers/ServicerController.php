@@ -51,7 +51,7 @@ class ServicerController extends Controller {
                 'address' => $request->address,
                 'type' => 2,
                 'status' => 0,
-                'sub_dealer_id' => $request->user()->id,
+                'sub_dealer_id' => $request->user()->subdealer->id,
                 'user_id' => $user->id
             ]);
         }
@@ -272,11 +272,13 @@ class ServicerController extends Controller {
     public function subDealerAssignServicer()
     {
         $sub_dealer_id=\Auth::user()->subDealer->id;
+        // dd($sub_dealer_id);
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->where('status',0)
         ->where('type',2)
         ->get();
+        // dd($servicer);
         $clients = Client::select('id','name','user_id','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
