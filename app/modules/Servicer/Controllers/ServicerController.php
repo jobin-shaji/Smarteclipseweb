@@ -14,7 +14,7 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
 use DataTables;
-
+use PDF;
 class ServicerController extends Controller {
     
 
@@ -456,11 +456,11 @@ class ServicerController extends Controller {
         // $servicer->address = $request->address;
         $servicer_job->save();
 
-
+        $service_job_id=Crypt::encrypt($servicer_job->id);
         $request->session()->flash('message', 'Assign  servicer successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('job.list'));  
-        // return redirect(route('job-complete.certificate'));  
+        // return redirect(route('job-complete.certificate',$service_job_id));  
     }
     // save vehicle
     public function servicerSaveVehicle(Request $request)
@@ -474,29 +474,50 @@ class ServicerController extends Controller {
         $gps_id = $request->gps_id;
         $client_id = $request->client_id;
         $servicer_job_id = $request->servicer_job_id;
- // dd($servicer_job_id);
+
+        $engine_number = $request->engine_number;
+        $chassis_number = $request->chassis_number;
+        $path = $request->path;
+        // dd($servicer_job_id);
         if($gps_id!=null)
         {
-            $route_area = Vehicle::create([
+            $vehicle_create= Vehicle::create([
                 'name' => $name,
                 'register_number' => $register_number,
                 'vehicle_type_id' => $vehicle_type_id,
                 'gps_id' => $gps_id,
                 'client_id' => $client_id,
                 'servicer_job_id' => $servicer_job_id,
+                'engine_number' => $engine_number,
+                'chassis_number' => $chassis_number,
                 'status' => 1
             ]);
-        }
-         
+            // $vehicle_id=$vehicle_create->id;
+            // $file=$request->path;
 
+            // $getFileExt   = $file->getClientOriginalExtension();
+            // $uploadedFile =   time().'.'.$getFileExt;
+            // // // dd()
+            // // //Move Uploaded File
+            // $destinationPath = 'documents';
+            // $file->move($destinationPath,$uploadedFile);
+            // $documents = Document::create([
+            //     'vehicle_id' => $vehicle_id,
+            //     'document_type_id' => '1',
+            //     'expiry_date' => null,
+            //     'path' => $uploadedFile,
+            // ]);
+        }         
           $vehicle = Vehicle::select(
-                    'name',
-                    'register_number',
-                    'vehicle_type_id',
-                    'gps_id',
-                    'client_id',
-                    'servicer_job_id'               
-                    )
+            'name',
+            'register_number',
+            'vehicle_type_id',
+            'gps_id',
+            'client_id',
+            'servicer_job_id',
+            'engine_number',
+            'chassis_number'               
+        )
         ->with('gps:id,name,imei')
        // ->with('vehicle:id,name,register_number')
         ->where('servicer_job_id',$servicer_job_id)
@@ -509,12 +530,46 @@ class ServicerController extends Controller {
  
         
     }
-     public function jobCompleteCertificate()
+     public function jobCompleteCertificate(Request $request)
     {
 
-        return view('Servicer::servicer-cerificate');
+        return view('Servicer::servicer-cerificate',['id'=>$request->id]);
     }
 
+    public function downloadJobCompleteCertificate(Request $request){
+
+        
+        $servicer_job_id = Crypt::decrypt($request->id);
+        $vehicle_id = Crypt::decrypt($request->vid);
+       // dd($vehicle_id);
+        $servicer_job = ServicerJob::find($servicer_job_id);
+        $client_id=$servicer_job->client_id;
+
+        $client = Client::find($client_id);
+
+         $vehicle = Vehicle::select(
+            'id',
+            'name',
+            'register_number',
+            'vehicle_type_id',
+            'gps_id',
+            'client_id',
+            'servicer_job_id'               
+        )
+        ->with('gps:id,name,imei')
+        ->where('servicer_job_id',$servicer_job_id)
+        ->where('id',$vehicle_id)
+        ->first();
+        // dd($servicer_job_id);
+        
+        if($servicer_job == null){
+           return view('Servicer::404');
+        }
+
+        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'client' => $client]);
+        return $pdf->download('installation-certificate.pdf');
+
+    }
 
 
 
@@ -624,6 +679,7 @@ class ServicerController extends Controller {
     {
         $servicer_job_id = $request->servicer_job_id;
         $vehicle = Vehicle::select(
+            'id',
             'name',
             'register_number',
             'vehicle_type_id',
@@ -635,9 +691,18 @@ class ServicerController extends Controller {
        // ->with('vehicle:id,name,register_number')
         ->where('servicer_job_id',$servicer_job_id)
         ->get();
+        // dd()
         return DataTables::of($vehicle)
-        ->addIndexColumn()         
-        ->rawColumns(['link'])         
+        ->addIndexColumn() 
+        ->addColumn('action', function ($vehicle) {
+          
+                return "
+                <a href='/job-complete/".Crypt::encrypt($vehicle->servicer_job_id)."/downloads/".Crypt::encrypt($vehicle->id)."'>
+                        <button class='btn'><i class='fa fa-download'></i>Download</button>
+                      </a>";
+          
+        })
+        ->rawColumns(['link', 'action'])             
         ->make();
  
         

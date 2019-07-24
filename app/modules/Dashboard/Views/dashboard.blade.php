@@ -252,12 +252,12 @@
                <h3 id="gps">
                   <div class="loader"></div>
                </h3>
-               <p>GPS</p>
+               <p>NEW JOBS</p>
             </div>
             <div class="icon">
                <i class="fa fa-tablet"></i>
             </div>
-            <a href="/gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
          </div>
       </div>
       <!-- ./col -->
@@ -268,13 +268,13 @@
                <h3 id="dealer">
                   <div class="loader"></div>
                </h3>
-               <p>Dealers</p>
+               <p>COMPLETED JOBS</p>
             </div>
             <div class="icon">
                <i class="fa fa-tablet"></i>
               
             </div>
-            <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
          </div>
       </div>
       <!-- ./col -->
