@@ -1264,6 +1264,27 @@ class GpsController extends Controller {
         ->make();
     }
 
+    
+    public function downloadGpsDataTransfer(Request $request){
+
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $eid=$request->id;
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps = Gps::find($decrypted_id);
+        
+        if($gps == null){
+           return view('Gps::404');
+        }
+
+        $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
+        return $pdf->download('abcd.pdf');
+
+    }
+
+
+
     // root gps transfer rule
     public function gpsRootTransferRule(){
         $rules = [
@@ -1295,9 +1316,9 @@ class GpsController extends Controller {
     public function gpsCreateRules(){
         $rules = [
             'name' => 'required|unique:gps',
-            'imei' => 'required|numeric|min:15|unique:gps',
+            'imei' => 'required|numeric|min:15|unique:gps|max:15',
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|numeric|unique:gps',
+            'e_sim_number' => 'required|numeric|unique:gps|max:10|min:10',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required'
@@ -1309,35 +1330,15 @@ class GpsController extends Controller {
     public function gpsUpdateRules($gps){
         $rules = [
             'name' => 'required|unique:gps,name,'.$gps->id,
-            'imei' => 'required|numeric|min:15|unique:gps,imei,'.$gps->id,
+            'imei' => 'required|numeric|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|numeric|unique:gps,e_sim_number,'.$gps->id,
+            'e_sim_number' => 'required|numeric|max:10|min:10|unique:gps,e_sim_number,'.$gps->id,
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required',
         ];
         return  $rules;
     } 
-
-
-
-    public function downloadGpsDataTransfer(Request $request){
-
-        \QrCode::size(500)
-          ->format('png')
-          ->generate(public_path('images/qrcode.png'));
-        $eid=$request->id;
-        $decrypted_id = Crypt::decrypt($request->id);
-        $gps = Gps::find($decrypted_id);
-        
-        if($gps == null){
-           return view('Gps::404');
-        }
-
-        $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
-        return $pdf->download('gps_details.pdf');
-
-    }
 
 
 
