@@ -51,17 +51,18 @@ class GpsController extends Controller {
         return DataTables::of($gps)
         ->addIndexColumn()
         ->addColumn('action', function ($gps) {
+            $b_url = \URL::to('/');
             if($gps->deleted_at == null){
                 // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
                 return "
-                <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
                 </button>";
             }else{
                  return "
-                <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
                 </button>";
             }
@@ -108,17 +109,18 @@ class GpsController extends Controller {
                 }
             })
             ->addColumn('action', function ($gps) {
+                $b_url = \URL::to('/');
                 if($gps->deleted_at == null){
                     return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
+                    <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
                     </button>";
                 }else{
                      return "
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
                     </button>";
                 }
@@ -372,15 +374,16 @@ class GpsController extends Controller {
                 return $gps_transfer->gpsTransferItems->count();
              })
             ->addColumn('action', function ($devices) {
+                $b_url = \URL::to('/');
                 if($devices->accepted_on == null)
                 {
                     return "
-                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info' data-toggle='tooltip' title='View  GPS'><i class='fas fa-eye'> View</i></a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info' data-toggle='tooltip' title='View  GPS'><i class='fas fa-eye'> View</i></a>
                     <button onclick=acceptGpsTransfer(".$devices->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Accept
                     </button>";
                 }else{
                     return "
-                    <a href=/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'  data-toggle='tooltip' title='View  GPS'><i class='fas fa-eye'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'  data-toggle='tooltip' title='View  GPS'><i class='fas fa-eye'></i> View </a>
                     <b style='color:#008000';>Accepted</b>";
                 }
                 
@@ -486,17 +489,18 @@ class GpsController extends Controller {
         return DataTables::of($gps)
             ->addIndexColumn()
             ->addColumn('action', function ($gps) {
+                $b_url = \URL::to('/');
                 if($gps->deleted_at == null){
                     if($gps->status == 1){ 
                         return "
                             <b style='color:#008000';>Active</b>
-                            <a href=/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
                             <button onclick=deactivateGpsStatus(".$gps->id.") class='btn btn-xs btn-danger'></i>Deactivate</button>
                         ";
                         }else{ 
                         return "
                             <b style='color:#FF0000';>Inactive</b>
-                            <a href=/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/status-log class='btn btn-xs btn-info'> Log </a>
                             <button onclick=activateGpsStatus(".$gps->id.") class='btn btn-xs btn-success'> Activate </button>
                         ";
                         }
@@ -646,23 +650,24 @@ class GpsController extends Controller {
         })
         ->addColumn('action', function ($gps_transfer) 
         {
+            $b_url = \URL::to('/');
             if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
             {
                 return "
-                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=cancelGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
                 </button>";
             }
             else if($gps_transfer->deleted_at != null){
                 return "
-                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#FF0000';>Cancelled</b>";
             }
             else{
                 return "
-                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                <a href=/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#008000';>Transferred</b>";
             }
         })
