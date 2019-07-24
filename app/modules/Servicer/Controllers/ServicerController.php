@@ -387,9 +387,9 @@ class ServicerController extends Controller {
                        
          }) 
          ->addColumn('action', function ($servicer_job) {
-          
+             $b_url = \URL::to('/');
                 return "
-                <a href=/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
           
         })
         ->rawColumns(['link', 'action'])
@@ -616,9 +616,9 @@ class ServicerController extends Controller {
                        
          }) 
          ->addColumn('action', function ($servicer_job) {
-          
+           $b_url = \URL::to('/');
                 return "
-                <a href=/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+                <a href=".$b_url."/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
           
         })
         ->rawColumns(['link', 'action'])
@@ -696,9 +696,9 @@ class ServicerController extends Controller {
         return DataTables::of($vehicle)
         ->addIndexColumn() 
         ->addColumn('action', function ($vehicle) {
-          
+          $b_url = \URL::to('/');
                 return "
-                <a href='/job-complete/".Crypt::encrypt($vehicle->servicer_job_id)."/downloads/".Crypt::encrypt($vehicle->id)."'>
+                <a href=".$b_url."/job-complete/".Crypt::encrypt($vehicle->servicer_job_id)."/downloads/".Crypt::encrypt($vehicle->id).">
                         <button class='btn'><i class='fa fa-download'></i>Download</button>
                       </a>";
           

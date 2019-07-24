@@ -71,15 +71,16 @@ class DriverController extends Controller {
         return DataTables::of($driver)
         ->addIndexColumn()
         ->addColumn('action', function ($driver) {
+             $b_url = \URL::to('/');
         if($driver->deleted_at == null){ 
             return "
-            <a href=/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit </a>
-             <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
+            <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit </a>
+             <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
             <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
         }else{                   
                 return "
               
-                <a href=/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View!'><i class='fas fa-eye'></i> View </a>
+                <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View!'><i class='fas fa-eye'></i> View </a>
                 <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='fas fa-check'></i> Ativate</button>";
             }
         })
@@ -240,8 +241,9 @@ class DriverController extends Controller {
                     
             })            
             ->addColumn('action', function ($performance_Score) {
+                $b_url = \URL::to('/');
             return "<button onclick=VerifyAlert(".$performance_Score->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
-             <a href=/alert/report/".Crypt::encrypt($performance_Score->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+             <a href=".$b_url."/alert/report/".Crypt::encrypt($performance_Score->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();

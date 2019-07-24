@@ -81,9 +81,10 @@ class AccidentImpactAlertReportController extends Controller
                 }            
             }
         })
-        ->addColumn('action', function ($accidentimpactalert) {              
+        ->addColumn('action', function ($accidentimpactalert) {   
+         $b_url = \URL::to('/');           
             return "
-            <a href=/alert/report/".Crypt::encrypt($accidentimpactalert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+            <a href=".$b_url."/alert/report/".Crypt::encrypt($accidentimpactalert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();

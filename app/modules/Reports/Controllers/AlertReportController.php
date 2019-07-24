@@ -118,9 +118,10 @@ class AlertReportController extends Controller
         
     }
          })
-         ->addColumn('action', function ($alert) {              
+         ->addColumn('action', function ($alert) {
+         $b_url = \URL::to('/');               
                     return "
-                    <a href=/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+                    <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
                 })
             ->rawColumns(['link', 'action'])
         ->make();
