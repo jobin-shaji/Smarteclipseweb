@@ -158,7 +158,7 @@ class GeofenceController extends Controller {
 
 
     }
-     public function AssignGeofenceList()
+     public function assignGeofenceList()
     {
          $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
