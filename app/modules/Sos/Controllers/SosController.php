@@ -45,17 +45,18 @@ class SosController extends Controller {
         return DataTables::of($sos)
         ->addIndexColumn()
         ->addColumn('action', function ($sos) {
+            $b_url = \URL::to('/');
             if($sos->deleted_at == null){
                 // <a href=/sos/".Crypt::encrypt($sos->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
                 return "
-                <a href=/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                <a href=/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=delSos(".$sos->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
                 </button>";
             }else{
                  return "
-                <a href=/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                <a href=/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=activateSos(".$sos->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
                 </button>";
             }
@@ -100,17 +101,18 @@ class SosController extends Controller {
                 }
             })
             ->addColumn('action', function ($sos) {
+                $b_url = \URL::to('/');
                 if($sos->deleted_at == null){
                     return "
-                    <a href=/sos/".Crypt::encrypt($sos->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
-                    <a href=/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
+                    <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=delSos(".$sos->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
                     </button>";
                 }else{
                      return "
-                    <a href=/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateSos(".$sos->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
                     </button>";
                 }
@@ -265,15 +267,16 @@ class SosController extends Controller {
                 return $sos_transfer->sosTransferItems->count();
              })
             ->addColumn('action', function ($devices) {
+                $b_url = \URL::to('/');
                 if($devices->accepted_on == null)
                 {
                     return "
-                    <a href=/sos-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info' data-toggle='tooltip' title='View  Sos'><i class='fas fa-eye'> View</i></a>
+                    <a href=".$b_url."/sos-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-info' data-toggle='tooltip' title='View  Sos'><i class='fas fa-eye'> View</i></a>
                     <button onclick=acceptSosTransfer(".$devices->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Accept
                     </button>";
                 }else{
                     return "
-                    <a href=/sos-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'  data-toggle='tooltip' title='View Sos'><i class='fas fa-eye'></i> View </a>
+                    <a href=".$b_url."/sos-transfer/".Crypt::encrypt($devices->id)."/view class='btn btn-xs btn-success'  data-toggle='tooltip' title='View Sos'><i class='fas fa-eye'></i> View </a>
                     <b style='color:#008000';>Accepted</b>";
                 }
                 
@@ -442,23 +445,24 @@ class SosController extends Controller {
         })
         ->addColumn('action', function ($sos_transfer) 
         {
+            $b_url = \URL::to('/');
             if($sos_transfer->accepted_on == null && $sos_transfer->deleted_at == null)
             {
                 return "
-                <a href=/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                <a href=/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                <a href=".$b_url."/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=cancelSosTransfer(".$sos_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
                 </button>";
             }
             else if($sos_transfer->deleted_at != null){
                 return "
-                <a href=/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#FF0000';>Cancelled</b>";
             }
             else{
                 return "
-                <a href=/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                <a href=/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                <a href=".$b_url."/sos-transfer/".Crypt::encrypt($sos_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#008000';>Transferred</b>";
             }
         })
