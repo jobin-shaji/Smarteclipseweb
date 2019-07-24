@@ -24,7 +24,8 @@ return  [
        'Premium',
        'DataUsage',
        'SmsUsage',
-       'Servicer'
+       'Servicer',
+       'Sos'
     ]
 ]
 

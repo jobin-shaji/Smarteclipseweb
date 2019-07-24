@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-transfer-list',
+            url: 'sos-transfer-list',
             type: 'POST',
             data: {
                 'data': data
@@ -51,11 +51,11 @@ function callBackDataTable(){
     });
 }
 
-function cancelGpsTransfer(gps_transfer_id){
+function cancelSosTransfer(sos_transfer_id){
     if(confirm('Are you sure want to cancel this?')){
-        var url = 'gps-transfer/cancel';
+        var url = 'sos-transfer/cancel';
         var data = {
-            id : gps_transfer_id
+            id : sos_transfer_id
         };
         backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
     } 
@@ -63,7 +63,7 @@ function cancelGpsTransfer(gps_transfer_id){
 
 $('.dealerData').on('change', function() {
     var dealerUserID=this.value;
-    var purl = getUrl() + '/'+'gps-transfer-root-dropdown' ;
+    var purl = getUrl() + '/'+'sos-transfer-root-dropdown' ;
     var data = { dealer_user_id : dealerUserID };
     $.ajax({
         type:'POST',
@@ -93,7 +93,7 @@ $(document).ready(function() {
 
 $('.subDealerData').on('change', function() {
     var subDealerUserID=this.value;
-    var purl = getUrl() + '/'+'gps-transfer-dealer-dropdown' ;
+    var purl = getUrl() + '/'+'sos-transfer-dealer-dropdown' ;
     var data = { sub_dealer_user_id : subDealerUserID };
     $.ajax({
         type:'POST',
@@ -109,14 +109,14 @@ $('.subDealerData').on('change', function() {
             var sub_dealer_mobile=res.sub_dealer_mobile;
             $("#sub_dealer_name").val(sub_dealer_name);
             $("#address").val(sub_dealer_address);
-            $("#mobile").val(sub_dealer_mobile); 
+            $("#mobile").val(sub_dealer_mobile);
         }
     });
 });
 
 $('.clientData').on('change', function() {
     var clientUserID=this.value;
-    var purl = getUrl() + '/'+'gps-transfer-sub-dealer-dropdown' ;
+    var purl = getUrl() + '/'+'sos-transfer-sub-dealer-dropdown' ;
     var data = { client_user_id : clientUserID };
     $.ajax({
         type:'POST',
@@ -132,7 +132,7 @@ $('.clientData').on('change', function() {
             var client_mobile=res.client_mobile;
             $("#client_name").val(client_name);
             $("#address").val(client_address);
-            $("#mobile").val(client_mobile); 
+            $("#mobile").val(client_mobile);  
         }
     });
 });
