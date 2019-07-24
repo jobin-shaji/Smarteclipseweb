@@ -51,7 +51,7 @@ function create_vehicle(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/servicer/vehicles/history',
+            url: 'servicer/vehicles/history',
             type: 'POST',
              data:data,
             headers: {
