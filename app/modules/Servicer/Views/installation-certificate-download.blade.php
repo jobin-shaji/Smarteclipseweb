@@ -90,7 +90,7 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p3 ft4">Vehicle Make & Model:</P>
 <P class="p3 ft4">Vehicle Reg No:</P>
 <P class="p4 ft4">VTU model:</P>
-<P class="p3 ft4">IMEI number:</P>
+<P class="p3 ft4">IMEI number:{{$vehicle->user->username}}</P>
 <P class="p3 ft4">Owner name:{{$client->name}}</P>
 <P class="p3 ft4">Owner address:{{$client->address}}</P>
 <P class="p4 ft4">Mobile no:{{$client->user->mobile}}</P>
