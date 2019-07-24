@@ -76,7 +76,7 @@
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
-                          <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -87,12 +87,21 @@
                         </li>
 
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOS
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/sos-new')}}"> New Arrivals <span></span></a>
+                                <a class="dropdown-item" href="{{url('/sos-client')}}"> List SOS<span></span></a>                               
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                 <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>
-                                <a class="dropdown-item" href="/vehicles/create"> Add Vehicle <span></span></a>
+                                 <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>                            
                                 <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>  
                                
                                 <a class="dropdown-item" href="{{url('/drivers')}}"> List Drivers<span></span></a>  
@@ -237,6 +246,10 @@
 
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>Change Password</a>
+                                @endrole
+                                @role('root|dealer|sub_dealer')
+                                    <a class="dropdown-item">
+                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
                                 @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>

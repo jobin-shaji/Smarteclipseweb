@@ -83,9 +83,10 @@ class SuddenAccelerationReportController extends Controller
                 }            
             }
         })
-         ->addColumn('action', function ($suddenacceleration) {              
+         ->addColumn('action', function ($suddenacceleration) {    
+         $b_url = \URL::to('/');          
             return "
-            <a href=/alert/report/".Crypt::encrypt($suddenacceleration->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+            <a href=".$b_url."/alert/report/".Crypt::encrypt($suddenacceleration->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();

@@ -36,14 +36,15 @@ class RouteController extends Controller {
         return DataTables::of($route)
             ->addIndexColumn()
             ->addColumn('action', function ($route) {
+                $b_url = \URL::to('/'); 
                 if($route->deleted_at == null){
                     return "
-                     <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
+                     <a href=".$b_url."/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
 
                     <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
                 }else{
                      return "
-                    <a href=/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
+                    <a href=".$b_url."/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
                     <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
                 }
              })
@@ -202,9 +203,10 @@ class RouteController extends Controller {
         ->get();
         return DataTables::of($route)
             ->addIndexColumn() 
-            ->addColumn('action', function ($route) {                
+            ->addColumn('action', function ($route) { 
+            $b_url = \URL::to('/');               
             return "
-             <a href=/route/".Crypt::encrypt($route->route_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i>View Routes </a>";               
+             <a href=".$b_url."/route/".Crypt::encrypt($route->route_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i>View Routes </a>";               
              })
             ->rawColumns(['link', 'action'])         
             ->make();

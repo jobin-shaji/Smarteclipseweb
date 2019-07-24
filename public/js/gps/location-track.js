@@ -59,7 +59,7 @@ function initMap(){
 
 function getMarkers() {
 
-    var url = '/vehicles/location-track';
+    var url = 'vehicles/location-track';
     var id = $("#vehicle_id_data").val();
     // var id=1;
     data = {

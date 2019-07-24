@@ -81,9 +81,10 @@ class MainBatteryDisconnectReportController extends Controller
                 }            
             }
         })
-        ->addColumn('action', function ($mainbatterydisconnect) {              
+        ->addColumn('action', function ($mainbatterydisconnect) {  
+        $b_url = \URL::to('/');             
             return "
-            <a href=/alert/report/".Crypt::encrypt($mainbatterydisconnect->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+            <a href=".$b_url."/alert/report/".Crypt::encrypt($mainbatterydisconnect->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
         ->make();

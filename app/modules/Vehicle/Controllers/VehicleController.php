@@ -55,20 +55,21 @@ class VehicleController extends Controller {
         return DataTables::of($vehicles)
             ->addIndexColumn()
             ->addColumn('action', function ($vehicles) {
+                $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
                         return "
                     
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
+                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i> Playback</a>
+                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/playback class='btn btn-xs btn btn-success' data-toggle='tooltip' title='Playback'><i class='fas fa-car'></i> Playback</a>
 
-                         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>
+                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>
 
                         <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
                     
                 }else{
                      return "
-                    <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> View </a>
+                    <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> View </a>
                     <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
                 }
              })
@@ -576,8 +577,9 @@ class VehicleController extends Controller {
                 }
              })
             ->addColumn('action', function ($vehicle_documents) {
+                $b_url = \URL::to('/');
                 $path = url('/documents').'/'.$vehicle_documents->path;
-                return "<a href= '".$path."' download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+                return "<a href= '".$b_url.$path."' download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
@@ -608,8 +610,9 @@ class VehicleController extends Controller {
         return DataTables::of($vehicle_type)
             ->addIndexColumn()
             ->addColumn('action', function ($vehicle_type) {
-                return "<a href=/vehicle-type/".Crypt::encrypt($vehicle_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=/vehicle-type/".Crypt::encrypt($vehicle_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+                $b_url = \URL::to('/');
+                return "<a href=".$b_url."/vehicle-type/".Crypt::encrypt($vehicle_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                    <a href=".$b_url."/vehicle-type/".Crypt::encrypt($vehicle_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
              })
             ->rawColumns(['link', 'action'])
             ->make();
@@ -741,9 +744,10 @@ class VehicleController extends Controller {
                 
             })
             ->addColumn('action', function ($vehicles) {
+                $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
                         return "
-                        <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
                 }else{
                      return ""; 
                 }
@@ -982,6 +986,7 @@ class VehicleController extends Controller {
         $decrypted_id = Crypt::decrypt($request->id);            
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
     }
+
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
@@ -1311,7 +1316,43 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
       $miles = $dist * 60 * 1.1515;
       return ($miles * 1.609344);
     }
+//
+    // servicer vehicle create
 
+    public function servicercreateVehicle(Request $request)
+    {
+        $client_id = Crypt::decrypt($request->id);
+        $servicer_id=\Auth::user()->servicer->id;
+        $client = Client::select(
+            'user_id'
+            )
+            ->where('id',$client_id)
+            ->first();
+            $client_user_id=$client->user_id;
+        $vehicleTypes=VehicleType::select(
+                'id','name')->get();
+        $vehicle_device = Vehicle::select(
+                'gps_id',
+                'id',
+                'register_number',
+                'name'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+
+        $single_gps = [];
+        foreach($vehicle_device as $device){
+            $single_gps[] = $device->gps_id;
+        } 
+
+        $devices=Gps::select('id','name','imei')
+                ->where('user_id',$client_user_id)
+                ->whereNotIn('id',$single_gps)
+                ->get();
+           // dd($client_id);
+        return view('Vehicle::servicer-vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
+    }
+ 
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()
@@ -1458,6 +1499,12 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         return $userData;
 
     }
+
+
+    // servicer vehicle create 
+
+       // vehicle create rules
+ 
 /////////////// snap root for live data///////////////////////////////////
 
 }

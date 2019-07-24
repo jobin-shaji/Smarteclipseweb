@@ -13,7 +13,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	Route::post('/geofence/show','GeofenceController@geofenceShow')->name('geofence.show');
 
-	Route::get('/assign/geofence-vehicle','GeofenceController@AssignGeofenceList')->name('assign.geofence.vehicle');
-	Route::post('/assign-geofence-vehicle-list','GeofenceController@getAssignGeofenceVehicleList')->name('assign-geofence-vehicle-list');
+	Route::get('/assign/geofence-vehicle','GeofenceController@assignGeofenceList')->name('assign.geofence.vehicle');
+	Route::post('/assign/assign-geofence-vehicle-list','GeofenceController@getAssignGeofenceVehicleList')->name('assign-geofence-vehicle-list');
 });
 

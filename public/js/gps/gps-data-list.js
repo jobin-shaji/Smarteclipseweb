@@ -38,7 +38,7 @@ function callBackDataTable(value){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/gps-data-list',
+            url: 'gps-data-list',
             type: 'POST',
             data: 'hello',          
             headers: {

@@ -304,7 +304,7 @@ function downloadFile(url,data){
 
                             // safari doesn't support this yet
                             if (typeof a.download === 'undefined') {
-                                window.location = downloadUrl;
+                                // window.location = downloadUrl;
                             } else {
                                 a.href = downloadUrl;
                                 a.download = filename;
@@ -359,6 +359,7 @@ function getPolygonData(url, data, callBack, options) {
     });
 
 }
+
 
 
 
@@ -829,5 +830,22 @@ function alerts(){
     }  
   
 }
+
+function downloadLabel(id){
+    var url = 'gps-transfer-label/export';
+    var data = {
+        id : id
+    };
+  downloadFile(url,data);
+}
+
+function downloadSosLabel(id){
+    var url = 'sos-transfer-label/export';
+    var data = {
+        id : id
+    };
+  downloadFile(url,data);
+}
+
 
 

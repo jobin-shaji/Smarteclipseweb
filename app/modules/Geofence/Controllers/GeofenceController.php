@@ -76,14 +76,15 @@ class GeofenceController extends Controller {
         return DataTables::of($geofence)
         ->addIndexColumn()
         ->addColumn('action', function ($geofence) {
+            $b_url = \URL::to('/');
             if($geofence->deleted_at == null){  
             return " 
-             <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>           
+             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>           
                            
                 <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate </button>";
                 }else{ 
                 return "
-                <a href=/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>  
+                <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>  
                 <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>";
             }
         })
@@ -157,7 +158,7 @@ class GeofenceController extends Controller {
 
 
     }
-     public function AssignGeofenceList()
+     public function assignGeofenceList()
     {
          $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
@@ -216,9 +217,10 @@ class GeofenceController extends Controller {
         ->get();
         return DataTables::of($geofence)
             ->addIndexColumn() 
-            ->addColumn('action', function ($geofence) {                
+            ->addColumn('action', function ($geofence) {  
+            $b_url = \URL::to('/');              
             return "
-              <a href=/geofence/".Crypt::encrypt($geofence->geofence_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View Geofence</a> ";               
+              <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->geofence_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View Geofence</a> ";               
              })
             ->rawColumns(['link', 'action'])         
             ->make();

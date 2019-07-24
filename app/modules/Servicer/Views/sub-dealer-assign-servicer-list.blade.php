@@ -23,12 +23,12 @@
                 <thead>
                   <tr>
                       <th>#</th>
-                     
-                      <th >Servicer</th>
+                      <th >Job Code</th>
+                      <th >Service Engieer</th>
                        <th >Client</th>
-                      <th >Job ID</th>
+                      
                       <th >Job Type</th>
-                      <th >User</th>
+                      <!-- <th >User</th> -->
                       <th >Description</th>
                       <th >Job Date</th>
                       

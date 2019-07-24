@@ -1,11 +1,12 @@
 $(document).ready(function() {
         $('#document_type_id').on('change', function() {
             var docTypeID = $(this).val();
+            var purl = getUrl() + '/'+'vehicles/findDateFieldWithDocTypeID' ;
             var data={ docTypeID : docTypeID };
             if(docTypeID) {
                 $.ajax({
                     type:'POST',
-                    url: '/vehicles/findDateFieldWithDocTypeID',
+                    url: purl,
                     data:data ,
                     async: true,
                     headers: {

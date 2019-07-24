@@ -32,7 +32,7 @@ function callBackDataTable(data=null){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/performance-score-history-list',
+            url: 'performance-score-history-list',
             type: 'POST',
             data:data,
             headers: {

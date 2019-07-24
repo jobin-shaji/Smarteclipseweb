@@ -83,6 +83,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('/') }}/dist/css/st.action-panel.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+   <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
 @yield('pre-css')
 
