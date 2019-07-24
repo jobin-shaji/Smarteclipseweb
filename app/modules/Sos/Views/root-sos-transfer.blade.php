@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="col-md-12 col-lg-6">
-                    <video id="preview" style="height:50%; width: 50%;"></video>
+                    <video id="preview" style="height:100%; width: 100%;"></video>
                   </div>
                 </div>
 

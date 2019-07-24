@@ -1335,7 +1335,7 @@ class GpsController extends Controller {
         }
 
         $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
-        return $pdf->download('abcd.pdf');
+        return $pdf->download('gps_details.pdf');
 
     }
 
