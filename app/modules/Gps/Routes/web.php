@@ -68,7 +68,8 @@ Route::post('/gps-transfer/user-detils','GpsController@userData')->name('gps-tra
 Route::post('/gps-transfer/accept','GpsController@AcceptGpsTransfer')->name('gps.accept');
 Route::post('/gps-transfer/cancel','GpsController@cancelGpsTransfer')->name('gps.cancel');
 Route::get('/gps-transfer/{id}/label','GpsController@gpsTransferLabel')->name('gps-transfer.label');
-Route::post('gps-transfer-label/export','GpsController@exportGpsTransferLabel')->name('gps-transfer-label.export');
+// Route::post('gps-transfer-label/export','GpsController@exportGpsTransferLabel')->name('gps-transfer-label.export');
+Route::get('/gps-transfer-label/{id}/export','GpsController@exportGpsTransferLabel')->name('gps-transfer-label.export');
 Route::post('/gps-scan','GpsController@getScannedGps')->name('gps-scan');
 
 //gps new arrivals in dealer

@@ -23,7 +23,9 @@
             <div class="col-md-12"> 
             <div class="row">
               <div class="col-md-10 ">
-                <button type="submit" class="btn btn-primary btn-md form-btn" onclick="downloadSosLabel({{$sos_transfer->id}})">Download</button>
+                <a href="{{route('sos-transfer-label.export',$sos_transfer->id)}}">
+                  <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
+                </a>
               </div>
             </div>                   
               <div class="card" style="max-width: 700px;">
