@@ -49,7 +49,7 @@ function getUrl() {
     function playback() {
     $(function() {
         // var baseurl = '/vehicles/location-playback';
-        var url = '/vehicles/location-playback';
+        var url = 'vehicles/location-playback';
         var id = document.getElementById('vehicle_id').value;
         var from_time = document.getElementById('fromDate').value;
         var to_time = document.getElementById('toDate').value;

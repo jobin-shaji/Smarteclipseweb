@@ -15,7 +15,7 @@ $(document).ready(function () {
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/list-history-jobs',
+            url: 'list-history-jobs',
             type: 'POST',
             data: {
                 'data': data
