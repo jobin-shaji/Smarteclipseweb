@@ -1,8 +1,13 @@
- @extends('layouts.eclipse')
-@section('title')
-    Assign Servicer
-@endsection
-@section('content')
+
+
+
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META http-equiv="X-UA-Compatible" content="IE=8">
+<TITLE></TITLE>
+<META name="generator" content="BCL easyConverter SDK 5.0.140">
 <STYLE type="text/css">
 
 body {margin-top: 0px;margin-left: 0px;}
@@ -51,50 +56,6 @@ body {margin-top: 0px;margin-left: 0px;}
 .t0{width: 655px;margin-left: 91px;margin-top: 3px;font: bold 16px 'Calibri';}
 
 </STYLE>
-<div class="page-wrapper page-wrapper-root page-wrapper_new">
-<div class="page-wrapper-root1">
-          
-      <div class="container-fluid">                    
-        <div class="card-body">
-          <div class="table-responsive">
-
-              <div class="download_button pull-right">
-                      <a href="{{ url('/') }}/job-complete/{{$id}}/downloads">
-                        <button class="btn"><i class="fa fa-download"></i>Download</button>
-                      </a>
-                    </div>
-            <TABLE cellpadding=0 cellspacing=0 class="t0">
-<TR>
-  <TD class="tr0 td0"><P class="p0 ft0" style="margin-left: -10px;">SUB DEALER/OEM ICON</P></TD>
-  <TD class="tr0 td1"><P class="p1 ft0">ADDRESS WITH</P></TD>
-</TR>
-<TR>
-  <TD class="tr1 td0"><P class="p0 ft1">&nbsp;</P></TD>
-  <TD class="tr1 td1"><P class="p1 ft2">PHONE NUMBER AND MAIL ID</P></TD>
-</TR>
-</TABLE>
-
-             
-        
-      </div>
-    </div>            
-  </div>
-</div>
-
-
-
-
- 
-
-
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<META http-equiv="X-UA-Compatible" content="IE=8">
-<TITLE></TITLE>
-<META name="generator" content="BCL easyConverter SDK 5.0.140">
-
 </HEAD>
 
 <BODY>
@@ -104,28 +65,38 @@ body {margin-top: 0px;margin-left: 0px;}
 
 
 <DIV class="dclr"></DIV>
-
+<TABLE cellpadding=0 cellspacing=0 class="t0">
+<TR>
+  <TD class="tr0 td0"><P class="p0 ft0" style="margin-left: -10px;">SUB DEALER/OEM ICON</P></TD>
+  <!-- <TD class="tr0 td1"><P class="p1 ft0">ADDRESS WITH</P></TD> -->
+</TR>
+<TR>
+  <TD class="tr1 td0"><P class="p0 ft1">&nbsp;</P></TD>
+  <TD class="tr1 td1"><P class="p1 ft2">{{$servicer_job->user->mobile}},{{$servicer_job->user->email}}</P></TD>
+</TR>
+</TABLE>
 <P class="p2 ft3">INSTALLATION CERTIFICATE</P>
-<P class="p3 ft4">DATE:</P>
-<P class="p4 ft4">DOCUMENT NUMBER:</P>
+<P class="p3 ft4">DATE:{{$servicer_job->job_complete_date}}</P>
+<P class="p4 ft4">DOCUMENT NUMBER:<?php echo str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT)?></P>
 <P class="p5 ft4">TO WHOMSOVER IT MAY CONCERN</P>
 <P class="p6 ft4">Dear Sir,</P>
 <P class="p7 ft4">Sub: Installation of Smart Eclipse Manufactured by VST Mobility solutions, Kochi</P>
 <P class="p8 ft4">Ref:ARAI certification number</P>
 <P class="p9 ft4">We VST Mobility Solution/SUB Dealer name , manufacturers/Dealers of AIS 140 ARAI certified GPS solutions hereby confirm that we have completed the installation of GPS device for the following vehicle as mentioned below,</P>
 
-<P class="p4 ft4">Vehicle Engine Number:</P>
-<P class="p3 ft4">Vehicle Chassis number:</P>
+<P class="p4 ft4">Vehicle Engine Number:{{$client->user->email}}</P>
+<P class="p3 ft4">Vehicle Chassis number:
+</P>
 <P class="p3 ft4">Vehicle Make & Model:</P>
 <P class="p3 ft4">Vehicle Reg No:</P>
 <P class="p4 ft4">VTU model:</P>
 <P class="p3 ft4">IMEI number:</P>
-<P class="p3 ft4">Owner name;</P>
-<P class="p3 ft4">Owner address;</P>
-<P class="p4 ft4">Mobile no:</P>
-<P class="p3 ft4">Email:</P>
+<P class="p3 ft4">Owner name:{{$client->name}}</P>
+<P class="p3 ft4">Owner address:{{$client->address}}</P>
+<P class="p4 ft4">Mobile no:{{$client->user->mobile}}</P>
+<P class="p3 ft4">Email:{{$client->user->email}}</P>
 <P class="p11 ft4">Yours truly,</P>
-<P class="p12 ft4">OEM/dealer name</P>
+<P class="p12 ft4">{{$servicer_job->user->username}}</P>
 <P class="p13 ft4">Signature and name of service Engineer</P>
 <P class="p14 ft4"><NOBR>-------------------------------------Tamper</NOBR> <NOBR>here----------------------------------------------------------</NOBR></P>
 <P class="p15 ft5">CUSTOMER FEEDBACK:</P>
@@ -133,4 +104,3 @@ body {margin-top: 0px;margin-left: 0px;}
 </DIV>
 </BODY>
 </HTML>
-@endsection

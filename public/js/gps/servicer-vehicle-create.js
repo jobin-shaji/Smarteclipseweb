@@ -22,6 +22,14 @@ function create_vehicle(){
     else if(document.getElementById('gps_id').value == ''){
         alert('please enter gps');
     }
+     else if(document.getElementById('engine_number').value == ''){
+        alert('please enter engine_number');
+    }
+     else if(document.getElementById('chassis_number').value == ''){
+        alert('please enter chassis_number');
+    }
+    
+    
     
     else{
        
@@ -32,7 +40,13 @@ function create_vehicle(){
         var register_number=$('#register_number').val(); 
         var vehicle_type_id=$('#vehicle_type_id').val(); 
         var gps_id=$('#gps_id').val(); 
-        var data = { 'client_id':client_id,'servicer_job_id':servicer_job_id,'name':name,'register_number':register_number, 'vehicle_type_id':vehicle_type_id, 'gps_id':gps_id};
+
+         var engine_number=$('#engine_number').val(); 
+        var chassis_number=$('#chassis_number').val();
+       // var path= document.getElementById("path").files[0].name; 
+        // =$('#path').val(); 
+
+        var data = { 'engine_number':engine_number,'chassis_number':chassis_number,'client_id':client_id,'servicer_job_id':servicer_job_id,'name':name,'register_number':register_number, 'vehicle_type_id':vehicle_type_id, 'gps_id':gps_id};
        
         callBackDataTable(data);
    }

@@ -119,6 +119,7 @@
                       <th >Vehicle</th>
                        <th >Register Number</th>
                       <th >GPS</th>
+                      <th >Action</th>
                      
                   </tr>
                 </thead>

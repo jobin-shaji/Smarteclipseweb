@@ -7,7 +7,7 @@
 <div class="page-wrapper-root1">
  <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Assign Servicer</li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Job</li>
          </ol>
          @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -146,7 +146,42 @@
                                  <strong class="error-text">{{ $errors->first('register_number') }}</strong>
                                  </span>
                                  @endif
-                              </div> 
+                              </div>
+                              <div class="form-group row" style="float:none!important">
+                                 <label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
+                                 <div class="form-group has-feedback">
+                                    <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" value="{{ old('engine_number') }}" id="engine_number" >
+                                 </div>
+                                 @if ($errors->has('engine_number'))
+                                 <span class="help-block">
+                                 <strong class="error-text">{{ $errors->first('engine_number') }}</strong>
+                                 </span>
+                                 @endif
+                              </div>
+                              <div class="form-group row" style="float:none!important">
+                                 <label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
+                                 <div class="form-group has-feedback">
+                                    <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" value="{{ old('chassis_number') }}" id="chassis_number" >
+                                 </div>
+                                 @if ($errors->has('chassis_number'))
+                                 <span class="help-block">
+                                 <strong class="error-text">{{ $errors->first('chassis_number') }}</strong>
+                                 </span>
+                                 @endif
+                              </div>
+                               
+<!-- 
+                                <div class="form-group row" style="float:none!important">
+                                <label class="srequired">RC Book </label>
+                               <div class="form-group has-feedback">
+                                   <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" id="path" value="{{ old('path') }}" > 
+                                    </div>
+                                    @if ($errors->has('path'))
+                                      <span class="help-block">
+                                          <strong class="error-text">{{ $errors->first('path') }}</strong>
+                                      </span>
+                                    @endif
+                                </div> -->
                                <div class="form-group row" style="float:none!important">
                                  <label for="fname" class="col-sm-5 text-right control-label col-form-label">Vehicle Type</label>
                                  <div class="form-group has-feedback">
