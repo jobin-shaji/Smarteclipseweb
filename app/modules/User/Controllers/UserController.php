@@ -119,9 +119,10 @@ class UserController extends Controller {
         return DataTables::of($users)
         ->addIndexColumn()
         ->addColumn('action', function ($user) {
+             $b_url = \URL::to('/');
         return "
-        <a href=/users/".$user->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-        <a href=/users/".$user->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+        <a href=".$b_url."/users/".$user->id."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+        <a href=".$b_url."/users/".$user->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
         <button onclick=delUser(".$user->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-trash'></i> Delete </button>";
         })
         ->rawColumns(['link', 'action'])

@@ -31,8 +31,9 @@ class RootController extends Controller {
         return DataTables::of($states)
             ->addIndexColumn()
             ->addColumn('action', function ($state) {
+                $b_url = \URL::to('/'); 
                 return "
-                    <a href=/state/".$state->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+                    <a href=".$b_url."/state/".$state->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
             })
             ->rawColumns(['link', 'action'])
             ->make();
