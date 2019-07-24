@@ -32,7 +32,7 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <div class="download_button pull-right">
-                      <a href=/gps/{{$eid}}/download>
+                      <a href="{{route('gps.download',$eid)}}">
                         <button class="btn"><i class="fa fa-download"></i>Download</button>
                       </a>
                     </div>

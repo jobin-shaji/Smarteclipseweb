@@ -60,7 +60,8 @@ Route::post('/sos-transfer/user-detils','SosController@userData')->name('sos-tra
 Route::post('/sos-transfer/accept','SosController@AcceptSosTransfer')->name('sos.accept');
 Route::post('/sos-transfer/cancel','SosController@cancelSosTransfer')->name('sos.cancel');
 Route::get('/sos-transfer/{id}/label','SosController@sosTransferLabel')->name('sos-transfer.label');
-Route::post('sos-transfer-label/export','SosController@exportSosTransferLabel')->name('sos-transfer-label.export');
+// Route::post('sos-transfer-label/export','SosController@exportSosTransferLabel')->name('sos-transfer-label.export');
+Route::get('/sos-transfer-label/{id}/export','SosController@exportSosTransferLabel')->name('sos-transfer-label.export');
 Route::post('/sos-scan','SosController@getScannedSos')->name('sos-scan');
 
 //sos new arrivals in dealer
