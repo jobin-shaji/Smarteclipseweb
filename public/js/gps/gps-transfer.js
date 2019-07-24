@@ -63,10 +63,11 @@ function cancelGpsTransfer(gps_transfer_id){
 
 $('.dealerData').on('change', function() {
     var dealerUserID=this.value;
+    var purl = getUrl() + '/'+'gps-transfer-root-dropdown' ;
     var data = { dealer_user_id : dealerUserID };
     $.ajax({
         type:'POST',
-        url: '/gps-transfer-root-dropdown',
+        url: purl,
         data:data ,
         async: true,
         headers: {
@@ -92,10 +93,11 @@ $(document).ready(function() {
 
 $('.subDealerData').on('change', function() {
     var subDealerUserID=this.value;
+    var purl = getUrl() + '/'+'gps-transfer-dealer-dropdown' ;
     var data = { sub_dealer_user_id : subDealerUserID };
     $.ajax({
         type:'POST',
-        url: '/gps-transfer-dealer-dropdown',
+        url: purl,
         data:data ,
         async: true,
         headers: {
@@ -114,10 +116,11 @@ $('.subDealerData').on('change', function() {
 
 $('.clientData').on('change', function() {
     var clientUserID=this.value;
+    var purl = getUrl() + '/'+'gps-transfer-sub-dealer-dropdown' ;
     var data = { client_user_id : clientUserID };
     $.ajax({
         type:'POST',
-        url: '/gps-transfer-sub-dealer-dropdown',
+        url: purl,
         data:data ,
         async: true,
         headers: {
