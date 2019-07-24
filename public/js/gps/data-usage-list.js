@@ -35,7 +35,7 @@ function callBackDataTable(data=null){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/data-usage-list',
+            url: 'data-usage-list',
             type: 'POST',
             data:data,
             headers: {

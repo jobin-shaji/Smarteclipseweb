@@ -15,7 +15,7 @@
 
       function initMap(){
        
-         var url = '/client-location';
+         var url = 'client-location';
          var data = { 
       
         };
