@@ -48,7 +48,7 @@ function check(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: '/assign-geofence-vehicle-list',
+            url: 'assign-geofence-vehicle-list',
             type: 'POST',
              data:data,
             headers: {
