@@ -19,6 +19,18 @@
         </div>
     </li>
     <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/sos/create')}}">ADD SOS</a>
+            <a class="dropdown-item" href="{{url('/sos')}}">LIST SOS</a>  
+            <a class="dropdown-item" href="{{url('/sos-transfer-root/create')}}">TRANSFER SOS</a> 
+            <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LOG</a> 
+            <a class="dropdown-item" href="{{url('/sos-transferred')}}">TRANSFERRED SOS</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
         </a>
         <ul class="dropdown-menu multi-level">

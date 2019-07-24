@@ -14,7 +14,7 @@
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/job-list')}}">JOB LIST </a>  
-            
+            <a class="dropdown-item" href="{{url('/job-history-list')}}">JOB History </a>  
                                      
         </div>
     </li>

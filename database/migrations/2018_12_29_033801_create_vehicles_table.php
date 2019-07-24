@@ -22,6 +22,9 @@ class CreateVehiclesTable extends Migration
             $table->integer('client_id');
             $table->tinyInteger('status');
             $table->integer('driver_id');
+            $table->integer('servicer_job_id')->nullable();
+            $table->string('engine_number')->nullable();
+            $table->string('chassis_number')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

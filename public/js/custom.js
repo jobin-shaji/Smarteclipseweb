@@ -839,5 +839,13 @@ function downloadLabel(id){
   downloadFile(url,data);
 }
 
+function downloadSosLabel(id){
+    var url = 'sos-transfer-label/export';
+    var data = {
+        id : id
+    };
+  downloadFile(url,data);
+}
+
 
 
