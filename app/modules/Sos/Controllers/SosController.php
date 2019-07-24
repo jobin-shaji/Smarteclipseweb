@@ -996,7 +996,7 @@ class SosController extends Controller {
         }
 
         $pdf = PDF::loadView('Sos::sos-pdf-download',['sos' => $sos]);
-        return $pdf->download('abcd.pdf');
+        return $pdf->download('sos_details.pdf');
 
     }
 
