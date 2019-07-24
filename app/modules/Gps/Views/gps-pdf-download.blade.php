@@ -17,7 +17,9 @@
       <td style="border:solid 1px #222;border-width:0 0 0 1px;width:100px;">
 
         <?php 
+
         $qr=$gps->imei;
+        
         ?>
         <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($qr)) !!}" />
       </td>
