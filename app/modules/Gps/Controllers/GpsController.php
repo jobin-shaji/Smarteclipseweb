@@ -1342,5 +1342,4 @@ class GpsController extends Controller {
 
 
 
-
 }
