@@ -49,7 +49,7 @@ class VehicleController extends Controller {
             ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
             ->with('driver:id,name')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->get();
 
         return DataTables::of($vehicles)
@@ -93,7 +93,7 @@ class VehicleController extends Controller {
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
         }
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
@@ -729,7 +729,7 @@ class VehicleController extends Controller {
             )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()
@@ -799,7 +799,7 @@ class VehicleController extends Controller {
             ->whereIn('client_id',$single_clients)
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->get();
 
         return DataTables::of($vehicles)
@@ -957,7 +957,7 @@ class VehicleController extends Controller {
             ->whereIn('client_id',$single_clients)
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->get();
 
         return DataTables::of($vehicles)
@@ -1345,7 +1345,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             $single_gps[] = $device->gps_id;
         } 
 
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();

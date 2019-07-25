@@ -36,7 +36,6 @@ class GpsController extends Controller {
         $user_id=\Auth::user()->id;
         $gps = Gps::select(
             'id',
-            'name',
         	'imei',
         	'manufacturing_date',
             'e_sim_number',
@@ -83,7 +82,6 @@ class GpsController extends Controller {
         $user_id[]=\Auth::user()->id;
         $gps = Gps::select(
                 'id',
-                'name',
                 'imei',
                 'manufacturing_date',
                 'version',
@@ -144,7 +142,6 @@ class GpsController extends Controller {
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
         $gps = Gps::create([
-            'name'=> $request->name,
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
             'e_sim_number'=> $request->e_sim_number,
@@ -196,7 +193,6 @@ class GpsController extends Controller {
         $rules = $this->gpsUpdateRules($gps);
         $this->validate($request, $rules);
 
-        $gps->name = $request->name;
         $gps->imei = $request->imei;
         $gps->manufacturing_date = $request->manufacturing_date;
         $gps->e_sim_number = $request->e_sim_number;
@@ -337,7 +333,7 @@ class GpsController extends Controller {
             'gf_id'
         )
         // ->with('client:id,name')
-        ->with('gps:id,name')
+        ->with('gps:id')
         // ->with('vehicle:id,name')
         ->where('gps_id',$gps_id)
         ->get();
@@ -432,7 +428,6 @@ class GpsController extends Controller {
         $dealer_subdealer_clients_group = array_merge($single_sub_dealers_user_id,$single_clients_user_id,$dealer_user_id);
         $gps = Gps::select(
                 'id',
-                'name',
                 'imei',
                 'version',
                 'brand',
@@ -474,7 +469,6 @@ class GpsController extends Controller {
         $subdealer_clients_group = array_merge($single_clients_user_id,$sub_dealer_user_id);
         $gps = Gps::select(
                 'id',
-                'name',
                 'imei',
                 'version',
                 'brand',
@@ -577,7 +571,7 @@ class GpsController extends Controller {
                 'user_id',
                 'created_at')
                 ->where('gps_id',$decrypted_id)
-                ->with('gps:id,name,imei')
+                ->with('gps:id,imei')
                 ->get();
         return view('Gps::gps-status-log-view',['gps_logs' => $gps_logs]);
     }
@@ -600,7 +594,6 @@ class GpsController extends Controller {
         $client_id=\Auth::user()->id;
         $gps = Gps::select(
                 'id',
-                'name',
                 'imei',
                 'version',
                 'brand',
@@ -680,7 +673,7 @@ class GpsController extends Controller {
     {
         $user = \Auth::user();
         $root = $user->root;
-        $devices = Gps::select('id', 'name', 'imei','user_id')
+        $devices = Gps::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->get();
         $entities = $root->dealers;
@@ -693,7 +686,7 @@ class GpsController extends Controller {
     {
         $device_imei=$request->imei;
         $user = \Auth::user();
-        $device = Gps::select('id', 'name', 'imei','user_id')
+        $device = Gps::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->where('imei',$device_imei)
                         ->first();
@@ -704,13 +697,11 @@ class GpsController extends Controller {
             ));
         }else{
             $gps_id=$device->id;
-            $gps_name=$device->name;
             $gps_imei=$device->imei;
             return response()->json(array(
                 'status' => 1,
                 'title' => 'success',
                 'gps_id' => $gps_id,
-                'gps_name' => $gps_name,
                 'gps_imei' => $gps_imei
             ));
         } 
@@ -751,7 +742,7 @@ class GpsController extends Controller {
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
         }
-        $devices = Gps::select('id', 'name', 'imei')
+        $devices = Gps::select('id', 'imei')
                         ->whereIn('id',$gps_list)
                         ->get();
         return view('Gps::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
@@ -801,10 +792,12 @@ class GpsController extends Controller {
     {
         $user = \Auth::user();
         $dealer = $user->dealer;
-        $devices = Gps::select('id', 'name', 'imei','user_id')
+        $devices = Gps::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->get();
-        $entities = $dealer->subDealers;
+        $entities = $dealer->subDealers()->with('user')->get();
+
+        $entities = $entities->where('user.deleted_at',null);
 
         return view('Gps::dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
@@ -844,7 +837,7 @@ class GpsController extends Controller {
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
         }
-        $devices = Gps::select('id', 'name', 'imei')
+        $devices = Gps::select('id', 'imei')
                         ->whereIn('id',$gps_list)
                         ->get();
         return view('Gps::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
@@ -894,10 +887,12 @@ class GpsController extends Controller {
     {
         $user = \Auth::user();
         $sub_dealer=$user->subdealer;
-        $devices = Gps::select('id', 'name', 'imei','user_id')
+        $devices = Gps::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->get();
-        $entities = $sub_dealer->clients;
+        $entities = $sub_dealer->clients()->with('user')->get();
+
+        $entities = $entities->where('user.deleted_at',null);
 
         return view('Gps::sub-dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
@@ -937,7 +932,7 @@ class GpsController extends Controller {
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
         }
-        $devices = Gps::select('id', 'name', 'imei')
+        $devices = Gps::select('id', 'imei')
                         ->whereIn('id',$gps_list)
                         ->get();
         return view('Gps::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
@@ -995,7 +990,7 @@ class GpsController extends Controller {
         $devices=array();
         foreach($gps_items as $gps_item){
             $single_gps= $gps_item->gps_id;
-            $devices[]=Gps::select('id','name','imei','version','e_sim_number','brand','model_name')
+            $devices[]=Gps::select('id','imei','version','e_sim_number','brand','model_name')
                         ->where('id',$single_gps)
                         ->first();
         }
@@ -1315,7 +1310,6 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'name' => 'required|unique:gps',
             'imei' => 'required|numeric|min:15|unique:gps|max:15',
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|numeric|unique:gps|max:10|min:10',
@@ -1329,7 +1323,6 @@ class GpsController extends Controller {
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
-            'name' => 'required|unique:gps,name,'.$gps->id,
             'imei' => 'required|numeric|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|numeric|max:10|min:10|unique:gps,e_sim_number,'.$gps->id,

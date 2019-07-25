@@ -29,7 +29,6 @@
                                             <thead>
                                               <tr>
                                                 <th>Sl.No</th>
-                                                <th>Name</th>
                                                 <th>IMEI</th>
                                                 <th>Version</th>
                                                 <th>Brand</th>
@@ -40,7 +39,6 @@
                                               @foreach($devices as $device)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
-                                                <td>{{$device->name}}</td>
                                                 <td>{{$device->imei}}</td>
                                                 <td>{{$device->version}}</td>
                                                 <td>{{$device->brand}}</td>

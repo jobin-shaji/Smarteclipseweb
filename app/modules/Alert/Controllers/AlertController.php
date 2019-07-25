@@ -315,14 +315,14 @@ class AlertController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Alert type does not exist'
             ]);
         }
         $alert_type->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer restored successfully'
+            'message' => 'Alert type restored successfully'
         ]);
     }//
 

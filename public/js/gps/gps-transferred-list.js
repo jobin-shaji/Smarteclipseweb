@@ -37,7 +37,6 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name', searchable: false},
             {data: 'imei', name: 'imei'},
             {data: 'manufacturing_date', name: 'manufacturing_date'},
             {data: 'version', name: 'version'},

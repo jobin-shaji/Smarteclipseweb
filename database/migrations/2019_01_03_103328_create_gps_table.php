@@ -15,7 +15,6 @@ class CreateGpsTable extends Migration
     {
         Schema::create('gps', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->string('imei');
             $table->date('manufacturing_date');
             $table->bigInteger('e_sim_number');

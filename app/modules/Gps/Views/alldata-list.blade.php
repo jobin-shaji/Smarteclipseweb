@@ -14,7 +14,7 @@
               <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
                 <option value="">All</option>
                 @foreach($gps as $gps)
-                <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
+                <option value="{{$gps->id}}">{{$gps->imei}}</option>
                 @endforeach
               </select>
               <!-- <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> SET OTA </button>  -->

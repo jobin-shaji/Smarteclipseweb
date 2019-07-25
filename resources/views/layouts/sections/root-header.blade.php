@@ -48,6 +48,12 @@
                 </ul>
             </li>
             <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">END USERS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/client')}}">LIST END USERS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SERVICE ENGINEERS</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{url('create-servicer')}}">ADD SERVICE ENGINEER</a></li>

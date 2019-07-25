@@ -18,7 +18,6 @@
                               <thead>
                                   <tr>
                                     <th>Sl.No</th>
-                                    <th>Name</th>
                                     <th>IMEI</th>
                                     <th>Version</th>
                                     <th>Brand</th>

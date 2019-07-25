@@ -20,17 +20,6 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
-                    <label class="srequired">Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
-                    @if ($errors->has('name'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('name') }}</strong>
-                    </span>
-                  @endif
-                  </div>
-                  
-
-                  <div class="form-group has-feedback">
                     <label class="srequired">IMEI</label>
                     <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ old('imei') }}" required> 
                      @if ($errors->has('imei'))

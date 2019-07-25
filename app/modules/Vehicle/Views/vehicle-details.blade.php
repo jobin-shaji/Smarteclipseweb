@@ -58,7 +58,7 @@
 
                             <div class="form-group has-feedback">
                               <label class="srequired">GPS</label>
-                              <input type="text" class="form-control" value="{{$vehicle->gps->name}} || {{$vehicle->gps->imei}}" disabled> 
+                              <input type="text" class="form-control" value="{{$vehicle->gps->imei}}" disabled> 
                               <span class="glyphicon glyphicon-home form-control-feedback"></span>
                             </div>
                           </div> 
