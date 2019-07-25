@@ -48,11 +48,6 @@
           <div class="row">
             <div class="col-lg-8 col-md-12">
               <div class="form-group has-feedback">
-                <label>Name</label>
-                <input type="text" class="form-control" value="{{ $gps->name}}" disabled>
-              </div>
-
-              <div class="form-group has-feedback">
                 <label>IMEI</label>
                 <input type="text" class="form-control" value="{{ $gps->imei}}" disabled> 
               </div>

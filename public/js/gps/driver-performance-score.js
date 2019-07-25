@@ -49,7 +49,7 @@ function callBackDataTable(data=null){
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
             {data: 'driver.name', name: 'driver.name'},
-            {data: 'gps.name', name: 'gps.name'},
+            {data: 'gps.imei', name: 'gps.imei'},
             {data: 'description', name: 'description'},
             
             {data: 'points', name: 'points'},

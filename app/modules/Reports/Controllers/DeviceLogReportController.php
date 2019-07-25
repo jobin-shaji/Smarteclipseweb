@@ -30,7 +30,7 @@ class DeviceLogReportController extends Controller {
             'created_at'
         )  
         ->where('user_id',$subdealer)              
-        ->with('gps:id,name,imei')
+        ->with('gps:id,imei')
         ->with('user:id,username');
         if($from)
         {

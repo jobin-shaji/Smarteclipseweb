@@ -22,11 +22,11 @@ class SubDealer extends Model
   // dealer
   public function dealer()
   {
-    return $this->hasOne('App\Modules\Dealer\Models\Dealer','id','dealer_id');
+    return $this->hasOne('App\Modules\Dealer\Models\Dealer','id','dealer_id')->withTrashed();
   }
 
   public function clients(){
-      return $this->hasMany('App\Modules\Client\Models\Client');
+      return $this->hasMany('App\Modules\Client\Models\Client')->withTrashed();
   }
 }
 

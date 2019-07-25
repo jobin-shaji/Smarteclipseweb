@@ -208,7 +208,7 @@ class DriverController extends Controller {
             ->with('alert:id,alert_type_id')
             ->with('driver:id,name')
             ->with('vehicle:id,name,register_number')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->with('client:id,name'); 
             if($driver_id==null && $from==null && $to==null)
             {

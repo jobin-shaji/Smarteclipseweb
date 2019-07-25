@@ -29,7 +29,6 @@
                       <th>#</th>
                       <th>Vehicle Name</th>
                       <th>Register Number</th>
-                      <th>GPS Name</th>
                       <th>IMEI</th>
                       <th>Vehicle Type</th>
                       <th>Dealer</th>

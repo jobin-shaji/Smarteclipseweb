@@ -26,7 +26,6 @@
                 <thead>
                   <tr>
                       <th>Sl.No</th>
-                      <th>Name</th>
                       <th>IMEI</th>
                       <th>Manufacturing Date</th>
                       <th>Version</th>

@@ -11,7 +11,7 @@ class Client extends Model
   
   public function subdealer()
   {
-    return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id');
+    return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id')->withTrashed();
   } 
 
   public function user()

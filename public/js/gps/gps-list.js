@@ -37,10 +37,9 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name', searchable: false},
-            {data: 'imei', name: 'imei'},
+            {data: 'imei', name: 'imei',searchable: false},
             {data: 'manufacturing_date', name: 'manufacturing_date'},
-            {data: 'e_sim_number', name: 'e_sim_number'},
+            {data: 'e_sim_number', name: 'e_sim_number',searchable: false},
             {data: 'brand', name: 'brand'},
             {data: 'model_name', name: 'model_name'},
             {data: 'version', name: 'version'},

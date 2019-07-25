@@ -19,10 +19,9 @@ scanner.addListener('scan', function (content) {
                  alert("item exists");
             }else{
                 items.push(res.gps_id);
-                var gps_name=res.gps_name;
                 var gps_imei=res.gps_imei;
                 $("#gps_id").val(items); 
-                var markup = "<tr><td>" + gps_name + "</td><td>" + gps_imei + "</td></tr>";
+                var markup = "<tr><td>" + gps_imei + "</td></tr>";
                 $("table tbody").append(markup);
             }
         }else{

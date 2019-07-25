@@ -45,7 +45,7 @@ class OtaController extends Controller {
                 }else{
                      return "
                     <a href=".$b_url."/ota-type/".Crypt::encrypt($ota_type->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                    <a href=".$b_url"/ota-type/".Crypt::encrypt($ota_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/ota-type/".Crypt::encrypt($ota_type->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <button onclick=activateOtaType(".$ota_type->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>"; 
                 }
              })

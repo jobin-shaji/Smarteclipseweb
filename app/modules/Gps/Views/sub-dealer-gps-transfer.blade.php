@@ -81,7 +81,6 @@
                       <table class="table table-bordered  table-striped " style="width:100%">
                         <thead>
                           <tr>
-                            <th>GPS Name</th>
                             <th>IMEI</th>
                           </tr>
                         </thead>

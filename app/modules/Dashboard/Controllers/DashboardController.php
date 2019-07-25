@@ -105,7 +105,7 @@ class DashboardController extends Controller
                     ->orderBy('id','desc')                 
                     ->get();
                     $user_id=\Auth::user()->id;
-                     $get_gpss = Gps::select('id','name','imei','lat','lon')
+                     $get_gpss = Gps::select('id','imei','lat','lon')
                     ->whereNotNull('lat')
                     ->whereNotNull('lon')
                     ->where('user_id',$user_id)                        

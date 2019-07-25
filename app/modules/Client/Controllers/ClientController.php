@@ -78,16 +78,7 @@ class ClientController extends Controller {
     {
         return view('Client::client-list');
     }
-    public function user_create_rules()
-    {
-        $rules = [
-            'username' => 'required|unique:users',
-            'mobile' => 'required|numeric|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ];
-        return  $rules;
-    }
+   
     public function getClientlist(Request $request)
     {
         $subdealer=$request->user()->subdealer->id;
@@ -99,14 +90,14 @@ class ClientController extends Controller {
         'address',                                       
         'deleted_at')
         ->withTrashed()
-        ->with('user:id,email,mobile')
+        ->with('user:id,email,mobile,deleted_at')
         ->where('sub_dealer_id',$subdealer)
         ->get();
         return DataTables::of($client)
         ->addIndexColumn()
         ->addColumn('action', function ($client) {
              $b_url = \URL::to('/');
-        if($client->deleted_at == null){ 
+        if($client->user->deleted_at == null){ 
             return "
             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
@@ -114,8 +105,6 @@ class ClientController extends Controller {
             <button onclick=delClient(".$client->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate </button>";
         }else{                   
                 return "
-              
-                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=activateClient(".$client->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-remove'></i> Activate </button>";
             }
         })
@@ -384,7 +373,7 @@ class ClientController extends Controller {
                 'message' => 'Client does not exist'
             ]);
         }
-        $client->delete();
+        $client->user->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -404,7 +393,7 @@ class ClientController extends Controller {
              ]);
         }
 
-        $client->restore();
+        $client->user->restore();
 
         return response()->json([
             'status' => 1,
@@ -526,6 +515,17 @@ class ClientController extends Controller {
     {
         $rules = [
             'logo' => 'required'
+        ];
+        return  $rules;
+    }
+
+     public function user_create_rules()
+    {
+        $rules = [
+            'username' => 'required|unique:users',
+            'mobile' => 'required|numeric|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
     }

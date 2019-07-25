@@ -43,7 +43,7 @@ class DealerController extends Controller {
         })
         ->addColumn('action', function ($dealers) {
              $b_url = \URL::to('/');
-            if($dealers->deleted_at == null){ 
+            if($dealers->user->deleted_at == null){ 
             return "
             <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
@@ -51,8 +51,7 @@ class DealerController extends Controller {
            
             ";
             }else{ 
-            return "<a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>";
+            return "";
             }
         })
         ->rawColumns(['link', 'action','working_status'])
@@ -166,14 +165,16 @@ class DealerController extends Controller {
     //delete dealer details from table
     public function disableDealer(Request $request)
     {
-        $dealer = User::find($request->id);
-        if($dealer == null){
+        $dealer_user = User::find($request->id);
+        $dealer = Dealer::select('id')->where('user_id',$dealer_user->id)->first();
+        if($dealer_user == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Dealer does not exist'
             ]);
         }
+        $dealer_user->delete();
         $dealer->delete();
         return response()->json([
             'status' => 1,
@@ -184,14 +185,16 @@ class DealerController extends Controller {
     // restore emplopyee
     public function enableDealer(Request $request)
     {
-        $dealer = User::withTrashed()->find($request->id);
-        if($dealer==null){
+        $dealer_user = User::withTrashed()->find($request->id);
+        $dealer = Dealer::withTrashed()->select('id')->where('user_id',$dealer_user->id)->first();
+        if($dealer_user==null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Dealer does not exist'
             ]);
         }
+        $dealer_user->restore();
         $dealer->restore();
         return response()->json([
             'status' => 1,
