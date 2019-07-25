@@ -252,7 +252,7 @@ class DealerController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|min:10',
             'username' => 'nullable|string|max:20|unique:dealers',
             'password' => 'nullable|string|min:6|confirmed',
         ];
@@ -263,7 +263,7 @@ class DealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric'       
+            'phone_number' => 'required|numeric|min:10'       
         ];
         return  $rules;
     }
@@ -279,7 +279,7 @@ class DealerController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|numeric|unique:users|min:10|max:10',
+            'mobile' => 'required|numeric|unique:users|min:10',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;

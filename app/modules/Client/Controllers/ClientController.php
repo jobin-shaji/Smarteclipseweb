@@ -150,7 +150,7 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric'
+            'phone_number' => 'required|numeric|size:10'
             
         ];
         return  $rules;
@@ -523,7 +523,7 @@ class ClientController extends Controller {
     {
         $rules = [
             'username' => 'required|unique:users',
-            'mobile' => 'required|numeric|unique:users',
+            'mobile' => 'required|numeric|size:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
