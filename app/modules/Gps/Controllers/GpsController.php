@@ -1310,9 +1310,9 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'imei' => 'required|numeric|min:15|unique:gps|max:15',
+            'imei' => 'required|numeric|unique:gps|min:15',
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|numeric|unique:gps|max:10|min:10',
+            'e_sim_number' => 'required|numeric|unique:gps|min:10',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required'
@@ -1323,9 +1323,9 @@ class GpsController extends Controller {
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
-            'imei' => 'required|numeric|min:15|max:15|unique:gps,imei,'.$gps->id,
+            'imei' => 'required|numeric|min:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|numeric|max:10|min:10|unique:gps,e_sim_number,'.$gps->id,
+            'e_sim_number' => 'required|numeric|min:10|unique:gps,e_sim_number,'.$gps->id,
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required',
