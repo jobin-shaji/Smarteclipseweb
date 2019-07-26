@@ -231,18 +231,7 @@
 
 
          </div>
-         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
-                <thead>
-                  <tr>
-                      <th>#</th>
-                     
-                      <th >Vehicle</th>
-                       <th >Register Number</th>
-                      <th >GPS</th>
-                     
-                  </tr>
-                </thead>
-              </table>
+        
         </div>
    <!-- </form> -->
               </div>

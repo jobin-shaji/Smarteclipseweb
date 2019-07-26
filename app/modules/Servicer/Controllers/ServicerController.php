@@ -437,7 +437,7 @@ class ServicerController extends Controller {
             $single_gps[] = $device->gps_id;
         } 
 
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
