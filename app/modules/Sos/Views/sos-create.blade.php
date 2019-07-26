@@ -20,8 +20,8 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
-                    <label class="srequired">IMEI</label>
-                    <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ old('imei') }}" required> 
+                    <label class="srequired">Serial NO</label>
+                    <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="Serial NO" name="imei" value="{{ old('imei') }}" required> 
                      @if ($errors->has('imei'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>

@@ -48,7 +48,7 @@
           <div class="row">
             <div class="col-lg-8 col-md-12">
               <div class="form-group has-feedback">
-                <label>IMEI</label>
+                <label>Serial NO</label>
                 <input type="text" class="form-control" value="{{ $sos->imei}}" disabled> 
               </div>
 
