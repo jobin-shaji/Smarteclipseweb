@@ -81,7 +81,7 @@
                       <table class="table table-bordered  table-striped " style="width:100%">
                         <thead>
                           <tr>
-                            <th>IMEI</th>
+                            <th>Serial No</th>
                           </tr>
                         </thead>
                         <tbody>

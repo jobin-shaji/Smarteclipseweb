@@ -19,7 +19,7 @@
                               <thead>
                                   <tr>
                                     <th>Sl.No</th>
-                                    <th>IMEI</th>
+                                    <th>Serial NO</th>
                                     <th>Version</th>
                                     <th>Brand</th>
                                     <th>Model Name</th>
