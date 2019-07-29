@@ -25,7 +25,7 @@ scanner.addListener('scan', function (content) {
                 $("table tbody").append(markup);
             }
         }else{
-          alert("Gps device already tranferred");
+          alert("Gps device already transferred");
         }
       }
   });
