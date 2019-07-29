@@ -70,7 +70,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/vehicle-root')}}">LIST VEHICLES<span></span></a> 
-            <a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATAGORIES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES<span></span></a> 
             <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATAGORY<span></span></a>
         </div>
     </li>
