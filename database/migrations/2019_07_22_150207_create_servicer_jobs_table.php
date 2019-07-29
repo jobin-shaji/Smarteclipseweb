@@ -24,6 +24,8 @@ class CreateServicerJobsTable extends Migration
             $table->dateTime('job_date');
             $table->dateTime('job_complete_date');
              $table->integer('status');
+             $table->string('latitude');
+             $table->string('longitude');
             $table->timestamps();
              $table->softDeletes();
         });
