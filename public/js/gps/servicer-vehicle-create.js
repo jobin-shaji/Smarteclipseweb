@@ -43,6 +43,7 @@ function create_vehicle(){
 
          var engine_number=$('#engine_number').val(); 
         var chassis_number=$('#chassis_number').val();
+        
        // var path= document.getElementById("path").files[0].name; 
         // =$('#path').val(); 
 

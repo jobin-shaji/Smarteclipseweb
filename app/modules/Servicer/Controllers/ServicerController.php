@@ -9,7 +9,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
-
+use App\Modules\Vehicle\Models\Document;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
@@ -450,14 +450,53 @@ class ServicerController extends Controller {
 
     public function servicerJobSave(Request $request)
     { 
+         $custom_messages = [
+        'path.required' => 'File cannot be blank'
+        ];
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
         $this->validate($request,$rules);      
         $job_completed_date=date("Y-m-d", strtotime($request->job_completed_date)); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
-        // $servicer->address = $request->address;
+         $servicer_job->status = 1;
         $servicer_job->save();
+        $name= $request->name;         
+        $register_number = $request->register_number;
+        $vehicle_type_id = $request->vehicle_type_id;
+        $gps_id = $request->gps_id;
+        $client_id = $request->client_id;
+        $servicer_job_id = $request->servicer_job_id;
+        $engine_number = $request->engine_number;
+        $chassis_number = $request->chassis_number;
+        // $path = $request->path;
+
+        $vehicle_create= Vehicle::create([
+                'name' => $name,
+                'register_number' => $register_number,
+                'vehicle_type_id' => $vehicle_type_id,
+                'gps_id' => $gps_id,
+                'client_id' => $client_id,
+                'servicer_job_id' =>$servicer_job->id,
+                'engine_number' => $engine_number,
+                'chassis_number' => $chassis_number,
+                'status' => 1
+            ]);
+         $this->validate($request, $rules, $custom_messages);
+        $file=$request->path;
+        // dd($file);
+        $getFileExt   = $file->getClientOriginalExtension();
+        $uploadedFile =   time().'.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $file->move($destinationPath,$uploadedFile);
+        $documents = Document::create([
+            'vehicle_id' => $vehicle_create->id,
+            'document_type_id' => 1,
+            'expiry_date' => null,
+            'path' => $uploadedFile,
+        ]);
+
 
         $service_job_id=Crypt::encrypt($servicer_job->id);
         $request->session()->flash('message', 'Assign  servicer successfully!'); 
@@ -481,7 +520,7 @@ class ServicerController extends Controller {
         $engine_number = $request->engine_number;
         $chassis_number = $request->chassis_number;
         $path = $request->path;
-        // dd($servicer_job_id);
+        
         if($gps_id!=null)
         {
             $vehicle_create= Vehicle::create([
@@ -767,7 +806,17 @@ class ServicerController extends Controller {
     {
         $rules = [
           
-            'job_completed_date' => 'required'            
+            'job_completed_date' => 'required',
+            'name' => 'required',
+            'register_number' => 'required',
+            'vehicle_type_id' => 'required',
+            'gps_id' => 'required',
+            'client_id' => 'required',
+            'servicer_job_id' => 'required',
+            'engine_number' => 'required',
+            'chassis_number' => 'required',
+            'name' => 'required',
+            'path' => 'required'
         ];
         return  $rules;
     }
