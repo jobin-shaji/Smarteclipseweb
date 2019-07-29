@@ -54,7 +54,7 @@
                  
                   <div class="form-group has-feedback">
                         <label class="srequired">Mobile No.</label>
-                        <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" required>
+                        <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" required>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                          @if ($errors->has('mobile'))
                      <span class="help-block">
