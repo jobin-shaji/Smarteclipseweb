@@ -741,6 +741,7 @@ class GpsController extends Controller {
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
         $gps_array=explode(",",$gps_array_list[0]);
         $gps_list=[];
@@ -750,7 +751,7 @@ class GpsController extends Controller {
         $devices = Gps::select('id', 'imei')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Gps::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+        return view('Gps::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save root gps transfer/transfer gps from root to dealer
@@ -760,6 +761,7 @@ class GpsController extends Controller {
         $gps_array = $request->gps_id;
         $to_user_id = $request->dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $uniqid=uniqid();
         $order_number=$uniqid.date("Y-m-d h:i:s");
         if($gps_array){
@@ -768,6 +770,7 @@ class GpsController extends Controller {
               "to_user_id" => $to_user_id,
               "order_number" => $order_number,
               "scanned_employee_code" => $scanned_employee_code,
+              "invoice_number" => $invoice_number,
               "dispatched_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_gps_transfer=$gps_transfer->id;
@@ -840,6 +843,7 @@ class GpsController extends Controller {
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
         $gps_array=explode(",",$gps_array_list[0]);
         $gps_list=[];
@@ -849,7 +853,7 @@ class GpsController extends Controller {
         $devices = Gps::select('id', 'imei')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Gps::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+        return view('Gps::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save dealer gps transfer/transfer gps from dealer to sub dealer
@@ -859,6 +863,7 @@ class GpsController extends Controller {
         $gps_array = $request->gps_id;
         $to_user_id = $request->sub_dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $uniqid=uniqid();
         $order_number=$uniqid.date("Y-m-d h:i:s");
         if($gps_array){
@@ -867,6 +872,7 @@ class GpsController extends Controller {
               "to_user_id" => $to_user_id,
               "order_number" => $order_number,
               "scanned_employee_code" => $scanned_employee_code,
+              "invoice_number" => $invoice_number,
               "dispatched_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_gps_transfer=$gps_transfer->id;
@@ -939,6 +945,7 @@ class GpsController extends Controller {
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
         $gps_array=explode(",",$gps_array_list[0]);
         $gps_list=[];
@@ -948,7 +955,7 @@ class GpsController extends Controller {
         $devices = Gps::select('id', 'imei')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Gps::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+        return view('Gps::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save dealer gps transfer/transfer gps from sub dealer to client
@@ -958,6 +965,7 @@ class GpsController extends Controller {
         $gps_array = $request->gps_id;
         $to_user_id = $request->client_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $uniqid=uniqid();
         $order_number=$uniqid.date("Y-m-d h:i:s");
         if($gps_array){
@@ -966,7 +974,9 @@ class GpsController extends Controller {
               "to_user_id" => $to_user_id,
               "order_number" => $order_number,
               "scanned_employee_code" => $scanned_employee_code,
-              "dispatched_on" => date('Y-m-d H:i:s')
+              "invoice_number" => $invoice_number,
+              "dispatched_on" => date('Y-m-d H:i:s'),
+              "accepted_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_gps_transfer=$gps_transfer->id;
         }
@@ -979,7 +989,7 @@ class GpsController extends Controller {
                 if($gps_transfer_item){
                     //update gps table
                     $gps = Gps::find($gps_id);
-                    $gps->user_id =null;
+                    $gps->user_id =$to_user_id;
                     $gps->save();
                 }
             }
@@ -1299,6 +1309,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
         ];
         return $rules;
     }
@@ -1309,6 +1320,7 @@ class GpsController extends Controller {
           'gps_id' => 'required',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
         ];
         return $rules;
     }
@@ -1319,7 +1331,9 @@ class GpsController extends Controller {
         $rules = [
           'gps_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
-          'scanned_employee_code' => 'required',];
+          'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
+      ];
         return $rules;
     }
 
@@ -1329,6 +1343,7 @@ class GpsController extends Controller {
             'gps_id' => 'required',
             'sub_dealer_user_id' => 'required',
             'scanned_employee_code' => 'required',
+            'invoice_number' => 'required'
         ];
         return $rules;
     }
@@ -1339,6 +1354,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
         ];
         return $rules;
     }
@@ -1349,6 +1365,7 @@ class GpsController extends Controller {
             'gps_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
+            'invoice_number' => 'required'
         ];
         return $rules;
     }
@@ -1356,9 +1373,9 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'imei' => 'required|numeric|unique:gps|min:15',
+            'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|numeric|unique:gps|min:10',
+            'e_sim_number' => 'required|string|unique:gps|min:10|max:10',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required'
@@ -1369,9 +1386,9 @@ class GpsController extends Controller {
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
-            'imei' => 'required|numeric|min:15|unique:gps,imei,'.$gps->id,
+            'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|numeric|min:10|unique:gps,e_sim_number,'.$gps->id,
+            'e_sim_number' => 'required|string|min:10|max:10|unique:gps,e_sim_number,'.$gps->id,
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required',

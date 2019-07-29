@@ -81,7 +81,6 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-new')}}"> New Arrivals <span></span></a>
                                 <a class="dropdown-item" href="{{url('/gps-client')}}"> List GPS<span></span></a>                               
                             </div>
                         </li>
@@ -91,7 +90,6 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/sos-new')}}"> New Arrivals <span></span></a>
                                 <a class="dropdown-item" href="{{url('/sos-client')}}"> List SOS<span></span></a>                               
                             </div>
                         </li>

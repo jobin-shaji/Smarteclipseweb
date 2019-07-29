@@ -51,6 +51,11 @@
             <label>Scanned Employee Code</label>
             <input type="text" class="form-control" name="scanned_employee_code" value="{{ $scanned_employee_code}}" readonly> 
           </div>
+
+          <div class="form-group has-feedback">
+            <label>Invoice Number</label>
+            <input type="text" class="form-control" name="invoice_number" value="{{ $invoice_number}}" readonly> 
+          </div>
         </div>
       </div>
       <div class="form-group has-feedback">

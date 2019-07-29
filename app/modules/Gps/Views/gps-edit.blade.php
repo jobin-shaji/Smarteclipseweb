@@ -30,7 +30,7 @@
         <div class="col-md-6">
           <div class="form-group has-feedback">
             <label class="srequired">IMEI</label>
-            <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}"> 
+            <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}"> 
           </div>
           @if ($errors->has('imei'))
             <span class="help-block">
@@ -50,7 +50,7 @@
 
           <div class="form-group has-feedback">
             <label class="srequired">E-SIM Number</label>
-            <input type="text" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}"> 
+            <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}"> 
           </div>
           @if ($errors->has('e_sim_number'))
             <span class="help-block">
