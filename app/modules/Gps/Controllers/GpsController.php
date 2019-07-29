@@ -727,8 +727,13 @@ class GpsController extends Controller {
     // proceed gps transfer for confirmation
     public function proceedRootGpsTransfer(Request $request) 
     {
-        $rules = $this->gpsRootTransferRule();
-        $this->validate($request, $rules);
+        
+        if($request->gps_id[0]==null){
+            $rules = $this->gpsRootTransferRule();
+        }else{
+            $rules = $this->gpsRootTransferNullRule();
+        }
+        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one qr code']);
         $dealer_user_id=$request->dealer_user_id;
         $dealer_name=$request->dealer_name;
         $address=$request->address;
@@ -822,8 +827,12 @@ class GpsController extends Controller {
     // proceed gps transfer for confirmation
     public function proceedDealerGpsTransfer(Request $request) 
     {
-        $rules = $this->gpsDealerTransferRule();
-        $this->validate($request, $rules);
+        if($request->gps_id[0]==null){
+            $rules = $this->gpsDealerTransferRule();
+        }else{
+            $rules = $this->gpsDealerTransferNullRule();
+        }
+        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one qr code']);
         $sub_dealer_user_id=$request->sub_dealer_user_id;
         $sub_dealer_name=$request->sub_dealer_name;
         $address=$request->address;
@@ -917,8 +926,12 @@ class GpsController extends Controller {
     // proceed gps transfer for confirmation
     public function proceedSubDealerGpsTransfer(Request $request) 
     {
-        $rules = $this->gpsSubDealerTransferRule();
-        $this->validate($request, $rules);
+        if($request->gps_id[0]==null){
+            $rules = $this->gpsSubDealerTransferRule();
+        }else{
+            $rules = $this->gpsSubDealerTransferNullRule();
+        }
+        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one qr code']);
         $client_user_id=$request->client_user_id;
         $client_name=$request->client_name;
         $address=$request->address;
@@ -1281,27 +1294,60 @@ class GpsController extends Controller {
     // root gps transfer rule
     public function gpsRootTransferRule(){
         $rules = [
-          'gps_id' => 'required',
+          'gps_id' => 'required|min:2',
           'dealer_user_id' => 'required',
-          'scanned_employee_code' => 'required',];
+          'scanned_employee_code' => 'required',
+        ];
         return $rules;
     }
+
+    // root gps transfer rule with null gps_id array
+    public function gpsRootTransferNullRule(){
+        $rules = [
+          'gps_id' => 'required',
+          'dealer_user_id' => 'required',
+          'scanned_employee_code' => 'required',
+        ];
+        return $rules;
+    }
+
 
     // dealer gps transfer rule
     public function gpsDealerTransferRule(){
         $rules = [
-          'gps_id' => 'required',
+          'gps_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',];
+        return $rules;
+    }
+
+    // root gps transfer rule with null gps_id array
+    public function gpsDealerTransferNullRule(){
+        $rules = [
+            'gps_id' => 'required',
+            'sub_dealer_user_id' => 'required',
+            'scanned_employee_code' => 'required',
+        ];
         return $rules;
     }
 
     // sub dealer gps transfer rule
     public function gpsSubDealerTransferRule(){
         $rules = [
-          'gps_id' => 'required',
+          'gps_id' => 'required|min:2',
           'client_user_id' => 'required',
-          'scanned_employee_code' => 'required',];
+          'scanned_employee_code' => 'required',
+        ];
+        return $rules;
+    }
+
+    // root gps transfer rule with null gps_id array
+    public function gpsSubDealerTransferNullRule(){
+        $rules = [
+            'gps_id' => 'required',
+            'client_user_id' => 'required',
+            'scanned_employee_code' => 'required',
+        ];
         return $rules;
     }
 

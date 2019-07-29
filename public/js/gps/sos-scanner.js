@@ -25,7 +25,7 @@ scanner.addListener('scan', function (content) {
                 $("table tbody").append(markup);
             }
         }else{
-          alert("Sos button already tranferred");
+          alert("Sos button already transferred");
         }
       }
   });
