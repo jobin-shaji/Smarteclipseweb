@@ -30,7 +30,7 @@
         <div class="col-md-6">
           <div class="form-group has-feedback">
             <label class="srequired">Serial NO</label>
-            <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="Serial NO" name="imei" value="{{ $sos->imei}}"> 
+            <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="Serial NO" name="imei" value="{{ $sos->imei}}"> 
           </div>
           @if ($errors->has('imei'))
             <span class="help-block">
