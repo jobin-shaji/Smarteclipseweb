@@ -125,6 +125,9 @@ class UsersTableSeeder extends Seeder
         DB::table('document_types')->insert([
             'name' => 'Tax Document'
         ]);
+        DB::table('document_types')->insert([
+            'name' => 'Installation Photo'
+        ]);
 
         DB::table('vehicle_types')->insert([
             'name' => 'Car'
