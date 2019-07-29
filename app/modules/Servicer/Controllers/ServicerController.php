@@ -290,6 +290,19 @@ class ServicerController extends Controller {
         $this->validate($request, $rules);
         $job_date=date("Y-m-d", strtotime($request->job_date));        
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
+
+        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+
+        if($placeLatLng==null){
+              $request->session()->flash('message', 'Enter correct location'); 
+              $request->session()->flash('alert-class', 'alert-danger'); 
+              return redirect(route('sub-dealer.assign.servicer'));        
+        }
+
+        $location_lat=$placeLatLng['latitude'];
+        $location_lng=$placeLatLng['logitude'];
+        
+
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
                 'servicer_id' => $request->servicer,
@@ -299,7 +312,9 @@ class ServicerController extends Controller {
                 'user_id' => $user_id,
                 'description' => $request->description,
                 'job_date' => $job_date,                
-                'status' => 0,            
+                'status' => 0, 
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng           
             ]); 
             $request->session()->flash('message', 'Assign  servicer successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
@@ -717,7 +732,27 @@ class ServicerController extends Controller {
     }
 
 
+#################################################
+    function getPlaceLatLng($address){
 
+        $data = urlencode($address);
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ";
+        $geocode_stats = file_get_contents($url);
+        $output_deals = json_decode($geocode_stats);
+        if ($output_deals->status != "OK") {
+            return null;
+        }
+        if ($output_deals) {
+            $latLng = $output_deals->results[0]->geometry->location;
+            $lat = $latLng->lat;
+            $lng = $latLng->lng;
+            $locationData = ["latitude" => $lat, "logitude" => $lng];
+            return $locationData;
+        } else {
+            return null;
+        }
+    }
+################################################################################
 
 
 
@@ -786,5 +821,6 @@ class ServicerController extends Controller {
         ];
         return  $rules;
     }
+
 
 }

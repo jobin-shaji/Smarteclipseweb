@@ -23,7 +23,6 @@ use PDF;
 use Auth;
 use DataTables;
 
-
 class GpsController extends Controller {
     //Display all gps
 	public function gpsListPage()
@@ -69,7 +68,6 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
-
     //Display all transferred gps
     public function gpsTransferredListPage()
     {

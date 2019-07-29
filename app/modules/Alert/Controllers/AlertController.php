@@ -62,7 +62,7 @@ class AlertController extends Controller {
                 'created_at')
                 ->with('alertType:id,code,description')
                 ->with('vehicle:id,name,register_number')
-                ->with('gps:id,name,imei')
+                ->with('gps:id,imei')
                 ->with('client:id,name');
                 if($alert_id==null && $vehicle_id==null)
                 { 
@@ -331,7 +331,7 @@ class AlertController extends Controller {
        //Display all alerts
     public function packet()
     {
-        $devices=Gps::select('id','name','imei')                
+        $devices=Gps::select('id','imei')                
                 ->get();
        
         return view('Alert::packet-list',['devices'=>$devices]);
@@ -358,7 +358,7 @@ class AlertController extends Controller {
         )
         ->with('alertType:id,code,description')
         ->with('vehicle:id,name,register_number')
-        ->with('gps:id,name,imei')
+        ->with('gps:id,imei')
         ->with('client:id,name')
         ->where('client_id',$client_id)
         ->where('status',0)
