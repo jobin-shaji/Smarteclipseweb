@@ -484,20 +484,30 @@ class ServicerController extends Controller {
             ]);
          $this->validate($request, $rules, $custom_messages);
         $file=$request->path;
+        $installation_photo=$request->installation_photo;
         // dd($file);
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   time().'.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
         $file->move($destinationPath,$uploadedFile);
+
+         $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
+        $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
+        //Move Uploaded File
+        $file->move($destinationPath,$uploadedInstallationFile);
         $documents = Document::create([
             'vehicle_id' => $vehicle_create->id,
             'document_type_id' => 1,
             'expiry_date' => null,
             'path' => $uploadedFile,
         ]);
-
-
+        $installation_documents = Document::create([
+            'vehicle_id' => $vehicle_create->id,
+            'document_type_id' => 5,
+            'expiry_date' => null,
+            'path' => $uploadedInstallationFile,
+        ]);
         $service_job_id=Crypt::encrypt($servicer_job->id);
         $request->session()->flash('message', 'Assign  servicer successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
@@ -580,15 +590,10 @@ class ServicerController extends Controller {
 
     public function downloadJobCompleteCertificate(Request $request){
 
-        
         $servicer_job_id = Crypt::decrypt($request->id);
-        $vehicle_id = Crypt::decrypt($request->vid);
-       // dd($vehicle_id);
         $servicer_job = ServicerJob::find($servicer_job_id);
         $client_id=$servicer_job->client_id;
-
         $client = Client::find($client_id);
-
          $vehicle = Vehicle::select(
             'id',
             'name',
@@ -596,29 +601,22 @@ class ServicerController extends Controller {
             'vehicle_type_id',
             'gps_id',
             'client_id',
-            'servicer_job_id'               
+            'servicer_job_id',
+            'chassis_number'               
         )
-        ->with('gps:id,name,imei')
+        ->with('gps:id,imei')
         ->where('servicer_job_id',$servicer_job_id)
-        ->where('id',$vehicle_id)
+        // ->where('id',$vehicle_id)
         ->first();
-        // dd($servicer_job_id);
-        
+        // dd($vehicle);
         if($servicer_job == null){
            return view('Servicer::404');
         }
-
-        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'client' => $client]);
+        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client]);
         return $pdf->download('installation-certificate.pdf');
-
     }
-
-
-
-
-     public function jobHistoryList()
+    public function jobHistoryList()
     {
-
         return view('Servicer::job-history-list');
     }
     public function getJobsHistoryList()
@@ -668,58 +666,27 @@ class ServicerController extends Controller {
 
      public function jobHistoryDetails(Request $request)
     {
-
         $decrypted = Crypt::decrypt($request->id); 
-
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
         $client_id=$servicer_job->client_id;
-          $vehicle_device = Vehicle::select(
+        $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
             'register_number',
             'name'
-            )
-            ->where('client_id',$client_id)
-            ->get();
-
-
-        $servicer_id=\Auth::user()->servicer->id;
-        $client = Client::select(
-            'user_id'
-            )
-            ->where('id',$client_id)
-            ->first();
-            $client_user_id=$client->user_id;
-        $vehicleTypes=VehicleType::select(
-                'id','name')->get();
-        $vehicle_device = Vehicle::select(
-                'gps_id',
-                'id',
-                'register_number',
-                'name'
-                )
-                ->where('client_id',$client_id)
-                ->get();
-
-        $single_gps = [];
-        foreach($vehicle_device as $device){
-            $single_gps[] = $device->gps_id;
-        } 
-
-        $devices=Gps::select('id','name','imei')
-                ->where('user_id',$client_user_id)
-                ->whereNotIn('id',$single_gps)
-                ->get();
-       if($servicer_job == null){
+        )
+        ->where('client_id',$client_id)
+        ->where('servicer_job_id',$servicer_job->id)
+        ->first();
+        if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device,'vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
+        return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
-
-
     public function servicerJobHistory(Request $request)
     {
         $servicer_job_id = $request->servicer_job_id;
+        // dd($servicer_job_id);
         $vehicle = Vehicle::select(
             'id',
             'name',
@@ -729,11 +696,10 @@ class ServicerController extends Controller {
             'client_id',
             'servicer_job_id'               
         )
-        ->with('gps:id,name,imei')
+        ->with('gps:id,imei')
        // ->with('vehicle:id,name,register_number')
         ->where('servicer_job_id',$servicer_job_id)
         ->get();
-        // dd()
         return DataTables::of($vehicle)
         ->addIndexColumn() 
         ->addColumn('action', function ($vehicle) {
