@@ -506,7 +506,7 @@ class ServicerController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $file->move($destinationPath,$uploadedFile);
-
+        
         $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
         $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
         //Move Uploaded File
