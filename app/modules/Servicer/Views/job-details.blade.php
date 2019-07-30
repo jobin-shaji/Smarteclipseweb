@@ -78,7 +78,7 @@
                         <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
                         <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" > 
                         <div class="form-group row" style="float:none!important">
-                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
+                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle Name</label>
                          <div class="form-group has-feedback">
                             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" > 
                          </div>
