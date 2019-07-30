@@ -76,12 +76,12 @@
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
-                   <!--      <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-client')}}"> List GPS<span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/gps-client')}}"> LIST GPS<span></span></a>                               
                             </div>
                         </li>
 
@@ -90,35 +90,41 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/sos-client')}}"> List SOS<span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/sos-client')}}"> LIST SOS<span></span></a>                               
                             </div>
-                        </li>
- -->
+                        </li> -->
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                 <a class="dropdown-item" href="/driver/create"> Add Driver <span></span></a>                            
-                                <a class="dropdown-item" href="{{url('/vehicle')}}"> List Vehicles<span></span></a>  
-                               
-                                <a class="dropdown-item" href="{{url('/drivers')}}"> List Drivers<span></span></a>  
-                                <a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">Vehicle Documents<span></span></a>
-                                <a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">Driver Update Log<span></span></a>
-                                 <a class="dropdown-item" href="{{url('/performance-score-history')}}">Driver Performance Score History <span></span></a> 
-
-
-                            </div>
+                            <ul class="dropdown-menu multi-level">
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DRIVER</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/driver/create">ADD DRIVER</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/drivers')}}">LIST DRIVERS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
-                        
-                         <li class="nav-item dropdown">
+
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/fence')}}"> Add Geofence <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/geofence')}}"> List Geofence<span></span></a>  
-                                 <a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}"> Assign Geofence <span></span></a>                             
+                                <a class="dropdown-item" href="{{url('/fence')}}"> ADD GEOFENCE <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/geofence')}}"> LIST GEOFENCE<span></span></a>  
+                                 <a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}"> ASSIGN GEOFENCE <span></span></a>                             
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -126,10 +132,10 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/route/create')}}"> Add Route <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/route')}}"> List Route<span></span></a>  
+                                <a class="dropdown-item" href="{{url('/route/create')}}"> ADD ROUTE <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/route')}}"> LIST ROUTE<span></span></a>  
 
-                                 <a class="dropdown-item" href="{{url('/assign/route-vehicle')}}"> Assign Route <span></span></a>                               
+                                 <a class="dropdown-item" href="{{url('/assign/route-vehicle')}}"> ASSIGN ROUTE <span></span></a>                               
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -138,9 +144,9 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                              
-                                <a class="dropdown-item" href="{{url('/performance-score')}}">Alert Points <span></span></a>   
+                                <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
                                   
-                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> Alert Notification Manager<span></span></a>                         
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
                             </div>
                         </li>
                         <li class="nav-item dropdown" >
@@ -191,7 +197,7 @@
                                 <div id="alert_notification">
                                
                             </div>
-                                <a class="dropdown-item" href="{{url('/alert')}}">View All Alerts</a>
+                                <a class="dropdown-item" href="{{url('/alert')}}">VIEW ALL ALERTS</a>
 
                                                             </div>
                         </li>                      
@@ -214,7 +220,7 @@
                                                  <div class="d-flex no-block align-items-center p-10"  >
                                                 <span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>
                                                 <div class="m-l-10" >
-                                                <a href="{{url('/all-vehicle-docs')}}"><small class="font-light">View All Documents</small></a><br>                                        
+                                                <a href="{{url('/all-vehicle-docs')}}"><small class="font-light">VIEW ALL DOCUMENTS</small></a><br>                                        
                                                                                
                                                 </div>
                                             </div>  
@@ -243,14 +249,14 @@
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
 
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
-                                        <i class="fa fa-cog m-r-5 m-l-5"></i>Change Password</a>
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('root|dealer|sub_dealer')
                                     <a class="dropdown-item">
                                             <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
                                 @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>Logout</a>
+                                onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
                                 
                             </div>
                         </li>
