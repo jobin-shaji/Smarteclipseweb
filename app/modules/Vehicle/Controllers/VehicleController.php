@@ -51,9 +51,19 @@ class VehicleController extends Controller {
             ->with('driver:id,name')
             ->with('gps:id,imei')
             ->get();
-
-        return DataTables::of($vehicles)
+            return DataTables::of($vehicles)
             ->addIndexColumn()
+             ->addColumn('driver', function ($vehicles) {
+                if($vehicles->driver_id== null || $vehicles->driver_id==0)
+                {
+                    return "Not assigned";
+                }
+                else
+                {
+                  return $vehicles->driver->name;
+                 
+                }
+            })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
