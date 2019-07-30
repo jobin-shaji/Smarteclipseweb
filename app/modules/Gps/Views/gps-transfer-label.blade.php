@@ -32,13 +32,14 @@
                 <div class="row no-gutters">
                     <div class="col-md-5">
                         <?php 
-                           $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number;
+                           $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number.'InvoiceNumber:'.$gps_transfer->invoice_number;
                         ?>
                         {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
                     </div>
                     <div class="col-md-7">
                         <div class="card-body">
                             <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
+                            <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>
                             <p class="card-text"><b>Shipped : </b> {{$gps_transfer->dispatched_on}} </p>
                             <h5 class="card-title">Shipping To,</h5>
                             <p class="card-text">{{$role_details->name}}</p>

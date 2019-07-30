@@ -18,7 +18,7 @@ class SosTransfer extends Model
     }
 
 	// fillable fields
-    protected $fillable=['from_user_id','to_user_id','order_number','scanned_employee_code','dispatched_on','accepted_on'];
+    protected $fillable=['from_user_id','to_user_id','order_number','scanned_employee_code','invoice_number','dispatched_on','accepted_on'];
 
 	//join user table with sos table
     public function sos()

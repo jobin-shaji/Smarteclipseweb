@@ -531,13 +531,19 @@ class SosController extends Controller {
     // proceed sos transfer for confirmation
     public function proceedRootSosTransfer(Request $request) 
     {
-        $rules = $this->sosRootTransferRule();
+        if($request->sos_id[0]==null){
+            $rules = $this->sosRootTransferRule();
+        }else{
+            $rules = $this->sosRootTransferNullRule();
+        }
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one qr code']);
         $this->validate($request, $rules);
         $dealer_user_id=$request->dealer_user_id;
         $dealer_name=$request->dealer_name;
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $sos_array_list = $request->sos_id;
         $sos_array=explode(",",$sos_array_list[0]);
         $sos_list=[];
@@ -547,7 +553,7 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei')
                         ->whereIn('id',$sos_list)
                         ->get();
-        return view('Sos::root-sos-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+        return view('Sos::root-sos-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save root sos transfer/transfer sos from root to dealer
@@ -557,6 +563,7 @@ class SosController extends Controller {
         $sos_array = $request->sos_id;
         $to_user_id = $request->dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $uniqid=uniqid();
         $order_number=$uniqid.date("Y-m-d h:i:s");
         if($sos_array){
@@ -565,6 +572,7 @@ class SosController extends Controller {
               "to_user_id" => $to_user_id,
               "order_number" => $order_number,
               "scanned_employee_code" => $scanned_employee_code,
+              "invoice_number" => $invoice_number,
               "dispatched_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_sos_transfer=$sos_transfer->id;
@@ -624,13 +632,19 @@ class SosController extends Controller {
     // proceed sos transfer for confirmation
     public function proceedDealerSosTransfer(Request $request) 
     {
-        $rules = $this->sosDealerTransferRule();
+        if($request->sos_id[0]==null){
+            $rules = $this->sosDealerTransferRule();
+        }else{
+            $rules = $this->sosDealerTransferNullRule();
+        }
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one qr code']);
         $this->validate($request, $rules);
         $sub_dealer_user_id=$request->sub_dealer_user_id;
         $sub_dealer_name=$request->sub_dealer_name;
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $sos_array_list = $request->sos_id;
         $sos_array=explode(",",$sos_array_list[0]);
         $sos_list=[];
@@ -640,7 +654,7 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei')
                         ->whereIn('id',$sos_list)
                         ->get();
-        return view('Sos::dealer-sos-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+        return view('Sos::dealer-sos-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save dealer sos transfer/transfer sos from dealer to sub dealer
@@ -650,6 +664,7 @@ class SosController extends Controller {
         $sos_array = $request->sos_id;
         $to_user_id = $request->sub_dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $uniqid=uniqid();
         $order_number=$uniqid.date("Y-m-d h:i:s");
         if($sos_array){
@@ -658,6 +673,7 @@ class SosController extends Controller {
               "to_user_id" => $to_user_id,
               "order_number" => $order_number,
               "scanned_employee_code" => $scanned_employee_code,
+              "invoice_number" => $invoice_number,
               "dispatched_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_sos_transfer=$sos_transfer->id;
@@ -717,13 +733,19 @@ class SosController extends Controller {
     // proceed sos transfer for confirmation
     public function proceedSubDealerSosTransfer(Request $request) 
     {
-        $rules = $this->sosSubDealerTransferRule();
+        if($request->sos_id[0]==null){
+            $rules = $this->sosSubDealerTransferRule();
+        }else{
+            $rules = $this->sosSubDealerTransferNullRule();
+        }
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one qr code']);
         $this->validate($request, $rules);
         $client_user_id=$request->client_user_id;
         $client_name=$request->client_name;
         $address=$request->address;
         $mobile=$request->mobile;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $sos_array_list = $request->sos_id;
         $sos_array=explode(",",$sos_array_list[0]);
         $sos_list=[];
@@ -733,7 +755,7 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei')
                         ->whereIn('id',$sos_list)
                         ->get();
-        return view('Sos::sub-dealer-sos-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code,'devices' => $devices]);
+        return view('Sos::sub-dealer-sos-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save dealer sos transfer/transfer sos from sub dealer to client
@@ -743,6 +765,7 @@ class SosController extends Controller {
         $sos_array = $request->sos_id;
         $to_user_id = $request->client_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
         $uniqid=uniqid();
         $order_number=$uniqid.date("Y-m-d h:i:s");
         if($sos_array){
@@ -751,7 +774,9 @@ class SosController extends Controller {
               "to_user_id" => $to_user_id,
               "order_number" => $order_number,
               "scanned_employee_code" => $scanned_employee_code,
-              "dispatched_on" => date('Y-m-d H:i:s')
+              "invoice_number" => $invoice_number,
+              "dispatched_on" => date('Y-m-d H:i:s'),
+              "accepted_on" => date('Y-m-d H:i:s')
             ]);
             $last_id_in_sos_transfer=$sos_transfer->id;
         }
@@ -764,7 +789,7 @@ class SosController extends Controller {
                 if($sos_transfer_item){
                     //update sos table
                     $sos = Sos::find($sos_id);
-                    $sos->user_id =null;
+                    $sos->user_id =$to_user_id;
                     $sos->save();
                 }
             }
@@ -1003,34 +1028,73 @@ class SosController extends Controller {
     // root sos transfer rule
     public function sosRootTransferRule(){
         $rules = [
+          'sos_id' => 'required|min:2',
+          'dealer_user_id' => 'required',
+          'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
+      ];
+        return $rules;
+    }
+
+    // root sos transfer rule with null gps_id array
+    public function sosRootTransferNullRule(){
+        $rules = [
           'sos_id' => 'required',
           'dealer_user_id' => 'required',
-          'scanned_employee_code' => 'required',];
+          'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
+        ];
         return $rules;
     }
 
     // dealer sos transfer rule
     public function sosDealerTransferRule(){
         $rules = [
-          'sos_id' => 'required',
+          'sos_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
-          'scanned_employee_code' => 'required',];
+          'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
+      ];
+        return $rules;
+    }
+
+    // root sos transfer rule with null gps_id array
+    public function sosDealerTransferNullRule(){
+        $rules = [
+            'sos_id' => 'required',
+            'sub_dealer_user_id' => 'required',
+            'scanned_employee_code' => 'required',
+            'invoice_number' => 'required'
+        ];
         return $rules;
     }
 
     // sub dealer sos transfer rule
     public function sosSubDealerTransferRule(){
         $rules = [
-          'sos_id' => 'required',
+          'sos_id' => 'required|min:2',
           'client_user_id' => 'required',
-          'scanned_employee_code' => 'required',];
+          'scanned_employee_code' => 'required',
+          'invoice_number' => 'required'
+      ];
+        return $rules;
+    }
+
+    // root sos transfer rule with null gps_id array
+    public function sosSubDealerTransferNullRule(){
+        $rules = [
+            'sos_id' => 'required',
+            'client_user_id' => 'required',
+            'scanned_employee_code' => 'required',
+            'invoice_number' => 'required'
+        ];
         return $rules;
     }
 
     //validation for sos creation
     public function sosCreateRules(){
         $rules = [
-            'imei' => 'required|numeric|min:15|unique:sos',
+            'imei' => 'required|string|min:15|max:15|unique:sos',
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',
@@ -1042,7 +1106,7 @@ class SosController extends Controller {
     //validation for sos updation
     public function sosUpdateRules($sos){
         $rules = [
-            'imei' => 'required|numeric|min:15|unique:sos,imei,'.$sos->id,
+            'imei' => 'required|string|min:15|max:15|unique:sos,imei,'.$sos->id,
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',

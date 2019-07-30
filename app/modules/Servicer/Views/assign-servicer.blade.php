@@ -96,7 +96,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Date</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" date_expiry form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Mobile" name="job_date" value="{{ old('job_date') }}" required>
+                        <input type="text" class=" date_expiry_edit form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Mobile" name="job_date" value="{{ old('job_date') }}" required>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_date'))

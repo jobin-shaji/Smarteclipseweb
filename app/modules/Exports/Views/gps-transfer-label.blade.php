@@ -17,7 +17,7 @@
       <td style="border:solid 1px #222;border-width:0 0 0 1px;width:100px;">
 
         <?php 
-           $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number;
+           $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number.'InvoiceNumber:'.$gps_transfer->invoice_number;
         ?>
         <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($qr)) !!} ">
       </td>
@@ -38,6 +38,8 @@
 
       <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">Order Number:{{$gps_transfer->order_number}}
+        </td>
+        <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Invoice Number:{{$gps_transfer->invoice_number}}
         </td>
       </tr>
 
