@@ -382,6 +382,8 @@ class ServicerController extends Controller {
             'job_complete_date', 
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
+            'latitude',
+            'longitude',
             'status'
         )
         ->where('servicer_id',$user_id)
@@ -400,9 +402,29 @@ class ServicerController extends Controller {
             else
             {
                 return "Service" ; 
-            }
-                       
+            }                       
          }) 
+        ->addColumn('location', function ($servicer_job) {                    
+            $latitude= $servicer_job->latitude;
+            $longitude=$servicer_job->longitude;          
+            if(!empty($latitude) && !empty($longitude)){
+                //Send request and receive json data by address
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+                $output = json_decode($geocodeFromLatLong);         
+                $status = $output->status;
+                //Get address from json data
+                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+                //Return address of the given latitude and longitude
+                if(!empty($address)){
+                    $location=$address;
+                    return $location;                                 
+                }        
+            }
+            else
+            {
+                return "No Address";
+            }
+         })
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
                 return "
@@ -506,7 +528,7 @@ class ServicerController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $file->move($destinationPath,$uploadedFile);
-        
+
         $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
         $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
         //Move Uploaded File

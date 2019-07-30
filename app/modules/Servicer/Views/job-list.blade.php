@@ -28,6 +28,7 @@
                     <th >Job Type</th>
                     <th >Assignee</th>
                     <th >Description</th>
+                    <th >Location</th>
                     <th >Job Date</th> 
                     <th >Action</th>                      
                   </tr>
