@@ -651,10 +651,10 @@ else
         $vehicles_details= DB::select($sql);
         // dd($vehicles_details);
 
-        $vehicles_details_data=collect($vehicles_details)->toArray()
-                            ->with('vehicle:gps_id,id,name,register_number')
-                            ->whereIn('id',$single_vehicle) 
-                            ->get();
+        // $vehicles_details_data=collect($vehicles_details)->toArray()
+        //                     ->with('vehicle:gps_id,id,name,register_number')
+        //                     ->whereIn('id',$single_vehicle) 
+        //                     ->get();
 
 
         // Gps::Select(
@@ -672,19 +672,19 @@ else
                       
         // ->get();
        
-        $response_track_data=$this->vehicleDataList($vehicles_details);        
-       if($response_track_data){     
-                 $response_data = array(
-                'user_data'  => $response_track_data,
-                'status'=>'success'
-            );
-        }
-        else{
+       //  $response_track_data=$this->vehicleDataList($vehicles_details);        
+       // if($response_track_data){     
+       //           $response_data = array(
+       //          'user_data'  => $response_track_data,
+       //          'status'=>'success'
+       //      );
+       //  }
+       //  else{
                 $response_data = array(
                 'status'  => 'failed',
                 'message' => 'failed',
                 'code'    =>0);
-             }
+             // }
         return response()->json($response_data); 
     }
 

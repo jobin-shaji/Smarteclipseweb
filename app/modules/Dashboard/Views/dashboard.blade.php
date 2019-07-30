@@ -303,6 +303,11 @@
 
             <div class="col-md-12 full-height">
                <div id="map" style="width:100%; height:100%;"></div>
+               <div id="right-panel">
+                <h2>Results</h2>
+                <ul id="places"></ul>
+                <button id="more">More results</button>
+              </div>
             </div>
 
               
@@ -377,10 +382,10 @@
                                         <select id="search_radius" class="form-control">
                                           <option selected>KM</option>
                                           <option value="10">10 KM</option>
-                                         <!--  <option value="30">30 KM</option>
+                                          <option value="30">30 KM</option>
                                           <option value="50">50 KM</option>
                                           <option value="75">75 KM</option>
-                                          <option value="100">100 KM</option> -->
+                                          <option value="100">100 KM</option>
                                         </select>
                                       </div>
                                   </div>
@@ -585,6 +590,17 @@
 @role('client')
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
+<script type="text/javascript">
+function initMap(){
+var haightAshbury = {lat: 20.593683, lng: 78.962883};
+var map = new google.maps.Map(document.getElementById('map'), {
+ zoom: 10,
+  center: haightAshbury,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+});
+}
+</script>
+<script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
 <style type="text/css">
