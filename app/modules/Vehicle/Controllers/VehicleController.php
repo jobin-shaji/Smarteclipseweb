@@ -161,7 +161,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
-        if($vehicle_update && $request->driver_id){
+        if($vehicle_update && $new_driver_id && $old_driver){
                 $vehicle_driver_log = VehicleDriverLog::create([
                 'vehicle_id' => $vehicle->id,
                 'from_driver_id' => $old_driver,
