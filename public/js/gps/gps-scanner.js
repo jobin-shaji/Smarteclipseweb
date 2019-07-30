@@ -16,16 +16,17 @@ scanner.addListener('scan', function (content) {
         if(res.status == 1){
           var position = jQuery.inArray(res.gps_id, items);
             if(position !='-1'){
-                 alert("item exists");
+                toastr.info('Item Exists');
             }else{
                 items.push(res.gps_id);
                 var gps_imei=res.gps_imei;
                 $("#gps_id").val(items); 
                 var markup = "<tr><td>" + gps_imei + "</td></tr>";
                 $("table tbody").append(markup);
+                toastr.success('Scanned Successfully');
             }
         }else{
-          alert("Gps device already transferred");
+          toastr.error('Already Transferred');
         }
       }
   });
