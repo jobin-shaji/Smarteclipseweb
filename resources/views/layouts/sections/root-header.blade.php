@@ -71,7 +71,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/vehicle-root')}}">LIST VEHICLES<span></span></a> 
             <a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES<span></span></a> 
-            <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATAGORY<span></span></a>
+            <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATEGORY<span></span></a>
         </div>
     </li>
     <li class="nav-item dropdown">

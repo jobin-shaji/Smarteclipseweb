@@ -500,17 +500,17 @@ class ServicerController extends Controller {
          $this->validate($request, $rules, $custom_messages);
         $file=$request->path;
         $installation_photo=$request->installation_photo;
-        // dd($file);
+       
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   time().'.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
         $file->move($destinationPath,$uploadedFile);
 
-         $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
+        $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
         $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
         //Move Uploaded File
-        $file->move($destinationPath,$uploadedInstallationFile);
+        $installation_photo->move($destinationPath,$uploadedInstallationFile);
         $documents = Document::create([
             'vehicle_id' => $vehicle_create->id,
             'document_type_id' => 1,
@@ -519,7 +519,7 @@ class ServicerController extends Controller {
         ]);
         $installation_documents = Document::create([
             'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 5,
+            'document_type_id' => 6,
             'expiry_date' => null,
             'path' => $uploadedInstallationFile,
         ]);
