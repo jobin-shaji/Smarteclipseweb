@@ -51,7 +51,7 @@ var map_flag;
 var track_flag=0;
 var map_popup=0;
 
-
+function initMap(){
 map = new google.maps.Map(document.getElementById('map'), {
 zoom: 10,
 center: haightAshbury,
@@ -64,7 +64,7 @@ var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
    getVehicleSequence(); 
   // 'key' => env('APP_KEY'),
  
-
+}
 // check each 10 sec
 
     window.setInterval(function(){

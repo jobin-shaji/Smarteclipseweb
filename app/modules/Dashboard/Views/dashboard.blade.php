@@ -591,14 +591,7 @@
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
-function initMap(){
-var haightAshbury = {lat: 20.593683, lng: 78.962883};
-var map = new google.maps.Map(document.getElementById('map'), {
- zoom: 10,
-  center: haightAshbury,
-  mapTypeId: google.maps.MapTypeId.ROADMAP
-});
-}
+
 </script>
 <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
