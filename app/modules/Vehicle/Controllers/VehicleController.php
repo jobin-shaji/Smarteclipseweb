@@ -51,9 +51,19 @@ class VehicleController extends Controller {
             ->with('driver:id,name')
             ->with('gps:id,imei')
             ->get();
-
-        return DataTables::of($vehicles)
+            return DataTables::of($vehicles)
             ->addIndexColumn()
+             ->addColumn('driver', function ($vehicles) {
+                if($vehicles->driver_id== null || $vehicles->driver_id==0)
+                {
+                    return "Not assigned";
+                }
+                else
+                {
+                  return $vehicles->driver->name;
+                 
+                }
+            })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
@@ -151,7 +161,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
-        if($vehicle_update && $request->driver_id){
+        if($vehicle_update && $new_driver_id && $old_driver){
                 $vehicle_driver_log = VehicleDriverLog::create([
                 'vehicle_id' => $vehicle->id,
                 'from_driver_id' => $old_driver,
@@ -201,6 +211,9 @@ class VehicleController extends Controller {
         'path.required' => 'File cannot be blank'
         ];
         if($request->document_type_id == 1){
+            $rules = $this->documentCreateRules();
+            $expiry_date=null;
+        }else if($request->document_type_id == 6){
             $rules = $this->documentCreateRules();
             $expiry_date=null;
         }else{
@@ -491,19 +504,21 @@ class VehicleController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         $vehicle_driver_log = VehicleDriverLog::select(
-                                'vehicle_id',
-                                'from_driver_id',
-                                'to_driver_id',
-                                'created_at'
-                                )
-                                ->where('client_id',$client_id)
-                                ->with('Fromdriver:id,name')
-                                ->with('Todriver:id,name')
-                                ->with('vehicle:id,name,register_number')
-                                ->get();
-
+            'vehicle_id',
+            'from_driver_id',
+            'to_driver_id',
+            'client_id',
+            'created_at'
+        )
+        ->where('client_id',$client_id)
+        ->with('Fromdriver:id,name')
+        ->with('Todriver:id,name')
+        ->with('vehicle:id,name,register_number')
+        ->get();
+// dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
             ->addIndexColumn()
+           ->rawColumns(['link'])
             ->make();
     }
 

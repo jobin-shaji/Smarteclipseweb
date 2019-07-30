@@ -21,10 +21,10 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Serial NO</label>
-                    <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="Serial NO" name="imei" value="{{ old('imei') }}" required> 
-                     @if ($errors->has('imei'))
+                    <input type="number" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial NO" name="serial_no" value="{{ old('serial_no') }}" required> 
+                     @if ($errors->has('serial_no'))
                     <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('imei') }}</strong>
+                        <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
                     </span>
                   @endif
                   </div>
