@@ -209,7 +209,7 @@ class GpsController extends Controller {
 
 
     public function data(Request $request)
-     {
+    {
         $decrypted = Crypt::decrypt($request->id);   
         $gps = Gps::find($decrypted);
         if($gps == null){
