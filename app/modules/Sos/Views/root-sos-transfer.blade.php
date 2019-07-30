@@ -76,6 +76,16 @@
                     @endif
 
                     <div class="form-group has-feedback">
+                      <label class="srequired">Invoice Number</label>
+                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" required> 
+                    </div>
+                    @if ($errors->has('invoice_number'))
+                    <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
+                    </span>
+                    @endif
+
+                    <div class="form-group has-feedback">
                       <label class="srequired">SOS List</label>
                         <input type="hidden" name="sos_id[]" id="sos_id" value="">
                         <table class="table table-bordered  table-striped " style="width:100%">
