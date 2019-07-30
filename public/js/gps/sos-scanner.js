@@ -16,16 +16,17 @@ scanner.addListener('scan', function (content) {
         if(res.status == 1){
           var position = jQuery.inArray(res.sos_id, items);
             if(position !='-1'){
-                 alert("item exists");
+                toastr.info('Item Exists');
             }else{
                 items.push(res.sos_id);
                 var sos_imei=res.sos_imei;
                 $("#sos_id").val(items); 
                 var markup = "<tr><td>" + sos_imei + "</td></tr>";
                 $("table tbody").append(markup);
+                toastr.success('Scanned Successfully');
             }
         }else{
-          alert("Sos button already transferred");
+          toastr.error('Already Transferred');
         }
       }
   });
