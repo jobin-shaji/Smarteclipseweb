@@ -89,9 +89,21 @@
                         </div>
                          </b>
                   </div>
+                 
 
               </div>
           </div>
+
+           <div class="share_button">
+                     <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a href="https://www.facebook.com/sharer.php?u=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" target="_blank"><img src="https://4.bp.blogspot.com/-raFYZvIFUV0/UwNI2ek6i3I/AAAAAAAAGSA/zs-kwq0q58E/s1600/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a href="https://twitter.com/share?url=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324&text=Simple Share Buttons" target="_blank"><img src="https://4.bp.blogspot.com/--ISQEurz3aE/UwNI4hDaQMI/AAAAAAAAGS4/ZAgmPiM9Xpk/s1600/twitter.png" alt="Twitter" /></a> <!-- Google+ --> <a href="https://plus.google.com/share?url=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" target="_blank"><img src="https://2.bp.blogspot.com/-9ijXNtKTaSk/UwNI3ANT4MI/AAAAAAAAGSY/Tu4kE8x9SnI/s1600/google.png" alt="Google" /></a><!-- LinkedIn --> <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" target="_blank"><img src="https://2.bp.blogspot.com/-3_cATk7Wlho/UwNI3eoTTLI/AAAAAAAAGSQ/Y8cpq6S-SeQ/s1600/linkedin.png" alt="LinkedIn" /></a> 
+                      <a href="mailto:?Subject=FrinMash&Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324"><img src="https://4.bp.blogspot.com/-njgKtNLrPqI/UwNI2o-9WfI/AAAAAAAAGR4/f8da1gBgyLs/s1600/email.png" alt="Email" /></a>
+                      <!-- watsapp -->
+
+                      <a href="https://web.whatsapp.com/send?text=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" data-action="share/whatsapp/share"><img src="https://4.bp.blogspot.com/-njgKtNLrPqI/UwNI2o-9WfI/AAAAAAAAGR4/f8da1gBgyLs/s1600/email.png" alt="Email" /></a>
+
+                   
+                      </div>
+                  </div>
 
         <div id="map" class="live_track_map" style="width:100%;height:500px;"></div>
     </div>
