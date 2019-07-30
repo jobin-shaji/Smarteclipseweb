@@ -213,6 +213,9 @@ class VehicleController extends Controller {
         if($request->document_type_id == 1){
             $rules = $this->documentCreateRules();
             $expiry_date=null;
+        }else if($request->document_type_id == 6){
+            $rules = $this->documentCreateRules();
+            $expiry_date=null;
         }else{
             $rules = $this->customDocCreateRules();
             $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
