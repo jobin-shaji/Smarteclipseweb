@@ -1,6 +1,5 @@
 
 
-
 $(document).ready(function () { 
      var url = 'driver-score';
      var data = {
@@ -61,18 +60,11 @@ center: haightAshbury,
 var input1 = document.getElementById('search_place');
     autocomplete1 = new google.maps.places.Autocomplete(input1);
 var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-
    map_flag=0;
    getVehicleSequence(); 
-
-}
-
-
-
-
   // 'key' => env('APP_KEY'),
  
-
+}
 // check each 10 sec
 
     window.setInterval(function(){
@@ -209,6 +201,7 @@ function addMarker(location,title,car_color,path,scale,fillOpacity,strokeWeight,
 function selectVehicleTrack(res){
 map.panTo(new google.maps.LatLng(res.lat,res.lon));
 map.setZoom(15);
+nearestPointsOnMap(res.lat,res.lon);
 }
 
 $( ".vehicle_gps_id" ).click(function() {
@@ -231,16 +224,18 @@ var radius=$('#search_radius').val();
           var lat=results[0].geometry.location.lat();
           var lng=results[0].geometry.location.lng();
           map.panTo(new google.maps.LatLng(lat,lng));
-          map.setZoom(16);
+          map.setZoom(12);
           var url = '/location-search';
 
-var data = {
+  var data = {
       lat : lat,
       lng:lng,
       radius:radius
-    };
+      };
 
     backgroundPostData(url,data,'searchLocation',{alert:false});
+    setMapZoom(radius);
+    redarLocation(lat,lng,radius);
 
           } else {
             alert("Please enter a valid location");
@@ -348,6 +343,102 @@ alert('No vehicle found in this location');
 }
 
 }
+
+
+function redarLocation(lat,lng,radius){
+   var radius_in_meter=radius*1000;
+   var latlng = new google.maps.LatLng(lat,lng);
+   var sunCircle = {
+        strokeColor: "#b84930",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#b84930",
+        fillOpacity: 0.35,
+        map: map,
+        center: latlng,
+        radius:radius_in_meter // in meters
+    };
+  cityCircle = new google.maps.Circle(sunCircle)
+  var opts = {
+   lat : lat,
+   lng : lng
+  };
+  myGoogleRadar = new GoogleRadar(map, opts);
+
+  // init a RadarPolygon
+ opts = {
+   angle : 10,
+   time : 60,
+   radius:radius
+};
+  myGoogleRadar.addRadarPolygon(opts);
+}
+
+function setMapZoom(radius){
+  var zoom_size=10;
+  if(radius==10){
+    zoom_size=14;
+  }else if(radius==30){
+    zoom_size=12;
+  }else if(radius==50){
+    zoom_size=10;
+  }else if(radius==75){
+    zoom_size=10;
+  }else if(radius==100){
+    zoom_size=8;
+  }
+  map.setZoom(zoom_size);
+}
+// ---------------find nearest map points-----------------
+function nearestPointsOnMap(lat,lng){
+        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
+        var service = new google.maps.places.PlacesService(map);
+        var getNextPage = null;
+        var moreButton = document.getElementById('more');
+        moreButton.onclick = function() {
+          moreButton.disabled = true;
+          if (getNextPage) getNextPage();
+        };
+        // Perform a nearby search.
+         service.nearbySearch(
+          {location: pyrmont, radius: 500, type: ['store']},
+           function(results, status, pagination) {
+           if (status !== 'OK') return;
+              createMarkers(results);
+              moreButton.disabled = !pagination.hasNextPage;
+              getNextPage = pagination.hasNextPage && function() {
+                pagination.nextPage();
+              };
+            });
+}
+ function createMarkers(places) {
+        var bounds = new google.maps.LatLngBounds();
+        var placesList = document.getElementById('places');
+        for (var i = 0, place; place = places[i]; i++) {
+          var image = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+          var marker = new google.maps.Marker({
+            map: map,
+            icon: image,
+            title: place.name,
+            position: place.geometry.location
+          });
+
+          var li = document.createElement('li');
+          li.textContent = place.name;
+          placesList.appendChild(li);
+
+          bounds.extend(place.geometry.location);
+        }
+        map.fitBounds(bounds);
+      }
+// ---------------find nearest map points-----------------
+
 $(document).ready(function(){
    $('st-actionContainer').launchBtn( { openDuration: 500, closeDuration: 300 } );
   });
