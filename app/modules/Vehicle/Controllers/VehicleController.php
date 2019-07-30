@@ -504,6 +504,7 @@ class VehicleController extends Controller {
             'vehicle_id',
             'from_driver_id',
             'to_driver_id',
+            'client_id',
             'created_at'
         )
         ->where('client_id',$client_id)
