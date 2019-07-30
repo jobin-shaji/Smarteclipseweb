@@ -322,7 +322,6 @@ class ServicerController extends Controller {
     }
     public function subDealerAssignServicerList()
     {
-
         return view('Servicer::sub-dealer-assign-servicer-list');
     }
     public function getSubDealerAssignServicerList()
@@ -777,7 +776,41 @@ class ServicerController extends Controller {
 ################################################################################
 
 
-
+//Alert Notification
+    public function notification(Request $request)
+    {
+        $user = $request->user();  
+        $client=Client::where('user_id',$user->id)->first();
+        $client_id=$client->id;
+        $alert = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'vehicle_id',
+            'gps_id',
+            'client_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at'
+        )
+        ->with('alertType:id,code,description')
+        ->with('vehicle:id,name,register_number')
+        ->with('gps:id,imei')
+        ->with('client:id,name')
+        ->where('client_id',$client_id)
+        ->where('status',0)
+        ->orderBy('id','DESC')
+        ->limit(4)
+        ->get();
+        if($user->hasRole('client')){
+            return response()->json([                          
+                'alert' => $alert,
+                'status' => 'alertNotification'           
+            ]);
+        }  
+    }
+    ##############################################
 
     public function servicerCreateRules()
     {
