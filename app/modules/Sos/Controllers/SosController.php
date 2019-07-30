@@ -136,7 +136,7 @@ class SosController extends Controller {
         $rules = $this->sosCreateRules();
         $this->validate($request, $rules);
         $sos = Sos::create([
-            'imei'=> $request->imei,
+            'imei'=> $request->serial_no,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
             'brand'=> $request->brand,
             'model_name'=> $request->model_name,
@@ -1094,7 +1094,7 @@ class SosController extends Controller {
     //validation for sos creation
     public function sosCreateRules(){
         $rules = [
-            'imei' => 'required|string|min:15|max:15|unique:sos',
+            'serial_no' => 'required|string|min:15|max:15|unique:sos',
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',
