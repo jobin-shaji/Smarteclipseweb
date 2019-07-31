@@ -12,6 +12,7 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer'] , 'namespace
 
 	Route::post('/servicer/delete','ServicerController@delete')->name('servicer.delete');
 	Route::post('/servicer/activate','ServicerController@activate')->name('servicer.activate');
+	 Route::post('/servicer-client-gps', 'ServicerController@clientGpsList')->name('servicer.client.gps');
 
 	
 });
@@ -33,7 +34,7 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::get('/sub-dealer-assign-servicer-list','ServicerController@subDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 
-	 Route::post('/servicer-client-gps', 'ServicerController@notification')->name('servicer.client.gps');
+	
 	
 });
 
