@@ -37,6 +37,7 @@ $(document).ready(function () {
             {data: 'job_type', name: 'job_type'},
             {data: 'user.username', name: 'user.username'},
             {data: 'description', name: 'description'},
+            {data: 'location', name: 'location'},
             {data: 'job_date', name: 'job_date'},   
             {data: 'action', name: 'action', orderable: false, searchable: false}
            

@@ -26,8 +26,9 @@
                     <th >Job Code</th>
                     <th >Client</th>                      
                     <th >Job Type</th>
-                    <th >Assigne</th>
+                    <th >Assignee</th>
                     <th >Description</th>
+                    <th >Location</th>
                     <th >Job Date</th> 
                     <th >Action</th>                      
                   </tr>
