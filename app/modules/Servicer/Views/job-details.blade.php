@@ -21,6 +21,8 @@
         <div class="card-body">
           <div class="table-responsive">
               <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+
+
                <form  method="POST" action="{{route('job.complete.save',$servicer_job->id)}}"enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-md-6">      
@@ -74,7 +76,37 @@
                           <strong class="error-text">{{ $errors->first('job_date') }}</strong>
                           </span>
                           @endif
-                        </div>               
+                        </div>
+                         <div class="form-group row" style="float:none!important">
+                         <label for="fname" class="col-sm-5 text-right control-label col-form-label">GPS</label>
+                         <div class="form-group has-feedback">
+                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="gps_id" name="gps_id">
+                              <option value="{{$servicer_job->gps->id}}">{{$servicer_job->gps->imei}}</option>
+                            </select>                           
+                         </div>
+                         @if ($errors->has('gps_id'))
+                         <span class="help-block">
+                         <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                         </span>
+                         @endif 
+                      </div>   
+                      <div class="form-group row" style="float:none!important">
+                         <label for="fname" class="col-sm-5 text-right control-label col-form-label">Driver</label>
+                         <div class="form-group has-feedback">
+                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="driver" name="driver">
+                               <option value="">Select</option>
+                                  @foreach ($drivers as $driver)
+                                  <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                  @endforeach  
+
+                            </select>                           
+                         </div>
+                         @if ($errors->has('driver'))
+                         <span class="help-block">
+                         <strong class="error-text">{{ $errors->first('driver') }}</strong>
+                         </span>
+                         @endif 
+                      </div>               
                         <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
                         <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" > 
                         <div class="form-group row" style="float:none!important">
@@ -121,7 +153,8 @@
                            </span>
                            @endif
                         </div>
-                        <div class="form-group row" style="float:none!important">
+                        
+                       <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">RC Book</label>
                            <div class="form-group has-feedback">
                               <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" id="path" value="{{ old('path') }}" > 
@@ -132,14 +165,38 @@
                                 </span>
                               @endif
                         </div>
-                           <div class="form-group row" style="float:none!important">
-                           <label for="fname" class="col-md-6 text-right control-label col-form-label">Installation Photo</label>
+                        <div class="form-group row" style="float:none!important">
+                          <label for="fname" class="col-md-6 text-right control-label col-form-label">Installation Photo</label>
                            <div class="form-group has-feedback">
                               <input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" > 
                               </div>
                               @if ($errors->has('installation_photo'))
                                 <span class="help-block">
                                     <strong class="error-text">{{ $errors->first('installation_photo') }}</strong>
+                                </span>
+                              @endif
+                        </div>
+
+
+                          <div class="form-group row" style="float:none!important">
+                           <label for="fname" class="col-md-6 text-right control-label col-form-label">Activation Photo</label>
+                           <div class="form-group has-feedback">
+                              <input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" > 
+                              </div>
+                              @if ($errors->has('activation_photo'))
+                                <span class="help-block">
+                                    <strong class="error-text">{{ $errors->first('activation_photo') }}</strong>
+                                </span>
+                              @endif
+                        </div>
+                          <div class="form-group row" style="float:none!important">
+                           <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Photo</label>
+                           <div class="form-group has-feedback">
+                              <input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" > 
+                              </div>
+                              @if ($errors->has('vehicle_photo'))
+                                <span class="help-block">
+                                    <strong class="error-text">{{ $errors->first('vehicle_photo') }}</strong>
                                 </span>
                               @endif
                         </div>
@@ -159,22 +216,7 @@
                          </span>
                          @endif
                       </div>
-                      <div class="form-group row" style="float:none!important">
-                         <label for="fname" class="col-sm-5 text-right control-label col-form-label">GPS</label>
-                         <div class="form-group has-feedback">
-                            <select class="form-control" name="gps_id"  id="gps_id"data-live-search="true" title="Select GPS" required>
-                                <option selected disabled>Select GPS</option>
-                                 @foreach($devices as $gps)
-                                 <option value="{{$gps->id}}">{{$gps->imei}}</option>
-                                 @endforeach
-                            </select>
-                         </div>
-                         @if ($errors->has('gps_id'))
-                         <span class="help-block">
-                         <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
-                         </span>
-                         @endif 
-                      </div>
+                     
                       <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Job Complete Date</label>
                       <div class="form-group has-feedback">
@@ -184,6 +226,19 @@
                       @if ($errors->has('job_completed_date'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+                      <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
+                      <div class="form-group has-feedback">
+                        <textarea name="comment" id="comment" value="" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" required></textarea>
+                        
+                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('comment'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('comment') }}</strong>
                       </span>
                       @endif
                     </div>

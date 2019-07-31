@@ -26,6 +26,8 @@ class CreateServicerJobsTable extends Migration
             $table->integer('status');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->integer('gps_id')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
