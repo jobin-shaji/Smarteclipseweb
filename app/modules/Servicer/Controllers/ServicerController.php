@@ -13,6 +13,7 @@ use App\Modules\Vehicle\Models\Document;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
+use App\Modules\Driver\Models\Driver;
 use DataTables;
 use PDF;
 class ServicerController extends Controller {
@@ -471,15 +472,20 @@ class ServicerController extends Controller {
         ->with('gps:id,imei')
         ->with('clients:id,name')
         ->first();
+        $client_id=$servicer_job->client_id;
+        // dd($client_id);
         $servicer_id=\Auth::user()->servicer->id;
         $vehicleTypes=VehicleType::select(
             'id','name'
         )
-        ->get();        
+        ->get();       
+        $drivers=Driver::select('id','name')
+        ->where('client_id',$client_id)
+        ->get();       
        if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'client_id'=>$request->id]);
+        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
 
 
@@ -508,20 +514,21 @@ class ServicerController extends Controller {
         $servicer_job_id = $request->servicer_job_id;
         $engine_number = $request->engine_number;
         $chassis_number = $request->chassis_number;
+        $driver_id=$request->driver;
         // $path = $request->path;
-
         $vehicle_create= Vehicle::create([
-                'name' => $name,
-                'register_number' => $register_number,
-                'vehicle_type_id' => $vehicle_type_id,
-                'gps_id' => $gps_id,
-                'client_id' => $client_id,
-                'servicer_job_id' =>$servicer_job->id,
-                'engine_number' => $engine_number,
-                'chassis_number' => $chassis_number,
-                'status' => 1
-            ]);
-         $this->validate($request, $rules, $custom_messages);
+            'name' => $name,
+            'register_number' => $register_number,
+            'vehicle_type_id' => $vehicle_type_id,
+            'gps_id' => $gps_id,
+            'client_id' => $client_id,
+            'servicer_job_id' =>$servicer_job->id,
+            'engine_number' => $engine_number,
+            'chassis_number' => $chassis_number,
+            'driver_id' => $driver_id,
+            'status' => 1
+        ]);
+        $this->validate($request, $rules, $custom_messages);
         $file=$request->path;
         $installation_photo=$request->installation_photo;
         $activation_photo=$request->activation_photo;
@@ -847,6 +854,56 @@ class ServicerController extends Controller {
     }
     ##############################################
 
+    public function servicerJobHistoryList()
+    {
+        return view('Servicer::servicer-job-history-list');
+    }
+
+     public function getServicerJobsHistoryList()
+    {
+        $user_id=\Auth::user()->id;
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_complete_date', 
+             \DB::raw('Date(job_date) as job_date'),                 
+            'created_at',
+            'status'
+        )
+        ->where('user_id',$user_id)
+        ->whereNotNull('job_complete_date')
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+         ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }
+                       
+         }) 
+         ->addColumn('action', function ($servicer_job) {
+           $b_url = \URL::to('/');
+                return "
+                <a href=".$b_url."/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
     public function servicerCreateRules()
     {
         $rules = [
@@ -896,8 +953,7 @@ class ServicerController extends Controller {
     }
      public function servicercompleteJobRules()
     {
-        $rules = [
-          
+        $rules = [          
             'job_completed_date' => 'required',
             'name' => 'required',
             'register_number' => 'required',
@@ -912,7 +968,9 @@ class ServicerController extends Controller {
             'installation_photo' => 'required',
             'activation_photo' => 'required',
             'vehicle_photo' => 'required',
-            'comment' => 'required'
+            'comment' => 'required',
+            'driver'=>'required'
+
         ];
         return  $rules;
     }
