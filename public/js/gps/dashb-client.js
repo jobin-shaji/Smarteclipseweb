@@ -390,53 +390,75 @@ function setMapZoom(radius){
   map.setZoom(zoom_size);
 }
 // ---------------find nearest map points-----------------
+var POI_markers = [];
 function nearestPointsOnMap(lat,lng){
+        deleteMarkersPOI();
         var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
         var service = new google.maps.places.PlacesService(map);
-        var getNextPage = null;
-        var moreButton = document.getElementById('more');
-        moreButton.onclick = function() {
-          moreButton.disabled = true;
-          if (getNextPage) getNextPage();
-        };
+     
         // Perform a nearby search.
+       
          service.nearbySearch(
-          {location: pyrmont, radius: 500, type: ['store']},
+          {location: pyrmont, radius: 5000, type:['atm']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
               createMarkers(results);
-              moreButton.disabled = !pagination.hasNextPage;
-              getNextPage = pagination.hasNextPage && function() {
-                pagination.nextPage();
-              };
             });
+         service.nearbySearch(
+          {location: pyrmont, radius: 5000, type:['hospital']},
+           function(results, status, pagination) {
+           if (status !== 'OK') return;
+              createMarkers(results);
+            });
+
+          service.nearbySearch(
+          {location: pyrmont, radius: 500, type:['gas_station']},
+           function(results, status, pagination) {
+           if (status !== 'OK') return;
+              createMarkers(results);
+            });
+          setMapOnAllPOI();
+
 }
  function createMarkers(places) {
+       
         var bounds = new google.maps.LatLngBounds();
-        var placesList = document.getElementById('places');
         for (var i = 0, place; place = places[i]; i++) {
           var image = {
             url: place.icon,
-            size: new google.maps.Size(71, 71),
+            size: new google.maps.Size(60, 60),
             origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
+            anchor: new google.maps.Point(10, 20),
+            scaledSize: new google.maps.Size(15, 15)
           };
           var marker = new google.maps.Marker({
-            map: map,
             icon: image,
             title: place.name,
             position: place.geometry.location
           });
 
-          var li = document.createElement('li');
-          li.textContent = place.name;
-          placesList.appendChild(li);
 
+          POI_markers.push(marker);
           bounds.extend(place.geometry.location);
         }
         map.fitBounds(bounds);
+        
       }
+      function setMapOnAllPOI() {
+        for (var i = 0; i < POI_markers.length; i++) {
+          POI_markers[i].setMap(map);
+        }
+      }
+      function clearMarkersPOI() {
+        POI_markers.();
+      }
+      function deleteMarkersPOI() {
+
+        clearMarkersPOI();
+         POI_markers = [];
+        
+      }
+     
 // ---------------find nearest map points-----------------
 
 $(document).ready(function(){
