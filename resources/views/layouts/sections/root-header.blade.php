@@ -60,6 +60,7 @@
                 <li><a class="dropdown-item" href="{{url('/servicers')}}">LIST SERVICE ENGINEERS</a></li>
                 <li><a class="dropdown-item" href="{{url('/assign-servicer')}}">CREATE JOB</a></li>
                 <li><a class="dropdown-item" href="{{url('/assign-servicer-list')}}">LIST JOBS</a></li>
+                <li><a class="dropdown-item" href="{{url('/servicer-job-history-list')}}">JOBS HISTORY</a></li>
                 </ul>
             </li>
         </ul>

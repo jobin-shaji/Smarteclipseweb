@@ -80,11 +80,30 @@
                          <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">GPS</label>
                          <div class="form-group has-feedback">
-                            <input type="text" class="form-control {{ $errors->has('gps_id') ? ' has-error' : '' }}" placeholder="Gps" name="gps_id" value="{{$servicer_job->gps->imei}}" id="gps_id" readonly="" >
+                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="gps_id" name="gps_id">
+                              <option value="{{$servicer_job->gps->id}}">{{$servicer_job->gps->imei}}</option>
+                            </select>                           
                          </div>
                          @if ($errors->has('gps_id'))
                          <span class="help-block">
                          <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                         </span>
+                         @endif 
+                      </div>   
+                      <div class="form-group row" style="float:none!important">
+                         <label for="fname" class="col-sm-5 text-right control-label col-form-label">Driver</label>
+                         <div class="form-group has-feedback">
+                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="driver" name="driver">
+                               <option value="">Select</option>
+                                  @foreach ($drivers as $driver)
+                                  <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                  @endforeach  
+
+                            </select>                           
+                         </div>
+                         @if ($errors->has('driver'))
+                         <span class="help-block">
+                         <strong class="error-text">{{ $errors->first('driver') }}</strong>
                          </span>
                          @endif 
                       </div>               
