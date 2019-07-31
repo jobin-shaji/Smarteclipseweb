@@ -206,6 +206,15 @@ class ServicerController extends Controller {
         $job_date=date("Y-m-d", strtotime($request->job_date));
         
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
+        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+
+        if($placeLatLng==null){
+              $request->session()->flash('message', 'Enter correct location'); 
+              $request->session()->flash('alert-class', 'alert-danger'); 
+              return redirect(route('sub-dealer.assign.servicer'));        
+        }
+        $location_lat=$placeLatLng['latitude'];
+        $location_lng=$placeLatLng['logitude'];        
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
                 'servicer_id' => $request->servicer,
@@ -214,8 +223,11 @@ class ServicerController extends Controller {
                 'job_type' => $request->job_type,
                 'user_id' => $user_id,
                 'description' => $request->description,
+                'gps_id' => $request->gps, 
                 'job_date' => $job_date,                
-                'status' => 0,            
+                'status' => 0,
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng              
             ]); 
             $request->session()->flash('message', 'Assign  servicer successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
@@ -311,7 +323,8 @@ class ServicerController extends Controller {
                 'job_type' => $request->job_type,
                 'user_id' => $user_id,
                 'description' => $request->description,
-                'job_date' => $job_date,                
+                'job_date' => $job_date,
+                'gps_id' => $request->gps,                
                 'status' => 0, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng           
@@ -378,6 +391,7 @@ class ServicerController extends Controller {
             'job_type',
             'user_id',
             'description',
+            'gps_id',
             'job_complete_date', 
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
@@ -437,57 +451,45 @@ class ServicerController extends Controller {
     {
 
         $decrypted = Crypt::decrypt($request->id); 
-
-        $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
-        $client_id=$servicer_job->client_id;
-          $vehicle_device = Vehicle::select(
-            'gps_id',
+        $servicer_job = ServicerJob::select(
             'id',
-            'register_number',
-            'name'
-            )
-            ->where('client_id',$client_id)
-            ->get();
-
-
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_date',
+            'job_complete_date',
+            'status',
+            'latitude',
+            'longitude',
+            'gps_id'
+        )
+        ->withTrashed()
+        ->where('id', $decrypted)
+        ->with('gps:id,imei')
+        ->with('clients:id,name')
+        ->first();
         $servicer_id=\Auth::user()->servicer->id;
-        $client = Client::select(
-            'user_id'
-            )
-            ->where('id',$client_id)
-            ->first();
-            $client_user_id=$client->user_id;
         $vehicleTypes=VehicleType::select(
-                'id','name')->get();
-        $vehicle_device = Vehicle::select(
-                'gps_id',
-                'id',
-                'register_number',
-                'name'
-                )
-                ->where('client_id',$client_id)
-                ->get();
-
-        $single_gps = [];
-        foreach($vehicle_device as $device){
-            $single_gps[] = $device->gps_id;
-        } 
-
-        $devices=Gps::select('id','imei')
-                ->where('user_id',$client_user_id)
-                ->whereNotIn('id',$single_gps)
-                ->get();
+            'id','name'
+        )
+        ->get();        
        if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device,'vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
+        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'client_id'=>$request->id]);
     }
 
 
     public function servicerJobSave(Request $request)
     { 
          $custom_messages = [
-        'path.required' => 'File cannot be blank'
+        'path.required' => 'File cannot be blank',
+        'installation_photo.required' => 'File cannot be blank',
+        'activation_photo.required' => 'File cannot be blank',
+        'vehicle_photo.required' => 'File cannot be blank'
         ];
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
@@ -495,6 +497,7 @@ class ServicerController extends Controller {
         $job_completed_date=date("Y-m-d", strtotime($request->job_completed_date)); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
+        $servicer_job->comment = $request->comment;
          $servicer_job->status = 1;
         $servicer_job->save();
         $name= $request->name;         
@@ -521,6 +524,8 @@ class ServicerController extends Controller {
          $this->validate($request, $rules, $custom_messages);
         $file=$request->path;
         $installation_photo=$request->installation_photo;
+        $activation_photo=$request->activation_photo;
+        $vehicle_photo=$request->vehicle_photo;
        
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   time().'.'.$getFileExt;
@@ -530,8 +535,17 @@ class ServicerController extends Controller {
 
         $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
         $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
-        //Move Uploaded File
         $installation_photo->move($destinationPath,$uploadedInstallationFile);
+
+        $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
+        $uploadedActivationFile =   time().'.'.$getActivationFileExt;
+        $activation_photo->move($destinationPath,$uploadedActivationFile);
+
+        $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
+        $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
+        $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
+
+
         $documents = Document::create([
             'vehicle_id' => $vehicle_create->id,
             'document_type_id' => 1,
@@ -543,6 +557,18 @@ class ServicerController extends Controller {
             'document_type_id' => 6,
             'expiry_date' => null,
             'path' => $uploadedInstallationFile,
+        ]);
+        $activation_documents = Document::create([
+            'vehicle_id' => $vehicle_create->id,
+            'document_type_id' => 7,
+            'expiry_date' => null,
+            'path' => $uploadedActivationFile,
+        ]);
+        $vehicle_photo = Document::create([
+            'vehicle_id' => $vehicle_create->id,
+            'document_type_id' => 8,
+            'expiry_date' => null,
+            'path' => $uploadedVehicleFile,
         ]);
         $service_job_id=Crypt::encrypt($servicer_job->id);
         $request->session()->flash('message', 'Assign  servicer successfully!'); 
@@ -777,38 +803,47 @@ class ServicerController extends Controller {
 
 
 //Alert Notification
-    public function notification(Request $request)
+    public function clientGpsList(Request $request)
     {
-        $user = $request->user();  
-        $client=Client::where('user_id',$user->id)->first();
-        $client_id=$client->id;
-        $alert = Alert::select(
-            'id',
-            'alert_type_id',
-            'device_time',
-            'vehicle_id',
+        $user = $request->user();
+        $client_id=$request->client_id;
+         $client = Client::find($client_id);
+         $vehicle_device = Vehicle::select(
             'gps_id',
-            'client_id',
-            'latitude',
-            'longitude',
-            'status',
-            'created_at'
+            'id',
+            'register_number',
+            'name'
         )
-        ->with('alertType:id,code,description')
-        ->with('vehicle:id,name,register_number')
-        ->with('gps:id,imei')
-        ->with('client:id,name')
         ->where('client_id',$client_id)
-        ->where('status',0)
-        ->orderBy('id','DESC')
-        ->limit(4)
         ->get();
-        if($user->hasRole('client')){
-            return response()->json([                          
-                'alert' => $alert,
-                'status' => 'alertNotification'           
-            ]);
-        }  
+
+        $single_gps = [];
+        foreach($vehicle_device as $device){
+            $single_gps[] = $device->gps_id;
+        }   
+
+        $devices=Gps::select('id','imei')
+        ->where('user_id',$client->user_id)
+        ->whereNotIn('id',$single_gps)
+        ->get();
+ 
+        // if($user->hasRole('sub_dealer')){
+            if($devices)
+            {               
+                $response_data = array(
+                    'status'  => 'client-gps',
+                    'devices' => $devices
+                );
+            }
+            else{
+                $response_data = array(
+                    'status'  => 'failed',
+                    'message' => 'failed',
+                    'code'    =>0
+                );
+            }
+            return response()->json($response_data); 
+        // }
     }
     ##############################################
 
@@ -832,6 +867,7 @@ class ServicerController extends Controller {
             'client' => 'required',
             'job_type' => 'required',
             'description' => 'required',
+            'gps' => 'required',
             'job_date' => 'required'            
         ];
         return  $rules;
@@ -872,7 +908,11 @@ class ServicerController extends Controller {
             'engine_number' => 'required',
             'chassis_number' => 'required',
             'name' => 'required',
-            'path' => 'required'
+            'path' => 'required',
+            'installation_photo' => 'required',
+            'activation_photo' => 'required',
+            'vehicle_photo' => 'required',
+            'comment' => 'required'
         ];
         return  $rules;
     }
