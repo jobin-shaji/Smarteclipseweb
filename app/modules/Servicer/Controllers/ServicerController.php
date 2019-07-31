@@ -614,20 +614,7 @@ class ServicerController extends Controller {
                 'status' => 1
             ]);
             // $vehicle_id=$vehicle_create->id;
-            // $file=$request->path;
-
-            // $getFileExt   = $file->getClientOriginalExtension();
-            // $uploadedFile =   time().'.'.$getFileExt;
-            // // // dd()
-            // // //Move Uploaded File
-            // $destinationPath = 'documents';
-            // $file->move($destinationPath,$uploadedFile);
-            // $documents = Document::create([
-            //     'vehicle_id' => $vehicle_id,
-            //     'document_type_id' => '1',
-            //     'expiry_date' => null,
-            //     'path' => $uploadedFile,
-            // ]);
+            
         }         
           $vehicle = Vehicle::select(
             'name',
@@ -722,6 +709,27 @@ class ServicerController extends Controller {
                 return "Service" ; 
             }
                        
+         })
+         ->addColumn('location', function ($servicer_job) {                    
+            $latitude= $servicer_job->latitude;
+            $longitude=$servicer_job->longitude;          
+            if(!empty($latitude) && !empty($longitude)){
+                //Send request and receive json data by address
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+                $output = json_decode($geocodeFromLatLong);         
+                $status = $output->status;
+                //Get address from json data
+                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+                //Return address of the given latitude and longitude
+                if(!empty($address)){
+                    $location=$address;
+                    return $location;                                 
+                }        
+            }
+            else
+            {
+                return "No Address";
+            }
          }) 
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
