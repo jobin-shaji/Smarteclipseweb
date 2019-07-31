@@ -131,8 +131,6 @@ class SosController extends Controller {
     public function save(Request $request)
     {
         $root_id=\Auth::user()->id;
-        $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
-       
         $rules = $this->sosCreateRules();
         $this->validate($request, $rules);
         $sos = Sos::create([

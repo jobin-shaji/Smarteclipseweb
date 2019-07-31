@@ -25,7 +25,8 @@ return  [
        'DataUsage',
        'SmsUsage',
        'Servicer',
-       'Sos'
+       'Sos',
+       'TrafficRules'
     ]
 ]
 
