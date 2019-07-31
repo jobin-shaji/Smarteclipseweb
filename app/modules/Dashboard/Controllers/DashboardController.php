@@ -645,46 +645,32 @@ else
          $single_vehicle = [];
          foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-         }        
-        $sql='select id ,lat,lat_dir,lon,mode,(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance from gps  having distance <= '.$radius;
+         }
 
-        $vehicles_details= DB::select($sql);
-        // dd($vehicles_details);
+        $vehicle_by_search=Gps::select('gps.id' ,'gps.lat','gps.lat_dir','gps.lon','gps.mode','device_time'
+        ,DB::raw("6371 * acos(cos(radians(" . $lat . ")) 
+        * cos(radians(gps.lat)) 
+        * cos(radians(gps.lon) - radians(" . $lng . ")) 
+        + sin(radians(" .$lat. ")) 
+        * sin(radians(gps.lat))) AS distance"))
+        ->groupBy("gps.id")
+        ->having('distance','<=',$radius)
+        ->with('vehicle:gps_id,id,name,register_number')
+       ->whereIn('id',$single_vehicle)    
+        ->get();
 
-        // $vehicles_details_data=collect($vehicles_details)->toArray()
-        //                     ->with('vehicle:gps_id,id,name,register_number')
-        //                     ->whereIn('id',$single_vehicle) 
-        //                     ->get();
-
-
-        // Gps::Select(
-        //    'id',
-        //     'lat',
-        //     'lat_dir',
-        //     'lon',
-        //     'lon_dir',
-        //     'mode',
-        //     \DB::raw('(3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$lat.' - lat) * pi()/180 / 2), 2) +COS( '.$lat.' * pi()/180) * COS(lat * pi()/180) * POWER(SIN(( '.$lng.' - lon) * pi()/180 / 2), 2) ))) as distance ')
-        //    ) 
-        //  ->having('distance', '<=', $radius)  
-        //  ->with('vehicle:gps_id,id,name,register_number')
-        // ->whereIn('id',$single_vehicle)                
-                      
-        // ->get();
-       
-       //  $response_track_data=$this->vehicleDataList($vehicles_details);        
-       // if($response_track_data){     
-       //           $response_data = array(
-       //          'user_data'  => $response_track_data,
-       //          'status'=>'success'
-       //      );
-       //  }
-       //  else{
+        $response_track_data=$this->vehicleDataList($vehicle_by_search);        
+       if($response_track_data){     
+                 $response_data = array(
+                'user_data'  => $response_track_data,
+                'status'=>'success'
+            );
+       }else{
                 $response_data = array(
                 'status'  => 'failed',
                 'message' => 'failed',
                 'code'    =>0);
-             // }
+             }
         return response()->json($response_data); 
     }
 

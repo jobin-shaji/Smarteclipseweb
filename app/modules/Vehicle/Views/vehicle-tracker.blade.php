@@ -93,17 +93,35 @@
 
               </div>
           </div>
-
+            <?php
+            $location_url="https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude;
+            ?>
            <div class="share_button">
-                     <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a href="https://www.facebook.com/sharer.php?u=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a href="https://twitter.com/share?url=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a> <!-- Google+ --> <a href="https://plus.google.com/share?url=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" target="_blank"><img src="{{ url('/') }}/share-icons/google.png" alt="Google" /></a><!-- LinkedIn --> <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
-                      <a href="mailto:?Subject=FrinMash&Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324"><img src="{{ url('/') }}/share-icons/email.png" alt="Email" /></a>
+                     <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a> <!-- Google+ --> <a target="_blank" href="https://plus.google.com/share?url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/google.png" alt="Google" /></a><!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
+                      <a target="_blank" href="mailto:?Subject=FrinMash&Body=I%20saw%20this%20and%20thought%20of%20you!%20 {{$location_url}}"><img src="{{ url('/') }}/share-icons/email.png" alt="Email" /></a>
                       <!-- watsapp -->
-
-                      <a href="https://web.whatsapp.com/send?text=https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" data-action="share/whatsapp/share"><img src="{{ url('/') }}/share-icons/whatsapp.png" alt="Email" /></a>
+                      <a target="_blank" href="https://web.whatsapp.com/send?text={{$location_url}}" data-action="share/whatsapp/share"><img src="{{ url('/') }}/share-icons/whatsapp.png" alt="Email" /></a>
 
                    
                       </div>
                   </div>
+        <div class="cover_poi">
+          <div class="poi_atm poi_item">
+            <a href="#" id="poi_atm">
+            <img src="{{ url('/') }}/images/ATM.png">
+            </a>
+          </div>
+          <div class="poi_petrol poi_item">
+            <a href="#" id="poi_petrol">
+            <img src="{{ url('/') }}/images/pump.png">
+           </a>
+          </div>
+          <div class="poi_hopital poi_item">
+            <a href="#" id="poi_hopital">
+            <img src="{{ url('/') }}/images/hospital.png">
+            </a>
+          </div>
+        </div>
 
         <div id="map" class="live_track_map" style="width:100%;height:500px;"></div>
     </div>
@@ -115,7 +133,7 @@
 @section('script')
 
 <script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=places&callback=initMap" async defer></script>
 @endsection
 
 @endsection

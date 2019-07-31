@@ -17104,7 +17104,9 @@ border-radius: 6px 0 6px 6px;
 }
 
  #share-buttons img { width: 35px;  border: 0; box-shadow: 0; }
- .share_button {bottom: 28px;right: 71px;position: fixed;z-index: 2;}
+ .share_button {bottom: 55px;right: 71px;position: fixed;z-index: 2;}
+ .cover_poi {position: fixed;z-index: 2;right: 40px;top: 203px;}
+ .poi_item {padding-top: 8px;}
 
 
 
