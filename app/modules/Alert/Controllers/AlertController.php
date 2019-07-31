@@ -338,7 +338,6 @@ class AlertController extends Controller {
     }
 
     //Alert Notification
-
     public function notification(Request $request)
     {
         $user = $request->user();  

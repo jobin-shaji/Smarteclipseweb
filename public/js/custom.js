@@ -159,6 +159,10 @@ function backgroundPostData(url, data, callBack, options) {
                     
                     subDealerGpsUser(res);
                 }
+                else if(callBack =='clientGps'){
+
+                    clientGps(res);
+                }
                 
             }
         },
@@ -847,5 +851,65 @@ function downloadSosLabel(id){
   downloadFile(url,data);
 }
 
+function getGps(res){
+    var url = 'servicer-client-gps';
+    var data = {
+         client_id : res
+    };   
+    backgroundPostData(url,data,'clientGps',{alert:false});   
+           
+}
+function clientGps(res)
+{
+      alert(res);
+ //    $("#notification").empty();
+ //   var expired_documents;
+
+ //    length=res.expired_documents.length;
+ //    for (var i = 0; i < length; i++) {
+ //     register_number=res.expired_documents[i].vehicle.register_number;
+ //      vehicle_name=res.expired_documents[i].vehicle.name;
+ //     document_name=res.expired_documents[i].document_type.name;
+ //      expiry_date=res.expired_documents[i].expiry_date;
+ //        var expired_documents='  <div class="d-flex no-block align-items-center p-10" >'+
+ //        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+ //        '<div class="m-l-10">'+
+ //        '<small class="font-light">'+document_name+' expired on '+expiry_date+' </small><br>'+                                        
+ //        '<small class="font-light">'+vehicle_name+'</small><br>'+                                                                     
+ //        '<small class="font-light">'+register_number+'</small><br>'+                                    
+ //        '</div></div>';  
+ //        $("#notification").append(expired_documents);       
+ //    }  
+
+ //    expire_length=res.expire_documents.length;
+ // $("#expire_notification").empty();
+ //    for (var i = 0; i < expire_length; i++) { 
+        
+ //    expire_register_number=res.expire_documents[i].vehicle.register_number;
+ //      expire_vehicle_name=res.expire_documents[i].vehicle.name;
+ //     expire_document_name=res.expire_documents[i].document_type.name;
+ //      expire_expiry_date=res.expire_documents[i].expiry_date;
+     
+ //        var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
+ //        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+ //        '<div class="m-l-10" >'+
+ //        '<small class="font-light">'+expire_document_name+' expires on '+expire_expiry_date+' </small><br>'+                                        
+ //        '<small class="font-light">'+expire_vehicle_name+'</small><br>'+                                                                     
+ //        '<small class="font-light">'+expire_register_number+'</small><br>'+                                    
+ //        '</div></div>';  
+ //         $("#expire_notification").append(expire_documents); 
+ //      } 
+
+ //       if(expire_length==0)
+ //      {
+ //        var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
+ //        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+ //        '<div class="m-l-10" >'+
+ //        '<small class="font-light"> No expired Documents</small><br>'+                                        
+                                       
+ //        '</div></div>';  
+ //         $("#expire_notification").append(expire_documents);   
+ //      }     
+}
 
 

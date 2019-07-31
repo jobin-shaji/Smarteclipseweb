@@ -32,6 +32,8 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 	Route::get('/sub-dealer-assign-servicer-list','ServicerController@subDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
+
+	 Route::post('/servicer-client-gps', 'ServicerController@notification')->name('servicer.client.gps');
 	
 });
 
@@ -61,6 +63,8 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	Route::get('/job-history/{id}/details','ServicerController@jobHistoryDetails')->name('job.history.details');
 
 	Route::post('/servicer/vehicles/history','ServicerController@servicerJobHistory')->name('servicer.vehicles.history');
+
+
 
 	
 	

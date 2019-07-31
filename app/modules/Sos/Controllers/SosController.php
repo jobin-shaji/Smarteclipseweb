@@ -1092,7 +1092,7 @@ class SosController extends Controller {
     //validation for sos creation
     public function sosCreateRules(){
         $rules = [
-            'serial_no' => 'required|string|min:15|max:15|unique:sos',
+            'serial_no' => 'required|string|min:15|max:15|unique:sos,imei',
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',
