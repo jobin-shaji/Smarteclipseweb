@@ -210,10 +210,7 @@ class VehicleController extends Controller {
         $custom_messages = [
         'path.required' => 'File cannot be blank'
         ];
-        if($request->document_type_id == 1){
-            $rules = $this->documentCreateRules();
-            $expiry_date=null;
-        }else if($request->document_type_id == 6){
+        if($request->document_type_id == 1 || $request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8){
             $rules = $this->documentCreateRules();
             $expiry_date=null;
         }else{
