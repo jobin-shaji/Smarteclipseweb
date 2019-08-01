@@ -904,8 +904,10 @@ public function notification(Request $request)
         $clients = Client::select('id','name','address','user_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
+  
          $single_client = [];
          $client_count=[];
+         $client_name=[];
         foreach($clients as $client){
              $client_name[] = $client->name;
             $single_client[] = $client->user_id;

@@ -55,8 +55,14 @@ function dealerGpsUser(res){
       datasets: [{
         label: '#:',
        data:[res.sub_dealer,res.client],
-        backgroundColor:'rgba(242,156,18, 0.2)',
-        borderColor:'rgba(242,156,18,1)',
+         backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)'
+            ],
         borderWidth: 1
       }]
     },
