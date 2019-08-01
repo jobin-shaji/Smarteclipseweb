@@ -43,12 +43,13 @@
                     <label class="srequired">Confirm password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                  </div>
-                  @if ($errors->has('password'))
+                     @if ($errors->has('password'))
                     <span class="help-block">
                     <strong class="error-text">{{ $errors->first('password') }}</strong>
                     </span>
                   @endif   
+                  </div>
+                 
 
                </div>
                </div>

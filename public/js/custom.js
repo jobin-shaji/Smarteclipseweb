@@ -863,12 +863,15 @@ function downloadSosLabel(id){
 }
 
 function getClientServicerGps(res){
-    // alert(res);
-    var url = 'servicer-client-gps';
-    var data = {
-         client_id : res
-    };   
-    backgroundPostData(url,data,'clientGps',{alert:false});   
+    if(res)
+    {       
+        var url = 'servicer-client-gps';
+        var data = {
+             client_id : res
+        };   
+        backgroundPostData(url,data,'clientGps',{alert:false});   
+    }
+    
            
 }
 function clientGps(res)

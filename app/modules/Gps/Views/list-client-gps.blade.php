@@ -6,13 +6,7 @@
     <section class="content-header">
         <h1>Create vehicle</h1>
     </section>
-    @if(Session::has('message'))
-    <div class="pad margin no-print">
-      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
-      </div>
-    </div>
-    @endif  
+   
 
 <section class="hilite-content">
       <!-- title row -->
@@ -24,6 +18,13 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Client Gps</li>
               </ol>
+               @if(Session::has('message'))
+                <div class="pad margin no-print">
+                  <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                      {{ Session::get('message') }}  
+                  </div>
+                </div>
+              @endif  
             </nav>
 
                      
