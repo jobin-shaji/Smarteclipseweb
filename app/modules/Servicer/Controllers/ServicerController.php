@@ -37,7 +37,7 @@ class ServicerController extends Controller {
         ]);
 
         $user->assignRole('servicer');
-
+        $sub_dealer_id=\Auth::user()->subdealer->id;
         if($request->user()->hasRole('root')){
             $servicer = Servicer::create([
                 'name' => $request->name,
@@ -52,12 +52,12 @@ class ServicerController extends Controller {
                 'address' => $request->address,
                 'type' => 2,
                 'status' => 0,
-                'sub_dealer_id' => $request->user()->subdealer->id,
+                'sub_dealer_id' => $sub_dealer_id,
                 'user_id' => $user->id
             ]);
         }
 
-        $request->session()->flash('message', 'New servicer successfully!'); 
+        $request->session()->flash('message', 'New servicer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('servicer.details',encrypt($servicer->id)));
     }
@@ -578,7 +578,7 @@ class ServicerController extends Controller {
             'path' => $uploadedVehicleFile,
         ]);
         $service_job_id=Crypt::encrypt($servicer_job->id);
-        $request->session()->flash('message', 'Assign  servicer successfully!'); 
+        $request->session()->flash('message', 'job  completed successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('job.list'));  
         // return redirect(route('job-complete.certificate',$service_job_id));  
@@ -822,6 +822,7 @@ class ServicerController extends Controller {
     {
         $user = $request->user();
         $client_id=$request->client_id;
+
          $client = Client::find($client_id);
          $vehicle_device = Vehicle::select(
             'gps_id',
