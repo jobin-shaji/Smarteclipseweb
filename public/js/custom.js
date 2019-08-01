@@ -18,7 +18,7 @@
                 var decrementDay = moment(new Date(e.date));
                 decrementDay.subtract(1, 'days');
                 $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-                 $(this).data("DateTimePicker").hide();
+                $(this).data("DateTimePicker").hide();
             });
 
         });
@@ -85,6 +85,14 @@ function toast(res){
 
         alertNotification(res);
     } 
+     else if(res.status == 'mobile_already'){
+
+        driverMobileExisted(res);
+    } 
+    else if(res.status =='driver'){
+
+        servicerDriver(res);
+    }
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -163,6 +171,9 @@ function backgroundPostData(url, data, callBack, options) {
 
                     clientGps(res);
                 }
+                 
+
+                
                 
             }
         },
@@ -869,8 +880,12 @@ function clientGps(res)
  for (var i = 0; i < length; i++) {
          var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].imei+'</option>';  
          $("#gps").append(gps);   
-     }
-    
+     }    
 }
+function driverMobileExisted(res)
+{
+    alert("Already Registered Mobile number");
+}
+
 
 

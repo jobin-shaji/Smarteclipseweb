@@ -78,25 +78,6 @@ Route::post('/vehicles/location-track','VehicleController@locationTrack')->name(
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-Route::group(['middleware' => ['web','auth','role:dealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-
-//Vehicle List
-Route::get('/vehicle-dealer','VehicleController@vehicleDealerList')->name('vehicle-dealer');
-
-Route::post('/vehicle-dealer-list','VehicleController@getVehicleDealerList')->name('vehicle-dealer-list');
-});
-
-Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-
-//Vehicle List
-Route::get('/vehicle-sub-dealer','VehicleController@vehicleSubDealerList')->name('vehicle-sub-dealer');
-
-Route::post('/vehicle-sub-dealer-list','VehicleController@getVehicleSubDealerList')->name('vehicle-sub-dealer-list');
-
-});
-
-
 Route::group(['middleware' => ['web','auth','role:servicer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 Route::get('/servicer/vehicles/{id}/create','VehicleController@servicerCreateVehicle')->name('servicer.vehicles.create');
 

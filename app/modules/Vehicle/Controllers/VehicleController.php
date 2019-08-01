@@ -771,70 +771,6 @@ class VehicleController extends Controller {
             ->make();
     }
 
-    /////////////////////////////Vehicle Dealer List//////////////////////////
-    // show list page
-    public function vehicleDealerList()
-    {
-       return view('Vehicle::vehicle-dealer-list'); 
-    }
-
-    // data for list page
-    public function getVehicleDealerList()
-    {
-        $dealer_id=\Auth::user()->dealer->id;
-        $sub_dealers = SubDealer::select(
-                'id'
-                )
-                ->where('dealer_id',$dealer_id)
-                ->get();
-        $single_sub_dealers = [];
-        foreach($sub_dealers as $sub_dealer){
-            $single_sub_dealers[] = $sub_dealer->id;
-        }
-        $clients = Client::select(
-                'id'
-                )
-                ->whereIn('sub_dealer_id',$single_sub_dealers)
-                ->get();
-        $single_clients = [];
-        foreach($clients as $client){
-            $single_clients[] = $client->id;
-        }
-
-        $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'vehicle_type_id',
-                    'client_id',
-                    'deleted_at'
-                    )
-            ->withTrashed()
-            ->whereIn('client_id',$single_clients)
-            ->with('client:id,name')
-            ->with('vehicleType:id,name')
-            ->with('gps:id,imei')
-            ->get();
-
-        return DataTables::of($vehicles)
-            ->addIndexColumn()
-            ->addColumn('sub_dealer',function($vehicles){
-               $vehicle = Vehicle::find($vehicles->id);
-               return $vehicle->client->subDealer->name;
-                
-            })
-            // ->addColumn('action', function ($vehicles) {
-            //     if($vehicles->deleted_at == null){
-            //         return "
-            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-            //     }else{
-            //          return ""; 
-            //     }
-            // })
-            ->rawColumns(['link'])
-            ->make();
-    }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
@@ -938,58 +874,7 @@ class VehicleController extends Controller {
         return response()->json($response_data); 
     }
 
-    /////////////////////////////Vehicle Sub Dealer List/////////////////////
-    // show list page
-    public function vehicleSubDealerList()
-    {
-       return view('Vehicle::vehicle-sub-dealer-list'); 
-    }
-
-    // data for list page
-    public function getVehicleSubDealerList()
-    {
-        $sub_dealer_id=\Auth::user()->subdealer->id;
-        $clients = Client::select(
-                'id'
-                )
-                ->where('sub_dealer_id',$sub_dealer_id)
-                ->get();
-        $single_clients = [];
-        foreach($clients as $client){
-            $single_clients[] = $client->id;
-        }
-
-        $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'vehicle_type_id',
-                    'client_id',
-                    'deleted_at'
-                    )
-            ->withTrashed()
-            ->whereIn('client_id',$single_clients)
-            ->with('client:id,name')
-            ->with('vehicleType:id,name')
-            ->with('gps:id,imei')
-            ->get();
-
-        return DataTables::of($vehicles)
-            ->addIndexColumn()
-            // ->addColumn('action', function ($vehicles) {
-            //     if($vehicles->deleted_at == null){
-            //         return "
-            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-            //     }else{
-            //          return ""; 
-            //     }
-            // })
-            ->rawColumns(['link'])
-            ->make();
-    }
-
-     /////////////////////////////Vehicle Tracker/////////////////////////////
+    /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
        
          $decrypted_id = Crypt::decrypt($request->id);  

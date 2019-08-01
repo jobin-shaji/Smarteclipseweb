@@ -19,9 +19,10 @@ scanner.addListener('scan', function (content) {
                 toastr.info('Item Exists');
             }else{
                 items.push(res.sos_id);
+                var sos_imei_id=res.sos_id;
                 var sos_imei=res.sos_imei;
                 $("#sos_id").val(items); 
-                var markup = "<tr><td>" + sos_imei + "</td></tr>";
+                var markup = "<tr class='cover_imei_"+sos_imei_id+"'><td>" + sos_imei + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+sos_imei_id+");'>Remove</button></td></tr>";
                 $("table tbody").append(markup);
                 toastr.success('Scanned Successfully');
             }
@@ -32,6 +33,17 @@ scanner.addListener('scan', function (content) {
   });
   
 });
+
+function deleteValueArray(sos_id){
+  var item_data = items.indexOf(sos_id)
+  if (item_data > -1) {
+       items.splice(item_data, 1);
+       $('.cover_imei_'+sos_id).remove();
+       $('#sos_id').val(items);
+    }
+
+}
+
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length > 0) {
     scanner.start(cameras[0]);

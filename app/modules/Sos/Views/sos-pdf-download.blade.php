@@ -25,9 +25,9 @@
       </tr>
 
       <tr style=" width:710px; border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
-        <td style="padding:12px 0;width:250px;margin:0 0 0 12px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;border:none;padding:0 0 0 12px">Date of Manufacturing:10/10/2019
+        <td style="padding:12px 0;width:250px;margin:0 0 0 12px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;border:none;padding:0 0 0 12px">Date of Manufacturing:10/10/2019
         </td>
-         <td style="border:solid 1px #222;border-width:0 0 0 1px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px">Manufacturing Address:<br><span style="font-size:13px">VST Mobility Solutions Pvt. Ltd. Kerala Technology Innovation Zone,<br>
+         <td style="border:solid 1px #222;border-width:0 0 0 1px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:18px;font-weight:bolder;padding:12px 0 12px 12px">Manufacturing Address:<br><span style="font-size:13px">VST Mobility Solutions Pvt. Ltd. Kerala Technology Innovation Zone,<br>
         Kinfra Hi-Tech Park, HMT Colony, North Kalamassery,<br>
         Ernakulam, Kerala, India 683503</span>
        </td>
@@ -35,20 +35,20 @@
     </tr>
     <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
 
-    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">Quantity:1</td>
-    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Batch:121561651</td>
+    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">Quantity:1</td>
+    <!-- <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Batch:121561651</td> -->
     </tr>
 
      <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
 
-    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">IMEI No:{{$sos->imei}}</td>
-    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Model No:11111111</td>
+    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">Serial No:{{$sos->imei}}</td>
+    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Model Name:{{$sos->model_name}}</td>
     </tr>
 
     
 
      <tr style="position:absolute;" >
-    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >Certifications:<br></td>
+    <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >Certifications:<br></td>
     <td style="width:250px;margin:0 0 12px 0;border:none;float:left"> <img src="./images/certifications1.png" width="200" height="40"></td>
     </tr>
 
