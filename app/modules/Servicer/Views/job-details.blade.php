@@ -264,12 +264,12 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title"></h4>
         </div>
-        <!-- <div class="modal-body"> -->
+        <div class="modal-body">
 
           <form  method="POST" id="form1">
       {{csrf_field()}}
       <div class="row">
-      <div class="col-lg-6 col-md-12">
+      <div class="col-lg-12 col-md-12">
             <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
                <div class="row">
                   <div class="col-sm-12">                    
@@ -327,13 +327,14 @@
           </div>
         </div>  -->   
         <div class="modal-footer">   
-          <button type="button" id="btn" class="btn btn-primary address_btn" onclick="createDriver({{$servicer_job->id}})">Create</button>
+          <button type="button" id="btn" class="btn btn-primary" onclick="createDriver({{$servicer_job->id}})">Create</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
-      </div>
-      </form>
+     
+      </form> 
+    </div>
          <!--  <p>Some text in the modal.</p> -->
-        <!-- </div> -->
+        </div>
       
       
     </div>
