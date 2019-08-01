@@ -129,10 +129,10 @@
                         <!-- small box -->
                         <div class="small-box bg-green bxs">
                            <div class="inner">
-                              <h3 id="gps_dealer">
+                              <h3 id="total_gps_dealer">
                                  <div class="loader"></div>
                               </h3>
-                              <p>GPS</p>
+                              <p>Total GPS</p>
                            </div>
                            <div class="icon">
                               <i class="fa fa-tablet"></i>
@@ -140,6 +140,23 @@
                            <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                      </div>
+
+                     <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+                        <!-- small box -->
+                        <div class="small-box bg-green bxs">
+                           <div class="inner">
+                              <h3 id="transferred_gps_dealer">
+                                 <div class="loader"></div>
+                              </h3>
+                              <p>Transferred GPS</p>
+                           </div>
+                           <div class="icon">
+                              <i class="fa fa-tablet"></i>
+                           </div>
+                           <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                     </div>
+
                      <!-- ./col -->
                      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
                         <!-- small box -->
