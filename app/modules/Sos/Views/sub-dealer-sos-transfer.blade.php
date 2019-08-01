@@ -67,7 +67,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
-                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" required> 
+                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
                   </div>
                   @if ($errors->has('scanned_employee_code'))
                   <span class="help-block">
@@ -77,7 +77,7 @@
 
                   <div class="form-group has-feedback">
                       <label class="srequired">Invoice Number</label>
-                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" required> 
+                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" autocomplete="off" required> 
                     </div>
                     @if ($errors->has('invoice_number'))
                     <span class="help-block">

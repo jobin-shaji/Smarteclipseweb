@@ -14,10 +14,7 @@ $(document).ready(function() {
                     },
                     success:function(res) {
                         if(res){
-                            if (res == '1') {
-                                $("#expiry_heading").hide();
-                                $("#expiry_date").hide();
-                            }else if (res == '6') {
+                            if (res == '1' || res == '6' || res == '7' || res == '8') {
                                 $("#expiry_heading").hide();
                                 $("#expiry_date").hide();
                             }else {
