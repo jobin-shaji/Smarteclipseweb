@@ -94,7 +94,7 @@
               </div>
           </div>
             <?php
-            $location_url="https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude;
+            $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
             ?>
            <div class="share_button">
                      <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a> <!-- Google+ --> <a target="_blank" href="https://plus.google.com/share?url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/google.png" alt="Google" /></a><!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
