@@ -26,9 +26,8 @@
                     <th >Job Code</th>
                     <th >Client</th>                      
                     <th >Job Type</th>
-                    <th >Assignee</th>
+                    <th >Servicer</th>
                     <th >Description</th>
-                    <th >Location</th>
                     <th >Job Date</th> 
                     <th >Action</th>                      
                   </tr>
@@ -46,5 +45,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/job-history-list.js')}}"></script>
+    <script src="{{asset('js/gps/servicer-job-history-list.js')}}"></script>
   @endsection

@@ -12,7 +12,11 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer'] , 'namespace
 
 	Route::post('/servicer/delete','ServicerController@delete')->name('servicer.delete');
 	Route::post('/servicer/activate','ServicerController@activate')->name('servicer.activate');
+	 Route::post('/servicer-client-gps', 'ServicerController@clientGpsList')->name('servicer.client.gps');
 
+
+	 Route::get('/servicer-job-history-list','ServicerController@servicerJobHistoryList')->name('servicer.job.history-list');
+	Route::post('/servicer-list-history-jobs','ServicerController@getServicerJobsHistoryList')->name('servicer.list.history.jobs');
 	
 });
  
@@ -33,7 +37,10 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::get('/sub-dealer-assign-servicer-list','ServicerController@subDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 
-	 Route::post('/servicer-client-gps', 'ServicerController@notification')->name('servicer.client.gps');
+
+	
+
+	
 	
 });
 
@@ -49,9 +56,6 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
 
-	Route::get('/job-complete-certificate/{id}','ServicerController@jobCompleteCertificate')->name('job-complete.certificate');
-
-	Route::get('/job-complete/{id}/downloads','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 	// Route::get('/job-complete/{id}/downloads/{vid}','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 
 
@@ -59,14 +63,15 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 
 	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history-list');
-	Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');
+	Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
+});
+Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 	Route::get('/job-history/{id}/details','ServicerController@jobHistoryDetails')->name('job.history.details');
 
 	Route::post('/servicer/vehicles/history','ServicerController@servicerJobHistory')->name('servicer.vehicles.history');
 
-
-
 	
-	
+	Route::get('/job-complete-certificate/{id}','ServicerController@jobCompleteCertificate')->name('job-complete.certificate');
+
+	Route::get('/job-complete/{id}/downloads','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 });
-

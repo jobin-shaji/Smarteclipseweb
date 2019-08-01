@@ -15,7 +15,7 @@ $(document).ready(function () {
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'list-history-jobs',
+            url: 'servicer-list-history-jobs',
             type: 'POST',
             data: {
                 'data': data
@@ -35,9 +35,8 @@ $(document).ready(function () {
             // {data: 'servicer.name', name: 'servicer.name'},
             {data: 'clients.name', name: 'clients.name'},
             {data: 'job_type', name: 'job_type'},
-            {data: 'user.username', name: 'user.username'},
+            {data: 'servicer.name', name: 'servicer.name'},
             {data: 'description', name: 'description'},
-            {data: 'location', name: 'location'},
             {data: 'job_date', name: 'job_date'},   
             {data: 'action', name: 'action', orderable: false, searchable: false}
            

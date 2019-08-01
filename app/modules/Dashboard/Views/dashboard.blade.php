@@ -303,11 +303,7 @@
 
             <div class="col-md-12 full-height">
                <div id="map" style="width:100%; height:100%;"></div>
-               <div id="right-panel">
-                <h2>Results</h2>
-                <ul id="places"></ul>
-                <button id="more">More results</button>
-              </div>
+              
             </div>
 
               
@@ -429,8 +425,17 @@
 
 
             </div>
+
+         
+
+
             <div class="dashboard-main-Right">
                <div class="iconsbg1234">
+
+
+
+                  
+
                   <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('M')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
@@ -572,7 +577,7 @@
 
 
 
-
+             
 
          </div>
       </div>
@@ -588,13 +593,14 @@
 <script src="{{asset('js/gps/mdb.js')}}"></script>
 <script src="{{asset('js/gps/dashb.js')}}"></script>
 @role('client')
+<script src="{{asset('js/gps/dashb-client.js')}}"></script>
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
 
 </script>
 <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
-<script src="{{asset('js/gps/dashb-client.js')}}"></script>
+
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
 <style type="text/css">
   .container-fluid {padding-left: 0px !important}
