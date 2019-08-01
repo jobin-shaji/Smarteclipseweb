@@ -92,6 +92,7 @@
                         <thead>
                           <tr>
                             <th>Serial No</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>

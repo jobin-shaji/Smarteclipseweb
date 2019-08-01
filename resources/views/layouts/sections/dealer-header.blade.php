@@ -52,18 +52,4 @@
                                    <a class="dropdown-item" href="{{url('/dealer-client')}}">LIST END USER<span></span></a>
                             </div>
                         </li>
-                      
-
-
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/vehicle-dealer')}}">LIST VEHICLES<span></span></a>   
-                                                          
-                            </div>
-                        </li>
                     </ul>

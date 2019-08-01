@@ -184,7 +184,7 @@ class SosController extends Controller {
         $rules = $this->sosUpdateRules($sos);
         $this->validate($request, $rules);
 
-        $sos->imei = $request->imei;
+        $sos->imei = $request->serial_no;
         $sos->manufacturing_date = $request->manufacturing_date;
         $sos->brand = $request->brand;
         $sos->model_name = $request->model_name;
@@ -1104,7 +1104,7 @@ class SosController extends Controller {
     //validation for sos updation
     public function sosUpdateRules($sos){
         $rules = [
-            'imei' => 'required|string|min:15|max:15|unique:sos,imei,'.$sos->id,
+            'serial_no' => 'required|string|min:15|max:15|unique:sos,imei,'.$sos->id,
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',

@@ -32,24 +32,34 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Country</label>
-                      <select class="form-control" id="country_id" name="country_id" required>
+                      <select class="form-control {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                       <option selected disabled>Select Country</option>
                       @foreach($countries as $country)
                       <option value="{{$country->id}}">{{$country->name}}</option>  
                       @endforeach
                       </select>
+                  @if ($errors->has('country_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                    </span>
+                  @endif
                   </div>
 
                   <div class="form-group has-feedback">
                     <label class="srequired">State</label>
-                      <select class="form-control" id="state_id" name="state_id"  required>
+                      <select class="form-control {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
                       <option selected disabled>Select Country First</option>
                       </select>
+                  @if ($errors->has('state_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('state_id') }}</strong>
+                    </span>
+                  @endif
                   </div>
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Speed (km/h)</label>
-                    <input type="text" class="form-control {{ $errors->has('speed') ? ' has-error' : '' }}" placeholder="Speed" name="speed" value="{{ old('speed') }}" required> 
+                    <input type="text" class="form-control {{ $errors->has('speed') ? ' has-error' : '' }}" placeholder="Speed" name="speed" value="{{ old('speed') }}"> 
                     @if ($errors->has('speed'))
                       <span class="help-block">
                           <strong class="error-text">{{ $errors->first('speed') }}</strong>
