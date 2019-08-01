@@ -53,7 +53,7 @@
                
                   <div class="form-group has-feedback">
                     <label class="srequired">Mobile No.</label>
-                    <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
+                    <input type="number" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                      @if ($errors->has('phone_number'))
                     <span class="help-block">
