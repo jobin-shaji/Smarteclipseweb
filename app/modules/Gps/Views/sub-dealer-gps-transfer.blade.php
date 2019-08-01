@@ -92,6 +92,7 @@
                         <thead>
                           <tr>
                             <th>IMEI</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
