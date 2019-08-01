@@ -150,7 +150,7 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric|size:10'
+            'phone_number' => 'required|string|min:10|max:10'
             
         ];
         return  $rules;
