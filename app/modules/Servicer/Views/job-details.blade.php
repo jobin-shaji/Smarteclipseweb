@@ -3,6 +3,7 @@
     Assign Servicer
 @endsection
 @section('content')
+
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
  <nav aria-label="breadcrumb">
@@ -105,7 +106,8 @@
                          <span class="help-block">
                          <strong class="error-text">{{ $errors->first('driver') }}</strong>
                          </span>
-                         @endif 
+                         @endif
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Driver </button>
                       </div>               
                         <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
                         <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" > 
@@ -249,9 +251,95 @@
                     </div>
                   </div>                
               </div>
-            </form>
+            
               </div>
             </div>
+          </form>
+           <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <!-- <div class="modal-body"> -->
+
+          <form  method="POST" id="form1">
+      {{csrf_field()}}
+      <div class="row">
+      <div class="col-lg-6 col-md-12">
+            <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
+               <div class="row">
+                  <div class="col-sm-12">                    
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="card-body_vehicle wizard-content">                             
+                              <div class="form-group row" style="float:none!important">
+                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
+                                 <div class="form-group has-feedback">
+                                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="driver_name" id="driver_name" value="{{ old('name') }}" > 
+                                 </div>
+                                 @if ($errors->has('name'))
+                                  <span class="help-block">
+                                      <strong class="error-text">{{ $errors->first('name') }}</strong>
+                                  </span>
+                                @endif
+                              </div>
+                               <div class="form-group row" style="float:none!important">
+                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
+                                 <div class="form-group has-feedback">
+                                     <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" id="mobile" value="{{ old('mobile') }}" > 
+                                  </div>
+                                  @if ($errors->has('mobile'))
+                                    <span class="help-block">
+                                        <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                                    </span>
+                                  @endif
+                              </div>
+                              <div class="form-group row" style="float:none!important">
+                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                                 <div class="form-group has-feedback">
+                                    <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" id="address" rows=5></textarea>
+                                  </div>
+                                   @if ($errors->has('address'))
+                                <span class="help-block">
+                                    <strong class="error-text">{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif
+                              </div>                                                         
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+       </div>
+       <!-- <div class="row">
+         <div class="col-lg-6 col-md-12">
+            <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
+              <div class="row">
+              
+              </div>
+            </div>
+          </div>
+        </div>  -->   
+        <div class="modal-footer">   
+          <button type="button" id="btn" class="btn btn-primary address_btn" onclick="createDriver({{$servicer_job->id}})">Create</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </form>
+         <!--  <p>Some text in the modal.</p> -->
+        <!-- </div> -->
+      
+      
+    </div>
+  </div>
+  
+
           </div>
         </div>
       </div>
@@ -262,6 +350,7 @@
 <div class="clearfix"></div>
 
 @endsection
-<!--  @section('script')
+ @section('script')
+ <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="{{asset('js/gps/servicer-vehicle-create.js')}}"></script>
-  @endsection -->
+  @endsection

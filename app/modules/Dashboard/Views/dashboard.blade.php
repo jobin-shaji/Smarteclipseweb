@@ -425,8 +425,17 @@
 
 
             </div>
+
+         
+
+
             <div class="dashboard-main-Right">
                <div class="iconsbg1234">
+
+
+
+                  
+
                   <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('M')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
@@ -568,7 +577,7 @@
 
 
 
-
+             
 
          </div>
       </div>

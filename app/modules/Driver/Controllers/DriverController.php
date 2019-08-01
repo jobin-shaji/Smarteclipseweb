@@ -248,6 +248,52 @@ class DriverController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+
+
+//Client Driver Create
+    public function clientDriverCreate(Request $request)
+    {
+
+        $servicer_job_id= $request->servicer_job_id;         
+        $driver_name= $request->driver_name;         
+        $mobile = $request->mobile;
+        $address = $request->address;
+        $client_id = $request->client_id;
+        $driver_mobile = Driver::select(
+            'name',
+            'mobile'               
+        )               
+        ->where('mobile',$mobile)
+        ->count();
+        if($driver_mobile==0)
+        {
+            if($driver_name!=null)
+            {
+                $create_driver= Driver::create([
+                    'name' => $driver_name,
+                    'mobile' => $mobile,
+                    'address' => $address,
+                    'points' => 100,
+                    'client_id' => $client_id                    
+                ]);                
+            } 
+            $driver_id=$create_driver->id;               
+            return response()->json([
+                'driver_id'=>$driver_id,
+                'driver_name'=>$driver_name,
+                'status' => 'driver'           
+            ]);
+        }
+        else
+        {
+             return response()->json([               
+                'status' => 'mobile_already'           
+            ]);
+        }
+       
+      
+    }
+
      //validation for employee updation
     public function driverUpdateRules($driver)
     {
