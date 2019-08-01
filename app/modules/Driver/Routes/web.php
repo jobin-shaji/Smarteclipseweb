@@ -22,3 +22,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/performance-score-history-list','DriverController@performanceScoreHistoryList')->name('performance-score-history-list');
 });
 
+Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Driver\Controllers' ] , function() {
+
+	Route::post('/servicer-driver-create','DriverController@clientDriverCreate')->name('servicer.driver.create.p');
+});
