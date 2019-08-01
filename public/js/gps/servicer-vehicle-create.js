@@ -42,7 +42,11 @@ function servicerDriver(res)
     var driver_id=res.driver_id;
     var driver_name=res.driver_name;
     var driver='  <option value="'+driver_id+'"  >'+driver_name+'</option>';  
-    $("#driver").append(driver);   
+    $("#driver").append(driver);  
+    $("#driver").val(driver_id);
+    $("#driver_name").val("");
+    $("#mobile").val("");
+    $("#address").val("");
     $('#myModal').modal('hide'); 
 }
 

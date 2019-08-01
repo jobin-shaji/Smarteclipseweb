@@ -48,6 +48,18 @@
                       </span>
                       @endif
                     </div>
+                     <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Installation Location</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('search_place'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('search_place') }}</strong>
+                      </span>
+                      @endif
+                    </div>
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
                       <div class="form-group has-feedback">
@@ -110,18 +122,7 @@
                       </span>
                       @endif
                     </div>
-                        <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Installation Location</label>
-                      <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" required>
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                      </div>
-                      @if ($errors->has('search_place'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('search_place') }}</strong>
-                      </span>
-                      @endif
-                    </div>
+                       
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Date</label>
                       <div class="form-group has-feedback">
