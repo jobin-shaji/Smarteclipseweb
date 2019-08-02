@@ -55,6 +55,7 @@
         
     
     </div>
+    @role('superior|pro')
     <div class="col-lg-6 col-md-12">
        
   
@@ -101,6 +102,7 @@
           </div>
        
     </div>
+    @endrole
 
   </div>
 
