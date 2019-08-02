@@ -27,7 +27,7 @@ class GeofenceController extends Controller {
 
         $geofence = Geofence::select(
             'id', 
-            'user_id',                                  
+            'user_id'                                  
             )  
             ->withTrashed()     
             ->where('user_id',$request->user()->id)        
