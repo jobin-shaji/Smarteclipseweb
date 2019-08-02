@@ -887,7 +887,8 @@ function clientGps(res)
 }
 function driverMobileExisted(res)
 {
-    alert("Already Registered Mobile number");
+    alertify.confirm('Confirm Message', function(){ alertify.success('Ok') });
+    // alert("Already Registered Mobile number");
 }
 
 
