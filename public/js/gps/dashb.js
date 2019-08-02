@@ -25,7 +25,8 @@ function dbcount(res){
       $('#dealer_subdealer').text(res.subdealers);
       $('#total_gps_dealer').text(res.total_gps);
       $('#transferred_gps_dealer').text(res.transferred_gps);
-      $('#subdealer_gps').text(res.gps);
+      $('#total_gps_subdealer').text(res.total_gps);
+      $('#transferred_gps_subdealer').text(res.transferred_gps);
       $('#subdealer_client').text(res.clients);
       $('#client_gps').text(res.gps);
       $('#client_vehicle').text(res.vehicles);

@@ -153,7 +153,7 @@
                            <div class="icon">
                               <i class="fa fa-tablet"></i>
                            </div>
-                           <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                           <a href="/gps-transfers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                      </div>
 
@@ -211,10 +211,25 @@
    <!-- small box -->
    <div class="small-box bg-green bxs">
       <div class="inner">
-         <h3 id="subdealer_gps">
+         <h3 id="total_gps_subdealer">
             <div class="loader"></div>
          </h3>
-         <p>GPS</p>
+         <p>Total GPS</p>
+      </div>
+      <div class="icon">
+         <i class="fa fa-tablet"></i>
+      </div>
+      <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+   </div>
+</div>
+<div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+   <!-- small box -->
+   <div class="small-box bg-green bxs">
+      <div class="inner">
+         <h3 id="transferred_gps_subdealer">
+            <div class="loader"></div>
+         </h3>
+         <p>Transferred GPS</p>
       </div>
       <div class="icon">
          <i class="fa fa-tablet"></i>

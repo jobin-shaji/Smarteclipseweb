@@ -188,26 +188,37 @@ class DashboardController extends Controller
             ]);
         }
         else if($user->hasRole('dealer')){
-            $gps_transfers=GpsTransfer::select('id')
-                                    ->where('to_user_id',$user->id)
-                                    ->whereNotNull('accepted_on')
-                                    ->whereNull('deleted_at')
-                                    ->get();
-            $single_gps_transfers=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $single_gps_transfers[] = $gps_transfer->id;
+            $dealer_user_id=[];
+            $dealer_user_id[]=$user->id;
+            $dealer_id=$user->dealer->id;
+            $sub_dealers = SubDealer::select(
+                'id','user_id'
+                )
+                ->where('dealer_id',$dealer_id)
+                ->get();
+            $single_sub_dealers = [];
+            $single_sub_dealers_user_id = [];
+            foreach($sub_dealers as $sub_dealer){
+                $single_sub_dealers[] = $sub_dealer->id;
+                $single_sub_dealers_user_id[] = $sub_dealer->user_id;
             }
-            $total_gps = GpsTransferItems::whereIn('gps_transfer_id',$single_gps_transfers)->count();
-            $gps_transferred=GpsTransfer::select('id')
-                                    ->where('from_user_id',$user->id)
-                                    ->whereNotNull('accepted_on')
-                                    ->whereNull('deleted_at')
-                                    ->get();
-            $single_gps_transferred=[];
-            foreach ($gps_transferred as $gps_transfer) {
-                $single_gps_transferred[] = $gps_transfer->id;
+            $clients = Client::select(
+                    'id','user_id'
+                    )
+                    ->whereIn('sub_dealer_id',$single_sub_dealers)
+                    ->get();
+            $single_clients_user_id = [];
+            foreach($clients as $client){
+                $single_clients_user_id[] = $client->user_id;
             }
-            $transferred_gps = GpsTransferItems::whereIn('gps_transfer_id',$single_gps_transferred)->count();
+            $dealer_subdealer_clients_group = array_merge($single_sub_dealers_user_id,$single_clients_user_id,$dealer_user_id);
+            $subdealer_clients_group = array_merge($single_sub_dealers_user_id,$single_clients_user_id);
+            $total_gps = Gps::withTrashed()
+                ->whereIn('user_id',$dealer_subdealer_clients_group)
+                ->count();
+            $transferred_gps = Gps::withTrashed()
+                ->whereIn('user_id',$subdealer_clients_group)
+                ->count();
             return response()->json([
                 'subdealers' => SubDealer::where('dealer_id',$dealers->id)->count(),
                 'total_gps' => $total_gps,
@@ -216,9 +227,29 @@ class DashboardController extends Controller
             ]);
         }
         else if($user->hasRole('sub_dealer')){
+            $sub_dealer_user_id=[];
+            $sub_dealer_user_id[]=$user->id;
+            $sub_dealer_id=$user->subdealer->id;
+            $clients = Client::select(
+                    'user_id'
+                    )
+                    ->where('sub_dealer_id',$sub_dealer_id)
+                    ->get();
+            $single_clients_user_id = [];
+            foreach($clients as $client){
+                $single_clients_user_id[] = $client->user_id;
+            }
+            $subdealer_clients_group = array_merge($single_clients_user_id,$sub_dealer_user_id);
+            $total_gps = Gps::withTrashed()
+                ->whereIn('user_id',$subdealer_clients_group)
+                ->count();
+            $transferred_gps = Gps::withTrashed()
+                ->whereIn('user_id',$single_clients_user_id)
+                ->count();
             return response()->json([
                 'clients' => Client::where('sub_dealer_id',$subdealers->id)->count(),
-                'gps' => Gps::where('user_id',$user->id)->count(),
+                'total_gps' => $total_gps,
+                'transferred_gps' => $transferred_gps,
                 'status' => 'dbcount'           
             ]);
         }
