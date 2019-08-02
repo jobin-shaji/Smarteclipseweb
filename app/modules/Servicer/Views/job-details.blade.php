@@ -94,7 +94,7 @@
                       <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">Driver</label>
                          <div class="form-group has-feedback">
-                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="driver" name="driver">
+                           <select class="form-control select2" data-live-search="true" title="Select Servicer" id="driver" name="driver">
                                <option value="">Select</option>
                                   @foreach ($drivers as $driver)
                                   <option value="{{$driver->id}}">{{$driver->name}}</option>
@@ -353,5 +353,6 @@
 @endsection
  @section('script')
  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-    <script src="{{asset('js/gps/servicer-vehicle-create.js')}}"></script>
+    <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
+  
   @endsection

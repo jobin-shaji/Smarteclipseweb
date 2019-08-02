@@ -1,6 +1,8 @@
 
 
  $(function () {
+    $('.select2').select2();
+
            
             $('#fromDate,#toDate').datetimepicker({
                 useCurrent: false,
@@ -22,6 +24,8 @@
             });
 
         });
+ // $('.select2').select2();
+
 // dateTimepicker
 
     $( ".datetimepicker" ).datetimepicker({ 
@@ -887,8 +891,14 @@ function clientGps(res)
 }
 function driverMobileExisted(res)
 {
-    alertify.confirm('Confirm Message', function(){ alertify.success('Ok') });
-    // alert("Already Registered Mobile number");
+    var closable = alertify.alert().setting('closable');
+    alertify.alert()
+    .setting({
+        'label':'OK',
+        'message': 'Already Registered Mobile number' ,
+        'onok': function(){ alertify.success('ok');}
+    }).show();
+
 }
 
 
