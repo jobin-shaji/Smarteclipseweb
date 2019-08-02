@@ -15,17 +15,41 @@ use DataTables;
 class GeofenceController extends Controller {
 
     //Display all etms
-	public function create()
+	public function create(Request $request)
     {
+        $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
         // $client = $request->user()->client;
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude;
+
+
+
+        $geofence = Geofence::select(
+            'id', 
+            'user_id',                                  
+            )  
+            ->withTrashed()     
+            ->where('user_id',$request->user()->id)        
+            ->count();  
+            // dd($geofence);
+             if(($request->user()->hasRole('freebies')&& $geofence==0 )  || ($request->user()->hasRole('fundamental')&& $geofence<3 )|| ($request->user()->hasRole('superior')&& $geofence<4  ) || ($request->user()->hasRole('pro')&& $geofence<10 )){
+                return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+             }
+             else
+             {
+                $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
+                $request->session()->flash('alert-class', 'alert-success'); 
+                return view('Geofence::geofence-list');
+             }
+
+
+
         // return response()->json([
         //     'latitude' => (float)$client->latitude,
         //     'longitude' => (float)$client->longitude
         // ]);
-		return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+		
 	}
 	public function saveFence(Request $request){
 

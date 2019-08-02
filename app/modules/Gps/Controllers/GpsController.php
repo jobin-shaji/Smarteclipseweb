@@ -1307,7 +1307,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1318,7 +1318,7 @@ class GpsController extends Controller {
           'gps_id' => 'required',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1330,7 +1330,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
       ];
         return $rules;
     }
@@ -1341,7 +1341,7 @@ class GpsController extends Controller {
             'gps_id' => 'required',
             'sub_dealer_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required'
+            'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1352,7 +1352,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1363,7 +1363,7 @@ class GpsController extends Controller {
             'gps_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required'
+            'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
