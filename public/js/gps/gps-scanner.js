@@ -29,7 +29,7 @@ scanner.addListener('scan', function (content) {
                 toastr.success('Scanned Successfully');
             }
         }else{
-          toastr.error('Already Transferred');
+          toastr.error('This GPS device is already transferred');
         }
       }
   });

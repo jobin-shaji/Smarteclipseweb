@@ -179,7 +179,7 @@ class DashboardController extends Controller
     }
         if($user->hasRole('root')){
             return response()->json([
-                 'gps' => Gps::where('user_id',$user->id)->count(), 
+                'gps' => Gps::where('user_id',$user->id)->count(), 
                 'dealers' => Dealer::all()->count(), 
                 'subdealers' => SubDealer::all()->count(),
                 'clients' => Client::all()->count(),
@@ -188,16 +188,68 @@ class DashboardController extends Controller
             ]);
         }
         else if($user->hasRole('dealer')){
+            $dealer_user_id=[];
+            $dealer_user_id[]=$user->id;
+            $dealer_id=$user->dealer->id;
+            $sub_dealers = SubDealer::select(
+                'id','user_id'
+                )
+                ->where('dealer_id',$dealer_id)
+                ->get();
+            $single_sub_dealers = [];
+            $single_sub_dealers_user_id = [];
+            foreach($sub_dealers as $sub_dealer){
+                $single_sub_dealers[] = $sub_dealer->id;
+                $single_sub_dealers_user_id[] = $sub_dealer->user_id;
+            }
+            $clients = Client::select(
+                    'id','user_id'
+                    )
+                    ->whereIn('sub_dealer_id',$single_sub_dealers)
+                    ->get();
+            $single_clients_user_id = [];
+            foreach($clients as $client){
+                $single_clients_user_id[] = $client->user_id;
+            }
+            $dealer_subdealer_clients_group = array_merge($single_sub_dealers_user_id,$single_clients_user_id,$dealer_user_id);
+            $subdealer_clients_group = array_merge($single_sub_dealers_user_id,$single_clients_user_id);
+            $total_gps = Gps::withTrashed()
+                ->whereIn('user_id',$dealer_subdealer_clients_group)
+                ->count();
+            $transferred_gps = Gps::withTrashed()
+                ->whereIn('user_id',$subdealer_clients_group)
+                ->count();
             return response()->json([
                 'subdealers' => SubDealer::where('dealer_id',$dealers->id)->count(),
-                'gps' => Gps::where('user_id',$user->id)->count(),
+                'total_gps' => $total_gps,
+                'transferred_gps' => $transferred_gps,
                 'status' => 'dbcount'           
             ]);
         }
         else if($user->hasRole('sub_dealer')){
+            $sub_dealer_user_id=[];
+            $sub_dealer_user_id[]=$user->id;
+            $sub_dealer_id=$user->subdealer->id;
+            $clients = Client::select(
+                    'user_id'
+                    )
+                    ->where('sub_dealer_id',$sub_dealer_id)
+                    ->get();
+            $single_clients_user_id = [];
+            foreach($clients as $client){
+                $single_clients_user_id[] = $client->user_id;
+            }
+            $subdealer_clients_group = array_merge($single_clients_user_id,$sub_dealer_user_id);
+            $total_gps = Gps::withTrashed()
+                ->whereIn('user_id',$subdealer_clients_group)
+                ->count();
+            $transferred_gps = Gps::withTrashed()
+                ->whereIn('user_id',$single_clients_user_id)
+                ->count();
             return response()->json([
                 'clients' => Client::where('sub_dealer_id',$subdealers->id)->count(),
-                'gps' => Gps::where('user_id',$user->id)->count(),
+                'total_gps' => $total_gps,
+                'transferred_gps' => $transferred_gps,
                 'status' => 'dbcount'           
             ]);
         }
