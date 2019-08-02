@@ -2,13 +2,22 @@ function createDriver(res){
     var mobile = document.getElementById("mobile").value;
     var phoneno = /^\d{10}$/;
     if(document.getElementById('driver_name').value == ''){
-        alert('please enter name');
+        // alertify.confirm('please enter name', function(){ alertify.success('Ok') });
+        var closable = alertify.alert().setting('closable');
+        alertify.alert()
+        .setting({'label':'OK','message': 'please enter name'}).show();
     }
     else if(document.getElementById('mobile').value == '' ){
-        alert('please select mobile');
+         var closable = alertify.alert().setting('closable');
+        alertify.alert()
+        .setting({'label':'OK','message': 'please enter mobile number'}).show();
+        
     }
     else if(document.getElementById('address').value == ''){
-        alert('please enter address');
+        var closable = alertify.alert().setting('closable');
+        alertify.alert()
+        .setting({'label':'OK','message': 'please enter address'}).show();    
+   
     }
      else{
         if(mobile.match(phoneno))
@@ -29,12 +38,13 @@ function createDriver(res){
             backgroundPostData(url,data,'servicerDriver',{alert:false});  
         }
         else
-        {           
-            alert("Mobile number should be number");
+        { 
+            var closable = alertify.alert().setting('closable');
+            alertify.alert()
+            .setting({'label':'OK','message': 'Mobile should be number'}).show();              
+            // alert("Mobile number should be number");
         // return false;
-        }
-
-        
+        }    
     }          
 }
 function servicerDriver(res)

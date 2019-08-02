@@ -68,6 +68,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="{{asset('js/custom.js')}}"></script>
      <script src="{{asset('js/alertify.min.js')}}"></script>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     
     
         
