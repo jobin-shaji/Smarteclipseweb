@@ -51,8 +51,7 @@ class ClientController extends Controller {
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng          
             ]);
-            User::where('username', $request->username)->first()->assignRole('client');
-            
+            User::where('username', $request->username)->first()->assignRole('client');            
             $alert_types = AlertType::all(); 
             if($client){
                 foreach ($alert_types as $alert_type) {
