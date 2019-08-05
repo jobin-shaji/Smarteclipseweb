@@ -14,7 +14,7 @@
 
                   <li>
                     <a href="{{url('/sms-usage')}}" class="animate"> <span class="glyphicon glyphicon-user"></span>
-                      <span class="desc animate">SMS Ussage</span>
+                      <span class="desc animate">SMS Usage</span>
                       <span class=""><img src="{{ url('/') }}/Report-icons/sms-usage.png"  /></span>
                     </a>
                   </li>

@@ -902,4 +902,26 @@ function driverMobileExisted(res)
 }
 
 
+function downloadInvoice(){    
+    var url = 'daily-km-report/export';
+    var  vehicles=$('#vehicle').val();   
+    var vehicle=vehicles;
+   
+    // console.log(alert);
+    var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        };
+        downloadFile(url,data);
+    }
+}
+
+
 

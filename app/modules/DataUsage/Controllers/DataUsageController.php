@@ -25,7 +25,7 @@ class DataUsageController extends Controller
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
         }
-        $devices=Gps::select('id','name','imei')               
+        $devices=Gps::select('id','imei')               
                 ->whereIn('id',$single_gps)
                 ->get();
 
@@ -46,11 +46,11 @@ class DataUsageController extends Controller
 		 );
 		if($gps_id==null)
 		{
-			$dailyDataUsage=$dailyDataUsage->with('Gps:id,name,imei,manufacturing_date');
+			$dailyDataUsage=$dailyDataUsage->with('Gps:id,imei,manufacturing_date');
 		}
 		else
 		{
-			$dailyDataUsage=$dailyDataUsage->with('Gps:id,name,imei,manufacturing_date')
+			$dailyDataUsage=$dailyDataUsage->with('Gps:id,imei,manufacturing_date')
 			->where('gps_id',$gps_id);
 			 
 		}
