@@ -67,7 +67,6 @@
                     <input type="checkbox" checked id="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->imei}}
                 </div>
               @endforeach
-
         </div>
       <div class="row">
         <!-- /.col -->

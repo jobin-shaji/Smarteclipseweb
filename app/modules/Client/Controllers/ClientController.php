@@ -30,7 +30,7 @@ class ClientController extends Controller {
         }
 
         $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['logitude'];
+        $location_lng=$placeLatLng['longitude'];
         
         if($request->user()->hasRole('sub_dealer'))
         {
@@ -543,7 +543,7 @@ class ClientController extends Controller {
             $latLng = $output_deals->results[0]->geometry->location;
             $lat = $latLng->lat;
             $lng = $latLng->lng;
-            $locationData = ["latitude" => $lat, "logitude" => $lng];
+            $locationData = ["latitude" => $lat, "longitude" => $lng];
             return $locationData;
         } else {
             return null;
