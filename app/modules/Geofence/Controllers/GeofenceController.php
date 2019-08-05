@@ -31,17 +31,16 @@ class GeofenceController extends Controller {
             )  
             ->withTrashed()     
             ->where('user_id',$request->user()->id)        
-            ->count();  
-            // dd($geofence);
-             if(($request->user()->hasRole('freebies')&& $geofence==0 )  || ($request->user()->hasRole('fundamental')&& $geofence<3 )|| ($request->user()->hasRole('superior')&& $geofence<4  ) || ($request->user()->hasRole('pro')&& $geofence<10 )){
+            ->count(); 
+            if($geofence<1){
                 return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
-             }
-             else
-             {
+            }else if($request->user()->hasRole('fundamental')&& $geofence<3) {
+                return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+            }else{
                 $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
                 $request->session()->flash('alert-class', 'alert-success'); 
                 return view('Geofence::geofence-list');
-             }
+            }
 
 
 
