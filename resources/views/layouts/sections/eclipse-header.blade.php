@@ -105,7 +105,7 @@
                                     <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
                                     <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
                                     
-                                   <!--  <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
+                                    <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu">

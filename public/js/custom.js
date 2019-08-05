@@ -175,6 +175,11 @@ function backgroundPostData(url, data, callBack, options) {
 
                     clientGps(res);
                 }
+                else if(callBack =='vehicleInvoice'){
+
+                    vehicleInvoice(res);
+                }
+
                  
 
                 
@@ -903,25 +908,31 @@ function driverMobileExisted(res)
 
 
 function downloadInvoice(){    
-    var url = 'daily-km-report/export';
-    var  vehicles=$('#vehicle').val();   
-    var vehicle=vehicles;
-   
-    // console.log(alert);
-    var fromDate=$('#fromDate').val();
+    var url = 'invoice/export';
+    var  vehicle=$('#vehicle').val();   
+   var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
     if(fromDate){
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
-        downloadFile(url,data);
-    }else{
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
-        };
-        downloadFile(url,data);
+        backgroundPostData(url,data,{alert:false});
+    }
+    else
+    {
+        // alert("Please select");
+        // var data = {
+        // id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        // };
+        // downloadFile(url,data);
     }
 }
+
+
+function vehicleInvoice(res){    
+  // alert(res);
+}
+
 
 
 

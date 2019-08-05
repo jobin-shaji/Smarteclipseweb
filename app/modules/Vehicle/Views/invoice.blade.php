@@ -20,6 +20,8 @@ Daily KM Report
               <div class="col-md-12 col-md-offset-1">
                 <div class="panel panel-default">
                   <div >
+                    <form method="POST" action ="{{route('vehicle-invoice.export.p')}}">
+                      {{csrf_field()}}
                     <div class="panel-body">
                       <div class="panel-heading">
                        <div class="cover_div_search">
@@ -50,17 +52,17 @@ Daily KM Report
                             <div class="col-lg-3 col-md-3 pt-4">  
                               <div class="form-group">          
                                
-                                <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadInvoice()">
+                                <button type="submit" class="btn btn-sm btn1 btn-primary form-control">
 
-                                <i class="fa fa-file"></i>Download Invoice</button>
-
-                                
+                                <i class="fa fa-file"></i>Download Invoice</button>                                
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>                  
                     </div>
+                  </form>
+
                   </div>
                 </div>
               </div>

@@ -22,6 +22,7 @@ use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PDF;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -897,6 +898,16 @@ class VehicleController extends Controller {
         ->get();
           
         return view('Vehicle::invoice',['vehicles'=>$vehicles] );
+    }
+
+    public function export(Request $request){
+
+       
+        $pdf = PDF::loadView('Vehicle::invoice-pdf-download');
+        return $pdf->download('GpsData.pdf');
+      
+        
+
     }
 
     // public function locationPlayback(Request $request){
