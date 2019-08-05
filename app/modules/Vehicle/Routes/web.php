@@ -48,7 +48,7 @@ Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->
 ///////////////////////////////////invoice////////////////////////////////////////////////////////////
 Route::get('/invoice','VehicleController@invoice')->name('invoice');
 
-Route::post('/daily-km-report/export','DailyKMReportController@export')->name('daily.km.report.export');
+Route::post('/vehicle-invoice/export','VehicleController@export')->name('vehicle-invoice.export.p');
 
 
 
