@@ -1167,7 +1167,7 @@ class GpsController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('GPSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('dealer')){
             $gps_transfer = GpsTransfer::find($gps_transfer_id);
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
@@ -1184,7 +1184,7 @@ class GpsController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('GPSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('sub_dealer')){
             $gps_transfer = GpsTransfer::find($gps_transfer_id);
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
@@ -1201,7 +1201,7 @@ class GpsController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('GPSTransferLabel.pdf',$headers);
         }
     }
 
@@ -1295,7 +1295,7 @@ class GpsController extends Controller {
         }
 
         $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
-        return $pdf->download('abcd.pdf');
+        return $pdf->download('GpsData.pdf');
 
     }
 
