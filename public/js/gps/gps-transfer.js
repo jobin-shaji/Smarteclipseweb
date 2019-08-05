@@ -85,7 +85,7 @@ $('.dealerData').on('change', function() {
   });
 
 $(document).ready(function() {
-    $('#selectedCheckBox').click(function(e) {
+    $('.selectedCheckBox').click(function(e) {
         e.preventDefault();
         e.stopPropagation();
     });
