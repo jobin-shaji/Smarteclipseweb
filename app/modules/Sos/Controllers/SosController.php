@@ -967,7 +967,7 @@ class SosController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('SOSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('dealer')){
             $sos_transfer = SosTransfer::find($sos_transfer_id);
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
@@ -984,7 +984,7 @@ class SosController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('SOSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('sub_dealer')){
             $sos_transfer = SosTransfer::find($sos_transfer_id);
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
@@ -1001,7 +1001,7 @@ class SosController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('SOSTransferLabel.pdf',$headers);
         }
     }
 
