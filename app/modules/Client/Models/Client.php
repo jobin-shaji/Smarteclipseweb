@@ -6,7 +6,7 @@ class Client extends Model
 {
   use SoftDeletes;    
 	protected $fillable=[
-		'user_id','sub_dealer_id','name','address','created_by','deleted_by','deleted_at'
+		'user_id','sub_dealer_id','name','address','latitude','longitude','created_by','deleted_by','deleted_at'
 	];	
   
   public function subdealer()

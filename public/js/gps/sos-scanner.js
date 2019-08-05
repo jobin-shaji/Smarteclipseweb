@@ -27,7 +27,7 @@ scanner.addListener('scan', function (content) {
                 toastr.success('Scanned Successfully');
             }
         }else{
-          toastr.error('This SOS button is already transferred');
+          toastr.error('Could not find this button');
         }
       }
   });
