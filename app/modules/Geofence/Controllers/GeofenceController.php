@@ -192,6 +192,7 @@ class GeofenceController extends Controller {
         $geofence = Geofence::select('id','user_id','name','cordinates','fence_type_id','deleted_at')
         ->where('user_id',$user_id)
         ->get();
+        
          return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
     }
 
