@@ -884,6 +884,21 @@ class VehicleController extends Controller {
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
     }
 
+
+
+
+/// invoice/////////
+
+
+    public function invoice(Request $request){
+        $client_id=\Auth::user()->client->id;
+         $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+          
+        return view('Vehicle::invoice',['vehicles'=>$vehicles] );
+    }
+
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
