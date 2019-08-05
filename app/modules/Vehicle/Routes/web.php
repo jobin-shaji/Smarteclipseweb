@@ -48,9 +48,8 @@ Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->
 ///////////////////////////////////invoice////////////////////////////////////////////////////////////
 Route::get('/invoice','VehicleController@invoice')->name('invoice');
 
+Route::post('/daily-km-report/export','DailyKMReportController@export')->name('daily.km.report.export');
 
-Route::get('/gps-transfer-label/{id}/export','GpsController@exportGpsTransferLabel')->name('gps-transfer-label.export');
-Route::post('/gps-scan','GpsController@getScannedGps')->name('gps-scan');
 
 
 

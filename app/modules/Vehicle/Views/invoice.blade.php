@@ -49,11 +49,12 @@ Daily KM Report
                             </div>
                             <div class="col-lg-3 col-md-3 pt-4">  
                               <div class="form-group">          
+                               
+                                <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadInvoice()">
+
+                                <i class="fa fa-file"></i>Download Invoice</button>
+
                                 
-                                 <a href="{{route('gps-transfer-label.export',$gps_transfer->id)}}">
-                                <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
-                              </a>
-                                <!-- <i class="fa fa-file"></i>Download Excel</button> -->
                               </div>
                             </div>
                           </div>
