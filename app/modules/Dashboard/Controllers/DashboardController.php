@@ -509,7 +509,7 @@ class DashboardController extends Controller
             'device_time'
           )
         ->with('vehicle:gps_id,id,name,register_number')
-        
+        ->whereNotNull('mode')
         ->whereIn('id',$single_vehicle)        
         ->orderBy('id','desc')                 
         ->get(); 
