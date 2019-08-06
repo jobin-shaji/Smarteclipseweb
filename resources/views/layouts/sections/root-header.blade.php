@@ -24,7 +24,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/sos/create')}}">ADD SOS</a>
-            <a class="dropdown-item" href="{{url('/sos')}}">LIST SOS</a>  
+            <a class="dropdown-item" href="{{url('/sos')}}">IN STOCK</a>  
             <a class="dropdown-item" href="{{url('/sos-transfer-root/create')}}">TRANSFER SOS</a> 
             <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LOG</a> 
             <a class="dropdown-item" href="{{url('/sos-transferred')}}">TRANSFERRED SOS</a>
