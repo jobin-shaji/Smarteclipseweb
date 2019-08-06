@@ -22,6 +22,7 @@ use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PDF;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -882,6 +883,31 @@ class VehicleController extends Controller {
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);            
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
+    }
+
+
+
+
+/// invoice/////////
+
+
+    public function invoice(Request $request){
+        $client_id=\Auth::user()->client->id;
+         $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+          
+        return view('Vehicle::invoice',['vehicles'=>$vehicles] );
+    }
+
+    public function export(Request $request){
+
+       
+        $pdf = PDF::loadView('Vehicle::invoice-pdf-download');
+        return $pdf->download('GpsData.pdf');
+      
+        
+
     }
 
     // public function locationPlayback(Request $request){

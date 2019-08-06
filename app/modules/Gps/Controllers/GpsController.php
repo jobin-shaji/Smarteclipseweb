@@ -1373,7 +1373,7 @@ class GpsController extends Controller {
         $rules = [
             'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|string|unique:gps|min:10|max:10',
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required'
