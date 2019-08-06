@@ -106,13 +106,14 @@ function callBackDataTable(value){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index'},
-            {data: 'imei', name: 'imei', },
-            {data: 'count', name: 'count'},
+            {data: 'imei', name: 'imei', orderable: false},
+            {data: 'count', name: 'count',orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time'},
-            {data: 'forhuman', name: 'forhuman'},
+            {data: 'forhuman', name: 'forhuman',orderable: false, searchable: false},
              {data: 'created_at', name: 'created_at'},
-            {data: 'servertime', name: 'servertime'},
-            {data: 'vlt_data', name: 'vlt_data'},
+            {data: 'servertime', name: 'servertime',orderable: false, searchable: false},
+            {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false
+          },
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
