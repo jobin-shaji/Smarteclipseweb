@@ -15,17 +15,40 @@ use DataTables;
 class GeofenceController extends Controller {
 
     //Display all etms
-	public function create()
+	public function create(Request $request)
     {
+        $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
         // $client = $request->user()->client;
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude;
+
+
+
+        $geofence = Geofence::select(
+            'id', 
+            'user_id'                                  
+            )  
+            ->withTrashed()     
+            ->where('user_id',$request->user()->id)        
+            ->count(); 
+            if($geofence<1){
+                return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+            }else if($request->user()->hasRole('fundamental')&& $geofence<3) {
+                return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+            }else{
+                $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
+                $request->session()->flash('alert-class', 'alert-success'); 
+                return view('Geofence::geofence-list');
+            }
+
+
+
         // return response()->json([
         //     'latitude' => (float)$client->latitude,
         //     'longitude' => (float)$client->longitude
         // ]);
-		return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+		
 	}
 	public function saveFence(Request $request){
 
@@ -168,6 +191,7 @@ class GeofenceController extends Controller {
         $geofence = Geofence::select('id','user_id','name','cordinates','fence_type_id','deleted_at')
         ->where('user_id',$user_id)
         ->get();
+        
          return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
     }
 

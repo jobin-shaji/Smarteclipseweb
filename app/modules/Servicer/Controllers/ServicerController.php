@@ -37,7 +37,8 @@ class ServicerController extends Controller {
         ]);
 
         $user->assignRole('servicer');
-        $sub_dealer_id=\Auth::user()->subdealer->id;
+       
+
         if($request->user()->hasRole('root')){
             $servicer = Servicer::create([
                 'name' => $request->name,
@@ -46,7 +47,8 @@ class ServicerController extends Controller {
                 'status' => 0,
                 'user_id' => $user->id
             ]);
-        }else{
+        }else{ 
+            $sub_dealer_id=\Auth::user()->subdealer->id;
              $servicer = Servicer::create([
                 'name' => $request->name,
                 'address' => $request->address,

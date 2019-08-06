@@ -967,7 +967,7 @@ class SosController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('SOSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('dealer')){
             $sos_transfer = SosTransfer::find($sos_transfer_id);
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
@@ -984,7 +984,7 @@ class SosController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('SOSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('sub_dealer')){
             $sos_transfer = SosTransfer::find($sos_transfer_id);
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
@@ -1001,7 +1001,7 @@ class SosController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('SOSTransferLabel.pdf',$headers);
         }
     }
 
@@ -1029,7 +1029,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:sos_transfers'
       ];
         return $rules;
     }
@@ -1040,7 +1040,7 @@ class SosController extends Controller {
           'sos_id' => 'required',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:sos_transfers'
         ];
         return $rules;
     }
@@ -1051,7 +1051,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:sos_transfers'
       ];
         return $rules;
     }
@@ -1062,7 +1062,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'sub_dealer_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required'
+            'invoice_number' => 'required|unique:sos_transfers'
         ];
         return $rules;
     }
@@ -1073,7 +1073,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:sos_transfers'
       ];
         return $rules;
     }
@@ -1084,7 +1084,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required'
+            'invoice_number' => 'required|unique:sos_transfers'
         ];
         return $rules;
     }

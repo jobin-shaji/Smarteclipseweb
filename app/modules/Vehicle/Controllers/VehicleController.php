@@ -22,6 +22,7 @@ use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PDF;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -590,8 +591,8 @@ class VehicleController extends Controller {
              })
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
-                $path = url('/documents').'/'.$vehicle_documents->path;
-                return "<a href= '".$b_url.$path."' download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+                $path = url($b_url.'/documents').'/'.$vehicle_documents->path;
+                return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
@@ -882,6 +883,97 @@ class VehicleController extends Controller {
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);            
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
+    }
+
+
+
+
+/// invoice/////////
+
+
+    public function invoice(Request $request){
+        $client_id=\Auth::user()->client->id;
+         $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+          
+        return view('Vehicle::invoice',['vehicles'=>$vehicles] );
+    }
+
+    public function export(Request $request){
+
+
+
+        $from = $request->fromDate;
+        $to = $request->toDate;
+        $vehicle = $request->vehicle;      
+        $query =GpsData::select(
+            'client_id',
+            'gps_id',
+            'vehicle_id',
+            'header',
+            'vendor_id',
+            'firmware_version',
+            'imei',
+            'update_rate_ignition_on',
+            'update_rate_ignition_off',
+            'battery_percentage',
+            'low_battery_threshold_value',
+            'memory_percentage',
+            'digital_io_status',
+            'analog_io_status',
+            'activation_key',
+            'latitude',
+            'lat_dir',
+            'longitude',
+            'lon_dir',
+            'date',
+            'time',
+            'speed',
+            'alert_id',
+            'packet_status',
+            'gps_fix',
+            'mcc',
+            'mnc',
+            'lac',
+            'cell_id',
+            'heading',
+            'no_of_satelites',
+            'hdop',
+            'gsm_signal_strength',
+            'ignition',
+            'main_power_status',
+            'vehicle_mode',
+            'altitude',
+            'pdop',
+            'nw_op_name',
+            'nmr',
+            'main_input_voltage',
+            'internal_battery_voltage',
+            'tamper_alert',
+            'digital_input_status',
+            'digital_output_status',
+            'frame_number',
+            'checksum',            
+            'gf_id',
+            // 'device_time',
+            \DB::raw('DATE(device_time) as date'),
+            \DB::raw('sum(distance) as distance')
+        )
+        ->with('vehicle:id,name,register_number')
+
+        ->where('vehicle_id',$vehicle)
+        ->groupBy('date');                     
+        if($from){
+            $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)
+                ->whereDate('device_time', '<=', $search_to_date);
+        }
+        $vehicle_invoice = $query->get();  
+
+        $pdf = PDF::loadView('Vehicle::invoice-pdf-download',['vehicle_invoice'=> $vehicle_invoice]);
+        return $pdf->download('Invoice.pdf');
     }
 
     // public function locationPlayback(Request $request){

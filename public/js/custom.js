@@ -1,6 +1,8 @@
 
 
  $(function () {
+    $('.select2').select2();
+
            
             $('#fromDate,#toDate').datetimepicker({
                 useCurrent: false,
@@ -22,6 +24,8 @@
             });
 
         });
+ // $('.select2').select2();
+
 // dateTimepicker
 
     $( ".datetimepicker" ).datetimepicker({ 
@@ -39,8 +43,9 @@
          
  });
 $( ".date_expiry_edit" ).datetimepicker({ 
-    format: 'DD-MM-YYYY',       
-    minDate: moment().subtract(1,'d')
+    format: 'DD-MM-YYYY',  
+    minDate: moment().millisecond(0).second(0).minute(0).hour(0)     
+    // minDate: moment().subtract(1,'d')
  });
  $( ".manufacturing_date" ).datetimepicker({ 
     format: 'DD-MM-YYYY',       
@@ -171,6 +176,11 @@ function backgroundPostData(url, data, callBack, options) {
 
                     clientGps(res);
                 }
+                else if(callBack =='vehicleInvoice'){
+
+                    vehicleInvoice(res);
+                }
+
                  
 
                 
@@ -887,8 +897,43 @@ function clientGps(res)
 }
 function driverMobileExisted(res)
 {
-    alert("Already Registered Mobile number");
+    var closable = alertify.alert().setting('closable');
+    alertify.alert()
+    .setting({
+        'label':'OK',
+        'message': 'Already Registered Mobile number' ,
+        'onok': function(){ alertify.success('ok');}
+    }).show();
+
 }
+
+
+function downloadInvoice(){    
+    var url = 'invoice/export';
+    var  vehicle=$('#vehicle').val();   
+   var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        backgroundPostData(url,data,{alert:false});
+    }
+    else
+    {
+        // alert("Please select");
+        // var data = {
+        // id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        // };
+        // downloadFile(url,data);
+    }
+}
+
+
+function vehicleInvoice(res){    
+  // alert(res);
+}
+
 
 
 

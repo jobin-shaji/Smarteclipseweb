@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Country</label>
-                      <select class="form-control {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                      <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                       <option selected disabled>Select Country</option>
                       @foreach($countries as $country)
                       <option value="{{$country->id}}">{{$country->name}}</option>  
@@ -47,7 +47,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">State</label>
-                      <select class="form-control {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
+                      <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
                       <option selected disabled>Select Country First</option>
                       </select>
                   @if ($errors->has('state_id'))

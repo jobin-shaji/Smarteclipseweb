@@ -45,6 +45,13 @@ Route::get('/vehicle-route/{id}/edit','VehicleController@editVehicleRoute')->nam
 Route::post('/vehicle-route/{id}/edit','VehicleController@updateVehicleRoute')->name('vehicle-route.update.p');
 Route::get('/vehicle-route/{id}/view','VehicleController@viewVehicleRoute')->name('vehicle-route.view');
 Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->name('vehicle-route.delete');
+///////////////////////////////////invoice////////////////////////////////////////////////////////////
+Route::get('/invoice','VehicleController@invoice')->name('invoice');
+
+Route::post('/vehicle-invoice/export','VehicleController@export')->name('vehicle-invoice.export.p');
+
+
+
 
 });
 

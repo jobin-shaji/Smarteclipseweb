@@ -48,7 +48,7 @@ function callBackDataTable(data=null){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'gps.name', name: 'gps.name'},
+           
             {data: 'gps.imei', name: 'gps.imei'},
             {data: 'gps.manufacturing_date', name: 'gps.manufacturing_date'},
              {data: 'date_time', name: 'date_time'},

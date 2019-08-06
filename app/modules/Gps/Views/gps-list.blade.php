@@ -12,7 +12,7 @@
   
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS LIST</li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/In Stock</li>
     @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">

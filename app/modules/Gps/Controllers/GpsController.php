@@ -1167,7 +1167,7 @@ class GpsController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('GPSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('dealer')){
             $gps_transfer = GpsTransfer::find($gps_transfer_id);
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
@@ -1184,7 +1184,7 @@ class GpsController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('GPSTransferLabel.pdf',$headers);
         }else if($request->user()->hasRole('sub_dealer')){
             $gps_transfer = GpsTransfer::find($gps_transfer_id);
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
@@ -1201,7 +1201,7 @@ class GpsController extends Controller {
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
-            return $pdf->download('pdfview.pdf',$headers);
+            return $pdf->download('GPSTransferLabel.pdf',$headers);
         }
     }
 
@@ -1295,7 +1295,7 @@ class GpsController extends Controller {
         }
 
         $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
-        return $pdf->download('abcd.pdf');
+        return $pdf->download('GpsData.pdf');
 
     }
 
@@ -1307,7 +1307,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1318,7 +1318,7 @@ class GpsController extends Controller {
           'gps_id' => 'required',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1330,7 +1330,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
       ];
         return $rules;
     }
@@ -1341,7 +1341,7 @@ class GpsController extends Controller {
             'gps_id' => 'required',
             'sub_dealer_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required'
+            'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1352,7 +1352,7 @@ class GpsController extends Controller {
           'gps_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required'
+          'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1363,7 +1363,7 @@ class GpsController extends Controller {
             'gps_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required'
+            'invoice_number' => 'required|unique:gps_transfers'
         ];
         return $rules;
     }
@@ -1373,7 +1373,7 @@ class GpsController extends Controller {
         $rules = [
             'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|string|unique:gps|min:10|max:10',
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required'
@@ -1386,7 +1386,7 @@ class GpsController extends Controller {
         $rules = [
             'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
-            'e_sim_number' => 'required|string|min:10|max:10|unique:gps,e_sim_number,'.$gps->id,
+            'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required',
