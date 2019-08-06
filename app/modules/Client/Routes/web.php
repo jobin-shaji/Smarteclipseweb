@@ -4,6 +4,11 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/root-client-list','ClientController@getRootClient')->name('root-client-list');
 	Route::post('/client/disable','ClientController@disableClient')->name('client.disable');
 	Route::post('/client/enable','ClientController@enableClient')->name('client.enable');
+	Route::get('/client/{id}/subscription','ClientController@subscription')->name('client.subscription');
+	Route::post('/client-role-create/{id}','ClientController@addUserRole')->name('client.role.create.p');
+	Route::post('/client/role/delete','ClientController@deleteClientRole')->name('client.role.delete');
+
+
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/dealer-client','ClientController@dealerClientListPage')->name('dealer-client');

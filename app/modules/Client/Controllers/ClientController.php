@@ -271,10 +271,14 @@ class ClientController extends Controller {
         return DataTables::of($client)
         ->addIndexColumn()  
         ->addColumn('working_status', function ($client) {
+              $b_url = \URL::to('/');
             if($client->user->deleted_at == null){ 
             return "
                 <b style='color:#008000';>Enabled</b>
                 <button onclick=disableEndUser(".$client->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+                
+
+                 <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
             ";
             }else{ 
             return "
@@ -360,6 +364,41 @@ class ClientController extends Controller {
         ->addIndexColumn()           
         ->make();
     }
+//////////////////////////////////////subscription///////////////////////////////////////////
+    public function subscription(Request $request)
+    {
+        $client_user_id=Crypt::decrypt($request->id);
+        $user = User::find(Crypt::decrypt($request->id));  
+        $roles = $user->roles;
+        // dd($roles);
+        return view('Client::client-subscription',compact('roles'),['client_user_id'=>$request->id]);
+
+    }
+
+    public function addUserRole(Request $request){
+        $client_user_id=Crypt::decrypt($request->id);
+        $user = User::find($client_user_id); 
+        // dd($request->role);
+        $user->assignRole($request->client_role);
+        $roles = $user->roles;
+         // dd($roles);
+        return redirect(route('client.subscription',$request->id));
+
+    }
+
+     //delete client role s from table
+    public function deleteClientRole(Request $request)
+    {
+        $client_user_id=$request->client_user_id;
+        $user = User::find($client_user_id); 
+        $encrypt=Crypt::encrypt($client_user_id);         
+        $user->removeRole($request->client_role);
+        $roles = $user->roles;      
+        return redirect(route('client.subscription',$encrypt));
+        
+    }
+
+
 
     //delete Sub Dealer details from table
     public function deleteClient(Request $request)
