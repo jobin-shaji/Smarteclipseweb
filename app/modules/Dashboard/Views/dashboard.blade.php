@@ -548,8 +548,11 @@
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;" >
                            <img src="assets/images/fuel-status.png">
                            <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
+                           @role('fundamental|superior|pro')
                            <medium id="fuel_status" class="font-light">
+                           @endrole
                           <i class="fa fa-spinner" aria-hidden="true"></i>
+
                         </div>
                         <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                            <img src="assets/images/speed.png">

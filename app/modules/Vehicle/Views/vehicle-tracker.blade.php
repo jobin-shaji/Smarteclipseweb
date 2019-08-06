@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+  @extends('layouts.eclipse')
 
 @section('content')
 <section class="content box">
@@ -96,6 +96,8 @@
             <?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
             ?>
+
+          @role('fundamental|superior|pro')
            <div class="share_button">
                      <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a> <!-- Google+ --> <a target="_blank" href="https://plus.google.com/share?url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/google.png" alt="Google" /></a><!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
                       <a target="_blank" href="mailto:?Subject=FrinMash&Body=I%20saw%20this%20and%20thought%20of%20you!%20 {{$location_url}}"><img src="{{ url('/') }}/share-icons/email.png" alt="Email" /></a>
@@ -105,6 +107,9 @@
                    
                       </div>
                   </div>
+
+              @endrole
+
         <div class="cover_poi">
           <div class="poi_atm poi_item">
             <a href="#" id="poi_atm">
