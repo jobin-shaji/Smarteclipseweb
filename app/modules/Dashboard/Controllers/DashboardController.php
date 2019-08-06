@@ -406,7 +406,7 @@ class DashboardController extends Controller
             //Get address from json data
             $address = ($status=="OK")?$output->results[1]->formatted_address:'';
         }
-         $battery_status=$gps->battery_status;
+        $battery_status=$gps->battery_status;
         if($network_status>=50)
         {
             $net_status="Good";
@@ -826,6 +826,7 @@ public function notification(Request $request)
             // ->with('gps:id,name,imei')
             ->with('gpsTransferItems:id')
             ->where('from_user_id', $root_id)
+            ->whereNotNull('accepted_on')
             ->orderBy("month","DESC") 
             ->groupBy("month")  
             ->get();

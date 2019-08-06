@@ -75,26 +75,32 @@ body {margin-top: 0px;margin-left: 0px;}
   <TD class="tr1 td1"><P class="p1 ft2">{{$servicer_job->user->mobile}},{{$servicer_job->user->email}}</P></TD>
 </TR>
 </TABLE>
+<?php
+	$job_complete_date = $servicer_job->job_complete_date;
+	$date = new DateTime($job_complete_date);
+
+	$date = $date->format('d/m/Y');
+?>
 <P class="p2 ft3">INSTALLATION CERTIFICATE</P>
-<P class="p3 ft4">DATE:{{$servicer_job->job_complete_date}}</P>
-<P class="p4 ft4">DOCUMENT NUMBER:<?php echo str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT)?></P>
+<P class="p3 ft4">DATE:  {{$date}}</P>
+<P class="p4 ft4">DOCUMENT NUMBER:  <?php echo str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT)?></P>
 <P class="p5 ft4">TO WHOMSOVER IT MAY CONCERN</P>
 <P class="p6 ft4">Dear Sir,</P>
 <P class="p7 ft4">Sub: Installation of Smart Eclipse Manufactured by VST Mobility solutions, Kochi</P>
 <P class="p8 ft4">Ref:ARAI certification number</P>
 <P class="p9 ft4">We VST Mobility Solution/SUB Dealer name , manufacturers/Dealers of AIS 140 ARAI certified GPS solutions hereby confirm that we have completed the installation of GPS device for the following vehicle as mentioned below,</P>
 
-<P class="p4 ft4">Vehicle Engine Number:{{$client->user->email}}</P>
-<P class="p3 ft4">Vehicle Chassis number:{{$vehicle->chassis_number}}
+<P class="p4 ft4">Vehicle Engine Number:  {{$vehicle->engine_number}}</P>
+<P class="p3 ft4">Vehicle Chassis number:  {{$vehicle->chassis_number}}
 </P>
-<P class="p3 ft4">Vehicle Make & Model:{{$vehicle->name}}</P>
-<P class="p3 ft4">Vehicle Reg No:{{$vehicle->register_number}}</P>
-<P class="p4 ft4">VTU model:</P>
-<P class="p3 ft4">IMEI number:{{$vehicle->gps->imei}}</P>
-<P class="p3 ft4">Owner name:{{$client->name}}</P>
-<P class="p3 ft4">Owner address:{{$client->address}}</P>
-<P class="p4 ft4">Mobile no:{{$client->user->mobile}}</P>
-<P class="p3 ft4">Email:{{$client->user->email}}</P>
+<P class="p3 ft4">Vehicle Make & Model:  {{$vehicle->name}}</P>
+<P class="p3 ft4">Vehicle Reg No:  {{$vehicle->register_number}}</P>
+<P class="p4 ft4">VTU model:  </P>
+<P class="p3 ft4">IMEI number:  {{$vehicle->gps->imei}}</P>
+<P class="p3 ft4">Owner name:  {{$client->name}}</P>
+<P class="p3 ft4">Owner address:  {{$client->address}}</P>
+<P class="p4 ft4">Mobile no:  {{$client->user->mobile}}</P>
+<P class="p3 ft4">Email:  {{$client->user->email}}</P>
 <P class="p11 ft4">Yours truly,</P>
 <P class="p12 ft4">{{$servicer_job->user->username}}</P>
 <P class="p13 ft4">Signature and name of service Engineer</P>
