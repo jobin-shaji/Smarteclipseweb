@@ -181,10 +181,15 @@ function backgroundPostData(url, data, callBack, options) {
                     vehicleInvoice(res);
                 }
 
-                 
+                else if(callBack =='AssignClientRole'){
 
-                
-                
+                    AssignClientRole(res);
+                }
+                else if(callBack =='removeClientRole'){
+
+                    removeClientRole(res);
+                }
+               
             }
         },
         error: function (err) {
@@ -933,7 +938,19 @@ function downloadInvoice(){
 function vehicleInvoice(res){    
   // alert(res);
 }
-
+function removeRole(client_user_id,role){
+    var url = 'client/role/delete';
+    var data = {
+        client_user_id : client_user_id,
+        client_role : role
+    };
+    backgroundPostData(url,data,'removeClientRole',{alert:true});  
+}
+function removeClientRole(res)
+{
+    location.reload();
+    // $('#client_roles').text(res.vehicles);
+}
 
 
 

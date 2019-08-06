@@ -660,7 +660,8 @@ class ServicerController extends Controller {
             'gps_id',
             'client_id',
             'servicer_job_id',
-            'chassis_number'               
+            'chassis_number',
+            'engine_number'             
         )
         ->with('gps:id,imei')
         ->where('servicer_job_id',$servicer_job_id)
@@ -691,7 +692,9 @@ class ServicerController extends Controller {
             'job_complete_date', 
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
-            'status'
+            'status',
+            'latitude',
+            'longitude'
         )
         ->where('servicer_id',$user_id)
         ->whereNotNull('job_complete_date')

@@ -389,7 +389,8 @@ class DashboardController extends Controller
 
  public function vehicleDetails(Request $request){
 
-        $gps = Gps::find($request->gps_id);
+        $address="";
+        $gps = Gps::find($request->gps_id); 
         $network_status=$gps->network_status;
         $fuel_status=$gps->fuel_status;
         $speed=$gps->speed;
@@ -398,6 +399,7 @@ class DashboardController extends Controller
         $satelite=$gps->satllite;
         $latitude=$gps->lat;
         $longitude=$gps->lon;
+        
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
@@ -406,7 +408,7 @@ class DashboardController extends Controller
             //Get address from json data
             $address = ($status=="OK")?$output->results[1]->formatted_address:'';
         }
-         $battery_status=$gps->battery_status;
+        $battery_status=$gps->battery_status;
         if($network_status>=50)
         {
             $net_status="Good";
@@ -586,6 +588,7 @@ class DashboardController extends Controller
         $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
                     ->where('id',$gpsID)                 
                     ->first();
+           
         return response()->json($user_data); 
     }
 
@@ -826,6 +829,7 @@ public function notification(Request $request)
             // ->with('gps:id,name,imei')
             ->with('gpsTransferItems:id')
             ->where('from_user_id', $root_id)
+            ->whereNotNull('accepted_on')
             ->orderBy("month","DESC") 
             ->groupBy("month")  
             ->get();

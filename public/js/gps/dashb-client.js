@@ -222,14 +222,17 @@ function setMapOnAll(map) {
 }
 
 function selectVehicleTrack(res) {
+  console.log(res);
  map.panTo(new google.maps.LatLng(res.lat, res.lon));
  map.setZoom(15);
 
 }
 
 $(".vehicle_gps_id").click(function() {
+
  var url = '/dashboard-track';
  var gps_id = this.value;
+ alert(gps_id);
  var data = {
   gps_id: gps_id
  };
@@ -239,6 +242,18 @@ $(".vehicle_gps_id").click(function() {
  });
 
 });
+
+
+function getVehicleTrack(gps_id){
+ var url = '/dashboard-track';
+ var data = {
+  gps_id: gps_id
+ };
+
+ backgroundPostData(url, data, 'selectVehicleTrack', {
+  alert: false
+ });
+}
 
 function locationSearch() {
 
@@ -337,7 +352,7 @@ function addVehicleToVehicleList(vehicle_name, reg, gpsID) {
 
  var vehicleData = '<div class="border-card">' +
   '<div class="card-type-icon with-border">' +
-  '<input type="radio" id="radio" id="gpsid" class="vehicle_gps_id" name="radio" onclick="getVehicle(' + gpsID + ')" value="' + gpsID + '">' +
+  '<input type="radio" id="radio"  class="vehicle_gps_id" name="radio" onclick="getVehicle(' + gpsID + '); getVehicleTrack(' + gpsID + '); " value="' + gpsID + '">' +
   '</div>' +
   '<div class="content-wrapper">' +
   '<div class="label-group fixed">' +

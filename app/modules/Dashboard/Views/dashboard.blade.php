@@ -656,9 +656,5 @@
 <script src="{{asset('js/gps/dash-sub-dealer.js')}}"></script>
 @endrole
 
-@role('root')
-<script src="{{asset('js/gps/dash-root.js')}}"></script>
-@endrole
-
 @endsection
 @endsection
