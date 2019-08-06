@@ -388,8 +388,9 @@ class DashboardController extends Controller
     }
 
  public function vehicleDetails(Request $request){
+
         $address="";
-        $gps = Gps::find($request->gps_id);
+        $gps = Gps::find($request->gps_id); 
         $network_status=$gps->network_status;
         $fuel_status=$gps->fuel_status;
         $speed=$gps->speed;
@@ -398,7 +399,7 @@ class DashboardController extends Controller
         $satelite=$gps->satllite;
         $latitude=$gps->lat;
         $longitude=$gps->lon;
-        dd($satelite);
+        
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
@@ -587,6 +588,7 @@ class DashboardController extends Controller
         $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
                     ->where('id',$gpsID)                 
                     ->first();
+           
         return response()->json($user_data); 
     }
 

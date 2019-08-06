@@ -50,7 +50,7 @@ function getVehicle(value)
      backgroundPostData(url,data,'vehicle_details',{alert:false});
 }
 function vehicle_details(res){
-  console.log(res);
+  // console.log(res);
       $('#network_status').text(res.network_status);
       $('#fuel_status').text(res.fuel_status);
       $('#speed').text(res.speed);
