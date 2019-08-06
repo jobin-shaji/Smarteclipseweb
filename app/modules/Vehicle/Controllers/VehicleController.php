@@ -557,8 +557,8 @@ class VehicleController extends Controller {
         }
         else if($selected_status=="valid"){
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
-            ->where(function ($query) {
-                $query->whereDate('expiry_date', '>', date('Y-m-d'))
+            ->where(function ($vehicle_documents) {
+                $vehicle_documents->whereDate('expiry_date', '>', date('Y-m-d'))
                 ->orWhereNull('expiry_date');
             });
         }
