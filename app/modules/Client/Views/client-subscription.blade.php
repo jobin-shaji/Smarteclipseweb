@@ -34,7 +34,7 @@
                   <div class="form-group">    
                     <label>Create Role</label>                        
                     <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="client_role" name="client_role">
-                      <option >Select</option>
+                      <option value=" ">Select</option>
                       <option value="fundamental">Fundamental</option>
                       <option value="superior">superior</option>
                       <option value="pro">pro</option>                   
