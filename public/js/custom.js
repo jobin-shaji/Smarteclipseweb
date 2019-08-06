@@ -43,8 +43,9 @@
          
  });
 $( ".date_expiry_edit" ).datetimepicker({ 
-    format: 'DD-MM-YYYY',       
-    minDate: moment().subtract(1,'d')
+    format: 'DD-MM-YYYY',  
+    minDate: moment().millisecond(0).second(0).minute(0).hour(0)     
+    // minDate: moment().subtract(1,'d')
  });
  $( ".manufacturing_date" ).datetimepicker({ 
     format: 'DD-MM-YYYY',       
