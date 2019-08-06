@@ -386,6 +386,7 @@
                   @endforeach  
                      </div>
                   </div>
+                     @role('fundamental|superior|pro')
                   <div class="right-bottom">
                      <div class="st-button-main">
                         <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
@@ -428,13 +429,13 @@
                           </div>
                         </form>
                      </div>
-                      @role('fundamental|superior|pro')
+                   
                         <div class="right-bottom3">
                           <div class="driver_image" id="diver_behavior">
                             <img src="assets/images/driver_dash.png">
                           </div>
                         </div>
-                      @endrole
+                      
                      
                       <div id="myModal" class="modal_for_dash">
                        <!-- Modal content -->
@@ -452,7 +453,7 @@
                           
                        <!-- Modal content -->
                         </div>
-
+                    @endrole
                </div>
               </div>
 
