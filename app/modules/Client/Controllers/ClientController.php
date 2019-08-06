@@ -232,6 +232,14 @@ class ClientController extends Controller {
         ];
         return $rules;
     }
+    public function activatesubscription()
+    {
+        $rules=[
+            'client_role' => 'required'
+        ];
+        return $rules;
+    }
+    
 
     //employee details view
     public function details(Request $request)
@@ -376,12 +384,12 @@ class ClientController extends Controller {
     }
 
     public function addUserRole(Request $request){
+         $rules=$this->activatesubscription();
+        $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
         $user = User::find($client_user_id); 
-        // dd($request->role);
         $user->assignRole($request->client_role);
         $roles = $user->roles;
-         // dd($roles);
         return redirect(route('client.subscription',$request->id));
 
     }
