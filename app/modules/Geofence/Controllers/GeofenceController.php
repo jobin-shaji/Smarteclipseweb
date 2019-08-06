@@ -51,27 +51,28 @@ class GeofenceController extends Controller {
 		
 	}
 	public function saveFence(Request $request){
-
-		foreach ($request->polygons as $polygon) {
-			Geofence::create([
-				'user_id' => $request->user()->id,
-                'name' => $request->name,
-				'cordinates' => $polygon,
-				'fence_type_id' => 1
-			]);
-		}
-// return response()->json([
-//     'redirect' => url('geofence')
-// ]);
-        // $request->session()->flash('message', 'New geofence created successfully!'); 
-        // $request->session()->flash('alert-class', 'alert-success'); 
-        // return redirect(route('geofence'));
-        return response()->json([
-            'status' => 'geofence',
-            'title' => 'Success',
-            'redirect' => url('geofence'),
-            'message' => 'Geofence added successfully'
-        ]);
+        if($request->polygons==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Please draw the geofence'
+            ]);
+        }else{
+            foreach ($request->polygons as $polygon) {
+                Geofence::create([
+                    'user_id' => $request->user()->id,
+                    'name' => $request->name,
+                    'cordinates' => $polygon,
+                    'fence_type_id' => 1
+                ]);
+            }
+            return response()->json([
+                'status' => 'geofence',
+                'title' => 'Success',
+                'redirect' => url('geofence'),
+                'message' => 'Geofence added successfully'
+            ]);
+        }
 	}
 
 
