@@ -164,7 +164,8 @@ class ServicerController extends Controller {
         if($request->user()->hasRole('root')){
             $servicer = $servicer->where('type',1);
         }else{
-            $servicer = $servicer->where('type',2)->where('sub_dealer_id',$request->user()->id);
+            // \Auth::user()->subdealer->id
+            $servicer = $servicer->where('type',2)->where('sub_dealer_id',$request->user()->subdealer->id);
         }
         $servicer->get();
         return DataTables::of($servicer)

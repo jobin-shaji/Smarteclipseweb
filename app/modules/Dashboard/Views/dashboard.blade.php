@@ -463,29 +463,29 @@
          
 
 
-            <div class="dashboard-main-Right">
+            <div class="dashboard-main-Right cover_vehicle_track_list">
                <div class="iconsbg1234">
 
 
 
                   
 
-                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('M')">
+                  <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
                            <h1 class="text-white" style="color:#129a00!important">
                             <!-- <img src="assets/images/moving.png" style="width:100%"> -->
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            
                            </h1>
+                           <span class="track_status">Moving</span>
                            <span style="float:left;width:100%"  >
                            <h1 id="moving"  class="text-white"  style="font-size:19px;color:#fab03a!important">0</h1>
                            <!--  <h5 class="text-white">MOVING</h5></span> -->
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('H')">
+                  <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -493,13 +493,15 @@
                            <!--  <img src="assets/images/idling.png" style="width:100%"> -->
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                           </h1>
+                           <span class="track_status">Halt</span>
+
                            <span style="float:left;width:100%">
                            <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important"></h1>
                            <!-- <h5 class="text-white">IDLE</h5></span> -->
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('S')">
+                  <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -508,13 +510,15 @@
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
 
                            </h1>
+                           <span class="track_status">Sleep</span>
+
                            <span style="float:left;width:100%">
                            <h1 id="stop"  class="text-white"  style="font-size:19px;color:#fab03a!important"></h1>
                            <!-- <h5 class="text-white">DELAY</h5></span> -->
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 col-lg-2 col-xlg-3" onclick="moving('O')">
+                  <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')">
                      <div class="card card-hover">
                         <div class="box bg-cyan1234 text-center">
                            <h1 class="font-light text-white"></h1>
@@ -523,6 +527,8 @@
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
 
                            </h1>
+                           <span class="track_status">Offline</span>
+
                            <span style="float:left;width:100%">
                            <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                            <!--  <h5 class="text-white">STOPPED</h5></span> -->
