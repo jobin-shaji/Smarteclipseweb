@@ -656,7 +656,9 @@ else
         ->whereIn('id',$single_vehicle)       
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime)        
-        ->where('mode',$vehicle_mode)        
+        ->where('mode',$vehicle_mode)
+        ->whereNotNull('lat') 
+        ->whereNotNull('lon')         
         ->orderBy('id','desc')                 
         ->get(); 
 }
