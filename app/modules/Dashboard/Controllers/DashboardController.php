@@ -880,21 +880,32 @@ public function notification(Request $request)
     public function dealerGpsSale(Request $request)
     {
         $user_id=\Auth::user()->id;
-        $gps = GpsTransfer::select(
-            'id',
-            'from_user_id',
-            'to_user_id',
-            \DB::raw('date_format(accepted_on, "%M") as month'),
-            // \DB::raw('count(date_format(accepted_on, "%M")) as count')    
-            \DB::raw('count(id) as count')  
 
-        )
-        // ->with('gps:id,name,imei')
-        ->with('gpsTransferItems:id')
-        ->where('from_user_id', $user_id)
-        ->orderBy("month","DESC") 
-        ->groupBy("month")  
-        ->get();
+        $gps_transfers = GpsTransfer::select('id',
+                'from_user_id',
+                'to_user_id'
+            )
+            ->where('from_user_id', $user_id)
+            ->whereNotNull('accepted_on')
+            ->get();
+            $gps_transfer_id = [];
+            foreach($gps_transfers as $gps_transfer){
+                $gps_transfer_id[] = $gps_transfer->id;
+            }
+            
+            $gps = GpsTransferItems::select(
+                'id',
+                'gps_transfer_id',
+                'gps_id',
+                \DB::raw('date_format(created_at, "%M") as month'),
+                \DB::raw('count(date_format(created_at, "%M")) as count')             
+            )
+            ->with('gps:id,imei')
+            ->with('gpsTransfer:id,imei')
+            ->whereIn('gps_transfer_id',$gps_transfer_id)
+             ->orderBy("month","DESC") 
+            ->groupBy("month")  
+            ->get(); 
         $gps_month = [];
         $gps_count = [];
         foreach($gps as $gps_sale){
@@ -941,18 +952,43 @@ public function notification(Request $request)
     {
         // dd($request->id);
         $user_id=\Auth::user()->id;
-        $gps = GpsTransfer::select(
-            'id',
-            'from_user_id',
-            'to_user_id',
-            \DB::raw('date_format(accepted_on, "%M") as month'),
-            \DB::raw('count(date_format(accepted_on, "%M")) as count')               
-        )
-        ->with('gpsTransferItems:id')
-        ->where('from_user_id', $user_id)
-        ->orderBy("month","DESC") 
-        ->groupBy("month")  
-        ->get();
+         $gps_transfers = GpsTransfer::select('id',
+                'from_user_id',
+                'to_user_id'
+            )
+            ->where('from_user_id', $user_id)
+            ->whereNotNull('accepted_on')
+            ->get();
+            $gps_transfer_id = [];
+            foreach($gps_transfers as $gps_transfer){
+                $gps_transfer_id[] = $gps_transfer->id;
+            }
+            
+            $gps = GpsTransferItems::select(
+                'id',
+                'gps_transfer_id',
+                'gps_id',
+                \DB::raw('date_format(created_at, "%M") as month'),
+                \DB::raw('count(date_format(created_at, "%M")) as count')             
+            )
+            ->with('gps:id,imei')
+            ->with('gpsTransfer:id,imei')
+            ->whereIn('gps_transfer_id',$gps_transfer_id)
+             ->orderBy("month","DESC") 
+            ->groupBy("month")  
+            ->get(); 
+        // $gps = GpsTransfer::select(
+        //     'id',
+        //     'from_user_id',
+        //     'to_user_id',
+        //     \DB::raw('date_format(accepted_on, "%M") as month'),
+        //     \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+        // )
+        // ->with('gpsTransferItems:id')
+        // ->where('from_user_id', $user_id)
+        // ->orderBy("month","DESC") 
+        // ->groupBy("month")  
+        // ->get();
         $gps_month = [];
         $gps_count = [];
         foreach($gps as $gps_sale){
