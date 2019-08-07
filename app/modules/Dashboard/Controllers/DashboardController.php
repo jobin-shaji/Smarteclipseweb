@@ -597,7 +597,6 @@ class DashboardController extends Controller
     public function vehicleMode(Request $request)
     {
         $vehicle_mode=$request->vehicle_mode;
-
         $user = $request->user(); 
         $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
@@ -609,8 +608,7 @@ class DashboardController extends Controller
              )
             ->where('client_id',$client->id)
             ->get();
-        // user list of vehicles
-
+       
         // userID list of vehicles
          $single_vehicle = [];
          foreach($vehicles as $vehicle){
@@ -632,12 +630,16 @@ if($vehicle_mode=='O')
             'device_time'
           )
         ->with('vehicle:gps_id,id,name,register_number')
-        ->whereIn('id',$single_vehicle)       
+        ->whereIn('id',$single_vehicle)      
+        ->whereNotNull('lat') 
+        ->whereNotNull('lon') 
+        
         // ->where('device_time', '>=',$oneMinut_currentDateTime)
         // ->where('device_time', '<=',$currentDateTime)        
         // ->where('mode',$vehicle_mode)        
         ->orderBy('id','desc')                 
         ->get(); 
+
 }
 else
 {
