@@ -267,29 +267,6 @@ class DashboardController extends Controller
         }       
     }
 
-    //driver score
-    public function driverScore(Request $request)
-    {
-        $client_id=\Auth::user()->client->id;
-        $drivers = Driver::select(
-                'id',
-                'name',
-                'points')
-                ->where('client_id',$client_id)
-                ->get();
-        $single_driver_name = [];
-        $single_driver_point = [];
-        foreach($drivers as $driver){
-            $single_driver_name[] = $driver->name;
-            $single_driver_point[] = $driver->points;
-        }
-        $score=array(
-                    "drive_data"=>$single_driver_name,
-                    "drive_score"=>$single_driver_point
-                );
-        return response()->json($score); 
-    }
-
     //emergency alert
     public function emergencyAlerts(Request $request)
     {

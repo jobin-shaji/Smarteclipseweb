@@ -428,13 +428,7 @@
                           </div>
                         </form>
                      </div>
-                      @role('fundamental|superior|pro')
-                        <div class="right-bottom3">
-                          <div class="driver_image" id="diver_behavior">
-                            <img src="assets/images/driver_dash.png">
-                          </div>
-                        </div>
-                      @endrole
+                    
                      
                       <div id="myModal" class="modal_for_dash">
                        <!-- Modal content -->
