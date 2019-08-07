@@ -332,6 +332,7 @@ function searchLocation(res) {
   vehicleTrack(res);
   setMapZoom(radius);
  } else {
+  setMapZoom(radius);
   alert('No vehicle found in this location');
  }
 
