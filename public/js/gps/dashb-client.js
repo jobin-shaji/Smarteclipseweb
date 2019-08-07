@@ -233,7 +233,7 @@ $(".vehicle_gps_id").click(function() {
 
  var url = '/dashboard-track';
  var gps_id = this.value;
- alert(gps_id);
+ // alert(gps_id);
  var data = {
   gps_id: gps_id
  };
