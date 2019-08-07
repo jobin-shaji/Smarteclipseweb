@@ -50,7 +50,7 @@ function getVehicleSequence() {
 }
 
 function vehicleTrack(res) {
-
+if(res.status!="failed"){
  var JSONObject = res.user_data;
 
  var marker, i;
@@ -110,6 +110,7 @@ function vehicleTrack(res) {
   }
  }
  setMapOnAll(map);
+}
 
 }
 

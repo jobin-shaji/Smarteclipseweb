@@ -954,3 +954,21 @@ function removeClientRole(res)
 
 
 
+$(".cover_track_data").hover(function () {
+    $(this).find('.track_status').toggleClass("track_status_hover");
+});
+
+
+
+$('.cover_vehicle_track_list .cover_track_data').click(function(){
+    $('.cover_track_data').removeClass("track_status_active");
+    $('.cover_track_data .track_status').removeClass("track_status_active_hover");
+
+    $(this).addClass("track_status_active");
+    $(this).find('.track_status').addClass("track_status_active_hover");
+
+   
+});
+
+
+
