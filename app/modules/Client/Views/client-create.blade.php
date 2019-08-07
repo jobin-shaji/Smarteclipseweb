@@ -153,8 +153,7 @@
 
 <div class="clearfix"></div>
 @section('script')
-<script async defer
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
+
    <script>
      function initMap()
      {
@@ -167,5 +166,7 @@
   
      }
    </script>
+   <script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
 @endsection
 @endsection

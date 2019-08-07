@@ -928,7 +928,8 @@ class ServicerController extends Controller {
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
-            'mobile' => 'required'
+            'mobile' => 'required|string|min:10'  
+           
         ];
         return  $rules;
     }
@@ -952,7 +953,8 @@ class ServicerController extends Controller {
             'name' => 'required',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'address' => 'required',
-            'mobile' => 'required'
+           'mobile' => 'required|string|min:10'
+            
         ];
         return  $rules;
     }

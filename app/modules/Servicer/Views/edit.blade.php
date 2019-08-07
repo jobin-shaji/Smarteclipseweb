@@ -51,7 +51,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $servicer->user->mobile}}" >
+                        <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $servicer->user->mobile}}" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                     </div>
