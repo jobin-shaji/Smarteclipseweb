@@ -28,27 +28,25 @@ class GeofenceController extends Controller {
         $geofence = Geofence::select(
             'id', 
             'user_id'                                  
-            )  
-            ->withTrashed()     
-            ->where('user_id',$request->user()->id)        
-            ->count(); 
-            if($geofence<1){
-                return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
-            }else if($request->user()->hasRole('fundamental')&& $geofence<3) {
-                return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
-            }else{
-                $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
-                $request->session()->flash('alert-class', 'alert-success'); 
-                return view('Geofence::geofence-list');
-            }
-
-
-
-        // return response()->json([
-        //     'latitude' => (float)$client->latitude,
-        //     'longitude' => (float)$client->longitude
-        // ]);
-		
+        )  
+        ->withTrashed()     
+        ->where('user_id',$request->user()->id)        
+        ->count(); 
+        if($geofence<1){
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }else if($request->user()->hasRole('fundamental')&& $geofence<3) {
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }
+        else if($request->user()->hasRole('superior')&& $geofence<6) {
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }
+        else if($request->user()->hasRole('pro')&& $geofence<10) {
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }else{
+            $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return view('Geofence::geofence-list');
+        }
 	}
 	public function saveFence(Request $request){
         if($request->polygons==null){

@@ -114,6 +114,9 @@
                                     <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/driver/create">ADD DRIVER</a></li>
                                     <li><a class="dropdown-item" href="{{url('/drivers')}}">LIST DRIVERS</a></li>
+                                    @role('fundamental|superior|pro')
+                                    <li><a class="dropdown-item" href="{{url('/drivers-score-page')}}">DRIVER SCORE</a></li>
+                                    @endrole
                                     <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
                                     </ul>
                                 </li>

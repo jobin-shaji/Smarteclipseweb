@@ -1,46 +1,3 @@
-$(document).ready(function() {
- var url = 'driver-score';
- var data = {
-
- };
- backgroundPostData(url, data, 'driverScore', {
-  alert: false
- });
-});
-
-function driverScore(res) {
- var ctx = document.getElementById("myChart").getContext('2d');
- var myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-   labels: res.drive_data,
-   datasets: [{
-    label: '# Score',
-    data: res.drive_score,
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    borderColor: 'rgba(255,99,132,1)',
-    borderWidth: 1
-   }]
-  },
-  options: {
-   title: {
-    display: true,
-    text: 'Driver Score'
-   },
-   scales: {
-    yAxes: [{
-     ticks: {
-      beginAtZero: true
-     }
-    }]
-   }
-  }
- });
-}
-
-
-
-
 
 var latMap = 20.593683;
 var lngMap = 78.962883;
@@ -93,7 +50,7 @@ function getVehicleSequence() {
 }
 
 function vehicleTrack(res) {
-
+if(res.status!="failed"){
  var JSONObject = res.user_data;
 
  var marker, i;
@@ -153,6 +110,7 @@ function vehicleTrack(res) {
   }
  }
  setMapOnAll(map);
+}
 
 }
 
@@ -232,7 +190,7 @@ $(".vehicle_gps_id").click(function() {
 
  var url = '/dashboard-track';
  var gps_id = this.value;
- alert(gps_id);
+ // alert(gps_id);
  var data = {
   gps_id: gps_id
  };
@@ -296,26 +254,6 @@ function locationSearch() {
  }
  return false;
 }
-
-
-$(document).ready(function() {
-
- var modal = document.getElementById('myModal');
- var btn = document.getElementById("diver_behavior");
- var span = document.getElementsByClassName("close")[0];
- btn.onclick = function() {
-  modal.style.display = "block";
- }
- span.onclick = function() {
-  modal.style.display = "none";
- }
- window.onclick = function(event) {
-
-  if (event.target == modal) {
-   modal.style.display = "none";
-  }
- }
-});
 
 function moving(vehicle_mode) {
  track_flag = 1;
@@ -394,6 +332,7 @@ function searchLocation(res) {
   vehicleTrack(res);
   setMapZoom(radius);
  } else {
+  setMapZoom(radius);
   alert('No vehicle found in this location');
  }
 
