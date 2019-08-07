@@ -58,17 +58,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($roles as $role)
- 
-                       @if($role->name != "client")
-                       
+                        <?php $i=1; ?>
+                        @foreach($roles as $role) 
+                       @if($role->name != "client")                       
                           <tr>
-                            <th>{{$loop->iteration}}</th>
+                            <th><?php echo $i;?></th>
                             <th id ="role">{{$role->name}}</th>
                             <th><button class='btn btn-xs btn-success' onclick="removeRole(<?php echo Crypt::decrypt($client_user_id)?>,'{{$role->name}}')" id="remove">Remove </button></th>
                           </tr>
-                        @endif
-                        @endforeach
+                        <?php $i++;?>
+                        @endif 
+                        @endforeach 
+                       
                       </tbody>
                     </table>
                 </div>
