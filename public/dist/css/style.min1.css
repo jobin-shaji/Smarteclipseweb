@@ -17144,12 +17144,29 @@ border-radius: 6px 0 6px 6px;
 
 
 }
-.pac-icon{  }
-.pac-item{  }
-.pac-item:hover{  }
-.pac-item-selected{ }
-.pac-item-query{ }
-.pac-matched{ }
+
+.track_status{
+    /*display: none;*/
+    font-weight:900;
+     font-size: 12px;
+    font-family:courier;
+    display: none;
+}
+
+
+.track_status_hover{
+
+    display: block !important;
+}
+
+.track_status_active_hover{
+    display: block !important;
+    
+}
+
+
+
+
 
 
 
