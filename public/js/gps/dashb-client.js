@@ -14,6 +14,7 @@ var radius;
 var cityCircle;
 var circleStatus=0;
 var myGoogleRadar;
+var radarStatus=0;
 
 function initMap() {
  map = new google.maps.Map(document.getElementById('map'), {
@@ -128,7 +129,8 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
  var marker = new google.maps.Marker({
   position: location,
   title: "",
-  icon: icon
+  icon: icon,
+  gpsid:gpsID
  });
  var infowindow = new google.maps.InfoWindow();
  google.maps.event.addListener(marker, 'mouseover', function() {
@@ -180,10 +182,13 @@ function setMapOnAll(map) {
 }
 
 function selectVehicleTrack(res) {
-  console.log(res);
- map.panTo(new google.maps.LatLng(res.lat, res.lon));
- map.setZoom(15);
 
+ map.panTo(new google.maps.LatLng(res.lat, res.lon));
+ map.setZoom(18);
+ if(circleStatus==1){
+  cityCircle.setMap(null);
+ }
+ redarLocationSelectVehicle(res.lat,res.lon,0.1);
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -342,7 +347,9 @@ function searchLocation(res) {
 function redarLocation(lat, lng, radius) {
  if(circleStatus==1){
    cityCircle.setMap(null);
-    myGoogleRadar.hidePolygon();
+    if(radarStatus==1){
+     myGoogleRadar.hidePolygon();
+   }
  }
  var radius_in_meter = radius * 1000;
  var latlng = new google.maps.LatLng(lat, lng);
@@ -370,6 +377,33 @@ function redarLocation(lat, lng, radius) {
   radius: radius
  };
  myGoogleRadar.addRadarPolygon(opts);
+ circleStatus=1;
+ radarStatus=1;
+}
+
+
+function redarLocationSelectVehicle(lat, lng, radius) {
+ if(circleStatus==1){
+   cityCircle.setMap(null);
+   if(radarStatus==1){
+     myGoogleRadar.hidePolygon();
+   }
+ }
+ var radius_in_meter = radius * 1000;
+ var latlng = new google.maps.LatLng(lat, lng);
+ var sunCircle = {
+  strokeColor: "#408753",
+  strokeOpacity: 0.8,
+  strokeWeight: 2,
+  fillColor: "#408753",
+  fillOpacity: 0.35,
+  map: map,
+  center: latlng,
+  radius: radius_in_meter // in meters
+ };
+ cityCircle = new google.maps.Circle(sunCircle);
+
+ 
  circleStatus=1;
 }
 
