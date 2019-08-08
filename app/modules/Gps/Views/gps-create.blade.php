@@ -56,7 +56,7 @@
                   <div class="form-group has-feedback">
                     <label class="srequired">Manufacturing Date</label>
                     <input type="text" class="
-                    manufacturing_date form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Purchase Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
+                    manufacturing_date form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
                      @if ($errors->has('manufacturing_date'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>

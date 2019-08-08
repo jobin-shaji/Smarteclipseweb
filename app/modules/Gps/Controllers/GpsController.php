@@ -36,7 +36,7 @@ class GpsController extends Controller {
         $gps = Gps::select(
             'id',
         	'imei',
-        	'manufacturing_date',
+            \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
             'e_sim_number',
             'brand',
             'model_name',
@@ -55,13 +55,13 @@ class GpsController extends Controller {
                 return "
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                <button onclick=delGps(".$gps->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete
                 </button>";
             }else{
                  return "
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
+                <button onclick=activateGps(".$gps->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Restore
                 </button>";
             }
         })
@@ -231,7 +231,7 @@ class GpsController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps deleted successfully'
+            'message' => 'Gps deactivated successfully'
         ]);
     }
 
