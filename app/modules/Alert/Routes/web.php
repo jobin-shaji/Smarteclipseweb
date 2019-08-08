@@ -22,6 +22,9 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/packet/create','AlertController@save')->name('packet.create.p');
 	  Route::post('/alert-notification', 'AlertController@notification')->name('alert-notification');
 
+	   Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
+	  
+
 });
 
 Route::group(['namespace' => 'App\Modules\Alert\Controllers' ] , function() {

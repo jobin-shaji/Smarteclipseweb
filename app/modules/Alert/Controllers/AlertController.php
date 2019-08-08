@@ -373,11 +373,26 @@ class AlertController extends Controller {
     }
 
 
-
-
-
-
-
+    function notificationAlertCount()
+    {
+        $user=\Auth::user();
+        if($user->hasRole('client')){
+        $client_id=\Auth::user()->client->id;
+        $alert = Alert::select('id')
+        ->where('client_id',$client_id)
+        ->where('status',0)
+        ->get()
+        ->count();
+            return response()->json([                          
+                'notification_count' => $alert,
+                'status' => 'success'           
+            ]);
+        }else{
+           return response()->json([                          
+                'status' => 'failed'           
+            ]);   
+        }  
+    }
 
 
      //alert create rules 
