@@ -116,13 +116,14 @@ class DealerController extends Controller {
     }
     //update dealers details
     public function update(Request $request)
-    { 
+    {  
+        
        $dealer = Dealer::where('user_id', $request->id)->first();
         if($dealer == null){
            return view('Dealer::404');
         } 
-        $rules = $this->dealersUpdateRules($dealer);
-        $this->validate($request, $rules);      
+          $rules = $this->dealersUpdatesRules($dealer);
+        $this->validate($request, $rules);   
         $dealer->name = $request->name;
         $dealer->save();
         $user = User::find($request->id);
@@ -259,11 +260,11 @@ class DealerController extends Controller {
         return  $rules;
     }
     //validation for employee updation
-    public function dealersUpdateRules($dealer)
+    public function dealersUpdatesRules($dealer)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric|min:10'       
+            'phone_number' => 'required|string|min:10'       
         ];
         return  $rules;
     }

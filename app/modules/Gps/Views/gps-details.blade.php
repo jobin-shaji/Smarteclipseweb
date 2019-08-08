@@ -54,7 +54,7 @@
 
               <div class="form-group has-feedback">
                 <label>Manufacturing Date</label>
-                <input type="text" class="form-control" value="{{ $gps->manufacturing_date}}" disabled> 
+                <input type="text" class="form-control" value="{{date('d-m-Y', strtotime($gps->manufacturing_date)) }}" disabled> 
               </div>
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>
