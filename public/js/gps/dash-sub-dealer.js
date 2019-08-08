@@ -67,12 +67,12 @@ function subDealerGpsUser(res)
       text: 'GPS Users'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
+      //   yAxes: [{
+      //     ticks: {
+      //       beginAtZero: true
+      //     }
+      //   }]
+      // }
     }
   });
 }

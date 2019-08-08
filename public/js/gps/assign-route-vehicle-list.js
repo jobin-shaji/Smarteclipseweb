@@ -1,7 +1,35 @@
 $(document).ready(function () {
     callBackDataTable();
-
 });
+function selectRoute(){
+    var vehicle_id=$('#vehicle').val();
+    var route_id=$('#vehicle_route').val();        
+    var client=$('meta[name = "client"]').attr('content'); 
+    var from_date = document.getElementById('assignfromDate').value;          
+    var to_date = document.getElementById('assignToDate').value;
+    var url = 'already/assign-route';
+     var data = {   
+                    'vehicle_id':vehicle_id,
+                    'client':client,
+                    'route_id':route_id,
+                    'from_date':from_date, 
+                    'to_date':to_date
+                };       
+    backgroundPostData(url,data,'assignRouteCount',{alert:true});  
+}
+
+function assignRouteCount(res)
+{
+    if(res.assign_route_count!=0)
+    {
+        alert("Already assigned");
+    }
+    else if(res.assign_route_count==0)
+    {
+        check();
+    }
+
+}
 
 
 function check(){
@@ -18,8 +46,8 @@ function check(){
         var vehicle_id=$('#vehicle').val();
         var route_id=$('#vehicle_route').val();        
         var client=$('meta[name = "client"]').attr('content'); 
-          var from_date = document.getElementById('fromDate').value;          
-        var to_date = document.getElementById('toDate').value;
+        var from_date = document.getElementById('assignfromDate').value;          
+        var to_date = document.getElementById('assignToDate').value;
         // $to_date = date("Y-m-d", strtotime($toDate));
         var data = { 'vehicle_id':vehicle_id,'client':client, 'route_id':route_id, 'from_date':from_date, 'to_date':to_date};
         // console.log(data);
@@ -28,18 +56,7 @@ function check(){
 }
 
 
-
-
  function callBackDataTable(data=null){   
-
- // var data = {
- //        client: $('meta[name = "client"]').attr('content'),
- //       vehicle_id : document.getElementById('vehicle').value,
- //        route_id : document.getElementById('vehicle_route').value,
- //         from_date : document.getElementById('fromDate').value,
- //        to_date : document.getElementById('toDate').value,
-        
- //    };   
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -66,8 +83,7 @@ function check(){
             {data: 'vehicle.register_number', name: 'vehicle.register_number'} ,
             {data: 'date_from', name: 'date_from'} ,
             {data: 'date_to', name: 'date_to'},   
-
-             {data: 'action', name: 'action', orderable: false, searchable: false}
+            {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         

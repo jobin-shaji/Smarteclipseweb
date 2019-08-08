@@ -130,7 +130,7 @@ class ClientController extends Controller {
         if($client == null){
            return view('Client::404');
         } 
-        $rules = $this->dealersUpdateRules($client);
+        $rules = $this->clientUpdateRules($client);
         $this->validate($request, $rules);       
         $client->name = $request->name;
         $client->save();
@@ -145,7 +145,7 @@ class ClientController extends Controller {
         return redirect(route('client.edit',$did));  
     }
      //validation for employee updation
-    public function dealersUpdateRules($subdealer)
+    public function clientUpdateRules($subdealer)
     {
         $rules = [
             'name' => 'required',
@@ -668,7 +668,7 @@ public function selectSubdealer(Request $request)
     {
         $rules = [
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|unique:users',
+            'mobile' => 'required|string|min:10|max:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];

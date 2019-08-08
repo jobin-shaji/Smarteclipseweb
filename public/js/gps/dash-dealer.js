@@ -72,11 +72,11 @@ function dealerGpsUser(res){
       text: 'GPS User'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+        // yAxes: [{
+        //   ticks: {
+        //     beginAtZero: true
+        //   }
+        // }]
       }
     }
   });
