@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Client\Models\Client;
 use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\VehicleRoute;
 use Illuminate\Support\Facades\Crypt;
@@ -55,7 +56,11 @@ class RouteController extends Controller {
     // create a new route
     public function createRoute()
     {
-        return view('Route::route-add');
+        $client_id=\Auth::user()->client->id;
+        $driver_location=Client::select('latitude','longitude')
+                ->where('id',$client_id)
+                ->first();
+        return view('Route::route-add',['driver_location' => $driver_location]);
     }
 
     // // save route

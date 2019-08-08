@@ -43,7 +43,7 @@ Create Geofence
                            <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
                             <input type="hidden" class="form-control" placeholder="Search Place" name="lat" id="lat" value="{{$lat}}" required>  
 
-          <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
+                          <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
 
                         
                           </div>
