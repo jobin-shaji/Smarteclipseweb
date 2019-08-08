@@ -180,7 +180,7 @@ class SubDealerController extends Controller {
         if($subdealer == null){
            return view('SubDealer::404');
         } 
-        $rules = $this->dealersUpdateRules($subdealer);
+        $rules = $this->subdealersUpdateRules($subdealer);
         $this->validate($request, $rules);       
         $subdealer->name = $request->name;
         $subdealer->save();
@@ -195,11 +195,11 @@ class SubDealerController extends Controller {
         return redirect(route('sub.dealers.edit',$did));  
     }
      //validation for employee updation
-    public function dealersUpdateRules($subdealer)
+    public function subdealersUpdateRules($subdealer)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric|min:10'
+            'phone_number' => 'required|numeric|min:10|max:10'
             
         ];
         return  $rules;
@@ -297,7 +297,7 @@ class SubDealerController extends Controller {
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|unique:users',
+            'mobile' => 'required|string|min:10|max:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
