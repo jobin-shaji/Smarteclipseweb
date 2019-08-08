@@ -38,11 +38,55 @@
                         </h2>
                       </div>
                     </div>
-                    <form  method="POST" action="{{route('client.create.p')}}">
+                    <form  method="POST" action="{{route('root.client.create.p')}}">
                     {{csrf_field()}}
                     <div class="card">
                     <div class="card-body">
                     <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>USER INFO</h4>
+
+                      <div class="form-group row" style="float:none!important">
+                      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Dealer</label> 
+                      <div class="form-group has-feedback">
+                       <select class="form-control select2 dealerData" id="dealer" name="dealer" data-live-search="true" title="Select Dealer" required onchange="selectDealer(this.value)">
+                          <option value="">Select Dealer</option>
+                          @foreach($entities as $entity)
+                          <option value="{{$entity->id}}">{{$entity->name}}</option>
+                          @endforeach
+                        </select>
+                         @if ($errors->has('dealer_user_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('dealer_user_id') }}</strong>
+                          </span>
+                        @endif 
+                      </div>
+                      @if ($errors->has('name'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('name') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+
+                     <div class="form-group row" style="float:none!important">
+                      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Sub Dealer</label> 
+                      <div class="form-group has-feedback">
+                       <select class="form-control select2 dealerData" id="sub_dealer" name="sub_dealer" data-live-search="true" title="Select Sub Dealer" required >
+                          <option value="">Select sub Dealer</option>
+                          
+                        </select>
+                         @if ($errors->has('sub_dealer'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('sub_dealer') }}</strong>
+                          </span>
+                        @endif 
+                      </div>
+                      @if ($errors->has('name'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('name') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+
+
                     <div class="form-group row" style="float:none!important">
                       <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
                       <div class="form-group has-feedback">
@@ -52,18 +96,6 @@
                       @if ($errors->has('name'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('name') }}</strong>
-                      </span>
-                      @endif
-                    </div>
-                    <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
-                      <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required>
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                      </div>
-                      @if ($errors->has('address'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('address') }}</strong>
                       </span>
                       @endif
                     </div>
@@ -79,6 +111,19 @@
                       </span>
                       @endif
                     </div>
+                    <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('address'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('address') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+                    
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                       <div class="form-group has-feedback">
