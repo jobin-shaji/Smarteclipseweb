@@ -196,7 +196,10 @@
 
                         @role('client')
                         <li class="nav-item dropdown">
-                            <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
+                            <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
+                                <span class="bell_value" id="bell_notification_count">0</span>
+                            </span><i class="mdi mdi-bell font-24"></i>
+                            
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
@@ -257,8 +260,16 @@
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
-                                @role('root|dealer|sub_dealer')
-                                    <a class="dropdown-item">
+                                @role('root')
+                                    <a style="margin-left: 15px;">
+                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                @endrole
+                                @role('dealer')
+                                    <a class="dropdown-item" href="{{url('/dealer/profile')}}">
+                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                @endrole
+                                @role('sub_dealer')
+                                    <a class="dropdown-item" href="{{url('/sub-dealer/profile')}}">
                                             <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
                                 @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"

@@ -240,6 +240,25 @@ class DealerController extends Controller {
             'message' => 'Dealer restored successfully'
         ]);
     }
+
+//////////////////////////////////////Dealer Profile-start///////////////////////////////
+
+    //Dealer profile view
+    public function dealerProfile()
+    {
+        $dealer_id = \Auth::user()->dealer->id;
+        $dealer_user_id = \Auth::user()->id;
+        $dealer = Dealer::withTrashed()->where('id', $dealer_id)->first();
+        $user=User::find($dealer_user_id); 
+        if($dealer == null)
+        {
+           return view('Dealer::404');
+        }
+        return view('Dealer::dealer-profile',['dealer' => $dealer,'user' => $user]);
+    }
+
+//////////////////////////////////////Dealer Profile-end///////////////////////////////
+
      public function updateDepotUserRuleChangePassword()
     {
         $rules=[

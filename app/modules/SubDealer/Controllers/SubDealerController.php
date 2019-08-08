@@ -288,12 +288,32 @@ class SubDealerController extends Controller {
             'message' => 'Sub Dealer restored successfully'
         ]);
     }
- public function passwordUpdateRules(){
+
+//////////////////////////////////////Sub Dealer Profile-start////////////////////////
+
+    //Sub Dealer profile view
+    public function subDealerProfile()
+    {
+        $sub_dealer_id = \Auth::user()->subdealer->id;
+        $sub_dealer_user_id = \Auth::user()->id;
+        $sub_dealer = SubDealer::withTrashed()->where('id', $sub_dealer_id)->first();
+        $user=User::find($sub_dealer_user_id); 
+        if($sub_dealer == null)
+        {
+           return view('SubDealer::404');
+        }
+        return view('SubDealer::sub-dealer-profile',['sub_dealer' => $sub_dealer,'user' => $user]);
+    }
+
+//////////////////////////////////////Sub Dealer Profile-end/////////////////////////
+
+    public function passwordUpdateRules(){
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
         return $rules;
-  }
+    }
+
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
