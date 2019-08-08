@@ -33,7 +33,7 @@ class SosController extends Controller {
         $sos = Sos::select(
             'id',
         	'imei',
-        	'manufacturing_date',
+        	\DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
             'brand',
             'model_name',
         	'version',
@@ -107,13 +107,13 @@ class SosController extends Controller {
                     <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
                     <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                     <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=delSos(".$sos->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                    <button onclick=delSos(".$sos->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete
                     </button>";
                 }else{
                      return "
                     <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                     <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=activateSos(".$sos->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
+                    <button onclick=activateSos(".$sos->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Restore
                     </button>";
                 }
             })

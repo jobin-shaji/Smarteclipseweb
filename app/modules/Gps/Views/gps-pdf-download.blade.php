@@ -27,7 +27,7 @@
       </tr>
 
       <tr style=" width:710px; border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
-        <td style="padding:12px 0;width:250px;margin:0 0 0 12px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;border:none;padding:0 0 0 12px">Date of Manufacturing:{{$gps->manufacturing_date}}
+        <td style="padding:12px 0;width:250px;margin:0 0 0 12px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;border:none;padding:0 0 0 12px">Date of Manufacturing:{{date('d-m-Y', strtotime($gps->manufacturing_date))}}
         </td>
          <td style="border:solid 1px #222;border-width:0 0 0 1px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:18px;font-weight:bolder;padding:12px 0 12px 12px">Manufacturing Address:<br><span style="font-size:13px">VST Mobility Solutions Pvt. Ltd. Kerala Technology Innovation Zone,<br>
         Kinfra Hi-Tech Park, HMT Colony, North Kalamassery,<br>

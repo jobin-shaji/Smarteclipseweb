@@ -1,6 +1,15 @@
 var items = [];
 var purl = getUrl() + '/'+'gps-scan' ;
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+Instascan.Camera.getCameras().then(function (cameras) {
+  if (cameras.length > 0) {
+    $('#warn').html('Scan Qr Code');
+    scanner.start(cameras[0]);
+  } else {
+     $('#warn').html('Camera not found , Please connect your camera');
+  }
+}).catch(function (e) {
+});
 scanner.addListener('scan', function (content) {
   var imei=content;
   var data = { imei : imei };
@@ -26,6 +35,10 @@ scanner.addListener('scan', function (content) {
                 $("#gps_id").val(items); 
                 var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_imei + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                 $("table tbody").append(markup);
+                var value = $('#gps_id').val();
+                if (value) {
+                  $("#transfer_button").show();
+                }
                 toastr.success('Scanned Successfully');
             }
         }else{
@@ -39,22 +52,23 @@ scanner.addListener('scan', function (content) {
 function deleteValueArray(gps_id){
   var item_data = items.indexOf(gps_id)
   if (item_data > -1) {
-       items.splice(item_data, 1);
-       $('.cover_imei_'+gps_id).remove();
-       $('#gps_id').val(items);
+      items.splice(item_data, 1);
+      $('.cover_imei_'+gps_id).remove();
+      $('#gps_id').val(items);
+      var value = $('#gps_id').val();
+      if (value) {
+        $("#transfer_button").show();
+      }else{
+        $("#transfer_button").hide();
+      }
     }
 
 }
 
-Instascan.Camera.getCameras().then(function (cameras) {
-  if (cameras.length > 0) {
-    scanner.start(cameras[0]);
-  } else {
-    console.error('No cameras found.');
-  }
-}).catch(function (e) {
-  console.error(e);
-});
+
+
+
+
 
 
 
