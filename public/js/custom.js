@@ -1036,7 +1036,7 @@ function rootSubdealer(res)
         var data = { 
         };
         backgroundPostData(url,data,'notificationCount',{alert:false});
-    }, 8000);
+    }, 8000);//hai
 
     $( document ).ready(function() {
         var url = 'notification_alert_count';
