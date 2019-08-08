@@ -17164,6 +17164,23 @@ border-radius: 6px 0 6px 6px;
     
 }
 
+span.cover_bell {
+       position: absolute;
+    top: 5px;
+    right: 15px;
+    width: 22px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ff2c74;
+    color: #fff;
+    line-height: 25px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+}
+
+
 
 
 

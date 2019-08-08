@@ -219,6 +219,8 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack =='assignGeofenceCount'){
 
                     assignGeofenceCount(res);
+                }else if(callBack=='notificationCount'){
+                         notificationCount(res);
                 }
                 
 
@@ -997,6 +999,7 @@ $(".cover_track_data").hover(function () {
 
 
 $('.cover_vehicle_track_list .cover_track_data').click(function(){
+    
     $('.cover_track_data').removeClass("track_status_active");
     $('.cover_track_data .track_status').removeClass("track_status_active_hover");
 
@@ -1026,5 +1029,31 @@ function rootSubdealer(res)
         $("#sub_dealer").append(sub_dealer);  
     } 
 }
+
+
+// ---------------check notification-----------------------------------
+    setInterval(function() {
+        var url = 'notification_alert_count';
+        var data = { 
+        };
+        backgroundPostData(url,data,'notificationCount',{alert:false});
+    }, 8000);//hai
+
+    $( document ).ready(function() {
+        var url = 'notification_alert_count';
+        var data = { 
+        };
+        backgroundPostData(url,data,'notificationCount',{alert:false});
+      });
+// ---------------check notification-----------------------------------
+
+    function notificationCount(res){
+        if(res.status=="success"){
+            var count_notification=res.notification_count;
+            $("#bell_notification_count").text(count_notification);
+
+        }
+    }
+
 
 

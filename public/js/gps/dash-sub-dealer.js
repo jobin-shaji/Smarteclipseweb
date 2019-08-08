@@ -72,7 +72,7 @@ function subDealerGpsUser(res)
       //       beginAtZero: true
       //     }
       //   }]
-      // }
+      }
     }
   });
 }
