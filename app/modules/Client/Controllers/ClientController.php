@@ -287,6 +287,10 @@ class ClientController extends Controller {
                 
 
                  <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
+
+                  <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+              
             ";
             }else{ 
             return "
@@ -547,6 +551,101 @@ class ClientController extends Controller {
             'longitude' => (float)$client->longitude
         ]);
     }
+/////////////////////////////Root Client Create/////////////////////////////
+     public function clientCreate()
+    {
+        $user = \Auth::user();
+        $root = $user->root;       
+        $entities = $root->dealers;        
+       return view('Client::root-client-create',['entities' => $entities]);
+    }
+
+
+public function selectSubdealer(Request $request)
+{
+     $user = \Auth::user();
+    $dealer_id=$request->dealer;
+     $sub_dealers=SubDealer::select([
+        'id',
+       'user_id',
+       'dealer_id',
+       'name'
+    ])           
+    ->where('dealer_id', $dealer_id)
+    ->get();
+    if($user->hasRole('root')){
+        return response()->json([            
+            'sub_dealers' => $sub_dealers
+            // 'status' => 'root_subdealer'           
+        ]);
+    }  
+
+
+
+
+}
+
+ //upload employee details to database table
+    public function clientSave(Request $request)
+    {      
+        
+        
+        if($request->user()->hasRole('root'))
+        {
+            $rules = $this->root_user_create_rules();
+            $this->validate($request, $rules);
+            $subdealer_id = $request->sub_dealer;
+            $placeLatLng=$this->getPlaceLatLng($request->search_place);
+            if($placeLatLng==null){
+                $request->session()->flash('message', 'Enter correct location'); 
+                $request->session()->flash('alert-class', 'alert-danger'); 
+                return redirect(route('client.create'));        
+            }
+            $location_lat=$placeLatLng['latitude'];
+            $location_lng=$placeLatLng['longitude'];
+           
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'status' => 1,
+                'password' => bcrypt($request->password),
+            ]);
+            $client = Client::create([            
+                'user_id' => $user->id,
+                'sub_dealer_id' => $subdealer_id,
+                'name' => $request->name,            
+                'address' => $request->address, 
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng          
+            ]);
+            User::where('username', $request->username)->first()->assignRole('client');            
+            $alert_types = AlertType::all(); 
+            if($client){
+                foreach ($alert_types as $alert_type) {
+                    $user_alerts = UserAlerts::create([
+                      "alert_id" => $alert_type->id, 
+                      "client_id" => $client->id, 
+                      "status" => 1
+                    ]);
+                    $client_alert_point = ClientAlertPoint::create([
+                      "alert_type_id" => $alert_type->id, 
+                      "driver_point" => $alert_type->driver_point, 
+                      "client_id" => $client->id
+                    ]);
+                }
+            }
+        }
+        $eid= encrypt($user->id);
+        $request->session()->flash('message', 'New client created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+         return redirect(route('client'));        
+    }
+
+
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
     public function passwordUpdateRules(){
@@ -568,6 +667,19 @@ class ClientController extends Controller {
      public function user_create_rules()
     {
         $rules = [
+            'username' => 'required|unique:users',
+            'mobile' => 'required|string|min:10|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+    #######################################################################
+// r oot create client validation
+    public function root_user_create_rules()
+    {
+        $rules = [
+            'sub_dealer' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
