@@ -385,8 +385,8 @@ class AlertController extends Controller {
         $rules = [
             'code' => 'required|unique:alert_types',
             'description' => 'required',
-            'driver_point' => 'required',
-            'path' => 'required'
+            'driver_point' => 'required|numeric',
+            'path' => 'required|mimes:jpg,jpeg,png|max:20000'
             
         ];
         return  $rules;
