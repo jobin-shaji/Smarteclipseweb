@@ -367,13 +367,18 @@ class DashboardController extends Controller
  public function vehicleDetails(Request $request){
 
         $address="";
+        $satelite=0;
+
         $gps = Gps::find($request->gps_id); 
+        if($gps->satllite!=null){
+         $satelite=$gps->satllite;   
+        }
         $network_status=$gps->network_status;
         $fuel_status=$gps->fuel_status;
         $speed=$gps->speed;
         $odometer=$gps->odometer;
         $mode=$gps->mode;
-        $satelite=$gps->satllite;
+        $satelite=$satelite;
         $latitude=$gps->lat;
         $longitude=$gps->lon;
         

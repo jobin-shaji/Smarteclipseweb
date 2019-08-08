@@ -77,11 +77,17 @@ function rootGpsUser(res){
       text: 'GPS USERS'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+        // yAxes: [{
+        //   ticks: {
+        //     // beginAtZero: true,
+        //     display: false
+        //   }
+        // }],
+        // xAxes: [{
+        //     gridLines: {
+        //      display: false
+        //     },
+        // }]
       }
     }
   });

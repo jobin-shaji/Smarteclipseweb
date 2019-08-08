@@ -46,7 +46,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-   Alerts Reports (1 month history)
+   Alert Reports (1 month history)
    </a>
 </p>
 <a data-toggle="collapse" href="#collapseExample"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
@@ -110,7 +110,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
-   Alerts Reports (2 months history)
+   Alert Reports (2 months history)
   </a>
 </p>
   <a data-toggle="collapse" href="#collapseExample1"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
@@ -176,7 +176,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
-   Alerts Reports (4 months history)
+   Alert Reports (4 months history)
   </a>
 </p>
 <a data-toggle="collapse" href="#collapseExample2"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
@@ -245,7 +245,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
-   Alerts Report (6 months history)
+   Alert Report (6 months history)
   </a>
 </p>
 <a data-toggle="collapse" href="#collapseExample3"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>

@@ -22,6 +22,22 @@
                 $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
                 $(this).data("DateTimePicker").hide();
             });
+            $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+            $('#assignToDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+
 
         });
  // $('.select2').select2();
@@ -196,6 +212,18 @@ function backgroundPostData(url, data, callBack, options) {
 
                     rootSubdealer(res);
                 }
+                else if(callBack =='assignRouteCount'){
+
+                    assignRouteCount(res);
+                }
+                else if(callBack =='assignGeofenceCount'){
+
+                    assignGeofenceCount(res);
+                }
+                
+
+
+
 
                
             }

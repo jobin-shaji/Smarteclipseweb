@@ -3,6 +3,35 @@ $(document).ready(function () {
 
 });
 
+function selectGeofence(){
+    var vehicle_id=$('#vehicle').val();
+    var geofence_id=$('#vehicle_geofence').val();        
+    var client=$('meta[name = "client"]').attr('content'); 
+    var from_date = document.getElementById('assignfromDate').value;          
+    var to_date = document.getElementById('assignToDate').value;
+    var url = 'already/assign-geofence';
+     var data = {   
+                    'vehicle_id':vehicle_id,
+                    'client':client,
+                    'geofence_id':geofence_id,
+                    'from_date':from_date, 
+                    'to_date':to_date
+                };       
+    backgroundPostData(url,data,'assignGeofenceCount',{alert:true});  
+}
+
+function assignGeofenceCount(res)
+{
+    if(res.assign_geofence_count!=0)
+    {
+        alert("Already assigned");
+    }
+    else if(res.assign_geofence_count==0)
+    {
+        check();
+    }
+
+}
 
 function check(){
 
@@ -18,8 +47,8 @@ function check(){
         var vehicle_id=$('#vehicle').val();
         var geofence_id=$('#vehicle_geofence').val();        
         var client=$('meta[name = "client"]').attr('content'); 
-          var from_date = document.getElementById('fromDate').value;          
-        var to_date = document.getElementById('toDate').value;
+          var from_date = document.getElementById('assignfromDate').value;          
+        var to_date = document.getElementById('assignToDate').value;
         // $to_date = date("Y-m-d", strtotime($toDate));
         var data = { 'vehicle_id':vehicle_id,'client':client, 'geofence_id':geofence_id, 'from_date':from_date, 'to_date':to_date};
         // console.log(data);

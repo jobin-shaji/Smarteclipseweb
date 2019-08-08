@@ -34,7 +34,7 @@
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">                      
                             <label>Route</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Route" id="vehicle_route" name="vehicle_route">
+                            <select class="form-control selectpicker" data-live-search="true" title="Select Route" id="vehicle_route" name="vehicle_route" >
                               <option value="">Select</option>
                               @foreach ($routes as $route)
                               <option value="{{$route->id}}">{{$route->name}}</option>
@@ -45,18 +45,18 @@
                            <div class="col-lg-2 col-md-3"> 
                           <div class="form-group">                    
                             <label> from Date</label>
-                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate">
+                            <input type="text" class="date_expiry form-control" id="assignfromDate" name="fromDate">
                           </div>
                         </div>
                           <div class="col-lg-2 col-md-3"> 
                           <div class="form-group">                    
                             <label> to date</label>
-                            <input type="text" class="datepicker form-control" id="toDate" name="toDate">
+                            <input type="text" class="datepicker form-control" id="assignToDate" name="toDate" >
                           </div>
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="check()">Route Schedule </button>
+                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="selectRoute()">Route Schedule </button>
                             </div>
                           </div>
                         </div>

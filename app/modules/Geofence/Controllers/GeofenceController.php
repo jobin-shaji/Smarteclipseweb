@@ -211,6 +211,8 @@ class GeofenceController extends Controller {
             ->where('vehicle_id',$vehicle_id)
             ->where('geofence_id',$geofence)
             ->where('client_id',$client_id)
+            ->whereBetween('date_from',array($fromDate,$toDate))
+            ->WhereBetween('date_to',array($fromDate,$toDate))
             ->get()
             ->count();
             if($geofences==0)
@@ -249,6 +251,28 @@ class GeofenceController extends Controller {
             ->make();
     }
 
+
+ public function alredyassigngeofenceCount(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicle_id= $request->vehicle_id;           
+        $geofence = $request->geofence_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $fromDate = date("Y-m-d", strtotime($from_date));
+        $toDate = date("Y-m-d", strtotime($to_date));
+        $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to')
+        ->where('vehicle_id',$vehicle_id)
+        ->where('geofence_id',$geofence)
+        ->where('client_id',$client_id)
+        ->whereBetween('date_from',array($fromDate,$toDate))
+        ->WhereBetween('date_to',array($fromDate,$toDate))
+        ->get()
+        ->count();
+        return response()->json([
+            'assign_geofence_count' => $geofences            
+        ]);       
+    }
    
 
 }
