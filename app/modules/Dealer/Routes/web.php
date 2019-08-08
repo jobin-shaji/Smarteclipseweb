@@ -16,3 +16,7 @@ Route::post('/dealer/disable','DealerController@disableDealer')->name('dealer.di
 Route::post('/dealer/enable','DealerController@enableDealer')->name('dealer.enable');
 });
 
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
+	Route::get('/dealer/profile','DealerController@dealerProfile')->name('dealer.profile');
+});
+
