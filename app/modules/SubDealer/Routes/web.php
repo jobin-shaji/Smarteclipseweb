@@ -21,3 +21,7 @@ Route::post('/sub-dealer/delete','SubDealerController@deleteSubDealer')->name('d
 Route::post('/sub-dealer/activate','SubDealerController@activateSubDealer')->name('dealer.activate');
 });
 
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+	Route::get('/sub-dealer/profile','SubDealerController@subDealerProfile')->name('sub-dealer.profile');
+});
+
