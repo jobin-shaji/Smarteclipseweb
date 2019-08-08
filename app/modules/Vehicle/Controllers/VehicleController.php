@@ -1395,10 +1395,10 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     {
         $rules = [
             'name' => 'required',
-            'svg_icon' => 'required',
-            'weight' => 'required',
-            'scale' => 'required',
-            'opacity' => 'required'
+            'svg_icon' => 'required|mimes:svg|max:20000',
+            'weight' => 'required|numeric',
+            'scale' => 'required|numeric',
+            'opacity' => 'required|numeric'
         ];
         return  $rules;
     }

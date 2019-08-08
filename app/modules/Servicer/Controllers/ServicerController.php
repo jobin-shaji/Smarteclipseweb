@@ -958,7 +958,8 @@ class ServicerController extends Controller {
         ];
         return  $rules;
     }
-       public function servicerVehicleCreateRules()
+    
+    public function servicerVehicleCreateRules()
     {
         $rules = [
             'name' => 'required',
