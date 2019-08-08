@@ -17157,12 +17157,29 @@ border-radius: 6px 0 6px 6px;
 .track_status_hover{
 
     display: block !important;
-}
+}http://localhost:8000/logo/1562480174.jpg
 
 .track_status_active_hover{
     display: block !important;
     
 }
+
+span.cover_bell {
+       position: absolute;
+    top: 5px;
+    right: 15px;
+    width: 22px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ff2c74;
+    color: #fff;
+    line-height: 25px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+}
+
 
 
 
