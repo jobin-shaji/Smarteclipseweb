@@ -31,7 +31,7 @@
                                           <table class="table table-bordered  table-striped " style="width:100%">
                                             <thead>
                                               <tr>
-                                                <th>#</th>
+                                                <th>Sl.No</th>
                                                 <th>Imei</th>
                                                 <th>Status</th>
                                                 <th>Updated By</th>

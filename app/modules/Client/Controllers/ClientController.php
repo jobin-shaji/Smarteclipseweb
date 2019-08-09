@@ -476,7 +476,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client deleted successfully'
+            'message' => 'Client deactivated successfully'
         ]);
     }
 
@@ -497,7 +497,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client restored successfully'
+            'message' => 'Client activated successfully'
         ]);
     }
 

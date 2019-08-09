@@ -29,15 +29,15 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th >Job Code</th>
-                    <th >Client</th>                      
-                    <th >Job Type</th>
-                    <th >Assignee</th>
-                    <th >Description</th>
-                    <th >Location</th>
-                    <th >Job Date</th> 
-                    <th >Action</th>                      
+                    <th>Sl.No</th>
+                    <th>Job Code</th>
+                    <th>Client</th>                      
+                    <th>Job Type</th>
+                    <th>Assignee</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Job Date</th> 
+                    <th>Action</th>                      
                   </tr>
                 </thead>
               </table>

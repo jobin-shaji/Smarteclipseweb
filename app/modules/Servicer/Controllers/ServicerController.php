@@ -928,7 +928,7 @@ class ServicerController extends Controller {
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
-            'mobile' => 'required|string|min:10'  
+            'mobile' => 'required|string|min:10|max:10'  
            
         ];
         return  $rules;
