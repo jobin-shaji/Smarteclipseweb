@@ -65,6 +65,13 @@
                           <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
                           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                         </div>     
+                      </div>
+                      <div class="form-group row" style="float:none!important">                     
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Location</label>
+                         <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Location" name="location" value="{{ $location}}" disabled>
+                          <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                        </div>     
                       </div>       
                     </div>
                   </div>
