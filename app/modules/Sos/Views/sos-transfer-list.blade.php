@@ -32,7 +32,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                      <th>#</th>
+                      <th>Sl.No</th>
                       <th>From User</th>
                       <th>To User</th>
                       <th>Dispatched On</th>
