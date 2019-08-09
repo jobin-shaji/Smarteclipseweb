@@ -26,7 +26,9 @@ return  [
        'SmsUsage',
        'Servicer',
        'Sos',
-       'TrafficRules'
+       'TrafficRules',
+       'School',
+       'Student'
     ]
 ]
 
