@@ -329,7 +329,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric|max:10|unique:drivers,mobile,'.$driver->id
+            'mobile' => 'required|string|min:10|max:10|unique:drivers,mobile,'.$driver->id
             
         ];
         return  $rules;

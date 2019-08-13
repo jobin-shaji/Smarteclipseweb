@@ -64,6 +64,7 @@ class SchoolController extends Controller {
             ->make();
     }
 
+    //EDIT SCHOOL DETAILS
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
@@ -75,314 +76,96 @@ class SchoolController extends Controller {
         return view('School::school-edit',['school' => $school]);
     }
 
-//     //update dealers details
-//     public function update(Request $request)
-//     {
-//         $driver = Driver::where('id', $request->id)->first();
-//         if($driver == null){
-//            return view('Driver::404');
-//         } 
-//         $rules = $this->driverUpdateRules($driver);
-//         $this->validate($request, $rules);       
-//         $driver->name = $request->name;
-//         $driver->address = $request->address;
-//         $driver->mobile = $request->mobile;
-//         $driver->save();      
-//         $did = encrypt($driver->id);
-//         $request->session()->flash('message', 'Driver details updated successfully!');
-//         $request->session()->flash('alert-class', 'alert-success'); 
-//         return redirect(route('driver.edit',$did));  
-//     }
+    //update school details
+    public function update(Request $request)
+    {
+        $school = School::where('id', $request->id)->first();
+        if($school == null){
+           return view('School::404');
+        } 
+        $rules = $this->schoolUpdateRules($school);
+        $this->validate($request, $rules);       
+        $school->name = $request->name;
+        $school->address = $request->address;
+        $school->mobile = $request->mobile;
+        $school->save();      
+        $did = encrypt($school->id);
+        $request->session()->flash('message', 'School details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('school.edit',$did));  
+    }
 
-//     public function performanceScore()
-//     {
-//         $client =\Auth::user()->client;
-//         $driver_points = $client->driver_points;
-//        return view('Driver::driver-alert-type-score',['driver_points' => $driver_points,'client_id' => $client->id]);
-//     }
-
-//     // update alert type point
-//     public function updatePerformanceScore(Request $request)
-//     {
-//         $alert_type__first_id=1;
-//         $client_id=$request->id;
-//         $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
-//                     ->where('client_id',$client_id)
-//                     ->where('alert_type_id',1)
-//                     ->first();
-//          $alert_type_point->driver_point = $request->harsh_braking;
-//          $alert_type_point->save();
-//          $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
-//                     ->where('client_id',$client_id)
-//                     ->where('alert_type_id',12)
-//                     ->first();
-//          $alert_type_point->driver_point = $request->over_speed;
-//          $alert_type_point->save();
-//           $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
-//                     ->where('client_id',$client_id)
-//                     ->where('alert_type_id',13)
-//                     ->first();
-//          $alert_type_point->driver_point = $request->tilt;
-//          $alert_type_point->save();
-//          $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
-//                     ->where('client_id',$client_id)
-//                     ->where('alert_type_id',14)
-//                     ->first();
-//          $alert_type_point->driver_point = $request->impact;
-//          $alert_type_point->save();
-//          $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
-//                     ->where('client_id',$client_id)
-//                     ->where('alert_type_id',15)
-//                     ->first();
-//          $alert_type_point->driver_point = $request->over_speed_gf_entry;
-//          $alert_type_point->save();
-//          $alert_type_point = ClientAlertPoint::select('id','alert_type_id','driver_point','client_id')
-//                     ->where('client_id',$client_id)
-//                     ->where('alert_type_id',16)
-//                     ->first();
-//          $alert_type_point->driver_point = $request->over_speed_gf_exit;
-//          $alert_type_point->save();
-//         $request->session()->flash('message', 'Performance score updated successfully!'); 
-//         $request->session()->flash('alert-class', 'alert-success'); 
-//         return redirect(route('performance-score'));  
-//     }
-
-//     /// performance score history
-//     public function performanceScoreHistory()
-//     {
-//         // $client =\Auth::user()->client;
-//         $client_id=\Auth::user()->client->id;
-//        $drivers = Driver::select('id','name')
-//                     ->where('client_id',$client_id)
-//                     ->get();
-//        return view('Driver::performance-score-history',['drivers' => $drivers]);
-//     }
-
-//     public function performanceScoreHistoryList(Request $request)
-//     {
-
-//         $client_id=\Auth::user()->client->id;
-//          $driver_id= $request->driver_id;            
-//         $from = $request->from_date;
-//         $to = $request->to_date;
-
-//          $vehicles = Vehicle::select('id','register_number')
-//                     ->where('client_id',$client_id)
-//                     ->get();
-//             $single_vehicle = [];
-//             foreach($vehicles as $vehicle){
-//                 $single_vehicle[] = $vehicle->id;
-//             }
-//             $performance_Score = DriverBehaviour::select(
-//                 'id',
-//                 'vehicle_id',
-//                 'driver_id',
-//                 'gps_id',
-//                 'alert_id',
-//                 'points',                
-//                 'created_at'
-//             )               
-//             ->with('alert:id,alert_type_id')
-//             ->with('driver:id,name')
-//             ->with('vehicle:id,name,register_number')
-//             ->with('gps:id,imei')
-//             ->with('client:id,name'); 
-//             if($driver_id==null && $from==null && $to==null)
-//             {
-//                  $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle);
-//             }
-//             else if($driver_id!=null && $from==null && $to==null)
-//             {
-//                 $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-//                 ->where('driver_id',$driver_id);
-//             }
-//             else
-//             {
-//                 $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-//                 ->where('driver_id',$driver_id);
-//                 if($from){
-//                   $search_from_date=date("Y-m-d", strtotime($from));                      
-//                   $search_to_date=date("Y-m-d", strtotime($to));
-//                   $performance_Score = $performance_Score->whereDate('created_at', '>=', $search_from_date)
-//                   ->whereDate('created_at', '<=', $search_to_date);
-//                 }
-
-
-//             }       
-//              $performance_Score = $performance_Score->get();
-//             return DataTables::of($performance_Score)
-//             ->addIndexColumn()
-//             ->addColumn('description', function ($performance_Score) {
-//                 $description=$performance_Score->alert->alertType->description;
-//                 return $description;
-                    
-//             })            
-//             ->addColumn('action', function ($performance_Score) {
-//                 $b_url = \URL::to('/');
-//             return "<button onclick=VerifyAlert(".$performance_Score->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
-//              <a href=".$b_url."/alert/report/".Crypt::encrypt($performance_Score->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
-//         })
-//         ->rawColumns(['link', 'action'])
-//         ->make();
-//     }
-
-//     //driver score page
-//     public function driverScorePage()
-//     {
-//        return view('Driver::driver-score');
-//     }
-
-//     //driver score
-//     public function driverScore(Request $request)
-//     {
-//         $client_id=\Auth::user()->client->id;
-//         $drivers = Driver::select(
-//                 'id',
-//                 'name',
-//                 'points')
-//                 ->where('client_id',$client_id)
-//                 ->get();
-//         $single_driver_name = [];
-//         $single_driver_point = [];
-//         foreach($drivers as $driver){
-//             $single_driver_name[] = $driver->name;
-//             $single_driver_point[] = $driver->points;
-//         }
-//         $score=array(
-//                     "drive_data"=>$single_driver_name,
-//                     "drive_score"=>$single_driver_point
-//                 );
-//         return response()->json($score); 
-//     }
-
-
-//     //Client Driver Create
-//     public function clientDriverCreate(Request $request)
-//     {
-
-//         $servicer_job_id= $request->servicer_job_id;         
-//         $driver_name= $request->driver_name;         
-//         $mobile = $request->mobile;
-//         $address = $request->address;
-//         $client_id = $request->client_id;
-//         $driver_mobile = Driver::select(
-//             'name',
-//             'mobile'               
-//         )               
-//         ->where('mobile',$mobile)
-//         ->count();
-//         if($driver_mobile==0)
-//         {
-//             if($driver_name!=null)
-//             {
-//                 $create_driver= Driver::create([
-//                     'name' => $driver_name,
-//                     'mobile' => $mobile,
-//                     'address' => $address,
-//                     'points' => 100,
-//                     'client_id' => $client_id                    
-//                 ]);                
-//             } 
-//             $driver_id=$create_driver->id;               
-//             return response()->json([
-//                 'driver_id'=>$driver_id,
-//                 'driver_name'=>$driver_name,
-//                 'status' => 'driver'           
-//             ]);
-//         }
-//         else
-//         {
-//              return response()->json([               
-//                 'status' => 'mobile_already'           
-//             ]);
-//         }
-       
-      
-//     }
-
-//      //validation for employee updation
-//     public function driverUpdateRules($driver)
-//     {
-//         $rules = [
-//             'name' => 'required',
-//             'address' => 'required',
-//             'mobile' => 'required|numeric|max:10|unique:drivers,mobile,'.$driver->id
-            
-//         ];
-//         return  $rules;
-//     }
     
-//     // details page
-//     public function details(Request $request)
-//     {
-//         $decrypted_id = Crypt::decrypt($request->id);
-//         $driver=Driver::find($decrypted_id);
-//         if($driver==null){
-//             return view('Driver::404');
-//         } 
-//         return view('Driver::driver-details',['driver' => $driver]);
-//     }
+    // details page
+    public function details(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $school=School::find($decrypted_id);
+        if($school==null){
+            return view('School::404');
+        } 
+        return view('School::school-details',['school' => $school]);
+    }
 
   
-//      //delete Sub Dealer details from table
-//     public function deleteDriver(Request $request)
-//     {
-//         $driver = Driver::find($request->uid);
-//         if($driver == null){
-//             return response()->json([
-//                 'status' => 0,
-//                 'title' => 'Error',
-//                 'message' => 'driver does not exist'
-//             ]);
-//         }
-//         $driver->delete();
-//         return response()->json([
-//             'status' => 1,
-//             'title' => 'Success',
-//             'message' => 'driver deleted successfully'
-//         ]);
-//     }
+    //deactivated school details from table
+    public function deleteSchool(Request $request)
+    {
+        $school = School::find($request->uid);
+        if($school == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'school does not exist'
+            ]);
+        }
+        $school->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'School deactivated successfully'
+        ]);
+    }
 
 
-//     // restore emplopyee
-//     public function activateDriver(Request $request)
-//     {
-//         $driver = Driver::withTrashed()->find($request->id);
-//         if($driver==null){
-//              return response()->json([
-//                 'status' => 0,
-//                 'title' => 'Error',
-//                 'message' => 'driver does not exist'
-//              ]);
-//         }
+    // restore school
+    public function activateSchool(Request $request)
+    {
+        $school = School::withTrashed()->find($request->id);
+        if($school==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'school does not exist'
+             ]);
+        }
 
-//         $driver->restore();
+        $school->restore();
 
-//         return response()->json([
-//             'status' => 1,
-//             'title' => 'Success',
-//             'message' => 'Driver restored successfully'
-//         ]);
-//     }
-// //update driver performance
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'School restored successfully'
+        ]);
+    }
 
-
-//      public function driverUpdateperformanceRules($driver)
-//     {
-//         $rules = [
-//             'name' => 'required',
-//             'address' => 'required',
-//             'mobile' => 'required|numeric'
-            
-//         ];
-//         return  $rules;
-//     }
     public function schoolCreateRules()
     {
         $rules = [
             'name' => 'required',
             'address' => 'required',
             'mobile' => 'required|string|min:10|max:10|unique:schools',
+            
+        ];
+        return  $rules;
+    }
+     //validation for school updation
+    public function schoolUpdateRules($school)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'mobile' => 'required|string|min:10|max:10|unique:schools,mobile,'.$school->id
             
         ];
         return  $rules;
