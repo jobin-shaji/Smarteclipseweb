@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  School Creation
+  Student Creation
 @endsection
 @section('content')   
  
@@ -8,7 +8,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create School</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Student</li>
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -18,7 +18,7 @@
           </div>
         @endif  
     </nav>
-    <form  method="POST" action="{{route('school.create.p')}}">
+    <form  method="POST" action="{{route('student.create.p')}}">
       {{csrf_field()}}
       <div class="row">
         <div class="col-lg-6 col-md-12">
@@ -27,7 +27,19 @@
               <div class="col-sm-12">                    
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="card-body_vehicle wizard-content">                       
+                    <div class="card-body_vehicle wizard-content">   
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Student ID</label>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Student ID" name="code" value="{{ old('code') }}" > 
+                        </div>
+                        @if ($errors->has('code'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('code') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                         <div class="form-group has-feedback">
@@ -39,6 +51,18 @@
                           </span>
                         @endif
                       </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Location</label>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="student_location" id="student_location" value="{{ old('student_location') }}" required>
+                        </div>
+                        @if ($errors->has('student_location'))
+                        <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('student_location') }}</strong>
+                        </span>
+                        @endif
+                      </div> 
                              
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
@@ -62,7 +86,24 @@
                             <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
-                      </div>                                                         
+                      </div>  
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">School</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control select2" name="school_id" data-live-search="true" title="Select School" required>
+                            <option selected disabled>Select School</option>
+                            @foreach($schools as $school)
+                              <option value="{{$school->id}}">{{$school->name}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('school_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('school_id') }}</strong>
+                          </span>
+                        @endif 
+                      </div>                                                      
                     </div>
                   </div>
                 </div>
@@ -83,4 +124,18 @@
     </form>
   </div>
 </section>
- @endsection
+
+@section('script')
+  <script>
+    function initMap()
+    {
+      var input1 = document.getElementById('student_location');
+      autocomplete1 = new google.maps.places.Autocomplete(input1);
+      var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
+     }
+  </script>
+  <script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap">
+  </script>
+@endsection
+@endsection
