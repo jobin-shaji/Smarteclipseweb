@@ -19,7 +19,7 @@ class ClientController extends Controller {
     }
     //upload employee details to database table
     public function save(Request $request)
-    {      
+    {    
         $subdealer_id = \Auth::user()->subdealer->id;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
@@ -51,7 +51,11 @@ class ClientController extends Controller {
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng          
             ]);
-            User::where('username', $request->username)->first()->assignRole('client');            
+            if($request->client_category=="school"){
+                User::where('username', $request->username)->first()->assignRole('school');
+            }else{
+                User::where('username', $request->username)->first()->assignRole('client');
+            }         
             $alert_types = AlertType::all(); 
             if($client){
                 foreach ($alert_types as $alert_type) {
@@ -668,7 +672,11 @@ public function selectSubdealer(Request $request)
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng          
             ]);
-            User::where('username', $request->username)->first()->assignRole('client');            
+            if($request->client_category=="school"){
+                User::where('username', $request->username)->first()->assignRole('school');
+            }else{
+                User::where('username', $request->username)->first()->assignRole('client');
+            }            
             $alert_types = AlertType::all(); 
             if($client){
                 foreach ($alert_types as $alert_type) {
@@ -716,6 +724,9 @@ public function selectSubdealer(Request $request)
      public function user_create_rules()
     {
         $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'client_category' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|max:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -729,6 +740,9 @@ public function selectSubdealer(Request $request)
     {
         $rules = [
             'sub_dealer' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'client_category' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
