@@ -1,6 +1,6 @@
 <?php 
 
-Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Student\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App\Modules\Student\Controllers' ] , function() {
 	Route::get('/student','StudentController@studentList')->name('student');
 	Route::post('/student-list','StudentController@getStudentlist')->name('student-list');
 	Route::get('/student/create','StudentController@create')->name('student.create');

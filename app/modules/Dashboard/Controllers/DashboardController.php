@@ -48,7 +48,10 @@ class DashboardController extends Controller
         else if(\Auth::user()->hasRole('sub_dealer')){
             return view('Dashboard::dashboard');  
         }
-         else if(\Auth::user()->hasRole('servicer')){
+        else if(\Auth::user()->hasRole('servicer')){
+            return view('Dashboard::dashboard');  
+        }
+        else if(\Auth::user()->hasRole('school')){
             return view('Dashboard::dashboard');  
         }
         else if(\Auth::user()->hasRole('client')){
