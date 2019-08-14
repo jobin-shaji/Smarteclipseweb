@@ -21,14 +21,19 @@ class StudentController extends Controller {
     {    
         $rules = $this->studentCreateRules();
         $this->validate($request, $rules);  
-        $placeLatLng=$this->getPlaceLatLng($request->student_location); 
-        if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('student.create'));        
+        $location_lat=$request->latitude;
+        $location_lng=$request->longitude;  
+        if($location_lat==null){
+            $placeLatLng=$this->getPlaceLatLng($request->student_location); 
+            if($placeLatLng==null){
+                  $request->session()->flash('message', 'Enter correct location'); 
+                  $request->session()->flash('alert-class', 'alert-danger'); 
+                  return redirect(route('student.create'));        
+            }
+            $location_lat=$placeLatLng['latitude'];
+            $location_lng=$placeLatLng['longitude'];  
         }
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['longitude'];      
+            
         $student = Student::create([ 
             'code' => $request->code,           
             'name' => $request->name,            
@@ -122,15 +127,19 @@ class StudentController extends Controller {
         } 
         $rules = $this->studentUpdateRules($student);
         $this->validate($request, $rules);  
-        $placeLatLng=$this->getPlaceLatLng($request->student_location);
-        if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('student.edit',$did));        
+        $location_lat=$request->latitude;
+        $location_lng=$request->longitude;  
+        if($location_lat==null){
+            $placeLatLng=$this->getPlaceLatLng($request->student_location); 
+            if($placeLatLng==null){
+                  $request->session()->flash('message', 'Enter correct location'); 
+                  $request->session()->flash('alert-class', 'alert-danger'); 
+                  return redirect(route('student.edit',$did));        
+            }
+            $location_lat=$placeLatLng['latitude'];
+            $location_lng=$placeLatLng['longitude'];  
         }
 
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['longitude'];
         $student->latitude= $location_lat;
         $student->longitude=$location_lng;
         $student->code = $request->code;     

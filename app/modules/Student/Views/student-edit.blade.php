@@ -63,6 +63,9 @@
                  @endif
                 </div>
 
+                <input type="hidden"  name="latitude" id="latitude" value="{{$student->latitude}}">
+                <input type="hidden"  name="longitude" id="longitude" value="{{$student->longitude}}">
+
                 <div class="form-group row" style="float:none!important">            
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Location</label>
                   <div class="form-group has-feedback">
@@ -103,8 +106,10 @@
                         <strong class="error-text">{{ $errors->first('school_id') }}</strong>
                     </span>
                   @endif
-                </div>
-                          
+                </div>      
+            </div>
+            <div class="col-lg-6 col-md-12">
+              <div id="map" style=" width:100%;height:540px;"></div>
             </div>
           </div>
           <div class="row">
@@ -119,14 +124,7 @@
 </section>
 
 @section('script')
-  <script>
-    function initMap()
-    {
-      var input1 = document.getElementById('student_location');
-      autocomplete1 = new google.maps.places.Autocomplete(input1);
-      var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-     }
-  </script>
+  <script src="{{asset('js/gps/student_location_map.js')}}"></script>
   <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap">
   </script>
