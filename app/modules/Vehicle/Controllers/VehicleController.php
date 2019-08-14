@@ -457,7 +457,7 @@ class VehicleController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Vehicle deleted successfully'
+            'message' => 'Vehicle deactivated successfully'
         ]);
      }
 
@@ -480,7 +480,7 @@ class VehicleController extends Controller {
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
-                'message' => 'Vehicle restored successfully'
+                'message' => 'Vehicle activated successfully'
             ]);
         }
         return response()->json([

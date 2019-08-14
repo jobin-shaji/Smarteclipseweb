@@ -21,6 +21,7 @@ class CreateStudentsTable extends Migration
             $table->bigInteger('mobile');
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('password');
             $table->integer('school_id');
             $table->timestamps();
             $table->softDeletes();
