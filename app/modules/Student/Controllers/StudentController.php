@@ -14,7 +14,8 @@ class StudentController extends Controller {
     {
         $schools=School::select('id','name')
                 ->get();
-       return view('Student::student-create',['schools'=>$schools]);
+        $random_password=$this->randomPassword();
+       return view('Student::student-create',['schools'=>$schools,'random_password'=>$random_password]);
     }
     //upload student details to database table
     public function save(Request $request)
@@ -41,12 +42,24 @@ class StudentController extends Controller {
             'mobile' => $request->mobile, 
             'latitude' => $location_lat,
             'longitude' => $location_lng,
+            'password' => bcrypt($request->password),
             'school_id' => $request->school_id,       
         ]);
         $eid= encrypt($student->id);
         $request->session()->flash('message', 'New student created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('student'));        
+    }
+
+    public function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
     }
 
     //Student list
@@ -252,6 +265,7 @@ class StudentController extends Controller {
             'code' => 'required|unique:students',
             'name' => 'required',
             'address' => 'required',
+            'password' => 'required',
             'mobile' => 'required|string|min:10|max:10|unique:students',
             'student_location' => 'required',
             'school_id' => 'required',

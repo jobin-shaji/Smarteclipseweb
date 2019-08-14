@@ -89,7 +89,20 @@
                             <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
-                      </div>  
+                      </div> 
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
+                        <div class="form-group has-feedback">
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" id="password" value="{{ $random_password }}" > 
+                          <br><input type="checkbox" onclick="showPassword()">Show Password
+                        </div>
+                        @if ($errors->has('password'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('password') }}</strong>
+                          </span>
+                        @endif
+                      </div> 
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">School</label>
@@ -115,7 +128,7 @@
           </div>
         </div>
         <div class="col-lg-6 col-md-12">
-          <div id="map" style=" width:100%;height:540px;"></div>
+          <div id="map" style=" width:100%;height:100%;"></div>
         </div>
       </div>
       <div class="row">

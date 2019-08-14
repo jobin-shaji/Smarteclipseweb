@@ -10,7 +10,7 @@ class Student extends Model
     use SoftDeletes;   
 
 	protected $fillable=[
-		'code','name','address','mobile','latitude','longitude','school_id'
+		'code','name','address','mobile','latitude','longitude','password','school_id'
 	];	
 
 	public function school(){
