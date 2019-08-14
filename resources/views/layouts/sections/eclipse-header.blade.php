@@ -144,6 +144,7 @@
                                  <a class="dropdown-item" href="{{url('/assign/route-vehicle')}}"> ASSIGN ROUTE <span></span></a>                               
                             </div>
                         </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
                             </a>
@@ -159,6 +160,16 @@
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> GO PREMIUM    
                             </a>
                         </li>
+
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> STUDENT 
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/student/create')}}"> ADD STUDENT <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/student')}}"> LIST STUDENT<span></span></a>                                 
+                            </div>
+                        </li> -->
 
 <!--                           <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Complaints 

@@ -52,10 +52,13 @@
                         @endif
                       </div>
 
+                      <input type="hidden"  name="latitude" id="latitude" value="">
+                      <input type="hidden"  name="longitude" id="longitude" value="">
+
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Location</label>
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="student_location" id="student_location" value="{{ old('student_location') }}" required>
+                          <input type="text" class="form-control {{ $errors->has('student_location') ? ' has-error' : '' }}" placeholder="Location" name="student_location" id="student_location" value="{{ old('student_location') }}" required>
                         </div>
                         @if ($errors->has('student_location'))
                         <span class="help-block">
@@ -111,6 +114,9 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-6 col-md-12">
+          <div id="map" style=" width:100%;height:540px;"></div>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-6 col-md-12">
@@ -126,14 +132,7 @@
 </section>
 
 @section('script')
-  <script>
-    function initMap()
-    {
-      var input1 = document.getElementById('student_location');
-      autocomplete1 = new google.maps.places.Autocomplete(input1);
-      var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-     }
-  </script>
+  <script src="{{asset('js/gps/student_location_map.js')}}"></script>
   <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap">
   </script>

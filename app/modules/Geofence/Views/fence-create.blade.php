@@ -56,7 +56,7 @@ Create Geofence
                       </form>
                     </div> 
                      <div class="col-lg-4 d-flex no-block align-items-center" style="text-align:right;">
-               <h4 class="page-title">Please plot points on the map to create geo fence</h4>
+               <h4 class="page-title">Please plot points on the map to create geofence</h4>
             </div>   
    </div>
                 </div>   
