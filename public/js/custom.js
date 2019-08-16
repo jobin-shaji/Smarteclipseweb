@@ -870,7 +870,7 @@ function notification(res){
        if(expire_length==0)
       {
         var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
-        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+        '<span class="btn btn-success btn-circle"><i class="fa fa-check"></i></span>'+
         '<div class="m-l-10" >'+
         '<small class="font-light"> No expired Documents</small><br>'+                                        
                                        

@@ -3,7 +3,6 @@
   Assign Servicer
 @endsection
 @section('content')
-
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -29,15 +28,15 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                      <th>#</th>
-                      <th >Job Code</th>
-                      <th >Service Engieer</th>
-                       <th >Client</th>
+                      <th>Sl.No</th>
+                      <th>Job Code</th>
+                      <th>Service Engieer</th>
+                      <th>Client</th>
                       
-                      <th >Job Type</th>
+                      <th>Job Type</th>
                       <!-- <th >User</th> -->
-                      <th >Description</th>
-                      <th >Job Date</th>
+                      <th>Description</th>
+                      <th>Job Date</th>
                       
                   </tr>
                 </thead>

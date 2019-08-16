@@ -72,15 +72,13 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                      <th>#</th>
+                      <th>Sl.No</th>
                       <th>Geofence Name</th>
-                      <th >Vehicle</th>
-                       <th >Register Number</th>
-                      <th >From Date</th>
-                      <th >To date</th>
-                      <th >Action</th>
-
-
+                      <th>Vehicle</th>
+                      <th>Register Number</th>
+                      <th>From Date</th>
+                      <th>To date</th>
+                      <th>Action</th>
                   </tr>
                 </thead>
               </table>

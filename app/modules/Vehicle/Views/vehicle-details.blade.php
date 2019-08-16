@@ -73,7 +73,7 @@
                     <div class="row">
                       <div class="col-lg-6 col-md-6 col-xs-12">
                         <h3 class="page-header">
-                          <i class="fa fa-car"> Change Driver</i> 
+                          <i class="fa fa-user"> Change Driver</i> 
                         </h3>
                         <?php 
                           $encript=Crypt::encrypt($vehicle->gps->id)

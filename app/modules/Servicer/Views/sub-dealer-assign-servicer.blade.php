@@ -3,6 +3,9 @@
     Assign Servicer
 @endsection
 @section('content')
+<style type="text/css">
+  .pac-container { position: relative !important;top: -530px !important;margin:0px }
+</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
  <nav aria-label="breadcrumb">
