@@ -3,20 +3,23 @@
     Assign Servicer
 @endsection
 @section('content')
+<style type="text/css">
+  .pac-container { position: relative !important;top: -450px !important;margin:0px }
+</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
  <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Assign Servicer</li>
-         </ol>
-         @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}  
-            </div>
-          </div>
-        @endif           
-        </nav>           
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Assign Servicer</li>
+   </ol>
+   @if(Session::has('message'))
+    <div class="pad margin no-print">
+      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+          {{ Session::get('message') }}  
+      </div>
+    </div>
+  @endif           
+  </nav>           
       <div class="container-fluid">                    
         <div class="card-body">
           <div class="table-responsive">
