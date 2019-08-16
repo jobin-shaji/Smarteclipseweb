@@ -3,7 +3,6 @@
   Assign Servicer
 @endsection
 @section('content')
-
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">

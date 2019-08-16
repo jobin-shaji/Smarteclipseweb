@@ -4,7 +4,9 @@
 @endsection
 @section('content')   
    
-
+<style type="text/css">
+  .pac-container { position: relative !important;top: -380px !important;margin:0px }
+</style>
 <section class="hilite-content">
   <!-- title row -->
   <div class="page-wrapper_new">

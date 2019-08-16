@@ -3,7 +3,9 @@
   Student Creation
 @endsection
 @section('content')   
- 
+<style type="text/css">
+  .pac-container { position: relative !important;top: -570px !important;margin:0px }
+</style>
 <section class="hilite-content">
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
