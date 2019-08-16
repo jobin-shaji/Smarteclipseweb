@@ -39,6 +39,6 @@
         toastr.options.escapeHtml = true;
         toastr.options.newestOnTop = false;
     </script>
-
+<script src="{{asset('js/api-custom.js')}}"></script>
     </body>
 </html>
