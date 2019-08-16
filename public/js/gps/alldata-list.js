@@ -114,10 +114,14 @@ function callBackDataTable(value){
             {data: 'servertime', name: 'servertime',orderable: false, searchable: false},
             {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false
           },
+           {data: 'action', name: 'action',orderable: false, searchable: false
+          },
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
+
+
 
 

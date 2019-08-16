@@ -87,7 +87,8 @@ class ClientController extends Controller {
         'sub_dealer_id',                      
         'name',                   
         'address',                                       
-        'deleted_at')
+        'deleted_at'
+    )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
         ->where('sub_dealer_id',$subdealer)

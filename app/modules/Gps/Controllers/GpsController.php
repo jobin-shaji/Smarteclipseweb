@@ -1233,9 +1233,6 @@ class GpsController extends Controller {
         }else{
          $items = GpsData::all();  
         }
-
-
-           
         return DataTables::of($items)
         ->addIndexColumn()
          ->addColumn('count', function ($items) {
@@ -1253,6 +1250,16 @@ class GpsController extends Controller {
                 $servertime=Carbon::parse($items->created_at)->diffForHumans();;
                 return $servertime;
              })
+         ->addColumn('action', function ($items) {
+             $b_url = \URL::to('/');
+           // <a href=".$b_url."/dealers/".Crypt::encrypt($items->id)."/change-password class='btn btn-xs btn-primary'>View</a>
+            return "
+          
+             <button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button> 
+            ";
+          
+        })
+        ->rawColumns(['link', 'action'])
         ->make();
     }
 
@@ -1298,6 +1305,49 @@ class GpsController extends Controller {
         return $pdf->download('GpsData.pdf');
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function getGpsAllData(Request $request)
+{      
+    $items = GpsData::find($request->id);
+    return response()->json([
+            'gpsData' => $items        
+    ]);
+               
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

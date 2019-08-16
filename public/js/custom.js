@@ -138,7 +138,6 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-   
 
             toast(res);
             if (callBack){
@@ -221,6 +220,8 @@ function backgroundPostData(url, data, callBack, options) {
                     assignGeofenceCount(res);
                 }else if(callBack=='notificationCount'){
                          notificationCount(res);
+                }else if(callBack=='gpsData'){
+                         gpsData(res);
                 }
                 
 
@@ -1055,5 +1056,4 @@ function rootSubdealer(res)
         }
     }
 
-
-
+   
