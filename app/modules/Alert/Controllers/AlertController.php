@@ -1,6 +1,5 @@
 <?php 
 
-
 namespace App\Modules\Alert\Controllers;
 
 use Illuminate\Http\Request;
