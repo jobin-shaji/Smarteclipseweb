@@ -461,8 +461,6 @@
             <div class="dashboard-main-Right cover_vehicle_track_list">
                <div class="iconsbg1234">
 
-
-
                   
 
                   <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">

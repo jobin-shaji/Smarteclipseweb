@@ -611,7 +611,7 @@ if($vehicle_mode=='O')
         ->whereNotNull('lat') 
         ->whereNotNull('lon') 
         
-        // ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$oneMinut_currentDateTime)
         // ->where('device_time', '<=',$currentDateTime)        
         // ->where('mode',$vehicle_mode)        
         ->orderBy('id','desc')                 
