@@ -580,49 +580,54 @@ class DashboardController extends Controller
         $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
         // userID list of vehicles
-        if($vehicle_mode=='O')
-        {
-            $vehiles_details=Gps::Select(
-                    'id',
-                    'lat',
-                    'lat_dir',
-                    'lon',
-                    'lon_dir',
-                    'mode',
-                    'device_time'
-                  )
-                ->with('vehicle:gps_id,id,name,register_number')
-                ->whereIn('id',$single_vehicle)      
-                ->whereNotNull('lat') 
-                ->whereNotNull('lon') 
-                
-                // ->where('device_time', '>=',$oneMinut_currentDateTime)
-                // ->where('device_time', '<=',$currentDateTime)        
-                // ->where('mode',$vehicle_mode)        
-                ->orderBy('id','desc')                 
-                ->get(); 
-        }
-        else
-        {
-            $vehiles_details=Gps::Select(
-                    'id',
-                    'lat',
-                    'lat_dir',
-                    'lon',
-                    'lon_dir',
-                    'mode',
-                    'device_time'
-                  )
-                ->with('vehicle:gps_id,id,name,register_number')
-                ->whereIn('id',$single_vehicle)       
-                ->where('device_time', '>=',$oneMinut_currentDateTime)
-                ->where('device_time', '<=',$currentDateTime)        
-                ->where('mode',$vehicle_mode)
-                ->whereNotNull('lat') 
-                ->whereNotNull('lon')         
-                ->orderBy('id','desc')                 
-                ->get(); 
-        }
+
+if($vehicle_mode=='O')
+{
+    $vehiles_details=Gps::Select(
+            'id',
+            'lat',
+            'lat_dir',
+            'lon',
+            'lon_dir',
+            'mode',
+            'device_time'
+          )
+        ->with('vehicle:gps_id,id,name,register_number')
+        ->whereIn('id',$single_vehicle)      
+        ->whereNotNull('lat') 
+        ->whereNotNull('lon') 
+        
+        ->where('device_time', '<=',$oneMinut_currentDateTime)
+        // ->where('device_time', '<=',$currentDateTime)        
+        // ->where('mode',$vehicle_mode)        
+        ->orderBy('id','desc')                 
+        ->get(); 
+
+}
+else
+{
+    $vehiles_details=Gps::Select(
+            'id',
+            'lat',
+            'lat_dir',
+            'lon',
+            'lon_dir',
+            'mode',
+            'device_time'
+          )
+        ->with('vehicle:gps_id,id,name,register_number')
+        ->whereIn('id',$single_vehicle)       
+        ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$currentDateTime)        
+        ->where('mode',$vehicle_mode)
+        ->whereNotNull('lat') 
+        ->whereNotNull('lon')         
+        ->orderBy('id','desc')                 
+        ->get(); 
+}
+         
+
+       
         $response_track_data=$this->vehicleDataList($vehiles_details);
         if($response_track_data){     
                  $response_data = array(

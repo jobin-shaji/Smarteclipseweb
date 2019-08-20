@@ -404,71 +404,6 @@
                       <canvas id="myChart" style="max-width: 500px;"></canvas>
                     </div>
                   </div>
-<<<<<<< HEAD
-                     @role('fundamental|superior|pro')
-                  <div class="right-bottom">
-                     <div class="st-button-main">
-                        <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
-                        
-
-                     </div>
-                     </div>
-
-                    <div class="right-bottom2">
-                     
-                       <form  onsubmit="return locationSearch();" >
-                      <div class="col-lg-12 col-md-12">
-                       <div class="container-fluid bg-light map_search">
-                       <div class="row align-items-center justify-content-center">
-                              <div class="col-lg-4 col-md-4 ">
-                                     <div class="form-group">
-                                        <input type="text" id="search_place" class="form-control" value="">
-                                     </div>
-                                  </div>
-                                  <div class="col-lg-4 col-md-4 ">
-                                      <div class="form-group">
-                                        <select id="search_radius" class="form-control">
-                                          <option selected>KM</option>
-                                          <option value="10">10 KM</option>
-                                          <option value="30">30 KM</option>
-                                          <option value="50">50 KM</option>
-                                          <option value="75">75 KM</option>
-                                          <option value="100">100 KM</option>
-                                        </select>
-                                      </div>
-                                  </div>
-                                 
-                                  <div class="col-lg-2 col-md-2 ">
-                                   <button type="submit" class="btn btn-primary btn-block">
-                                    <i class="fas fa-search"></i>
-                                   </button>
-                                </div>
-                            </div>
-                          </div>
-                          </div>
-                        </form>
-                     </div>
-
-                     
-                      <div id="myModal" class="modal_for_dash">
-                       <!-- Modal content -->
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                <span class="close"></span>
-                                
-                          <div class="container">  
-                            <div class="container">
-                              <canvas id="myChart" style="max-width: 500px;"></canvas>
-                          </div>
-                          </div>
-                          </div>
-                          </div>
-                          
-                       <!-- Modal content -->
-                        </div>
-                    @endrole
-               </div>
-
               </div>
             </div>
           </div>
@@ -583,31 +518,32 @@
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
-                        <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                           <img src="assets/images/sattelite.png">
-                            <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
-                            <medium id="satelite" class="font-light">
-                           <i class="fa fa-spinner" aria-hidden="true"></i>
-                        </div>
-                        <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                           <img src="assets/images/battery-status.png">
-                            <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
-                            <medium id="battery_status" class="font-light">
-                              <i class="fa fa-spinner" aria-hidden="true"></i>
-                        </div>
-                        <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                           <img src="assets/images/towing-dash.png">
-                            <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                            <medium class="font-light">
-                              <i class="fa fa-spinner" aria-hidden="true"></i>
-                        </div>
-                       
-                        <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
-                          
-                            <h4 class="m-b-0 m-t-5 score_data_text">
-                             <img src="assets/images/location.png">
-                            Location
-                        </h4>
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/sattelite.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
+                <medium id="satelite" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/battery-status.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <medium id="battery_status" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/towing-dash.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
+                <medium class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+                 
+              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
+                <h4 class="m-b-0 m-t-5 score_data_text">
+                  <img src="assets/images/location.png">
+                    Location
+                </h4>
                 <medium id="address" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>   
               </div>
