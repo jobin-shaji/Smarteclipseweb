@@ -89,5 +89,7 @@ Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
 
 Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
 
+Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
+// Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 
 });
