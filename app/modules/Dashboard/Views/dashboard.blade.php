@@ -438,7 +438,7 @@
               </h1>
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
-                <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important"></h1>
+                <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                 <!-- <h5 class="text-white">IDLE</h5> -->
               </span>
             </div>
@@ -454,7 +454,7 @@
               </h1>
               <span class="track_status">Sleep</span>
               <span style="float:left;width:100%">
-                <h1 id="stop"  class="text-white"  style="font-size:19px;color:#fab03a!important"></h1>
+                <h1 id="stop"  class="text-white"  style="font-size:19px;color:#fab03a!important">0</h1>
                 <!-- <h5 class="text-white">DELAY</h5> -->
               </span>
             </div>

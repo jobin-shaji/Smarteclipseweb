@@ -6,7 +6,7 @@ $(document).ready(function () {
      };
 
 
-      backgroundPostData(url,data,'dbcount',{alert:false});
+      backgroundPostData(url,data,'dbcount',{alert:true});
 
 
  //    window.setInterval(function(){
