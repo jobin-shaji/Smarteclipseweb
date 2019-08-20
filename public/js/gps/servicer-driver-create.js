@@ -35,7 +35,7 @@ function createDriver(res){
                  address : address,
                  client_id : client_id 
             };   
-            backgroundPostData(url,data,'servicerDriver',{alert:false});  
+            backgroundPostData(url,data,'servicerDriver',{alert:true});  
         }
         else
         { 
