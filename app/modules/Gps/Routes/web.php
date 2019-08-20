@@ -83,5 +83,8 @@ Route::get('/gps-data','GpsController@allgpsListPage')->name('gps-data');
 Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 
 Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
+
+Route::get('/test','GpsController@testKm')->name('testkm');
+
 Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
 });
