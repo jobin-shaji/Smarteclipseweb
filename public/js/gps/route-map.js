@@ -2,8 +2,8 @@
     
     
 
-      var latMap=25.402282;
-      var lngMap=51.189165;
+      var latMap=parseFloat(document.getElementById('lat').value);
+      var lngMap=parseFloat(document.getElementById('lng').value);
       var map;
       var image ='';
       var path=[];
@@ -19,7 +19,7 @@
          var data = { 
       
         };
-         backgroundPostData(url,data,'loadMap',{alert:false});
+         backgroundPostData(url,data,'loadMap',{alert:true});
       }
 
 

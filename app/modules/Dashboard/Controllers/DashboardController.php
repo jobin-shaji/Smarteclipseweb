@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Modules\Dashboard\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,7 +17,6 @@ use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\User\Models\User;
-
 use DataTables;
 use DB;
 use Carbon\Carbon; 
@@ -48,7 +45,10 @@ class DashboardController extends Controller
         else if(\Auth::user()->hasRole('sub_dealer')){
             return view('Dashboard::dashboard');  
         }
-         else if(\Auth::user()->hasRole('servicer')){
+        else if(\Auth::user()->hasRole('servicer')){
+            return view('Dashboard::dashboard');  
+        }
+        else if(\Auth::user()->hasRole('school')){
             return view('Dashboard::dashboard');  
         }
         else if(\Auth::user()->hasRole('client')){
@@ -142,41 +142,37 @@ class DashboardController extends Controller
             foreach($vehicles as $vehicle){
                 $single_vehicle[] = $vehicle->gps_id;
             }
-// if(strtotime($mysql_timestamp) > strtotime("-30 minutes")) {
-//  $this_is_new = true;
-// }
-         $currentDateTime=Date('Y-m-d H:i:s');
-         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+            $currentDateTime=Date('Y-m-d H:i:s');
+            $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
 
-        $moving=Gps::where('user_id',$user->id)->where('mode','M')
-        ->whereNotNull('lat')
-        ->whereNotNull('lon')
-        ->where('device_time', '>=',$oneMinut_currentDateTime)
-        ->where('device_time', '<=',$currentDateTime)
-        ->whereIn('id',$single_vehicle)->count();
+            $moving=Gps::where('user_id',$user->id)->where('mode','M')
+            ->whereNotNull('lat')
+            ->whereNotNull('lon')
+            ->where('device_time', '>=',$oneMinut_currentDateTime)
+            ->where('device_time', '<=',$currentDateTime)
+            ->whereIn('id',$single_vehicle)->count();
 
-        $offline=Gps::where('user_id',$user->id)
-        ->whereNotNull('lat')
-        ->whereNotNull('lon')
-        ->where('device_time', '<=',$oneMinut_currentDateTime)
-        // ->where('device_time', '<=',$currentDateTime)
-        ->whereIn('id',$single_vehicle)->count();
+            $offline=Gps::where('user_id',$user->id)
+            ->whereNotNull('lat')
+            ->whereNotNull('lon')
+            ->where('device_time', '<=',$oneMinut_currentDateTime)
+            // ->where('device_time', '<=',$currentDateTime)
+            ->whereIn('id',$single_vehicle)->count();
 
-        $idle=Gps::where('user_id',$user->id)->where('mode','H')
-        ->whereNotNull('lat')
-        ->whereNotNull('lon')
-        ->where('device_time', '>=',$oneMinut_currentDateTime)
-        ->where('device_time', '<=',$currentDateTime)
-        ->whereIn('id',$single_vehicle)->count();
+            $idle=Gps::where('user_id',$user->id)->where('mode','H')
+            ->whereNotNull('lat')
+            ->whereNotNull('lon')
+            ->where('device_time', '>=',$oneMinut_currentDateTime)
+            ->where('device_time', '<=',$currentDateTime)
+            ->whereIn('id',$single_vehicle)->count();
 
-        $stop=Gps::where('user_id',$user->id)->where('mode','S')
-        ->whereNotNull('lat')
-        ->whereNotNull('lon')
-        ->where('device_time', '>=',$oneMinut_currentDateTime)
-        ->where('device_time', '<=',$currentDateTime)
-        ->whereIn('id',$single_vehicle)->count();
-
-    }
+            $stop=Gps::where('user_id',$user->id)->where('mode','S')
+            ->whereNotNull('lat')
+            ->whereNotNull('lon')
+            ->where('device_time', '>=',$oneMinut_currentDateTime)
+            ->where('device_time', '<=',$currentDateTime)
+            ->whereIn('id',$single_vehicle)->count();
+        }
         if($user->hasRole('root')){
             return response()->json([
                 'gps' => Gps::where('user_id',$user->id)->count(), 
@@ -347,8 +343,8 @@ class DashboardController extends Controller
         }
     }
 
-    public function getLocation(Request $request){
-      
+    public function getLocation(Request $request)
+    {
         $gps_data=GpsData::select([
             'latitude as latitude',
             'longitude as longitude' 
@@ -358,22 +354,23 @@ class DashboardController extends Controller
         ->get();
       
         return response()->json($gps_data); 
-
-
-
-
     }
 
- public function vehicleDetails(Request $request){
-
+    public function vehicleDetails(Request $request)
+    {
         $address="";
+        $satelite=0;
+
         $gps = Gps::find($request->gps_id); 
+        if($gps->satllite!=null){
+         $satelite=$gps->satllite;   
+        }
         $network_status=$gps->network_status;
         $fuel_status=$gps->fuel_status;
         $speed=$gps->speed;
         $odometer=$gps->odometer;
         $mode=$gps->mode;
-        $satelite=$gps->satllite;
+        $satelite=$satelite;
         $latitude=$gps->lat;
         $longitude=$gps->lon;
         
@@ -432,7 +429,6 @@ class DashboardController extends Controller
              }
             
         return response()->json($response_data); 
-
     }
 
     public function vehicleList(Request $request)
@@ -456,7 +452,8 @@ class DashboardController extends Controller
        ->make();
     }
 
-    public function dashVehicleTrack(Request $request){
+    public function dashVehicleTrack(Request $request)
+    {
         $user = $request->user(); 
         $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
@@ -471,14 +468,14 @@ class DashboardController extends Controller
         // user list of vehicles
 
         // userID list of vehicles
-         $single_vehicle = [];
-         foreach($vehicles as $vehicle){
+        $single_vehicle = [];
+        foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-         } 
-           $currentDateTime=Date('Y-m-d H:i:s');
+        } 
+        $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
         // userID list of vehicles
-         $vehiles_details=Gps::Select(
+        $vehiles_details=Gps::Select(
             'id',
             'lat',
             'lat_dir',
@@ -486,16 +483,14 @@ class DashboardController extends Controller
             'lon_dir',
             'mode',
             'device_time'
-          )
+        )
         ->with('vehicle:gps_id,id,name,register_number')
         ->whereNotNull('mode')
         ->whereIn('id',$single_vehicle)        
         ->orderBy('id','desc')                 
         ->get(); 
-        
-
+    
         $response_track_data=$this->vehicleDataList($vehiles_details);
-     
         if($response_track_data){     
                  $response_data = array(
                 'user_data'  => $response_track_data,
@@ -507,57 +502,51 @@ class DashboardController extends Controller
                 'status'  => 'failed',
                 'message' => 'failed',
                 'code'    =>0);
-             }
+        }
         return response()->json($response_data); 
     }
 
 
-     function vehicleDataList($vehiles_details){
+    function vehicleDataList($vehiles_details){
         // dd($vehiles_details[0]->id);
-         $vehicleTrackData=array();
+        $vehicleTrackData=array();
         foreach ($vehiles_details as $vehicle_data) {
-         $vehicle_ecrypt_id=Crypt::encrypt($vehicle_data->vehicle->id);
-         $single_vehicle=Vehicle::find($vehicle_data->vehicle->id);
-         $single_vehicle_type= $single_vehicle->vehicleType;
+            $vehicle_ecrypt_id=Crypt::encrypt($vehicle_data->vehicle->id);
+            $single_vehicle=Vehicle::find($vehicle_data->vehicle->id);
+            $single_vehicle_type= $single_vehicle->vehicleType;
 
-        $currentDateTime=Date('Y-m-d H:i:s');
-        $device_time= $vehicle_data->device_time;
-        $oneMinut_currentDateTime=date($currentDateTime,strtotime("-2 minutes"));
-        $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
+            $currentDateTime=Date('Y-m-d H:i:s');
+            $device_time= $vehicle_data->device_time;
+            $oneMinut_currentDateTime=date($currentDateTime,strtotime("-2 minutes"));
+            $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
 
-
-         if($time_diff_minut<=2)
-         {
-            $modes=$vehicle_data->mode;
-         }
-         else
-         {
-           $modes= "O";
-         }
-
-
-         $vehicleTrackData[]=array(
-                                    "id"=>$vehicle_data->id,
-                                    "lat"=>$vehicle_data->lat,
-                                    "lat_dir"=>$vehicle_data->lat_dir,
-                                    "lon"=>$vehicle_data->lon,
-                                    "lon_dir"=>$vehicle_data->lon_dir,
-                                    "mode"=>$modes,
-                                    "vehicle_id"=>$vehicle_ecrypt_id,
-                                    "vehicle_name"=>$vehicle_data->vehicle->name,
-                                    "register_number"=>$vehicle_data->vehicle->register_number,
-                                    "vehicle_svg"=>$single_vehicle_type->svg_icon,
-                                    "vehicle_scale"=>$single_vehicle_type->vehicle_scale,
-                                    "opacity"=>$single_vehicle_type->opacity,
-                                    "strokeWeight"=>$single_vehicle_type->strokeWeight,
-                                    "device_time"=>$vehicle_data->device_time
-                                    );
-        
-      }
-      return $vehicleTrackData;
+            if($time_diff_minut<=2)
+            {
+                $modes=$vehicle_data->mode;
+            }
+            else
+            {
+               $modes= "O";
+            }
+            $vehicleTrackData[]=array(
+                "id"=>$vehicle_data->id,
+                "lat"=>$vehicle_data->lat,
+                "lat_dir"=>$vehicle_data->lat_dir,
+                "lon"=>$vehicle_data->lon,
+                "lon_dir"=>$vehicle_data->lon_dir,
+                "mode"=>$modes,
+                "vehicle_id"=>$vehicle_ecrypt_id,
+                "vehicle_name"=>$vehicle_data->vehicle->name,
+                "register_number"=>$vehicle_data->vehicle->register_number,
+                "vehicle_svg"=>$single_vehicle_type->svg_icon,
+                "vehicle_scale"=>$single_vehicle_type->vehicle_scale,
+                "opacity"=>$single_vehicle_type->opacity,
+                "strokeWeight"=>$single_vehicle_type->strokeWeight,
+                "device_time"=>$vehicle_data->device_time
+                );
+        }
+        return $vehicleTrackData;
     }
-
-
 
     public function vehicleTrackList(Request $request)
     {
@@ -565,11 +554,8 @@ class DashboardController extends Controller
         $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
                     ->where('id',$gpsID)                 
                     ->first();
-           
         return response()->json($user_data); 
     }
-
-
 
     public function vehicleMode(Request $request)
     {
@@ -577,24 +563,24 @@ class DashboardController extends Controller
         $user = $request->user(); 
         $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
-            $vehicles = Vehicle::select(
-                'id',
-                'register_number',
-                'name',
-                'gps_id'
-             )
-            ->where('client_id',$client->id)
-            ->get();
+        $vehicles = Vehicle::select(
+            'id',
+            'register_number',
+            'name',
+            'gps_id'
+         )
+        ->where('client_id',$client->id)
+        ->get();
        
         // userID list of vehicles
-         $single_vehicle = [];
-         foreach($vehicles as $vehicle){
+        $single_vehicle = [];
+        foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-         }  
-
+        }  
         $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
         // userID list of vehicles
+
 if($vehicle_mode=='O')
 {
     $vehiles_details=Gps::Select(
@@ -640,8 +626,9 @@ else
         ->get(); 
 }
          
+
+       
         $response_track_data=$this->vehicleDataList($vehiles_details);
-     
         if($response_track_data){     
                  $response_data = array(
                 'user_data'  => $response_track_data,
@@ -655,34 +642,31 @@ else
                 'code'    =>0);
              }
         return response()->json($response_data); 
-            
-       
     }
 
-     public function locationSearch(Request $request)
+    public function locationSearch(Request $request)
     {
-         $lat=$request->lat;
-         $lng=$request->lng; 
-         $radius=$request->radius;
-         $user = $request->user(); 
-         $client=Client::where('user_id',$user->id)->first();
+        $lat=$request->lat;
+        $lng=$request->lng; 
+        $radius=$request->radius;
+        $user = $request->user(); 
+        $client=Client::where('user_id',$user->id)->first();
         // user list of vehicles
-            $vehicles = Vehicle::select(
-                'id',
-                'register_number',
-                'name',
-                'gps_id'
-             )
-            ->where('client_id',$client->id)
-            ->get();
+        $vehicles = Vehicle::select(
+            'id',
+            'register_number',
+            'name',
+            'gps_id'
+         )
+        ->where('client_id',$client->id)
+        ->get();
         // user list of vehicles
 
         // userID list of vehicles
-         $single_vehicle = [];
-         foreach($vehicles as $vehicle){
+        $single_vehicle = [];
+        foreach($vehicles as $vehicle){
             $single_vehicle[] = $vehicle->gps_id;
-         }
-
+        }
         $vehicle_by_search=Gps::select('gps.id' ,'gps.lat','gps.lat_dir','gps.lon','gps.mode','device_time'
         ,DB::raw("6371 * acos(cos(radians(" . $lat . ")) 
         * cos(radians(gps.lat)) 
@@ -692,21 +676,20 @@ else
         ->groupBy("gps.id")
         ->having('distance','<=',$radius)
         ->with('vehicle:gps_id,id,name,register_number')
-       ->whereIn('id',$single_vehicle)    
+        ->whereIn('id',$single_vehicle)    
         ->get();
-
         $response_track_data=$this->vehicleDataList($vehicle_by_search);        
-       if($response_track_data){     
-                 $response_data = array(
+        if($response_track_data){     
+            $response_data = array(
                 'user_data'  => $response_track_data,
                 'status'=>'success'
             );
-       }else{
+        }else{
                 $response_data = array(
                 'status'  => 'failed',
                 'message' => 'failed',
                 'code'    =>0);
-             }
+        }
         return response()->json($response_data); 
     }
 
@@ -718,57 +701,53 @@ else
         return $minutes;
     }
 
-public function notification(Request $request)
-{
-
-
-          $user = $request->user();  
-           $client=Client::where('user_id',$user->id)->first();
-           $client_id=$client->id;
-           
-       
-            $vehicles = Vehicle::select('id','register_number')
+    public function notification(Request $request)
+    {
+        $user = $request->user();  
+        $client=Client::where('user_id',$user->id)->first();
+        $client_id=$client->id;
+        $vehicles = Vehicle::select('id','register_number')
                     ->where('client_id',$client_id)
                     ->get();
-            $single_vehicle = [];
-            foreach($vehicles as $vehicle){
-                $single_vehicle[] = $vehicle->id;
-            }
-            $expired_documents=Document::select([
+        $single_vehicle = [];
+        foreach($vehicles as $vehicle){
+            $single_vehicle[] = $vehicle->id;
+        }
+        $expired_documents=Document::select([
                 'id',
                 'vehicle_id',
                 'document_type_id',
                 'expiry_date'
-            ])
-            ->with('vehicle:id,name,register_number')
-            ->with('documentType:id,name')
-            ->whereIn('vehicle_id',$single_vehicle)
-            ->whereDate('expiry_date', '<', date('Y-m-d'))
-            ->get();
-            // $expire_documents=Document::select([
-            //     'id',
-            //     'vehicle_id',
-            //     'document_type_id',
-            //     'expiry_date'
-            // ])
-            // ->with('vehicle:id,name,register_number')
-            // ->with('documentType:id,name')
-            // ->whereIn('vehicle_id',$single_vehicle)
-            // ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
-            // ->get();
-             $expire_documents=Document::select([
-                'id',
-                'vehicle_id',
-                'document_type_id',
-                'expiry_date'
-            ])
-            ->with('vehicle:id,name,register_number')
-            ->with('documentType:id,name')
-            ->whereIn('vehicle_id',$single_vehicle)
-            ->where('expiry_date','>=', [date('Y-m-d')])
-            ->orderBy('expiry_date','DESC')
-            ->take(5)
-            ->get();
+        ])
+        ->with('vehicle:id,name,register_number')
+        ->with('documentType:id,name')
+        ->whereIn('vehicle_id',$single_vehicle)
+        ->whereDate('expiry_date', '<', date('Y-m-d'))
+        ->get();
+        // $expire_documents=Document::select([
+        //     'id',
+        //     'vehicle_id',
+        //     'document_type_id',
+        //     'expiry_date'
+        // ])
+        // ->with('vehicle:id,name,register_number')
+        // ->with('documentType:id,name')
+        // ->whereIn('vehicle_id',$single_vehicle)
+        // ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+        // ->get();
+         $expire_documents=Document::select([
+            'id',
+            'vehicle_id',
+            'document_type_id',
+            'expiry_date'
+        ])
+        ->with('vehicle:id,name,register_number')
+        ->with('documentType:id,name')
+        ->whereIn('vehicle_id',$single_vehicle)
+        ->where('expiry_date','>=', [date('Y-m-d')])
+        ->orderBy('expiry_date','DESC')
+        ->take(5)
+        ->get();
        if($user->hasRole('client')){
             return response()->json([            
                 'expired_documents' => $expired_documents,
@@ -776,57 +755,52 @@ public function notification(Request $request)
                 'status' => 'notification'           
             ]);
         }  
+    }
 
-
-
-
-}
-
-  public function rootGpsSale(Request $request)
+    public function rootGpsSale(Request $request)
     {
         // dd($request->id);
         $root_id=\Auth::user()->root->id;
-
-            $gps_transfers = GpsTransfer::select('id',
-                'from_user_id',
-                'to_user_id'
-            )
-            ->where('from_user_id', $root_id)
-            ->whereNotNull('accepted_on')
-            ->get();
-            $gps_transfer_id = [];
-            foreach($gps_transfers as $gps_transfer){
-                $gps_transfer_id[] = $gps_transfer->id;
-            }
-            
-            $gps = GpsTransferItems::select(
-                'id',
-                'gps_transfer_id',
-                'gps_id',
-                \DB::raw('date_format(created_at, "%M") as month'),
-                \DB::raw('count(date_format(created_at, "%M")) as count')             
-            )
-            ->with('gps:id,imei')
-            ->with('gpsTransfer:id,imei')
-            ->whereIn('gps_transfer_id',$gps_transfer_id)
-             ->orderBy("month","DESC") 
-            ->groupBy("month")  
-            ->get(); 
-            // dd($gps);
-          // $gps = GpsTransfer::select(
-          //       'id',
-          //       'from_user_id',
-          //       'to_user_id',
-          //       \DB::raw('date_format(accepted_on, "%M") as month'),
-          //       \DB::raw('count(date_format(accepted_on, "%M")) as count')               
-          //   )
-          //   // ->with('gps:id,imei')
-          //   ->with('gpsTransferItems:id')
-          //   ->where('from_user_id', $root_id)
-          //   ->whereNotNull('accepted_on')
-          //   ->orderBy("month","DESC") 
-          //   ->groupBy("month")  
-          //   ->get();
+        $gps_transfers = GpsTransfer::select('id',
+            'from_user_id',
+            'to_user_id'
+        )
+        ->where('from_user_id', $root_id)
+        ->whereNotNull('accepted_on')
+        ->get();
+        $gps_transfer_id = [];
+        foreach($gps_transfers as $gps_transfer){
+            $gps_transfer_id[] = $gps_transfer->id;
+        }
+        
+        $gps = GpsTransferItems::select(
+            'id',
+            'gps_transfer_id',
+            'gps_id',
+            \DB::raw('date_format(created_at, "%M") as month'),
+            \DB::raw('count(date_format(created_at, "%M")) as count')             
+        )
+        ->with('gps:id,imei')
+        ->with('gpsTransfer:id,imei')
+        ->whereIn('gps_transfer_id',$gps_transfer_id)
+         ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get(); 
+        // dd($gps);
+        // $gps = GpsTransfer::select(
+        //       'id',
+        //       'from_user_id',
+        //       'to_user_id',
+        //       \DB::raw('date_format(accepted_on, "%M") as month'),
+        //       \DB::raw('count(date_format(accepted_on, "%M")) as count')               
+        //   )
+        //   // ->with('gps:id,imei')
+        //   ->with('gpsTransferItems:id')
+        //   ->where('from_user_id', $root_id)
+        //   ->whereNotNull('accepted_on')
+        //   ->orderBy("month","DESC") 
+        //   ->groupBy("month")  
+        //   ->get();
         $gps_month = [];
         $gps_count = [];
         foreach($gps as $gps_sale){
@@ -841,15 +815,13 @@ public function notification(Request $request)
     }
 
 
-  public function rootGpsUsers(Request $request)
+    public function rootGpsUsers(Request $request)
     {
         // dd($request->id);
         $root_id=\Auth::user()->root->id;       
         $dealer=Dealer::all()->count();
         $sub_dealer=SubDealer::all()->count();
         $client=Client::all()->count();
-
-        
         $gps_user=array(
                     "dealer"=>$dealer,
                     "sub_dealer"=>$sub_dealer,
@@ -861,7 +833,6 @@ public function notification(Request $request)
     public function dealerGpsSale(Request $request)
     {
         $user_id=\Auth::user()->id;
-
         $gps_transfers = GpsTransfer::select('id',
                 'from_user_id',
                 'to_user_id'
@@ -869,24 +840,23 @@ public function notification(Request $request)
             ->where('from_user_id', $user_id)
             ->whereNotNull('accepted_on')
             ->get();
-            $gps_transfer_id = [];
-            foreach($gps_transfers as $gps_transfer){
-                $gps_transfer_id[] = $gps_transfer->id;
-            }
-            
-            $gps = GpsTransferItems::select(
-                'id',
-                'gps_transfer_id',
-                'gps_id',
-                \DB::raw('date_format(created_at, "%M") as month'),
-                \DB::raw('count(date_format(created_at, "%M")) as count')             
-            )
-            ->with('gps:id,imei')
-            ->with('gpsTransfer:id,imei')
-            ->whereIn('gps_transfer_id',$gps_transfer_id)
-             ->orderBy("month","DESC") 
-            ->groupBy("month")  
-            ->get(); 
+        $gps_transfer_id = [];
+        foreach($gps_transfers as $gps_transfer){
+            $gps_transfer_id[] = $gps_transfer->id;
+        }
+        $gps = GpsTransferItems::select(
+            'id',
+            'gps_transfer_id',
+            'gps_id',
+            \DB::raw('date_format(created_at, "%M") as month'),
+            \DB::raw('count(date_format(created_at, "%M")) as count')             
+        )
+        ->with('gps:id,imei')
+        ->with('gpsTransfer:id,imei')
+        ->whereIn('gps_transfer_id',$gps_transfer_id)
+         ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get(); 
         $gps_month = [];
         $gps_count = [];
         foreach($gps as $gps_sale){
@@ -900,7 +870,7 @@ public function notification(Request $request)
         return response()->json($dealer_gps_sale); 
     }
 
-////////Dealer GPS User
+    //////////////////////////////Dealer GPS User//////////////////////////////
 
     public function dealerGpsUsers(Request $request)
     {
@@ -916,7 +886,6 @@ public function notification(Request $request)
         foreach($sub_dealers as $sub_dealer){
             $single_sub_dealer[] = $sub_dealer->id;
         }
-
         $client = Client::select('id','name')
         ->whereIn('sub_dealer_id',$single_sub_dealer)
         ->count();         
@@ -928,36 +897,36 @@ public function notification(Request $request)
         return response()->json($dealer_gps_user); 
     }
 
-    //////Sub Dealer GPS Count
-     public function subDealerGpsSale(Request $request)
+    ///////////////////////Sub Dealer GPS Count//////////////////////////////////
+    public function subDealerGpsSale(Request $request)
     {
         // dd($request->id);
         $user_id=\Auth::user()->id;
-         $gps_transfers = GpsTransfer::select('id',
-                'from_user_id',
-                'to_user_id'
-            )
-            ->where('from_user_id', $user_id)
-            ->whereNotNull('accepted_on')
-            ->get();
-            $gps_transfer_id = [];
-            foreach($gps_transfers as $gps_transfer){
-                $gps_transfer_id[] = $gps_transfer->id;
-            }
-            
-            $gps = GpsTransferItems::select(
-                'id',
-                'gps_transfer_id',
-                'gps_id',
-                \DB::raw('date_format(created_at, "%M") as month'),
-                \DB::raw('count(date_format(created_at, "%M")) as count')             
-            )
-            ->with('gps:id,imei')
-            ->with('gpsTransfer:id,imei')
-            ->whereIn('gps_transfer_id',$gps_transfer_id)
-             ->orderBy("month","DESC") 
-            ->groupBy("month")  
-            ->get(); 
+        $gps_transfers = GpsTransfer::select('id',
+            'from_user_id',
+            'to_user_id'
+        )
+        ->where('from_user_id', $user_id)
+        ->whereNotNull('accepted_on')
+        ->get();
+        $gps_transfer_id = [];
+        foreach($gps_transfers as $gps_transfer){
+            $gps_transfer_id[] = $gps_transfer->id;
+        }
+        
+        $gps = GpsTransferItems::select(
+            'id',
+            'gps_transfer_id',
+            'gps_id',
+            \DB::raw('date_format(created_at, "%M") as month'),
+            \DB::raw('count(date_format(created_at, "%M")) as count')             
+        )
+        ->with('gps:id,imei')
+        ->with('gpsTransfer:id,imei')
+        ->whereIn('gps_transfer_id',$gps_transfer_id)
+         ->orderBy("month","DESC") 
+        ->groupBy("month")  
+        ->get(); 
         // $gps = GpsTransfer::select(
         //     'id',
         //     'from_user_id',
@@ -982,6 +951,7 @@ public function notification(Request $request)
         );
         return response()->json($sub_dealer_gps_sale); 
     }
+    
     //Sub Delaer gps users
     public function subDealerGpsUsers(Request $request)
     {

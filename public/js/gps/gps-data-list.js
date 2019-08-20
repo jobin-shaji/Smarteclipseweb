@@ -4,7 +4,7 @@ $(document).ready(function () {
     var data = { 'gps_id':gps_id};  
      callBackDataTable(data);   
     window.setInterval(function(){
-          backgroundPostData(url,data,'gpsdatacount',{alert:false});  
+          backgroundPostData(url,data,'gpsdatacount',{alert:true});  
     }, 5000);    
 });
 

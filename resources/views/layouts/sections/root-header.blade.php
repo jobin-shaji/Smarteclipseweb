@@ -50,6 +50,7 @@
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">END USERS</a>
                 <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/root/client/create')}}">ADD END USER</a></li>
                 <li><a class="dropdown-item" href="{{url('/client')}}">LIST END USERS</a></li>
                 </ul>
             </li>

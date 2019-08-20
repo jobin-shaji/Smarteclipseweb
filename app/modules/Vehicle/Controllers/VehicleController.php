@@ -457,7 +457,7 @@ class VehicleController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Vehicle deleted successfully'
+            'message' => 'Vehicle deactivated successfully'
         ]);
      }
 
@@ -480,7 +480,7 @@ class VehicleController extends Controller {
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
-                'message' => 'Vehicle restored successfully'
+                'message' => 'Vehicle activated successfully'
             ]);
         }
         return response()->json([
@@ -1395,10 +1395,10 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     {
         $rules = [
             'name' => 'required',
-            'svg_icon' => 'required',
-            'weight' => 'required',
-            'scale' => 'required',
-            'opacity' => 'required'
+            'svg_icon' => 'required|mimes:svg|max:20000',
+            'weight' => 'required|numeric',
+            'scale' => 'required|numeric',
+            'opacity' => 'required|numeric'
         ];
         return  $rules;
     }
@@ -1474,7 +1474,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         $lat = $b_lat;
         $lng = $b_lng;
         $route = $lat . "," . $lng;
-        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4";
+        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {

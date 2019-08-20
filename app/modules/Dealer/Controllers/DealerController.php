@@ -116,13 +116,14 @@ class DealerController extends Controller {
     }
     //update dealers details
     public function update(Request $request)
-    { 
+    {  
+        
        $dealer = Dealer::where('user_id', $request->id)->first();
         if($dealer == null){
            return view('Dealer::404');
         } 
-        $rules = $this->dealersUpdateRules($dealer);
-        $this->validate($request, $rules);      
+          $rules = $this->dealersUpdatesRules($dealer);
+        $this->validate($request, $rules);   
         $dealer->name = $request->name;
         $dealer->save();
         $user = User::find($request->id);
@@ -239,6 +240,25 @@ class DealerController extends Controller {
             'message' => 'Dealer restored successfully'
         ]);
     }
+
+//////////////////////////////////////Dealer Profile-start///////////////////////////////
+
+    //Dealer profile view
+    public function dealerProfile()
+    {
+        $dealer_id = \Auth::user()->dealer->id;
+        $dealer_user_id = \Auth::user()->id;
+        $dealer = Dealer::withTrashed()->where('id', $dealer_id)->first();
+        $user=User::find($dealer_user_id); 
+        if($dealer == null)
+        {
+           return view('Dealer::404');
+        }
+        return view('Dealer::dealer-profile',['dealer' => $dealer,'user' => $user]);
+    }
+
+//////////////////////////////////////Dealer Profile-end///////////////////////////////
+
      public function updateDepotUserRuleChangePassword()
     {
         $rules=[
@@ -259,11 +279,11 @@ class DealerController extends Controller {
         return  $rules;
     }
     //validation for employee updation
-    public function dealersUpdateRules($dealer)
+    public function dealersUpdatesRules($dealer)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric|min:10'       
+            'phone_number' => 'required|string|min:10'       
         ];
         return  $rules;
     }

@@ -1,6 +1,5 @@
 <?php 
 
-
 namespace App\Modules\Alert\Controllers;
 
 use Illuminate\Http\Request;
@@ -123,8 +122,9 @@ class AlertController extends Controller {
             //     }
             // })
             ->addColumn('action', function ($alert) {
+                // <button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
                  $b_url = \URL::to('/');
-            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
+            return "
              <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
@@ -373,11 +373,26 @@ class AlertController extends Controller {
     }
 
 
-
-
-
-
-
+    function notificationAlertCount()
+    {
+        $user=\Auth::user();
+        if($user->hasRole('client')){
+        $client_id=\Auth::user()->client->id;
+        $alert = Alert::select('id')
+        ->where('client_id',$client_id)
+        ->where('status',0)
+        ->get()
+        ->count();
+            return response()->json([                          
+                'notification_count' => $alert,
+                'status' => 'success'           
+            ]);
+        }else{
+           return response()->json([                          
+                'status' => 'failed'           
+            ]);   
+        }  
+    }
 
 
      //alert create rules 
@@ -385,8 +400,8 @@ class AlertController extends Controller {
         $rules = [
             'code' => 'required|unique:alert_types',
             'description' => 'required',
-            'driver_point' => 'required',
-            'path' => 'required'
+            'driver_point' => 'required|numeric',
+            'path' => 'required|mimes:jpg,jpeg,png|max:20000'
             
         ];
         return  $rules;

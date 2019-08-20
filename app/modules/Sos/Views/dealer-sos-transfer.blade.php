@@ -107,13 +107,14 @@
                   </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
+                  <div id="warn">Please connect your camera to scan qr code .</div>
                   <video id="preview" style="height:100%; width: 100%;"></video>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn ">Transfer</button>
+                  <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button">Transfer</button>
                 </div>
               </div>
             </form>

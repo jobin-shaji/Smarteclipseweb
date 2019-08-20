@@ -17,16 +17,17 @@ class ClientController extends Controller {
     {
        return view('Client::client-create');
     }
+
     //upload employee details to database table
     public function save(Request $request)
-    {      
+    {    
         $subdealer_id = \Auth::user()->subdealer->id;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
         if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('client.create'));        
+            $request->session()->flash('message', 'Enter correct location'); 
+            $request->session()->flash('alert-class', 'alert-danger'); 
+            return redirect(route('client.create'));        
         }
 
         $location_lat=$placeLatLng['latitude'];
@@ -51,7 +52,11 @@ class ClientController extends Controller {
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng          
             ]);
-            User::where('username', $request->username)->first()->assignRole('client');            
+            if($request->client_category=="school"){
+                User::where('username', $request->username)->first()->assignRole('school');
+            }else{
+                User::where('username', $request->username)->first()->assignRole('client');
+            }         
             $alert_types = AlertType::all(); 
             if($client){
                 foreach ($alert_types as $alert_type) {
@@ -71,8 +76,9 @@ class ClientController extends Controller {
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New client created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('clients'));        
+        return redirect(route('clients'));        
     }
+
     public function clientList()
     {
         return view('Client::client-list');
@@ -87,7 +93,8 @@ class ClientController extends Controller {
         'sub_dealer_id',                      
         'name',                   
         'address',                                       
-        'deleted_at')
+        'deleted_at'
+    )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
         ->where('sub_dealer_id',$subdealer)
@@ -114,13 +121,32 @@ class ClientController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id); 
         $client = Client::withTrashed()->where('user_id', $decrypted)->first();
+
+        $latitude= $client->latitude;
+        $longitude=$client->longitude;          
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $output = json_decode($geocodeFromLatLong);         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude            
+                 $location=$address;
+                 // dd($location);
+        }
+        else
+        {
+              $location="";
+        }
+
         $user=User::find($decrypted); 
        
         if($client == null)
         {
            return view('Client::404');
         }
-        return view('Client::client-edit',['client' => $client,'user' => $user]);
+        return view('Client::client-edit',['client' => $client,'user' => $user,'location' => $location]);
     }
 
     //update dealers details
@@ -130,9 +156,20 @@ class ClientController extends Controller {
         if($client == null){
            return view('Client::404');
         } 
-        $rules = $this->dealersUpdateRules($client);
+        $rules = $this->clientUpdateRules($client);
         $this->validate($request, $rules);       
         $client->name = $request->name;
+        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        if($placeLatLng==null){
+            $request->session()->flash('message', 'Enter correct location'); 
+            $request->session()->flash('alert-class', 'alert-danger'); 
+            return redirect(route('client.create'));        
+        }
+
+        $location_lat=$placeLatLng['latitude'];
+        $location_lng=$placeLatLng['longitude'];
+        $client->latitude= $location_lat;
+        $client->longitude=$location_lng;
         $client->save();
         $user = User::find($request->id);
         $user->mobile = $request->phone_number;
@@ -144,8 +181,9 @@ class ClientController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.edit',$did));  
     }
-     //validation for employee updation
-    public function dealersUpdateRules($subdealer)
+
+    //validation for employee updation
+    public function clientUpdateRules($subdealer)
     {
         $rules = [
             'name' => 'required',
@@ -154,7 +192,8 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
-    //     //for edit page of subdealer password
+
+    //for edit page of subdealer password
     public function changePassword(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
@@ -166,13 +205,10 @@ class ClientController extends Controller {
         return view('Client::client-change-password',['client' => $client]);
     }
 
-    
     //update password
     public function updatePassword(Request $request)
     {
         $client=\Auth::user()->sub_dealer;
-       
-
         $client=User::find($request->id);
         if($client== null){
             return view('SubDealer::404');
@@ -185,27 +221,22 @@ class ClientController extends Controller {
         $client->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
-        
-            return  redirect(route('client.change-password',$did));
-        
-        
+        return  redirect(route('client.change-password',$did));
     }
 
     public function changeClientPassword(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
         $client = Client::where('user_id', $decrypted)->first();
-         
         if($client == null){
            return view('Client::404');
         }
         return view('Client::subdealer-client-change-password',['client' => $client]);
     }
 
-      //update password
+    //update password
     public function updateClientPassword(Request $request)
     {
-       
         $client=User::find($request->id);
         if($client== null){
             return view('SubDealer::404');
@@ -218,10 +249,7 @@ class ClientController extends Controller {
         $client->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
-       
-             return  redirect(route('client.change-password-subdealer',$did));
-       
-        
+        return  redirect(route('client.change-password-subdealer',$did));  
     }
 
 
@@ -232,6 +260,7 @@ class ClientController extends Controller {
         ];
         return $rules;
     }
+
     public function activatesubscription()
     {
         $rules=[
@@ -245,14 +274,29 @@ class ClientController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
-
         $client = Client::withTrashed()->where('user_id', $decrypted)->first();
         $user=User::find($decrypted); 
-
+        $latitude= $client->latitude;
+        $longitude=$client->longitude;          
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $output = json_decode($geocodeFromLatLong);         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude            
+                 $location=$address;
+                 // dd($location);
+        }
+        else
+        {
+            $location="";
+        }
         if($client == null){
            return view('Client::404');
         }
-        return view('Client::client-details',['client' => $client,'user' => $user]);
+        return view('Client::client-details',['client' => $client,'user' => $user,'location' => $location]);
     }
 
 
@@ -260,6 +304,7 @@ class ClientController extends Controller {
     {
         return view('Client::root-client-list');
     }
+
     //returns employees as json 
     public function getRootClient()
     {
@@ -279,7 +324,7 @@ class ClientController extends Controller {
         return DataTables::of($client)
         ->addIndexColumn()  
         ->addColumn('working_status', function ($client) {
-              $b_url = \URL::to('/');
+            $b_url = \URL::to('/');
             if($client->user->deleted_at == null){ 
             return "
                 <b style='color:#008000';>Enabled</b>
@@ -287,6 +332,10 @@ class ClientController extends Controller {
                 
 
                  <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
+
+                  <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+              
             ";
             }else{ 
             return "
@@ -317,6 +366,7 @@ class ClientController extends Controller {
             'message' => 'Client disabled successfully'
         ]);
     }
+
     // restore emplopyee
     public function enableClient(Request $request)
     {
@@ -340,6 +390,7 @@ class ClientController extends Controller {
     {
         return view('Client::dealer-client-list');
     }
+
     //returns employees as json 
     public function getDealerClient()
     {
@@ -372,7 +423,7 @@ class ClientController extends Controller {
         ->addIndexColumn()           
         ->make();
     }
-//////////////////////////////////////subscription///////////////////////////////////////////
+//////////////////////////////////////subscription/////////////////////////////////////
     public function subscription(Request $request)
     {
         $client_user_id=Crypt::decrypt($request->id);
@@ -380,11 +431,11 @@ class ClientController extends Controller {
         $roles = $user->roles;
         // dd($roles);
         return view('Client::client-subscription',compact('roles'),['client_user_id'=>$request->id]);
-
     }
 
-    public function addUserRole(Request $request){
-         $rules=$this->activatesubscription();
+    public function addUserRole(Request $request)
+    {
+        $rules=$this->activatesubscription();
         $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
         $user = User::find($client_user_id); 
@@ -394,7 +445,7 @@ class ClientController extends Controller {
 
     }
 
-     //delete client role s from table
+    //delete client role s from table
     public function deleteClientRole(Request $request)
     {
         $client_user_id=$request->client_user_id;
@@ -405,8 +456,6 @@ class ClientController extends Controller {
         return redirect(route('client.subscription',$encrypt));
         
     }
-
-
 
     //delete Sub Dealer details from table
     public function deleteClient(Request $request)
@@ -423,7 +472,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client deleted successfully'
+            'message' => 'Client deactivated successfully'
         ]);
     }
 
@@ -432,11 +481,11 @@ class ClientController extends Controller {
     {
         $client = Client::withTrashed()->find($request->id);
         if($client==null){
-             return response()->json([
+            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Client does not exist'
-             ]);
+            ]);
         }
 
         $client->user->restore();
@@ -444,7 +493,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client restored successfully'
+            'message' => 'Client activated successfully'
         ]);
     }
 
@@ -473,7 +522,6 @@ class ClientController extends Controller {
         }
         $rules = $this->logoUpdateRules();
         $this->validate($request, $rules);
-
         $file=$request->file('logo');
         if($file){
             $old_file = $client->logo;
@@ -540,16 +588,106 @@ class ClientController extends Controller {
         return redirect(route('client.profile'));  
     }
 
-    public function clientLocation(Request $request){
+    public function clientLocation(Request $request)
+    {
         $client = $request->user()->client;
         return response()->json([
             'latitude' => (float)$client->latitude,
             'longitude' => (float)$client->longitude
         ]);
     }
+/////////////////////////////Root Client Create/////////////////////////////
+    public function clientCreate()
+    {
+        $user = \Auth::user();
+        $root = $user->root;       
+        $entities = $root->dealers;        
+       return view('Client::root-client-create',['entities' => $entities]);
+    }
+
+
+public function selectSubdealer(Request $request)
+    {
+        $user = \Auth::user();
+        $dealer_id=$request->dealer;
+        $sub_dealers=SubDealer::select([
+            'id',
+           'user_id',
+           'dealer_id',
+           'name'
+        ])           
+        ->where('dealer_id', $dealer_id)
+        ->get();
+        if($user->hasRole('root')){
+            return response()->json([            
+                'sub_dealers' => $sub_dealers
+                // 'status' => 'root_subdealer'           
+            ]);
+        }  
+    }
+
+    //upload employee details to database table
+    public function clientSave(Request $request)
+    {      
+        if($request->user()->hasRole('root'))
+        {
+            $rules = $this->root_user_create_rules();
+            $this->validate($request, $rules);
+            $subdealer_id = $request->sub_dealer;
+            $placeLatLng=$this->getPlaceLatLng($request->search_place);
+            if($placeLatLng==null){
+                $request->session()->flash('message', 'Enter correct location'); 
+                $request->session()->flash('alert-class', 'alert-danger'); 
+                return redirect(route('client.create'));        
+            }
+            $location_lat=$placeLatLng['latitude'];
+            $location_lng=$placeLatLng['longitude'];
+           
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'status' => 1,
+                'password' => bcrypt($request->password),
+            ]);
+            $client = Client::create([            
+                'user_id' => $user->id,
+                'sub_dealer_id' => $subdealer_id,
+                'name' => $request->name,            
+                'address' => $request->address, 
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng          
+            ]);
+            if($request->client_category=="school"){
+                User::where('username', $request->username)->first()->assignRole('school');
+            }else{
+                User::where('username', $request->username)->first()->assignRole('client');
+            }            
+            $alert_types = AlertType::all(); 
+            if($client){
+                foreach ($alert_types as $alert_type) {
+                    $user_alerts = UserAlerts::create([
+                      "alert_id" => $alert_type->id, 
+                      "client_id" => $client->id, 
+                      "status" => 1
+                    ]);
+                    $client_alert_point = ClientAlertPoint::create([
+                      "alert_type_id" => $alert_type->id, 
+                      "driver_point" => $alert_type->driver_point, 
+                      "client_id" => $client->id
+                    ]);
+                }
+            }
+        }
+        $eid= encrypt($user->id);
+        $request->session()->flash('message', 'New client created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client'));        
+    }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-    public function passwordUpdateRules(){
+    public function passwordUpdateRules()
+    {
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
@@ -565,9 +703,29 @@ class ClientController extends Controller {
         return  $rules;
     }
 
-     public function user_create_rules()
+    public function user_create_rules()
     {
         $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'client_category' => 'required',
+            'username' => 'required|unique:users',
+            'mobile' => 'required|string|min:10|max:10|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+    ###############################################################################
+
+    // root create client validation
+    public function root_user_create_rules()
+    {
+        $rules = [
+            'sub_dealer' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'client_category' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -576,9 +734,9 @@ class ClientController extends Controller {
         return  $rules;
     }
 
-#################################################
-    function getPlaceLatLng($address){
-
+#####################################################################################
+    function getPlaceLatLng($address)
+    {
         $data = urlencode($address);
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ";
         $geocode_stats = file_get_contents($url);

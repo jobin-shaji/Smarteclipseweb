@@ -6,11 +6,11 @@
      var data = {
    
      };
-      backgroundPostData(url,data,'subDealerGpsSale',{alert:false});
+      backgroundPostData(url,data,'subDealerGpsSale',{alert:true});
        var url = 'sub-dealer-gps-user';
      var data = {   
      };
-      backgroundPostData(url,data,'subDealerGpsUser',{alert:false});
+      backgroundPostData(url,data,'subDealerGpsUser',{alert:true});
      
 });
 function subDealerGpsSale(res)
@@ -67,11 +67,11 @@ function subDealerGpsUser(res)
       text: 'GPS Users'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+      //   yAxes: [{
+      //     ticks: {
+      //       beginAtZero: true
+      //     }
+      //   }]
       }
     }
   });

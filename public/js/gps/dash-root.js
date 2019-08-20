@@ -5,13 +5,13 @@ $(document).ready(function () {
      var data = {
    
      };
-      backgroundPostData(url,data,'rootGpsSale',{alert:false});
+      backgroundPostData(url,data,'rootGpsSale',{alert:true});
 
       var url = 'root-gps-user';
      var data = {
    
      };
-      backgroundPostData(url,data,'rootGpsUser',{alert:false});
+      backgroundPostData(url,data,'rootGpsUser',{alert:true});
 });
 // rootGpsSale
 function rootGpsSale(res){
@@ -77,11 +77,17 @@ function rootGpsUser(res){
       text: 'GPS USERS'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+        // yAxes: [{
+        //   ticks: {
+        //     // beginAtZero: true,
+        //     display: false
+        //   }
+        // }],
+        // xAxes: [{
+        //     gridLines: {
+        //      display: false
+        //     },
+        // }]
       }
     }
   });

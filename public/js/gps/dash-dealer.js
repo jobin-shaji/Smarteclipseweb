@@ -4,12 +4,12 @@ $(document).ready(function () {
      var data = {
    
      };
-      backgroundPostData(url,data,'dealerGpsSale',{alert:false});
+      backgroundPostData(url,data,'dealerGpsSale',{alert:true});
       
     var url = 'dealer-gps-user';
      var data = {   
      };
-      backgroundPostData(url,data,'dealerGpsUser',{alert:false});
+      backgroundPostData(url,data,'dealerGpsUser',{alert:true});
      
 });
 function dealerGpsSale(res)
@@ -72,11 +72,11 @@ function dealerGpsUser(res){
       text: 'GPS User'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+        // yAxes: [{
+        //   ticks: {
+        //     beginAtZero: true
+        //   }
+        // }]
       }
     }
   });

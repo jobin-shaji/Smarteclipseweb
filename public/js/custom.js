@@ -22,6 +22,22 @@
                 $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
                 $(this).data("DateTimePicker").hide();
             });
+            $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+            $('#assignToDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+
 
         });
  // $('.select2').select2();
@@ -51,6 +67,9 @@ $( ".date_expiry_edit" ).datetimepicker({
     format: 'DD-MM-YYYY',       
     maxDate: new Date()
  });
+
+ 
+
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
@@ -119,9 +138,10 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-   
-
+            
+           if(options.alert==true){
             toast(res);
+            }
             if (callBack){
                 if (callBack == 'callBackDataTables'){
 
@@ -189,6 +209,27 @@ function backgroundPostData(url, data, callBack, options) {
 
                     removeClientRole(res);
                 }
+                else if(callBack =='rootSubdealer'){
+
+                    rootSubdealer(res);
+                }
+                else if(callBack =='assignRouteCount'){
+
+                    assignRouteCount(res);
+                }
+                else if(callBack =='assignGeofenceCount'){
+
+                    assignGeofenceCount(res);
+                }else if(callBack=='notificationCount'){
+                         notificationCount(res);
+                }else if(callBack=='gpsData'){
+                         gpsData(res);
+                }
+                
+
+
+
+
                
             }
         },
@@ -270,7 +311,7 @@ function track_vehicle(){
 }
 
 function VerifyAlert(vehicle_id,decrypt_vehicle_id){
-    if(confirm('Are you sure want to verify this alert?')){
+   
         if(typeof(Storage) !== "undefined") {
             localStorage.setItem("qwertasdfgzxcvb", decrypt_vehicle_id);
         }
@@ -278,8 +319,8 @@ function VerifyAlert(vehicle_id,decrypt_vehicle_id){
         var data = {
         id : vehicle_id
         };
-        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
-    } 
+        backgroundPostData(url,data,'verifyAlertResponse',{alert:false}); 
+     
 }
 
 function verifyAlertResponse(res){
@@ -831,7 +872,7 @@ function notification(res){
        if(expire_length==0)
       {
         var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
-        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+        '<span class="btn btn-success btn-circle"><i class="fa fa-check"></i></span>'+
         '<div class="m-l-10" >'+
         '<small class="font-light"> No expired Documents</small><br>'+                                        
                                        
@@ -961,6 +1002,7 @@ $(".cover_track_data").hover(function () {
 
 
 $('.cover_vehicle_track_list .cover_track_data').click(function(){
+    
     $('.cover_track_data').removeClass("track_status_active");
     $('.cover_track_data .track_status').removeClass("track_status_active_hover");
 
@@ -970,5 +1012,50 @@ $('.cover_vehicle_track_list .cover_track_data').click(function(){
    
 });
 
+function selectDealer(dealer)
+{
+    var url = 'select/subdealer';
+    var data = {
+        dealer : dealer      
+    };
+    backgroundPostData(url,data,'rootSubdealer',{alert:true}); 
+}
+
+function rootSubdealer(res)
+{
+     $("#sub_dealer").empty();
+      // var sub_dealer='  <option value=""  >select</option>';  
+        // $("#sub_dealer").append(sub_dealer); 
+    var length=res.sub_dealers.length
+    for (var i = 0; i < length; i++) {     
+         sub_dealer='  <option value="'+res.sub_dealers[i].id+'"  >'+res.sub_dealers[i].name+'</option>';  
+        $("#sub_dealer").append(sub_dealer);  
+    } 
+}
 
 
+// ---------------check notification-----------------------------------
+    setInterval(function() {
+        var url = 'notification_alert_count';
+        var data = { 
+        };
+        backgroundPostData(url,data,'notificationCount',{alert:false});
+    }, 8000);//hai
+
+    $( document ).ready(function() {
+        var url = 'notification_alert_count';
+        var data = { 
+        };
+        backgroundPostData(url,data,'notificationCount',{alert:false});
+      });
+// ---------------check notification-----------------------------------
+
+    function notificationCount(res){
+        if(res.status=="success"){
+            var count_notification=res.notification_count;
+            $("#bell_notification_count").text(count_notification);
+
+        }
+    }
+
+   

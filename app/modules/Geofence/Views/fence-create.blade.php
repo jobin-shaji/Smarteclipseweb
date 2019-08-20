@@ -43,7 +43,7 @@ Create Geofence
                            <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
                             <input type="hidden" class="form-control" placeholder="Search Place" name="lat" id="lat" value="{{$lat}}" required>  
 
-          <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
+                          <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
 
                         
                           </div>
@@ -56,7 +56,7 @@ Create Geofence
                       </form>
                     </div> 
                      <div class="col-lg-4 d-flex no-block align-items-center" style="text-align:right;">
-               <h4 class="page-title">Please plot points on the map to create geo fence</h4>
+               <h4 class="page-title">Please plot points on the map to create geofence</h4>
             </div>   
    </div>
                 </div>   

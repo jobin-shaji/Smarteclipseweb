@@ -51,17 +51,31 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $servicer->user->mobile}}" >
+                        <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $servicer->user->mobile}}" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                     </div>
+                     @if (!($errors->has('email')))
                     <div class="form-group row" style="float:none!important">               
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email.</label> 
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ $servicer->user->email }}" >
+                        <input type="text" class="form-control" placeholder="email" name="email" value="{{ $servicer->user->email }}" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                     </div>
+                     @endif
+                    @if ($errors->has('email'))
+                    <div class="form-group row" style="float:none!important">               
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email.</label> 
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="email" name="email" value="{{ old('email') }}" >
+                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('email') }}</strong>
+                    </span>
+                    @endif
                     <div class="row">
                       <div class="col-md-3">
                         <button type="submit" class="btn btn-primary btn-md form-btn ">UPDATE SERVICER DETAILS</button>

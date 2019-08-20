@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Client\Models\Client;
 use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\VehicleRoute;
 use Illuminate\Support\Facades\Crypt;
@@ -55,7 +56,11 @@ class RouteController extends Controller {
     // create a new route
     public function createRoute()
     {
-        return view('Route::route-add');
+        $client_id=\Auth::user()->client->id;
+        $driver_location=Client::select('latitude','longitude')
+                ->where('id',$client_id)
+                ->first();
+        return view('Route::route-add',['driver_location' => $driver_location]);
     }
 
     // // save route
@@ -170,14 +175,16 @@ class RouteController extends Controller {
         $to_date = $request->to_date;
         $fromDate = date("Y-m-d", strtotime($from_date));
         $toDate = date("Y-m-d", strtotime($to_date));
-
         if($vehicle_id!="")
          {
             $router = VehicleRoute::select('id','vehicle_id','route_id','date_from','date_to')
             ->where('vehicle_id',$vehicle_id)
             ->where('route_id',$routes)
             ->where('client_id',$client_id)
+             ->whereBetween('date_from',array($fromDate,$toDate))
+            ->WhereBetween('date_to',array($fromDate,$toDate))
             ->get()->count();
+// dd($router);
             if($router==0)
             {
                  $route_area = VehicleRoute::create([
@@ -188,7 +195,13 @@ class RouteController extends Controller {
                         'client_id' => $client_id,
                         'status' => 1
                     ]);
-            }   
+            } 
+            else{
+                // $request->session()->flash('message', 'Already Assigned Route!'); 
+                // $request->session()->flash('alert-class', 'alert-success'); 
+                // return redirect(route('route'));
+
+            }  
         }     
         $route = VehicleRoute::select(
                     'id',
@@ -210,6 +223,27 @@ class RouteController extends Controller {
              })
             ->rawColumns(['link', 'action'])         
             ->make();
+    }
+    public function alredyassignroutelist(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicle_id= $request->vehicle_id;           
+        $routes = $request->route_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $fromDate = date("Y-m-d", strtotime($from_date));
+        $toDate = date("Y-m-d", strtotime($to_date));
+        $router = VehicleRoute::select('id','vehicle_id','route_id','date_from','date_to')
+        ->where('vehicle_id',$vehicle_id)
+        ->where('route_id',$routes)
+        ->where('client_id',$client_id)
+        ->whereBetween('date_from',array($fromDate,$toDate))
+        ->WhereBetween('date_to',array($fromDate,$toDate))
+        ->get()->count();
+        // dd($router);
+        return response()->json([
+            'assign_route_count' => $router            
+        ]);       
     }
 
 

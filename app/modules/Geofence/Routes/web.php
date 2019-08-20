@@ -15,5 +15,8 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	Route::get('/assign/geofence-vehicle','GeofenceController@assignGeofenceList')->name('assign.geofence.vehicle');
 	Route::post('/assign/assign-geofence-vehicle-list','GeofenceController@getAssignGeofenceVehicleList')->name('assign-geofence-vehicle-list');
+
+	Route::post('/already/assign-geofence','GeofenceController@alredyassigngeofenceCount')->name('already.assign.geofence');
+
 });
 

@@ -41,7 +41,7 @@
 
           <div class="form-group has-feedback">
             <label class="srequired">Manufacturing Date</label>
-            <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ $sos->manufacturing_date}}"> 
+            <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ $sos->manufacturing_date}}" max="{{date('Y-m-d')}}"> 
             @if ($errors->has('manufacturing_date'))
               <span class="help-block">
               <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>

@@ -22,7 +22,6 @@ Route::post('/gps-transfer-root-proceed','GpsController@proceedConfirmRootGpsTra
 Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
 
 });
-
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 //gps dealer list
@@ -84,4 +83,8 @@ Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 
 Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
 Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
+
+Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
+
+
 });

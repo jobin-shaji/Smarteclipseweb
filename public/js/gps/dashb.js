@@ -6,7 +6,7 @@ $(document).ready(function () {
      };
 
 
-      backgroundPostData(url,data,'dbcount',{alert:false});
+      backgroundPostData(url,data,'dbcount',{alert:true});
 
 
  //    window.setInterval(function(){
@@ -47,10 +47,9 @@ function getVehicle(value)
      var data = { 
       gps_id : value
      };
-     backgroundPostData(url,data,'vehicle_details',{alert:false});
+     backgroundPostData(url,data,'vehicle_details',{alert:true});
 }
 function vehicle_details(res){
-  // console.log(res);
       $('#network_status').text(res.network_status);
       $('#fuel_status').text(res.fuel_status);
       $('#speed').text(res.speed);
