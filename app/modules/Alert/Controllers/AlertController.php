@@ -122,8 +122,9 @@ class AlertController extends Controller {
             //     }
             // })
             ->addColumn('action', function ($alert) {
+                // <button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
                  $b_url = \URL::to('/');
-            return "<button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
+            return "
              <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
         ->rawColumns(['link', 'action'])
