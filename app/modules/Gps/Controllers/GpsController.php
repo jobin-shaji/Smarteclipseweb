@@ -1307,22 +1307,6 @@ class GpsController extends Controller {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public function getGpsAllData(Request $request)
 {      
     $items = GpsData::find($request->id);
@@ -1331,6 +1315,11 @@ public function getGpsAllData(Request $request)
     ]);
                
 }
+public function privacyPolicy()
+    {
+       
+        return view('Gps::privacy-policy');
+    }
 
 
 
