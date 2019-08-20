@@ -47,7 +47,7 @@ function getVehicle(value)
      var data = { 
       gps_id : value
      };
-     backgroundPostData(url,data,'vehicle_details',{alert:false});
+     backgroundPostData(url,data,'vehicle_details',{alert:true});
 }
 function vehicle_details(res){
       $('#network_status').text(res.network_status);

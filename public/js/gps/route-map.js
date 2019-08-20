@@ -19,7 +19,7 @@
          var data = { 
       
         };
-         backgroundPostData(url,data,'loadMap',{alert:false});
+         backgroundPostData(url,data,'loadMap',{alert:true});
       }
 
 
