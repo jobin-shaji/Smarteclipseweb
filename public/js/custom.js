@@ -138,8 +138,10 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-
+            
+           if(options.alert==true){
             toast(res);
+            }
             if (callBack){
                 if (callBack == 'callBackDataTables'){
 
@@ -309,7 +311,7 @@ function track_vehicle(){
 }
 
 function VerifyAlert(vehicle_id,decrypt_vehicle_id){
-    if(confirm('Are you sure want to verify this alert?')){
+   
         if(typeof(Storage) !== "undefined") {
             localStorage.setItem("qwertasdfgzxcvb", decrypt_vehicle_id);
         }
@@ -317,8 +319,8 @@ function VerifyAlert(vehicle_id,decrypt_vehicle_id){
         var data = {
         id : vehicle_id
         };
-        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
-    } 
+        backgroundPostData(url,data,'verifyAlertResponse',{alert:false}); 
+     
 }
 
 function verifyAlertResponse(res){
