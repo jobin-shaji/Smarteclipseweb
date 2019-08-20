@@ -15,40 +15,62 @@ use DataTables;
 class GeofenceController extends Controller {
 
     //Display all etms
-	public function create()
+	public function create(Request $request)
     {
+        $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
         // $client = $request->user()->client;
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude;
-        // return response()->json([
-        //     'latitude' => (float)$client->latitude,
-        //     'longitude' => (float)$client->longitude
-        // ]);
-		return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+
+
+
+        $geofence = Geofence::select(
+            'id', 
+            'user_id'                                  
+        )  
+        ->withTrashed()     
+        ->where('user_id',$request->user()->id)        
+        ->count(); 
+        if($geofence<1){
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }else if($request->user()->hasRole('fundamental')&& $geofence<3) {
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }
+        else if($request->user()->hasRole('superior')&& $geofence<6) {
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }
+        else if($request->user()->hasRole('pro')&& $geofence<10) {
+            return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }else{
+            $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return view('Geofence::geofence-list');
+        }
 	}
 	public function saveFence(Request $request){
-
-		foreach ($request->polygons as $polygon) {
-			Geofence::create([
-				'user_id' => $request->user()->id,
-                'name' => $request->name,
-				'cordinates' => $polygon,
-				'fence_type_id' => 1
-			]);
-		}
-// return response()->json([
-//     'redirect' => url('geofence')
-// ]);
-        // $request->session()->flash('message', 'New geofence created successfully!'); 
-        // $request->session()->flash('alert-class', 'alert-success'); 
-        // return redirect(route('geofence'));
-        return response()->json([
-            'status' => 'geofence',
-            'title' => 'Success',
-            'redirect' => url('geofence'),
-            'message' => 'Geofence added successfully'
-        ]);
+        if($request->polygons==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Please draw the geofence'
+            ]);
+        }else{
+            foreach ($request->polygons as $polygon) {
+                Geofence::create([
+                    'user_id' => $request->user()->id,
+                    'name' => $request->name,
+                    'cordinates' => $polygon,
+                    'fence_type_id' => 1
+                ]);
+            }
+            return response()->json([
+                'status' => 'geofence',
+                'title' => 'Success',
+                'redirect' => url('geofence'),
+                'message' => 'Geofence added successfully'
+            ]);
+        }
 	}
 
 
@@ -168,6 +190,7 @@ class GeofenceController extends Controller {
         $geofence = Geofence::select('id','user_id','name','cordinates','fence_type_id','deleted_at')
         ->where('user_id',$user_id)
         ->get();
+        
          return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
     }
 
@@ -188,6 +211,8 @@ class GeofenceController extends Controller {
             ->where('vehicle_id',$vehicle_id)
             ->where('geofence_id',$geofence)
             ->where('client_id',$client_id)
+            ->whereBetween('date_from',array($fromDate,$toDate))
+            ->WhereBetween('date_to',array($fromDate,$toDate))
             ->get()
             ->count();
             if($geofences==0)
@@ -226,6 +251,28 @@ class GeofenceController extends Controller {
             ->make();
     }
 
+
+ public function alredyassigngeofenceCount(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $vehicle_id= $request->vehicle_id;           
+        $geofence = $request->geofence_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $fromDate = date("Y-m-d", strtotime($from_date));
+        $toDate = date("Y-m-d", strtotime($to_date));
+        $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to')
+        ->where('vehicle_id',$vehicle_id)
+        ->where('geofence_id',$geofence)
+        ->where('client_id',$client_id)
+        ->whereBetween('date_from',array($fromDate,$toDate))
+        ->WhereBetween('date_to',array($fromDate,$toDate))
+        ->get()
+        ->count();
+        return response()->json([
+            'assign_geofence_count' => $geofences            
+        ]);       
+    }
    
 
 }

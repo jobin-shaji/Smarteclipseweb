@@ -8,6 +8,13 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Sos</li>
       </ol>
+       @if(Session::has('message'))
+          <div class="pad margin no-print">
+              <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+            </div>
+          </div>
+          @endif
     </nav>
        
     <div class="container-fluid">
@@ -20,7 +27,7 @@
                             <thead>
                                 <tr>
                                   <th>Sl.No</th>
-                                  <th>IMEI</th>
+                                  <th>Serial NO</th>
                                   <th>Version</th>
                                   <th>Brand</th>
                                   <th>Model Name</th>

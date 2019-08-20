@@ -1,6 +1,15 @@
 var items = [];
 var purl = getUrl() + '/'+'gps-scan' ;
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+Instascan.Camera.getCameras().then(function (cameras) {
+  if (cameras.length > 0) {
+    $('#warn').html('Scan Qr Code');
+    scanner.start(cameras[0]);
+  } else {
+     $('#warn').html('Camera not found , Please connect your camera');
+  }
+}).catch(function (e) {
+});
 scanner.addListener('scan', function (content) {
   var imei=content;
   var data = { imei : imei };
@@ -14,30 +23,52 @@ scanner.addListener('scan', function (content) {
       },
       success: function (res) {
         if(res.status == 1){
-          var position = jQuery.inArray(res.gps_id, items);
+           var position = jQuery.inArray(res.gps_id, items);
+
+
             if(position !='-1'){
-                 alert("item exists");
+                toastr.info('Item Exists');
             }else{
                 items.push(res.gps_id);
-                var gps_name=res.gps_name;
+                var gps_imei_id=res.gps_id;
                 var gps_imei=res.gps_imei;
                 $("#gps_id").val(items); 
-                var markup = "<tr><td>" + gps_name + "</td><td>" + gps_imei + "</td></tr>";
+                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_imei + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                 $("table tbody").append(markup);
+                var value = $('#gps_id').val();
+                if (value) {
+                  $("#transfer_button").show();
+                }
+                toastr.success('Scanned Successfully');
             }
         }else{
-          alert("Gps device already tranferred");
+          toastr.error('Could not find this device');
         }
       }
   });
   
 });
-Instascan.Camera.getCameras().then(function (cameras) {
-  if (cameras.length > 0) {
-    scanner.start(cameras[0]);
-  } else {
-    console.error('No cameras found.');
-  }
-}).catch(function (e) {
-  console.error(e);
-});
+
+function deleteValueArray(gps_id){
+  var item_data = items.indexOf(gps_id)
+  if (item_data > -1) {
+      items.splice(item_data, 1);
+      $('.cover_imei_'+gps_id).remove();
+      $('#gps_id').val(items);
+      var value = $('#gps_id').val();
+      if (value) {
+        $("#transfer_button").show();
+      }else{
+        $("#transfer_button").hide();
+      }
+    }
+
+}
+
+
+
+
+
+
+
+

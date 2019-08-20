@@ -105,7 +105,7 @@ Add Vehicle
                         <select class="form-control" name="gps_id" data-live-search="true" title="Select GPS" required>
                            <option selected disabled>Select GPS</option>
                            @foreach($devices as $gps)
-                           <option value="{{$gps->id}}">{{$gps->name}}||{{$gps->imei}}</option>
+                           <option value="{{$gps->id}}">{{$gps->imei}}</option>
                            @endforeach
                         </select>
                      </div>

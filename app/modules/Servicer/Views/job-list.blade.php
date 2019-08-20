@@ -9,6 +9,13 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Servicer Pending Jobs  List</li>
      </ol>
+      @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
+          </div>
+        @endif  
     </nav>
  
  <div class="container-fluid">
@@ -22,14 +29,15 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th >Job Code</th>
-                    <th >Client</th>                      
-                    <th >Job Type</th>
-                    <th >Assigne</th>
-                    <th >Description</th>
-                    <th >Job Date</th> 
-                    <th >Action</th>                      
+                    <th>Sl.No</th>
+                    <th>Job Code</th>
+                    <th>Client</th>                      
+                    <th>Job Type</th>
+                    <th>Assignee</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Job Date</th> 
+                    <th>Action</th>                      
                   </tr>
                 </thead>
               </table>

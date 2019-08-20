@@ -13,11 +13,11 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer Confirmation Form</li>
         @if(Session::has('message'))
-        <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-            {{ Session::get('message') }}  
+          <div class="pad margin no-print">
+              <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+              </div>
           </div>
-        </div>
         @endif
         
       </ol>
@@ -51,6 +51,11 @@
             <label>Scanned Employee Code</label>
             <input type="text" class="form-control" name="scanned_employee_code" value="{{ $scanned_employee_code}}" readonly> 
           </div>
+
+          <div class="form-group has-feedback">
+            <label>Invoice Number</label>
+            <input type="text" class="form-control" name="invoice_number" value="{{ $invoice_number}}" readonly> 
+          </div>
         </div>
       </div>
       <div class="form-group has-feedback">
@@ -59,7 +64,7 @@
 
                @foreach  ($devices as $device )
                 <div class="col-md-3">
-                    <input type="checkbox" checked id="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->name}}||{{$device->imei}}
+                    <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->imei}}
                 </div>
               @endforeach
 

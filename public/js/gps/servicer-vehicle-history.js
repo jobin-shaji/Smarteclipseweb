@@ -8,8 +8,6 @@ $(document).ready(function () {
 
 
 function create_vehicle(){
-
-
     if(document.getElementById('name').value == ''){
         alert('please enter name');
     }
@@ -21,13 +19,11 @@ function create_vehicle(){
     }
     else if(document.getElementById('gps_id').value == ''){
         alert('please enter gps');
-    }
-    
-    else{
-       
+    }    
+    else{       
         var name=$('#name').val();
-         var client_id=$('#client_id').val();
-         var servicer_job_id=$('#servicer_job_id').val();
+        var client_id=$('#client_id').val();
+        var servicer_job_id=$('#servicer_job_id').val();
 
         var register_number=$('#register_number').val(); 
         var vehicle_type_id=$('#vehicle_type_id').val(); 
@@ -66,7 +62,7 @@ function create_vehicle(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'register_number', name: 'register_number'} ,
-            {data: 'gps.name', name: 'gps.name'} ,    
+            // {data: 'gps.imei', name: 'gps.imei'} ,    
             {data: 'action', name: 'action', orderable: false, searchable: false},       
         ],
         

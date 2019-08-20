@@ -22,6 +22,7 @@ use App\Modules\Client\Models\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PDF;
 use DataTables;
 
 class VehicleController extends Controller {
@@ -49,11 +50,21 @@ class VehicleController extends Controller {
             ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
             ->with('driver:id,name')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->get();
-
-        return DataTables::of($vehicles)
+            return DataTables::of($vehicles)
             ->addIndexColumn()
+             ->addColumn('driver', function ($vehicles) {
+                if($vehicles->driver_id== null || $vehicles->driver_id==0)
+                {
+                    return "Not assigned";
+                }
+                else
+                {
+                  return $vehicles->driver->name;
+                 
+                }
+            })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
@@ -93,7 +104,7 @@ class VehicleController extends Controller {
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
         }
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
@@ -151,7 +162,7 @@ class VehicleController extends Controller {
         $this->validate($request, $rules);
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
-        if($vehicle_update && $request->driver_id){
+        if($vehicle_update && $new_driver_id && $old_driver){
                 $vehicle_driver_log = VehicleDriverLog::create([
                 'vehicle_id' => $vehicle->id,
                 'from_driver_id' => $old_driver,
@@ -200,7 +211,7 @@ class VehicleController extends Controller {
         $custom_messages = [
         'path.required' => 'File cannot be blank'
         ];
-        if($request->document_type_id == 1){
+        if($request->document_type_id == 1 || $request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8){
             $rules = $this->documentCreateRules();
             $expiry_date=null;
         }else{
@@ -446,7 +457,7 @@ class VehicleController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Vehicle deleted successfully'
+            'message' => 'Vehicle deactivated successfully'
         ]);
      }
 
@@ -469,7 +480,7 @@ class VehicleController extends Controller {
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
-                'message' => 'Vehicle restored successfully'
+                'message' => 'Vehicle activated successfully'
             ]);
         }
         return response()->json([
@@ -491,19 +502,21 @@ class VehicleController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         $vehicle_driver_log = VehicleDriverLog::select(
-                                'vehicle_id',
-                                'from_driver_id',
-                                'to_driver_id',
-                                'created_at'
-                                )
-                                ->where('client_id',$client_id)
-                                ->with('Fromdriver:id,name')
-                                ->with('Todriver:id,name')
-                                ->with('vehicle:id,name,register_number')
-                                ->get();
-
+            'vehicle_id',
+            'from_driver_id',
+            'to_driver_id',
+            'client_id',
+            'created_at'
+        )
+        ->where('client_id',$client_id)
+        ->with('Fromdriver:id,name')
+        ->with('Todriver:id,name')
+        ->with('vehicle:id,name,register_number')
+        ->get();
+// dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
             ->addIndexColumn()
+           ->rawColumns(['link'])
             ->make();
     }
 
@@ -544,7 +557,10 @@ class VehicleController extends Controller {
         }
         else if($selected_status=="valid"){
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
-            ->whereDate('expiry_date', '>', date('Y-m-d'));
+            ->where(function ($vehicle_documents) {
+                $vehicle_documents->whereDate('expiry_date', '>', date('Y-m-d'))
+                ->orWhereNull('expiry_date');
+            });
         }
         else if($selected_status=="expiring"){
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
@@ -578,8 +594,8 @@ class VehicleController extends Controller {
              })
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
-                $path = url('/documents').'/'.$vehicle_documents->path;
-                return "<a href= '".$b_url.$path."' download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+                $path = url($b_url.'/documents').'/'.$vehicle_documents->path;
+                return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
@@ -729,7 +745,7 @@ class VehicleController extends Controller {
             )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()
@@ -756,70 +772,6 @@ class VehicleController extends Controller {
             ->make();
     }
 
-    /////////////////////////////Vehicle Dealer List//////////////////////////
-    // show list page
-    public function vehicleDealerList()
-    {
-       return view('Vehicle::vehicle-dealer-list'); 
-    }
-
-    // data for list page
-    public function getVehicleDealerList()
-    {
-        $dealer_id=\Auth::user()->dealer->id;
-        $sub_dealers = SubDealer::select(
-                'id'
-                )
-                ->where('dealer_id',$dealer_id)
-                ->get();
-        $single_sub_dealers = [];
-        foreach($sub_dealers as $sub_dealer){
-            $single_sub_dealers[] = $sub_dealer->id;
-        }
-        $clients = Client::select(
-                'id'
-                )
-                ->whereIn('sub_dealer_id',$single_sub_dealers)
-                ->get();
-        $single_clients = [];
-        foreach($clients as $client){
-            $single_clients[] = $client->id;
-        }
-
-        $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'vehicle_type_id',
-                    'client_id',
-                    'deleted_at'
-                    )
-            ->withTrashed()
-            ->whereIn('client_id',$single_clients)
-            ->with('client:id,name')
-            ->with('vehicleType:id,name')
-            ->with('gps:id,name,imei')
-            ->get();
-
-        return DataTables::of($vehicles)
-            ->addIndexColumn()
-            ->addColumn('sub_dealer',function($vehicles){
-               $vehicle = Vehicle::find($vehicles->id);
-               return $vehicle->client->subDealer->name;
-                
-            })
-            // ->addColumn('action', function ($vehicles) {
-            //     if($vehicles->deleted_at == null){
-            //         return "
-            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-            //     }else{
-            //          return ""; 
-            //     }
-            // })
-            ->rawColumns(['link'])
-            ->make();
-    }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
@@ -923,58 +875,7 @@ class VehicleController extends Controller {
         return response()->json($response_data); 
     }
 
-    /////////////////////////////Vehicle Sub Dealer List/////////////////////
-    // show list page
-    public function vehicleSubDealerList()
-    {
-       return view('Vehicle::vehicle-sub-dealer-list'); 
-    }
-
-    // data for list page
-    public function getVehicleSubDealerList()
-    {
-        $sub_dealer_id=\Auth::user()->subdealer->id;
-        $clients = Client::select(
-                'id'
-                )
-                ->where('sub_dealer_id',$sub_dealer_id)
-                ->get();
-        $single_clients = [];
-        foreach($clients as $client){
-            $single_clients[] = $client->id;
-        }
-
-        $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'vehicle_type_id',
-                    'client_id',
-                    'deleted_at'
-                    )
-            ->withTrashed()
-            ->whereIn('client_id',$single_clients)
-            ->with('client:id,name')
-            ->with('vehicleType:id,name')
-            ->with('gps:id,name,imei')
-            ->get();
-
-        return DataTables::of($vehicles)
-            ->addIndexColumn()
-            // ->addColumn('action', function ($vehicles) {
-            //     if($vehicles->deleted_at == null){
-            //         return "
-            //         <a href=/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
-            //     }else{
-            //          return ""; 
-            //     }
-            // })
-            ->rawColumns(['link'])
-            ->make();
-    }
-
-     /////////////////////////////Vehicle Tracker/////////////////////////////
+    /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
        
          $decrypted_id = Crypt::decrypt($request->id);  
@@ -985,6 +886,97 @@ class VehicleController extends Controller {
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);            
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
+    }
+
+
+
+
+/// invoice/////////
+
+
+    public function invoice(Request $request){
+        $client_id=\Auth::user()->client->id;
+         $vehicles=Vehicle::select('id','name','register_number','client_id')
+        ->where('client_id',$client_id)
+        ->get();
+          
+        return view('Vehicle::invoice',['vehicles'=>$vehicles] );
+    }
+
+    public function export(Request $request){
+
+
+
+        $from = $request->fromDate;
+        $to = $request->toDate;
+        $vehicle = $request->vehicle;      
+        $query =GpsData::select(
+            'client_id',
+            'gps_id',
+            'vehicle_id',
+            'header',
+            'vendor_id',
+            'firmware_version',
+            'imei',
+            'update_rate_ignition_on',
+            'update_rate_ignition_off',
+            'battery_percentage',
+            'low_battery_threshold_value',
+            'memory_percentage',
+            'digital_io_status',
+            'analog_io_status',
+            'activation_key',
+            'latitude',
+            'lat_dir',
+            'longitude',
+            'lon_dir',
+            'date',
+            'time',
+            'speed',
+            'alert_id',
+            'packet_status',
+            'gps_fix',
+            'mcc',
+            'mnc',
+            'lac',
+            'cell_id',
+            'heading',
+            'no_of_satelites',
+            'hdop',
+            'gsm_signal_strength',
+            'ignition',
+            'main_power_status',
+            'vehicle_mode',
+            'altitude',
+            'pdop',
+            'nw_op_name',
+            'nmr',
+            'main_input_voltage',
+            'internal_battery_voltage',
+            'tamper_alert',
+            'digital_input_status',
+            'digital_output_status',
+            'frame_number',
+            'checksum',            
+            'gf_id',
+            // 'device_time',
+            \DB::raw('DATE(device_time) as date'),
+            \DB::raw('sum(distance) as distance')
+        )
+        ->with('vehicle:id,name,register_number')
+
+        ->where('vehicle_id',$vehicle)
+        ->groupBy('date');                     
+        if($from){
+            $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)
+                ->whereDate('device_time', '<=', $search_to_date);
+        }
+        $vehicle_invoice = $query->get();  
+
+        $pdf = PDF::loadView('Vehicle::invoice-pdf-download',['vehicle_invoice'=> $vehicle_invoice]);
+        return $pdf->download('Invoice.pdf');
     }
 
     // public function locationPlayback(Request $request){
@@ -1345,7 +1337,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
             $single_gps[] = $device->gps_id;
         } 
 
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->whereNotIn('id',$single_gps)
                 ->get();
@@ -1403,10 +1395,10 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
     {
         $rules = [
             'name' => 'required',
-            'svg_icon' => 'required',
-            'weight' => 'required',
-            'scale' => 'required',
-            'opacity' => 'required'
+            'svg_icon' => 'required|mimes:svg|max:20000',
+            'weight' => 'required|numeric',
+            'scale' => 'required|numeric',
+            'opacity' => 'required|numeric'
         ];
         return  $rules;
     }
@@ -1482,7 +1474,7 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
         $lat = $b_lat;
         $lng = $b_lng;
         $route = $lat . "," . $lng;
-        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4";
+        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {

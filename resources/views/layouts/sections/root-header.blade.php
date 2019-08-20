@@ -12,7 +12,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a>
-            <a class="dropdown-item" href="{{url('/gps')}}">LIST DEVICE</a>  
+            <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>  
             <a class="dropdown-item" href="{{url('/gps-transfer-root/create')}}">TRANSFER DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transfers')}}">DEVICE TRANSFER LOG</a> 
             <a class="dropdown-item" href="{{url('/gps-transferred')}}">TRANSFERRED DEVICES</a>
@@ -24,7 +24,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/sos/create')}}">ADD SOS</a>
-            <a class="dropdown-item" href="{{url('/sos')}}">LIST SOS</a>  
+            <a class="dropdown-item" href="{{url('/sos')}}">IN STOCK</a>  
             <a class="dropdown-item" href="{{url('/sos-transfer-root/create')}}">TRANSFER SOS</a> 
             <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LOG</a> 
             <a class="dropdown-item" href="{{url('/sos-transferred')}}">TRANSFERRED SOS</a>
@@ -48,12 +48,20 @@
                 </ul>
             </li>
             <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">END USERS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/root/client/create')}}">ADD END USER</a></li>
+                <li><a class="dropdown-item" href="{{url('/client')}}">LIST END USERS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SERVICE ENGINEERS</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{url('create-servicer')}}">ADD SERVICE ENGINEER</a></li>
                 <li><a class="dropdown-item" href="{{url('/servicers')}}">LIST SERVICE ENGINEERS</a></li>
                 <li><a class="dropdown-item" href="{{url('/assign-servicer')}}">CREATE JOB</a></li>
                 <li><a class="dropdown-item" href="{{url('/assign-servicer-list')}}">LIST JOBS</a></li>
+                <li><a class="dropdown-item" href="{{url('/servicer-job-history-list')}}">JOBS HISTORY</a></li>
                 </ul>
             </li>
         </ul>
@@ -64,18 +72,37 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/vehicle-root')}}">LIST VEHICLES<span></span></a> 
-            <a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATAGORIES<span></span></a> 
-            <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATAGORY<span></span></a>
+            <a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATEGORY<span></span></a>
         </div>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ALERT
         </a>
+        <ul class="dropdown-menu multi-level">
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ALERT</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/alert-type/create')}}">ADD ALERT TYPE</a></li>
+                <li><a class="dropdown-item" href="{{url('/alert-types')}}">LIST ALERT TYPES</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">OTA</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/ota-type/create')}}">ADD OTA</a></li>
+                <li><a class="dropdown-item" href="{{url('/ota-type')}}">OTA LIST</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> TRAFFIC RULES
+        </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/alert-type/create')}}">ADD ALERT TYPE<span></span></a>   
-            <a class="dropdown-item" href="{{url('/alert-types')}}">LIST ALERT TYPES<span></span></a><a class="dropdown-item" href="{{url('/ota-type/create')}}">ADD OTA<span></span></a>   
-        </a><a class="dropdown-item" href="{{url('/ota-type')}}">OTA LIST<span></span></a>  
+            <a class="dropdown-item" href="{{url('/traffic-rule/create')}}">ADD TRAFFIC RULE<span></span></a>   
+            <a class="dropdown-item" href="{{url('/traffic-rule')}}">LIST TRAFFIC RULES<span></span></a>  
         </div>
     </li>       
 </ul>

@@ -1,6 +1,8 @@
 
 
  $(function () {
+    $('.select2').select2();
+
            
             $('#fromDate,#toDate').datetimepicker({
                 useCurrent: false,
@@ -18,10 +20,28 @@
                 var decrementDay = moment(new Date(e.date));
                 decrementDay.subtract(1, 'days');
                 $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-                 $(this).data("DateTimePicker").hide();
+                $(this).data("DateTimePicker").hide();
+            });
+            $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
             });
 
+            $('#assignToDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+
+
         });
+ // $('.select2').select2();
+
 // dateTimepicker
 
     $( ".datetimepicker" ).datetimepicker({ 
@@ -38,14 +58,18 @@
         minDate: new Date()
          
  });
-     $( ".date_expiry_edit" ).datetimepicker({ 
-        format: 'DD-MM-YYYY',       
-         minDate: moment().subtract(1,'d')
+$( ".date_expiry_edit" ).datetimepicker({ 
+    format: 'DD-MM-YYYY',  
+    minDate: moment().millisecond(0).second(0).minute(0).hour(0)     
+    // minDate: moment().subtract(1,'d')
  });
-     $( ".manufacturing_date" ).datetimepicker({ 
-        format: 'DD-MM-YYYY',       
-        maxDate: new Date()
+ $( ".manufacturing_date" ).datetimepicker({ 
+    format: 'DD-MM-YYYY',       
+    maxDate: new Date()
  });
+
+ 
+
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
@@ -85,6 +109,14 @@ function toast(res){
 
         alertNotification(res);
     } 
+     else if(res.status == 'mobile_already'){
+
+        driverMobileExisted(res);
+    } 
+    else if(res.status =='driver'){
+
+        servicerDriver(res);
+    }
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -106,9 +138,10 @@ function backgroundPostData(url, data, callBack, options) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-   
-
+            
+           if(options.alert==true){
             toast(res);
+            }
             if (callBack){
                 if (callBack == 'callBackDataTables'){
 
@@ -159,7 +192,45 @@ function backgroundPostData(url, data, callBack, options) {
                     
                     subDealerGpsUser(res);
                 }
+                else if(callBack =='clientGps'){
+
+                    clientGps(res);
+                }
+                else if(callBack =='vehicleInvoice'){
+
+                    vehicleInvoice(res);
+                }
+
+                else if(callBack =='AssignClientRole'){
+
+                    AssignClientRole(res);
+                }
+                else if(callBack =='removeClientRole'){
+
+                    removeClientRole(res);
+                }
+                else if(callBack =='rootSubdealer'){
+
+                    rootSubdealer(res);
+                }
+                else if(callBack =='assignRouteCount'){
+
+                    assignRouteCount(res);
+                }
+                else if(callBack =='assignGeofenceCount'){
+
+                    assignGeofenceCount(res);
+                }else if(callBack=='notificationCount'){
+                         notificationCount(res);
+                }else if(callBack=='gpsData'){
+                         gpsData(res);
+                }
                 
+
+
+
+
+               
             }
         },
         error: function (err) {
@@ -240,7 +311,7 @@ function track_vehicle(){
 }
 
 function VerifyAlert(vehicle_id,decrypt_vehicle_id){
-    if(confirm('Are you sure want to verify this alert?')){
+   
         if(typeof(Storage) !== "undefined") {
             localStorage.setItem("qwertasdfgzxcvb", decrypt_vehicle_id);
         }
@@ -248,8 +319,8 @@ function VerifyAlert(vehicle_id,decrypt_vehicle_id){
         var data = {
         id : vehicle_id
         };
-        backgroundPostData(url,data,'verifyAlertResponse',{alert:true}); 
-    } 
+        backgroundPostData(url,data,'verifyAlertResponse',{alert:false}); 
+     
 }
 
 function verifyAlertResponse(res){
@@ -801,7 +872,7 @@ function notification(res){
        if(expire_length==0)
       {
         var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
-        '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
+        '<span class="btn btn-success btn-circle"><i class="fa fa-check"></i></span>'+
         '<div class="m-l-10" >'+
         '<small class="font-light"> No expired Documents</small><br>'+                                        
                                        
@@ -847,5 +918,144 @@ function downloadSosLabel(id){
   downloadFile(url,data);
 }
 
+function getClientServicerGps(res){
+    if(res)
+    {       
+        var url = 'servicer-client-gps';
+        var data = {
+             client_id : res
+        };   
+        backgroundPostData(url,data,'clientGps',{alert:false});   
+    }
+    
+           
+}
+function clientGps(res)
+{
+     $("#gps").empty();
+    var expired_documents;
+    length=res.devices.length;
+   // console.log(res.devices[0].imei);
+ for (var i = 0; i < length; i++) {
+         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].imei+'</option>';  
+         $("#gps").append(gps);   
+     }    
+}
+function driverMobileExisted(res)
+{
+    var closable = alertify.alert().setting('closable');
+    alertify.alert()
+    .setting({
+        'label':'OK',
+        'message': 'Already Registered Mobile number' ,
+        'onok': function(){ alertify.success('ok');}
+    }).show();
+
+}
 
 
+function downloadInvoice(){    
+    var url = 'invoice/export';
+    var  vehicle=$('#vehicle').val();   
+   var fromDate=$('#fromDate').val();
+    var toDate=$('#toDate').val();
+    if(fromDate){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        };
+        backgroundPostData(url,data,{alert:false});
+    }
+    else
+    {
+        // alert("Please select");
+        // var data = {
+        // id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        // };
+        // downloadFile(url,data);
+    }
+}
+
+
+function vehicleInvoice(res){    
+  // alert(res);
+}
+function removeRole(client_user_id,role){
+    var url = 'client/role/delete';
+    var data = {
+        client_user_id : client_user_id,
+        client_role : role
+    };
+    backgroundPostData(url,data,'removeClientRole',{alert:true});  
+}
+function removeClientRole(res)
+{
+    location.reload();
+    // $('#client_roles').text(res.vehicles);
+}
+
+
+
+$(".cover_track_data").hover(function () {
+    $(this).find('.track_status').toggleClass("track_status_hover");
+});
+
+
+
+$('.cover_vehicle_track_list .cover_track_data').click(function(){
+    
+    $('.cover_track_data').removeClass("track_status_active");
+    $('.cover_track_data .track_status').removeClass("track_status_active_hover");
+
+    $(this).addClass("track_status_active");
+    $(this).find('.track_status').addClass("track_status_active_hover");
+
+   
+});
+
+function selectDealer(dealer)
+{
+    var url = 'select/subdealer';
+    var data = {
+        dealer : dealer      
+    };
+    backgroundPostData(url,data,'rootSubdealer',{alert:true}); 
+}
+
+function rootSubdealer(res)
+{
+     $("#sub_dealer").empty();
+      // var sub_dealer='  <option value=""  >select</option>';  
+        // $("#sub_dealer").append(sub_dealer); 
+    var length=res.sub_dealers.length
+    for (var i = 0; i < length; i++) {     
+         sub_dealer='  <option value="'+res.sub_dealers[i].id+'"  >'+res.sub_dealers[i].name+'</option>';  
+        $("#sub_dealer").append(sub_dealer);  
+    } 
+}
+
+
+// ---------------check notification-----------------------------------
+    setInterval(function() {
+        var url = 'notification_alert_count';
+        var data = { 
+        };
+        backgroundPostData(url,data,'notificationCount',{alert:false});
+    }, 8000);//hai
+
+    $( document ).ready(function() {
+        var url = 'notification_alert_count';
+        var data = { 
+        };
+        backgroundPostData(url,data,'notificationCount',{alert:false});
+      });
+// ---------------check notification-----------------------------------
+
+    function notificationCount(res){
+        if(res.status=="success"){
+            var count_notification=res.notification_count;
+            $("#bell_notification_count").text(count_notification);
+
+        }
+    }
+
+   

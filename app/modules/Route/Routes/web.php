@@ -12,6 +12,7 @@ Route::post('route/activate','RouteController@activateRoute')->name('route.activ
 
 Route::get('/assign/route-vehicle','RouteController@AssignRouteList')->name('assign.route.vehicle');
 Route::post('/assign/assign-route-vehicle-list','RouteController@getAssignRouteVehicleList')->name('assign-route-vehicle-list');
+Route::post('/already/assign-route','RouteController@alredyassignroutelist')->name('already.assign.route');
 
 
 });

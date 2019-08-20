@@ -6,7 +6,7 @@ $(document).ready(function () {
      };
 
 
-      backgroundPostData(url,data,'dbcount',{alert:false});
+      backgroundPostData(url,data,'dbcount',{alert:true});
 
 
  //    window.setInterval(function(){
@@ -23,8 +23,10 @@ function dbcount(res){
       $('#client').text(res.clients);
       $('#vehicle').text(res.vehicles);
       $('#dealer_subdealer').text(res.subdealers);
-      $('#gps_dealer').text(res.gps);
-      $('#subdealer_gps').text(res.gps);
+      $('#total_gps_dealer').text(res.total_gps);
+      $('#transferred_gps_dealer').text(res.transferred_gps);
+      $('#total_gps_subdealer').text(res.total_gps);
+      $('#transferred_gps_subdealer').text(res.transferred_gps);
       $('#subdealer_client').text(res.clients);
       $('#client_gps').text(res.gps);
       $('#client_vehicle').text(res.vehicles);
@@ -45,7 +47,7 @@ function getVehicle(value)
      var data = { 
       gps_id : value
      };
-     backgroundPostData(url,data,'vehicle_details',{alert:false});
+     backgroundPostData(url,data,'vehicle_details',{alert:true});
 }
 function vehicle_details(res){
       $('#network_status').text(res.network_status);

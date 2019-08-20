@@ -52,15 +52,15 @@ class SubDealerController extends Controller {
     //delete sub_dealer details from table
     public function disableSubDealer(Request $request)
     {
-        $sub_dealer = User::find($request->id);
-        if($sub_dealer == null){
+        $sub_dealer_user = User::find($request->id);
+        if($sub_dealer_user == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Sub Dealer does not exist'
             ]);
         }
-        $sub_dealer->delete();
+        $sub_dealer_user->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -70,15 +70,15 @@ class SubDealerController extends Controller {
     // restore emplopyee
     public function enableSubDealer(Request $request)
     {
-        $sub_dealer = User::withTrashed()->find($request->id);
-        if($sub_dealer==null){
+        $sub_dealer_user = User::withTrashed()->find($request->id);
+        if($sub_dealer_user==null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Sub Dealer does not exist'
             ]);
         }
-        $sub_dealer->restore();
+        $sub_dealer_user->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -137,14 +137,14 @@ class SubDealerController extends Controller {
         'address',                                       
         'deleted_at')
         ->withTrashed()
-        ->with('user:id,email,mobile')
+        ->with('user:id,email,mobile,deleted_at')
         ->where('dealer_id',$dealer)
         ->get();
         return DataTables::of($subdealers)
         ->addIndexColumn()
         ->addColumn('action', function ($subdealers) {
             $b_url = \URL::to('/');
-        if($subdealers->deleted_at == null){ 
+        if($subdealers->user->deleted_at == null){ 
             return "
             <a href=".$b_url."/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=".$b_url."/sub-dealers/".Crypt::encrypt($subdealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
@@ -159,6 +159,8 @@ class SubDealerController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+
+
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
@@ -178,7 +180,7 @@ class SubDealerController extends Controller {
         if($subdealer == null){
            return view('SubDealer::404');
         } 
-        $rules = $this->dealersUpdateRules($subdealer);
+        $rules = $this->subdealersUpdateRules($subdealer);
         $this->validate($request, $rules);       
         $subdealer->name = $request->name;
         $subdealer->save();
@@ -193,11 +195,11 @@ class SubDealerController extends Controller {
         return redirect(route('sub.dealers.edit',$did));  
     }
      //validation for employee updation
-    public function dealersUpdateRules($subdealer)
+    public function subdealersUpdateRules($subdealer)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric'
+            'phone_number' => 'required|numeric|min:10|max:10'
             
         ];
         return  $rules;
@@ -258,7 +260,7 @@ class SubDealerController extends Controller {
                 'message' => 'Sub Dealer does not exist'
             ]);
         }
-        $subdealer->delete();
+        $subdealer->user->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -278,7 +280,7 @@ class SubDealerController extends Controller {
              ]);
         }
 
-        $subdealer->restore();
+        $subdealer->user->restore();
 
         return response()->json([
             'status' => 1,
@@ -286,16 +288,36 @@ class SubDealerController extends Controller {
             'message' => 'Sub Dealer restored successfully'
         ]);
     }
- public function passwordUpdateRules(){
+
+//////////////////////////////////////Sub Dealer Profile-start////////////////////////
+
+    //Sub Dealer profile view
+    public function subDealerProfile()
+    {
+        $sub_dealer_id = \Auth::user()->subdealer->id;
+        $sub_dealer_user_id = \Auth::user()->id;
+        $sub_dealer = SubDealer::withTrashed()->where('id', $sub_dealer_id)->first();
+        $user=User::find($sub_dealer_user_id); 
+        if($sub_dealer == null)
+        {
+           return view('SubDealer::404');
+        }
+        return view('SubDealer::sub-dealer-profile',['sub_dealer' => $sub_dealer,'user' => $user]);
+    }
+
+//////////////////////////////////////Sub Dealer Profile-end/////////////////////////
+
+    public function passwordUpdateRules(){
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
         return $rules;
-  }
+    }
+
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
-            'mobile' => 'required|numeric|unique:users',
+            'mobile' => 'required|string|min:10|max:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];

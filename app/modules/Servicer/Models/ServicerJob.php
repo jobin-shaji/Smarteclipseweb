@@ -10,7 +10,7 @@ class ServicerJob extends Model
 	 use SoftDeletes;
 
 	 protected $fillable = [
-        'servicer_id', 'client_id','job_id','job_type','user_id','description','job_date','job_complete_date','status'
+        'servicer_id', 'client_id','job_id','job_type','user_id','description','job_date','job_complete_date','status','latitude','longitude','gps_id','comment'
     ];
     public function user()
 	  {
@@ -24,4 +24,8 @@ class ServicerJob extends Model
    	{
       return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id');
   	} 
+    public function gps()
+    {
+      return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+    }
 }

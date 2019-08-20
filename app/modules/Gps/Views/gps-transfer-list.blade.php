@@ -10,6 +10,13 @@
    <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer List </li>
+    @if(Session::has('message'))
+      <div class="pad margin no-print">
+        <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
+        </div>
+      </div>
+    @endif
   </ol>
 </nav>
 
@@ -25,7 +32,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                      <th>#</th>
+                      <th>Sl.No</th>
                       <th>From User</th>
                       <th>To User</th>
                       <th>Dispatched On</th>

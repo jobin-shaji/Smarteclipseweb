@@ -31,10 +31,9 @@
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Sl.No</th>
                             <th>Vehicle Name</th>
                             <th>Register Number</th>
-                            <th>GPS Name</th>
                             <th>IMEI</th>
                             <th>Driver</th>
                             <th>Vehicle Type</th>

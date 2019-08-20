@@ -4,12 +4,12 @@ $(document).ready(function () {
      var data = {
    
      };
-      backgroundPostData(url,data,'dealerGpsSale',{alert:false});
+      backgroundPostData(url,data,'dealerGpsSale',{alert:true});
       
     var url = 'dealer-gps-user';
      var data = {   
      };
-      backgroundPostData(url,data,'dealerGpsUser',{alert:false});
+      backgroundPostData(url,data,'dealerGpsUser',{alert:true});
      
 });
 function dealerGpsSale(res)
@@ -55,8 +55,14 @@ function dealerGpsUser(res){
       datasets: [{
         label: '#:',
        data:[res.sub_dealer,res.client],
-        backgroundColor:'rgba(242,156,18, 0.2)',
-        borderColor:'rgba(242,156,18,1)',
+         backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)'
+            ],
         borderWidth: 1
       }]
     },
@@ -66,11 +72,11 @@ function dealerGpsUser(res){
       text: 'GPS User'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+        // yAxes: [{
+        //   ticks: {
+        //     beginAtZero: true
+        //   }
+        // }]
       }
     }
   });

@@ -5,13 +5,13 @@ $(document).ready(function () {
      var data = {
    
      };
-      backgroundPostData(url,data,'rootGpsSale',{alert:false});
+      backgroundPostData(url,data,'rootGpsSale',{alert:true});
 
       var url = 'root-gps-user';
      var data = {
    
      };
-      backgroundPostData(url,data,'rootGpsUser',{alert:false});
+      backgroundPostData(url,data,'rootGpsUser',{alert:true});
 });
 // rootGpsSale
 function rootGpsSale(res){
@@ -54,8 +54,20 @@ function rootGpsUser(res){
       datasets: [{
         label: '#:',
         data:[res.dealer,res.sub_dealer,res.client],
-        backgroundColor:'rgba(242,156,18, 0.2)',
-        borderColor:'rgba(242,156,18,1)',
+
+        backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(75, 192, 192, 1)'
+               
+            ],
         borderWidth: 1
       }]
     },
@@ -65,11 +77,17 @@ function rootGpsUser(res){
       text: 'GPS USERS'
     },
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
+        // yAxes: [{
+        //   ticks: {
+        //     // beginAtZero: true,
+        //     display: false
+        //   }
+        // }],
+        // xAxes: [{
+        //     gridLines: {
+        //      display: false
+        //     },
+        // }]
       }
     }
   });

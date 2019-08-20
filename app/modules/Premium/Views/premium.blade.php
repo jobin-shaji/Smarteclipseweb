@@ -18,7 +18,7 @@ Go Premium
 <div class="card mb-3 shadow-sm">
    <div style="height:72px">
  
-  <img src="{{url('/')}}/assets/images/eggs.png" class="card-img-top" alt="..." style="width: 5rem;margin: 3% auto">
+  <!-- <img src="{{url('/')}}/premium/car1.jpg" class="card-img-top" alt="..." style="width: 7rem;margin: 3% auto"> -->
 <!--   <div class="card-body">
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div> -->
@@ -46,7 +46,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-   Alerts Reports (1 month history)
+   Alert Reports (1 month history)
    </a>
 </p>
 <a data-toggle="collapse" href="#collapseExample"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
@@ -84,7 +84,7 @@ Go Premium
     </div>
 <div class="card mb-3 shadow-sm">
    <div style="height:72px">
-  <img src="{{url('/')}}/assets/images/larva.png" class="card-img-top" alt="..." style="width:7rem;margin:8.5% auto">
+ <!--  <img src="{{url('/')}}/premium/car2.jpg" class="card-img-top" alt="..." style="width:7rem;margin:8.5% auto"> -->
 <!--   <div class="card-body">
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div> -->
@@ -110,7 +110,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
-   Alerts Reports (2 months history)
+   Alert Reports (2 months history)
   </a>
 </p>
   <a data-toggle="collapse" href="#collapseExample1"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
@@ -149,7 +149,7 @@ Go Premium
 
     <div class="card mb-3 shadow-sm">
   <div style="height:72px">
-  <img src="{{url('/')}}/assets/images/pupa.png" class="card-img-top" alt="..."  style="width: 1.7rem;margin:1.5% auto;">
+  <!-- <img src="{{url('/')}}/premium/car3.jpg" class="card-img-top" alt="..."  style="width: 7rem;margin:1.5% auto;"> -->
 <!--   <div class="card-body">
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div> -->
@@ -176,7 +176,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
-   Alerts Reports (4 months history)
+   Alert Reports (4 months history)
   </a>
 </p>
 <a data-toggle="collapse" href="#collapseExample2"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
@@ -219,7 +219,7 @@ Go Premium
     
     <div class="card mb-3 shadow-sm">
   <div style="height:72px">
-  <img src="{{url('/')}}/assets/images/butterfly.png" class="card-img-top" alt="..."  style="width:3.7rem;margin:2% auto;">
+ <!--  <img src="{{url('/')}}/premium/car4.jpg" class="card-img-top" alt="..."  style="width:7rem;margin:2% auto;"> -->
 <!--   <div class="card-body">
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div> -->
@@ -245,7 +245,7 @@ Go Premium
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
-   Alerts Report (6 months history)
+   Alert Report (6 months history)
   </a>
 </p>
 <a data-toggle="collapse" href="#collapseExample3"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>

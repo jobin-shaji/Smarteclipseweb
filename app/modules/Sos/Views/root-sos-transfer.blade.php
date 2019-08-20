@@ -31,49 +31,64 @@
                   <div class="col-md-12 col-lg-6">
                     <div class="form-group has-feedback">
                         <label class="srequired">Dealer Name</label>
-                        <select class="form-control selectpicker dealerData" id="to_user" name="dealer_user_id" data-live-search="true" title="Select Dealer" required>
+                        <select class="form-control select2 dealerData" id="to_user" name="dealer_user_id" data-live-search="true" title="Select Dealer" required>
                           <option value="">Select Dealer</option>
                           @foreach($entities as $entity)
                           <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                           @endforeach
                         </select>
+                         @if ($errors->has('dealer_user_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('dealer_user_id') }}</strong>
+                          </span>
+                        @endif 
                     </div>     
-                    @if ($errors->has('dealer_user_id'))
-                      <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('dealer_user_id') }}</strong>
-                      </span>
-                    @endif 
+                   
 
                     <div class="form-group has-feedback">
                       <label class="srequired">Address</label>
                       <input type="text" name="address"  id="address"  value="" class="form-control" placeholder="Address" readonly>
                       <input type="hidden" name="dealer_name"  id="dealer_name"  value="" class="form-control">
-                    </div>
-                    @if ($errors->has('address'))
-                      <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('address') }}</strong>
-                      </span>
-                    @endif
+                        @if ($errors->has('address'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('address') }}</strong>
+                          </span>
+                        @endif
 
+                    </div>
+                  
                     <div class="form-group has-feedback">
                       <label class="srequired">Mobile No</label>
                       <input type="text" name="mobile" id="mobile" value="" class="form-control" placeholder="Mobile No" readonly >
+                      @if ($errors->has('mobile'))
+                        <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                        </span>
+                      @endif
                     </div>
-                    @if ($errors->has('mobile'))
-                      <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('mobile') }}</strong>
-                      </span>
-                    @endif
+                    
 
                     <div class="form-group has-feedback">
                       <label class="srequired">Scanned Employee Code</label>
-                      <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" required> 
+                      <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required>
+                       @if ($errors->has('scanned_employee_code'))
+                        <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
+                        </span>
+                      @endif 
                     </div>
-                    @if ($errors->has('scanned_employee_code'))
-                    <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
-                    </span>
-                    @endif
+                   
+
+                    <div class="form-group has-feedback">
+                      <label class="srequired">Invoice Number</label>
+                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" autocomplete="off" required> 
+                       @if ($errors->has('invoice_number'))
+                        <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
+                        </span>
+                      @endif
+                    </div>
+                   
 
                     <div class="form-group has-feedback">
                       <label class="srequired">SOS List</label>
@@ -81,7 +96,8 @@
                         <table class="table table-bordered  table-striped " style="width:100%">
                           <thead>
                             <tr>
-                              <th>IMEI</th>
+                              <th>Serial NO</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -96,13 +112,14 @@
                     </div>
                   </div>
                   <div class="col-md-12 col-lg-6">
+                    <div id="warn">Please connect your camera to scan qr code .</div>
                     <video id="preview" style="height:100%; width: 100%;"></video>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-3 ">
-                    <button type="submit" class="btn btn-primary btn-md form-btn ">Transfer</button>
+                    <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button">Transfer</button>
                   </div>
                 </div>     
               </form>

@@ -19,6 +19,7 @@ class CreateSosTransfersTable extends Migration
             $table->integer('to_user_id');
             $table->string('order_number');
             $table->string('scanned_employee_code');
+            $table->string('invoice_number');
             $table->dateTime('dispatched_on');
             $table->dateTime('accepted_on')->nullable();
             $table->timestamps();

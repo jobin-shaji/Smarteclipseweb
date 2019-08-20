@@ -13,10 +13,10 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-new')}}"> New Arrivals</a>
-                                <a class="dropdown-item" href="{{url('/gps-dealer')}}"> List Device</a>  
-                                <a class="dropdown-item" href="{{url('/gps-transfer-dealer/create')}}"> Device Transfer</a>
-                                <a class="dropdown-item" href="{{url('/gps-transfers')}}"> Device Transfer List</a>                           
+                                <a class="dropdown-item" href="{{url('/gps-new')}}"> NEW ARRIVALS</a>
+                                <a class="dropdown-item" href="{{url('/gps-dealer')}}"> LIST DEVICE </a>  
+                                <a class="dropdown-item" href="{{url('/gps-transfer-dealer/create')}}"> DEVICE TRANSFER</a>
+                                <a class="dropdown-item" href="{{url('/gps-transfers')}}"> DEVICE TRANSFER LIST</a>                           
                             </div>
                         </li>
 
@@ -25,10 +25,10 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/sos-new')}}"> New Arrivals</a>
-                                <a class="dropdown-item" href="{{url('/sos-dealer')}}"> List SOS</a>  
-                                <a class="dropdown-item" href="{{url('/sos-transfer-dealer/create')}}"> SOS Transfer</a>
-                                <a class="dropdown-item" href="{{url('/sos-transfers')}}"> SOS Transfer List</a>                           
+                                <a class="dropdown-item" href="{{url('/sos-new')}}"> NEW ARRIVALS</a>
+                                <a class="dropdown-item" href="{{url('/sos-dealer')}}"> LIST SOS</a>  
+                                <a class="dropdown-item" href="{{url('/sos-transfer-dealer/create')}}"> SOS TRANSFER</a>
+                                <a class="dropdown-item" href="{{url('/sos-transfers')}}"> SOS TRANSFER LIST</a>                           
                             </div>
                         </li>
 
@@ -38,8 +38,8 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                               
-                                 <a class="dropdown-item" href="{{url('/sub-dealer/create')}}">Add Sub Dealer<span></span></a>
-                                   <a class="dropdown-item" href="{{url('/subdealers')}}">List Sub Dealer<span></span></a>
+                                 <a class="dropdown-item" href="{{url('/sub-dealer/create')}}">ADD SUB DEALER<span></span></a>
+                                   <a class="dropdown-item" href="{{url('/subdealers')}}">LIST SUB DEALER<span></span></a>
                             </div>
                         </li>
                            <li class="nav-item dropdown">
@@ -49,21 +49,7 @@
                                 <div class="dropdown-divider"></div>
                               
                                
-                                   <a class="dropdown-item" href="{{url('/dealer-client')}}">List End User<span></span></a>
-                            </div>
-                        </li>
-                      
-
-
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/vehicle-dealer')}}">List Vehicles<span></span></a>   
-                                                          
+                                   <a class="dropdown-item" href="{{url('/dealer-client')}}">LIST END USER<span></span></a>
                             </div>
                         </li>
                     </ul>

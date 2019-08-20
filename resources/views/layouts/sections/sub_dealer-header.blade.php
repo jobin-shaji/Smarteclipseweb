@@ -32,36 +32,28 @@
                             </div>
                         </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
-                                </a>
-                                <ul class="dropdown-menu multi-level">
-                                    <li class="dropdown-submenu">
-                                        <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>
-                                        <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{url('/client/create')}}">ADD END USER</a></li>
-                                        <li><a class="dropdown-item" href="{{url('/clients')}}">LIST END USERS</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SERVICE ENGINEERS</a>
-                                        <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{url('create-servicer')}}">ADD SERVICE ENGINEER</a></li>
-                                        <li><a class="dropdown-item" href="{{url('/servicers')}}">LIST SERVICE ENGINEERS</a></li>
-                                        <li><a class="dropdown-item" href="{{url('/sub-dealer-assign-servicer')}}">CREATE JOB</a></li>
-                                         <li><a class="dropdown-item" href="{{url('/sub-dealer-assign-servicer-list')}}">LIST JOBS</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                             </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/vehicle-sub-dealer')}}">LIST VEHICLES<span></span></a>                                                             
-                            </div>
+                            <ul class="dropdown-menu multi-level">
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/client/create')}}">ADD END USER</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/clients')}}">LIST END USERS</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SERVICE ENGINEERS</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('create-servicer')}}">ADD SERVICE ENGINEER</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/servicers')}}">LIST SERVICE ENGINEERS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/sub-dealer-assign-servicer')}}">CREATE JOB</a></li>
+                                     <li><a class="dropdown-item" href="{{url('/sub-dealer-assign-servicer-list')}}">LIST JOBS</a></li>
+                                     <li><a class="dropdown-item" href="{{url('/servicer-job-history-list')}}">JOBS HISTORY</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS

@@ -58,7 +58,7 @@
 
                             <div class="form-group has-feedback">
                               <label class="srequired">GPS</label>
-                              <input type="text" class="form-control" value="{{$vehicle->gps->name}} || {{$vehicle->gps->imei}}" disabled> 
+                              <input type="text" class="form-control" value="{{$vehicle->gps->imei}}" disabled> 
                               <span class="glyphicon glyphicon-home form-control-feedback"></span>
                             </div>
                           </div> 
@@ -73,7 +73,7 @@
                     <div class="row">
                       <div class="col-lg-6 col-md-6 col-xs-12">
                         <h3 class="page-header">
-                          <i class="fa fa-car"> Change Driver</i> 
+                          <i class="fa fa-user"> Change Driver</i> 
                         </h3>
                         <?php 
                           $encript=Crypt::encrypt($vehicle->gps->id)

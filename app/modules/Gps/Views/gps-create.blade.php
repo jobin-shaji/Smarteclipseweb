@@ -11,6 +11,13 @@
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Device</li>
+    @if(Session::has('message'))
+      <div class="pad margin no-print">
+        <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
+        </div>
+      </div>
+    @endif 
   </ol>
 </nav>       
         <div class="row">
@@ -20,19 +27,8 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
-                    <label class="srequired">Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
-                    @if ($errors->has('name'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('name') }}</strong>
-                    </span>
-                  @endif
-                  </div>
-                  
-
-                  <div class="form-group has-feedback">
                     <label class="srequired">IMEI</label>
-                    <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ old('imei') }}" required> 
+                    <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ old('imei') }}" required> 
                      @if ($errors->has('imei'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -60,7 +56,7 @@
                   <div class="form-group has-feedback">
                     <label class="srequired">Manufacturing Date</label>
                     <input type="text" class="
-                    manufacturing_date form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Purchase Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
+                    manufacturing_date form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
                      @if ($errors->has('manufacturing_date'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
@@ -70,7 +66,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">E-SIM Number</label>
-                    <input type="text" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" >
+                    <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" >
                     @if ($errors->has('e_sim_number'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>

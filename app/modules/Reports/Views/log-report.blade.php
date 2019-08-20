@@ -55,8 +55,7 @@
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>
-                             <th>Sl.No</th>                              
-                              <th>GPS </th>                            
+                             <th>Sl.No</th>                                   
                               <th>IMEI</th>                              
                               <th>Status</th>                            
                               <th>Updated By  </th>

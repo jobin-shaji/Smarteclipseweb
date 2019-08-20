@@ -49,7 +49,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric|unique:drivers',
+            'mobile' => 'required|string|min:10|max:10|unique:drivers',
             
         ];
         return  $rules;
@@ -208,7 +208,7 @@ class DriverController extends Controller {
             ->with('alert:id,alert_type_id')
             ->with('driver:id,name')
             ->with('vehicle:id,name,register_number')
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->with('client:id,name'); 
             if($driver_id==null && $from==null && $to==null)
             {
@@ -248,13 +248,88 @@ class DriverController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+
+    //driver score page
+    public function driverScorePage()
+    {
+       return view('Driver::driver-score');
+    }
+
+    //driver score
+    public function driverScore(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $drivers = Driver::select(
+                'id',
+                'name',
+                'points')
+                ->where('client_id',$client_id)
+                ->get();
+        $single_driver_name = [];
+        $single_driver_point = [];
+        foreach($drivers as $driver){
+            $single_driver_name[] = $driver->name;
+            $single_driver_point[] = $driver->points;
+        }
+        $score=array(
+                    "drive_data"=>$single_driver_name,
+                    "drive_score"=>$single_driver_point
+                );
+        return response()->json($score); 
+    }
+
+
+    //Client Driver Create
+    public function clientDriverCreate(Request $request)
+    {
+
+        $servicer_job_id= $request->servicer_job_id;         
+        $driver_name= $request->driver_name;         
+        $mobile = $request->mobile;
+        $address = $request->address;
+        $client_id = $request->client_id;
+        $driver_mobile = Driver::select(
+            'name',
+            'mobile'               
+        )               
+        ->where('mobile',$mobile)
+        ->count();
+        if($driver_mobile==0)
+        {
+            if($driver_name!=null)
+            {
+                $create_driver= Driver::create([
+                    'name' => $driver_name,
+                    'mobile' => $mobile,
+                    'address' => $address,
+                    'points' => 100,
+                    'client_id' => $client_id                    
+                ]);                
+            } 
+            $driver_id=$create_driver->id;               
+            return response()->json([
+                'driver_id'=>$driver_id,
+                'driver_name'=>$driver_name,
+                'status' => 'driver'           
+            ]);
+        }
+        else
+        {
+             return response()->json([               
+                'status' => 'mobile_already'           
+            ]);
+        }
+       
+      
+    }
+
      //validation for employee updation
     public function driverUpdateRules($driver)
     {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric'
+            'mobile' => 'required|string|min:10|max:10|unique:drivers,mobile,'.$driver->id
             
         ];
         return  $rules;

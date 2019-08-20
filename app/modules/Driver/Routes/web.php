@@ -20,5 +20,12 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	Route::get('/performance-score-history','DriverController@performanceScoreHistory')->name('performance.score.history');
 	Route::post('/performance-score-history-list','DriverController@performanceScoreHistoryList')->name('performance-score-history-list');
+
+	Route::get('/drivers-score-page','DriverController@driverScorePage')->name('drivers-score-page');
+	Route::post('/driver-score','DriverController@driverScore')->name('driver.score');
 });
 
+Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Driver\Controllers' ] , function() {
+
+	Route::post('/servicer-driver-create','DriverController@clientDriverCreate')->name('servicer.driver.create.p');
+});

@@ -29,24 +29,25 @@
     <div class="row">
         <div class="col-md-6">
           <div class="form-group has-feedback">
-            <label class="srequired">IMEI</label>
-            <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $sos->imei}}"> 
-          </div>
-          @if ($errors->has('imei'))
+            <label class="srequired">Serial NO</label>
+            <input type="number" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial NO" name="serial_no" value="{{ $sos->imei}}"> 
+          @if ($errors->has('serial_no'))
             <span class="help-block">
-            <strong class="error-text">{{ $errors->first('imei') }}</strong>
+            <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
             </span>
           @endif
+          </div>
+          
 
           <div class="form-group has-feedback">
             <label class="srequired">Manufacturing Date</label>
-            <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ $sos->manufacturing_date}}"> 
+            <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ $sos->manufacturing_date}}" max="{{date('Y-m-d')}}"> 
+            @if ($errors->has('manufacturing_date'))
+              <span class="help-block">
+              <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
+              </span>
+            @endif
           </div>
-          @if ($errors->has('manufacturing_date'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
-            </span>
-          @endif
         </div>
       </div>
       <div class="row">
@@ -55,32 +56,35 @@
           <div class="form-group has-feedback">
             <label class="srequired">Brand</label>
             <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Brand" name="brand" value="{{ $sos->brand}}"> 
-          </div>
           @if ($errors->has('brand'))
             <span class="help-block">
             <strong class="error-text">{{ $errors->first('brand') }}</strong>
             </span>
           @endif
+          </div>
+          
 
           <div class="form-group has-feedback">
             <label class="srequired">Model Name</label>
             <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ $sos->model_name}}"> 
-          </div>
           @if ($errors->has('model_name'))
             <span class="help-block">
             <strong class="error-text">{{ $errors->first('model_name') }}</strong>
             </span>
           @endif
+          </div>
+          
 
           <div class="form-group has-feedback">
             <label class="srequired">Version</label>
             <input type="text" class="form-control {{ $errors->has('version') ? ' has-error' : '' }}" placeholder="Version" name="version" value="{{ $sos->version}}"> 
-          </div>
           @if ($errors->has('version'))
             <span class="help-block">
             <strong class="error-text">{{ $errors->first('version') }}</strong>
             </span>
           @endif
+          </div>
+          
         </div>
     </div>
       <div class="row">

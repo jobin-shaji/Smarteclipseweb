@@ -7,6 +7,13 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a><a href="/gps-sub-dealer">/GPS List</a>/GPS Log</li>
         
       </ol>
+      @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
+          </div>
+        @endif 
     </nav>
  
     <div class="container-fluid">
@@ -24,8 +31,7 @@
                                           <table class="table table-bordered  table-striped " style="width:100%">
                                             <thead>
                                               <tr>
-                                                <th>#</th>
-                                                <th>GPS</th>
+                                                <th>Sl.No</th>
                                                 <th>Imei</th>
                                                 <th>Status</th>
                                                 <th>Updated By</th>
@@ -36,7 +42,6 @@
                                               @foreach($gps_logs as $gps_log)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
-                                                <td>{{$gps_log->gps->name}}</td>
                                                   <td>{{$gps_log->gps->imei}}
                                                   </td>
                                                 <td>

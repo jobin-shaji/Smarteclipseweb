@@ -39,12 +39,13 @@
                   @endforeach
                 </select>
                 <span class="glyphicon glyphicon-car form-control-feedback"></span>
-              </div>     
-              @if ($errors->has('gps_id'))
+                @if ($errors->has('gps_id'))
                 <span class="help-block">
                     <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
                 </span>
-              @endif 
+                @endif 
+              </div>     
+            
 
               <div class="form-group has-feedback">
                 <label class="srequired">Complaint Category</label>
@@ -64,12 +65,13 @@
               <div class="form-group has-feedback">
                     <label class="srequired">Description</label>
                     <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required>
+                     @if ($errors->has('description'))
+                       <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('description') }}</strong>
+                       </span>
+                     @endif
               </div>
-              @if ($errors->has('description'))
-                 <span class="help-block">
-                    <strong class="error-text">{{ $errors->first('description') }}</strong>
-                 </span>
-              @endif
+             
             </div>
         </div>
           <div class="row">

@@ -43,7 +43,7 @@ class DealerController extends Controller {
         })
         ->addColumn('action', function ($dealers) {
              $b_url = \URL::to('/');
-            if($dealers->deleted_at == null){ 
+            if($dealers->user->deleted_at == null){ 
             return "
             <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
@@ -51,8 +51,7 @@ class DealerController extends Controller {
            
             ";
             }else{ 
-            return "<a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <button onclick=activateDealer(".$dealers->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate </button>";
+            return "";
             }
         })
         ->rawColumns(['link', 'action','working_status'])
@@ -117,13 +116,14 @@ class DealerController extends Controller {
     }
     //update dealers details
     public function update(Request $request)
-    { 
+    {  
+        
        $dealer = Dealer::where('user_id', $request->id)->first();
         if($dealer == null){
            return view('Dealer::404');
         } 
-        $rules = $this->dealersUpdateRules($dealer);
-        $this->validate($request, $rules);      
+          $rules = $this->dealersUpdatesRules($dealer);
+        $this->validate($request, $rules);   
         $dealer->name = $request->name;
         $dealer->save();
         $user = User::find($request->id);
@@ -166,14 +166,16 @@ class DealerController extends Controller {
     //delete dealer details from table
     public function disableDealer(Request $request)
     {
-        $dealer = User::find($request->id);
-        if($dealer == null){
+        $dealer_user = User::find($request->id);
+        $dealer = Dealer::select('id')->where('user_id',$dealer_user->id)->first();
+        if($dealer_user == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Dealer does not exist'
             ]);
         }
+        $dealer_user->delete();
         $dealer->delete();
         return response()->json([
             'status' => 1,
@@ -184,14 +186,16 @@ class DealerController extends Controller {
     // restore emplopyee
     public function enableDealer(Request $request)
     {
-        $dealer = User::withTrashed()->find($request->id);
-        if($dealer==null){
+        $dealer_user = User::withTrashed()->find($request->id);
+        $dealer = Dealer::withTrashed()->select('id')->where('user_id',$dealer_user->id)->first();
+        if($dealer_user==null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Dealer does not exist'
             ]);
         }
+        $dealer_user->restore();
         $dealer->restore();
         return response()->json([
             'status' => 1,
@@ -236,6 +240,25 @@ class DealerController extends Controller {
             'message' => 'Dealer restored successfully'
         ]);
     }
+
+//////////////////////////////////////Dealer Profile-start///////////////////////////////
+
+    //Dealer profile view
+    public function dealerProfile()
+    {
+        $dealer_id = \Auth::user()->dealer->id;
+        $dealer_user_id = \Auth::user()->id;
+        $dealer = Dealer::withTrashed()->where('id', $dealer_id)->first();
+        $user=User::find($dealer_user_id); 
+        if($dealer == null)
+        {
+           return view('Dealer::404');
+        }
+        return view('Dealer::dealer-profile',['dealer' => $dealer,'user' => $user]);
+    }
+
+//////////////////////////////////////Dealer Profile-end///////////////////////////////
+
      public function updateDepotUserRuleChangePassword()
     {
         $rules=[
@@ -249,18 +272,18 @@ class DealerController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|min:10',
             'username' => 'nullable|string|max:20|unique:dealers',
             'password' => 'nullable|string|min:6|confirmed',
         ];
         return  $rules;
     }
     //validation for employee updation
-    public function dealersUpdateRules($dealer)
+    public function dealersUpdatesRules($dealer)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric'       
+            'phone_number' => 'required|string|min:10'       
         ];
         return  $rules;
     }
@@ -276,7 +299,7 @@ class DealerController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|numeric|unique:users|min:10|max:10',
+            'mobile' => 'required|string|unique:users|min:10|max:10',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
