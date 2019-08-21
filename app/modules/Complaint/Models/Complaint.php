@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Complaint extends Model
 {
   protected $fillable=[
-		'ticket_id','gps_id','complaint_type_id','description','client_id','status'
+		'ticket_id','gps_id','complaint_type_id','description','client_id','status','servicer_id','assigned_by'
 	];
 
 	public function gps()
@@ -33,5 +33,10 @@ class Complaint extends Model
   // user
   public function user(){
       return $this->hasOne('App\Modules\User\Models\User','id','response_by');
+  }
+
+  // client
+  public function servicer(){
+      return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id');
   }
 }

@@ -20,6 +20,9 @@ class CreateComplaintsTable extends Migration
             $table->integer('complaint_type_id');
             $table->text('description');
             $table->integer('client_id');
+            $table->integer('status')->comment = '0-inactive,1-assigned';
+            $table->integer('servicer_id');
+            $table->integer('assigned_by');            
             $table->timestamps();
         });
     }
