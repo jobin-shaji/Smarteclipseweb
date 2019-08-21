@@ -36,9 +36,6 @@
                   <b>Ticket Code:</b> {{ $complaint->ticket->code}}
                   </li>
                   <li class="list-group-item">
-                  <b>GPS Name:</b> {{ $complaint->gps->name}}
-                  </li>
-                  <li class="list-group-item">
                   <b>IMEI:</b> {{ $complaint->gps->imei}}
                   </li>
                   <li class="list-group-item">

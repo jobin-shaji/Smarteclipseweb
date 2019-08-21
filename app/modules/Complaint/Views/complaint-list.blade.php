@@ -38,7 +38,6 @@
                   <tr>
                     <th>Sl.No</th>
                     <th>Ticket Code</th>   
-                    <th>GPS Name</th>                            
                     <th>IMEI</th>                              
                     <th>Complaint</th>                            
                     <th>Description</th>

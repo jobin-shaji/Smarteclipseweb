@@ -137,7 +137,7 @@ class ComplaintController extends Controller {
                 'description',                                        
                 'created_at'
             )
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->with('ticket:id,code')
             ->with('complaintType:id,name')
             ->where('client_id',$client_id)
