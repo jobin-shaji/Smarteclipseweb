@@ -161,7 +161,7 @@ class ComplaintController extends Controller {
         $last_id=Complaint::max('id');
         $ticket_code_id=$last_id+1;
         $ticket_code='C'.'0'.'0'.$ticket_code_id;
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->get();
         $complaint_type=ComplaintType::select('id','name')
