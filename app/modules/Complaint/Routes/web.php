@@ -11,19 +11,24 @@ Route::post('/complaint-type/activate','ComplaintController@activateComplaintTyp
 
 });
 
-Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {
-	
+Route::group(['middleware' => ['web','auth','role:root|sub_dealer|client'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {	
 Route::get('/complaint','ComplaintController@complaintListPage')->name('complaint');
 Route::post('/complaint-list','ComplaintController@getComplaints')->name('complaint-list');
-});
+Route::get('/complaint/{id}/view','ComplaintController@view')->name('complaint.view');
 
+});
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {
 
 Route::get('/complaint/create','ComplaintController@create')->name('complaint.create');
 Route::post('/complaint/create','ComplaintController@save')->name('complaint.create.p');
 Route::post('/complaint/complaintType/','ComplaintController@findComplaintTypeWithCategory')->name('complaint.complaintType');
-Route::get('/complaint/{id}/view','ComplaintController@view')->name('complaint.view');
+
+});
+
+Route::group(['middleware' => ['web','auth','role:root|sub_dealer'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {	
+	Route::get('/assign-complaint/{id}','ComplaintController@assignComplaint')->name('assign.complaint');
+	Route::post('/complaint/assign-servicer/{id}','ComplaintController@assignComplaintToServicer')->name('complaint.assign.servicer.p');
 
 });
 

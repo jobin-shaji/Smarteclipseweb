@@ -26,11 +26,13 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
+           @role('client')
            <div class="panel-heading">Complaints  
               <a href="{{route('complaint.create')}}">
                 <button class="btn btn-xs btn-primary pull-right">Add New Complaint</button>
               </a>
             </div>
+            @endrole
             <div class="table-responsive">
             <div class="panel-body">
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
@@ -42,6 +44,9 @@
                     <th>Complaint</th>                            
                     <th>Description</th>
                     <th>Date</th>
+                     @role('sub_dealer|root')
+                    <th>Assigned To</th>
+                     @endrole
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -53,7 +58,12 @@
     </div>
   </section>
 @section('script')
+ @role('client')
+    <script src="{{asset('js/gps/client-complaint-list.js')}}"></script>
+    @endrole
+    @role('root|sub_dealer')
     <script src="{{asset('js/gps/complaint-list.js')}}"></script>
+    @endrole
 @endsection
 @endsection
 
