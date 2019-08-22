@@ -39,4 +39,7 @@ class Complaint extends Model
   public function servicer(){
       return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id');
   }
+   public function assignedBy(){
+      return $this->hasOne('App\Modules\User\Models\User','id','assigned_by');
+  }
 }

@@ -33,3 +33,17 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer'] , 'namespace
 });
 
 
+
+Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {
+
+	Route::get('/complaint-list','ComplaintController@complaintList')->name('servicer.complaint.list');
+	Route::post('/list-servicer-complaints','ComplaintController@getServicerComplaints')->name('list.servicer.complaints');	
+
+	// Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
+	// Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
+	// Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
+	// Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history-list');
+	// Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
+});
+
+

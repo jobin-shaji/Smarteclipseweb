@@ -355,6 +355,93 @@ class ComplaintController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('complaint'));  
     }
+    public function complaintList()
+    {
+        return view('Complaint::servicer-complaint-list');
+    }
+
+    //returns complaints as json 
+    public function getServicerComplaints()
+    {
+        
+           $servicer_id=\Auth::user()->servicer->id;
+            $complaints = Complaint::select(
+                'id', 
+                'ticket_id',
+                'gps_id',                      
+                'complaint_type_id',                   
+                'description',                                        
+                'created_at',
+                'client_id',
+                'status',
+                'servicer_id'
+            )
+            ->with('gps:id,imei')
+            ->with('ticket:id,code')
+            ->with('client:id,name,sub_dealer_id')
+            ->with('servicer:id,name')
+             ->with('assignedBy:id,username')
+            ->with('complaintType:id,name')
+            ->where('servicer_id',$servicer_id)
+            ->get();
+            // dd($complaints);
+            return DataTables::of($complaints)
+            ->addIndexColumn()
+            ->addColumn('action', function ($complaints) {
+                if(\Auth::user()->hasRole('client'))
+                {
+                    return "
+                        <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>";
+                }
+                else if(\Auth::user()->hasRole('sub_dealer|root'))
+                {
+                    return "
+                    <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>
+                    <a href=/assign-complaint/".Crypt::encrypt($complaints->id)." class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-eye-open'></i> Assign to Servicer </a>";
+                }
+            })           
+            ->addColumn('assigned_by', function ($complaints) { 
+                return $complaints->assignedBy->username;
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function assignComplantRules($complaint)
