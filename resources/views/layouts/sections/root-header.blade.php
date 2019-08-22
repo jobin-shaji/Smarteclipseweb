@@ -113,6 +113,7 @@
             <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a> 
             <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a> 
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
+            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
         </div>
     </li>       
 </ul>
