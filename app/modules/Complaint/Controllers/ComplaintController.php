@@ -127,8 +127,6 @@ class ComplaintController extends Controller {
     //returns complaints as json 
     public function getComplaints()
     {
-        
-           
             $complaints = Complaint::select(
                 'id', 
                 'ticket_id',
@@ -201,15 +199,12 @@ class ComplaintController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         $client_user_id=\Auth::user()->id;
-        $last_id=Complaint::max('id');
-        $ticket_code_id=$last_id+1;
-        $ticket_code='C'.'0'.'0'.$ticket_code_id;
         $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->get();
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
-        return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type,'ticket_code'=>$ticket_code]);
+        return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type]);
     }
 
     //upload complaints to database table
@@ -217,10 +212,13 @@ class ComplaintController extends Controller {
     {
         $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
+        $last_id=Complaint::max('id');
+        $ticket_code_id=$last_id+1;
+        $ticket_code='C'.'0'.'0'.$ticket_code_id;
         $rules = $this->complaint_create_rules();
         $this->validate($request, $rules);
         $ticket = Ticket::create([
-            'code' => $request->ticket_code,
+            'code' => $ticket_code,
             'client_id' => $client_id,
             'status' => 1
         ]);
@@ -379,7 +377,6 @@ class ComplaintController extends Controller {
     public function complaint_create_rules()
     {
         $rules = [
-            'ticket_code' => 'required',
             'gps_id' => 'required',       
             'complaint_type_id' => 'required',
             'description' => 'required'
