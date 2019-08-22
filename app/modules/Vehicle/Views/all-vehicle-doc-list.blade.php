@@ -33,7 +33,7 @@
                           <div class="col-lg-3 col-md-3"> 
                            <div class="form-group">
                             <label>Vehicle</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                            <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="">Select Vehicle</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
@@ -44,7 +44,7 @@
                           <div class="col-lg-3 col-md-3"> 
                            <div class="form-group">
                             <label>Status</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Status" id="status" name="status">
+                            <select class="form-control select2" data-live-search="true" title="Select Status" id="status" name="status">
                               <option value="">Select Status</option>
                               <option value="all">All</option>
                               <option value="valid">Valid</option>
