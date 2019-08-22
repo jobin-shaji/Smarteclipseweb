@@ -10,7 +10,15 @@ class PremiumController extends Controller {
     //All states 
     public function premiumListPage()
     {
-        return view('Premium::premium');
+    	if(\Auth::user()->hasRole('fundamental')){
+    		return view('Premium::premium-fundamental');
+    	}
+    	else if(\Auth::user()->hasRole('superior')){
+    		return view('Premium::premium-superior');
+    	}
+    	else if(!\Auth::user()->hasRole(['superior','fundamental','pro'])){
+    		return view('Premium::premium-client');
+    	}
     }
 
 
