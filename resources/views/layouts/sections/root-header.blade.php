@@ -106,11 +106,13 @@
         </div>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS 
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
         </a>
-       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>                       
-            <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a> 
+            <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
         </div>
     </li>       
 </ul>
