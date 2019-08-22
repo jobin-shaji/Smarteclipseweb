@@ -439,8 +439,11 @@ class ClientController extends Controller {
         $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
         $user = User::find($client_user_id); 
-        dd(Role::User());
-        removeRole($user);
+        $roles = $user->roles;
+        if($request->role_name!==null)
+        {
+            $user->removeRole($request->role_name);
+        }
         $user->assignRole($request->client_role);
         $roles = $user->roles;
         return redirect(route('client.subscription',$request->id));
