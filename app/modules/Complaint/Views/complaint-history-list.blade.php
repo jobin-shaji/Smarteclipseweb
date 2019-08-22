@@ -1,3 +1,4 @@
+
 @extends('layouts.eclipse')
 @section('title')
   Servicer Complaint List
@@ -7,7 +8,7 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Servicer Pending Complaint  List</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Servicer Complaint History List</li>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -34,10 +35,10 @@
                     <th>IMEI</th>                              
                     <th>Complaint</th>                            
                     <th>Description</th>
-                    <th>Date</th>                   
+                    <th>Date</th>
+                    <th>Closed Date</th>
                     <th>Assigned By</th>                    
-                    <th>Action</th>
-                  </tr>
+                    </tr>
                 </thead>
               </table>
             </div>
@@ -52,5 +53,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/servicer-complaint-list.js')}}"></script>
+    <script src="{{asset('js/gps/complaint-history-list.js')}}"></script>
   @endsection

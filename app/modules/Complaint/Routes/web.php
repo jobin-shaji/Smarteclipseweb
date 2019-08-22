@@ -39,11 +39,14 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	Route::get('/complaint-list','ComplaintController@complaintList')->name('servicer.complaint.list');
 	Route::post('/list-servicer-complaints','ComplaintController@getServicerComplaints')->name('list.servicer.complaints');	
 
-	// Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
-	// Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
-	// Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
-	// Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history-list');
-	// Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
+	Route::get('/assign-complaint/{id}/details','ComplaintController@complaintDetails')->name('assign-complaint.details');	
+	Route::post('/complaint-complete-save/{id}','ComplaintController@completeComplaintSave')->name('complaint.complete.save');
+
+	
 });
 
+Route::group(['middleware' => ['web','auth','role:servicer|root|sub_dealer'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {
+	Route::get('/complaint-history-list','ComplaintController@complaintHistoryList')->name('job.history-list');
+	Route::post('/list-servicer-complaints-history','ComplaintController@getComplaintsHistoryList')->name('list.servicer.complaints.history');	
+});
 
