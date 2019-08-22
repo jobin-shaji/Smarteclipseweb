@@ -7,6 +7,7 @@ use App\Modules\Complaint\Models\ComplaintType;
 use App\Modules\Complaint\Models\Comment;
 use App\Modules\Ticket\Models\Ticket;
 use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\User\Models\User;
@@ -118,7 +119,7 @@ class ComplaintController extends Controller {
     //Display complaints details 
     public function complaintListPage()
     {
-        if(\Auth::user()->hasRole('client')){
+        if(\Auth::user()->hasRole('client|sub_dealer|root')){
             return view('Complaint::complaint-list');
         }
     }
@@ -126,31 +127,72 @@ class ComplaintController extends Controller {
     //returns complaints as json 
     public function getComplaints()
     {
-        if(\Auth::user()->hasRole('client'))
-        {
-            $client_id=\Auth::user()->client->id;
             $complaints = Complaint::select(
                 'id', 
                 'ticket_id',
                 'gps_id',                      
                 'complaint_type_id',                   
                 'description',                                        
-                'created_at'
+                'created_at',
+                'client_id',
+                'status',
+                'servicer_id'
             )
-            ->with('gps:id,name,imei')
+            ->with('gps:id,imei')
             ->with('ticket:id,code')
+            ->with('client:id,name,sub_dealer_id')
+            ->with('servicer:id,name')
             ->with('complaintType:id,name')
-            ->where('client_id',$client_id)
-            ->get();
+            ->where('status','!=', 2);
+            if(\Auth::user()->hasRole('client'))
+            {
+                $client_id=\Auth::user()->client->id;
+                $complaints = $complaints->where('client_id',$client_id);
+            }
+            else if(\Auth::user()->hasRole('sub_dealer'))
+            {
+                $sub_dealer_id=\Auth::user()->subDealer->id;
+                $clients= Client::select('id', 'name','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->get();
+                $client_id = [];
+                foreach($clients as $client){
+                    $client_id[] = $client->id;
+                }
+                $complaints = $complaints->whereIn('client_id',$client_id);
+            }
+            $complaints = $complaints->get();
+            // dd($complaints);
             return DataTables::of($complaints)
             ->addIndexColumn()
             ->addColumn('action', function ($complaints) {
+                if(\Auth::user()->hasRole('client'))
+                {
                     return "
                         <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>";
+                }
+                else if(\Auth::user()->hasRole('sub_dealer|root'))
+                {
+                    return "
+                    <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>
+                    <a href=/assign-complaint/".Crypt::encrypt($complaints->id)." class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-eye-open'></i> Assign to Servicer </a>";
+                }
+            })           
+            ->addColumn('assigned_to', function ($complaints) { 
+                if(\Auth::user()->hasRole('sub_dealer|root'))
+                { 
+                    if($complaints->status==null||$complaints->status==0)
+                    {
+                        return "not assigned";
+                    }
+                    else
+                    {
+                        return $complaints->servicer->name;
+                    }                    
+                }
+                
             })
             ->rawColumns(['link', 'action'])
             ->make();
-        }
+        
     }
 
     //complaint creation page
@@ -158,15 +200,12 @@ class ComplaintController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         $client_user_id=\Auth::user()->id;
-        $last_id=Complaint::max('id');
-        $ticket_code_id=$last_id+1;
-        $ticket_code='C'.'0'.'0'.$ticket_code_id;
-        $devices=Gps::select('id','name','imei')
+        $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
                 ->get();
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
-        return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type,'ticket_code'=>$ticket_code]);
+        return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type]);
     }
 
     //upload complaints to database table
@@ -174,10 +213,13 @@ class ComplaintController extends Controller {
     {
         $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
+        $last_id=Complaint::max('id');
+        $ticket_code_id=$last_id+1;
+        $ticket_code='C'.'0'.'0'.$ticket_code_id;
         $rules = $this->complaint_create_rules();
         $this->validate($request, $rules);
         $ticket = Ticket::create([
-            'code' => $request->ticket_code,
+            'code' => $ticket_code,
             'client_id' => $client_id,
             'status' => 1
         ]);
@@ -266,6 +308,201 @@ class ComplaintController extends Controller {
         return view('Complaint::complaint-view',['complaint' => $complaint,'complaint_comments' => $complaint_comments]);
     }
 
+    //complaint details view
+    public function assignComplaint(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+
+        $complaint=Complaint::find($decrypted); 
+        $complaint_comments=Comment::get();
+        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
+        // ->where('user_id',$user_id)
+        ->where('status',0);
+        if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            $sub_dealer_id=\Auth::user()->SubDealer->id;
+            $servicer =$servicer->where('sub_dealer_id',$sub_dealer_id)
+            ->where('type',2);
+        }
+        else  if(\Auth::user()->hasRole('root'))
+        {
+            $servicer =$servicer->where('type',1);
+        }
+        $servicer =$servicer->get();
+        if($complaint == null){
+           return view('Complaint::404');
+        }
+
+        return view('Complaint::assign-complaint-to-servicer',['complaint' => $complaint,'complaint_comments' => $complaint_comments,'servicers'=>$servicer]);
+    }
+
+    public function assignComplaintToServicer(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $complaint = Complaint::where('id', $request->id)->first();
+        if($complaint == null){
+           return view('Complaint::404');
+        } 
+        $rules = $this->assignComplantRules($complaint);
+        $this->validate($request, $rules);              
+        $complaint->servicer_id=$request->servicer;
+        $complaint->assigned_by=$user_id;
+        $complaint->status=1;
+        $complaint->save();       
+        $did = encrypt($complaint->id);
+         $request->session()->flash('message', 'New Complaint successfully Assigned!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('complaint'));  
+    }
+    public function complaintList()
+    {
+        return view('Complaint::servicer-complaint-list');
+    }
+
+    //returns complaints as json 
+    public function getServicerComplaints()
+    {        
+        $servicer_id=\Auth::user()->servicer->id;
+        $complaints = Complaint::select(
+            'id', 
+            'ticket_id',
+            'gps_id',                      
+            'complaint_type_id',                   
+            'description',                                        
+            'created_at',
+            'client_id',
+            'assigned_by',
+            'status',
+            'servicer_id'
+        )
+        ->with('gps:id,imei')
+        ->with('ticket:id,code')
+        ->with('client:id,name,sub_dealer_id')
+        ->with('servicer:id,name')
+         ->with('assignedBy:id,username')
+        ->with('complaintType:id,name')
+        ->where('status',1)
+        ->where('servicer_id',$servicer_id)
+        ->get();
+        return DataTables::of($complaints)
+        ->addIndexColumn()
+        ->addColumn('action', function ($complaints) {                
+            $b_url = \URL::to('/');
+            return "
+            <a href=".$b_url."/assign-complaint/".Crypt::encrypt($complaints->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";           
+        })           
+        ->addColumn('assigned_by', function ($complaints) { 
+            return $complaints->assignedBy->username;
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();        
+    }
+    public function complaintDetails(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $complaints = Complaint::select(
+            'id', 
+            'ticket_id',
+            'gps_id',                      
+            'complaint_type_id',                   
+            'description',                                        
+            'created_at',
+            'client_id',
+            'assigned_by',
+            'status',
+            'servicer_id'
+        )
+        ->with('gps:id,imei')
+        ->with('ticket:id,code')
+        ->with('client:id,name,sub_dealer_id')
+        ->with('servicer:id,name')
+         ->with('assignedBy:id,username')
+        ->with('complaintType:id,name')
+        ->where('id',$decrypted)
+        ->first();      
+       if($complaints == null){
+           return view('Complaint::404');
+        }
+        return view('Complaint::complaint-details',['complaints'=>$complaints]);
+    }
+    public function completeComplaintSave(Request $request)
+    { 
+        // dd($request->id)
+        $rules = $this->complaintcompleteRules();
+        $this->validate($request,$rules);      
+
+        $complaint_completed_date=date("Y-m-d"); 
+        $complaint = Complaint::find($request->id);
+        $complaint->closed_on = $complaint_completed_date;
+        $complaint->servicer_comment = $request->comment;
+         $complaint->status = 2;
+        $complaint->save();
+        $complaint_id=Crypt::encrypt($complaint->id);
+        $request->session()->flash('message', 'Complaint  completed successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('servicer.complaint.list'));  
+       }
+    public function complaintHistoryList()
+    {
+        return view('Complaint::complaint-history-list');
+    }
+      //returns complaints as json 
+    public function getComplaintsHistoryList()
+    {        
+        
+        $complaints = Complaint::select(
+            'id', 
+            'ticket_id',
+            'gps_id',                      
+            'complaint_type_id',                   
+            'description',                                        
+            'created_at',
+            'client_id',
+            'assigned_by',
+            'status',
+            'servicer_id',
+            'closed_on'
+        )
+        ->with('gps:id,imei')
+        ->with('ticket:id,code')
+        ->with('client:id,name,sub_dealer_id')
+        ->with('servicer:id,name')
+         ->with('assignedBy:id,username')
+        ->with('complaintType:id,name')
+        ->where('status',2);
+        if(\Auth::user()->hasRole('servicer'))
+        {
+            $servicer_id=\Auth::user()->servicer->id;
+            $complaints=$complaints->where('servicer_id',$servicer_id);
+        }
+        else if(\Auth::user()->hasRole('sub_dealer|root'))
+        {
+            $sub_dealer_id=\Auth::user()->id;
+            $complaints=$complaints->where('assigned_by',$sub_dealer_id);
+        }
+        $complaints=$complaints->get();
+        return DataTables::of($complaints)
+        ->addIndexColumn()
+        ->addColumn('action', function ($complaints) {                
+            $b_url = \URL::to('/');
+            return "
+            <a href=".$b_url."/assign-complaint/".Crypt::encrypt($complaints->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";           
+        })           
+        ->addColumn('assigned_by', function ($complaints) { 
+            return $complaints->assignedBy->username;
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();        
+    }
+    public function assignComplantRules($complaint)
+    {
+        $rules = [
+            'servicer' => 'required',                        
+        ];
+        return  $rules;
+    }
+
+
     public function complaint_type_create_rules()
     {
         $rules = [
@@ -279,10 +516,16 @@ class ComplaintController extends Controller {
     public function complaint_create_rules()
     {
         $rules = [
-            'ticket_code' => 'required',
             'gps_id' => 'required',       
             'complaint_type_id' => 'required',
             'description' => 'required'
+        ];
+        return  $rules;
+    }
+     public function complaintcompleteRules()
+    {
+        $rules = [                      
+            'comment' => 'required'
         ];
         return  $rules;
     }

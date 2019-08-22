@@ -1,10 +1,10 @@
 @extends('layouts.eclipse')
 @section('title')
-Go Premium
+  Go Premium
 @endsection
 @section('content')
 @section('pre-css')
-    <link href="{{asset('css/style.min2.css')}}" rel="stylesheet">
+  <link href="{{asset('css/style.min2.css')}}" rel="stylesheet">
 @endsection
 
 <body>
@@ -14,71 +14,68 @@ Go Premium
 
 <div class="container">
   <div class="card-deck mb-3 text-center">
-  
-<div class="card mb-3 shadow-sm">
-   <div style="height:72px">
- 
-  <!-- <img src="{{url('/')}}/premium/car1.jpg" class="card-img-top" alt="..." style="width: 7rem;margin: 3% auto"> -->
-<!--   <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div> -->
-</div>
+    <div class="card mb-3 shadow-sm">
+      <div style="height:72px">
+        <!-- <img src="{{url('/')}}/premium/car1.jpg" class="card-img-top" alt="..." style="width: 7rem;margin: 3% auto"> -->
+      <!--   <div class="card-body">
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div> -->
+      </div>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Freebies</h4>
       </div>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
-       <li><i class="fas fa-mobile-alt"></i>Mobile application</li>
-      <li><i class="far fa-caret-square-left"></i>Route playback history(1 Month)</li> 
-      <li><i class="far fa-map"></i>Point of interest</li>
-      <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
-      <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-      <li style="height:24px"></li> 
-      <li style="height:24px"></li> 
-      <li style="height:24px"></li> 
-      <li style="height:24px"></li> 
-      <li style="height:24px"></li> 
-      <li style="height:24px"></li> 
-       <li style="height:24px"></li> 
-      <li style="height:33px"></li> 
-
+          <li><i class="fas fa-mobile-alt"></i>Mobile application</li>
+          <li><i class="far fa-caret-square-left"></i>Route playback history(1 Month)</li> 
+          <li><i class="far fa-map"></i>Point of interest</li>
+          <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
+          <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
+          <li style="height:24px"></li> 
+          <li style="height:24px"></li> 
+          <li style="height:24px"></li> 
+          <li style="height:24px"></li> 
+          <li style="height:24px"></li> 
+          <li style="height:24px"></li> 
+           <li style="height:24px"></li> 
+          <li style="height:33px"></li> 
         </ul>
         <p>
-  <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-   Alert Reports (1 month history)
-   </a>
-</p>
-<a data-toggle="collapse" href="#collapseExample"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body" style="margin:0!important">
-  <ul class="list-unstyled mt-3 mb-4">
-           <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
-          <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
-          <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
-          <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
-          <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
-          <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
-          <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
-          <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
-           <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
-           <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
-           <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
-          </ul>
-  </div>
-</div>
+          <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+           Alert Reports (1 month history)
+          </a>
+        </p>
+        <a data-toggle="collapse" href="#collapseExample"><img src="{{url('/')}}/assets/images/download.gif" width="20" height="30"></a>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body" style="margin:0!important">
+          <ul class="list-unstyled mt-3 mb-4">
+                   <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
+                  <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
+                  <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+                  <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
+                  <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
+                  <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
+                  <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
+                  <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
+                   <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
+                   <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
+                   <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
+                  </ul>
+          </div>
+        </div>
         <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Try Now</button> -->
       </div>
     </div>
@@ -92,7 +89,6 @@ Go Premium
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Fundamental</h4>
       </div>
-      <button type="button" class="btn">Pay Now</button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">

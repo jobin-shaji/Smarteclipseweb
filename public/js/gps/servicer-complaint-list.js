@@ -18,7 +18,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'complaint-list',
+            url: 'list-servicer-complaints',
             type: 'POST',
             data: {
                 'data': data
@@ -39,8 +39,7 @@ function callBackDataTable(){
             {data: 'complaint_type.name', name: 'complaint_type.name'},
             {data: 'description', name: 'description'},
             {data: 'created_at', name: 'created_at'},
-
-            {data: 'assigned_to', name: 'assigned_to'},
+            {data: 'assigned_by', name: 'assigned_by'},
             {data: 'action', name: 'action', orderable: false, searchable: false},        
         ],
         
