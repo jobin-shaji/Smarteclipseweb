@@ -41,6 +41,10 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
 
 	Route::post('/client-location','ClientController@clientLocation')->name('client.location'); 
+
+	Route::get('/payments','ClientController@paymentsView')->name('client.payments');
+	Route::get('/payment-status','ClientController@paymentReview')->name('client.payments.review');
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
