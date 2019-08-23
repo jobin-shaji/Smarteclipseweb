@@ -32,6 +32,14 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	
 	Route::post('/client/delete','ClientController@deleteClient')->name('client.delete');
 	Route::post('/client/activate','ClientController@activateClient')->name('client.activate');
+
+	
+
+	// Route::get('dropdownlist','ClientController@index');
+	// Route::get('get-state-list','ClientController@getStateList');
+	// Route::get('get-city-list','ClientController@getCityList');
+
+	
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
@@ -53,4 +61,7 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace
 	Route::get('/client/{id}/change-password-subdealer','ClientController@changeClientPassword')->name('client.change-password-subdealer');
 	Route::post('/client/{id}/update-password-subdealer','ClientController@updateClientPassword')->name('client.update-password.subdealer'); 
 	Route::get('/client/{id}/details','ClientController@details')->name('client.details');
+ Route::post('/client-create/get-state-list/','ClientController@getStateList')->name('client-create.get-state-list');
+	  Route::post('/client-create/get-city-list/','ClientController@getCityList')->name('client-create.get-city-list');
+	
 });
