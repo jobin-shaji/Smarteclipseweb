@@ -322,7 +322,7 @@ class ClientController extends Controller {
                         'payment_date' => $date_time
                     ]);
 
-                    dd("success");
+                    ClientController::updateClientRole($transaction->subscription);
                 }
             }
 
