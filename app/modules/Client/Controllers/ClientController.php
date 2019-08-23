@@ -711,8 +711,7 @@ public function selectSubdealer(Request $request)
                 return redirect(route('client.create'));        
             }
             $location_lat=$placeLatLng['latitude'];
-            $location_lng=$placeLatLng['longitude'];
-           
+            $location_lng=$placeLatLng['longitude'];           
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,

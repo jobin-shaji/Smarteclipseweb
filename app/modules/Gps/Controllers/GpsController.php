@@ -1348,24 +1348,11 @@ public function privacyPolicy()
         return view('Gps::privacy-policy');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //for gps creation
+    public function create()
+    {
+        return view('Gps::gps-create');
+    }
 
     // root gps transfer rule
     public function gpsRootTransferRule(){
