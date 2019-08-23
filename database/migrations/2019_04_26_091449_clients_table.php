@@ -22,6 +22,9 @@ class ClientsTable extends Migration
             $table->text('logo')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->integer('country_id');
+            $table->integer('state_id');
+            $table->integer('city_id');
             $table->timestamps();
             $table->softDeletes();
         });

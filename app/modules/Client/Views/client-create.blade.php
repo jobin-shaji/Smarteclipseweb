@@ -53,6 +53,47 @@
                           </span>
                         @endif
                       </div>
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                          <option selected disabled>Select Country</option>
+                          @foreach($countries as $country)
+                          <option value="{{$country->id}}">{{$country->name}}</option>  
+                          @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('country_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                      <div class="form-group has-feedback">
+                      <label class="srequired">State</label>
+                        <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
+                        <option selected disabled>Select Country First</option>
+                        </select>
+                        @if ($errors->has('state_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('state_id') }}</strong>
+                          </span>
+                        @endif
+                      </div> 
+
+                       <div class="form-group has-feedback">
+                      <label class="srequired">City</label>
+                        <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
+                        <option selected disabled>Select Country and state First</option>
+                        </select>
+                        @if ($errors->has('city_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('city_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>                     
+                        
+
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">User Location</label>
@@ -181,5 +222,7 @@
    </script>
    <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
+<script src="{{asset('js/gps/client-create.js')}}"></script>
+
 @endsection
 @endsection

@@ -37,7 +37,8 @@
                       <th>Manufacturing Date</th>
                       <th>Version</th>
                       <th>E-SIM Number</th>
-                      <th>Brand</th>
+                      <th>Batch Number</th>
+                      <th>Employee Code</th>
                       <th>Model Name</th>
                       <th>User</th>
                   </tr>
