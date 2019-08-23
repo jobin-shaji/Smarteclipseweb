@@ -106,6 +106,15 @@
         </div>
     </li>
     <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SUBSCRIPTION
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/subscription/create')}}">ADD SUBSCRIPTION<span></span></a>   
+            <a class="dropdown-item" href="{{url('/subscription')}}">LIST SUBSCRIPTION<span></span></a>  
+        </div>
+    </li>
+    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">

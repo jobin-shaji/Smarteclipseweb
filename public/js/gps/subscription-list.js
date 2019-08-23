@@ -1,6 +1,5 @@
 $(document).ready(function () {
     callBackDataTable();
-    
 });
 
 
@@ -17,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-list',
+            url: 'subscription-list',
             type: 'POST',
             data: {
                 'data': data
@@ -26,6 +25,7 @@ function callBackDataTable(){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
+
         createdRow: function ( row, data, index ) {
             if ( data['deleted_at'] ) {
                 $('td', row).css('background-color', 'rgb(243, 204, 204)');
@@ -37,13 +37,9 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'imei', name: 'imei',searchable: false},
-            {data: 'manufacturing_date', name: 'manufacturing_date'},
-            {data: 'e_sim_number', name: 'e_sim_number',searchable: false},
-            {data: 'batch_number', name: 'batch_number'},
-            {data: 'employee_code', name: 'employee_code'},
-            {data: 'model_name', name: 'model_name'},
-            {data: 'version', name: 'version'},
+            {data: 'plan.name', name: 'plan.name'},
+            {data: 'country.name', name: 'country.name'},
+            {data: 'amount', name: 'amount'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         
@@ -51,20 +47,21 @@ function callBackDataTable(){
     });
 }
 
-function delGps(gps){
-    var url = 'gps/delete';
+function deleteSubscription(id){
+    var url = 'subscription/delete';
     var data = {
-        uid : gps
+        id : id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
 
-function activateGps(gps){
-    var url = 'gps/activate';
+function activateSubscription(id){
+    var url = 'subscription/activate';
     var data = {
-        id : gps
+        id : id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
+
 
 

@@ -76,11 +76,22 @@
                  
 
                   <div class="form-group has-feedback">
-                    <label class="srequired">Brand</label>
-                    <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Brand" name="brand" value="{{ old('brand') }}" required> 
-                     @if ($errors->has('brand'))
+                    <label class="srequired">Batch Number</label>
+                    <input type="text" class="form-control {{ $errors->has('batch_number') ? ' has-error' : '' }}" placeholder="Batch Number" name="batch_number" value="{{ old('batch_number') }}" required> 
+                     @if ($errors->has('batch_number'))
                     <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('brand') }}</strong>
+                        <strong class="error-text">{{ $errors->first('batch_number') }}</strong>
+                    </span>
+                  @endif
+                  </div>
+
+
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Employee Code</label>
+                    <input type="text" class="form-control {{ $errors->has('employee_code') ? ' has-error' : '' }}" placeholder="Employee Code" name="employee_code" value="{{ old('employee_code') }}" required> 
+                     @if ($errors->has('employee_code'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('employee_code') }}</strong>
                     </span>
                   @endif
                   </div>

@@ -7,19 +7,17 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update Traffic Rule</li>
-         </ol>
-          @if(Session::has('message'))
-            <div class="pad margin no-print">
-               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                  {{ Session::get('message') }}  
-               </div>
-            </div>
-            @endif  
-        </nav>
- 
-            
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update Traffic Rule</li>
+    </ol>
+    @if(Session::has('message'))
+      <div class="pad margin no-print">
+         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
+         </div>
+      </div>
+      @endif  
+  </nav>
   <div class="card-body">
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
@@ -36,35 +34,35 @@
                       <option value="{{$country->id}}" @if($country->id==$traffic_rule->country_id){{"selected"}} @endif>{{$country->name}}</option>
                       @endforeach
                     </select>
+                    @if ($errors->has('country_id'))
+                      <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                      </span>
+                    @endif
                   </div>
-                  @if ($errors->has('country_id'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('country_id') }}</strong>
-                    </span>
-                  @endif
 
                   <div class="form-group has-feedback">
                     <label class="srequired">State</label>
                     <select class="form-control" id="state_id" name="state_id" required>
                     <option value="{{$traffic_rule->state->id}}" selected>{{ $traffic_rule->state->name }}</option>
                     </select>
+                    @if ($errors->has('state_id'))
+                      <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('state_id') }}</strong>
+                      </span>
+                    @endif
                   </div>
-                  @if ($errors->has('state_id'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('state_id') }}</strong>
-                    </span>
-                  @endif
 
                   
                   <div class="form-group has-feedback">
                     <label class="srequired">Speed (km/h)</label>
                     <input type="text" class="form-control {{ $errors->has('speed') ? ' has-error' : '' }}" placeholder="Speed" name="speed" value="{{ $traffic_rule->speed }}" required> 
+                    @if ($errors->has('speed'))
+                      <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('speed') }}</strong>
+                      </span>
+                    @endif
                   </div>
-                  @if ($errors->has('speed'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('speed') }}</strong>
-                    </span>
-                  @endif
               </div>
             </div>
 

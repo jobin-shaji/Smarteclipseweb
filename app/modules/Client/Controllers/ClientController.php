@@ -9,15 +9,16 @@ use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
+
 use DB;
+use App\Modules\Client\Models\Voucher;
 use DataTables;
 class ClientController extends Controller {
    
     //employee creation page
     public function create()
-    {
-        
-        $countries = DB::table("countries"); 
+    {       
+       $countries = DB::table("countries")->select("name","id")->get(); 
          dd($countries);       
        return view('Client::client-create',compact('countries'));
     }
@@ -256,6 +257,30 @@ class ClientController extends Controller {
         return  redirect(route('client.change-password-subdealer',$did));  
     }
 
+    public function paymentsView(Request $request){
+        $plan = $request->plan;
+        $amount = 5000;
+        $voucher = Voucher::create([
+                    'reference_id' => time().rand(1000,5000),
+                    'client_id' => $request->user()->client->id,
+                    'amount' => 5000,
+                    'subscription' => $plan
+                   ]);       
+        return view('Client::payment',['plan' => $plan, 'amount' => $amount, 'reference_id' => $reference_id]);
+    }
+
+    public function paymentReview(Request $request){
+        $status = $request->status;
+        if($status == "success"){
+            $reference_id = $request->referenceId;
+            $transaction_id = $request->transactionId;
+            $date_time = $request->date_time;
+            $amount = $request->amount; 
+
+            $transaction = Voucher::where('');
+        }
+    
+    }
 
     public function updateDepotUserRuleChangePassword()
     {
