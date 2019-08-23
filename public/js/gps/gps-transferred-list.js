@@ -41,7 +41,8 @@ function callBackDataTable(){
             {data: 'manufacturing_date', name: 'manufacturing_date'},
             {data: 'version', name: 'version'},
             {data: 'e_sim_number', name: 'e_sim_number'},
-            {data: 'brand', name: 'brand'},
+            {data: 'batch_number', name: 'batch_number'},
+            {data: 'employee_code', name: 'employee_code'},
             {data: 'model_name', name: 'model_name'},
             {data: 'user', name: 'user'},
             
