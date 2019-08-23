@@ -14,6 +14,7 @@ use App\Modules\TrafficRules\Models\State;
 use App\Modules\TrafficRules\Models\City;
 use DB;
 use App\Modules\Client\Models\Voucher;
+use App\Modules\Client\Models\ClientTransaction;
 use DataTables;
 class ClientController extends Controller {
    
@@ -297,7 +298,7 @@ class ClientController extends Controller {
                     'amount' => 5000,
                     'subscription' => $plan
                    ]);       
-        return view('Client::payment',['plan' => $plan, 'amount' => $amount, 'reference_id' => $reference_id]);
+        return view('Client::payment',['plan' => $plan, 'amount' => $amount, 'reference_Id' => $voucher->reference_id]);
     }
 
     public function paymentReview(Request $request){
@@ -305,8 +306,27 @@ class ClientController extends Controller {
         if($status == "success"){
             $reference_id = $request->referenceId;
             $transaction_id = $request->transactionId;
-            $date_time = $request->date_time;
+            $date_time = $request->datetime;
             $amount = $request->amount; 
+
+            $transaction = Voucher::where('reference_id',$reference_id)->first();
+
+            if($transaction){
+                if($transaction->amount == $amount){
+                    ClientTransaction::create([
+                        'transaction_id' => $transaction_id,
+                        'reference_id' => $reference_id,
+                        'amount' => $amount,
+                        'status' => 1,
+                        'gateway' => 'qpay',
+                        'payment_date' => $date_time
+                    ]);
+
+                    dd("success");
+                }
+            }
+
+
         }
     }
 
