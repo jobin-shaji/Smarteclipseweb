@@ -38,7 +38,8 @@
                       <th>IMEI</th>
                       <th>Manufacturing Date</th>
                       <th>E-SIM Number</th>
-                      <th>Brand</th>
+                      <th>Batch Number</th>
+                      <th>Employee Code</th>
                       <th>Model Name</th>
                       <th>Version</th>
                       <th>Action</th>

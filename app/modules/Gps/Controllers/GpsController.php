@@ -38,7 +38,8 @@ class GpsController extends Controller {
         	'imei',
             \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
             'e_sim_number',
-            'brand',
+            'batch_number',
+            'employee_code',
             'model_name',
         	'version',
             'deleted_at'
@@ -143,7 +144,8 @@ class GpsController extends Controller {
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
             'e_sim_number'=> $request->e_sim_number,
-            'brand'=> $request->brand,
+            'batch_number'=> $request->batch_number,
+            'employee_code'=> $request->employee_code,
             'model_name'=> $request->model_name,
             'version'=> $request->version,
             'user_id' => $root_id,
@@ -194,7 +196,8 @@ class GpsController extends Controller {
         $gps->imei = $request->imei;
         $gps->manufacturing_date = $request->manufacturing_date;
         $gps->e_sim_number = $request->e_sim_number;
-        $gps->brand = $request->brand;
+        $gps->batch_number = $request->batch_number;
+        $gps->employee_code = $request->employee_code;
         $gps->model_name = $request->model_name;
         $gps->version = $request->version;
         $gps->save();
@@ -1432,7 +1435,8 @@ public function privacyPolicy()
             'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
-            'brand' => 'required',
+            'batch_number' => 'required',
+            'employee_code' => 'required',
             'model_name' => 'required',
             'version' => 'required'
         ];
@@ -1445,7 +1449,7 @@ public function privacyPolicy()
             'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
-            'brand' => 'required',
+            'batch_number' => 'required',
             'model_name' => 'required',
             'version' => 'required',
         ];
