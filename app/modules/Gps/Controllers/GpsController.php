@@ -198,6 +198,7 @@ class GpsController extends Controller {
         $gps->e_sim_number = $request->e_sim_number;
         $gps->batch_number = $request->batch_number;
         $gps->employee_code = $request->employee_code;
+
         $gps->model_name = $request->model_name;
         $gps->version = $request->version;
         $gps->save();
@@ -1449,7 +1450,7 @@ public function privacyPolicy()
             'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
-            'batch_number' => 'required',
+            'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required',
         ];
