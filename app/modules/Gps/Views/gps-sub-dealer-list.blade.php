@@ -28,7 +28,8 @@
                                     <th>Sl.No</th>
                                     <th>IMEI</th>
                                     <th>Version</th>
-                                    <th>Brand</th>
+                                    <th>Batch Number</th>
+                                    <th>Employee Code</th>
                                     <th>Model Name</th>
                                     <th>User</th>
                                     <th>Action</th>
