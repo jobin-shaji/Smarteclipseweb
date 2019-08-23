@@ -66,7 +66,7 @@
                 <input type="text" class="form-control" value="{{ $gps->batch_number}}" disabled> 
               </div>
 
-              <div class="form-group has-feedback">
+               <div class="form-group has-feedback">
                 <label>Employee Code</label>
                 <input type="text" class="form-control" value="{{ $gps->employee_code}}" disabled> 
               </div>
