@@ -38,7 +38,8 @@ class GpsController extends Controller {
         	'imei',
             \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
             'e_sim_number',
-            'brand',
+            'batch_number',
+            'employee_code',
             'model_name',
         	'version',
             'deleted_at'
@@ -143,7 +144,8 @@ class GpsController extends Controller {
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
             'e_sim_number'=> $request->e_sim_number,
-            'brand'=> $request->brand,
+            'batch_number'=> $request->batch_number,
+            'employee_code'=> $request->employee_code,
             'model_name'=> $request->model_name,
             'version'=> $request->version,
             'user_id' => $root_id,
@@ -194,7 +196,9 @@ class GpsController extends Controller {
         $gps->imei = $request->imei;
         $gps->manufacturing_date = $request->manufacturing_date;
         $gps->e_sim_number = $request->e_sim_number;
-        $gps->brand = $request->brand;
+        $gps->batch_number = $request->batch_number;
+        $gps->employee_code = $request->employee_code;
+
         $gps->model_name = $request->model_name;
         $gps->version = $request->version;
         $gps->save();
@@ -1287,6 +1291,25 @@ class GpsController extends Controller {
         ->make();
     }
 
+    public function testKm(){
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="sample.csv"');
+        $data = array(
+                'aaa,bbb,ccc,dddd',
+                '123,456,789',
+                '"aaa","bbb"'
+        );
+
+        $fp = fopen('php://output', 'wb');
+        foreach ( $data as $line ) {
+            $val = explode(",", $line);
+            fputcsv($fp, $val);
+        }
+        fclose($fp);
+
+        return $fp;
+    }
+
     
     public function downloadGpsDataTransfer(Request $request){
 
@@ -1307,22 +1330,6 @@ class GpsController extends Controller {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public function getGpsAllData(Request $request)
 {      
     $items = GpsData::find($request->id);
@@ -1331,6 +1338,11 @@ public function getGpsAllData(Request $request)
     ]);
                
 }
+public function privacyPolicy()
+    {
+       
+        return view('Gps::privacy-policy');
+    }
 
 
 
@@ -1424,7 +1436,8 @@ public function getGpsAllData(Request $request)
             'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
-            'brand' => 'required',
+            'batch_number' => 'required',
+            'employee_code' => 'required',
             'model_name' => 'required',
             'version' => 'required'
         ];
