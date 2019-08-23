@@ -55,6 +55,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 //gps client list
 Route::get('/gps-client','GpsController@gpsClientListPage')->name('gps-client');
 Route::post('/gps-client-list','GpsController@getClientGps')->name('gps-client-list');
+Route::get('/subscription-success','GpsController@subscriptionSuccess')->name('subscription.success');
 });
 
 Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
@@ -74,6 +75,7 @@ Route::post('/gps-scan','GpsController@getScannedGps')->name('gps-scan');
 //gps new arrivals in dealer
 Route::get('/gps-new','GpsController@newGpsListPage')->name('gps-new');
 Route::post('/gps-new-list','GpsController@getNewGps')->name('gps-new-list');
+
 });
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
@@ -91,6 +93,6 @@ Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data')
 
 Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
 // Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
-Route::get('/subscription-success','GpsController@create')->name('subscription.success');
+
 
 });

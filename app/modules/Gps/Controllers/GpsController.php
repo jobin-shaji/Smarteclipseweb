@@ -1337,24 +1337,24 @@ class GpsController extends Controller {
     }
 
 
-public function getGpsAllData(Request $request)
-{      
-    $items = GpsData::find($request->id);
-    return response()->json([
-            'gpsData' => $items        
-    ]);
-               
-}
-public function privacyPolicy()
+    public function getGpsAllData(Request $request)
+    {      
+        $items = GpsData::find($request->id);
+        return response()->json([
+                'gpsData' => $items        
+        ]);
+                   
+    }
+    public function privacyPolicy()
     {
        
         return view('Gps::privacy-policy');
     }
 
     //for gps creation
-    public function create()
-    {
-        return view('Gps::gps-create');
+    public function subscriptionSuccess()
+    {       
+        return view('Gps::subscription-success');
     }
 
     // root gps transfer rule
