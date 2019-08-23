@@ -323,6 +323,7 @@ class ClientController extends Controller {
                     ]);
 
                     ClientController::updateClientRole($transaction->subscription);
+                    return view('Gps::subscription-success');
                 }
             }
 
