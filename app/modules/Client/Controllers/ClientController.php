@@ -9,7 +9,9 @@ use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
-
+use App\Modules\TrafficRules\Models\Country;
+use App\Modules\TrafficRules\Models\State;
+use App\Modules\TrafficRules\Models\City;
 use DB;
 use App\Modules\Client\Models\Voucher;
 use DataTables;
@@ -18,11 +20,37 @@ class ClientController extends Controller {
     //employee creation page
     public function create()
     {       
-       $countries = DB::table("countries")->select("name","id")->get(); 
-         dd($countries);       
-       return view('Client::client-create',compact('countries'));
+        $countries=Country::select([
+            'id',
+            'name'
+        ])
+        ->get();     
+       return view('Client::client-create',['countries'=>$countries]);
     }
-
+    //get state in dependent dropdown
+    public function getStateList(Request $request)
+    {
+        $countryID=$request->countryID;
+        $states = State::select(
+                'id',
+                'name'
+                )
+                ->where("country_id",$countryID)
+                ->get();
+        return response()->json($states);
+    }
+     //get state in dependent dropdown
+    public function getCityList(Request $request)
+    {
+        $stateID=$request->stateID;        
+        $city = City::select(
+            'id',
+            'name'
+        )
+        ->where("state_id",$stateID)
+        ->get();
+        return response()->json($city);
+    }
     //upload employee details to database table
     public function save(Request $request)
     {    
@@ -55,7 +83,10 @@ class ClientController extends Controller {
                 'name' => $request->name,            
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
-                'longitude'=>$location_lng          
+                'longitude'=>$location_lng,
+                'country_id'=>$request->country_id,
+                'state_id'=>$request->state_id,
+                'city_id'=>$request->city_id        
             ]);
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
@@ -636,8 +667,12 @@ class ClientController extends Controller {
         $user = \Auth::user();
         $root = $user->root;       
         $entities = $root->dealers;    
-
-       return view('Client::root-client-create',['entities' => $entities]);
+        $countries=Country::select([
+            'id',
+            'name'
+        ])
+        ->get();
+        return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries]);
     }
 
 
@@ -691,7 +726,10 @@ public function selectSubdealer(Request $request)
                 'name' => $request->name,            
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
-                'longitude'=>$location_lng          
+                'longitude'=>$location_lng,
+                'country_id'=>$request->country_id,
+                'state_id'=>$request->state_id,
+                'city_id'=>$request->city_id          
             ]);
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
@@ -720,23 +758,7 @@ public function selectSubdealer(Request $request)
         return redirect(route('client'));        
     }
 
-///////////////////////////////////////////////////////////////////////////////////////
-        public function getStateList(Request $request)
-        {
-            $states = DB::table("states")
-            ->where("country_id",$request->country_id)
-            ->pluck("name","id");
-            return response()->json($states);
-        }
 
-        public function getCityList(Request $request)
-        {
-            $cities = DB::table("cities")
-            ->where("state_id",$request->state_id)
-            ->pluck("name","id");
-            return response()->json($cities);
-        }
-        /////////////////////////
     public function passwordUpdateRules()
     {
         $rules=[
@@ -760,6 +782,9 @@ public function selectSubdealer(Request $request)
             'name' => 'required',
             'address' => 'required',
             'client_category' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|max:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -777,6 +802,9 @@ public function selectSubdealer(Request $request)
             'name' => 'required',
             'address' => 'required',
             'client_category' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
