@@ -28,7 +28,8 @@ return  [
        'Sos',
        'TrafficRules',
        'School',
-       'Student'
+       'Student',
+       'Subscription'
     ]
 ]
 
