@@ -126,7 +126,7 @@ class TrafficRuleController extends Controller
     {
         $traffic_rule = TrafficRule::find($request->id);
         if($traffic_rule == null){
-           return view('Vehicle::404');
+           return view('TrafficRule::404');
         }
         $rules = $this->trafficRuleUpdateRules();
         $this->validate($request, $rules);
@@ -178,7 +178,7 @@ class TrafficRuleController extends Controller
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Traffic rule deleted successfully'
+            'message' => 'Traffic rule restored successfully'
         ]);
         
     }
