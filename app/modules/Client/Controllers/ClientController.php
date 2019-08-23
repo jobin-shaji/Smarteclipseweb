@@ -9,13 +9,17 @@ use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
+use DB;
 use DataTables;
 class ClientController extends Controller {
    
     //employee creation page
     public function create()
     {
-       return view('Client::client-create');
+        
+        $countries = DB::table("countries"); 
+         dd($countries);       
+       return view('Client::client-create',compact('countries'));
     }
 
     //upload employee details to database table
@@ -606,7 +610,8 @@ class ClientController extends Controller {
     {
         $user = \Auth::user();
         $root = $user->root;       
-        $entities = $root->dealers;        
+        $entities = $root->dealers;    
+
        return view('Client::root-client-create',['entities' => $entities]);
     }
 
@@ -691,6 +696,22 @@ public function selectSubdealer(Request $request)
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
+        public function getStateList(Request $request)
+        {
+            $states = DB::table("states")
+            ->where("country_id",$request->country_id)
+            ->pluck("name","id");
+            return response()->json($states);
+        }
+
+        public function getCityList(Request $request)
+        {
+            $cities = DB::table("cities")
+            ->where("state_id",$request->state_id)
+            ->pluck("name","id");
+            return response()->json($cities);
+        }
+        /////////////////////////
     public function passwordUpdateRules()
     {
         $rules=[

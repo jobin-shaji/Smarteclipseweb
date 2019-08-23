@@ -53,6 +53,49 @@
                           </span>
                         @endif
                       </div>
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                        <div class="form-group has-feedback">
+                         <select id="country" name="category_id" class="form-control" style="width:350px" >
+                            <option value="" selected disabled>Select</option>
+                              @foreach($countries as $key => $country)
+                              <option value="{{$key}}"> {{$country}}</option>
+                              @endforeach
+                          </select>
+
+                        </div>
+                        @if ($errors->has('country'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
+                        <div class="form-group has-feedback">
+                        <select name="state" id="state" class="form-control" style="width:350px">
+                        </select>
+
+                        </div>
+                        @if ($errors->has('state'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('state') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                         <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
+                        <div class="form-group has-feedback">
+                         <select name="city" id="city" class="form-control" style="width:350px">
+                         </select>
+                        </div>
+                        @if ($errors->has('city'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('city') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">User Location</label>
@@ -181,5 +224,7 @@
    </script>
    <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap"></script>
+<script src="{{asset('js/gps/client-create.js')}}"></script>
+
 @endsection
 @endsection

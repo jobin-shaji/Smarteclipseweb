@@ -32,6 +32,11 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	
 	Route::post('/client/delete','ClientController@deleteClient')->name('client.delete');
 	Route::post('/client/activate','ClientController@activateClient')->name('client.activate');
+	Route::get('dropdownlist','ClientController@index');
+	Route::get('get-state-list','ClientController@getStateList');
+	Route::get('get-city-list','ClientController@getCityList');
+
+	
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
