@@ -97,6 +97,8 @@
                         <thead>
                           <tr>
                             <th>IMEI</th>
+                            <th>Batch Number</th>
+                            <th>Employee Code</th>
                             <th>Action</th>
                           </tr>
                         </thead>
