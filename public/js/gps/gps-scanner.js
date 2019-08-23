@@ -32,8 +32,10 @@ scanner.addListener('scan', function (content) {
                 items.push(res.gps_id);
                 var gps_imei_id=res.gps_id;
                 var gps_imei=res.gps_imei;
+                var gps_batch_number=res.gps_batch_number;
+                var gps_employee_code=res.gps_employee_code;
                 $("#gps_id").val(items); 
-                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_imei + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_imei + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                 $("table tbody").append(markup);
                 var value = $('#gps_id').val();
                 if (value) {
