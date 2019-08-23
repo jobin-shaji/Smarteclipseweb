@@ -684,7 +684,7 @@ class GpsController extends Controller {
     {
         $device_imei=$request->imei;
         $user = \Auth::user();
-        $device = Gps::select('id', 'imei','user_id')
+        $device = Gps::select('id', 'imei','user_id','batch_number','employee_code')
                         ->where('user_id',$user->id)
                         ->where('imei',$device_imei)
                         ->first();
@@ -696,11 +696,15 @@ class GpsController extends Controller {
         }else{
             $gps_id=$device->id;
             $gps_imei=$device->imei;
+            $gps_batch_number=$device->batch_number;
+            $gps_employee_code=$device->employee_code;
             return response()->json(array(
                 'status' => 1,
                 'title' => 'success',
                 'gps_id' => $gps_id,
-                'gps_imei' => $gps_imei
+                'gps_imei' => $gps_imei,
+                'gps_batch_number' => $gps_batch_number,
+                'gps_employee_code' => $gps_employee_code
             ));
         } 
     }
