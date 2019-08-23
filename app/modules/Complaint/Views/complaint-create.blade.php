@@ -30,10 +30,6 @@
                   <div class="col-md-6">
                     <div class="card-body_vehicle wizard-content">                    
                       <div class="form-group has-feedback">
-                        <input type="hidden" class="form-control" name="ticket_code" value="{{ $ticket_code}}" readonly> 
-                      </div>
-
-                      <div class="form-group has-feedback">
                         <label class="srequired">GPS</label>
                         <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
                           <option value="" selected disabled>Select GPS</option>

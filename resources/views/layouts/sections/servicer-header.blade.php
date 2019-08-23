@@ -14,7 +14,16 @@
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/job-list')}}">JOB LIST </a>  
-            <a class="dropdown-item" href="{{url('/job-history-list')}}">JOB History </a>  
+            <a class="dropdown-item" href="{{url('/job-history-list')}}">JOB HISTORY </a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
+        </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/complaint-list')}}">COMPLAINT LIST </a>  
+            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
                                      
         </div>
     </li>

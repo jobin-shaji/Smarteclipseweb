@@ -68,7 +68,8 @@
                         </a>
                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <div class="dropdown-divider"></div>                       
-                            <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>                               
+                            <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a> 
+                            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>                               
                         </div>
                     </li>
                     </ul>

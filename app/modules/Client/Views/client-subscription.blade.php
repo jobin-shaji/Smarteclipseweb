@@ -39,7 +39,7 @@
               </div>  
               <button type="submit" id="button"  class="btn btn-primary  ">Create Role</button>
             </div>
-          </form>
+          
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
             <div class="row">
               <div class="col-sm-12">
@@ -48,7 +48,6 @@
                     <tr>
                      <th>Sl.No</th>                              
                       <th>Role Type</th>                            
-                      <th style="width:160px;">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -58,7 +57,8 @@
                         <tr>
                           <th><?php echo $i;?></th>
                           <th id ="role">{{$role->name}}</th>
-                          <th><button class='btn btn-xs btn-success' onclick="removeRole(<?php echo Crypt::decrypt($client_user_id)?>,'{{$role->name}}')" id="remove">Remove </button></th>
+                          <input type="hidden" name="role_name" id="role_name" value="{{$role->name}}">
+                          
                         </tr>
                         <?php $i++;?>
                       @endif 
@@ -68,6 +68,8 @@
               </div>
             </div>
           </div>
+          </form>
+
         </div>
       </div>
     </div>            
