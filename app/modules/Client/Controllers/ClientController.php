@@ -273,7 +273,7 @@ class ClientController extends Controller {
             $date_time = $request->date_time;
             $amount = $request->amount; 
 
-            $transaction = Voucher::where('')
+            // $transaction = Voucher::where('')
         }
     
     }
@@ -714,6 +714,22 @@ public function selectSubdealer(Request $request)
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client'));        
     }
+
+////////////////////////////////////Update client role-start//////////////////////////
+
+    public static function updateClientRole($new_role)
+    {
+
+        $user = \App\Modules\User\Models\User::find(11);
+        $roles =  $user->roles->where('name','!=','client');
+        foreach ($roles as $role) {
+            $user->removeRole($role->name);
+        }
+        $user->assignRole($new_role);
+        return true;
+    }
+
+////////////////////////////////////Update client role-end//////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////
     public function passwordUpdateRules()
