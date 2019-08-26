@@ -693,7 +693,7 @@ class ClientController extends Controller {
     }
 
 
-public function selectSubdealer(Request $request)
+    public function selectSubdealer(Request $request)
     {
         $user = \Auth::user();
         $dealer_id=$request->dealer;
@@ -780,7 +780,7 @@ public function selectSubdealer(Request $request)
     public static function updateClientRole($new_role)
     {
 
-        $user = \App\Modules\User\Models\User::find(11);
+        $user = \Auth::user();
         $roles =  $user->roles->where('name','!=','client');
         foreach ($roles as $role) {
             $user->removeRole($role->name);
