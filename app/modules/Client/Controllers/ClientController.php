@@ -323,6 +323,7 @@ class ClientController extends Controller {
                     ]);
 
                     ClientController::updateClientRole($transaction->subscription);
+                    return view('Gps::subscription-success');
                 }
             }
 
@@ -728,8 +729,7 @@ class ClientController extends Controller {
                 return redirect(route('client.create'));        
             }
             $location_lat=$placeLatLng['latitude'];
-            $location_lng=$placeLatLng['longitude'];
-           
+            $location_lng=$placeLatLng['longitude'];           
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
