@@ -40,7 +40,6 @@ function callBackDataTable(){
             {data: 'version', name: 'version'},
             {data: 'batch_number', name: 'batch_number'},
             {data: 'employee_code', name: 'employee_code'},
-
             {data: 'model_name', name: 'model_name'},
             {data: 'user.username', name: 'user.username'},
             {data: 'action', name: 'action', orderable: false, searchable: false},  
