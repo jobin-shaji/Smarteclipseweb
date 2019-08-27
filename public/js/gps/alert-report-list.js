@@ -17,8 +17,8 @@ function check(){
         var vehicle_id=$('#vehicle').val();
         
          var client=$('meta[name = "client"]').attr('content');
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
+        var from_date = document.getElementById('alert_fromDate').value;
+        var to_date = document.getElementById('alert_toDate').value;
         var data = { 'alertID':alert_id,'vehicle_id':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
         callBackDataTable(data);
         //      var  data = {
@@ -83,6 +83,9 @@ function refresh(){
     callBackDataTable(data);
     }   
 }
+
+
+
 
 
 

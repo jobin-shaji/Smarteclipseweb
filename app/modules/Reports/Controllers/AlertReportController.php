@@ -15,6 +15,8 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Gps\Models\GpsData;
+use Carbon\Carbon;
+
 
 use DataTables;
 use Auth;
@@ -41,16 +43,39 @@ class AlertReportController extends Controller
          $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
-        return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles]);  
+
+        $user=\Auth::user();
+        $user_role=$user->roles->where('name','!=','client')->first()->name;
+
+        $fromDate=$this->checkRoleAlert($user_role);
+        return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles,'from_date'=>$fromDate->format('d-m-Y')]);  
     }  
     public function alertReportList(Request $request)
     {
         $client= $request->client;
         $alert_id= $request->alertID;
 
-        $vehicle_id= $request->vehicle_id;            
+        $vehicle_id= $request->vehicle_id;
+
+
+
         $from = $request->from_date;
         $to = $request->to_date;
+
+          $user=\Auth::user();
+        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $check_role_in_playback=$this->checkRolePlayback($user_role,$from);
+        if($check_role_in_playback=="failed"){
+         $response_data = array(
+            'status'  => 'wrong_date',
+            'message' => 'wrong_date',
+            'polyline' => "wrong_date",
+            'code'    =>0
+        );
+         return response()->json($response_data); 
+        }
+
+
 
         $query =Alert::select(
             'id',
@@ -149,6 +174,41 @@ class AlertReportController extends Controller
         $gps_id=$request->$request;   
    
     }
-    
+
+    public function checkRoleAlert($role){
+       if($role=="fundamental"){
+            $from_date=Carbon::now()->subMonth(2);
+         }else if($role=="superior"){ 
+            $from_date=Carbon::now()->subMonth(4);
+         }else if($role=="pro"){
+             $from_date=Carbon::now()->subMonth(6);
+         }else{
+           $from_date=Carbon::now()->subMonth(1);
+         }
+         
+         return $from_date;
+    }
+
+    // ---validate  date-----------------
+    public function checkRolePlayback($role,$user_from_date){
+       if($role=="fundamental"){
+            $from_date=Carbon::now()->subMonth(2);
+         }else if($role=="superior"){ 
+            $from_date=Carbon::now()->subMonth(4);
+         }else if($role=="pro"){
+             $from_date=Carbon::now()->subMonth(6);
+         }else{
+           $from_date=Carbon::now()->subMonth(1);
+         }
+         
+         if(Carbon::parse($from_date) <= Carbon::parse($user_from_date)){
+            $return="Success";
+         }else{
+            $return="failed"; 
+         }
+         return $return;
+    }
+    // ---validate  date-----------------
+
 
 }
