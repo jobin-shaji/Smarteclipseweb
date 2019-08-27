@@ -884,12 +884,26 @@ class VehicleController extends Controller {
        
     }
     public function playbackHMap(Request $request){
-        $decrypted_id = Crypt::decrypt($request->id);            
-        return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id] );
+        $decrypted_id = Crypt::decrypt($request->id);  
+        $user=\Auth::user();
+        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $date_by_role=$this->playbackHistoryDataPeriod($user_role);  
+        return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id,'start_date'=>$date_by_role] );
     }
 
 
-
+    public function playbackHistoryDataPeriod($role){
+        if($role=="fundamental"){
+            $from_date=Carbon::now()->subMonth(2);
+         }else if($role=="superior"){ 
+            $from_date=Carbon::now()->subMonth(4);
+         }else if($role=="pro"){
+             $from_date=Carbon::now()->subMonth(6);
+         }else{
+           $from_date=Carbon::now()->subMonth(1);
+         }
+         return $from_date;
+     }
 
 /// invoice/////////
 
@@ -1122,6 +1136,22 @@ class VehicleController extends Controller {
 
     public function hmapLocationPlayback(Request $request)
     { 
+        $from_date=$request->from_time;
+        $to_date=$request->to_time;
+        $user=\Auth::user();
+        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $check_role_in_playback=$this->checkRolePlayback($user_role,$from_date);
+        if($check_role_in_playback=="failed"){
+         $response_data = array(
+            'status'  => 'wrong_date',
+            'message' => 'wrong_date',
+            'polyline' => "wrong_date",
+            'code'    =>0
+        );
+         return response()->json($response_data); 
+        }
+
+
         $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng', 
@@ -1207,8 +1237,7 @@ class VehicleController extends Controller {
         }    
         return response()->json($response_data); 
     }
-public function playBackForLine($vehicleID,$fromDate,$toDate){
-
+  public function playBackForLine($vehicleID,$fromDate,$toDate){
     $playBackDataList=array();
     $playback=array();
 
@@ -1344,6 +1373,28 @@ public function playBackForLine($vehicleID,$fromDate,$toDate){
            // dd($client_id);
         return view('Vehicle::servicer-vehicle-add',['vehicleTypes'=>$vehicleTypes,'devices'=>$devices,'client_id'=>$request->id]);
     }
+
+    // ---validate from date-----------------
+    public function checkRolePlayback($role,$user_from_date){
+       if($role=="fundamental"){
+            $from_date=Carbon::now()->subMonth(2);
+         }else if($role=="superior"){ 
+            $from_date=Carbon::now()->subMonth(4);
+         }else if($role=="pro"){
+             $from_date=Carbon::now()->subMonth(6);
+         }else{
+           $from_date=Carbon::now()->subMonth(1);
+         }
+         
+         if(Carbon::parse($from_date) <= Carbon::parse($user_from_date)){
+            $return="Success";
+         }else{
+            $return="failed"; 
+         }
+         return $return;
+    }
+    // ---validate from date-----------------
+
  
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules

@@ -48,11 +48,12 @@ function getUrl() {
 
     function playback() {
     $(function() {
+
         // var baseurl = '/vehicles/location-playback';
         var url = 'vehicles/location-playback';
         var id = document.getElementById('vehicle_id').value;
-        var from_time = document.getElementById('fromDate').value;
-        var to_time = document.getElementById('toDate').value;
+        var from_time = document.getElementById('playback_fromDate').value;
+        var to_time = document.getElementById('playback_toDate').value;
         
         var data = {
             id: id,
@@ -74,6 +75,8 @@ function getUrl() {
               if(res.polyline=='empty')
               {
                 alert("No data available");
+              }else if(res.polyline=='wrong_date'){
+                alert("Upgrade your plan");
               }
               else
               {

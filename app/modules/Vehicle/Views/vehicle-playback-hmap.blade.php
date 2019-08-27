@@ -37,14 +37,14 @@
                    <div class="col-lg-4 col-md-3">
                       <div class="form-group">
                          <label> From Date</label>
-                         <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate">
+                         <input type="text" data-fromdate="{{$start_date}}" class="datetimepicker playback_date_from form-control" id="playback_fromDate" name="fromDate">
                       </div>
                    </div>
 
                    <div class="col-lg-4 col-md-3">
                       <div class="form-group">                    
                          <label> To date</label>
-                          <input type="text" class="datetimepicker form-control" id="toDate" name="toDate">
+                          <input type="text" class="datetimepicker form-control" id="playback_toDate" name="toDate">
                       </div>
                    </div>
 
