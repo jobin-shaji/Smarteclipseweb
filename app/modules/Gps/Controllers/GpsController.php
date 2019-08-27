@@ -1356,6 +1356,40 @@ class GpsController extends Controller {
     {       
         return view('Gps::subscription-success');
     }
+     public function allBthData()
+    {       
+        return view('Gps::all-bth-data-list');
+    }
+     public function getAllBthData(Request $request)
+    {
+        $items = GpsData::where('header','BTH');         
+        return DataTables::of($items)
+            ->addIndexColumn()
+            ->addColumn('count', function ($items) {
+            $count=0;
+            $count=strlen($items->vlt_data);
+            return $count;
+        })
+        ->addColumn('forhuman', function ($items) {
+            $forhuman=0;
+            $forhuman=Carbon::parse($items->device_time)->diffForHumans();;
+            return $forhuman;
+        })
+        ->addColumn('servertime', function ($items) {
+            $servertime=0;
+            $servertime=Carbon::parse($items->created_at)->diffForHumans();;
+            return $servertime;
+        })
+        ->addColumn('action', function ($items) {
+            $b_url = \URL::to('/');
+            return "
+            <button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button> 
+            ";
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
 
     // root gps transfer rule
     public function gpsRootTransferRule(){
