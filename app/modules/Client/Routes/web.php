@@ -53,6 +53,9 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::get('/payments','ClientController@paymentsView')->name('client.payments');
 	Route::get('/payment-status','ClientController@paymentReview')->name('client.payments.review');
 
+
+	Route::get('/km-calculation','ClientController@kmCalculation')->name('km-calculation');
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
@@ -63,5 +66,12 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace
 	Route::get('/client/{id}/details','ClientController@details')->name('client.details');
  Route::post('/client-create/get-state-list/','ClientController@getStateList')->name('client-create.get-state-list');
 	  Route::post('/client-create/get-city-list/','ClientController@getCityList')->name('client-create.get-city-list');
+
+
+  
+
+
+
+
 	
 });
