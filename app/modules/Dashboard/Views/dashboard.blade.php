@@ -362,6 +362,8 @@
               <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
             </div>
           </div>
+
+          @role('fundamental|superior|pro|school')
           <div class="right-bottom2">
             <form  onsubmit="return locationSearch();" >
               <div class="col-lg-12 col-md-12">
@@ -394,6 +396,7 @@
               </div>
             </form>
           </div>
+
           <div id="myModal" class="modal_for_dash">
             <!-- Modal content -->
             <div class="modal-content">
@@ -407,6 +410,9 @@
               </div>
             </div>
           </div>
+          @endrole
+
+
         </div>
       </div>
     </div>

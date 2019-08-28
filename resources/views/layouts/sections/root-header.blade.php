@@ -69,12 +69,30 @@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/vehicle-root')}}">LIST VEHICLES<span></span></a> 
-            <a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES<span></span></a> 
-            <a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATEGORY<span></span></a>
-        </div>
+        <ul class="dropdown-menu multi-level">
+            <a class="dropdown-item" href="{{url('/vehicle-root')}}">LIST VEHICLES<span></span></a>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE CATEGORY</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/vehicle-type/create')}}">ADD VEHICLE CATEGORY</a></li>
+                <li><a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUBSCRIPTION</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/subscription/create')}}">ADD SUBSCRIPTION</a></li>
+                <li><a class="dropdown-item" href="{{url('/subscription')}}">LIST SUBSCRIPTION</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >TRAFFIC RULES</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/traffic-rule/create')}}">ADD TRAFFIC RULE</a></li>
+                <li><a class="dropdown-item" href="{{url('/traffic-rule')}}">LIST TRAFFIC RULES</a></li>
+                </ul>
+            </li>
+        </ul>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ALERT
@@ -95,24 +113,6 @@
                 </ul>
             </li>
         </ul>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> TRAFFIC RULES
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/traffic-rule/create')}}">ADD TRAFFIC RULE<span></span></a>   
-            <a class="dropdown-item" href="{{url('/traffic-rule')}}">LIST TRAFFIC RULES<span></span></a>  
-        </div>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SUBSCRIPTION
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/subscription/create')}}">ADD SUBSCRIPTION<span></span></a>   
-            <a class="dropdown-item" href="{{url('/subscription')}}">LIST SUBSCRIPTION<span></span></a>  
-        </div>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS

@@ -694,7 +694,7 @@ class ClientController extends Controller {
     }
 
 
-public function selectSubdealer(Request $request)
+    public function selectSubdealer(Request $request)
     {
         $user = \Auth::user();
         $dealer_id=$request->dealer;
@@ -780,7 +780,7 @@ public function selectSubdealer(Request $request)
     public static function updateClientRole($new_role)
     {
 
-        $user = \App\Modules\User\Models\User::find(11);
+        $user = \Auth::user();
         $roles =  $user->roles->where('name','!=','client');
         foreach ($roles as $role) {
             $user->removeRole($role->name);
@@ -809,7 +809,55 @@ public function selectSubdealer(Request $request)
         ];
         return  $rules;
     }
+    #####################################
+    public function kmCalculation(){
+     $data='<?xml version="1.0"?>
+        <gpx version="1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.topografix.com/GPX/1/0"
+        xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+          <trk>
+            <trkseg>
+              <trkpt lat="51.10177" lon="0.39349"/>
+              <trkpt lat="51.10181" lon="0.39335"/>
+              <trkpt lat="51.10255" lon="0.39366"/>
+              <trkpt lat="51.10398" lon="0.39466"/>
+              <trkpt lat="51.10501" lon="0.39533"/>
+            </trkseg>
+          </trk>
+        </gpx>';
+     $encoded_data=base64_encode($data);
+     $send_request=$this->getKmRequest($encoded_data);
+     echo $send_request;
 
+    }
+    ######################################
+    function getKmRequest($encoded_data){
+      $app_id="pTDh57IDvFztTZUGw15X";
+      $app_code="673-fZdOmD_oJnCMZ_ko-g";
+      $routemode="car";
+      $file=$encoded_data;
+
+        $post = array(
+               'app_id' => $app_id,
+               'app_code'=> $app_code,
+               'routemode' =>$routemode,
+               'file'=>$file
+              );                                                                    
+            $data_string = json_encode($post);                                               
+            $ch = curl_init('https://rme.api.here.com/2/matchroute.json');                              curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+                'Content-Length: ' . strlen($data_string))                                                                       
+            );                                                                                                                                                                                                                                  
+        $result = curl_exec($ch);
+        echo $result;
+
+  
+    }
+   ########################################
     public function user_create_rules()
     {
         $rules = [
