@@ -14,7 +14,8 @@
                 <th>Sl.No</th>
                 <th>Vlt data</th>               
                 <th>Created At </th>
-                <th>Server Time</th>                                     
+                <th>Server Time</th>   
+                <th>Action</th>                                           
               </tr>
           </thead>
       </table>
