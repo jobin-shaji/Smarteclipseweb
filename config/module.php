@@ -29,7 +29,8 @@ return  [
        'TrafficRules',
        'School',
        'Student',
-       'Subscription'
+       'Subscription',
+       'BusHelper'
     ]
 ]
 
