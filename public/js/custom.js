@@ -1,6 +1,8 @@
 
 
  $(function () {
+    
+
     $('.select2').select2();
 
            
@@ -9,6 +11,7 @@
                 minDate: moment()
             });
             $('#fromDate').datetimepicker().on('dp.change', function (e) {
+                var startdate=$(this).data('fromdate');
                 var incrementDay = moment(new Date(e.date));
                 incrementDay.add(1, 'days');
                 $('#toDate').data('DateTimePicker').minDate(incrementDay);
@@ -34,6 +37,42 @@
                 var decrementDay = moment(new Date(e.date));
                 decrementDay.subtract(1, 'days');
                 $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+
+            $('#playback_fromDate').datetimepicker().on('dp.change', function (e) {
+                var startdate=$(this).data('fromdate');
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $(this).data('DateTimePicker').minDate(startdate);
+                $('#playback_toDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+            $('#playback_toDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#playback_fromDate').data('DateTimePicker').maxDate(decrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+
+            $('#alert_fromDate').datetimepicker().on('dp.change', function (e) {
+                var startdate=$(this).data('fromdate');
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'days');
+                $(this).data('DateTimePicker').minDate(startdate);
+                $('#alert_toDate').data('DateTimePicker').minDate(incrementDay);
+                $(this).data("DateTimePicker").hide();
+            });
+
+            $('#alert_toDate').datetimepicker().on('dp.change', function (e) {
+                
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'days');
+                $('#alert_fromDate').data('DateTimePicker').maxDate(decrementDay);
                 $(this).data("DateTimePicker").hide();
             });
 

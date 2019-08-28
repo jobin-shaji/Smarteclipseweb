@@ -85,7 +85,8 @@ class GpsController extends Controller {
                 'manufacturing_date',
                 'version',
                 'e_sim_number',
-                'brand',
+                'batch_number',
+                'employee_code',
                 'model_name',
                 'user_id',
                 'deleted_at'
@@ -432,7 +433,8 @@ class GpsController extends Controller {
                 'id',
                 'imei',
                 'version',
-                'brand',
+                'batch_number',
+                'employee_code',
                 'model_name',
                 'user_id',
                 'deleted_at')
@@ -473,7 +475,8 @@ class GpsController extends Controller {
                 'id',
                 'imei',
                 'version',
-                'brand',
+                'batch_number',
+                'employee_code',
                 'model_name',
                 'user_id',
                 'status',
@@ -1019,7 +1022,7 @@ class GpsController extends Controller {
         $devices=array();
         foreach($gps_items as $gps_item){
             $single_gps= $gps_item->gps_id;
-            $devices[]=Gps::select('id','imei','version','e_sim_number','brand','model_name')
+            $devices[]=Gps::select('id','imei','version','e_sim_number','batch_number','employee_code','model_name')
                         ->where('id',$single_gps)
                         ->first();
         }
@@ -1334,38 +1337,25 @@ class GpsController extends Controller {
     }
 
 
-public function getGpsAllData(Request $request)
-{      
-    $items = GpsData::find($request->id);
-    return response()->json([
-            'gpsData' => $items        
-    ]);
-               
-}
-public function privacyPolicy()
+    public function getGpsAllData(Request $request)
+    {      
+        $items = GpsData::find($request->id);
+        return response()->json([
+                'gpsData' => $items        
+        ]);
+                   
+    }
+    public function privacyPolicy()
     {
        
         return view('Gps::privacy-policy');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //for gps creation
+    public function subscriptionSuccess()
+    {       
+        return view('Gps::subscription-success');
+    }
 
     // root gps transfer rule
     public function gpsRootTransferRule(){

@@ -153,7 +153,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <button type="button" class="btn">Pay Now</button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
@@ -223,7 +223,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
-      <button type="button" class="btn">Pay Now</button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">

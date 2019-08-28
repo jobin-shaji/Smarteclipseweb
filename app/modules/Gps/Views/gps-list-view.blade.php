@@ -38,7 +38,8 @@
                                                 <th>Sl.No</th>
                                                 <th>IMEI</th>
                                                 <th>Version</th>
-                                                <th>Brand</th>
+                                                <th>Batch Number</th>
+                                                <th>Employee Code</th>
                                                 <th>Model Name</th>
                                               </tr>
                                             </thead>
@@ -48,7 +49,8 @@
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$device->imei}}</td>
                                                 <td>{{$device->version}}</td>
-                                                <td>{{$device->brand}}</td>
+                                                <td>{{$device->batch_number}}</td>
+                                                <td>{{$device->employee_code}}</td>
                                                 <td>{{$device->model_name}}</td>
                                               </tr>
                                               @endforeach
