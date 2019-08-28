@@ -92,6 +92,11 @@ Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
 Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
 
 Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
+
+Route::get('/bth-data','GpsController@allBthData')->name('bth-data');
+Route::post('/allbthdata-list','GpsController@getAllBthData')->name('allbthdata-list');
+Route::get('/id/{id}/pased','GpsController@pasedData')->name('id-pased');
+
 // Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 
 

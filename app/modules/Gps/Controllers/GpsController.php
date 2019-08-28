@@ -1286,8 +1286,7 @@ class GpsController extends Controller {
     {
     
       
-         $items = VltData::all();  
-              
+         $items = VltData::all();                
         return DataTables::of($items)
         ->addIndexColumn()        
          ->addColumn('forhuman', function ($items) {
@@ -1295,6 +1294,14 @@ class GpsController extends Controller {
                 $forhuman=Carbon::parse($items->created_at)->diffForHumans();;
                 return $forhuman;
              })
+         ->addColumn('action', function ($items) {
+               $b_url = \URL::to('/');
+            return "
+           <a href=".$b_url."/id/".Crypt::encrypt($items->id)."/pased class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Details</a>
+             ";  
+             })
+         ->rawColumns(['link', 'action'])
+        
         ->make();
     }
 
@@ -1356,7 +1363,134 @@ class GpsController extends Controller {
     {       
         return view('Gps::subscription-success');
     }
+    public function allBthData()
+    {       
+        return view('Gps::all-bth-data-list');
+    }
+     public function getAllBthData(Request $request)
+    {
+        $items = GpsData::where('header','BTH');         
+        return DataTables::of($items)
+            ->addIndexColumn()
+            ->addColumn('count', function ($items) {
+            $count=0;
+            $count=strlen($items->vlt_data);
+            return $count;
+        })
+        ->addColumn('forhuman', function ($items) {
+            $forhuman=0;
+            $forhuman=Carbon::parse($items->device_time)->diffForHumans();;
+            return $forhuman;
+        })
+        ->addColumn('servertime', function ($items) {
+            $servertime=0;
+            $servertime=Carbon::parse($items->created_at)->diffForHumans();;
+            return $servertime;
+        })
+        ->addColumn('action', function ($items) {
+            $b_url = \URL::to('/');
+            return "
+            <button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button> 
+            ";
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+    public function pasedData(Request $request)
+    {     
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vltdata = VltData::find($decrypted_id); 
+        $vltdata = $vltdata->vltdata;
 
+        $imei=substr($vltdata, 3, 15);
+        $count=substr($vltdata, 18, 3);
+        $alert_id=substr($vltdata, 21, 2);
+        $packet_status=substr($vltdata, 23, 1);
+        $gps_fix=substr($vltdata, 24, 1);
+        $date = substr($vlt_data,25,6);
+        $time = substr($vlt_data,31,6);
+        $latitude = substr($vlt_data,37,10);
+        $lat_dir = substr($vlt_data,47,1);
+        $longitude = substr($vlt_data,48,10);
+        $lon_dir = substr($vlt_data,58,1);
+        $mcc = substr($vlt_data,59,3);
+        $mnc = substr($vlt_data,62,3);
+        $lac = substr($vlt_data,65,4);
+        $cell_id = substr($vlt_data,69,9);
+        $speed = substr($vlt_data,78,6);
+        $heading = substr($vlt_data,84,6);
+        $no_of_satelites = substr($vlt_data,90,2);
+        $hdop = substr($vlt_data,92,2);
+        $gsm_signal_strength = substr($vlt_data,94,2);
+        $ignition =substr($vlt_data,96,1);
+        $main_power_status = substr($vlt_data,97,1);
+        $vehicle_mode = substr($vlt_data,98,1);
+        $next_alert_id = substr($vlt_data,99,2);
+        if($next_alert_id==[16,03,17,22,23,20,21])
+        {
+            processCrtData($next_alert_id,$imei,$vlt_data,46);
+        } 
+        else if($next_alert_id==[13,14,15,09,18,19,06,04,05]) 
+        {
+            processAltData($next_alert_id,$imei,$vlt_data,46);
+        }  
+        return view('Gps::vlt-passed-data',['item' => $vltdata]);
+    }
+
+    public function processCrtData($next_alert_id, $imei, $vltdata, $pointer)
+    {
+        $header = "CRT";
+        $imei = $imei;
+        $alert_id = $next_alert_id;
+        $packet_status = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $gps_fix = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $date = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $time = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $latitude = substr($vlt_data,$pointer,10);$pointer=$pointer+10;
+        $lat_dir = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $longitude =substr($vlt_data,$pointer,10);$pointer=$pointer+10;
+        $lon_dir = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $mcc = substr($vlt_data,$pointer,3);$pointer=$pointer+3;
+        $mnc = substr($vlt_data,$pointer,3);$pointer=$pointer+3;
+        $lac = substr($vlt_data,$pointer,4);$pointer=$pointer+4;
+        $cell_id = substr($vlt_data,$pointer,9);$pointer=$pointer+9;
+        $speed = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $heading = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $no_of_satelites = substr($vlt_data,$pointer,2);$pointer=$pointer+2;
+        $hdop = substr($vlt_data,$pointer,2);$pointer=$pointer+2;
+        $gsm_signal_strength = substr($vlt_data,$pointer,2);$pointer=$pointer+2;
+        $ignition = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $main_power_status = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $vehicle_mode = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $gf_ide = substr($vlt_data,$pointer,5);$pointer=$pointer+5;
+    }
+    public function processAltData($next_alert_id, $imei, $vltdata, $pointer)
+    {   
+        $header = "ALT";
+        $imei = $imei;
+        $alert_id = $next_alert_id;
+        $packet_status = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $gps_fix = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $date = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $time = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $latitude =substr($vlt_data,$pointer,10);$pointer=$pointer+10;
+        $lat_dir = substr($vlt_data,$pointer,1),$pointer=$pointer+1;
+        $longitude = substr($vlt_data,$pointer,10);$pointer=$pointer+10;
+        $lon_dir = substr($vlt_data,$pointer,1),$pointer=$pointer+1;
+        $mcc = substr($vlt_data,$pointer,3),$pointer=$pointer+3;
+        $mnc = substr($vlt_data,$pointer,3),$pointer=$pointer+3;
+        $lac =substr($vlt_data,$pointer,4),$pointer=$pointer+4;
+        $cell_id = substr($vlt_data,$pointer,9),$pointer=$pointer+9;
+        $speed = substr($vlt_data,$pointer,6),$pointer=$pointer+6;
+        $heading = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
+        $no_of_satelites =substr($vlt_data,$pointer,2),$pointer=$pointer+2;
+        $hdop = substr($vlt_data,$pointer,2),$pointer=$pointer+2;
+        $gsm_signal_strength = substr($vlt_data,$pointer,2);$pointer=$pointer+2;
+        $ignition = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $main_power_status = substr($vlt_data,$pointer,1);
+        $vehicle_mode = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $gf_ide = substr($vlt_data,$pointer,5),$pointer=$pointer+5;
+     }
     // root gps transfer rule
     public function gpsRootTransferRule(){
         $rules = [
