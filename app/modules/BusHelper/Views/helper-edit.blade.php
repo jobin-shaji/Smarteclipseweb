@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  Update School Details
+  Update Helper Details
 @endsection
 @section('content')   
    
@@ -10,7 +10,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit School</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Helper</li>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -23,14 +23,14 @@
              
     <div class="container-fluid">
       <div class="card-body wizard-content">
-        <form  method="POST" action="{{route('school.update.p',$school->id)}}">
+        <form  method="POST" action="{{route('helper.update.p',$helper->id)}}">
           {{csrf_field()}}
           <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                   <div class="form-group has-feedback">
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $school->name}}">  
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $helper->name}}">  
                   </div>
                   @if ($errors->has('name'))
                     <span class="help-block">
@@ -40,21 +40,9 @@
                 </div>
 
                 <div class="form-group row" style="float:none!important">
-                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
-                  <div class="form-group has-feedback">
-                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $school->address}}">
-                  </div>
-                  @if ($errors->has('address'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('address') }}</strong>
-                    </span>
-                 @endif
-                </div>
-
-                <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                   <div class="form-group has-feedback">
-                    <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $school->mobile}}">
+                    <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $helper->mobile}}">
                   </div>
                   @if ($errors->has('mobile'))
                     <span class="help-block">

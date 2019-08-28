@@ -5,7 +5,7 @@
 	<div class="card-body">
 	    <div class="pad margin no-print">
 	      <div class="callout callout-danger" style="margin-bottom: 0!important;">
-	      Dealer does not exist !!!
+	      Helper does not exist !!!
 	      </div>
 	    </div>
 	</div>
