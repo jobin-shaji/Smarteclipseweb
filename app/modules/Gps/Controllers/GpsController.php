@@ -1398,7 +1398,7 @@ class GpsController extends Controller {
         }
 
        }elseif($alert_id==19){
-        $size=78;
+        $size=83;
         $single_packet=substr($packet_sart,0,$size);
         $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
         
@@ -1418,7 +1418,7 @@ class GpsController extends Controller {
         }
 
        }elseif($alert_id==21){
-        $size=78;
+        $size=83;
         $single_packet=substr($packet_sart,0,$size);
         $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
      
