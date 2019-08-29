@@ -54,6 +54,78 @@
                         @endif
                       </div>
 
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Gender</label> 
+                        <div class="form-group has-feedback">
+                          <select class="form-control {{ $errors->has('gender') ? ' has-error' : '' }}" placeholder="Gender" name="gender" value="{{ old('gender') }}">
+                            <option value="" selected disabled>Select Gender</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">Others</option>
+                          </select>
+                        </div>
+                        @if ($errors->has('gender'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('gender') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Class</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control  select2 {{ $errors->has('class_id') ? ' has-error' : '' }}" id="class_id" name="class_id" required>
+                          <option selected disabled>Select Class</option>
+                          @foreach($classes as $class)
+                          <option value="{{$class->id}}">{{$class->name}}</option>  
+                          @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('class_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('class_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Division</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control select2 {{ $errors->has('division_id') ? ' has-error' : '' }}" id="division_id" name="division_id"  required>
+                          <option selected disabled>Select Class First</option>
+                          </select>
+                        @if ($errors->has('division_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('division_id') }}</strong>
+                          </span>
+                        @endif
+                        </div> 
+                      </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Parent/Guardian</label>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('parent_name') ? ' has-error' : '' }}" placeholder="Parent Name" name="parent_name" value="{{ old('parent_name') }}" > 
+                        </div>
+                        @if ($errors->has('parent_name'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('parent_name') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                        <div class="form-group has-feedback">
+                          <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
+                        </div>
+                        @if ($errors->has('address'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('address') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
                       <input type="hidden"  name="latitude" id="latitude" value="">
                       <input type="hidden"  name="longitude" id="longitude" value="">
 
@@ -68,18 +140,6 @@
                         </span>
                         @endif
                       </div> 
-                             
-                      <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
-                        <div class="form-group has-feedback">
-                          <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
-                        </div>
-                        @if ($errors->has('address'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('address') }}</strong>
-                          </span>
-                        @endif
-                      </div>
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
@@ -93,6 +153,48 @@
                         @endif
                       </div> 
 
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email.</label> 
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required>
+                        </div>
+                        @if ($errors->has('email'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('email') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Route Batch</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control  select2 {{ $errors->has('route_batch') ? ' has-error' : '' }}" id="route_batch" name="route_batch" required>
+                          <option selected disabled>Select Route Batch</option>
+                          @foreach($route_batches as $route_batch)
+                          <option value="{{$route_batch->id}}">{{$route_batch->name}}</option>  
+                          @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('route_batch'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('route_batch') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">NFC Number</label>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('nfc') ? ' has-error' : '' }}" placeholder="NFC Number" name="nfc" value="{{ old('nfc') }}" > 
+                        </div>
+                        @if ($errors->has('nfc'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('nfc') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="form-group has-feedback">
@@ -104,24 +206,7 @@
                             <strong class="error-text">{{ $errors->first('password') }}</strong>
                           </span>
                         @endif
-                      </div> 
-
-                      <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">School</label>
-                        <div class="form-group has-feedback">
-                          <select class="form-control select2" name="school_id" data-live-search="true" title="Select School" required>
-                            <option selected disabled>Select School</option>
-                            @foreach($schools as $school)
-                              <option value="{{$school->id}}">{{$school->name}}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                        @if ($errors->has('school_id'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('school_id') }}</strong>
-                          </span>
-                        @endif 
-                      </div>                                                      
+                      </div>                                                       
                     </div>
                   </div>
                 </div>
@@ -151,5 +236,6 @@
   <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap">
   </script>
+  <script src="{{asset('js/gps/student-class-division-dropdown.js')}}"></script>
 @endsection
 @endsection

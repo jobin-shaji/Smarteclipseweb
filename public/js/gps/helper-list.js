@@ -31,7 +31,9 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name' },                      
+            {data: 'helper_code', name: 'helper_code' }, 
+            {data: 'name', name: 'name' }, 
+            {data: 'address', name: 'address' },                      
             {data: 'mobile', name: 'mobile'},             
             {data: 'action', name: 'action', orderable: false, searchable: false},
            

@@ -17,8 +17,15 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('name');
+            $table->integer('gender')->comment = '1-male,1-female,3-other';
+            $table->integer('class_id');
+            $table->integer('division_id');
+            $table->string('parent_name');
             $table->text('address');
             $table->bigInteger('mobile');
+            $table->string('email');
+            $table->integer('route_batch_id');
+            $table->string('nfc');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('password');

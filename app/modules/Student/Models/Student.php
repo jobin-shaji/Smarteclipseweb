@@ -10,10 +10,18 @@ class Student extends Model
     use SoftDeletes;   
 
 	protected $fillable=[
-		'code','name','address','mobile','latitude','longitude','password','school_id'
+		'code','name','gender','class_id','division_id','parent_name','email','route_batch_id','nfc','address','mobile','latitude','longitude','password','school_id'
 	];	
 
-	public function school(){
-		return $this->hasOne('App\Modules\School\Models\School','id','school_id');
+	public function class(){
+		return $this->hasOne('App\Modules\SchoolClass\Models\SchoolClass','id','class_id');
+	}
+
+	public function division(){
+		return $this->hasOne('App\Modules\ClassDivision\Models\ClassDivision','id','division_id');
+	}
+
+	public function routeBatch(){
+		return $this->hasOne('App\Modules\Student\Models\RouteBatch','id','route_batch_id');
 	}
 }

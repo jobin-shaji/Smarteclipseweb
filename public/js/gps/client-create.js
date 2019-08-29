@@ -1,7 +1,5 @@
 
-
-
-    $(document).ready(function() {
+$(document).ready(function() {
   $('#country_id').on('change', function() {
     var countryID = $(this).val();
     var data={ countryID : countryID };

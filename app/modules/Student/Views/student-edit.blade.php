@@ -54,6 +54,49 @@
                 </div>
 
                 <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Class</label>
+                  <div class="form-group has-feedback">
+                    <select class="form-control {{ $errors->has('class_id') ? ' has-error' : '' }}"  name="class_id" id="class_id" value="{{ old('class_id') }}" required>
+                      <option>Select Class</option>
+                      @foreach($classes as $class)
+                      <option value="{{$class->id}}" @if($class->id==$student->class_id){{"selected"}} @endif>{{$class->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @if ($errors->has('class_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('class_id') }}</strong>
+                    </span>
+                  @endif
+                </div>  
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Division</label>
+                  <div class="form-group has-feedback">
+                    <select class="form-control" id="division_id" name="division_id" required>
+                    <option value="{{$student->division->id}}" selected>{{ $student->division->name }}</option>
+                    </select>
+                  </div>
+                  @if ($errors->has('division_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('division_id') }}</strong>
+                    </span>
+                  @endif
+                </div>    
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Parent/Guardian</label>
+                  <div class="form-group has-feedback">
+                    <input type="text" class="form-control {{ $errors->has('parent_name') ? ' has-error' : '' }}" placeholder="Parent/Guardian" name="parent_name" value="{{ $student->parent_name}}">  
+                  </div>
+                  @if ($errors->has('parent_name'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('parent_name') }}</strong>
+                    </span>
+                  @endif
+                </div>
+
+                <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                   <div class="form-group has-feedback">
                     <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $student->address}}">
@@ -94,21 +137,45 @@
                 </div>
 
                 <div class="form-group row" style="float:none!important">
-                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">School</label>
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                   <div class="form-group has-feedback">
-                    <select class="form-control {{ $errors->has('school_id') ? ' has-error' : '' }}"  name="school_id" value="{{ old('school_id') }}" required>
-                      <option>Select School</option>
-                      @foreach($schools as $school)
-                        <option value="{{$school->id}}" @if($school->id==$student->school_id){{"selected"}} @endif>{{$school->name}}</option>
+                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $student->email}}">  
+                  </div>
+                  @if ($errors->has('email'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('email') }}</strong>
+                    </span>
+                  @endif
+                </div>
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Route Batch</label>
+                  <div class="form-group has-feedback">
+                    <select class="form-control {{ $errors->has('route_batch_id') ? ' has-error' : '' }}"  name="route_batch_id" value="{{ old('route_batch_id') }}" required>
+                      <option>Select Route Batch</option>
+                      @foreach($route_batches as $route_batch)
+                        <option value="{{$route_batch->id}}" @if($route_batch->id==$student->route_batch_id){{"selected"}} @endif>{{$route_batch->name}}</option>
                       @endforeach
                     </select>
                   </div>
-                  @if ($errors->has('school_id'))
+                  @if ($errors->has('route_batch_id'))
                     <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('school_id') }}</strong>
+                        <strong class="error-text">{{ $errors->first('route_batch_id') }}</strong>
                     </span>
                   @endif
-                </div>      
+                </div>   
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">NFC Number</label>
+                  <div class="form-group has-feedback">
+                    <input type="text" class="form-control {{ $errors->has('nfc') ? ' has-error' : '' }}" placeholder="NFC Number" name="nfc" value="{{ $student->nfc}}">  
+                  </div>
+                  @if ($errors->has('nfc'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('nfc') }}</strong>
+                    </span>
+                  @endif
+                </div>   
             </div>
             <div class="col-lg-6 col-md-12">
               <div id="map" style=" width:100%;height:540px;"></div>
@@ -130,5 +197,6 @@
   <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ&libraries=places&callback=initMap">
   </script>
+  <script src="{{asset('js/gps/student-class-division-dropdown.js')}}"></script>
 @endsection
 @endsection

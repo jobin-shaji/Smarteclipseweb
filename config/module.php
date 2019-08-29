@@ -30,7 +30,9 @@ return  [
        'School',
        'Student',
        'Subscription',
-       'BusHelper'
+       'BusHelper',
+       'SchoolClass',
+       'ClassDivision'
     ]
 ]
 
