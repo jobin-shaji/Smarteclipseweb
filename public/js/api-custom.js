@@ -40,6 +40,8 @@ function apiBackgroundPostData(url, data, callBack, options) {
             if (callBack){
                 if(callBack=='gpsData'){
                          gpsData(res);
+                }else if(callBack=='gpsDataBth'){
+                         gpsDataBth(res);
                 }
            }
         },
@@ -93,7 +95,7 @@ function getPolygonData(url, data, callBack, options) {
        id:id 
     };   
     apiBackgroundPostData(url,data,'gpsData',{alert:false});           
-}
+  }
 
 function gpsData(res)
 {
@@ -120,6 +122,28 @@ function gpsData(res)
             '<tr><td>main power status</td><td>'+res.gpsData.main_power_status+'</td></tr>'+
             '<tr><td>Vehicle Mode</td><td>'+res.gpsData.vehicle_mode+'</td></tr>'
         ;  
+        $("#allDataTable").append(gps); 
+    // console.log(res);
+    $('#gpsDataModal').modal('show');
+}
+
+
+ function getdataBTH(id){ 
+
+    var url = 'get-gps-data-bth';
+    var data = {
+       id:id 
+    };   
+    apiBackgroundPostData(url,data,'gpsDataBth',{alert:false});           
+  }
+
+
+  function gpsDataBth(res)
+{
+
+    $("#allDataTable tr").remove(); 
+    var gps=res.gpsData;  
+    alert(gps);
         $("#allDataTable").append(gps); 
     // console.log(res);
     $('#gpsDataModal').modal('show');

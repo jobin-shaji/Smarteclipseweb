@@ -18,7 +18,9 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
+
 use PDF;
 use Auth;
 use DataTables;
@@ -1253,21 +1255,26 @@ class GpsController extends Controller {
              })
          ->addColumn('forhuman', function ($items) {
                 $forhuman=0;
-                $forhuman=Carbon::parse($items->device_time)->diffForHumans();;
+                $forhuman=Carbon::parse($items->device_time)->diffForHumans();
                 return $forhuman;
              })
          ->addColumn('servertime', function ($items) {
                 $servertime=0;
-                $servertime=Carbon::parse($items->created_at)->diffForHumans();;
+                $servertime=Carbon::parse($items->created_at)->diffForHumans();
                 return $servertime;
              })
          ->addColumn('action', function ($items) {
              $b_url = \URL::to('/');
            // <a href=".$b_url."/dealers/".Crypt::encrypt($items->id)."/change-password class='btn btn-xs btn-primary'>View</a>
-            return "
-          
-             <button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button> 
-            ";
+
+             $contains = Str::contains($items, 'BTH');
+             if($contains){
+                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTH($items->id)'>Batch Log </button>"; 
+                    
+                  }else{
+                       return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button>";
+                      }
+                
           
         })
         ->rawColumns(['link', 'action'])
@@ -1352,6 +1359,124 @@ class GpsController extends Controller {
         ]);
                    
     }
+
+    public function getGpsAllDataBth(Request $request){
+
+      $items = GpsData::find($request->id);
+      $items_data=$this->splitByBTH($items);
+      $vltdata=$items->vlt_data;
+      $create_output_string=$this->createOutputString($items_data,$vltdata);
+
+        return response()->json([
+                'gpsData' => $create_output_string        
+        ]);  
+    }
+
+    public function splitByBTH($items){
+        $vltdata=$items->vlt_data;
+        $header=substr($vltdata,0,3);
+        $imei=substr($vltdata, 3, 15);
+        $count=substr($vltdata, 18, 3);
+        $packetRemovedHead=substr($vltdata,21);
+
+        $batchPacketData=[];
+        $outData=$this->allBatchlogSplit($packetRemovedHead);
+        return $outData;
+    }
+
+    public function allBatchlogSplit($packetRemovedHead){
+      $alert_id=substr($packetRemovedHead,0,2);
+      $packet_sart=substr($packetRemovedHead,2);
+       if($alert_id==18){
+        $size=83;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+        
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }elseif($alert_id==19){
+        $size=78;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+        
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }elseif($alert_id==20){
+        $size=83;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+       
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }elseif($alert_id==21){
+        $size=78;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+     
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }elseif($alert_id==22){
+        $size=78;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+        
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }elseif($alert_id==25){
+        $size=210;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+        
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }else{
+        $size=76;
+        $single_packet=substr($packet_sart,0,$size);
+        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
+        
+        $balanced_packet=substr($packet_sart,$size);
+        if(strlen($balanced_packet)!=0){
+           $this->allBatchlogSplit($balanced_packet); 
+        }
+
+       }
+
+       return $batchPacketData;
+
+    }
+
+    public function createOutputString($items_data,$vltdata){
+         $string="<tr><td colspan='3    '>".$vltdata."</td></tr>";
+         $string.="<tr><th>No</th><th>Alert ID</th><th>Packet</th></tr>";
+         $i=1;
+
+        foreach ($items_data as $item) {
+           $string.="<tr><td> Packet".$i."</td><td>".$item['alert']."</td><td>".$item['packet']."</td></tr>";
+           $i++;
+        }
+        return $string;
+    }
+
+
+
     public function privacyPolicy()
     {
        
@@ -1426,14 +1551,14 @@ class GpsController extends Controller {
         $main_power_status = substr($vlt_data,97,1);
         $vehicle_mode = substr($vlt_data,98,1);
         $next_alert_id = substr($vlt_data,99,2);
-        if($next_alert_id==[16,03,17,22,23,20,21])
-        {
-            processCrtData($next_alert_id,$imei,$vlt_data,46);
-        } 
-        else if($next_alert_id==[13,14,15,09,18,19,06,04,05]) 
-        {
-            processAltData($next_alert_id,$imei,$vlt_data,46);
-        }  
+        // if($next_alert_id==[16,03,17,22,23,20,21])
+        // {
+        //     processCrtData($next_alert_id,$imei,$vlt_data,46);
+        // } 
+        // else if($next_alert_id==[13,14,15,09,18,19,06,04,05]) 
+        // {
+        //     processAltData($next_alert_id,$imei,$vlt_data,46);
+        // }  
         return view('Gps::vlt-passed-data',['item' => $vltdata]);
     }
 
@@ -1474,22 +1599,22 @@ class GpsController extends Controller {
         $date = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
         $time = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
         $latitude =substr($vlt_data,$pointer,10);$pointer=$pointer+10;
-        $lat_dir = substr($vlt_data,$pointer,1),$pointer=$pointer+1;
+        $lat_dir = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
         $longitude = substr($vlt_data,$pointer,10);$pointer=$pointer+10;
-        $lon_dir = substr($vlt_data,$pointer,1),$pointer=$pointer+1;
-        $mcc = substr($vlt_data,$pointer,3),$pointer=$pointer+3;
-        $mnc = substr($vlt_data,$pointer,3),$pointer=$pointer+3;
-        $lac =substr($vlt_data,$pointer,4),$pointer=$pointer+4;
-        $cell_id = substr($vlt_data,$pointer,9),$pointer=$pointer+9;
-        $speed = substr($vlt_data,$pointer,6),$pointer=$pointer+6;
+        $lon_dir = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
+        $mcc = substr($vlt_data,$pointer,3);$pointer=$pointer+3;
+        $mnc = substr($vlt_data,$pointer,3);$pointer=$pointer+3;
+        $lac =substr($vlt_data,$pointer,4);$pointer=$pointer+4;
+        $cell_id = substr($vlt_data,$pointer,9);$pointer=$pointer+9;
+        $speed = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
         $heading = substr($vlt_data,$pointer,6);$pointer=$pointer+6;
-        $no_of_satelites =substr($vlt_data,$pointer,2),$pointer=$pointer+2;
-        $hdop = substr($vlt_data,$pointer,2),$pointer=$pointer+2;
+        $no_of_satelites =substr($vlt_data,$pointer,2);$pointer=$pointer+2;
+        $hdop = substr($vlt_data,$pointer,2);$pointer=$pointer+2;
         $gsm_signal_strength = substr($vlt_data,$pointer,2);$pointer=$pointer+2;
         $ignition = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
         $main_power_status = substr($vlt_data,$pointer,1);
         $vehicle_mode = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
-        $gf_ide = substr($vlt_data,$pointer,5),$pointer=$pointer+5;
+        $gf_ide = substr($vlt_data,$pointer,5);$pointer=$pointer+5;
      }
     // root gps transfer rule
     public function gpsRootTransferRule(){
