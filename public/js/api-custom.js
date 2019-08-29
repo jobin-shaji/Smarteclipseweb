@@ -128,7 +128,7 @@ function gpsData(res)
 }
 
 
- function getdataBTH(id){ 
+ function getdataBTHList(id){ 
 
     var url = 'get-gps-data-bth';
     var data = {
@@ -143,7 +143,7 @@ function gpsData(res)
 
     $("#allDataTable tr").remove(); 
     var gps=res.gpsData;  
-    alert(gps);
+
         $("#allDataTable").append(gps); 
     // console.log(res);
     $('#gpsDataModal').modal('show');
