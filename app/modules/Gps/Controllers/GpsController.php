@@ -1269,7 +1269,7 @@ class GpsController extends Controller {
 
              $contains = Str::contains($items, 'BTH');
              if($contains){
-                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTH($items->id)'>Batch Log </button>"; 
+                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>"; 
                     
                   }else{
                        return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button>";
