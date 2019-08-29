@@ -118,7 +118,7 @@ function callBackDataTable(value){
           },
         ],
         
-        aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
+        aLengthMenu: [[25, 50, 100,1000, -1], [25, 50, 100,1000, 'All']]
     });
 }
 
