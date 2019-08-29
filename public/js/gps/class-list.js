@@ -13,7 +13,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'student-list',
+            url: 'class-list',
             type: 'POST',
             data: {
                 'data': data
@@ -31,16 +31,8 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'code', name: 'code' },   
-            {data: 'name', name: 'name' },
-            {data: 'gender', name: 'gender' },           
-            {data: 'class', name: 'class' },
-            {data: 'parent_name', name: 'parent_name' },
-            {data: 'address', name: 'address',searchable: false},           
-            {data: 'mobile', name: 'mobile'},    
-            {data: 'email', name: 'email' },  
-            {data: 'route_batch.name', name: 'route_batch.name' },
-            {data: 'nfc', name: 'nfc' },          
+            
+            {data: 'name', name: 'name' },                       
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
         ],
@@ -48,19 +40,18 @@ function callBackDataTable(){
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
-function delStudent(student){
-    var url = 'student/delete';
+function delClass(class_id){
+    var url = 'class/delete';
     var data = {
-        id : student
+        uid : class_id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-function activateStudent(student){
-    var url = 'student/activate';
+function activateClass(class_id){
+    var url = 'class/activate';
     var data = {
-        id : student
+        id : class_id
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
-
 

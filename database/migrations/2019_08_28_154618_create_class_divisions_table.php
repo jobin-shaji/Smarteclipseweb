@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBusHelpersTable extends Migration
+class CreateClassDivisionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBusHelpersTable extends Migration
      */
     public function up()
     {
-        Schema::create('bus_helpers', function (Blueprint $table) {
+        Schema::create('class_divisions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('helper_code');
             $table->string('name');
-            $table->bigInteger('mobile');
-            $table->text('address');
+            $table->integer('class_id');
+            $table->integer('school_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +30,6 @@ class CreateBusHelpersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bus_helpers');
+        Schema::dropIfExists('class_divisions');
     }
 }

@@ -19,8 +19,10 @@ class HelperController extends Controller {
         $rules = $this->helperCreateRules();
         $this->validate($request, $rules);           
         $helper = BusHelper::create([            
-            'name' => $request->name,            
-            'mobile' => $request->mobile,        
+            'name' => $request->name,  
+            'helper_code' => $request->helper_code,           
+            'mobile' => $request->mobile,   
+            'address' => $request->address,      
         ]);
         $hid= encrypt($helper->id);
         $request->session()->flash('message', 'New helper created successfully!'); 
@@ -38,7 +40,9 @@ class HelperController extends Controller {
     {
         $helper = BusHelper::select(
             'id', 
-            'name',                   
+            'name',
+            'helper_code',
+            'address',               
             'mobile',
             'deleted_at')
             ->withTrashed()
@@ -82,8 +86,10 @@ class HelperController extends Controller {
            return view('BusHelper::404');
         } 
         $rules = $this->helperUpdateRules($helper);
-        $this->validate($request, $rules);       
+        $this->validate($request, $rules); 
+        $helper->helper_code = $request->helper_code;      
         $helper->name = $request->name;
+        $helper->address = $request->address;
         $helper->mobile = $request->mobile;
         $helper->save();      
         $hid = encrypt($helper->id);
@@ -141,7 +147,7 @@ class HelperController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Helper restored successfully'
+            'message' => 'Helper activated successfully'
         ]);
     }
 
@@ -149,7 +155,9 @@ class HelperController extends Controller {
     {
         $rules = [
             'name' => 'required',
+            'helper_code' => 'required|unique:bus_helpers',
             'mobile' => 'required|string|min:10|max:10|unique:bus_helpers',  
+            'address' => 'required',
         ];
         return  $rules;
     }
@@ -158,6 +166,8 @@ class HelperController extends Controller {
     {
         $rules = [
             'name' => 'required',
+            'helper_code' => 'required|unique:bus_helpers,helper_code,'.$helper->id,
+            'address' => 'required',
             'mobile' => 'required|string|min:10|max:10|unique:bus_helpers,mobile,'.$helper->id
         ];
         return  $rules;

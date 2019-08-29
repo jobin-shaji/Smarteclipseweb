@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Modules\BusHelper\Models;
+namespace App\Modules\SchoolClass\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BusHelper extends Model
+class SchoolClass extends Model
 {
     use SoftDeletes;   
 
 	protected $fillable=[
-		'name','helper_code','mobile','address'
-	];
+		'name','school_id'
+	];	
 }

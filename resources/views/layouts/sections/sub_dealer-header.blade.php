@@ -55,6 +55,15 @@
                                 </li>
                             </ul>
                         </li>
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SCHOOL 
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/school/create')}}"> ADD SCHOOL <span></span></a>                               
+                                <a class="dropdown-item" href="{{url('/school')}}"> LIST SCHOOLS<span></span></a>                                 
+                            </div>
+                        </li> -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS
                             </a>
@@ -71,5 +80,5 @@
                             <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a> 
                             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>                               
                         </div>
-                    </li>
+                        </li>
                     </ul>

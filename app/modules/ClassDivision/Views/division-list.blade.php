@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-  Helper List
+  Division List
 @endsection
 @section('content')
 
 <div class="page-wrapper_new">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Helper List</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Division List</li>
     </ol>  
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -27,10 +27,8 @@
                 <thead>
                   <tr>
                     <th>Sl.No</th>  
-                    <th>ID</th>                             
-                    <th>Name</th>                                                        
-                    <th>Address</th>  
-                    <th>Mobile</th>                           
+                    <th>Class</th>                             
+                    <th>Division</th>                                                      
                     <th style="width:160px;">Action</th>
                   </tr>
                 </thead>
@@ -45,5 +43,5 @@
 
 @endsection
 @section('script')
-  <script src="{{asset('js/gps/helper-list.js')}}"></script>
+  <script src="{{asset('js/gps/division-list.js')}}"></script>
 @endsection
