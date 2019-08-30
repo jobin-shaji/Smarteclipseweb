@@ -10,7 +10,7 @@ class ClassDivision extends Model
     use SoftDeletes;   
 
 	protected $fillable=[
-		'name','class_id','school_id'
+		'name','class_id','client_id'
 	];	
 
 	// class

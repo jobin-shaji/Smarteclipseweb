@@ -32,7 +32,8 @@ return  [
        'Subscription',
        'BusHelper',
        'SchoolClass',
-       'ClassDivision'
+       'ClassDivision',
+       'RouteBatch'
     ]
 ]
 

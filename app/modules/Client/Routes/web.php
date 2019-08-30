@@ -32,14 +32,9 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	
 	Route::post('/client/delete','ClientController@deleteClient')->name('client.delete');
 	Route::post('/client/activate','ClientController@activateClient')->name('client.activate');
-
-	
-
 	// Route::get('dropdownlist','ClientController@index');
 	// Route::get('get-state-list','ClientController@getStateList');
 	// Route::get('get-city-list','ClientController@getCityList');
-
-	
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
@@ -47,15 +42,14 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/client/{id}/profile','ClientController@saveUserLogo')->name('client.profile.p'); 
 	Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
 	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
-
-	Route::post('/client-location','ClientController@clientLocation')->name('client.location'); 
-
 	Route::get('/payments','ClientController@paymentsView')->name('client.payments');
 	Route::get('/payment-status','ClientController@paymentReview')->name('client.payments.review');
-
-
 	Route::get('/km-calculation','ClientController@kmCalculation')->name('km-calculation');
 
+});
+
+Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+	Route::post('/client-location','ClientController@clientLocation')->name('client.location'); 
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
@@ -66,12 +60,4 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace
 	Route::get('/client/{id}/details','ClientController@details')->name('client.details');
  	Route::post('/client-create/get-state-list/','ClientController@getStateList')->name('client-create.get-state-list');
 	Route::post('/client-create/get-city-list/','ClientController@getCityList')->name('client-create.get-city-list');
-
-
-  
-
-
-
-
-	
 });

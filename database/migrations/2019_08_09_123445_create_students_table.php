@@ -29,7 +29,7 @@ class CreateStudentsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('password');
-            $table->integer('school_id');
+            $table->integer('client_id');
             $table->timestamps();
             $table->softDeletes();
         });

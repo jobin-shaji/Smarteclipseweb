@@ -17,7 +17,7 @@ class CreateRouteBatchesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('route_id');
-            $table->integer('school_id');
+            $table->integer('client_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,7 +21,7 @@ class ClassController extends Controller {
         $this->validate($request, $rules);           
         $class = SchoolClass::create([            
             'name' => $request->name,            
-            'school_id' => $client_id       
+            'client_id' => $client_id       
         ]);
         $eid= encrypt($class->id);
         $request->session()->flash('message', 'New class created successfully!'); 
@@ -37,11 +37,14 @@ class ClassController extends Controller {
 
     public function getClasslist(Request $request)
     {
+        $client_id = \Auth::user()->client->id;
         $class = SchoolClass::select(
             'id', 
             'name',
+            'client_id',
             'deleted_at')
             ->withTrashed()
+            ->where('client_id',$client_id)
             ->get();
             return DataTables::of($class)
             ->addIndexColumn()

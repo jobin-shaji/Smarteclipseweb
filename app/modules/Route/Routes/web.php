@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:client'] ,'namespace' => 'App\Modules\Route\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:client|school'] ,'namespace' => 'App\Modules\Route\Controllers' ] , function () {
 
 Route::get('/route','RouteController@routeList')->name('route');
 Route::post('/route-list','RouteController@getRouteList')->name('route-list');
