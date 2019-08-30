@@ -15,8 +15,11 @@ class CreateBusHelpersTable extends Migration
     {
         Schema::create('bus_helpers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('helper_code');
             $table->string('name');
             $table->bigInteger('mobile');
+            $table->text('address');
+            $table->integer('client_id');
             $table->timestamps();
             $table->softDeletes();
         });

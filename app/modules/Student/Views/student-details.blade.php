@@ -46,6 +46,27 @@
                 </div>
 
                 <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Class</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" class="form-control {{ $errors->has('class_id') ? ' has-error' : '' }}" placeholder="Class" name="class_id" value="{{ $student->class->name}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Division</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" class="form-control {{ $errors->has('division_id') ? ' has-error' : '' }}" placeholder="Division" name="division_id" value="{{ $student->division->name}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Parent/Guardian</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" class="form-control {{ $errors->has('parent_name') ? ' has-error' : '' }}" placeholder="Parent/Guardian" name="parent_name" value="{{ $student->parent_name}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                     <div class="form-group has-feedback">
                       <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $student->address}}" disabled>
@@ -67,9 +88,23 @@
                 </div>
 
                 <div class="form-group row" style="float:none!important">
-                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">School</label>
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                     <div class="form-group has-feedback">
-                      <input type="text" class="form-control {{ $errors->has('school_id') ? ' has-error' : '' }}" placeholder="School" name="school_id" value="{{ $student->school->name}}" disabled>
+                      <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $student->email}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Route Batch</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" class="form-control {{ $errors->has('route_batch_id') ? ' has-error' : '' }}" placeholder="Route Batch" name="route_batch_id" value="{{ $student->routeBatch->name}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">NFC Number</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" class="form-control {{ $errors->has('nfc') ? ' has-error' : '' }}" placeholder="NFC Number" name="nfc" value="{{ $student->nfc}}" disabled>
                     </div>
                 </div>
               </div>

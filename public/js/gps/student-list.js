@@ -32,10 +32,15 @@ function callBackDataTable(){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'code', name: 'code' },   
-            {data: 'name', name: 'name' },           
+            {data: 'name', name: 'name' },
+            {data: 'gender', name: 'gender' },           
+            {data: 'class', name: 'class' },
+            {data: 'parent_name', name: 'parent_name' },
             {data: 'address', name: 'address',searchable: false},           
-            {data: 'mobile', name: 'mobile'},      
-            {data: 'school.name', name: 'school.name'},           
+            {data: 'mobile', name: 'mobile'},    
+            {data: 'email', name: 'email' },  
+            {data: 'route_batch.name', name: 'route_batch.name' },
+            {data: 'nfc', name: 'nfc' },          
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
         ],
@@ -57,4 +62,5 @@ function activateStudent(student){
     };
     backgroundPostData(url,data,'callBackDataTables',{alert:true});  
 }
+
 

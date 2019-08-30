@@ -31,10 +31,24 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title"></h4>
+              <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">ID</label>
+                  <div class="form-group has-feedback">
+                    <input type="text" class="form-control {{ $errors->has('helper_code') ? ' has-error' : '' }}" placeholder="helper ID" name="helper_code" value="{{ $helper->helper_code}}" disabled>
+                  </div>
+                </div>
+
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                   <div class="form-group has-feedback">
                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $helper->name}}" disabled>
+                  </div>
+                </div>
+
+                <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                  <div class="form-group has-feedback">
+                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $helper->address}}" disabled>
                   </div>
                 </div>
 

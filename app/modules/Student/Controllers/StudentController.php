@@ -3,7 +3,10 @@ namespace App\Modules\Student\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Student\Models\Student;
+use App\Modules\RouteBatch\Models\RouteBatch;
 use App\Modules\School\Models\School;
+use App\Modules\ClassDivision\Models\ClassDivision;
+use App\Modules\SchoolClass\Models\SchoolClass;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 
@@ -12,14 +15,34 @@ class StudentController extends Controller {
     //student creation page
     public function create()
     {
-        $schools=School::select('id','name')
+        $client_id = \Auth::user()->client->id;
+        $classes=SchoolClass::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
+        $route_batches=RouteBatch::select('id','name')
+                ->where('client_id',$client_id)
                 ->get();
         $random_password=$this->randomPassword();
-       return view('Student::student-create',['schools'=>$schools,'random_password'=>$random_password]);
+        return view('Student::student-create',['classes'=>$classes,'random_password'=>$random_password,'route_batches'=>$route_batches]);
     }
+
+    //get division in dependent dropdown
+    public function getClassDivisionList(Request $request)
+    {
+        $classID=$request->classID;
+        $division = ClassDivision::select(
+                'id',
+                'name'
+                )
+                ->where("class_id",$classID)
+                ->get();
+        return response()->json($division);
+    }
+
     //upload student details to database table
     public function save(Request $request)
-    {    
+    {
+        $client_id = \Auth::user()->client->id;    
         $rules = $this->studentCreateRules();
         $this->validate($request, $rules);  
         $location_lat=$request->latitude;
@@ -37,13 +60,20 @@ class StudentController extends Controller {
             
         $student = Student::create([ 
             'code' => $request->code,           
-            'name' => $request->name,            
+            'name' => $request->name,  
+            'gender' => $request->gender,  
+            'class_id' => $request->class_id, 
+            'division_id' => $request->division_id,       
+            'parent_name' => $request->parent_name,       
             'address' => $request->address,
             'mobile' => $request->mobile, 
+            'email' => $request->email,
+            'route_batch_id' => $request->route_batch_id,
+            'nfc' => $request->nfc,
             'latitude' => $location_lat,
             'longitude' => $location_lng,
             'password' => bcrypt($request->password),
-            'school_id' => $request->school_id,       
+            'client_id' => $client_id,       
         ]);
         $eid= encrypt($student->id);
         $request->session()->flash('message', 'New student created successfully!'); 
@@ -73,23 +103,49 @@ class StudentController extends Controller {
         $student = Student::select(
             'id', 
             'code',
-            'name',                   
+            'name',  
+            'gender',                  
+            'class_id', 
+            'division_id', 
+            'parent_name', 
+            'email', 
+            'route_batch_id', 
+            'nfc', 
             'address',
             'mobile',
-            'school_id',
+            'client_id',
             'deleted_at')
             ->withTrashed()
-            ->with('school:id,name')
+            ->with('class:id,name')
+            ->with('division:id,name')
+            ->with('routeBatch:id,name')
             ->get();
             return DataTables::of($student)
             ->addIndexColumn()
+            ->addColumn('gender', function ($student) {
+                $gender=$student->gender;
+                if($gender==1){
+                    return "Male";
+                }else if($gender==2){
+                    return "Female";
+                }else{
+                    return "Other";
+                }
+            })
+            ->addColumn('class', function ($student) {
+                $class=$student->class->name;
+                $division=$student->division->name;
+                $class_division=$class.' '.$division;
+                return $class_division;
+            })
             ->addColumn('action', function ($student) {
                  $b_url = \URL::to('/');
             if($student->deleted_at == null){ 
                 return "
-                <button onclick=delStudent(".$student->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>
-                <a href=".$b_url."/student/".Crypt::encrypt($student->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit </a>
-                 <a href=".$b_url."/student/".Crypt::encrypt($student->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
+                <a href=".$b_url."/student/".Crypt::encrypt($student->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'> View</a>
+                <a href=".$b_url."/student/".Crypt::encrypt($student->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'> Edit </a>
+                <button onclick=delStudent(".$student->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'> Deactivate</button>
+                
                 ";
             }else{                   
                 return "
@@ -121,13 +177,18 @@ class StudentController extends Controller {
         {
               $location="";
         }
-        $schools=School::select('id','name')
-                ->get();       
+        $client_id = \Auth::user()->client->id;
+        $classes=SchoolClass::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
+        $route_batches=RouteBatch::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();      
         if($student == null)
         {
            return view('Student::404');
         }
-        return view('Student::student-edit',['student' => $student,'schools' => $schools,'location' => $location]);
+        return view('Student::student-edit',['student' => $student,'location' => $location,'route_batches' => $route_batches,'classes' => $classes]);
     }
 
     //update Student details
@@ -157,6 +218,12 @@ class StudentController extends Controller {
         $student->longitude=$location_lng;
         $student->code = $request->code;     
         $student->name = $request->name;
+        $student->class_id = $request->class_id;
+        $student->division_id = $request->division_id;
+        $student->parent_name = $request->parent_name;
+        $student->email = $request->email;
+        $student->route_batch_id = $request->route_batch_id;
+        $student->nfc = $request->nfc;
         $student->address = $request->address;
         $student->mobile = $request->mobile;
         $student->save();      
@@ -264,11 +331,17 @@ class StudentController extends Controller {
         $rules = [
             'code' => 'required|unique:students',
             'name' => 'required',
+            'gender' => 'required',
+            'class_id' => 'required',
+            'division_id' => 'required',
+            'parent_name' => 'required',
+            'email' => 'required|string|email|max:255|unique:students',
+            'route_batch_id' => 'required',
+            'nfc' => 'required|unique:students',
             'address' => 'required',
             'password' => 'required',
             'mobile' => 'required|string|min:10|max:10|unique:students',
-            'student_location' => 'required',
-            'school_id' => 'required',
+            'student_location' => 'required'
             
         ];
         return  $rules;
@@ -279,10 +352,15 @@ class StudentController extends Controller {
         $rules = [
             'code' => 'required|unique:students,code,'.$student->id,
             'name' => 'required',
+            'class_id' => 'required',
+            'division_id' => 'required',
+            'parent_name' => 'required',
+            'email' => 'required|string|email|max:255|unique:students,email,'.$student->id,
+            'route_batch_id' => 'required',
+            'nfc' => 'required|unique:students,nfc,'.$student->id,
             'address' => 'required',
             'mobile' => 'required|string|min:10|max:10|unique:students,mobile,'.$student->id,
             'student_location' => 'required',
-            'school_id' => 'required',
             
         ];
         return  $rules;

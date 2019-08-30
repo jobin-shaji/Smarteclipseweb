@@ -10,23 +10,31 @@
     </li>
 
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SCHOOL 
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> STUDENT
         </a>
-       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/school/create')}}"> ADD SCHOOL <span></span></a>                               
-            <a class="dropdown-item" href="{{url('/school')}}"> LIST SCHOOL<span></span></a>                                 
-        </div>
-    </li>
-
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> STUDENT 
-        </a>
-       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/student/create')}}"> ADD STUDENT <span></span></a>                               
-            <a class="dropdown-item" href="{{url('/student')}}"> LIST STUDENT<span></span></a>                                 
-        </div>
+        <ul class="dropdown-menu multi-level">
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >STUDENT</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/student/create')}}">ADD STUDENT</a></li>
+                <li><a class="dropdown-item" href="{{url('/student')}}">LIST STUDENTS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">CLASS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/class/create')}}">ADD CLASS</a></li>
+                <li><a class="dropdown-item" href="{{url('/class')}}">LIST CLASSS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DIVISION</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/division/create')}}">ADD DIVISION</a></li>
+                <li><a class="dropdown-item" href="{{url('/division')}}">LIST DIVISIONS</a></li>
+                </ul>
+            </li>
+        </ul>
     </li>
 
     <li class="nav-item dropdown">
@@ -35,8 +43,31 @@
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/helper/create')}}"> ADD HELPER <span></span></a>                               
-            <a class="dropdown-item" href="{{url('/helper')}}"> LIST HELPER<span></span></a>                                 
+            <a class="dropdown-item" href="{{url('/helper')}}"> LIST HELPERS<span></span></a>                                 
         </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE
+        </a>
+        <ul class="dropdown-menu multi-level">
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
+                <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE BATCH</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/route-batch/create')}}">ADD ROUTE BATCH</a></li>
+                <li><a class="dropdown-item" href="{{url('/route-batch')}}">LIST ROUTE BATCH</a></li>
+                </ul>
+            </li>
+            
+        </ul>
     </li>
     
 </ul>

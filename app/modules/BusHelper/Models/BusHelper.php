@@ -10,6 +10,6 @@ class BusHelper extends Model
     use SoftDeletes;   
 
 	protected $fillable=[
-		'name','mobile'
+		'name','helper_code','mobile','address','client_id'
 	];
 }

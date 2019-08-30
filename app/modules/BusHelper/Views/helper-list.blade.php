@@ -26,9 +26,11 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                    <th>Sl.No</th>                              
+                    <th>Sl.No</th>  
+                    <th>ID</th>                             
                     <th>Name</th>                                                        
-                    <th>Mobile</th>                            
+                    <th>Address</th>  
+                    <th>Mobile</th>                           
                     <th style="width:160px;">Action</th>
                   </tr>
                 </thead>

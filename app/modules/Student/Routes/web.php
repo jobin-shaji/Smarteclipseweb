@@ -10,5 +10,6 @@ Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App
 	Route::post('/student/{id}/edit','StudentController@update')->name('student.update.p');
 	Route::post('/student/delete','StudentController@deleteStudent')->name('student.delete');
 	Route::post('/student/activate','StudentController@activateStudent')->name('student.activate');
+	Route::post('/student/class-division-dropdown/','StudentController@getClassDivisionList')->name('student.class-division-dropdown');
 });
 

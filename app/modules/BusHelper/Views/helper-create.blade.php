@@ -27,7 +27,19 @@
               <div class="col-sm-12">                    
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="card-body_vehicle wizard-content">                       
+                    <div class="card-body_vehicle wizard-content"> 
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">ID</label>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('helper_code') ? ' has-error' : '' }}" placeholder="Helper ID" name="helper_code" value="{{ old('helper_code') }}" > 
+                        </div>
+                        @if ($errors->has('helper_code'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('helper_code') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                         <div class="form-group has-feedback">
@@ -50,7 +62,19 @@
                             <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
-                      </div>                                                         
+                      </div>    
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                        <div class="form-group has-feedback">
+                          <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
+                        </div>
+                        @if ($errors->has('address'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('address') }}</strong>
+                          </span>
+                        @endif
+                      </div>                                                     
                     </div>
                   </div>
                 </div>

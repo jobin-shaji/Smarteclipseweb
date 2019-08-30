@@ -147,15 +147,15 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client Category</label> 
                         <div class="form-group has-feedback">
-                          <select class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}">
+                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}">
                             <option value="" selected disabled>Select Client Category</option>
                             <option value="school">School</option>
                             <option value="other">Others</option>
                           </select>
                         </div>
-                        @if ($errors->has('username'))
+                        @if ($errors->has('client_category'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('username') }}</strong>
+                            <strong class="error-text">{{ $errors->first('client_category') }}</strong>
                           </span>
                         @endif
                       </div> 

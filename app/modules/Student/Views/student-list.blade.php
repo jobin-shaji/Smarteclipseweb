@@ -28,10 +28,15 @@
                   <tr>
                     <th>Sl.No</th>  
                     <th>Student ID</th>                             
-                    <th>Name</th>                            
+                    <th>Name</th> 
+                    <th>Gender</th>     
+                    <th>Class</th> 
+                    <th>Parent/Guardian</th>                        
                     <th>Address</th>                              
                     <th>Mobile</th>
-                    <th>School</th>                             
+                    <th>Email</th>     
+                    <th>Route Batch</th> 
+                    <th>NFC Number</th>                             
                     <th style="width:160px;">Action</th>
                   </tr>
                 </thead>
