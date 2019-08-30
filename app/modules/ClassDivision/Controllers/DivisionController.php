@@ -12,11 +12,13 @@ class DivisionController extends Controller {
     //division creation page
     public function create()
     {
+        $client_id = \Auth::user()->client->id;
         $classes=SchoolClass::select([
-            'id',
-            'name'  
-        ])
-        ->get();  
+                    'id',
+                    'name'  
+                ])
+                ->where('client_id',$client_id)
+                ->get();  
         return view('ClassDivision::division-create',['classes' => $classes]);
     }
 
@@ -29,7 +31,7 @@ class DivisionController extends Controller {
         $division = ClassDivision::create([  
             'class_id' => $request->class_id,           
             'name' => $request->name,            
-            'school_id' => $client_id       
+            'client_id' => $client_id       
         ]);
         $eid= encrypt($division->id);
         $request->session()->flash('message', 'New division created successfully!'); 
@@ -45,6 +47,7 @@ class DivisionController extends Controller {
 
     public function getDivisionlist(Request $request)
     {
+        $client_id = \Auth::user()->client->id;
         $division = ClassDivision::select(
             'id', 
             'name',
@@ -52,6 +55,7 @@ class DivisionController extends Controller {
             'deleted_at')
             ->withTrashed()
             ->with('class:id,name')
+            ->where('client_id',$client_id)
             ->get();
             return DataTables::of($division)
             ->addIndexColumn()
@@ -74,12 +78,14 @@ class DivisionController extends Controller {
     //edit division details
     public function edit(Request $request)
     {
+        $client_id = \Auth::user()->client->id;
         $decrypted = Crypt::decrypt($request->id); 
         $division = ClassDivision::find($decrypted); 
         $classes=SchoolClass::select([
                     'id',
                     'name'  
                 ])
+                ->where('client_id',$client_id)
                 ->get();      
         if($division == null)
         {

@@ -10,6 +10,6 @@ class SchoolClass extends Model
     use SoftDeletes;   
 
 	protected $fillable=[
-		'name','school_id'
+		'name','client_id'
 	];	
 }

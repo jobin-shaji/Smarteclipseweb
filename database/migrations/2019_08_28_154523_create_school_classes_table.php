@@ -16,7 +16,7 @@ class CreateSchoolClassesTable extends Migration
         Schema::create('school_classes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('school_id');
+            $table->integer('client_id');
             $table->timestamps();
             $table->softDeletes();
         });

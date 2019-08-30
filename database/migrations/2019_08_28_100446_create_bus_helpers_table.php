@@ -19,6 +19,7 @@ class CreateBusHelpersTable extends Migration
             $table->string('name');
             $table->bigInteger('mobile');
             $table->text('address');
+            $table->integer('client_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,14 +15,16 @@ class HelperController extends Controller {
     }
     //upload helper details to database table
     public function save(Request $request)
-    {    
+    {
+        $client_id = \Auth::user()->client->id;    
         $rules = $this->helperCreateRules();
         $this->validate($request, $rules);           
         $helper = BusHelper::create([            
             'name' => $request->name,  
             'helper_code' => $request->helper_code,           
             'mobile' => $request->mobile,   
-            'address' => $request->address,      
+            'address' => $request->address,  
+            'client_id' => $client_id    
         ]);
         $hid= encrypt($helper->id);
         $request->session()->flash('message', 'New helper created successfully!'); 
@@ -38,14 +40,17 @@ class HelperController extends Controller {
 
     public function getHelperlist(Request $request)
     {
+        $client_id = \Auth::user()->client->id;
         $helper = BusHelper::select(
             'id', 
             'name',
             'helper_code',
             'address',               
             'mobile',
+            'client_id',
             'deleted_at')
             ->withTrashed()
+            ->where('client_id',$client_id)
             ->get();
             return DataTables::of($helper)
             ->addIndexColumn()

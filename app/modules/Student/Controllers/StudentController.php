@@ -3,7 +3,7 @@ namespace App\Modules\Student\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Student\Models\Student;
-use App\Modules\Student\Models\RouteBatch;
+use App\Modules\RouteBatch\Models\RouteBatch;
 use App\Modules\School\Models\School;
 use App\Modules\ClassDivision\Models\ClassDivision;
 use App\Modules\SchoolClass\Models\SchoolClass;
@@ -15,12 +15,12 @@ class StudentController extends Controller {
     //student creation page
     public function create()
     {
-        $school_id = \Auth::user()->client->id;
+        $client_id = \Auth::user()->client->id;
         $classes=SchoolClass::select('id','name')
-                ->where('school_id',$school_id)
+                ->where('client_id',$client_id)
                 ->get();
         $route_batches=RouteBatch::select('id','name')
-                ->where('school_id',$school_id)
+                ->where('client_id',$client_id)
                 ->get();
         $random_password=$this->randomPassword();
         return view('Student::student-create',['classes'=>$classes,'random_password'=>$random_password,'route_batches'=>$route_batches]);
@@ -42,7 +42,7 @@ class StudentController extends Controller {
     //upload student details to database table
     public function save(Request $request)
     {
-        $school_id = \Auth::user()->client->id;    
+        $client_id = \Auth::user()->client->id;    
         $rules = $this->studentCreateRules();
         $this->validate($request, $rules);  
         $location_lat=$request->latitude;
@@ -73,7 +73,7 @@ class StudentController extends Controller {
             'latitude' => $location_lat,
             'longitude' => $location_lng,
             'password' => bcrypt($request->password),
-            'school_id' => $school_id,       
+            'client_id' => $client_id,       
         ]);
         $eid= encrypt($student->id);
         $request->session()->flash('message', 'New student created successfully!'); 
@@ -113,7 +113,7 @@ class StudentController extends Controller {
             'nfc', 
             'address',
             'mobile',
-            'school_id',
+            'client_id',
             'deleted_at')
             ->withTrashed()
             ->with('class:id,name')
@@ -177,12 +177,12 @@ class StudentController extends Controller {
         {
               $location="";
         }
-        $school_id = \Auth::user()->client->id;
+        $client_id = \Auth::user()->client->id;
         $classes=SchoolClass::select('id','name')
-                ->where('school_id',$school_id)
+                ->where('client_id',$client_id)
                 ->get();
         $route_batches=RouteBatch::select('id','name')
-                ->where('school_id',$school_id)
+                ->where('client_id',$client_id)
                 ->get();      
         if($student == null)
         {
