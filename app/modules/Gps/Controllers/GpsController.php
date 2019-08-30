@@ -25,7 +25,10 @@ use PDF;
 use Auth;
 use DataTables;
 
+
+
 class GpsController extends Controller {
+    public $cart;
     //Display all gps
 	public function gpsListPage()
     {
@@ -1327,11 +1330,8 @@ class GpsController extends Controller {
             fputcsv($fp, $val);
         }
         fclose($fp);
-
         return $fp;
     }
-
-    
     public function downloadGpsDataTransfer(Request $request){
 
         \QrCode::size(500)
@@ -1344,13 +1344,10 @@ class GpsController extends Controller {
         if($gps == null){
            return view('Gps::404');
         }
-
         $pdf = PDF::loadView('Gps::gps-pdf-download',['gps' => $gps]);
         return $pdf->download('GpsData.pdf');
 
     }
-
-
     public function getGpsAllData(Request $request)
     {      
         $items = GpsData::find($request->id);
@@ -1365,10 +1362,10 @@ class GpsController extends Controller {
       $items = GpsData::find($request->id);
       $items_data=$this->splitByBTH($items);
       $vltdata=$items->vlt_data;
-      $create_output_string=$this->createOutputString($items_data,$vltdata);
 
+     
         return response()->json([
-                'gpsData' => $create_output_string        
+                'gpsData' => $items_data        
         ]);  
     }
 
@@ -1377,94 +1374,91 @@ class GpsController extends Controller {
         $header=substr($vltdata,0,3);
         $imei=substr($vltdata, 3, 15);
         $count=substr($vltdata, 18, 3);
-        $packetRemovedHead=substr($vltdata,21);
+        $packet_removed_head=substr($vltdata,21);
+        $alert_id = substr( $packet_removed_head,0,2);
+        $status = $this->batchParse($alert_id,$packet_removed_head);
 
-        $batchPacketData=[];
-        $outData=$this->allBatchlogSplit($packetRemovedHead);
-        return $outData;
-    }
+        $final = [];
+        $final[] = array("packet"=>$status['packet'][0],"alert"=>$alert_id);
 
-    public function allBatchlogSplit($packetRemovedHead){
-      $alert_id=substr($packetRemovedHead,0,2);
-      $packet_sart=substr($packetRemovedHead,2);
-       if($alert_id==18){
-        $size=83;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
-        
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
+        while(strlen($status['batch']) > 0){        
+            $alert_id = substr($status['batch'],0,2);
+            $response = $this->batchParse($alert_id,$status['batch']);
+            $status = $response;
+            $final[] =array("packet"=>$status['packet'][0],"alert"=>$alert_id);
         }
-
-       }elseif($alert_id==19){
-        $size=83;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
-        
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
-        }
-
-       }elseif($alert_id==20){
-        $size=83;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
        
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
-        }
 
-       }elseif($alert_id==21){
-        $size=83;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
-     
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
-        }
-
-       }elseif($alert_id==22){
-        $size=78;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
-        
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
-        }
-
-       }elseif($alert_id==25){
-        $size=210;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
-        
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
-        }
-
-       }else{
-        $size=76;
-        $single_packet=substr($packet_sart,0,$size);
-        $batchPacketData[]=array('packet'=>$single_packet,'alert'=>$alert_id);
-        
-        $balanced_packet=substr($packet_sart,$size);
-        if(strlen($balanced_packet)!=0){
-           $this->allBatchlogSplit($balanced_packet); 
-        }
-
-       }
-
-       return $batchPacketData;
-
+        $string_data=$this->createOutputString($final,$vltdata);
+        return $string_data;
     }
+
+    public function batchParse($alert_id, $batch){
+            $items = [];
+            switch ($alert_id) {
+            case '18':
+                $size=83;
+                $parsed = substr($batch,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                $final_packet=array('packet'=>$items,'batch'=>$balanced_packet);
+                return $final_packet;
+                break;
+            case '19':
+                $size=83;
+                $parsed =substr($batch,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                return array('packet'=>$items,'batch'=>$balanced_packet);
+               
+                break;
+            case '20':
+                $size=83;
+                $parsed = substr($batch,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                return array('packet'=>$items,'batch'=>$balanced_packet);
+                break;
+            case '21':
+                $size=83;
+                $parsed = substr($packet_start,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                return array('packet'=>$items,'batch'=>$balanced_packet);
+                break;
+            case '22':
+                $size=78;
+                $parsed = substr($batch,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                return array('packet'=>$items,'batch'=>$balanced_packet);
+                break;
+            case '25':
+                $size=210;
+                $parsed = substr($batch,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                return array('packet'=>$items,'batch'=>$balanced_packet);
+                break;
+            default:
+                $size=78;
+                $parsed = substr($batch,0,$size);
+                $items[] = $parsed;
+                $balanced_packet=substr($batch,$size);
+                return array('packet'=>$items,'batch'=>$balanced_packet);
+                break;
+
+        }
+    }
+
+
+
+
+
 
     public function createOutputString($items_data,$vltdata){
-         $string="<tr><td colspan='3    '>".$vltdata."</td></tr>";
+       
+         $string="<tr><td colspan='3'>".$vltdata."</td></tr>";
          $string.="<tr><th>No</th><th>Alert ID</th><th>Packet</th></tr>";
          $i=1;
 
