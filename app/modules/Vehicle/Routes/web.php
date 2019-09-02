@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:client'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:client|school'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 
 Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
@@ -76,7 +76,7 @@ Route::post('/vehicle-root-list','VehicleController@getVehicleRootList')->name('
 });
 
 ///////////////////////////////Location track////////////////////////////////////
-Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client|school'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
 
