@@ -1,6 +1,6 @@
 <?php 
 
-Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Driver\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' => 'App\Modules\Driver\Controllers' ] , function() {
 	 Route::get('/drivers','DriverController@driverList')->name('drivers');
 	 Route::post('/driver-list','DriverController@getDriverlist')->name('driver-list');
 

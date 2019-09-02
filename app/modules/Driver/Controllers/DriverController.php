@@ -22,19 +22,15 @@ class DriverController extends Controller {
     public function save(Request $request)
     {    
         $client_id=\Auth::user()->client->id; 
-        if($request->user()->hasRole('client')){
-            $rules = $this->driver_create_rules();
-            $this->validate($request, $rules);           
-            $client = Driver::create([            
-                'name' => $request->name,            
-                'address' => $request->address,
-                'mobile' => $request->mobile,
-                'client_id' => $client_id, 
-                'points' => 100          
-            ]);
-
-            // User::where('username', $request->username)->first()->assignRole('client');
-        }
+        $rules = $this->driver_create_rules();
+        $this->validate($request, $rules);           
+        $client = Driver::create([            
+            'name' => $request->name,            
+            'address' => $request->address,
+            'mobile' => $request->mobile,
+            'client_id' => $client_id, 
+            'points' => 100          
+        ]);
         $eid= encrypt($client->id);
         $request->session()->flash('message', 'New Driver created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
