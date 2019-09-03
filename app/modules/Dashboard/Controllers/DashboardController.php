@@ -65,7 +65,7 @@ class DashboardController extends Controller
                     ->where('client_id',$client_id)
                     // ->where('client_id',$client_id)
                     ->get();
-            dd($vehicles);
+            
             $single_vehicle = [];
             foreach($vehicles as $vehicle){
                 $single_vehicle[] = $vehicle->id;
@@ -116,6 +116,7 @@ class DashboardController extends Controller
                     ->where('client_id',$client_id)
                     ->whereIn('gps_id',$single_gps)
                     ->get();
+
                     // dd($get_vehicles->register_number);
             // dd($gps_data);
             return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
@@ -329,7 +330,18 @@ class DashboardController extends Controller
                 'offline' => $offline,
                 'status' => 'dbcount'           
             ]);
-        }       
+        } else if($user->hasRole('school')){
+            return response()->json([
+                'gps' => Gps::where('user_id',$user->id)->count(),
+                'vehicles' => Vehicle::where('client_id',$client->id)->count(),
+                'geofence' => Geofence::where('user_id',$user->id)->count(),
+                'moving' => $moving,
+                'idle' => $idle,
+                'stop' => $stop,
+                'offline' => $offline,
+                'status' => 'dbcount'           
+            ]);
+        }           
     }
 
     //emergency alert
