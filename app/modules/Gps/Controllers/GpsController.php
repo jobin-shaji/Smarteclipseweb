@@ -1358,12 +1358,9 @@ class GpsController extends Controller {
     }
 
     public function getGpsAllDataBth(Request $request){
-
       $items = GpsData::find($request->id);
       $items_data=$this->splitByBTH($items);
       $vltdata=$items->vlt_data;
-
-     
         return response()->json([
                 'gpsData' => $items_data        
         ]);  
