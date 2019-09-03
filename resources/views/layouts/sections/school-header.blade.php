@@ -10,60 +10,6 @@
     </li>
 
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE
-        </a>
-        <ul class="dropdown-menu multi-level">
-            <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE</a>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
-                <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE BATCH</a>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/route-batch/create')}}">ADD ROUTE BATCH</a></li>
-                <li><a class="dropdown-item" href="{{url('/route-batch')}}">LIST ROUTE BATCH</a></li>
-                </ul>
-            </li>
-            <li><a class="dropdown-item" href="{{url('/route/schedule')}}">SCHEDULE ROUTE</a></li>
-            
-        </ul>
-    </li>
-
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> STUDENT
-        </a>
-        <ul class="dropdown-menu multi-level">
-            <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">CLASS</a>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/class/create')}}">ADD CLASS</a></li>
-                <li><a class="dropdown-item" href="{{url('/class')}}">LIST CLASSS</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DIVISION</a>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/division/create')}}">ADD DIVISION</a></li>
-                <li><a class="dropdown-item" href="{{url('/division')}}">LIST DIVISIONS</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >STUDENT</a>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/student/create')}}">ADD STUDENT</a></li>
-                <li><a class="dropdown-item" href="{{url('/student')}}">LIST STUDENTS</a></li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-
-    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> HELPER 
         </a>
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -97,6 +43,66 @@
                 <li><a class="dropdown-item" href="{{url('/drivers-score-page')}}">DRIVER SCORE</a></li>
                 @endrole
                 <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE
+        </a>
+        <ul class="dropdown-menu multi-level">
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
+                <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE BATCH</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/route-batch/create')}}">ADD ROUTE BATCH</a></li>
+                <li><a class="dropdown-item" href="{{url('/route-batch')}}">LIST ROUTE BATCH</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SCHEDULE ROUTE</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/route/schedule')}}">SCHEDULE ROUTE</a></li>
+                <li><a class="dropdown-item" href="{{url('/route-schedule')}}">LIST SCHEDULED ROUTES</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> STUDENT
+        </a>
+        <ul class="dropdown-menu multi-level">
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">CLASS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/class/create')}}">ADD CLASS</a></li>
+                <li><a class="dropdown-item" href="{{url('/class')}}">LIST CLASSS</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DIVISION</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/division/create')}}">ADD DIVISION</a></li>
+                <li><a class="dropdown-item" href="{{url('/division')}}">LIST DIVISIONS</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >STUDENT</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/student/create')}}">ADD STUDENT</a></li>
+                <li><a class="dropdown-item" href="{{url('/student')}}">LIST STUDENTS</a></li>
                 </ul>
             </li>
         </ul>

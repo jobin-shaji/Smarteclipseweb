@@ -249,6 +249,56 @@ class RouteController extends Controller {
         ]);       
     }
 
+    // route schedule list
+    public function routeScheduledList()
+    {
+       return view('Route::route-schedule-list'); 
+    }
+
+    // route schedule list data
+    public function getrouteScheduledList()
+    {
+        $client_id=\Auth::user()->client->id;
+        $route_schedule = RouteSchedule::select(
+                    'id',
+                    'route_batch_id',
+                    'route_id',
+                    'vehicle_id',
+                    'driver_id',
+                    'helper_id',
+                    'client_id',
+                    'deleted_at'
+                    )
+                ->withTrashed()
+                ->with('routeBatch:id,name')
+                ->with('route:id,name')
+                ->with('vehicle:id,name,register_number')
+                ->with('driver:id,name')
+                ->with('helper:id,name,helper_code')
+                ->where('client_id',$client_id)
+                ->get();
+        return DataTables::of($route_schedule)
+            ->addIndexColumn()
+            ->addColumn('action', function ($route_schedule) {
+                $b_url = \URL::to('/');
+                if($route_schedule->deleted_at ==null){
+                    return 
+                        "
+                        <button onclick=deleteScheduleRoute(".$route_schedule->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
+                        </button>
+                        <a href=".$b_url."/route/".Crypt::encrypt($route_schedule->id)."/schedule-edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                        ";
+                }else{
+                    return 
+                        "<button onclick=activateScheduleRoute(".$route_schedule->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Activate
+                        </button>";
+                }
+                
+             })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
     // schedule a route and bus
     public function scheduleRoute()
     {
@@ -256,18 +306,21 @@ class RouteController extends Controller {
         $client_user_id=\Auth::user()->id;
         $schedule_vehicles = RouteSchedule::select(
                 'vehicle_id',
-                'helper_id'
+                'helper_id',
+                'route_batch_id'
                 )
                 ->where('client_id',$client_id)
                 ->get();
         $single_vehicle = [];
         $single_helper = [];
+        $single_route_batch = [];
         foreach($schedule_vehicles as $vehicle){
             $single_vehicle[] = $vehicle->vehicle_id;
             $single_helper[] = $vehicle->helper_id;
+            $single_route_batch[] = $vehicle->route_batch_id;
         }
         $vehicles=Vehicle::select('id','name','register_number')
-                ->where('user_id',$client_user_id)
+                ->where('client_id',$client_id)
                 ->whereNotIn('id',$single_vehicle)
                 ->get();
         $helpers=BusHelper::select('id','helper_code','name')
@@ -275,9 +328,142 @@ class RouteController extends Controller {
                 ->whereNotIn('id',$single_helper)
                 ->get();
         $route_batches=RouteBatch::select('id','name')
-        ->where('client_id',$client_id)
-        ->get();
+                ->where('client_id',$client_id)
+                ->whereNotIn('id',$single_route_batch)
+                ->get();
         return view('Route::route-schedule',['vehicles' => $vehicles,'helpers' => $helpers,'route_batches' => $route_batches]);
+    }
+
+    public function routeBatchData(Request $request){
+        $route_batch = RouteBatch::find($request->routeBatchID);
+        $route_batch->route;
+        return response()->json(array('response' => 'success', 'route_batch' => $route_batch));
+    }
+
+    public function routeVehicleDriverData(Request $request){
+        $vehicle = Vehicle::find($request->vehicleID);
+        $vehicle->driver;
+        return response()->json(array('response' => 'success', 'vehicle' => $vehicle));
+    }
+
+    // save vehicle schedules
+    public function saveScheduleRoute(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $rules = $this->scheduleRouteCreateRules();
+        $this->validate($request, $rules);
+        $route_schedule = RouteSchedule::create([
+            'route_batch_id' => $request->route_batch_id,
+            'route_id' => $request->route_id,
+            'vehicle_id' => $request->vehicle_id,
+            'driver_id' => $request->driver_id,
+            'helper_id' => $request->helper_id,
+            'client_id' => $client_id,
+           ]);
+        $request->session()->flash('message', ' Route scheduled successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('route.schedule'));
+    }
+
+    //edit scheduled route details
+    public function editScheduleRoute(Request $request)
+    {
+        $client_id = \Auth::user()->client->id;
+        $decrypted = Crypt::decrypt($request->id); 
+        $route_schedule = RouteSchedule::find($decrypted); 
+        $schedule_vehicles = RouteSchedule::select(
+                'vehicle_id',
+                'helper_id',
+                'route_batch_id'
+                )
+                ->where('client_id',$client_id)
+                ->whereNotIn('id',[$route_schedule->id])
+                ->get();
+        $single_vehicle = [];
+        $single_helper = [];
+        $single_route_batch = [];
+        foreach($schedule_vehicles as $vehicle){
+            $single_vehicle[] = $vehicle->vehicle_id;
+            $single_helper[] = $vehicle->helper_id;
+            $single_route_batch[] = $vehicle->route_batch_id;
+        }
+        $vehicles=Vehicle::select('id','name','register_number')
+                ->where('client_id',$client_id)
+                ->whereNotIn('id',$single_vehicle)
+                ->get();
+        $helpers=BusHelper::select('id','helper_code','name')
+                ->where('client_id',$client_id)
+                ->whereNotIn('id',$single_helper)
+                ->get();
+        $route_batches=RouteBatch::select('id','name')
+                ->where('client_id',$client_id)
+                ->whereNotIn('id',$single_route_batch)
+                ->get();    
+        if($route_schedule == null)
+        {
+           return view('Route::404');
+        }
+        return view('Route::route-schedule-edit',['route_schedule' => $route_schedule,'vehicles' => $vehicles,'helpers' => $helpers,'route_batches' => $route_batches]);
+    }
+
+    //update scheduled route details
+    public function updateScheduleRoute(Request $request)
+    {
+        $route_schedule = RouteSchedule::where('id', $request->id)->first();
+        if($route_schedule == null){
+           return view('Route::404');
+        } 
+        $rules = $this->routeScheduleUpdateRules($route_schedule);
+        $this->validate($request, $rules); 
+        $route_schedule->route_batch_id = $request->route_batch_id;      
+        $route_schedule->route_id = $request->route_id;
+        $route_schedule->vehicle_id = $request->vehicle_id;
+        $route_schedule->driver_id = $request->driver_id;
+        $route_schedule->helper_id = $request->helper_id;
+        $route_schedule->save();      
+        $did = encrypt($route_schedule->id);
+        $request->session()->flash('message', 'Scheduled route updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('route.schedule-edit',$did));  
+    }
+
+    //deactivated scheduled route details from table
+    public function deleteScheduleRoute(Request $request)
+    {
+        $route_schedule = RouteSchedule::find($request->uid);
+        if($route_schedule == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'division does not exist'
+            ]);
+        }
+        $route_schedule->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Scheduled route deactivated successfully'
+        ]);
+    }
+
+    // restore scheduled route
+    public function activateScheduleRoute(Request $request)
+    {
+        $route_schedule = RouteSchedule::withTrashed()->find($request->id);
+        if($route_schedule==null){
+             return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'division does not exist'
+             ]);
+        }
+
+        $route_schedule->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Scheduled route activated successfully'
+        ]);
     }
 
 
@@ -287,6 +473,30 @@ class RouteController extends Controller {
     {
         $rules = [
             'name' => 'required|unique:routes'
+        ];
+        return  $rules;
+    }
+
+    public function scheduleRouteCreateRules()
+    {
+        $rules = [
+            'route_batch_id' => 'required',
+            'route_id' => 'required',
+            'vehicle_id' => 'required',
+            'driver_id' => 'required',
+            'helper_id' => 'required',
+        ];
+        return  $rules;
+    }
+
+    public function routeScheduleUpdateRules($route_schedule)
+    {
+        $rules = [
+            'route_batch_id' => 'required',
+            'route_id' => 'required',
+            'vehicle_id' => 'required',
+            'driver_id' => 'required',
+            'helper_id' => 'required',
         ];
         return  $rules;
     }
