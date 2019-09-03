@@ -14,5 +14,8 @@ Route::get('/assign/route-vehicle','RouteController@AssignRouteList')->name('ass
 Route::post('/assign/assign-route-vehicle-list','RouteController@getAssignRouteVehicleList')->name('assign-route-vehicle-list');
 Route::post('/already/assign-route','RouteController@alredyassignroutelist')->name('already.assign.route');
 
+Route::get('/route/schedule','RouteController@scheduleRoute')->name('route.schedule');
+Route::post('/route/save_schedule','RouteController@saveScheduleRoute')->name('route.schedule.p');
+
 
 });

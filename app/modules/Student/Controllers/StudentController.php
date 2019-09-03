@@ -46,7 +46,7 @@ class StudentController extends Controller {
         $rules = $this->studentCreateRules();
         $this->validate($request, $rules);  
         $location_lat=$request->latitude;
-        $location_lng=$request->longitude;  
+        $location_lng=$request->longitude; 
         if($location_lat==null){
             $placeLatLng=$this->getPlaceLatLng($request->student_location); 
             if($placeLatLng==null){
@@ -56,8 +56,7 @@ class StudentController extends Controller {
             }
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];  
-        }
-            
+        }   
         $student = Student::create([ 
             'code' => $request->code,           
             'name' => $request->name,  

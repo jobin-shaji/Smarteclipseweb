@@ -169,7 +169,7 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Route Batch</label>
                         <div class="form-group has-feedback">
-                          <select class="form-control  select2 {{ $errors->has('route_batch') ? ' has-error' : '' }}" id="route_batch" name="route_batch" required>
+                          <select class="form-control  select2 {{ $errors->has('route_batch') ? ' has-error' : '' }}" id="route_batch" name="route_batch_id" required>
                           <option selected disabled>Select Route Batch</option>
                           @foreach($route_batches as $route_batch)
                           <option value="{{$route_batch->id}}">{{$route_batch->name}}</option>  
