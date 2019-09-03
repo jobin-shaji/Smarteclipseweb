@@ -220,22 +220,25 @@ class ServicerController extends Controller {
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['logitude'];        
         $user_id=\Auth::user()->id;
-                $servicer = ServicerJob::create([
-                'servicer_id' => $request->servicer,
-                'client_id' => $request->client,
-                'job_id' => $job_id,
-                'job_type' => $request->job_type,
-                'user_id' => $user_id,
-                'description' => $request->description,
-                'gps_id' => $request->gps, 
-                'job_date' => $job_date,                
-                'status' => 0,
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng              
-            ]); 
-            $request->session()->flash('message', 'Assign  servicer successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect(route('assign.servicer'));  
+        $servicer = ServicerJob::create([
+            'servicer_id' => $request->servicer,
+            'client_id' => $request->client,
+            'job_id' => $job_id,
+            'job_type' => $request->job_type,
+            'user_id' => $user_id,
+            'description' => $request->description,
+            'gps_id' => $request->gps, 
+            'job_date' => $job_date,                
+            'status' => 0,
+            'latitude'=>$location_lat,
+            'longitude'=>$location_lng              
+        ]); 
+        // $gps = Gps::find($request->gps);
+        // $gps->user_id = null;        
+        // $gps->save();                
+        $request->session()->flash('message', 'Assign  servicer successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('assign.servicer'));  
        
          
     }
@@ -828,9 +831,8 @@ class ServicerController extends Controller {
     {
         $user = $request->user();
         $client_id=$request->client_id;
-
-         $client = Client::find($client_id);
-         $vehicle_device = Vehicle::select(
+        $client = Client::find($client_id);
+        $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
             'register_number',
@@ -838,15 +840,27 @@ class ServicerController extends Controller {
         )
         ->where('client_id',$client_id)
         ->get();
-
         $single_gps = [];
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
-        }   
-
+        }
+        $servicer_jobs = ServicerJob::select(
+            'gps_id',
+            'servicer_id',
+            'user_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();
+        $servicer_gps = [];
+        foreach($servicer_jobs as $servicer_job){
+            $servicer_gps[] = $servicer_job->gps_id;
+        }     
+        // dd($servicer_gps);
         $devices=Gps::select('id','imei')
         ->where('user_id',$client->user_id)
         ->whereNotIn('id',$single_gps)
+        ->whereNotIn('id',$servicer_gps)
         ->get();
  
         // if($user->hasRole('sub_dealer')){
