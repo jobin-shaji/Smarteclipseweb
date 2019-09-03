@@ -22,6 +22,6 @@ class Student extends Model
 	}
 
 	public function routeBatch(){
-		return $this->hasOne('App\Modules\Student\Models\RouteBatch','id','route_batch_id');
+		return $this->hasOne('App\Modules\RouteBatch\Models\RouteBatch','id','route_batch_id');
 	}
 }

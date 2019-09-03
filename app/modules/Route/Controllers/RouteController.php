@@ -9,7 +9,10 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Client\Models\Client;
 use App\Modules\Route\Models\RouteArea;
+use App\Modules\Route\Models\RouteSchedule;
 use App\Modules\Vehicle\Models\VehicleRoute;
+use App\Modules\RouteBatch\Models\RouteBatch;
+use App\Modules\BusHelper\Models\BusHelper;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use DataTables;
@@ -244,6 +247,37 @@ class RouteController extends Controller {
         return response()->json([
             'assign_route_count' => $router            
         ]);       
+    }
+
+    // schedule a route and bus
+    public function scheduleRoute()
+    {
+        $client_id=\Auth::user()->client->id;
+        $client_user_id=\Auth::user()->id;
+        $schedule_vehicles = RouteSchedule::select(
+                'vehicle_id',
+                'helper_id'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+        $single_vehicle = [];
+        $single_helper = [];
+        foreach($schedule_vehicles as $vehicle){
+            $single_vehicle[] = $vehicle->vehicle_id;
+            $single_helper[] = $vehicle->helper_id;
+        }
+        $vehicles=Vehicle::select('id','name','register_number')
+                ->where('user_id',$client_user_id)
+                ->whereNotIn('id',$single_vehicle)
+                ->get();
+        $helpers=BusHelper::select('id','helper_code','name')
+                ->where('client_id',$client_id)
+                ->whereNotIn('id',$single_helper)
+                ->get();
+        $route_batches=RouteBatch::select('id','name')
+        ->where('client_id',$client_id)
+        ->get();
+        return view('Route::route-schedule',['vehicles' => $vehicles,'helpers' => $helpers,'route_batches' => $route_batches]);
     }
 
 
