@@ -28,7 +28,13 @@
                 <li><a class="dropdown-item" href="{{url('/route-batch')}}">LIST ROUTE BATCH</a></li>
                 </ul>
             </li>
-            <li><a class="dropdown-item" href="{{url('/route/schedule')}}">SCHEDULE ROUTE</a></li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SCHEDULE ROUTE</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/route/schedule')}}">SCHEDULE ROUTE</a></li>
+                <li><a class="dropdown-item" href="{{url('/route-schedule')}}">LIST SCHEDULED ROUTES</a></li>
+                </ul>
+            </li>
             
         </ul>
     </li>
