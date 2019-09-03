@@ -14,8 +14,16 @@ Route::get('/assign/route-vehicle','RouteController@AssignRouteList')->name('ass
 Route::post('/assign/assign-route-vehicle-list','RouteController@getAssignRouteVehicleList')->name('assign-route-vehicle-list');
 Route::post('/already/assign-route','RouteController@alredyassignroutelist')->name('already.assign.route');
 
+Route::get('/route-schedule','RouteController@routeScheduledList')->name('route-schedule');
+Route::post('/route-schedule-list','RouteController@getrouteScheduledList')->name('route-schedule-list');
 Route::get('/route/schedule','RouteController@scheduleRoute')->name('route.schedule');
 Route::post('/route/save_schedule','RouteController@saveScheduleRoute')->name('route.schedule.p');
+Route::post('/route/route-batch','RouteController@routeBatchData')->name('route.route-batch');
+Route::post('/route/vehicle-driver','RouteController@routeVehicleDriverData')->name('route.vehicle-driver');
+Route::get('/route/{id}/schedule-edit','RouteController@editScheduleRoute')->name('route.schedule-edit');
+Route::post('/route/{id}/schedule-edit','RouteController@updateScheduleRoute')->name('route.schedule-update.p');
+Route::post('/route/schedule-delete','RouteController@deleteScheduleRoute')->name('route.schedule-delete');
+Route::post('/route/schedule-activate','RouteController@activateScheduleRoute')->name('route.schedule-activate');
 
 
 });
