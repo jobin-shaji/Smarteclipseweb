@@ -65,6 +65,7 @@ class DashboardController extends Controller
                     ->where('client_id',$client_id)
                     // ->where('client_id',$client_id)
                     ->get();
+            dd($vehicles);
             $single_vehicle = [];
             foreach($vehicles as $vehicle){
                 $single_vehicle[] = $vehicle->id;
