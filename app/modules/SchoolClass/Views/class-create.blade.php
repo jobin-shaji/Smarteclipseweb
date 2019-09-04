@@ -8,6 +8,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Class Creation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Class</li>
      </ol>
        @if(Session::has('message'))

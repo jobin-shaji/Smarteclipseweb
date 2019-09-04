@@ -4,17 +4,11 @@
 @endsection
 @section('content')   
 @if(Session::has('message'))
-<div class="pad margin no-print">
-  <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-      {{ Session::get('message') }}  
-  </div>
-</div>
-@endif  
-
 <section class="hilite-content">
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Helper Details</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Helper Details</li>
       </ol>
       @if(Session::has('message'))

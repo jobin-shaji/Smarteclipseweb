@@ -18,6 +18,8 @@ Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App
 	Route::post('/student-notification/create','StudentNotifiationController@create')->name('student-nitification.create.p');
 
 	Route::post('/student/get-studen-from-batch','StudentNotifiationController@getStudentFromBatch')->name('student-data.batch');
+	
+	Route::post('/student/route-batch','StudentController@routeBatchData')->name('student.route-batch');
 
 });
 

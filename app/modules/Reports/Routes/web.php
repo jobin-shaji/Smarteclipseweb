@@ -1,6 +1,6 @@
 <?php 
 
-Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
 
 
 	// geofence report 
@@ -83,8 +83,6 @@ Route::get('/offline-report','OfflineReportController@accidentImpactAlertReport'
 Route::get('/mainbattery-disconnect-report','MainBatteryDisconnectReportController@mainBatteryDisconnectReport')->name('mainbattery-disconnect-report');
 Route::post('/mainbattery-disconnect-report-list','MainBatteryDisconnectReportController@mainBatteryDisconnectReportList')->name('mainbattery-disconnect-report-list');
 Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectReportController@export')->name('main.battery.disconnect.report.export');
-
-
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
@@ -92,4 +90,35 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::get('/log-report','DeviceLogReportController@logReport')->name('log-report');
 	Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
 	// Route::post('/track-report/export','TrackingReportController@export')->name('track.report.export');
+});
+
+Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
+
+	Route::get('/pickup-dropoff-report-based-on-student','PickupDropoffReportController@pickupReportBasedOnStudent')->name('pickup-dropoff-report-based-on-student');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+
+	//missed-student-report
+	Route::get('/missed-student-report','missedStudentReportController@missedStudentReport')->name('missed-student-report');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+	//pickup-drop-off-report-based-on-bus
+	Route::get('/pickup-dropoff-report-based-on-bus','PickupDropoffReportController@pickupReportBasedOnBus')->name('pickup-dropoff-report-based-on-bus');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+
+	// special class bus
+	Route::get('/special-class-bus-schedule-report','SpecialClassBusScheduleController@specialClassBusSchedule')->name('special-class-bus-schedule-report');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+
+	//parent information report
+	Route::get('/parent-information-report','ParentInformationReportController@parentInformationReport')->name('parent-information-report');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+
+	////student-wise-usage-report
+	Route::get('/student-wise-usage-report','StudentWiseUsageReportController@studentWiseUsageReport')->name('student-wise-usage-report');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+
+	////nfc card report
+	Route::get('/nfc-card-report','NfcCardReportController@nfcCardReport')->name('nfc-card-report');
+	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+
+
 });

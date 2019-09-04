@@ -7,6 +7,7 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Driver Score</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Driver Score</li>
        </ol>  
    
