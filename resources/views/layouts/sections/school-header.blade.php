@@ -145,13 +145,14 @@
                 </ul>
             </li>
         </ul>
-    </li>    
+    </li> 
+
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS 
         </a>
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/pickup-dropoff-report-based-on-student')}}"> PICKUP /DROP OFF REPORT  BASED ON STUDENT <span></span></a>                               
+            <a class="dropdown-item" href="{{url('/pickup-dropoff-report-based-on-student')}}"> PICKUP /DROP OFF REPORT  BASED ON STUDENT <span></span></a>
             <a class="dropdown-item" href="{{url('/pickup-dropoff-report-based-on-bus')}}"> PICKUP /DROP OFF REPORT  BASED ON BUS<span></span></a>
             <a class="dropdown-item" href="{{url('/total-km-report')}}"> TOTAL KM REPORT<span></span></a> <a class="dropdown-item" href="{{url('/daily-km-report')}}"> DAILY REPORT<span></span></a> 
             <a class="dropdown-item" href="{{url('/alert-report')}}"> ALERT REPORT<span></span></a> 
