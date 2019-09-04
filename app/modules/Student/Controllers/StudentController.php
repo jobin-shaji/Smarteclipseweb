@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Student\Models\Student;
 use App\Modules\RouteBatch\Models\RouteBatch;
+use App\Modules\Route\Models\RouteArea;
 use App\Modules\School\Models\School;
 use App\Modules\ClassDivision\Models\ClassDivision;
 use App\Modules\SchoolClass\Models\SchoolClass;
@@ -37,6 +38,16 @@ class StudentController extends Controller {
                 ->where("class_id",$classID)
                 ->get();
         return response()->json($division);
+    }
+
+    public function routeBatchData(Request $request)
+    {
+        $route_batch = RouteBatch::find($request->routeBatchID);
+        $route_id=$route_batch->route_id;
+        $route_area=RouteArea::select('route_id','latitude','longitude')
+                                        ->where('route_id',$route_id)
+                                        ->get();
+        return response()->json(array('response' => 'success', 'route_area' => $route_area));
     }
 
     //upload student details to database table

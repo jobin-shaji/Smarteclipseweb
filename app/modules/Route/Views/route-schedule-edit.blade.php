@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  Update Schedule Route
+  Update Scheduled Route
 @endsection
 @section('content')   
    
@@ -10,7 +10,8 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Schedule Route</li>
+        <li class="breadcrumb-page-heading">Update Scheduled Route</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Scheduled Route</li>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">

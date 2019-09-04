@@ -12,6 +12,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Student Updation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Student</li>
       </ol>
       @if(Session::has('message'))

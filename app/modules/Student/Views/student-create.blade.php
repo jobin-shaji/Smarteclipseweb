@@ -10,6 +10,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Student Creation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Student</li>
      </ol>
        @if(Session::has('message'))
@@ -128,7 +129,6 @@
 
                       <input type="hidden"  name="latitude" id="latitude" value="">
                       <input type="hidden"  name="longitude" id="longitude" value="">
-
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Location</label>
                         <div class="form-group has-feedback">
@@ -169,7 +169,7 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Route Batch</label>
                         <div class="form-group has-feedback">
-                          <select class="form-control  select2 {{ $errors->has('route_batch') ? ' has-error' : '' }}" id="route_batch" name="route_batch_id" required>
+                          <select class="form-control route_batch  select2 {{ $errors->has('route_batch') ? ' has-error' : '' }}" id="route_batch" name="route_batch_id" required>
                           <option selected disabled>Select Route Batch</option>
                           @foreach($route_batches as $route_batch)
                           <option value="{{$route_batch->id}}">{{$route_batch->name}}</option>  
@@ -182,6 +182,7 @@
                           </span>
                         @endif
                       </div>
+
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">NFC Number</label>

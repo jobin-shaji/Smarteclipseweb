@@ -3,13 +3,12 @@
   Update Helper Details
 @endsection
 @section('content')   
-   
-
 <section class="hilite-content">
   <!-- title row -->
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Helper Updation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Helper</li>
       </ol>
       @if(Session::has('message'))

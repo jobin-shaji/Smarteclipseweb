@@ -6,6 +6,7 @@
         <div class="page-wrapper_new">  
         <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading">Performance Score History</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Performance Score History</li>
      </ol>
     </nav>         
