@@ -17178,7 +17178,48 @@ span.cover_bell {
     text-align: center;
 }
 
+
+.form-check {
+    margin-left: 20px;
 }
+
+.form-check input,.form-check label{
+    display:inline-block;
+    vertical-align:middle;  
+}
+.branch_select_item {
+    /*width: 12%;*/
+}
+
+fieldset{
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:cover;
+    }    
+ legend{width:200px;padding:10px 20px;}
+ .cover_branch {
+    padding: 27px;
+}
+.selectbox_cover.row {
+    padding-left: 14px;
+    padding-bottom: 23px;
+}
+span.select2-selection__choice__remove {
+    background-color: #E4E4E4 !important;
+}
+
+span.select2-selection.select2-selection--multiple {
+    height: 100%;
+}
+
+.pac-container { position: relative !important;top: -530px !important;margin:0px }
+
+
+
+
+}
+
+
 
 
 
