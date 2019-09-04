@@ -33,6 +33,7 @@ $(document).ready(function() {
 
 $('.route_batch').on('change', function() {
     var routeBatchID=this.value;
+    var route_area = [];
     var data = { routeBatchID : routeBatchID };
     $.ajax({
         type:'POST',
@@ -43,8 +44,8 @@ $('.route_batch').on('change', function() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (res) {
-          var route_area=res.route_area;
-          $(".route_area").val(route_area); 
+          route_area.push(res.route_area);
+          $("#route_area").val(route_area); 
         }
     });
 });
