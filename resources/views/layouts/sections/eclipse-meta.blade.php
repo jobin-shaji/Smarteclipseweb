@@ -92,6 +92,14 @@
 @yield('pre-css')
 
   
+   <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+
+    <!-- Load styles -->
+    <!-- <link rel="stylesheet" type="text/css" href="/css/app.css?id=a9b4a1e556de29ef2d1c"> -->
+
+    <!-- Load JS -->
+    <script src="//ssl.google-analytics.com/ga.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
 
      <!--  <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
        <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}"> -->
