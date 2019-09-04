@@ -49,7 +49,77 @@ class DashboardController extends Controller
             return view('Dashboard::dashboard');  
         }
         else if(\Auth::user()->hasRole('school')){
-            return view('Dashboard::dashboard');  
+            $client_id=\Auth::user()->client->id;
+            $alerts = Alert::select(
+                    'id',
+                    'alert_type_id',
+                    'vehicle_id',
+                    'status',
+                    'created_at')
+                    ->with('alertType:id,code,description')
+                    ->with('vehicle:id,name,register_number')
+                    ->where('client_id',$client_id)
+                    ->orderBy('id', 'desc')->take(5)
+                    ->get();
+            $vehicles = Vehicle::select('id','register_number')
+                    ->where('client_id',$client_id)
+                    // ->where('client_id',$client_id)
+                    ->get();
+            
+            $single_vehicle = [];
+            foreach($vehicles as $vehicle){
+                $single_vehicle[] = $vehicle->id;
+            }
+            $expired_documents=Document::select([
+                    'id',
+                    'vehicle_id',
+                    'document_type_id',
+                    'expiry_date'
+                    ])
+                    ->with('vehicle:id,name,register_number')
+                    ->with('documentType:id,name')
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->whereDate('expiry_date', '<', date('Y-m-d'))
+                    ->get();
+            $expire_documents=Document::select([
+                    'id',
+                    'vehicle_id',
+                    'document_type_id',
+                    'expiry_date'
+                    ])
+                    ->with('vehicle:id,name,register_number')
+                    ->with('documentType:id,name')
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+                    ->get();
+
+                    $gps_data=GpsData::select([
+                        'latitude as latitude',
+                        'longitude as longitude' 
+                    ])                    
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->with('vehicle:id,name,register_number') 
+                    ->groupBy('vehicle_id')
+                    ->orderBy('id','desc')                 
+                    ->get();
+                    $user_id=\Auth::user()->id;
+                     $get_gpss = Gps::select('id','imei','lat','lon')
+                    ->whereNotNull('lat')
+                    ->whereNotNull('lon')
+                    ->where('user_id',$user_id)                        
+                    ->get();
+                     $single_gps = [];
+                    foreach($get_gpss as $get_gps){
+                        $single_gps[] = $get_gps->id;
+                    }
+                     $get_vehicles = Vehicle::select('id','register_number','name','gps_id')
+                    ->where('client_id',$client_id)
+                    ->whereIn('gps_id',$single_gps)
+                    ->get();
+
+                    // dd($get_vehicles->register_number);
+            // dd($gps_data);
+            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
         }
         else if(\Auth::user()->hasRole('client')){
             $client_id=\Auth::user()->client->id;
@@ -260,7 +330,18 @@ class DashboardController extends Controller
                 'offline' => $offline,
                 'status' => 'dbcount'           
             ]);
-        }       
+        } else if($user->hasRole('school')){
+            return response()->json([
+                'gps' => Gps::where('user_id',$user->id)->count(),
+                'vehicles' => Vehicle::where('client_id',$client->id)->count(),
+                'geofence' => Geofence::where('user_id',$user->id)->count(),
+                'moving' => $moving,
+                'idle' => $idle,
+                'stop' => $stop,
+                'offline' => $offline,
+                'status' => 'dbcount'           
+            ]);
+        }           
     }
 
     //emergency alert
