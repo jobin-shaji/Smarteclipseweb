@@ -9,5 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StudentNotification extends Model
 {
     use SoftDeletes;   
+    protected $fillable=[
+		'mobile','message','client_id','type','date'
+	];
    
 }
