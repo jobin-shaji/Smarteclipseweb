@@ -864,21 +864,21 @@ class ServicerController extends Controller {
         ->get();
  
         // if($user->hasRole('sub_dealer')){
-            if($devices)
-            {               
-                $response_data = array(
-                    'status'  => 'client-gps',
-                    'devices' => $devices
-                );
-            }
-            else{
-                $response_data = array(
-                    'status'  => 'failed',
-                    'message' => 'failed',
-                    'code'    =>0
-                );
-            }
-            return response()->json($response_data); 
+        if($devices)
+        {               
+            $response_data = array(
+                'status'  => 'client-gps',
+                'devices' => $devices
+            );
+        }
+        else{
+            $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0
+            );
+        }
+        return response()->json($response_data); 
         // }
     }
     ##############################################
