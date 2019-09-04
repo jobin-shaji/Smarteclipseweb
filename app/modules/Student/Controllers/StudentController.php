@@ -217,6 +217,7 @@ class StudentController extends Controller {
         $student->longitude=$location_lng;
         $student->code = $request->code;     
         $student->name = $request->name;
+        $student->gender = $request->gender;
         $student->class_id = $request->class_id;
         $student->division_id = $request->division_id;
         $student->parent_name = $request->parent_name;
@@ -351,6 +352,7 @@ class StudentController extends Controller {
         $rules = [
             'code' => 'required|unique:students,code,'.$student->id,
             'name' => 'required',
+            'gender' => 'required',
             'class_id' => 'required',
             'division_id' => 'required',
             'parent_name' => 'required',

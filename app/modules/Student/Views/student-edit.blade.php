@@ -54,6 +54,23 @@
                 </div>
 
                 <div class="form-group row" style="float:none!important">
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Gender</label> 
+                  <div class="form-group has-feedback">
+                    <select class="form-control {{ $errors->has('gender') ? ' has-error' : '' }}" placeholder="Gender" name="gender" value="{{ old('gender') }}">
+                      <option value="{{$student->gender}}" selected>@if($student->gender==1){{"Male"}} @elseif($student->gender==2){{"Female"}}@elseif($student->gender==3){{"Other"}} @endif</option>
+                      <option value="1">Male</option>
+                      <option value="2">Female</option>
+                      <option value="3">Others</option>
+                    </select>
+                  </div>
+                  @if ($errors->has('gender'))
+                    <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('gender') }}</strong>
+                    </span>
+                  @endif
+                </div>
+
+                <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Class</label>
                   <div class="form-group has-feedback">
                     <select class="form-control {{ $errors->has('class_id') ? ' has-error' : '' }}"  name="class_id" id="class_id" value="{{ old('class_id') }}" required>
@@ -178,7 +195,7 @@
                 </div>   
             </div>
             <div class="col-lg-6 col-md-12">
-              <div id="map" style=" width:100%;height:540px;"></div>
+              <div id="map" style=" width:100%;height:100%;"></div>
             </div>
           </div>
           <div class="row">
