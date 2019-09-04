@@ -11,5 +11,6 @@ Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App
 	Route::post('/student/delete','StudentController@deleteStudent')->name('student.delete');
 	Route::post('/student/activate','StudentController@activateStudent')->name('student.activate');
 	Route::post('/student/class-division-dropdown/','StudentController@getClassDivisionList')->name('student.class-division-dropdown');
+	Route::post('/student/route-batch','StudentController@routeBatchData')->name('student.route-batch');
 });
 
