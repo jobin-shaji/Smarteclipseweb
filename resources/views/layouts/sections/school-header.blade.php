@@ -105,6 +105,15 @@
                 <li><a class="dropdown-item" href="{{url('/student')}}">LIST STUDENTS</a></li>
                 </ul>
             </li>
+
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >NOTIFICATION</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/student-notification/create')}}">ADD Notification</a></li>
+                <li><a class="dropdown-item" href="{{url('/student')}}">LIST Notification</a></li>
+                </ul>
+            </li>
+
         </ul>
     </li>
     
