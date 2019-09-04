@@ -15,6 +15,11 @@ class CreateStudentNotificationsTable extends Migration
     {
         Schema::create('student_notifications', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('mobile');
+            $table->text('message');
+            $table->integer('client_id');
+            $table->text('type')->comment="1-from school notification";
+            $table->datTime('date');
             $table->timestamps();
         });
     }

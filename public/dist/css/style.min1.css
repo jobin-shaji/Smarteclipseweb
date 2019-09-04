@@ -17214,8 +17214,13 @@ span.select2-selection.select2-selection--multiple {
 
 .pac-container { position: relative !important;top: -530px !important;margin:0px }
 
-
-
+.cover_short_codes {
+    padding-left: 22px;
+    padding-bottom: 10px;
+}
+.cover_short_codes span {
+    padding-left: 11px;
+}
 
 }
 
