@@ -412,6 +412,7 @@ class ServicerController extends Controller {
         )
         ->where('servicer_id',$user_id)
         ->whereNull('job_complete_date')
+        ->with('gps:id,imei')
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
@@ -702,11 +703,13 @@ class ServicerController extends Controller {
             'created_at',
             'status',
             'latitude',
-            'longitude'
+            'longitude',
+            'gps_id'
         )
         ->where('servicer_id',$user_id)
         ->whereNotNull('job_complete_date')
         ->with('user:id,username')
+        ->with('gps:id,imei')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -906,11 +909,13 @@ class ServicerController extends Controller {
             'job_complete_date', 
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
+            'gps_id',
             'status'
         )
         ->where('user_id',$user_id)
         ->whereNotNull('job_complete_date')
         ->with('user:id,username')
+        ->with('gps:id,imei')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
