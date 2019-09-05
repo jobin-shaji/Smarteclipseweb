@@ -33,7 +33,7 @@ $(document).ready(function () {
             {data: 'job_id', name: 'job_id'},
             {data: 'servicer.name', name: 'servicer.name'},
             {data: 'clients.name', name: 'clients.name'},
-            
+            {data: 'gps.imei', name: 'gps.imei'},
             {data: 'job_type', name: 'job_type'},
             // {data: 'user.username', name: 'user.username'},
             {data: 'description', name: 'description'},
