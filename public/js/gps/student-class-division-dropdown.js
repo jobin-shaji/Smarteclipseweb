@@ -45,7 +45,8 @@ $('.route_batch').on('change', function() {
         },
         success: function (res) {
           route_area.push(res.route_area);
-          $("#route_area").val(route_area); 
-        }
+          $('[name=route_area]').val(JSON.stringify(route_area)); 
+        } 
     });
 });
+
