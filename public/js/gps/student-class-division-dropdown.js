@@ -30,3 +30,22 @@ $(document).ready(function() {
     }
   });
 });
+
+$('.route_batch').on('change', function() {
+    var routeBatchID=this.value;
+    var route_area = [];
+    var data = { routeBatchID : routeBatchID };
+    $.ajax({
+        type:'POST',
+        url: '/student/route-batch',
+        data:data ,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+          route_area.push(res.route_area);
+          $("#route_area").val(route_area); 
+        }
+    });
+});

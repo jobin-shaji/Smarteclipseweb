@@ -11,5 +11,18 @@ Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App
 	Route::post('/student/delete','StudentController@deleteStudent')->name('student.delete');
 	Route::post('/student/activate','StudentController@activateStudent')->name('student.activate');
 	Route::post('/student/class-division-dropdown/','StudentController@getClassDivisionList')->name('student.class-division-dropdown');
+
+	// students notification
+
+	Route::get('/student-notification/create','StudentNotifiationController@create')->name('student-nitification.create');
+	Route::post('/student-notification/create','StudentNotifiationController@sendMessageToUser')->name('student-nitification.create.p');
+
+	Route::post('/student/get-studen-from-batch','StudentNotifiationController@getStudentFromBatch')->name('student-data.batch');
+
+	Route::post('/student/route-batch','StudentController@routeBatchData')->name('student.route-batch');
+	Route::get('/student-notification','StudentNotifiationController@getNotification')->name('student-notification');
+	Route::post('/student-notification/list','StudentNotifiationController@getNotificationList')->name('student-notification.list');
+
+
 });
 

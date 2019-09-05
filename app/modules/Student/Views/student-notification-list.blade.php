@@ -1,15 +1,15 @@
 @extends('layouts.eclipse')
 @section('title')
-  Helper List
+  Student List
 @endsection
 @section('content')
 
 <div class="page-wrapper_new">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-page-heading">Helper List</li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Helper List</li>
-    </ol>  
+      <li class="breadcrumb-page-heading">Student notification list</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Student notification list</li>
+    </ol>
     @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -21,18 +21,16 @@
   <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive">
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                   
           <div class="row">
             <div class="col-sm-12">
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
                     <th>Sl.No</th>  
-                    <th>ID</th>                             
-                    <th>Name</th>                                                        
-                    <th>Address</th>  
-                    <th>Mobile</th>                           
-                    <th style="width:160px;">Action</th>
+                    <th>Mobile</th>                             
+                    <th>Message</th> 
+                    <th>Date</th>     
                   </tr>
                 </thead>
               </table>
@@ -46,5 +44,5 @@
 
 @endsection
 @section('script')
-  <script src="{{asset('js/gps/helper-list.js')}}"></script>
+  <script src="{{asset('js/gps/student-notification-list.js')}}"></script>
 @endsection
