@@ -32,7 +32,7 @@
                       <th>Job Code</th>
                       <th>Service Engieer</th>
                       <th>Client</th>
-                      
+                      <th>Gps</th>
                       <th>Job Type</th>
                       <!-- <th >User</th> -->
                       <th>Description</th>
