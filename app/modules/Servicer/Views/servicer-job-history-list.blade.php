@@ -34,6 +34,7 @@
                     <th>Client</th>                      
                     <th>Job Type</th>
                     <th>Servicer</th>
+                    <th>GPS</th>
                     <th>Description</th>
                     <th>Job Date</th> 
                     <th>Action</th>                      

@@ -36,6 +36,7 @@ $(document).ready(function () {
             {data: 'clients.name', name: 'clients.name'},
             {data: 'job_type', name: 'job_type'},
             {data: 'user.username', name: 'user.username'},
+            {data: 'gps.imei', name: 'gps.imei'},
             {data: 'description', name: 'description'},
             {data: 'location', name: 'location'},
             {data: 'job_date', name: 'job_date'},   
