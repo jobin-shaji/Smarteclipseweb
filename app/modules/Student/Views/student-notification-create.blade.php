@@ -28,11 +28,11 @@
                   <!-- Material unchecked -->
                 <div class="cover_branch">
                   <fieldset class="border" >
-                   <legend class ='text-center'>Branches</legend>
+                   <legend class ='text-center'>Batch</legend>
                    @foreach($route_batches as $branch)
                      <div class="col-lg-2 col-md-2 branch_select_item">
                       <div class="form-check branch_check_box">
-                          <input type="checkbox" class="form-check-input " value="{{$branch->id}}">
+                          <input type="checkbox" name="batchs[]" class="form-check-input " value="{{$branch->id}}">
                           <label class="form-check-label">{{$branch->name}}</label>
                       </div>
                     </div>
@@ -69,7 +69,11 @@
             <div class="cover_branch">
                   <fieldset class="border" >
                    <legend class ='text-center'>Message</legend>
-                      <textarea rows=8 style="width: 97%; margin-left: 20px;"></textarea>
+                      <div class="cover_short_codes">
+                        <span>Student Name:<b><i>'[student]'</i></b></span>
+                        <span>Parent Name:<b><i>'[parent]'</i></b></span>
+                      </div>
+                      <textarea rows=8 style="width: 97%; margin-left: 20px;" name="message"></textarea>
                       <button type="submitt" class="btn btn-success" style="margin-right:10px;">Send Message <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                  </fieldset> 
                  </div>
