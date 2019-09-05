@@ -261,6 +261,7 @@ class ServicerController extends Controller {
             'job_type',
             'user_id',
             'description',
+            'gps_id',
             // 'job_date',
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
@@ -268,6 +269,7 @@ class ServicerController extends Controller {
         )
         ->where('user_id',$user_id)
         ->with('user:id,username')
+        ->with('gps:id,imei')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -356,6 +358,7 @@ class ServicerController extends Controller {
             'job_type',
             'user_id',
             'description',
+            'gps_id',
             // 'job_date', 
              \DB::raw('Date(job_date) as job_date'),                
             'created_at',
@@ -363,6 +366,7 @@ class ServicerController extends Controller {
         )
         ->where('user_id',$user_id)
         ->with('user:id,username')
+        ->with('gps:id,imei')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
