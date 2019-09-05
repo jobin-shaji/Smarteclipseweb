@@ -79,8 +79,6 @@
     </div>
   </div>
 </div>
-@section('script')
-    <script src="{{asset('js/gps/pickup-dropoff-report-based-on-student-list.js')}}"></script>
-@endsection
+
 @endsection
 
