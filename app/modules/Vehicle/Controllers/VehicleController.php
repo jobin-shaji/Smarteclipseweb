@@ -1140,7 +1140,7 @@ class VehicleController extends Controller {
         $from_date=$request->from_time;
         $to_date=$request->to_time;
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $user_role=$user->roles->first()->name;
         $check_role_in_playback=$this->checkRolePlayback($user_role,$from_date);
         if($check_role_in_playback=="failed"){
          $response_data = array(
@@ -1377,7 +1377,7 @@ class VehicleController extends Controller {
 
     // ---validate from date-----------------
     public function checkRolePlayback($role,$user_from_date){
-       if($role=="fundamental"){
+       if($role=="fundamental"||"client"){
             $from_date=Carbon::now()->subMonth(2);
          }else if($role=="superior"){ 
             $from_date=Carbon::now()->subMonth(4);
