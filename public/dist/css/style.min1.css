@@ -3827,7 +3827,7 @@ input[type=submit].btn-block {
     z-index: 1000;
     display: none;
     float: left;
-    min-width: 10rem;
+    /*min-width: 30rem;*/
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
     font-size: 0.875rem;
@@ -17220,6 +17220,132 @@ span.select2-selection.select2-selection--multiple {
 }
 .cover_short_codes span {
     padding-left: 11px;
+}
+
+/*Report Menu*/
+li.sys_vapor.cover_dailyreport img {
+    background: #1eb786;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_geofence img {
+    background: #592525;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_alertreport img {
+    background: #326d9e;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_tracking_report img {
+    background: #e26212;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_deviation_report img {
+    background: #d0e026;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_harsh_bracking img {
+    background: #e038dd;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.sudden_acceleration img {
+    background: #1d9b82;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_total_km img {
+    background: #7cce25;
+    width: 25%;
+    border-radius: 4px;
+}
+li.sys_vapor.cover_over_speed img {
+    background: #96215b;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_zig_zag img {
+    background: #092444;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_accident img {
+    background: #68c96d;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_idle_report img {
+    background: #b7a228;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_main_battery img {
+    background: #f77f71;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor.cover_parking_report img {
+    background: #e091aa;
+    width: 25%;
+    border-radius: 4px;
+}
+
+li.sys_vapor {
+    background: #f8f9fa;
+    margin-top: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+
+
+
+ul.ecosystem {
+    column-count: 2;
+    list-style-type: none;
+    margin:0!important  ;
+}
+.system_info {
+    /*margin-left: 67px;*/
+}
+
+li.sys_vapor.cover_dailyreport {
+    /* border: 1px solid; */
+    background: #f8f9fa;
+}
+/*Report Menu*/
+
+
+.system_icon{float:left;}
+
+.system_info {
+    /* margin-left: 67px; */
+    padding: 0 0 0 5%;
+    font-size: 12px;
+}
+.system_icon {
+    padding: 12px;
+    width: 222px;
+}
+
+li.sys_vapor span {
+    color: #000;
 }
 
 }
