@@ -34,6 +34,7 @@
                     <th>Client</th>                      
                     <th>Job Type</th>
                     <th>Assignee</th>
+                    <th>GPS</th>
                     <th>Description</th>
                     <th>Location</th>
                     <th>Job Date</th> 

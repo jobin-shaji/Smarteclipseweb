@@ -3,7 +3,6 @@
   Helper Details
 @endsection
 @section('content')   
-@if(Session::has('message'))
 <section class="hilite-content">
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
