@@ -19,6 +19,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
+use App\Modules\Servicer\Models\ServicerJob;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -1396,6 +1397,112 @@ class VehicleController extends Controller {
     // ---validate from date-----------------
 
  
+
+
+
+    public function servicerVehicleList()
+    {
+        
+       return view('Vehicle::servicer-vehicle-list'); 
+    }
+   
+    public function getServicerVehicleList()
+    {
+        $servicer_id=\Auth::user()->servicer->id;
+        $servicer_jobs = ServicerJob::select(
+            'id',
+            'servicer_id',
+            'client_id',
+            'gps_id'
+        )
+        ->withTrashed()
+        ->where('servicer_id',$servicer_id)
+        ->get();
+        $job_id = [];
+        foreach($servicer_jobs as $servicer_job){
+            $job_id[] = $servicer_job->id;
+        } 
+        // dd($client_id);
+        $vehicles = Vehicle::select(
+            'id',
+            'name',
+            'register_number',
+            'client_id',
+            'gps_id',
+            'driver_id',
+            'vehicle_type_id',
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->whereIn('servicer_job_id',$job_id)
+        ->with('vehicleType:id,name')
+        ->with('driver:id,name')
+        ->with('client:id,name')
+        ->with('gps:id,imei')
+        ->get();
+        return DataTables::of($vehicles)
+        ->addIndexColumn()
+         ->addColumn('driver', function ($vehicles) {
+            if($vehicles->driver_id== null || $vehicles->driver_id==0)
+            {
+                return "Not assigned";
+            }
+            else
+            {
+              return $vehicles->driver->name;             
+            }
+        })
+        ->addColumn('action', function ($vehicles) {
+            $b_url = \URL::to('/');
+            if($vehicles->deleted_at == null){
+                    return "
+                     <a href=".$b_url."/servicer-vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>
+                    ";                 
+            }
+         })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+     public function servicerVehicleDetails(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle = Vehicle::find($decrypted_id);
+        $client_id=$vehicle->client_id;        
+        if($vehicle == null){
+            return view('Vehicle::404');
+        }
+        $drivers=Driver::select('id','name')
+                ->where('client_id',$client_id)
+                ->get();
+        $docTypes=DocumentType::select(
+                'id','name')->get();
+        $vehicleDocs=Document::select(
+                'id','vehicle_id','document_type_id','expiry_date','path')
+                ->where('vehicle_id',$vehicle->id)
+                ->with('documentType:id,name')
+                ->get();
+        return view('Vehicle::servicer-vehicle-details',['vehicle' => $vehicle,'drivers' => $drivers,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
+    }
+
+     //for dependent dropdown doc add
+    public function servicerfindDateFieldWithDocTypeID(Request $request)
+    {   
+        $docTypeID=$request->docTypeID;
+        return response()->json($docTypeID);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()

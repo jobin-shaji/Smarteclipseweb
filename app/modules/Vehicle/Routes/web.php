@@ -87,6 +87,21 @@ Route::post('/vehicles/location-track','VehicleController@locationTrack')->name(
 
 Route::group(['middleware' => ['web','auth','role:servicer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 Route::get('/servicer/vehicles/{id}/create','VehicleController@servicerCreateVehicle')->name('servicer.vehicles.create');
+Route::post('/servicer-vehicle-list','VehicleController@servicerVehicleList')->name('servicer-vehicle-list');
+Route::get('/servicer-vehicles/create','VehicleController@createVehicle')->name('servicer.vehicles.create');
+Route::get('/servicer-vehicle','VehicleController@servicerVehicleList')->name('servicer-vehicle');
 
+Route::post('/servicer-vehicle-list','VehicleController@getServicerVehicleList')->name('servicer.vehicle-list');
 
 });
+Route::group(['middleware' => ['web','auth','role:servicer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::get('/servicer-vehicles/{id}/details','VehicleController@servicerVehicleDetails')->name('servicer-vehicles.details');
+
+
+Route::post('/servicer-vehicles/findDateFieldWithDocTypeID/','VehicleController@servicerfindDateFieldWithDocTypeID')->name('servicer.vehicles.findDateFieldWithDocTypeID');
+// Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
+// Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
+// Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
+// Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
+
+	});

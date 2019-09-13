@@ -59,8 +59,7 @@ function callBackDataTable(data=null){
             // {data: 'location', name: 'location'},
             {data: 'device_time', name: 'device_time'},
             {data: 'action', name: 'action', orderable: false, searchable: false},           
-        ],
-        
+        ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }

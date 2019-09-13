@@ -17,6 +17,13 @@
     <!-- jQuery 3 -->
 
     <script src="{{asset('js/jquery.min.js')}}"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script>
+
+
+
     <!-- jQuery UI 1.11.4 -->
     <script src="{{asset('js/jquery-ui.min.js')}}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
