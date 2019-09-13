@@ -69,6 +69,7 @@
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/dist/css/style.min1.css" rel="stylesheet">
+
     
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
 

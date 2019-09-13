@@ -190,7 +190,7 @@ class VehicleController extends Controller {
                 ->where('client_id',$client_id)
                 ->get();
         $docTypes=DocumentType::select(
-                'id','name')->get();
+                'id','name')->whereIn('id',[2,3,4,5])->get();
         $vehicleDocs=Document::select(
                 'id','vehicle_id','document_type_id','expiry_date','path')
                 ->where('vehicle_id',$vehicle->id)
@@ -809,6 +809,7 @@ class VehicleController extends Controller {
                       'heading as angle',
                       'mode as vehicleStatus',
                       'speed',
+                      'battery_status',
                       'device_time as dateTime',
                       'main_power_status as power',
                       'ignition as ign',
@@ -824,6 +825,7 @@ class VehicleController extends Controller {
                               'lon as longitude',
                               'heading as angle',
                               'speed',
+                              'battery_status',
                               'device_time as dateTime',
                               'main_power_status as power',
                               'ignition as ign',
@@ -844,10 +846,11 @@ class VehicleController extends Controller {
                         "longitude"=>$snapRoute['lng'],
                         "angle"=>$track_data->angle,
                         "vehicleStatus"=>$track_data->vehicleStatus,
-                        "speed"=>$track_data->speed,
+                        "speed"=>ltrim($track_data->speed,'0'),
                         "dateTime"=>$track_data->dateTime,
                         "power"=>$track_data->power,
                         "ign"=>$track_data->ign,
+                        "battery_status"=>ltrim($track_data->battery_status,'0'),
                         "signalStrength"=>$track_data->signalStrength,
                         "last_seen"=>$minutes,
                         "fuel"=>"",
@@ -887,14 +890,15 @@ class VehicleController extends Controller {
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $user_role=$user->roles->first()->name;
+ 
         $date_by_role=$this->playbackHistoryDataPeriod($user_role);  
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id,'start_date'=>$date_by_role] );
     }
 
 
     public function playbackHistoryDataPeriod($role){
-        if($role=="fundamental"){
+        if($role=="fundamental|| client"){
             $from_date=Carbon::now()->subMonth(2);
          }else if($role=="superior"){ 
             $from_date=Carbon::now()->subMonth(4);
@@ -1140,7 +1144,7 @@ class VehicleController extends Controller {
         $from_date=$request->from_time;
         $to_date=$request->to_time;
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $user_role=$user->roles->first()->name;
         $check_role_in_playback=$this->checkRolePlayback($user_role,$from_date);
         if($check_role_in_playback=="failed"){
          $response_data = array(
@@ -1377,7 +1381,7 @@ class VehicleController extends Controller {
 
     // ---validate from date-----------------
     public function checkRolePlayback($role,$user_from_date){
-       if($role=="fundamental"){
+       if($role=="fundamental"||"client"){
             $from_date=Carbon::now()->subMonth(2);
          }else if($role=="superior"){ 
             $from_date=Carbon::now()->subMonth(4);
@@ -1611,7 +1615,7 @@ class VehicleController extends Controller {
     function getPlacenameFromLatLng($latitude,$longitude){
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCAcRaVEtvX5mdlFqLafvVd20LIZbPKNw4'); 
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo'); 
             $output = json_decode($geocodeFromLatLong);
          
             $status = $output->status;

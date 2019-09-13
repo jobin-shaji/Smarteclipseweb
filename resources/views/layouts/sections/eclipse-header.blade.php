@@ -169,6 +169,157 @@
                                 <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>                               
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS 
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                    <ul class="ecosystem">
+                                    <li class="sys_vapor cover_dailyreport">
+                                        <a href="{{url('/daily-km-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                               <span class="system_info">Daily Report </span></div>
+                                           
+                                        </a>
+                                    </li>
+
+                                    <li class="sys_vapor cover_geofence">
+                                        <a href="{{url('/geofence-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/geofence-report.png"  />
+                                               <span class="system_info"> Geofence Report</span>
+                                           </div>
+                                          
+                                        </a>
+                                    </li>
+
+                                    <li class="sys_vapor cover_alertreport">
+                                        <a href="{{url('/alert-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
+                                           <span class="system_info" >Alert Report </span>    
+                                           </div>
+                                          
+                                        </a>
+                                    </li>
+
+                                     <li class="sys_vapor cover_tracking_report">
+                                        <a href="{{url('/tracking-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/tracking-report.png"  />
+                                          <span class="system_info" >Tracking Report </span>
+                                           </div>
+                                          
+                                        </a>
+                                    </li>
+
+
+                                    <li class="sys_vapor cover_deviation_report">
+                                        <a href="{{url('/route-deviation-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/route-deviation-report.png"  />
+                                              <span class="system_info" >Route Deviation Report</span>  
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
+                                    <li class="sys_vapor cover_harsh_bracking">
+                                        <a href="{{url('/harsh-braking-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/braking-report.png"  />
+
+                                           <span class="system_info" >Harsh Braking Report</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
+                                     <li class="sys_vapor sudden_acceleration">
+                                        <a href="{{url('/sudden-acceleration-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/accelaration-report.png"  />
+                                            <span class="system_info" >Sudden Acceleration</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
+                                     <li class="sys_vapor cover_total_km">
+                                        <a href="{{url('/total-km-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                           <span class="system_info" >Total KM  Report</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
+                                     <li class="sys_vapor cover_over_speed">
+                                        <a href="{{url('/over-speed-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
+                                           <span class="system_info" >Over Speed  Report</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
+                                      <li class="sys_vapor cover_zig_zag">
+                                        <a href="{{url('/zigzag-driving-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/zigzag-report.png"  />
+                                           <span class="system_info" >Zig-Zag Driving Report</span>
+                                           </div>
+                                        
+                                        </a>
+                                    </li>
+
+                                       <li class="sys_vapor cover_accident">
+                                        <a href="{{url('/accident-imapct-alert-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/accident-impact-report.png"  />
+                                             <span class="system_info" >Accident Impact Alert</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
+                                     <li class="sys_vapor cover_idle_report">
+                                        <a href="{{url('/idle-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/idle-report.png"  />
+                                            <span class="system_info" >Idle Report</span>
+                                           </div>
+                                           
+                                        </a>
+                                    </li>
+
+                                     <li class="sys_vapor cover_parking_report">
+                                        <a href="{{url('/parking-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/parking-report.png"  />
+                                             <span class="system_info" >Parking Report</span>   
+                                           </div>
+                                           
+                                        </a>
+                                    </li>
+                                    <li class="sys_vapor cover_main_battery">
+                                        <a href="{{url('/mainbattery-disconnect-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/main-battery-disconnect-report.png"  />
+                                             <span class="system_info" >Main Battery Disconnect</span>  
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+                                     
+                                   </ul>
+                                   
+
+                            </div>
+                        </li>
                         
                         @if(!\Auth::user()->hasRole(['pro']))
                         <li class="nav-item dropdown" >

@@ -118,7 +118,7 @@ function getMarkers() {
                     // document.getElementById("user").innerHTML = res.client_name;
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
                     document.getElementById("car_speed").innerHTML = res.liveData.speed;
-                    document.getElementById("car_bettary").innerHTML = res.liveData.power;
+                    document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
                     document.getElementById("car_location").innerHTML = res.liveData.place;
                     document.getElementById("user").innerHTML = res.vehicle_name;
 

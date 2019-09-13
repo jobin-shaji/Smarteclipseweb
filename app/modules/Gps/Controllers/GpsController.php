@@ -1694,6 +1694,8 @@ class GpsController extends Controller {
             'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
             'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
+            'batch_number' => 'required',
+            'employee_code' => 'required',
             'brand' => 'required',
             'model_name' => 'required',
             'version' => 'required',

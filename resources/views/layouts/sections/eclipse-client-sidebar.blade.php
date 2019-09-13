@@ -1,4 +1,4 @@
-        <div class="client_menu">
+       <!--  <div class="client_menu">
            <nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
                 <div class="navbar-toggler animate">
                   <span class="menu-icon"></span>
@@ -76,18 +76,21 @@
                       <span class=""><img src="{{ url('/') }}/Report-icons/accident-impact-report.png"  /></span>
                     </a>
                   </li>
+                  
                    <li>
                     <a href="{{url('/idle-report')}}" class="animate">
                       <span class="desc animate"> Idle Report</span>
                       <span class=""><img src="{{ url('/') }}/Report-icons/idle-report.png"  /></span>
                     </a>
                   </li>
+
                   <li>
                     <a href="{{url('/parking-report')}}" class="animate">
                       <span class="desc animate"> Parking Report</span>
                       <span class=""><img src="{{ url('/') }}/Report-icons/parking-report.png"  /></span>
                     </a>
                   </li>
+
                   <li>
                     <a href="{{url('/mainbattery-disconnect-report')}}" class="animate">
                       <span class="desc animate"> Main Battery Disconnect Report</span>
@@ -99,4 +102,4 @@
               </nav> 
 
 
-        </div>
+        </div> -->

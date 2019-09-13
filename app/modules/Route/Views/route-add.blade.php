@@ -24,12 +24,12 @@
                   <div class="form-group has-feedback">
                     <!-- <label class="srequired">Route Name</label> -->
                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add route name" name="name" value="{{ old('name') }}" required> 
-                  </div>
                   @if ($errors->has('name'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('name') }}</strong>
                     </span>
                   @endif
+                  </div>
                   <input type="hidden" class="form-control" name="points" id="locationLatLng" value="" required>
                 </div>
                 <div class="col-lg-4 col-sm-12 cover_search_button_route">
@@ -60,7 +60,7 @@
           </div>
         </form>
       </div>
-    </div>
+    </div><br>
     <div id="map" style=" width:100%;height:540px;"></div>
   </div>
 </section>
