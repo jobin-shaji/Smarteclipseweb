@@ -189,7 +189,7 @@ class VehicleController extends Controller {
                 ->where('client_id',$client_id)
                 ->get();
         $docTypes=DocumentType::select(
-                'id','name')->get();
+                'id','name')->whereIn('id',[2,3,4,5])->get();
         $vehicleDocs=Document::select(
                 'id','vehicle_id','document_type_id','expiry_date','path')
                 ->where('vehicle_id',$vehicle->id)
