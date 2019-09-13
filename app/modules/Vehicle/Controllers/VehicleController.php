@@ -175,7 +175,17 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Vehicle details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicles.details',$encrypted_vehicle_id));  
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='client')
+        {
+            return redirect(route('vehicles.details',$encrypted_vehicle_id));
+        }
+        else
+        {
+            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
+        }
+        // return redirect(route('vehicles.details',$encrypted_vehicle_id));  
     }
     // details page
     public function details(Request $request)
@@ -236,7 +246,17 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($request->vehicle_id);
         $request->session()->flash('message', 'Document stored successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicles.details',$encrypted_vehicle_id));
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='client')
+        {
+            return redirect(route('vehicles.details',$encrypted_vehicle_id));
+        }
+        else
+        {
+            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
+        }
+       
     }
 
     // edit vehicle doc
@@ -302,7 +322,17 @@ class VehicleController extends Controller {
         $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
         $request->session()->flash('message', 'Document deleted successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicles.details',$encrypted_vehicle_id)); 
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='client')
+        {
+            return redirect(route('vehicles.details',$encrypted_vehicle_id));
+        }
+        else
+        {
+            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
+        }
+         
     }
 
     // Vehicle OTA
@@ -890,8 +920,7 @@ class VehicleController extends Controller {
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
         $user=\Auth::user();
-        $user_role=$user->roles->first()->name;
- 
+        $user_role=$user->roles->where('name','!=','client')->first()->name;
         $date_by_role=$this->playbackHistoryDataPeriod($user_role);  
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id,'start_date'=>$date_by_role] );
     }
