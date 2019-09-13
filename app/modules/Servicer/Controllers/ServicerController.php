@@ -404,7 +404,7 @@ class ServicerController extends Controller {
             'description',
             'gps_id',
             'job_complete_date', 
-             \DB::raw('Date(job_date) as job_date'),                 
+            \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
             'latitude',
             'longitude',
@@ -419,7 +419,7 @@ class ServicerController extends Controller {
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
-         ->addColumn('job_type', function ($servicer_job) {
+        ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
                 return "Installation" ; 
