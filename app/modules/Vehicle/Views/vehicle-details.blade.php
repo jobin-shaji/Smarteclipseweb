@@ -220,7 +220,6 @@
                                     @else
                                       <td>
                                         <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='Download'><i class='fa fa-download'></i></a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger'  data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                                       </td>
                                     @endif
                                   </tr>
