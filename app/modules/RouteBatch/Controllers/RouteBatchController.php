@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\RouteBatch\Models\RouteBatch;
 use App\Modules\Route\Models\Route;
+use App\Modules\Route\Models\RouteArea;
+use App\Modules\Student\Models\Student;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 
@@ -65,6 +67,7 @@ class RouteBatchController extends Controller {
                 return "
                 <button onclick=delRouteBatch(".$route_batch->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>
                 <a href=".$b_url."/route-batch/".Crypt::encrypt($route_batch->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit </a>
+                <a href=".$b_url."/route-batch/".Crypt::encrypt($route_batch->id)."/view class='btn btn-xs btn-primary' data-toggle='tooltip' title='view!'><i class='fa fa-eye'></i> View </a>
                 ";
             }else{                   
                 return "
@@ -110,6 +113,25 @@ class RouteBatchController extends Controller {
         $request->session()->flash('message', 'Route batch details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('route-batch.edit',$did));  
+    }
+
+    //view route batch details
+    public function view(Request $request)
+    {
+        $client_id = \Auth::user()->client->id;
+        $decrypted = Crypt::decrypt($request->id); 
+        $route_batch = RouteBatch::find($decrypted);   
+        $route_area=RouteArea::select('route_id','latitude','longitude')
+                        ->where('route_id',$route_batch->route_id)
+                        ->get();    
+        $students=Student::select('code','name','route_batch_id','latitude','longitude','parent_name','mobile')
+                        ->where('route_batch_id',$decrypted)
+                        ->get(); 
+        if($route_batch == null)
+        {
+           return view('RouteBatch::404');
+        }
+        return view('RouteBatch::route-batch-view',['route_batch' => $route_batch,'route_area' => $route_area,'students' => $students]);
     }
   
     //deactivated route batch details from table
