@@ -754,6 +754,39 @@ class VehicleController extends Controller {
        if($vehicle_type == null){
            return view('Vehicle::404');
         }
+
+        $online_vehicle=$request->online_icon;
+        $getFileExt   = $online_vehicle->getClientOriginalExtension();
+        $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $online_vehicle->move($destinationPath,$online_uploadedFile);
+        // online vehicle image
+         // offline vehicle image
+        $offline_vehicle=$request->offline_icon;
+        $getFileExt   = $offline_vehicle->getClientOriginalExtension();
+        $offline_uploadedFile =   time().'_offline_vehicle.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $offline_vehicle->move($destinationPath,$offline_uploadedFile);
+        // online vehicle image
+         // ideal vehicle image
+        $ideal_vehicle=$request->ideal_icon;
+        $getFileExt   = $ideal_vehicle->getClientOriginalExtension();
+        $ideal_uploadedFile =   time().'_ideal_icon.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
+        // ideal vehicle image
+        // sleep vehicle image
+        $sleep_vehicle=$request->sleep_icon;
+        $getFileExt   = $sleep_vehicle->getClientOriginalExtension();
+        $sleep_uploadedFile =   time().'_sleep_icon.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
+        // sleep vehicle image
+
         $rules = $this->vehicleTypeUpdateRules();
         $this->validate($request, $rules);
 
@@ -763,6 +796,11 @@ class VehicleController extends Controller {
         $vehicle_type->vehicle_scale = $request->scale;
         $vehicle_type->opacity = $request->opacity;
         $vehicle_type->strokeWeight = $request->weight;
+
+        $vehicle_type->online_icon =$online_uploadedFile;
+        $vehicle_type->offline_icon =$offline_uploadedFile;
+        $vehicle_type->ideal_icon = $ideal_uploadedFile;
+        $vehicle_type->sleep_icon =$sleep_uploadedFile;
 
         $vehicle_type->save();
 
