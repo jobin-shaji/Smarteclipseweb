@@ -102,10 +102,10 @@ function callBackDataTable(value){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
 
-        // },             
-        fnDrawCallback: function (oSettings, json) {
+         },             
+        // fnDrawCallback: function (oSettings, json) {
 
-        },
+        // },
 
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index'},
