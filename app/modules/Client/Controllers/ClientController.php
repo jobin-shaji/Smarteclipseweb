@@ -899,7 +899,7 @@ class ClientController extends Controller {
     function getPlaceLatLng($address)
     {
         $data = urlencode($address);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyCOae8mIIP0hzHTgFDnnp5mQTw-SkygJbQ";
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if ($output_deals->status != "OK") {
