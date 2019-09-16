@@ -412,7 +412,7 @@
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                 <div class="dropdown-divider">
                                 </div>
-                                @role('client')
+                                @role('client|school')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
 
@@ -431,10 +431,7 @@
                                     <a class="dropdown-item" href="{{url('/sub-dealer/profile')}}">
                                             <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
                                 @endrole
-                                @role('school')
-                                    <a style="margin-left: 15px;">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
-                                @endrole
+                                
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
                                 

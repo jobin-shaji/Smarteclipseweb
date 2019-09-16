@@ -38,10 +38,6 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
-	Route::get('/client/profile','ClientController@userProfile')->name('client.profile');
-	Route::post('/client/{id}/profile','ClientController@saveUserLogo')->name('client.profile.p'); 
-	Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
-	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
 	Route::get('/payments','ClientController@paymentsView')->name('client.payments');
 	Route::get('/payment-status','ClientController@paymentReview')->name('client.payments.review');
 	Route::get('/km-calculation','ClientController@kmCalculation')->name('km-calculation');
@@ -50,6 +46,10 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::post('/client-location','ClientController@clientLocation')->name('client.location'); 
+	Route::get('/client/profile','ClientController@userProfile')->name('client.profile');
+	Route::post('/client/{id}/profile','ClientController@saveUserLogo')->name('client.profile.p'); 
+	Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
+	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
