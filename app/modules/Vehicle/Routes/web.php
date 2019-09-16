@@ -8,16 +8,15 @@ Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
 Route::post('/vehicle-list','VehicleController@getVehicleList')->name('vehicle-list');
 Route::get('/vehicles/create','VehicleController@createVehicle')->name('vehicles.create');
 Route::post('/vehicles/save_vehicle','VehicleController@saveVehicle')->name('vehicles.create.p');
-Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
 Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles.details');
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
 
 Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateFieldWithDocTypeID')->name('vehicles.findDateFieldWithDocTypeID');
-Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
-Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
-Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
-Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
+// Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
+// Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
+// Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
+
 
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
@@ -87,6 +86,23 @@ Route::post('/vehicles/location-track','VehicleController@locationTrack')->name(
 
 Route::group(['middleware' => ['web','auth','role:servicer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 Route::get('/servicer/vehicles/{id}/create','VehicleController@servicerCreateVehicle')->name('servicer.vehicles.create');
+Route::post('/servicer-vehicle-list','VehicleController@servicerVehicleList')->name('servicer-vehicle-list');
+Route::get('/servicer-vehicles/create','VehicleController@createVehicle')->name('servicer.vehicles.create');
+Route::get('/servicer-vehicle','VehicleController@servicerVehicleList')->name('servicer-vehicle');
 
+Route::post('/servicer-vehicle-list','VehicleController@getServicerVehicleList')->name('servicer.vehicle-list');
 
 });
+Route::group(['middleware' => ['web','auth','role:servicer|client|school'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::get('/servicer-vehicles/{id}/details','VehicleController@servicerVehicleDetails')->name('servicer-vehicles.details');
+
+
+Route::post('/servicer-vehicles/findDateFieldWithDocTypeID/','VehicleController@servicerfindDateFieldWithDocTypeID')->name('servicer.vehicles.findDateFieldWithDocTypeID');
+Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
+Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
+Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
+Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
+Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+
+
+	});

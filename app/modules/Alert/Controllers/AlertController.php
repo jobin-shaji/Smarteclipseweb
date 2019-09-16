@@ -32,8 +32,10 @@ class AlertController extends Controller {
                 'status'
                )
             ->with('alertType:id,code,description')                
-            ->where('client_id',$client_id)                
-            ->get();              
+            ->where('client_id',$client_id)  
+                        
+            ->get();   
+            // dd($userAlert);           
 		return view('Alert::alert-list',['vehicles'=>$vehicles,'userAlerts'=>$userAlert]);
 	}
 
@@ -62,6 +64,7 @@ class AlertController extends Controller {
                 ->with('alertType:id,code,description')
                 ->with('vehicle:id,name,register_number')
                 ->with('gps:id,imei')
+                // ->limit(11590) 
                 ->with('client:id,name');
                 if($alert_id==null && $vehicle_id==null)
                 { 
@@ -81,12 +84,11 @@ class AlertController extends Controller {
                       $search_to_date=date("Y-m-d", strtotime($to));
                       $alert = $alert->whereDate('device_time', '>=', $search_from_date)
                       ->whereDate('device_time', '<=', $search_to_date);
-                    }
-                   
+                    }                   
                 } 
-                 $alert =$alert->get();
-        return DataTables::of($alert)
-            ->addIndexColumn()
+                $alert =$alert->get();
+                return DataTables::of($alert)
+                ->addIndexColumn()
         //      ->addColumn('address', function ($alert) {
         //          $latitude=$alert->latitude;
         //         $longitude=$alert->longitude;

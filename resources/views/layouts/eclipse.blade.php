@@ -56,7 +56,6 @@
     <script src="{{ url('/') }}/assets/libs/flot/jquery.flot.crosshair.js"></script>
     <script src="{{ url('/') }}/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
     <script src="{{ url('/') }}/dist/js/pages/chart/chart-page-init.js"></script>
-
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
         <!-- search option in dropdown -->

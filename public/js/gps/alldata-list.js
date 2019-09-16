@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+// var value=0;
     callBackDataTable();
 });
 document.getElementById("geofence").style.visibility = "hidden";
@@ -83,10 +83,10 @@ function checkAll(e) {
 
 
 function callBackDataTable(value){
-    
+     // console.log(value);
     var  data = {
         gps : value    
-    }; 
+    };
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -101,9 +101,12 @@ function callBackDataTable(value){
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
-        },             
+
+        // },             
         fnDrawCallback: function (oSettings, json) {
+
         },
+
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index'},
             {data: 'imei', name: 'imei', orderable: false},
