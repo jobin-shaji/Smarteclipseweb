@@ -678,35 +678,48 @@ class VehicleController extends Controller {
 
         // online vehicle image
         $online_vehicle=$request->online_icon;
+        if($online_vehicle){
         $getFileExt   = $online_vehicle->getClientOriginalExtension();
         $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
         $online_vehicle->move($destinationPath,$online_uploadedFile);
+        $vehicle_type->online_icon = $online_uploadedFile;
+        }
         // online vehicle image
          // offline vehicle image
         $offline_vehicle=$request->offline_icon;
+        if($offline_vehicle){
         $getFileExt   = $offline_vehicle->getClientOriginalExtension();
         $offline_uploadedFile =   time().'_offline_vehicle.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
         $offline_vehicle->move($destinationPath,$offline_uploadedFile);
+        $vehicle_type->offline_icon = $offline_uploadedFile;
+        }
         // online vehicle image
          // ideal vehicle image
         $ideal_vehicle=$request->ideal_icon;
+        if($ideal_vehicle){
         $getFileExt   = $ideal_vehicle->getClientOriginalExtension();
         $ideal_uploadedFile =   time().'_ideal_icon.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
         $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
+        $vehicle_type->ideal_icon = $ideal_uploadedFile;
+        }
         // ideal vehicle image
         // sleep vehicle image
         $sleep_vehicle=$request->sleep_icon;
+        if($sleep_vehicle){
         $getFileExt   = $sleep_vehicle->getClientOriginalExtension();
         $sleep_uploadedFile =   time().'_sleep_icon.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
         $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
+        // sleep vehicle image
+        $vehicle_type->online_icon =$online_uploadedFile;
+        }
         // sleep vehicle image
         $vehicle_type = VehicleType::create([
             'name' => $request->name,
@@ -796,7 +809,7 @@ class VehicleController extends Controller {
         $destinationPath = 'documents';
         $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
         // sleep vehicle image
-        $vehicle_type->online_icon =$online_uploadedFile;
+        $vehicle_type->sleep_icon =$sleep_uploadedFile;
         }
 
         $rules = $this->vehicleTypeUpdateRules();
