@@ -21,6 +21,13 @@ class CreateVehicleTypesTable extends Migration
             $table->float('vehicle_scale');
             $table->float('opacity');
             $table->float('strokeWeight');
+
+            $table->text('online_icon');
+            $table->text('offline_icon');
+            $table->text('ideal_icon');
+            $table->text('sleep_icon');
+
+
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            <form  method="POST" action="{{route('vehicle-type.update.p',$vehicle_type->id)}}">
+            <form  method="POST" action="{{route('vehicle-type.update.p',$vehicle_type->id)}}"enctype="multipart/form-data">
             {{csrf_field()}}
               <div class="row">
                 <div class="col-md-6">
@@ -80,12 +80,82 @@
                   @endif
               </div>
             </div>
+             <div class="row pt-3">
+              <div class="col-lg-3">
+                <div class="form-group has-feedback">
+                    <label class="srequired">App Online icon</label>
+                    <div class="vehicle_app_icon">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->online_icon}}" width="50" height="50">
+                    </div>
+                    <div class="form-group has-feedback">
+                            <input type="file" class="form-control {{ $errors->has('online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="online_icon" value="{{ old('online_icon') }}" > 
+                          </div>
+                          @if ($errors->has('online_icon'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('online_icon') }}</strong>
+                            </span>
+                          @endif
+                </div>
+              </div>
+
+               <div class="col-lg-3">
+                <div class="form-group has-feedback">
+                    <label class="srequired">App offline icon</label>
+                    <div class="vehicle_app_icon">
+                     <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->offline_icon}}" width="50" height="50">
+                    </div>
+                    <div class="form-group has-feedback">
+                            <input type="file" class="form-control {{ $errors->has('offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="offline_icon" value="{{ old('offline_icon') }}" > 
+                          </div>
+                          @if ($errors->has('offline_icon'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('offline_icon') }}</strong>
+                            </span>
+                          @endif
+                </div>
+              </div>
+
+                <div class="col-lg-3">
+                <div class="form-group has-feedback">
+                    <label class="srequired">App ideal icon</label>
+                    <div class="vehicle_app_icon">
+                      <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->ideal_icon}}" width="50" height="50">
+                    </div>
+                    <div class="form-group has-feedback">
+                            <input type="file" class="form-control {{ $errors->has('ideal_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="ideal_icon" value="{{ old('ideal_icon') }}" > 
+                          </div>
+                          @if ($errors->has('ideal_icon'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('ideal_icon') }}</strong>
+                            </span>
+                          @endif
+                </div>
+              </div>
+
+                <div class="col-lg-3">
+                <div class="form-group has-feedback">
+                    <label class="srequired">App sleep icon</label>
+                    <div class="vehicle_app_icon">
+                      <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->sleep_icon}}" width="50" height="50">
+                    </div>
+
+                    <div class="form-group has-feedback">
+                            <input type="file" class="form-control {{ $errors->has('sleep_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="sleep_icon" value="{{ old('sleep_icon') }}" > 
+                          </div>
+                          @if ($errors->has('sleep_icon'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('sleep_icon') }}</strong>
+                            </span>
+                          @endif
+                </div>
+              </div>
+            </div>
 
               
               <div class="row">
                 <!-- /.col -->
-                <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+                <div class="col-md-12 pt-3">
+                  <button type="submit" class="btn btn-primary btn-lg form-btn pull-left">update vehicle category</button>
                 </div>
                 <!-- /.col -->
               </div>
