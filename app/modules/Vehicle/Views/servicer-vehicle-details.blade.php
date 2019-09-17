@@ -50,13 +50,11 @@
                               <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{$vehicle->register_number}}" disabled> 
                               <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
                             </div>
-
                             <div class="form-group has-feedback">
                               <label class="srequired">Vehicle Type</label>
                               <input type="text" class="form-control" value="{{$vehicle->vehicleType->name}}" disabled> 
                               <span class="glyphicon glyphicon-plus form-control-feedback"></span>
                             </div>
-
                             <div class="form-group has-feedback">
                               <label class="srequired">GPS</label>
                               <input type="text" class="form-control" value="{{$vehicle->gps->imei}}" disabled> 
@@ -67,8 +65,7 @@
                       </div>
                     </div>
                   </section>
-                </div>
-                
+                </div>         
               </div>
             </div>
           </div>
@@ -111,7 +108,6 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label" id="expiry_heading" style="display: none;">Expiry Date</label> 
                           <div class="form-group has-feedback">
-
                             <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" > 
                           </div>
                           @if ($errors->has('expiry_date'))
