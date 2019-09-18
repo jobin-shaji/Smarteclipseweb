@@ -19,7 +19,7 @@ class CreateStudentNotificationsTable extends Migration
             $table->text('message');
             $table->integer('client_id');
             $table->text('type')->comment="1-from school notification";
-            $table->datTime('date');
+            $table->dateTime('date');
             $table->timestamps();
         });
     }
