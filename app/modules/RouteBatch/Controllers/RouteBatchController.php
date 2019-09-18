@@ -124,7 +124,7 @@ class RouteBatchController extends Controller {
         $route_area=RouteArea::select('route_id','latitude','longitude')
                         ->where('route_id',$route_batch->route_id)
                         ->get();    
-        $students=Student::select('code','name','route_batch_id','latitude','longitude','parent_name','mobile')
+        $students=Student::select('id','code','name','route_batch_id','latitude','longitude','parent_name','mobile')
                         ->where('route_batch_id',$decrypted)
                         ->get(); 
         if($route_batch == null)
