@@ -17,7 +17,6 @@ class CreateVehiclesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('register_number');
-            $table->integer('gps_id');
             $table->tinyInteger('vehicle_type_id');
             $table->integer('client_id');
             $table->tinyInteger('status');
@@ -26,6 +25,7 @@ class CreateVehiclesTable extends Migration
             $table->string('engine_number')->nullable();
             $table->string('chassis_number')->nullable();
             $table->integer('theft_mode')->nullable();
+            $table->integer('emergency_status');
             $table->timestamps();
             $table->softDeletes();
         });

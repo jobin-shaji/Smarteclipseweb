@@ -33,6 +33,6 @@ class ServicersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('servicers');
     }
 }
