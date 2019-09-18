@@ -17348,6 +17348,17 @@ li.sys_vapor span {
     color: #000;
 }
 
+.vehicle_app_icon img {
+    border-radius: 66px;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+img.cover_vehicle_icon {
+    margin-bottom: 11px;
+}
 }
 
 
