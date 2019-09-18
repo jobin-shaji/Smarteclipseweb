@@ -17,6 +17,7 @@ class CreateVehicleGpsTable extends Migration
             $table->increments('id');
             $table->increments('vehicle_id');
             $table->increments('gps_id');
+            $table->increments('user_id');
             $table->timestamps();
             $table->softDeletes();
         });

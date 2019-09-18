@@ -154,7 +154,7 @@ class GpsController extends Controller {
             'employee_code'=> $request->employee_code,
             'model_name'=> $request->model_name,
             'version'=> $request->version,
-            'user_id' => $root_id,
+            // 'user_id' => $root_id,
             'status'=>1
         ]);
         $request->session()->flash('message', 'New gps created successfully!'); 

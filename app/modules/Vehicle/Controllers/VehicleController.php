@@ -928,40 +928,39 @@ class VehicleController extends Controller {
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
         $offline="Offline";
         $track_data=Gps::select('lat as latitude',
-                      'lon as longitude',
-                      'heading as angle',
-                      'mode as vehicleStatus',
-                      'speed',
-                      'battery_status',
-                      'device_time as dateTime',
-                      'main_power_status as power',
-                      'ignition as ign',
-                      'gsm_signal_strength as signalStrength'
-                      )
-                    ->where('device_time', '>=',$oneMinut_currentDateTime)
-                    ->where('device_time', '<=',$currentDateTime)
-                    ->where('id',$get_vehicle->gps_id)
-                    ->first();
+            'lon as longitude',
+            'heading as angle',
+            'mode as vehicleStatus',
+            'speed',
+            'battery_status',
+            'device_time as dateTime',
+            'main_power_status as power',
+            'ignition as ign',
+            'gsm_signal_strength as signalStrength'
+        )
+        ->where('device_time', '>=',$oneMinut_currentDateTime)
+        ->where('device_time', '<=',$currentDateTime)
+        ->where('id',$get_vehicle->gps_id)
+        ->first();
         $minutes=0;
         if($track_data == null){
             $track_data = Gps::select('lat as latitude',
-                              'lon as longitude',
-                              'heading as angle',
-                              'speed',
-                              'battery_status',
-                              'device_time as dateTime',
-                              'main_power_status as power',
-                              'ignition as ign',
-                              'gsm_signal_strength as signalStrength',
-                              \DB::raw("'$offline' as vehicleStatus")
-                              )
-                              ->where('id',$get_vehicle->gps_id)
-                              ->first();
+                'lon as longitude',
+                'heading as angle',
+                'speed',
+                'battery_status',
+                'device_time as dateTime',
+                'main_power_status as power',
+                'ignition as ign',
+                'gsm_signal_strength as signalStrength',
+                \DB::raw("'$offline' as vehicleStatus")
+            )
+            ->where('id',$get_vehicle->gps_id)
+            ->first();
             $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
 
         if($track_data){
-
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
 
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
