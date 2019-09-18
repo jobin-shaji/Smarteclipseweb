@@ -862,7 +862,7 @@ class VehicleController extends Controller {
                 'id',
                 'name',
                 'register_number',
-                'gps_id',
+                // 'gps_id',
                 'vehicle_type_id',
                 'client_id',
                 'deleted_at'
@@ -876,7 +876,7 @@ class VehicleController extends Controller {
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
                 return $vehicle->client->subDealer->dealer->name;
-                
+                        
             })
             ->addColumn('sub_dealer',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
