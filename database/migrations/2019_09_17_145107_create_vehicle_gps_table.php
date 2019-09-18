@@ -15,7 +15,7 @@ class CreateVehicleGpsTable extends Migration
     {
         Schema::create('vehicle_gps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vehicle_id');
+            $table->integer('vehicle_id')->nullable();
             $table->integer('gps_id');
             $table->integer('user_id');
             $table->timestamps();
