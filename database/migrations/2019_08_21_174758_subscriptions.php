@@ -13,7 +13,7 @@ class Subscriptions extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('test_subscriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->text('order_id');
             $table->string('amount');
@@ -37,6 +37,6 @@ class Subscriptions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('test_subscriptions');
     }
 }

@@ -87,4 +87,8 @@ class GpsData extends Model
     {
        return $this->hasMany('App\Modules\Gps\Models\GpsData','date','date');
     }
+    public function vehicleGps()
+    {
+        return $this->belongsToMany('App\Modules\Gps\Models\GpsData', 'vehicle_gps',  'vehicle_id' ,'gps_id')->withPivot('id');
+    } 
 }

@@ -22,7 +22,6 @@ class CreateGpsTable extends Migration
             $table->string('employee_code');
             $table->string('model_name');
             $table->string('version');
-            $table->integer('user_id')->nullable();
             $table->integer('status')->comment = '0-inactive,1-active';
             $table->string('mode')->nullable();
             $table->string('lat')->nullable();

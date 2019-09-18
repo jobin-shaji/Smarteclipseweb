@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchoolsTable extends Migration
+class CreateVouchers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateSchoolsTable extends Migration
      */
     public function up()
     {
-        Schema::create('schools', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('address');
-            $table->bigInteger('mobile');
+            $table->text('reference_id');
+            $table->integer('client_id');
+            $table->double('amount');
+            $table->string('subscription');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateSchoolsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schools');
+        Schema::dropIfExists('vouchers');
     }
 }

@@ -20,6 +20,7 @@ class ClientTransactions extends Migration
             $table->double('amount');
             $table->string('gateway');
             $table->integer('status');
+            $table->date('payment_date');
             $table->timestamps();
             $table->softDeletes();
         });
