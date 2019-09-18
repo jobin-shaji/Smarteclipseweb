@@ -44,4 +44,5 @@ class Gps extends Model
     {
         return $this->hasMany('App\Modules\Gps\Models\GpsData','gps_id','id')->orderBy('id', 'desc');
     }
+
 }

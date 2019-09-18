@@ -29,6 +29,7 @@ use DataTables;
 
 
 class GpsController extends Controller {
+
     public $cart;
     //Display all gps
 	public function gpsListPage()
@@ -39,23 +40,18 @@ class GpsController extends Controller {
     public function getGps()
     {
         $user_id=\Auth::user()->id;
-        $gps = Gps::select(
+        $vehicle_gps = Gps::select(
             'id',
-        	'imei',
-            \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
-            'e_sim_number',
-            'batch_number',
-            'employee_code',
-            'model_name',
-        	'version',
-            'deleted_at'
+        	'gps_id',
+            'user_id'
         )
-        ->withTrashed()
+        ->with('gps:id,imei,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
         ->where('user_id',$user_id)
         ->get();
-        return DataTables::of($gps)
+        dd($vehicle_gps);
+        return DataTables::of($vehicle_gps)
         ->addIndexColumn()
-        ->addColumn('action', function ($gps) {
+        ->addColumn('action', function ($vehicle_gps) {
             $b_url = \URL::to('/');
             if($gps->deleted_at == null){
                 // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
