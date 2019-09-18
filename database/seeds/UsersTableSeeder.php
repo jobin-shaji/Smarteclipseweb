@@ -21,6 +21,10 @@ class UsersTableSeeder extends Seeder
         $permission_dealer = Permission::create(['name' => 'manage subdealers']);
         $permission_sub_dealer = Permission::create(['name' => 'manage clients']);
         $permission_client = Permission::create(['name' => 'client']);
+        // $permission_servicer = Permission::create(['name' => 'servicer']);
+        
+
+
 
         $rootUserRole = Role::create(['name' => 'root']);
         $rootUserRole->givePermissionTo($permission_root);
@@ -33,6 +37,15 @@ class UsersTableSeeder extends Seeder
 
         $clientUserRole = Role::create(['name' => 'client']);
         $clientUserRole->givePermissionTo($permission_client);
+
+        $servicerUserRole = Role::create(['name' => 'servicer']);
+        // $servicerUserRole->givePermissionTo($permission_servicer);
+
+        $fundamentalUserRole = Role::create(['name' => 'fundamental']);
+        $superiorUserRole = Role::create(['name' => 'superior']);
+        $proUserRole = Role::create(['name' => 'pro']);
+        $schoolUserRole = Role::create(['name' => 'school']);
+        
 
         $user =  DB::table('users')->insert([
             'username' => 'vst',
