@@ -19,8 +19,6 @@ class Vehicle extends Model
     public function vehicleType(){
     	return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
     }
-    
-   
 
     // driver
     public function driver(){
