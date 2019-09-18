@@ -14,7 +14,6 @@ use App\Modules\Geofence\Models\Geofence;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
-
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
@@ -124,71 +123,73 @@ class DashboardController extends Controller
             return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
         }
         else if(\Auth::user()->hasRole('client')){
-            // $client_id=\Auth::user()->client->id;
-            // $alerts = Alert::select(
-            //         'id',
-            //         'alert_type_id',
-            //         'vehicle_id',
-            //         'status',
-            //         'created_at')
-            //         ->with('alertType:id,code,description')
-            //         ->with('vehicle:id,name,register_number')
-            //         ->where('client_id',$client_id)
-            //         ->orderBy('id', 'desc')->take(5)
-            //         ->get();
-            // $vehicles = Vehicle::select('id','register_number')
-            //         ->where('client_id',$client_id)
-            //         // ->where('client_id',$client_id)
-            //         ->get();
-            // $single_vehicle = [];
-            // foreach($vehicles as $vehicle){
-            //     $single_vehicle[] = $vehicle->id;
-            // }
-            // $expired_documents=Document::select([
-            //         'id',
-            //         'vehicle_id',
-            //         'document_type_id',
-            //         'expiry_date'
-            //         ])
-            //         ->with('vehicle:id,name,register_number')
-            //         ->with('documentType:id,name')
-            //         ->whereIn('vehicle_id',$single_vehicle)
-            //         ->whereDate('expiry_date', '<', date('Y-m-d'))
-            //         ->get();
-            // $expire_documents=Document::select([
-            //         'id',
-            //         'vehicle_id',
-            //         'document_type_id',
-            //         'expiry_date'
-            //         ])
-            //         ->with('vehicle:id,name,register_number')
-            //         ->with('documentType:id,name')
-            //         ->whereIn('vehicle_id',$single_vehicle)
-            //         ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
-            //         ->get();
+            $client_id=\Auth::user()->client->id;
+            $alerts = Alert::select(
+                    'id',
+                    'alert_type_id',
+                    'vehicle_id',
+                    'status',
+                    'created_at')
+                    ->with('alertType:id,code,description')
+                    ->with('vehicle:id,name,register_number')
+                    ->where('client_id',$client_id)
+                    ->orderBy('id', 'desc')->take(5)
+                    ->get();
+            $vehicles = Vehicle::select('id','register_number')
+                    ->where('client_id',$client_id)
+                    // ->where('client_id',$client_id)
+                    ->get();
+            $single_vehicle = [];
+            foreach($vehicles as $vehicle){
+                $single_vehicle[] = $vehicle->id;
+            }
+            $expired_documents=Document::select([
+                    'id',
+                    'vehicle_id',
+                    'document_type_id',
+                    'expiry_date'
+                    ])
+                    ->with('vehicle:id,name,register_number')
+                    ->with('documentType:id,name')
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->whereDate('expiry_date', '<', date('Y-m-d'))
+                    ->get();
+            $expire_documents=Document::select([
+                    'id',
+                    'vehicle_id',
+                    'document_type_id',
+                    'expiry_date'
+                    ])
+                    ->with('vehicle:id,name,register_number')
+                    ->with('documentType:id,name')
+                    ->whereIn('vehicle_id',$single_vehicle)
+                    ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
+                    ->get();
                    
-            //         $user_id=\Auth::user()->id;
-            //          $get_gpss = Gps::select('id','imei','lat','lon')
-            //         ->whereNotNull('lat')
-            //         ->whereNotNull('lon')
-            //         // ->where('user_id',$user_id)                        
-            //         ->get();
-            //          $single_gps = [];
-            //         foreach($get_gpss as $get_gps){
-            //             $single_gps[] = $get_gps->id;
-            //         }
-            //          $get_vehicles = Vehicle::select('id','register_number','name')
-            //         ->where('client_id',$client_id)
-            //         // ->whereIn('gps_id',$single_gps)
-            //         ->get();
-            //         // dd($get_vehicles->register_number);
-            // // dd($gps_data);
-            // return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles]); 
+                    $user_id=\Auth::user()->id;
+                     $get_gpss = Gps::select('id','imei','lat','lon')
+                    ->whereNotNull('lat')
+                    ->whereNotNull('lon')
+                    // ->where('user_id',$user_id)                        
+                    ->get();
+                     $single_gps = [];
+                    foreach($get_gpss as $get_gps){
+                        $single_gps[] = $get_gps->id;
+                    }
+                     $get_vehicles = Vehicle::select('id','register_number','name')
+                    ->where('client_id',$client_id)
+                    // ->whereIn('gps_id',$single_gps)
+                    ->get();
+                    // dd($get_vehicles->register_number);
+            // dd($gps_data);
+            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles]); 
         }        
     }
     public function dashCount(Request $request)
     {
         $user = $request->user();
+        // $user_id=$user->id;
+       
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first();       
@@ -232,8 +233,14 @@ class DashboardController extends Controller
             ->whereIn('id',$single_vehicle)->count();
         }
         if($user->hasRole('root')){
+            $vehicle_gpss=VehicleGps::where('user_id',$user->id)->get();
+            $single_gps = [];
+            foreach($vehicle_gpss as $vehicle_gps){
+                $single_gps[] = $vehicle_gps->gps_id;
+            }
             return response()->json([
-                'gps' => Gps::where('user_id',$user->id)->count(), 
+                // 'gps' => Gps::where('user_id',$user->id)->count(), 
+                'gps' => Gps::whereIn('id',$single_gps)->count(), 
                 'dealers' => Dealer::all()->count(), 
                 'subdealers' => SubDealer::all()->count(),
                 'clients' => Client::all()->count(),
