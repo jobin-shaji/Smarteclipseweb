@@ -29,6 +29,7 @@ use DataTables;
 
 
 class GpsController extends Controller {
+
     public $cart;
     //Display all gps
 	public function gpsListPage()
@@ -39,20 +40,25 @@ class GpsController extends Controller {
     public function getGps()
     {
         $user_id=\Auth::user()->id;
-        $gps = Gps::select(
-            'id',
-        	'imei',
-            \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
-            'e_sim_number',
-            'batch_number',
-            'employee_code',
-            'model_name',
-        	'version',
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->where('user_id',$user_id)
-        ->get();
+        // $gps = Gps::select(
+        //     'id',
+        // 	'imei',
+        //     \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
+        //     'e_sim_number',
+        //     'batch_number',
+        //     'employee_code',
+        //     'model_name',
+        // 	'version',
+        //     'deleted_at'
+        // )
+        // ->withTrashed()
+        // ->with(['vehicleGps' => function ($query) {
+        //     $query->where('user_id', 0);
+        // }])
+        // // ->where('vehicleGps.user_id', $user_id)
+        // ->get();
+
+        $gps = Gps::with(['vehicleGps' => function($query){$query->where('user_id',1);}])->get();
         return DataTables::of($gps)
         ->addIndexColumn()
         ->addColumn('action', function ($gps) {

@@ -4,8 +4,6 @@
 @endsection
 @section('content')
 
-     
-
   <div class="page-wrapper page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -68,7 +66,7 @@
 
           <div class="form-group has-feedback">
             <label class="srequired">Batch Number</label>
-            <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" name="batch_number" value="{{ $gps->batch_number}}"> 
+            <input type="text" class="form-control {{ $errors->has('batch_number') ? ' has-error' : '' }}" placeholder="Batch Number" name="batch_number" value="{{ $gps->batch_number}}"> 
              @if ($errors->has('batch_number'))
               <span class="help-block">
                 <strong class="error-text">{{ $errors->first('batch_number') }}</strong>
@@ -86,9 +84,6 @@
             @endif
           </div>
 
-          
-         
-
           <div class="form-group has-feedback">
             <label class="srequired">Model Name</label>
             <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ $gps->model_name}}"> 
@@ -98,7 +93,6 @@
               </span>
             @endif
           </div>
-         
 
           <div class="form-group has-feedback">
             <label class="srequired">Version</label>
