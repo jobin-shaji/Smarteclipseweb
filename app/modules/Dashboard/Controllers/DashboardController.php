@@ -140,7 +140,7 @@ class DashboardController extends Controller
         $client=Client::where('user_id',$user->id)->first();       
         if($client)
         {
-            $single_vehicle =  $this->getVehicleGps($user->id);           
+            $single_vehicle =  $this->getVehicleGps($client->id,$user->id);           
             $currentDateTime=Date('Y-m-d H:i:s');
             $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
             $moving =  $this->getMoving($single_vehicle,$oneMinut_currentDateTime,$currentDateTime);
@@ -149,7 +149,7 @@ class DashboardController extends Controller
             $stop =  $this->getStop($single_vehicle,$oneMinut_currentDateTime,$currentDateTime);           
         }
         if($user->hasRole('root')){
-            $gps_id =  $this->getVehicleGps($user->id);
+            // $gps_id =  $this->getVehicleGps($user->id);
             return response()->json([
                 'gps' => Gps::whereIn('id',$gps_id)->count(), 
                 'dealers' => Dealer::all()->count(), 
@@ -249,9 +249,10 @@ class DashboardController extends Controller
             ]);
         }           
     }
-    function getVehicleGps($user_id){
-        $VehicleGpss=VehicleGps::select('vehicle_id','gps_id','user_id')
-        ->where('user_id',$user_id)
+    function getVehicleGps($client_id,$user_id){
+        // $VehicleGpss=VehicleGps::select('vehicle_id','gps_id','user_id')
+        $VehicleGpss=Vehicle::select('id','gps_id','client_id')
+        ->where('client_id',$client_id)
         ->get();      
         $single_vehicle_gps = [];
         foreach($VehicleGpss as $VehicleGps){
