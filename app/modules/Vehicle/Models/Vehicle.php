@@ -38,11 +38,4 @@ class Vehicle extends Model
     }
 
 
-   public function gps()
-    {
-        return $this->belongsToMany('App\Modules\Gps\Models\Gps', 'vehicle_gps','gps_id', 'vehicle_id');
-    }
-    
-
-
 }
