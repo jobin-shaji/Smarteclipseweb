@@ -97,9 +97,9 @@ class DashboardController extends Controller
                         'latitude as latitude',
                         'longitude as longitude' 
                     ])                    
-                    ->whereIn('vehicle_id',$single_vehicle)
+                    // ->whereIn('vehicle_id',$single_vehicle)
                     ->with('vehicle:id,name,register_number') 
-                    ->groupBy('vehicle_id')
+                    // ->groupBy('vehicle_id')
                     ->orderBy('id','desc')                 
                     ->get();
                     $user_id=\Auth::user()->id;
@@ -164,21 +164,24 @@ class DashboardController extends Controller
                     ->whereIn('vehicle_id',$single_vehicle)
                     ->whereBetween('expiry_date', [date('Y-m-d'), date('Y-m-d', strtotime("+10 days"))])
                     ->get();
-
+                    $client_id=\Auth::user()->client->id;
                     $gps_data=GpsData::select([
                         'latitude as latitude',
-                        'longitude as longitude' 
-                    ])                    
-                    ->whereIn('vehicle_id',$single_vehicle)
+                        'longitude as longitude', 
+                        'gps_id'
+                    ])  
+                     // ->with('vehicleGps:gps_id')                  
+                    // ->whereIn('vehicle_id',$single_vehicle)
                     ->with('vehicle:id,name,register_number') 
-                    ->groupBy('vehicle_id')
+                    // ->groupBy('vehicle_id')
                     ->orderBy('id','desc')                 
                     ->get();
+                    // dd($gps_data);
                     $user_id=\Auth::user()->id;
                      $get_gpss = Gps::select('id','imei','lat','lon')
                     ->whereNotNull('lat')
                     ->whereNotNull('lon')
-                    ->where('user_id',$user_id)                        
+                    // ->where('user_id',$user_id)                        
                     ->get();
                      $single_gps = [];
                     foreach($get_gpss as $get_gps){
@@ -190,7 +193,7 @@ class DashboardController extends Controller
                     ->get();
                     // dd($get_vehicles->register_number);
             // dd($gps_data);
-            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
+            return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles]); 
         }        
     }
     public function dashCount(Request $request)
