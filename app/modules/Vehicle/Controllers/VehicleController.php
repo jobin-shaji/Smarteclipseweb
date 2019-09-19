@@ -20,8 +20,10 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Servicer\Models\ServicerJob;
+use App\Modules\Vehicle\Models\VehicleGps;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 use PDF;
 use DataTables;
@@ -37,8 +39,19 @@ class VehicleController extends Controller {
    
     public function getVehicleList()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles = Vehicle::select(
+         $client_id=\Auth::user()->client->id;
+         $user_id=\Auth::user()->id;
+         $user_gps=VehicleGps::select(
+                                     'vehicle_id',
+                                     'gps_id',
+                                     'user_id'
+                                    )
+                  
+                  ->where('user_id',$user_id)
+                  ->get();
+         $single_vehicles=$this->getVehicleIdsFromVehicleGps($user_gps);
+
+         $vehicles = Vehicle::select(
                     'id',
                     'name',
                     'register_number',
@@ -46,6 +59,7 @@ class VehicleController extends Controller {
                     'vehicle_type_id',
                     'deleted_at'
                     )
+            ->whereIn('id',$single_vehicles)
             ->withTrashed()
             ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
@@ -54,6 +68,8 @@ class VehicleController extends Controller {
             ->get();
 
 
+
+           
             return DataTables::of($vehicles)
             ->addIndexColumn()
              ->addColumn('driver', function ($vehicles) {
@@ -66,6 +82,7 @@ class VehicleController extends Controller {
                   return $vehicles->driver->name;
                 }
             })
+
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
@@ -81,7 +98,7 @@ class VehicleController extends Controller {
                     
                 }else{
                      return "
-                    <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> View </a>
+                    <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->vehicle->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> View </a>
                     <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
                 }
              })
@@ -1522,6 +1539,7 @@ class VehicleController extends Controller {
     }
     // ---validate from date-----------------
 
+
  
 
 
@@ -1733,6 +1751,14 @@ class VehicleController extends Controller {
 
         ];
         return  $rules;
+    }
+  // -----------------single vehicle array from gps data-------------------------------
+    public function getVehicleIdsFromVehicleGps($user_gps){
+      $single_vehicles = [];
+        foreach($user_gps as $gps){
+            $single_vehicles[] = $gps->vehicle_id;
+        }  
+        return $single_vehicles;
     }
 // --------------------------------------------------------------------------------
     function getPlacenameFromLatLng($latitude,$longitude){
