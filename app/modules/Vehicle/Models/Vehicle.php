@@ -19,11 +19,8 @@ class Vehicle extends Model
     public function vehicleType(){
     	return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
     }
-<<<<<<< HEAD
-    
-   
-=======
->>>>>>> 689729eb52b7bce1c4bc213e00ceb23fadd1106d
+
+
 
     // driver
     public function driver(){
@@ -40,16 +37,12 @@ class Vehicle extends Model
         return $this->hasMany('App\Modules\Vehicle\Models\VehicleRoute','vehicle_id','id');
     }
 
-<<<<<<< HEAD
+
    public function gps()
     {
-        return $this->belongsToMany('App\Modules\Vehicle\Models\Vehicle', 'vehicle_gps',  'vehicle_id' ,'gps_id');
+        return $this->belongsToMany('App\Modules\Gps\Models\Gps', 'vehicle_gps','gps_id', 'vehicle_id');
     }
-=======
-    public function gps()
-    {
-        return $this->belongsToMany('App\Modules\Vehicle\Models\Vehicle', 'vehicle_gps','vehicle_id','gps_id');
-    } 
     
->>>>>>> 689729eb52b7bce1c4bc213e00ceb23fadd1106d
+
+
 }
