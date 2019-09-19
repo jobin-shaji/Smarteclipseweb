@@ -37,5 +37,10 @@ class Vehicle extends Model
         return $this->hasMany('App\Modules\Vehicle\Models\VehicleRoute','vehicle_id','id');
     }
 
+     public function gps()
+    {
+        return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+    }
+
 
 }

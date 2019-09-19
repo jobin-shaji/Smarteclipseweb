@@ -18,8 +18,34 @@
 
   
 
+  
 
-  <div class="row">
+  <div class="cover_playback" style="width:33%;">
+    <div class="row">
+     <div class="col-lg-4 col-md-3">
+        <div class="form-group">
+           <label> From Date</label>
+           <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate">
+        </div>
+     </div>
+
+     <div class="col-lg-4 col-md-3">
+        <div class="form-group">                   
+           <label> To date</label>
+            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate">
+        </div>
+     </div>
+
+     <div class="col-lg-3 col-md-3 pt-2 ">
+        <div class="form-group"> 
+           <button class="btn btn-sm btn-info form-control btn-play-back" onclick="playback()"> <i class="fa fa-filter" style="height:23px;"></i>Playback </button>                               
+        </div>
+     </div>
+
+  </div>
+  </div>
+
+
     <div class="col-lg-12 col-sm-12">
       <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
        <input type="hidden" name="svg_con" id="svg_con" value="{{$vehicle_type->svg_icon}}">
