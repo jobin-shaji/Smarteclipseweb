@@ -40,18 +40,28 @@ class GpsController extends Controller {
     public function getGps()
     {
         $user_id=\Auth::user()->id;
-        $vehicle_gps = Gps::select(
-            'id',
-        	'gps_id',
-            'user_id'
-        )
-        ->with('gps:id,imei,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
-        ->where('user_id',$user_id)
-        ->get();
-        dd($vehicle_gps);
-        return DataTables::of($vehicle_gps)
+        // $gps = Gps::select(
+        //     'id',
+        // 	'imei',
+        //     \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
+        //     'e_sim_number',
+        //     'batch_number',
+        //     'employee_code',
+        //     'model_name',
+        // 	'version',
+        //     'deleted_at'
+        // )
+        // ->withTrashed()
+        // ->with(['vehicleGps' => function ($query) {
+        //     $query->where('user_id', 0);
+        // }])
+        // // ->where('vehicleGps.user_id', $user_id)
+        // ->get();
+
+        $gps = Gps::with(['vehicleGps' => function($query){$query->where('user_id',1);}])->get();
+        return DataTables::of($gps)
         ->addIndexColumn()
-        ->addColumn('action', function ($vehicle_gps) {
+        ->addColumn('action', function ($gps) {
             $b_url = \URL::to('/');
             if($gps->deleted_at == null){
                 // <a href=/gps/".Crypt::encrypt($gps->id)."/data class='btn btn-xs btn-info'><i class='glyphicon glyphicon-folder-open'></i> Data </a>
