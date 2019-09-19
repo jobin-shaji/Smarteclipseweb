@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-new-list',
+            url: 'gps-dealer-new-list',
             type: 'POST',
             data: {
                 'data': data
@@ -46,9 +46,9 @@ function callBackDataTable(){
     });
 }
 
-function acceptGpsTransfer(gps_transfer_id){
+function acceptDealerGpsTransfer(gps_transfer_id){
     if(confirm('Are you sure want to accept this?')){
-        var url = 'gps-transfer/accept';
+        var url = 'gps-transfer-dealer/accept';
         var data = {
             id : gps_transfer_id
         };

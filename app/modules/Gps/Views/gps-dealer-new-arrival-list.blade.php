@@ -51,6 +51,6 @@
         </div>
 
 @section('script')
-    <script src="{{asset('js/gps/gps-new-arrival-list.js')}}"></script>
+    <script src="{{asset('js/gps/gps-dealer-new-arrival-list.js')}}"></script>
 @endsection
 @endsection
