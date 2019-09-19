@@ -108,7 +108,7 @@
     <script>
         $(document).ready(function () {
 
-            execCommand("https://app.gpsvst.vehiclest.com/api/v1/location_data", "POST", JSON.stringify({
+            execCommand("http://app.gpsvst.vehiclest.com/api/v1/location_data", "POST", JSON.stringify({
                 "imei": "868997036366951",
                 "from_date": "2019-09-02 15:42:04",
                 "to_date": "2019-09-03 15:42:04"
