@@ -17359,6 +17359,24 @@ img {
 img.cover_vehicle_icon {
     margin-bottom: 11px;
 }
+
+.cover_playback {
+    position: relative;
+    position: fixed;
+    z-index: 9999;
+    right: 73px;
+    bottom: 23px;
+    background: #5d5d5d;
+    padding: 14px;
+    border-radius: 24px;
+    color: #fff;
+}
+
+.cover_playback .btn-play-back {
+    border-radius: 7px;
+}
+
+
 }
 
 

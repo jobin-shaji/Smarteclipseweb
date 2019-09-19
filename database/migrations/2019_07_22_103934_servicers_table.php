@@ -19,6 +19,7 @@ class ServicersTable extends Migration
             $table->string('name');
             $table->text('address');
             $table->integer('status');
+            $table->integer('user_id');
             $table->integer('sub_dealer_id');
             $table->integer('deleted_by');
             $table->timestamps();
@@ -33,6 +34,6 @@ class ServicersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('servicers');
     }
 }

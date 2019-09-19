@@ -23,17 +23,16 @@ return  [
        'Ticket',
        'Premium',
        'DataUsage',
-       'SmsUsage',
        'Servicer',
        'Sos',
        'TrafficRules',
-       'School',
        'Student',
        'Subscription',
        'BusHelper',
        'SchoolClass',
        'ClassDivision',
-       'RouteBatch'
+       'RouteBatch',
+       'Warehouse'
     ]
 ]
 

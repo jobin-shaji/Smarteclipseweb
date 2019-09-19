@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSmsStatusesTable extends Migration
+class CreateVouchers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateSmsStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sms_statuses', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('gps_id');
-            $table->string('count');
-            $table->dateTime('date_time');
+            $table->text('reference_id');
+            $table->integer('client_id');
+            $table->double('amount');
+            $table->string('subscription');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateSmsStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sms_statuses');
+        Schema::dropIfExists('vouchers');
     }
 }

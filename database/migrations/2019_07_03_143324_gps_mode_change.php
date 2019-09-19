@@ -16,8 +16,6 @@ class GpsModeChange extends Migration
          Schema::create('gps_mode_changes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('gps_id');
-            $table->integer('vehicle_id');
-            $table->integer('client_id');
             $table->string('lat');
             $table->string('lng');
             $table->text('mode');

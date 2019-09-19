@@ -16,9 +16,7 @@ class GpsData extends Migration
          Schema::create('gps_data', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->integer('client_id')->nullable();
             $table->integer('gps_id')->nullable();
-            $table->integer('vehicle_id')->nullable();
             $table->string('header')->nullable();
             $table->integer('vendor_id')->nullable();
             $table->string('firmware_version')->nullable();

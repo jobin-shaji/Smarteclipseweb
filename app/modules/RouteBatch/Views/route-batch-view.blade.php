@@ -23,6 +23,7 @@
               <th>Name</th>
               <th>Parent Name</th>
               <th>Contact No.</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -33,6 +34,8 @@
               <td>{{$student->name}}</td>
               <td>{{$student->parent_name}}</td>
               <td>{{$student->mobile}}</td>
+              <?php $latitude=$student->latitude; $longitude=$student->longitude; ?>
+              <td><button onclick="panToMap({{$student->id}})" class='btn btn-xs btn-success'>Location</button></td>
             </tr>
             @endforeach
           </tbody>
@@ -125,5 +128,13 @@
       $(function(){
         initMap();
       });
+
+      function panToMap(student_id){
+        var url = 'route-batch/pan-to-map';
+        var data = {
+            id : student_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+      }
     </script>
   @endsection

@@ -1014,7 +1014,8 @@ class VehicleController extends Controller {
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','!=','client')->first()->name;
+    
+        $user_role=$user->roles->first()->name;
         $date_by_role=$this->playbackHistoryDataPeriod($user_role);  
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id,'start_date'=>$date_by_role] );
     }

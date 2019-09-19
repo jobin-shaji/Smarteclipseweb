@@ -16,6 +16,7 @@ use App\Modules\Ota\Models\OtaType;
 use App\Modules\Gps\Models\VltData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -28,6 +29,7 @@ use DataTables;
 
 
 class GpsController extends Controller {
+
     public $cart;
     //Display all gps
 	public function gpsListPage()
@@ -38,20 +40,25 @@ class GpsController extends Controller {
     public function getGps()
     {
         $user_id=\Auth::user()->id;
-        $gps = Gps::select(
-            'id',
-        	'imei',
-            \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
-            'e_sim_number',
-            'batch_number',
-            'employee_code',
-            'model_name',
-        	'version',
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->where('user_id',$user_id)
-        ->get();
+        // $gps = Gps::select(
+        //     'id',
+        // 	'imei',
+        //     \DB::raw("DATE_FORMAT(manufacturing_date, '%d-%m-%Y') as manufacturing_date"),
+        //     'e_sim_number',
+        //     'batch_number',
+        //     'employee_code',
+        //     'model_name',
+        // 	'version',
+        //     'deleted_at'
+        // )
+        // ->withTrashed()
+        // ->with(['vehicleGps' => function ($query) {
+        //     $query->where('user_id', 0);
+        // }])
+        // // ->where('vehicleGps.user_id', $user_id)
+        // ->get();
+
+        $gps = Gps::with(['vehicleGps' => function($query){$query->where('user_id',1);}])->get();
         return DataTables::of($gps)
         ->addIndexColumn()
         ->addColumn('action', function ($gps) {
@@ -142,7 +149,7 @@ class GpsController extends Controller {
     public function save(Request $request)
     {
         $root_id=\Auth::user()->id;
-       $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
+        $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
        
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
@@ -154,9 +161,15 @@ class GpsController extends Controller {
             'employee_code'=> $request->employee_code,
             'model_name'=> $request->model_name,
             'version'=> $request->version,
-            'user_id' => $root_id,
+            // 'user_id' => $root_id,
             'status'=>1
         ]);
+        if($gps){
+           $gps = VehicleGps::create([
+                'gps_id'=> $gps->id,
+                'user_id' => $root_id,
+            ]); 
+        }
         $request->session()->flash('message', 'New gps created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('gps.details',Crypt::encrypt($gps->id)));
