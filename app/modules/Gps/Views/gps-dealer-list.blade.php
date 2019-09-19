@@ -4,7 +4,7 @@
 <div class="page-wrapper page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Dealer</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/IN Stock</li>
       </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -30,7 +30,6 @@
                                     <th>Batch Number</th>
                                     <th>Employee Code</th>
                                     <th>Model Name</th>
-                                    <th>User</th>
                                   </tr>
                               </thead>
                           </table>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGpsStocksTable extends Migration
+class CreateVehicleGpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateGpsStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('gps_stocks', function (Blueprint $table) {
+        Schema::create('vehicle_gps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('gps_id');
-            $table->integer('inserted_by');
-            $table->integer('dealer_id')->nullable();
-            $table->integer('subdealer_id')->nullable();
-            $table->integer('client_id')->nullable();
-            $table->integer('deleted_by')->nullable();
+            $table->increments('vehicle_id');
+            $table->increments('gps_id');
+            $table->increments('client_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +30,6 @@ class CreateGpsStocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gps_stocks');
+        Schema::dropIfExists('vehicle_gps');
     }
 }

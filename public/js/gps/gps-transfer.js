@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-transfer-list',
+            url: 'gps-transfer-list-root',
             type: 'POST',
             data: {
                 'data': data
@@ -51,9 +51,9 @@ function callBackDataTable(){
     });
 }
 
-function cancelGpsTransfer(gps_transfer_id){
+function cancelRootGpsTransfer(gps_transfer_id){
     if(confirm('Are you sure want to cancel this?')){
-        var url = 'gps-transfer/cancel';
+        var url = 'gps-transfer-root/cancel';
         var data = {
             id : gps_transfer_id
         };
