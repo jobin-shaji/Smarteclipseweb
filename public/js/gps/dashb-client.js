@@ -291,8 +291,6 @@ function clearMarkers() {
 }
 
 function addVehicleToVehicleList(vehicle_name, reg, gpsID) {
-
-
  var vehicleData = '<div class="border-card">' +
   '<div class="card-type-icon with-border">' +
   '<input type="radio" id="radio"  class="vehicle_gps_id" name="radio" onclick="getVehicle(' + gpsID + '); getVehicleTrack(' + gpsID + '); " value="' + gpsID + '">' +
