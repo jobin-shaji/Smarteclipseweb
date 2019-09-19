@@ -36,11 +36,8 @@ class Gps extends Model
     	return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
     
-    public function vehicle()
-    {
-     return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id')->withTrashed();
-    }
-     public function gpsdata()
+
+    public function gpsdata()
     {
         return $this->hasMany('App\Modules\Gps\Models\GpsData','gps_id','id')->orderBy('id', 'desc');
     }
