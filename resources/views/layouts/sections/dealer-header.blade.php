@@ -13,8 +13,8 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-new')}}"> NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/gps-dealer')}}"> LIST DEVICE </a>  
+                                <a class="dropdown-item" href="{{url('/gps-dealer-new')}}"> NEW ARRIVALS</a>
+                                <a class="dropdown-item" href="{{url('/gps-dealer')}}"> IN STOCK </a>  
                                 <a class="dropdown-item" href="{{url('/gps-transfer-dealer/create')}}"> DEVICE TRANSFER</a>
                                 <a class="dropdown-item" href="{{url('/gps-transfers')}}"> DEVICE TRANSFER LIST</a>                           
                             </div>
