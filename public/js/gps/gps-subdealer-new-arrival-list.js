@@ -1,6 +1,5 @@
 $(document).ready(function () {
     callBackDataTable();
-    
 });
 
 
@@ -17,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-transferred-list',
+            url: 'gps-subdealer-new-list',
             type: 'POST',
             data: {
                 'data': data
@@ -27,8 +26,8 @@ function callBackDataTable(){
             }
         },
         createdRow: function ( row, data, index ) {
-            if ( data['deleted_at'] ) {
-                $('td', row).css('background-color', 'rgb(243, 204, 204)');
+            if ( data['accepted_on'] ) {
+                $('td', row).css('background-color', 'rgb(210, 239, 203)');
             }
         },
        
@@ -37,20 +36,26 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'imei', name: 'imei'},
-            {data: 'manufacturing_date', name: 'manufacturing_date'},
-            {data: 'version', name: 'version'},
-            {data: 'e_sim_number', name: 'e_sim_number'},
-            {data: 'batch_number', name: 'batch_number'},
-            {data: 'employee_code', name: 'employee_code'},
-            {data: 'model_name', name: 'model_name'},
-            {data: 'user', name: 'user'},
-            
+            {data: 'from_user.username', name: 'from_user.username', searchable: false},
+            {data: 'dispatched_on', name: 'dispatched_on'},
+            {data: 'count', name: 'count'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
+
+function acceptSubDealerGpsTransfer(gps_transfer_id){
+    if(confirm('Are you sure want to accept this?')){
+        var url = 'gps-transfer-subdealer/accept';
+        var data = {
+            id : gps_transfer_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
+}
+
 
 
 
