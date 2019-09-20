@@ -37,6 +37,9 @@ Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->
 
 
 
+
+
+
 //////////////////////////////////Route in vehicle//////////////////////////////
 
 Route::post('/vehicle-route/save_route','VehicleController@saveVehicleRoute')->name('vehicle-route.create.p');
@@ -106,3 +109,10 @@ Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.upd
 
 
 	});
+
+Route::group(['middleware' => ['web','auth','role:servicer|client|school|root|dealer|subdealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+  // new playback
+  Route::get('/vehicle_playback','VehicleController@playbackPage')->name('vehicle_playback');
+  Route::get('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
+
+});

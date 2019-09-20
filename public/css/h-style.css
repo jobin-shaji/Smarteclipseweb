@@ -7,6 +7,9 @@
         margin: 0;
         color:#fff;
     }
+    div#map {
+    top: 0px;
+   }
     #map {
 
         top: 50px;
@@ -150,6 +153,7 @@
         box-sizing: border-box;
         border-radius: 6px;
         display:none;
+        top: 11px;
     }
 
     .boxHeader {
