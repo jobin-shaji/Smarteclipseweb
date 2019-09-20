@@ -101,7 +101,7 @@
                         <h3 id="total_gps_dealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>Total GPS</p>
+                        <p>InStock GPS</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
@@ -173,7 +173,7 @@
             <h3 id="total_gps_subdealer">
               <div class="loader"></div>
             </h3>
-            <p>Total GPS</p>
+            <p> GPS In Stock</p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
@@ -286,7 +286,8 @@
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
             <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
-              @foreach ($vehicles as $vehicle)       
+              @foreach ($vehicles as $vehicle) 
+
                 <div class="border-card">
                   <div class="card-type-icon with-border">
                   <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">

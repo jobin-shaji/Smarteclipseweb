@@ -17,10 +17,10 @@ class CreateGpsStocksTable extends Migration
             $table->increments('id');
             $table->integer('gps_id');
             $table->integer('inserted_by');
-            $table->date('inserted_on');
             $table->integer('dealer_id')->nullable();
             $table->integer('subdealer_id')->nullable();
             $table->integer('client_id')->nullable();
+            $table->integer('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

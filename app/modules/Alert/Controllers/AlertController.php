@@ -64,7 +64,7 @@ class AlertController extends Controller {
                 ->with('alertType:id,code,description')
                 ->with('vehicle:id,name,register_number')
                 ->with('gps:id,imei')
-                // ->limit(11590) 
+                ->limit(1000) 
                 ->with('client:id,name');
                 if($alert_id==null && $vehicle_id==null)
                 { 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class GpsModeChange extends Migration
+class CreateVehicleGpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class GpsModeChange extends Migration
      */
     public function up()
     {
-         Schema::create('gps_mode_changes', function (Blueprint $table) {
+        Schema::create('vehicle_gps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('gps_id');
-            $table->string('lat');
-            $table->string('lng');
-            $table->text('mode');
-            $table->dateTime('device_time');
+            $table->increments('vehicle_id');
+            $table->increments('gps_id');
+            $table->increments('client_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +30,6 @@ class GpsModeChange extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gps_mode_changes');
+        Schema::dropIfExists('vehicle_gps');
     }
 }
