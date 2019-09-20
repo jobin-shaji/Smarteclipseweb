@@ -276,6 +276,13 @@ $('#poi_petrol').click(function(){
       }
      
 // ---------------find nearest map points-----------------
+// -------------------playback---------------------------
+function playbackData(){
+  alert(1);
+ // var myWindow = window.open("http://gpsvst.vehiclest.com", "", "width=500,height=500");
+}
+// -------------------playback---------------------------
+
 
 
 
