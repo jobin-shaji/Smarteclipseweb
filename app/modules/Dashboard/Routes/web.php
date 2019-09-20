@@ -26,6 +26,8 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
             
 });
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
+     Route::get('/map-view', 'DashboardController@mapView')->name('map.view');
+        Route::post('/root-vehicle-mode-count','DashboardController@vehicleModeCount')->name('root.vehicle.mode.count');
     Route::post('/root-gps-sale','DashboardController@rootGpsSale')->name('root.gps.sale');
     Route::post('/root-gps-user','DashboardController@rootGpsUsers')->name('root.gps.user');
 });

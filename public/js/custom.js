@@ -107,7 +107,9 @@ $( ".date_expiry_edit" ).datetimepicker({
     maxDate: new Date()
  });
 
- 
+ $(function() {
+  $('.selectpicker').selectpicker();
+});
 
 
 function getUrl(){
@@ -156,6 +158,11 @@ function toast(res){
 
         servicerDriver(res);
     }
+    else if(res.status=='vehicleModeCount')
+    {
+        vehicleModeCount(res);
+    }
+                
 }
 
 function backgroundPostData(url, data, callBack, options) { 
@@ -264,7 +271,7 @@ function backgroundPostData(url, data, callBack, options) {
                 }else if(callBack=='gpsData'){
                          gpsData(res);
                 }
-                
+
 
 
 

@@ -124,5 +124,16 @@
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
         </div>
-    </li>       
+    </li>  
+      <li class="nav-item dropdown">
+        <a class="nav-link waves-effect waves-dark" href="{{url('/map-view')}}"  aria-haspopup="true" > Map View
+        </a>
+        <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a> 
+            <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
+            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
+        </div> -->
+    </li>         
 </ul>

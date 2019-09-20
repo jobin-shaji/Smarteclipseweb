@@ -17375,6 +17375,12 @@ img.cover_vehicle_icon {
 .cover_playback .btn-play-back {
     border-radius: 7px;
 }
+.right-bottom2.all_user_gps_data {
+    background: #5c5c5c;
+    padding: 10px;
+    width: 33%;
+    border-radius: 15px;
+}
 
 
 }
