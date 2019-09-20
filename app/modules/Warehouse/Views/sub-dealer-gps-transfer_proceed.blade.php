@@ -36,6 +36,7 @@
               <option value="{{$client_user_id}}">{{$client_name}}</option>
             </select>
           </div>
+          <input type="hidden" name="client_id" value="{{$client_id}}">
 
           <div class="form-group has-feedback">
             <label>Client Address</label>
