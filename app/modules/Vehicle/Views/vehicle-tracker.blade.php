@@ -19,8 +19,8 @@
   
 
   
-  <form  onsubmit="return playbackData();">
- <input type="hidden" name="vehicle_id" value="{{$Vehicle_id}}">
+  <form id="playback_form">
+ <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
   <div class="cover_playback" style="width:33%;">
     <div class="row">
      <div class="col-lg-4 col-md-3">

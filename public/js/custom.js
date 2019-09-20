@@ -263,6 +263,10 @@ function backgroundPostData(url, data, callBack, options) {
                          notificationCount(res);
                 }else if(callBack=='gpsData'){
                          gpsData(res);
+
+                }else if(callBack=='playBackData'){
+                    
+                         playBackData(res);
                 }
                 
 
