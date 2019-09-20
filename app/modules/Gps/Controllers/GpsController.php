@@ -512,7 +512,7 @@ class GpsController extends Controller {
         if($request->gps){
          $items = GpsData::where('gps_id',$request->gps);  
         }else{
-         $items = GpsData::all()->limit(10000);  
+         $items = GpsData::limit(10000);  
         }
         return DataTables::of($items)
         ->addIndexColumn()
