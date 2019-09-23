@@ -63,6 +63,7 @@ class DashboardController extends Controller
         $vehicles = Vehicle::select('id','register_number','name','gps_id')
         ->where('client_id',$client_id)
         ->get();
+        
         $single_vehicle =  $this->getSingleVehicle($client_id);
         $expired_documents =  $this->getExpiredDocuments($single_vehicle);
         $expire_documents =  $this->getExpireDocuments($single_vehicle); 
@@ -143,10 +144,11 @@ class DashboardController extends Controller
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));      
         if($client)
         {
-            $single_vehicle =  $this->getVehicleGps($client->id,$user->id);           
-            
+
+            $single_vehicle =  $this->getVehicleGps($client->id,$user->id);    
+
             $moving =  $this->getMoving($single_vehicle,$oneMinut_currentDateTime,$currentDateTime);
-            $offline =  $this->getOffline($single_vehicle,$oneMinut_currentDateTime);
+            $offline =  $this->getOffline($single_vehicle,$oneMinut_currentDateTime); 
             $idle =  $this->getIdle($single_vehicle,$oneMinut_currentDateTime,$currentDateTime);
             $stop =  $this->getStop($single_vehicle,$oneMinut_currentDateTime,$currentDateTime);           
         }
@@ -232,9 +234,10 @@ class DashboardController extends Controller
         ->whereNotNull('lon')
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime);
-        if($user->hasRole('client')){
+        if($user->hasRole('client|school')){
             $moving=$moving->whereIn('id',$single_vehicle)->count();
         }
+        
         else
         {
             $moving=$moving->count();
@@ -246,14 +249,14 @@ class DashboardController extends Controller
         $offline=Gps::whereNotNull('lat')
         ->whereNotNull('lon')
         ->where('device_time', '<=',$oneMinut_currentDateTime);
-        if($user->hasRole('client')){
+        if($user->hasRole('client|school')){
             $offline=$offline->whereIn('id',$single_vehicle)->count();
-        }
+        }        
         else
         {
             $offline=$offline->count();
         }
-        // dd($offline);
+        
         return $offline; 
     }
     function getIdle($single_vehicle,$oneMinut_currentDateTime,$currentDateTime){
@@ -263,7 +266,7 @@ class DashboardController extends Controller
         ->whereNotNull('lon')
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime);
-        if($user->hasRole('client')){
+        if($user->hasRole('client|school')){
             $idle=$idle->whereIn('id',$single_vehicle)->count();
         }
         else{
@@ -278,7 +281,7 @@ class DashboardController extends Controller
         ->whereNotNull('lon')
         ->where('device_time', '>=',$oneMinut_currentDateTime)
         ->where('device_time', '<=',$currentDateTime);
-        if($user->hasRole('client')){
+        if($user->hasRole('client|school')){
             $stop=$stop->whereIn('id',$single_vehicle)->count();
         }
         else
@@ -387,7 +390,7 @@ class DashboardController extends Controller
         $address="";
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
-        // dd($gps->id);
+        
         if($gps->satllite!=null){
          $satelite=$gps->satllite;   
         }
@@ -472,7 +475,7 @@ class DashboardController extends Controller
     public function dashVehicleTrack(Request $request)
     {
         $user = $request->user(); 
-        if($user->hasRole('client')){
+        if($user->hasRole('client|school')){
             $client=Client::where('user_id',$user->id)->first();
             $gps_id =  $this->getVehicleGps($client->id,$user->id);        
             $currentDateTime=Date('Y-m-d H:i:s');
@@ -509,7 +512,7 @@ class DashboardController extends Controller
             ->whereNotNull('lon')  
             ->orderBy('id','desc')                 
             ->get(); 
-            // dd($vehiles_details);
+           
 
         }  
         $response_track_data=$this->vehicleDataList($vehiles_details); 
@@ -579,7 +582,7 @@ class DashboardController extends Controller
         $user = $request->user();  
         $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
-        if($user->hasRole('client')){
+        if($user->hasRole('client|school')){
             $client=Client::where('user_id',$user->id)->first();
             $gps_id =  $this->getVehicleGps($client->id,$user->id);         
            
@@ -768,7 +771,7 @@ class DashboardController extends Controller
     }
     public function rootGpsSale(Request $request)
     {
-        // dd($request->id);
+       
         $root_id=\Auth::user()->root->id;
         $gps_transfer_id=$this->getGpsSale($root_id);                    
         $gps=$this->getGpsTransfer($gps_transfer_id);
@@ -816,7 +819,7 @@ class DashboardController extends Controller
     }
     public function rootGpsUsers(Request $request)
     {
-        // dd($request->id);
+        
         $root_id=\Auth::user()->root->id;       
         $dealer=Dealer::all()->count();
         $sub_dealer=SubDealer::all()->count();
@@ -851,7 +854,7 @@ class DashboardController extends Controller
 
     public function dealerGpsUsers(Request $request)
     {
-        // dd($request->id);
+        
         $dealer_id=\Auth::user()->dealer->id; 
         $sub_dealers = SubDealer::select('id','name')
         ->where('dealer_id',$dealer_id)
@@ -874,7 +877,7 @@ class DashboardController extends Controller
     ///////////////////////Sub Dealer GPS Count//////////////////////////////////
     public function subDealerGpsSale(Request $request)
     {
-        // dd($request->id);
+       
         $user_id=\Auth::user()->id;
         $gps_transfer_id=$this->getGpsSale($user_id);                    
         $gps=$this->getGpsTransfer($gps_transfer_id); 
@@ -922,7 +925,7 @@ class DashboardController extends Controller
         // $gps = Vehicle::select('id','gps_id')
         // ->with('gps:id,imei')
         // ->get();
-        // dd($gps);
+       
         $gps = Gps::select('id','imei')->whereNotNull('lat')->whereNotNull('lon')->get();
         return view('Dashboard::map-view',['gpss' => $gps]);
     }

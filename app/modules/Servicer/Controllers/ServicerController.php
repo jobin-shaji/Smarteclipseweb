@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Warehouse\Models\GpsStock;
+
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
@@ -838,7 +840,20 @@ class ServicerController extends Controller {
     {
         $user = $request->user();
         $client_id=$request->client_id;
+
         $client = Client::find($client_id);
+        $gps_stocks = GpsStock::select(
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();
+
+        $stock_gps_id = [];
+        foreach($gps_stocks as $stock_gps){
+            $stock_gps_id[] = $stock_gps->gps_id;
+        }
+
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
@@ -851,6 +866,7 @@ class ServicerController extends Controller {
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
         }
+        
         $servicer_jobs = ServicerJob::select(
             'gps_id',
             'servicer_id',
@@ -865,7 +881,7 @@ class ServicerController extends Controller {
         }     
         // dd($servicer_gps);
         $devices=Gps::select('id','imei')
-        ->where('user_id',$client->user_id)
+        ->whereIn('id',$stock_gps_id)
         ->whereNotIn('id',$single_gps)
         ->whereNotIn('id',$servicer_gps)
         ->get();
