@@ -63,10 +63,10 @@ class DashboardController extends Controller
         $vehicles = Vehicle::select('id','register_number','name','gps_id')
         ->where('client_id',$client_id)
         ->get();
-        $single_vehicle =  $this->getVehicle($client_id);
+        $single_vehicle =  $this->getSingleVehicle($client_id);
         $expired_documents =  $this->getExpiredDocuments($single_vehicle);
         $expire_documents =  $this->getExpireDocuments($single_vehicle); 
-        return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $get_vehicles,'gps_data' => $gps_data]); 
+        return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles]); 
     }
     function clientDashboardIndex()
     {
