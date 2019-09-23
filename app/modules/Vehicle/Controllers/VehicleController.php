@@ -1622,16 +1622,43 @@ class VehicleController extends Controller {
     }
 
 
+    // --------------playback page-------------------------------------
+    public function playbackPage(){ 
+       return view('Vehicle::vehicle-playback-window'); 
+    }
+     public function playbackPageData(Request $request){ 
+      $vehicle_id=$request->vehicle_id;
+      $start_date=$request->from_date;
+      $end_date=$request->to_date;
+      $vehicle=Vehicle::find($vehicle_id);
+      if($vehicle==null){
+             $data = array('status' => 'failed',
+                           'message' => 'vehicle doesnot exist',
+                           'code'=>0);
+        return response()->json($data);
+       }
 
+      $gpsData=GpsData::select('latitude','longitude')
+                        ->where('gps_id',$vehicle->gps_id)
+                        ->whereNotNull('latitude')
+                        ->whereNotNull('longitude')
+                        ->orderBy('device_time','asc')
+                        ->get();
 
-
-
-
-
-
-
-
-
+       if($gpsData){
+          $response_data = array('status'  => 'success',
+                                'message' => 'success',
+                                'locations'=>$gpsData,
+                                'code'    =>1
+                                );
+          }else{
+          $response_data = array('status'  => 'failed',
+                                'message' => 'failed',
+                                'code'    =>0);
+          }
+        
+        return response()->json($response_data); 
+    }
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()
