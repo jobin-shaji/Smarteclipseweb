@@ -12,19 +12,22 @@
         <div class="st-actionContainer right-bottom" >         
           <div class="right-bottom">                        
           </div>         
-          <div class="right-bottom2 all_user_gps_data">            
-            <select id="gps_id" name="" class="form-control vehicle_gps_id"  onclick="getVehicle(this.value)">
+          <div class="right-bottom2 all_user_gps_data">    
+                 
+            <select id="gps_id" name=""  class="form-control vehicle_gps_id select2"  onchange="getVehicle(this.value)">
+              <option value="" disabled selected>Select</option>
              @foreach ($gpss as $gps)
-                <option value="{{$gps->id}}">{{$gps->imei}}</option>
+                <option id="gps_mode_changes" value="{{$gps->id}}">{{$gps->imei}}</option>
               @endforeach  
-            </select>                      
+            </select> 
+                              
           </div>
         </div>
       </div>
     </div>
     <div class="dashboard-main-Right cover_vehicle_track_list">
       <div class="iconsbg1234">
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="mode('M')">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -40,7 +43,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="mode('H')">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -56,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="mode('S')">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -72,7 +75,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="mode('O')">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
