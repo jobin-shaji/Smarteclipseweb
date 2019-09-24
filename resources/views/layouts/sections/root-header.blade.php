@@ -125,7 +125,7 @@
         </div>
     </li>  
       <li class="nav-item dropdown">
-        <a class="nav-link waves-effect waves-dark" href="{{url('/map-view')}}"  aria-haspopup="true" > Map View
+        <a class="nav-link waves-effect waves-dark" href="{{url('/map-view')}}"  aria-haspopup="true" > MAP VIEW
         </a>
         <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
