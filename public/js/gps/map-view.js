@@ -107,7 +107,7 @@ if(res.status!="failed"){
    '<div style="padding-top:5px; padding-left:16px;"><span style="margin-right:5px;">IMEI:</span>' + imei + ' </div>' +
    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+
    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+
-   '<div style="padding-top:5px;"><a href=/vehicles/' + vehicle_id + '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>   </div>' +
+   '<div style="padding-top:5px;"><a href=/vehicles/' + vehicle_id + '/location/root class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>   </div>' +
    '</div>';
 
 
