@@ -24,8 +24,6 @@ scanner.addListener('scan', function (content) {
       success: function (res) {
         if(res.status == 1){
            var position = jQuery.inArray(res.gps_id, items);
-
-
             if(position !='-1'){
                 toastr.info('Item Exists');
             }else{
