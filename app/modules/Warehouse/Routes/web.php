@@ -1,11 +1,11 @@
 <?php 
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Warehouse\Controllers' ] , function() {
 	//for Gps
-	Route::get('/gps-transfer-root/create','WarehouseController@createRootGpsTransfer')->name('gps-transfer-root.create');
+	Route::get('/gps-transfer-root','WarehouseController@createRootGpsTransfer')->name('gps-transfer-root');
 	Route::post('/gps-transfer-root-dropdown','WarehouseController@getDealerDetailsFromRoot')->name('gps-transfer-root-dropdown');
 	Route::post('/gps-transfer-root','WarehouseController@proceedRootGpsTransfer')->name('gps-transfer-root.transfer.p');
 	Route::post('/gps-transfer-root-proceed','WarehouseController@proceedConfirmRootGpsTransfer')->name('gps-transfer-root-proceed.create.p');
-	Route::get('/gps-transfers-root','WarehouseController@getRootList')->name('gps-transfers-root');
+	Route::get('/gps-transferred-root','WarehouseController@getRootList')->name('gps-transferred-root');
 	Route::post('/gps-transfer-list-root','WarehouseController@getRootListData')->name('gps-transfer-list-root');
 	Route::post('/gps-transfer-root/cancel','WarehouseController@cancelRootGpsTransfer')->name('gps.cancel-root');
 

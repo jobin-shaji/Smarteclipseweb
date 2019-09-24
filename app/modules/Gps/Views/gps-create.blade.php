@@ -21,11 +21,21 @@
   </ol>
 </nav>       
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12 col-lg-12">
             <form  method="POST" action="{{route('gps.create.p')}}">
             {{csrf_field()}}
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6 col-md-12">
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Serial No</label>
+                    <input type="text" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ old('serial_no') }}" required> 
+                     @if ($errors->has('serial_no'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
+                    </span>
+                  @endif
+                  </div>
+
                   <div class="form-group has-feedback">
                     <label class="srequired">IMEI</label>
                     <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ old('imei') }}" required> 
@@ -36,7 +46,6 @@
                   @endif
                   </div>
                  
-
                   <div class="form-group has-feedback">
                     <label class="srequired">Model Name</label>
                     <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ old('model_name') }}" required>   
@@ -52,7 +61,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6 col-md-12">
                   <div class="form-group has-feedback">
                     <label class="srequired">Manufacturing Date</label>
                     <input type="text" class="
@@ -60,6 +69,26 @@
                      @if ($errors->has('manufacturing_date'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
+                    </span>
+                  @endif
+                  </div>
+
+                  <div class="form-group has-feedback">
+                    <label class="srequired">ICC ID</label>
+                    <input type="text" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ old('icc_id') }}" required> 
+                     @if ($errors->has('icc_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('icc_id') }}</strong>
+                    </span>
+                  @endif
+                  </div>
+
+                  <div class="form-group has-feedback">
+                    <label class="srequired">IMSI</label>
+                    <input type="text" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ old('imsi') }}" required> 
+                     @if ($errors->has('imsi'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('imsi') }}</strong>
                     </span>
                   @endif
                   </div>

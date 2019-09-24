@@ -23,7 +23,7 @@ class Gps extends Model
     //     'allergies'
     // ];
 
-    protected $fillable=[ 'imei','manufacturing_date','e_sim_number','batch_number','model_name','version','user_id','status','device_time','employee_code'];
+    protected $fillable=[ 'serial_no','icc_id','imsi','imei','manufacturing_date','e_sim_number','batch_number','model_name','version','user_id','status','device_time','employee_code'];
 
     //join user table with gps table
     public function user()
