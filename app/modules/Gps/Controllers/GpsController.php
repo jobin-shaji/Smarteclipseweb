@@ -95,7 +95,7 @@ class GpsController extends Controller {
             'status'=>1
         ]);
         if($gps){
-           $gps = GpsStock::create([
+           $gps_stock = GpsStock::create([
                 'gps_id'=> $gps->id,
                 'inserted_by' => $root_id
             ]); 
