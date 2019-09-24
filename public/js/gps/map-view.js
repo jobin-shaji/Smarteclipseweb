@@ -62,6 +62,7 @@ function getVehicleSequence() {
 }
 
 function vehicleTrack(res) {
+  console.log(res);
 if(res.status!="failed"){
  var JSONObject = res.user_data;
  var marker, i;
@@ -78,6 +79,7 @@ if(res.status!="failed"){
    // map_flag=1;
   }
   var gpsID = JSONObject[i].id;
+  var imei = JSONObject[i].imei;
   var reg = JSONObject[i].register_number;
   var vehicle_id = JSONObject[i].vehicle_id;
   var vehicle_name = JSONObject[i].vehicle_name;
@@ -101,11 +103,11 @@ if(res.status!="failed"){
 
   var title = '<div id="content" style="width:150px;">' +
    '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:' + car_color + ';" aria-hidden="true"></i></span>' + vehicle_status +
-   '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>' + vehicle_name + '</i></span></div>' +
-   '<div style="padding-top:5px; padding-left:16px;"><i class="fa fa-car"></i><span style="margin-right:5px;">:</span>' + reg + ' </div>' +
+   '<div style="color:#000;font-weight:600;margin-top:5px;" ></div>' +
+   '<div style="padding-top:5px; padding-left:16px;"><span style="margin-right:5px;">IMEI:</span>' + imei + ' </div>' +
    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+
    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+
-   '<div style="padding-top:5px;"><a href=/vehicles/' + vehicle_id + '/playback class="btn btn-xs btn btn-warning" title="Playback" style="background-color:#fff;"><i class="fa fa-car" style="color:#000;font-size: 18px;"></i></a><a href=/vehicles/' + vehicle_id + '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" title="Alerts" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>  </div>' +
+   '<div style="padding-top:5px;"><a href=/vehicles/' + vehicle_id + '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>   </div>' +
    '</div>';
 
 
@@ -114,8 +116,10 @@ if(res.status!="failed"){
   var fillOpacity = JSONObject[i].opacity;
   var strokeWeight = JSONObject[i].strokeWeight;
   addMarker(loc, title, car_color, path, scale, fillOpacity, strokeWeight, gpsID);
+  // console.log(imei);
   if (track_flag != 0) {
-   addVehicleToVehicleList(vehicle_name, reg, gpsID);
+    
+   addGpsToGpsList(vehicle_name, reg, gpsID,imei);
   }
  }
  setMapOnAll(map);
@@ -199,11 +203,10 @@ function selectVehicleTrack(res) {
  redarLocationSelectVehicle(res.lat,res.lon,0.1);
 }
 
-$(".vehicle_gps_id").click(function() {
+$(".vehicle_gps_id").change(function() {
 
  var url = '/dashboard-track';
  var gps_id = this.value;
-
  var data = {
   gps_id: gps_id
  };
@@ -238,7 +241,9 @@ function locationSearch() {
   if (status == google.maps.GeocoderStatus.OK) {
     removeCircleFromMap();
    track_flag = 1;
-   $('#vehicle_card_cover').empty();
+   $('#gps_id').empty();
+   var vehicleData ='<option value=""disabled selected>select</option>';
+ $("#gps_id").append(vehicleData);
 
    var lat = results[0].geometry.location.lat();
    var lng = results[0].geometry.location.lng();
@@ -262,15 +267,17 @@ function locationSearch() {
    alert("Please enter a valid location");
   }
  });
- }else{
-   alert("Please select radius");
- }
- return false;
+}else{
+  alert("Please select radius");
+}
+  return false;
 }
 
-function moving(vehicle_mode) {
+function mode(vehicle_mode) {
  track_flag = 1;
- $('#vehicle_card_cover').empty();
+ $('#gps_id').empty();
+ var vehicleData ='<option value=""disabled selected>select</option>';
+ $("#gps_id").append(vehicleData);
  var url = '/dashboard-track-vehicle-mode';
  var data = {
   vehicle_mode: vehicle_mode
@@ -298,40 +305,9 @@ function clearMarkers() {
  setMapOnAll(null);
 }
 
-function addVehicleToVehicleList(vehicle_name, reg, gpsID) {
- var vehicleData = '<div class="border-card">' +
-  '<div class="card-type-icon with-border">' +
-  '<input type="radio" id="radio"  class="vehicle_gps_id" name="radio" onclick="getVehicle(' + gpsID + '); getVehicleTrack(' + gpsID + '); " value="' + gpsID + '">' +
-  '</div>' +
-  '<div class="content-wrapper">' +
-  '<div class="label-group fixed">' +
-  '<p class="title">' +
-  '<span><i class="fa fa-car"></i></span>' +
-  '</p>' +
-  '<p class="caption" id="vehicle_name">' + vehicle_name + '</p>' +
-  '</div>' +
-  '<div class="min-gap"></div>' +
-  '<div class="label-group">' +
-  '<p class="title">' +
-  '<span><i class="fas fa-arrow-alt-circle-left"></i></span>' +
-  '</p>' +
-
-  '<p class="caption" id="register_number">' + reg + '</p>' +
-  '</div>' +
-  '<div class="min-gap"></div>' +
-  '<div class="label-group">' +
-  '<p class="title">' +
-  '<span><i class="fas fa-tachometer-alt"></i></span>' +
-  '</p>' +
-  '<p class="caption">80</p>' +
-  '</div>' +
-
-  '</div>' +
-  '</div>';
-
- $("#vehicle_card_cover").append(vehicleData);
-
-
+function addGpsToGpsList(vehicle_name, reg, gpsID,imei) {
+  var vehicleData ='<option value="'+gpsID+'">'+imei+'</option>';
+  $("#gps_id").append(vehicleData);
 }
 
 

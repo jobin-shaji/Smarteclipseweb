@@ -84,8 +84,11 @@ class GpsController extends Controller {
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
         $gps = Gps::create([
+            'serial_no'=> $request->serial_no,
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
+            'icc_id'=> $request->icc_id,
+            'imsi'=> $request->imsi,
             'e_sim_number'=> $request->e_sim_number,
             'batch_number'=> $request->batch_number,
             'employee_code'=> $request->employee_code,
@@ -95,7 +98,7 @@ class GpsController extends Controller {
             'status'=>1
         ]);
         if($gps){
-           $gps = GpsStock::create([
+           $gps_stock = GpsStock::create([
                 'gps_id'=> $gps->id,
                 'inserted_by' => $root_id
             ]); 
@@ -876,8 +879,11 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
+            'serial_no' => 'required|unique:gps',
             'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
+            'icc_id' => 'required',
+            'imsi' => 'required',
             'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
             'batch_number' => 'required',
             'employee_code' => 'required',
