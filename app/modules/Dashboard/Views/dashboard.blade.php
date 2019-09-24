@@ -13,7 +13,7 @@
               <h3 id="gps">
                 <div class="loader"></div>
               </h3>
-              <p>GPS In Stock</p>
+              <p>Gps In Stock</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -101,7 +101,7 @@
                         <h3 id="total_gps_dealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>InStock GPS</p>
+                        <p>Total GPS</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
@@ -173,7 +173,7 @@
             <h3 id="total_gps_subdealer">
               <div class="loader"></div>
             </h3>
-            <p> GPS In Stock</p>
+            <p>Total GPS </p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
