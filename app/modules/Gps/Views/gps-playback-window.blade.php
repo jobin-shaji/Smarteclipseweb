@@ -31,7 +31,7 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="{{asset('js/h-script.js')}}"></script>
-    <script src="{{asset('js/gps/vehicle-playback_data.js')}}"></script>
+    <script src="{{asset('js/gps/gps-playback_data.js')}}"></script>
 
      
 </body>
