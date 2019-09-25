@@ -55,7 +55,7 @@
                       </div>
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
-                        <div class="form-group has-feedback">
+                        <div class="form-group ">
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                           <option selected disabled>Select Country</option>
                           @foreach($countries as $country)
@@ -69,7 +69,7 @@
                           </span>
                         @endif
                       </div>
-                      <div class="form-group has-feedback">
+                      <div class="form-group row" style="float:none!important">
                       <label class="srequired">State</label>
                         <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
                         <option selected disabled>Select Country First</option>
