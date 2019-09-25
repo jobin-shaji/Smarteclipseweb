@@ -1657,6 +1657,7 @@ class VehicleController extends Controller {
         
         return response()->json($response_data); 
     }
+    
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()

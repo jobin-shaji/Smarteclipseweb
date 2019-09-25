@@ -30,6 +30,7 @@ class CreateStudentsTable extends Migration
             $table->string('longitude');
             $table->string('password');
             $table->integer('client_id');
+            $table->string('path');
             $table->timestamps();
             $table->softDeletes();
         });

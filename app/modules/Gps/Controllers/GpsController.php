@@ -14,11 +14,14 @@ use App\Modules\Gps\Models\GpsLog;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Gps\Models\VltData;
+use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
+use App\Modules\Vehicle\Models\VehicleType;
+
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -44,7 +47,7 @@ class GpsController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
-        ->with('gps:id,imei,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
+        ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
         ->where('dealer_id',null)
         ->get();
         return DataTables::of($gps_stocks)
@@ -145,7 +148,10 @@ class GpsController extends Controller {
         $rules = $this->gpsUpdateRules($gps);
         $this->validate($request, $rules);
 
+        $gps->serial_no = $request->serial_no;
         $gps->imei = $request->imei;
+        $gps->icc_id = $request->icc_id;
+        $gps->imsi = $request->imsi;
         $gps->manufacturing_date = $request->manufacturing_date;
         $gps->e_sim_number = $request->e_sim_number;
         $gps->batch_number = $request->batch_number;
@@ -875,6 +881,202 @@ class GpsController extends Controller {
         $vehicle_mode = substr($vlt_data,$pointer,1);$pointer=$pointer+1;
         $gf_ide = substr($vlt_data,$pointer,5);$pointer=$pointer+5;
      }
+     ////////////////////Root location///////////////////
+     /////////////////////////////Vehicle Tracker/////////////////////////////
+    public function rootlocation(Request $request){
+        $decrypted_id = Crypt::decrypt($request->id);
+        // $get_vehicle=Vehicle::find($decrypted_id);
+        $vehicle_type=VehicleType::find(1);  
+        $track_data=Gps::select('lat as latitude',
+                              'lon as longitude'
+                              )         
+                              ->where('id',$decrypted_id)
+                              ->first();   
+        if($track_data==null)
+        {
+            return view('Gps::location-error');
+        }
+        else if($track_data->latitude==null || $track_data->longitude==null)
+        {
+            return view('Gps::location-error');
+        }
+        else
+        {
+            $latitude=$track_data->latitude;
+            $longitude= $track_data->longitude;
+        }
+        return view('Gps::gps-tracker',['gps_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+    }
+    public function rootlocationTrack(Request $request)
+    {
+        // $get_vehicle=Vehicle::where('gps_id',$request->id);
+        // dd($get_vehicle);
+        $currentDateTime=Date('Y-m-d H:i:s');
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+        $offline="Offline";
+        $track_data=Gps::select('lat as latitude',
+                      'lon as longitude',
+                      'heading as angle',
+                      'mode as vehicleStatus',
+                      'imei',
+                      'speed',
+                      'battery_status',
+                      'device_time as dateTime',
+                      'main_power_status as power',
+                      'ignition as ign',
+                      'gsm_signal_strength as signalStrength'
+                      )
+                    ->where('device_time', '>=',$oneMinut_currentDateTime)
+                    ->where('device_time', '<=',$currentDateTime)
+                    ->where('id',$request->id)
+                    ->first();
+        $minutes=0;
+        if($track_data == null){
+            $track_data = Gps::select('lat as latitude',
+                              'lon as longitude',
+                              'heading as angle',
+                              'speed',
+                              'imei',
+                              'battery_status',
+                              'device_time as dateTime',
+                              'main_power_status as power',
+                              'ignition as ign',
+                              'gsm_signal_strength as signalStrength',
+                              \DB::raw("'$offline' as vehicleStatus")
+                              )
+                              ->where('id',$request->id)
+                              ->first();
+            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+        }
+
+        if($track_data){
+            $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
+
+            $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+            $reponseData=array(
+                        "latitude"=>$snapRoute['lat'],
+                        "longitude"=>$snapRoute['lng'],
+                        "angle"=>$track_data->angle,
+                        "vehicleStatus"=>$track_data->vehicleStatus,
+                        "speed"=>ltrim($track_data->speed,'0'),
+                        "dateTime"=>$track_data->dateTime,
+                        "power"=>$track_data->power,
+                        "imei"=>$track_data->imei,
+                        "ign"=>$track_data->ign,
+                        "battery_status"=>ltrim($track_data->battery_status,'0'),
+                        "signalStrength"=>$track_data->signalStrength,
+                        "last_seen"=>$minutes,
+                        "fuel"=>"",
+                        "ac"=>"",
+                        "place"=>$plcaeName,
+                        "fuelquantity"=>""
+                      );
+
+
+            $response_data = array('status'  => 'success',
+                           'message' => 'success',
+                           'code'    =>1,
+                           'vehicle_type' => 'car',
+                           'client_name' => 'vst',
+                           'vehicle_reg' => '',
+                           'vehicle_name' => 'gps',
+                           'liveData' => $reponseData
+                            );
+
+        }else{
+            $response_data = array('status'  => 'failed',
+                           'message' => 'failed',
+                            'code'    =>0);
+        }
+             // dd($response_data['liveData']['ign']);
+        return response()->json($response_data); 
+    }
+    // --------------------------------------------------------------------------------
+    function getPlacenameFromLatLng($latitude,$longitude){
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo'); 
+            $output = json_decode($geocodeFromLatLong);
+             
+         
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude
+
+            if(!empty($address)){
+                return $address;
+            }else{
+                return false;
+            }
+        }else{
+            return false;   
+        }
+    }
+
+
+    // --------------playback page-------------------------------------
+    public function playbackPage(){ 
+       return view('Gps::gps-playback-window'); 
+
+    }
+     public function playbackPageData(Request $request){ 
+      $gps_id=$request->gps_id;
+      $start_date=$request->from_date;
+      $end_date=$request->to_date;
+      $vehicle=Gps::find($gps_id);
+      if($vehicle==null){
+             $data = array('status' => 'failed',
+                           'message' => 'GPS doesnot exist',
+                           'code'=>0);
+        return response()->json($data);
+       }
+
+      $gpsData=GpsData::select('latitude','longitude')
+                        ->where('gps_id',$gps_id)
+                        ->whereNotNull('latitude')
+                        ->whereNotNull('longitude')
+                        ->orderBy('device_time','asc')
+                        ->get();
+
+       if($gpsData){
+          $response_data = array('status'  => 'success',
+                                'message' => 'success',
+                                'locations'=>$gpsData,
+                                'code'    =>1
+                                );
+          }else{
+          $response_data = array('status'  => 'failed',
+                                'message' => 'failed',
+                                'code'    =>0);
+          }
+        
+        return response()->json($response_data); 
+    }
+    
+/////////////// snap root for live data///////////////////////////////////
+    function LiveSnapRoot($b_lat, $b_lng) {
+        $lat = $b_lat;
+        $lng = $b_lng;
+        $route = $lat . "," . $lng;
+        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
+        $geocode_stats = file_get_contents($url);
+        $output_deals = json_decode($geocode_stats);
+        if (isset($output_deals->snappedPoints)) {
+            $outPut_snap = $output_deals->snappedPoints;
+            // var_dump($output_deals);
+            if ($outPut_snap) {
+                foreach ($outPut_snap as $ldata) {
+                    $lat = $ldata->location->latitude;
+                    $lng = $ldata->location->longitude;
+                }
+            }
+        }
+        $userData = ["lat" => $lat, "lng" => $lng];
+        return $userData;
+
+    }
+
     
     //validation for gps creation
     public function gpsCreateRules(){
@@ -896,8 +1098,11 @@ class GpsController extends Controller {
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
+            'serial_no' => 'required|unique:gps,serial_no,'.$gps->id,
             'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
+            'icc_id' => 'required',
+            'imsi' => 'required',
             'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
             'batch_number' => 'required',
             'employee_code' => 'required',

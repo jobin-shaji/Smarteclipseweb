@@ -508,6 +508,7 @@ class DashboardController extends Controller
             ->whereIn('id',$gps_id)        
             ->orderBy('id','desc')                 
             ->get(); 
+            $response_track_data=$this->vehicleDataList($vehiles_details); 
         }
         else{
             $vehiles_details=Gps::Select(
@@ -526,8 +527,9 @@ class DashboardController extends Controller
             ->whereNotNull('lon')  
             ->orderBy('id','desc')                 
             ->get(); 
+            $response_track_data=$this->vehicleDataListRoot($vehiles_details); 
         }  
-        $response_track_data=$this->vehicleDataList($vehiles_details); 
+        
         if($response_track_data){     
                  $response_data = array(
                 'user_data'  => $response_track_data,
@@ -581,6 +583,47 @@ class DashboardController extends Controller
         }
         return $vehicleTrackData;
     }
+
+    public function vehicleDataListRoot($vehiles_details){
+        $vehicleTrackData=array();
+        foreach ($vehiles_details as $vehicle_data) {
+            // 
+        $gps_ecrypt_id=Crypt::encrypt($vehicle_data->id);
+        $currentDateTime=Date('Y-m-d H:i:s');
+        $device_time= $vehicle_data->device_time;
+        $oneMinut_currentDateTime=date($currentDateTime,strtotime("-2 minutes"));
+        $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
+            if($time_diff_minut<=2)
+            {
+                $modes=$vehicle_data->mode;
+            }
+            else
+            {
+               $modes= "O";
+            }
+            $vehicleTrackData[]=array(
+                "id"=>$vehicle_data->id,
+                "lat"=>$vehicle_data->lat,
+                "lat_dir"=>$vehicle_data->lat_dir,
+                "lon"=>$vehicle_data->lon,
+                "lon_dir"=>$vehicle_data->lon_dir,
+                "imei"=>$vehicle_data->imei,
+                "gps_encrypt_id"=>$gps_ecrypt_id,
+                "mode"=>$modes,
+                "vehicle_id"=>"",
+                "vehicle_name"=>"",
+                "register_number"=>"",
+                "vehicle_svg"=>"M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805",
+                "vehicle_scale"=>0.5,
+                "opacity"=>0.5,
+                "strokeWeight"=>0.5,
+                "device_time"=>$vehicle_data->device_time
+                );
+        }
+        return $vehicleTrackData;
+    }
+
+
     public function vehicleTrackList(Request $request)
     {
         $gpsID=$request->gps_id;     
@@ -642,6 +685,7 @@ class DashboardController extends Controller
                 ->orderBy('id','desc')                 
                 ->get(); 
             }
+            $response_track_data=$this->vehicleDataList($vehiles_details); 
         }
         else
         {              // userID list of vehicles
@@ -687,9 +731,9 @@ class DashboardController extends Controller
                 ->orderBy('id','desc')                 
                 ->get(); 
             }
-
+            $response_track_data=$this->vehicleDataListRoot($vehiles_details); 
         }
-        $response_track_data=$this->vehicleDataList($vehiles_details); 
+        
         if($response_track_data){     
                  $response_data = array(
                 'user_data'  => $response_track_data,
@@ -950,9 +994,6 @@ class DashboardController extends Controller
      public function vehicleModeCount(Request $request)
     {
         $user = $request->user();
-        // $dealers=Dealer::where('user_id',$user->id)->first();
-        // $subdealers=SubDealer::where('user_id',$user->id)->first();
-        // $client=Client::where('user_id',$user->id)->first(); 
         $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));             
         $single_vehicle=0;

@@ -12,6 +12,12 @@ Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
 Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
 Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
 
+Route::get('/gps/{id}/location/root','GpsController@rootlocation')->name('gps.location');
+Route::post('/gps/location-track/root','GpsController@rootlocationTrack')->name('gps.location-track');
+
+Route::get('/gps_playback','GpsController@playbackPage')->name('gps_playback');
+Route::get('/gps_playback_data','GpsController@playbackPageData')->name('gps_playback_data');
+
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 

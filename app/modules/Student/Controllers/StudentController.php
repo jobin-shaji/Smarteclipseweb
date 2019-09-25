@@ -16,6 +16,7 @@ class StudentController extends Controller {
     //student creation page
     public function create()
     {
+
         $client_id = \Auth::user()->client->id;
         $classes=SchoolClass::select('id','name')
                 ->where('client_id',$client_id)
@@ -53,9 +54,18 @@ class StudentController extends Controller {
     //upload student details to database table
     public function save(Request $request)
     {
+        $custom_messages = [
+        'student_photo.required' => 'File cannot be blank'
+        ];
         $client_id = \Auth::user()->client->id;    
         $rules = $this->studentCreateRules();
-        $this->validate($request, $rules);  
+        $this->validate($request, $rules, $custom_messages);  
+        $file=$request->student_photo;
+        $getFileExt   = $file->getClientOriginalExtension();
+        $uploadedFile =   time().'.'.$getFileExt;
+        $destinationPath = 'documents';
+        $file->move($destinationPath,$uploadedFile);
+        // dd($uploadedFile);
         $location_lat=$request->latitude;
         $location_lng=$request->longitude; 
         if($location_lat==null){
@@ -83,7 +93,8 @@ class StudentController extends Controller {
             'latitude' => $location_lat,
             'longitude' => $location_lng,
             'password' => bcrypt($request->password),
-            'client_id' => $client_id,       
+            'client_id' => $client_id,  
+            'path' => $uploadedFile,     
         ]);
         $eid= encrypt($student->id);
         $request->session()->flash('message', 'New student created successfully!'); 
@@ -223,6 +234,16 @@ class StudentController extends Controller {
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];  
         }
+        $file=$request->student_photo;
+        if($file)
+        {
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            $destinationPath = 'documents';
+            $file->move($destinationPath,$uploadedFile);
+            $student->path = $uploadedFile;
+        }
+        
 
         $student->latitude= $location_lat;
         $student->longitude=$location_lng;
@@ -237,6 +258,7 @@ class StudentController extends Controller {
         $student->nfc = $request->nfc;
         $student->address = $request->address;
         $student->mobile = $request->mobile;
+        
         $student->save();      
         $did = encrypt($student->id);
         $request->session()->flash('message', 'Student details updated successfully!');
