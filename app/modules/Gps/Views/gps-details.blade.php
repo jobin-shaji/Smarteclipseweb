@@ -48,6 +48,11 @@
           <div class="row">
             <div class="col-lg-8 col-md-12">
               <div class="form-group has-feedback">
+                <label>Serial No</label>
+                <input type="text" class="form-control" value="{{ $gps->serial_no}}" disabled> 
+              </div>
+
+              <div class="form-group has-feedback">
                 <label>IMEI</label>
                 <input type="text" class="form-control" value="{{ $gps->imei}}" disabled> 
               </div>
@@ -55,6 +60,14 @@
               <div class="form-group has-feedback">
                 <label>Manufacturing Date</label>
                 <input type="text" class="form-control" value="{{date('d-m-Y', strtotime($gps->manufacturing_date)) }}" disabled> 
+              </div>
+              <div class="form-group has-feedback">
+                <label>ICC ID</label>
+                <input type="text" class="form-control" value="{{ $gps->icc_id}}" disabled> 
+              </div>
+              <div class="form-group has-feedback">
+                <label>IMSI</label>
+                <input type="text" class="form-control" value="{{ $gps->imsi}}" disabled> 
               </div>
               <div class="form-group has-feedback">
                 <label class="srequired">E-SIM Number</label>

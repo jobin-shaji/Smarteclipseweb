@@ -47,7 +47,7 @@ class GpsController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
-        ->with('gps:id,imei,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
+        ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
         ->where('dealer_id',null)
         ->get();
         return DataTables::of($gps_stocks)
@@ -87,8 +87,11 @@ class GpsController extends Controller {
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);
         $gps = Gps::create([
+            'serial_no'=> $request->serial_no,
             'imei'=> $request->imei,
             'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
+            'icc_id'=> $request->icc_id,
+            'imsi'=> $request->imsi,
             'e_sim_number'=> $request->e_sim_number,
             'batch_number'=> $request->batch_number,
             'employee_code'=> $request->employee_code,
@@ -145,7 +148,10 @@ class GpsController extends Controller {
         $rules = $this->gpsUpdateRules($gps);
         $this->validate($request, $rules);
 
+        $gps->serial_no = $request->serial_no;
         $gps->imei = $request->imei;
+        $gps->icc_id = $request->icc_id;
+        $gps->imsi = $request->imsi;
         $gps->manufacturing_date = $request->manufacturing_date;
         $gps->e_sim_number = $request->e_sim_number;
         $gps->batch_number = $request->batch_number;
@@ -1034,8 +1040,11 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
+            'serial_no' => 'required|unique:gps',
             'imei' => 'required|string|unique:gps|min:15|max:15',
             'manufacturing_date' => 'required',
+            'icc_id' => 'required',
+            'imsi' => 'required',
             'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
             'batch_number' => 'required',
             'employee_code' => 'required',
@@ -1048,8 +1057,11 @@ class GpsController extends Controller {
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
+            'serial_no' => 'required|unique:gps,serial_no,'.$gps->id,
             'imei' => 'required|string|min:15|max:15|unique:gps,imei,'.$gps->id,
             'manufacturing_date' => 'required',
+            'icc_id' => 'required',
+            'imsi' => 'required',
             'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
             'batch_number' => 'required',
             'employee_code' => 'required',

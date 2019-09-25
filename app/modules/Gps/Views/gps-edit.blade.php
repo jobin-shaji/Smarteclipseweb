@@ -27,6 +27,16 @@
     <div class="row">
         <div class="col-md-6">
           <div class="form-group has-feedback">
+            <label class="srequired">Serial No</label>
+            <input type="number" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ $gps->serial_no}}"> 
+              @if ($errors->has('serial_no'))
+                <span class="help-block">
+                  <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
+                </span>
+              @endif
+          </div>
+
+          <div class="form-group has-feedback">
             <label class="srequired">IMEI</label>
             <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}"> 
               @if ($errors->has('imei'))
@@ -36,7 +46,6 @@
               @endif
           </div>
         
-
           <div class="form-group has-feedback">
             <label class="srequired">Manufacturing Date</label>
             <input type="date" class="form-control {{ $errors->has('manufacturing_date') ? ' has-error' : '' }}"  name="manufacturing_date" value="{{$gps->manufacturing_date}}" max="{{date('Y-m-d')}}"> 
@@ -46,8 +55,27 @@
               </span>
             @endif
           </div>
-          
 
+          <div class="form-group has-feedback">
+            <label class="srequired">ICC ID</label>
+            <input type="number" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ $gps->icc_id}}"> 
+              @if ($errors->has('icc_id'))
+                <span class="help-block">
+                  <strong class="error-text">{{ $errors->first('icc_id') }}</strong>
+                </span>
+              @endif
+          </div>
+
+          <div class="form-group has-feedback">
+            <label class="srequired">IMSI</label>
+            <input type="number" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ $gps->imsi}}"> 
+              @if ($errors->has('imsi'))
+                <span class="help-block">
+                  <strong class="error-text">{{ $errors->first('imsi') }}</strong>
+                </span>
+              @endif
+          </div>
+          
           <div class="form-group has-feedback">
             <label class="srequired">E-SIM Number</label>
             <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}"> 
@@ -57,8 +85,6 @@
               </span>
             @endif
           </div>
-         
-
         </div>
       </div>
       <div class="row">

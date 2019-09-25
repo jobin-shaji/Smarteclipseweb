@@ -74,7 +74,7 @@
           <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
         </div>
         <div class="col-md-1 ">
-          <a href="{{ route('gps-transfer-root.create') }}">
+          <a href="{{ route('gps.transfer.root.create') }}">
             <button type="button" class="btn btn-md ">Cancel</button>
           </a>
         </div>
