@@ -1013,6 +1013,47 @@ class GpsController extends Controller {
             return false;   
         }
     }
+
+
+    // --------------playback page-------------------------------------
+    public function playbackPage(){ 
+       return view('Gps::gps-playback-window'); 
+
+    }
+     public function playbackPageData(Request $request){ 
+      $gps_id=$request->gps_id;
+      $start_date=$request->from_date;
+      $end_date=$request->to_date;
+      $vehicle=Gps::find($gps_id);
+      if($vehicle==null){
+             $data = array('status' => 'failed',
+                           'message' => 'GPS doesnot exist',
+                           'code'=>0);
+        return response()->json($data);
+       }
+
+      $gpsData=GpsData::select('latitude','longitude')
+                        ->where('gps_id',$gps_id)
+                        ->whereNotNull('latitude')
+                        ->whereNotNull('longitude')
+                        ->orderBy('device_time','asc')
+                        ->get();
+
+       if($gpsData){
+          $response_data = array('status'  => 'success',
+                                'message' => 'success',
+                                'locations'=>$gpsData,
+                                'code'    =>1
+                                );
+          }else{
+          $response_data = array('status'  => 'failed',
+                                'message' => 'failed',
+                                'code'    =>0);
+          }
+        
+        return response()->json($response_data); 
+    }
+    
 /////////////// snap root for live data///////////////////////////////////
     function LiveSnapRoot($b_lat, $b_lng) {
         $lat = $b_lat;
