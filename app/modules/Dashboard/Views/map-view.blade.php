@@ -17,7 +17,7 @@
             <select id="gps_id" name=""  class="form-control vehicle_gps_id select2"  onchange="getVehicle(this.value)">
               <option value="" disabled selected>Select</option>
              @foreach ($gpss as $gps)
-                <option id="gps_mode_changes" value="{{$gps->id}}">{{$gps->imei}}</option>
+                <option  value="{{$gps->id}}">{{$gps->imei}}</option>
               @endforeach  
             </select> 
                               
