@@ -18,6 +18,8 @@ class Geofence extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->text('cordinates');
+            $table->text('response');
+            $table->integer('code');
             $table->string('fence_type_id');
             $table->timestamps();
             $table->softDeletes();

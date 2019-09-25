@@ -17,8 +17,8 @@ class CreateVehicleGeofencesTable extends Migration
             $table->increments('id');
             $table->integer('vehicle_id');
             $table->integer('geofence_id');
-            $table->dateTime('date_from');
-            $table->dateTime('date_to');
+            $table->dateTime('date_from')->nullable();
+            $table->dateTime('date_to')->nullable();
             $table->integer('status');
             $table->integer('client_id');
             $table->timestamps();
