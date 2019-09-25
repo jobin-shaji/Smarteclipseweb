@@ -281,11 +281,11 @@ $('#poi_petrol').click(function(){
 
 
 $( "#playback_form" ).submit(function( event ) {
-  var vehicle_id=$('#vehicle_id').val();
+  var gps_id=$('#vehicle_id_data').val();
   var from_date=$('#fromDate').val();
   var to_date=$('#toDate').val();
-  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
-  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
+  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&gps_id="+gps_id);
+  window.open("/gps_playback?"+url_data, "GPS Tracker", "width=700,height=500");
   event.preventDefault();
 });
 
