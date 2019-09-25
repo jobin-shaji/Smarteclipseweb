@@ -83,6 +83,8 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client|
 Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
 
 Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
+
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////
