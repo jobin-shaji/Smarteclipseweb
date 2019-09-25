@@ -26,7 +26,7 @@
              
     <div class="container-fluid">
       <div class="card-body wizard-content">
-        <form  method="POST" action="{{route('student.update.p',$student->id)}}">
+        <form  method="POST" action="{{route('student.update.p',$student->id)}}" enctype="multipart/form-data">
           {{csrf_field()}}
           <div class="row">
             <div class="col-lg-6 col-md-12">
@@ -181,8 +181,19 @@
                         <strong class="error-text">{{ $errors->first('route_batch_id') }}</strong>
                     </span>
                   @endif
-                </div>   
-
+                </div> 
+                <div class="form-group row" style="float:none!important">
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Photo </label>
+                <div class="form-group has-feedback">
+                  <img src="/documents/{{ $student->path}}">
+                <input type="file" class="form-control {{ $errors->has('student_photo') ? ' has-error' : '' }}" placeholder="student_photo" name="student_photo" value="{{$student->path}}" >
+                </div>
+                @if ($errors->has('student_photo'))
+                  <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('student_photo') }}</strong>
+                  </span>
+                @endif
+              </div>  
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">NFC Number</label>
                   <div class="form-group has-feedback">

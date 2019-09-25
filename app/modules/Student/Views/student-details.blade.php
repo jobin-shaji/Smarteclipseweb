@@ -32,6 +32,12 @@
           <div class="row">
             <div class="col-lg-6 col-md-12">
               <div class="form-group row" style="float:none!important">
+                
+                  <div class="form-group has-feedback">
+                    <img src="/documents/{{ $student->path}}">
+                  </div>
+              </div>
+              <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Student ID</label>
                   <div class="form-group has-feedback">
                     <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Student ID" name="code" value="{{ $student->code}}" disabled>
