@@ -12,6 +12,10 @@ Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
 Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
 Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
 
+Route::get('/gps/{id}/location/root','GpsController@rootlocation')->name('vehicles.location');
+
+Route::post('/gps/location-track/root','GpsController@rootlocationTrack')->name('vehicles.location-track');
+
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 

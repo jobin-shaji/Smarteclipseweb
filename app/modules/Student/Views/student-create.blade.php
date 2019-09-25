@@ -21,7 +21,7 @@
           </div>
         @endif  
     </nav>
-    <form  method="POST" action="{{route('student.create.p')}}">
+    <form  method="POST" action="{{route('student.create.p')}}" enctype="multipart/form-data">
       {{csrf_field()}}
       <div class="row">
         <div class="col-lg-6 col-md-12">
@@ -180,6 +180,19 @@
                         @if ($errors->has('route_batch'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('route_batch') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+
+
+                        <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Photo </label>
+                        <div class="form-group has-feedback">
+                        <input type="file" class="form-control {{ $errors->has('student_photo') ? ' has-error' : '' }}" placeholder="student_photo" name="student_photo" value="{{ old('student_photo') }}" required>
+                        </div>
+                        @if ($errors->has('student_photo'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('student_photo') }}</strong>
                           </span>
                         @endif
                       </div>
