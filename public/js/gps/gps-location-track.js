@@ -59,7 +59,7 @@ function initMap(){
 
 function getMarkers() {
 
-    var url = 'vehicles/location-track/root';
+    var url = 'gps/location-track/root';
     var id = $("#vehicle_id_data").val();
     // var id=1;
     data = {
@@ -121,7 +121,7 @@ function getMarkers() {
                     document.getElementById("car_speed").innerHTML = res.liveData.speed;
                     document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
                     document.getElementById("car_location").innerHTML = res.liveData.place;
-                    document.getElementById("user").innerHTML = res.vehicle_name;
+                    // document.getElementById("user").innerHTML = res.vehicle_name;
 
                     
 

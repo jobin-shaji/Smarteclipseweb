@@ -84,9 +84,7 @@ Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicl
 
 Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
 
-Route::get('/vehicles/{id}/location/root','VehicleController@rootlocation')->name('vehicles.location');
 
-Route::post('/vehicles/location-track/root','VehicleController@rootlocationTrack')->name('vehicles.location-track');
 });
 
 //////////////////////////////////////////////////////////////////////////////////

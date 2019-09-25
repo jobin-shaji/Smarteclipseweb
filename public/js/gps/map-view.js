@@ -81,7 +81,7 @@ if(res.status!="failed"){
   var gpsID = JSONObject[i].id;
   var imei = JSONObject[i].imei;
   var reg = JSONObject[i].register_number;
-  var vehicle_id = JSONObject[i].vehicle_id;
+  var gps_encrypt_id = JSONObject[i].gps_encrypt_id;
   var vehicle_name = JSONObject[i].vehicle_name;
   var loc = new google.maps.LatLng(lat, lng);
   var mode = JSONObject[i].mode;
@@ -107,7 +107,7 @@ if(res.status!="failed"){
    '<div style="padding-top:5px; padding-left:16px;"><span style="margin-right:5px;">IMEI:</span>' + imei + ' </div>' +
    // '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> ,</div>'+
    // '<div style="padding-top:5px;"><i class="fa fa-map-marker"></i> </div>'+
-   '<div style="padding-top:5px;"><a href=/vehicles/' + vehicle_id + '/location/root class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>   </div>' +
+   '<div style="padding-top:5px;"><a href=/gps/' + gps_encrypt_id + '/location/root class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>   </div>' +
    '</div>';
 
 
