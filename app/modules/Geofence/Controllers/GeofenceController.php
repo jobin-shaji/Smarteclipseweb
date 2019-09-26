@@ -9,6 +9,7 @@ use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGeofence;
 use App\Modules\Vehicle\Models\VehicleRoute;
+use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 
@@ -57,11 +58,20 @@ class GeofenceController extends Controller {
             ]);
         }else{
             foreach ($request->polygons as $polygon) {
+                $response="";
+                foreach ($polygon as $single_coordinate) {
+                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                }
+                $response=rtrim($response,"#");
+                $last_id=Geofence::max('id');
+                $code_last_id=$last_id+1;
+                $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
                 Geofence::create([
                     'user_id' => $request->user()->id,
                     'name' => $request->name,
                     'cordinates' => $polygon,
-                    'fence_type_id' => 1
+                    'response' => $response,
+                    'code' => $code
                 ]);
             }
             return response()->json([
@@ -86,8 +96,7 @@ class GeofenceController extends Controller {
             'id', 
             'user_id',                      
             'name',                   
-            'cordinates',  
-            'fence_type_id',                                      
+            'cordinates',                                     
             'deleted_at'
         )
         ->withTrashed()
@@ -182,12 +191,12 @@ class GeofenceController extends Controller {
     }
      public function assignGeofenceList()
     {
-         $user_id=\Auth::user()->id;
+        $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
-        $geofence = Geofence::select('id','user_id','name','cordinates','fence_type_id','deleted_at')
+        $geofence = Geofence::select('id','user_id','name','cordinates','deleted_at')
         ->where('user_id',$user_id)
         ->get();
         
@@ -201,43 +210,42 @@ class GeofenceController extends Controller {
        // $client_id= $request->client;         
         $vehicle_id= $request->vehicle_id;         
         $geofence = $request->geofence_id;
-        $from_date = $request->from_date;
-        $to_date = $request->to_date;
-        $fromDate = date("Y-m-d", strtotime($from_date));
-        $toDate = date("Y-m-d", strtotime($to_date));
-         if($vehicle_id!="")
-         {
+        // $from_date = $request->from_date;
+        // $to_date = $request->to_date;
+        // $fromDate = date("Y-m-d", strtotime($from_date));
+        // $toDate = date("Y-m-d", strtotime($to_date));
+        if($vehicle_id!="")
+        {
             $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to')
             ->where('vehicle_id',$vehicle_id)
             ->where('geofence_id',$geofence)
             ->where('client_id',$client_id)
-            ->whereBetween('date_from',array($fromDate,$toDate))
-            ->WhereBetween('date_to',array($fromDate,$toDate))
+            // ->whereBetween('date_from',array($fromDate,$toDate))
+            // ->WhereBetween('date_to',array($fromDate,$toDate))
             ->get()
             ->count();
             if($geofences==0)
             {
-                 $route_area = VehicleGeofence::create([
+                $route_area = VehicleGeofence::create([
                         'geofence_id' => $geofence,
                         'vehicle_id' => $vehicle_id,
-                        'date_from' => $fromDate,
-                        'date_to' => $toDate,
                         'client_id' => $client_id,
                         'status' => 1
                     ]);
+                if($route_area)  {
+                    $this->geofenceResponse($route_area->vehicle_id);
+                } 
             }  
-         }      
+        }   
         $geofence = VehicleGeofence::select(
                     'id',
                     'vehicle_id',
                     'geofence_id',
-                    \DB::raw('DATE(date_from) as date_from'),
-                    \DB::raw('DATE(date_to) as date_to')
-                    // 'date_from',
-                    //  'date_to'                                      
+                    // \DB::raw('DATE(date_from) as date_from'),
+                    // \DB::raw('DATE(date_to) as date_to')
                     )
         ->with('vehicleGeofence:id,name')
-       ->with('vehicle:id,name,register_number')
+        ->with('vehicle:id,name,register_number')
         ->where('client_id',$client_id)
         ->get();
         return DataTables::of($geofence)
@@ -251,8 +259,26 @@ class GeofenceController extends Controller {
             ->make();
     }
 
+    public function geofenceResponse($vehicle_id)
+    {
+        $response_string="";
+        $vehicle = Vehicle::find($vehicle_id);
+        $vehicle_geofences=VehicleGeofence::where('vehicle_id',$vehicle_id)->get();
+        foreach ($vehicle_geofences as $single_geofence) {
+            $geofence_id=$single_geofence->geofence_id;
+            $geofence_details=Geofence::where('id',$geofence_id)->first();
+            $response_string .=$geofence_details->code.'-1-'.$geofence_details->response.'&';
+        }
+        $response_string="SET GF:".$response_string;
+        $geofence_response= OtaResponse::create([
+                    'gps_id' => $vehicle->gps_id,
+                    'response' => $response_string
+                ]);
+        return $geofence_response;
+    }
 
- public function alredyassigngeofenceCount(Request $request)
+
+    public function alredyassigngeofenceCount(Request $request)
     {
         $client_id=\Auth::user()->client->id;
         $vehicle_id= $request->vehicle_id;           
@@ -265,8 +291,8 @@ class GeofenceController extends Controller {
         ->where('vehicle_id',$vehicle_id)
         ->where('geofence_id',$geofence)
         ->where('client_id',$client_id)
-        ->whereBetween('date_from',array($fromDate,$toDate))
-        ->WhereBetween('date_to',array($fromDate,$toDate))
+        // ->whereBetween('date_from',array($fromDate,$toDate))
+        // ->WhereBetween('date_to',array($fromDate,$toDate))
         ->get()
         ->count();
         return response()->json([
