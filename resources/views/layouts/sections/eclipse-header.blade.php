@@ -127,25 +127,26 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE 
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/fence')}}"> ADD GEOFENCE <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/geofence')}}"> LIST GEOFENCE<span></span></a>  
-                                 <a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}"> ASSIGN GEOFENCE <span></span></a>                             
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE 
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/route/create')}}"> ADD ROUTE <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/route')}}"> LIST ROUTE<span></span></a>  
-
-                                 <a class="dropdown-item" href="{{url('/assign/route-vehicle')}}"> ASSIGN ROUTE <span></span></a>                               
-                            </div>
+                            <ul class="dropdown-menu multi-level">
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >GEOFENCE</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/fence')}}">ADD GEOFENCE</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/geofence')}}">LIST GEOFENCES</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}">ASSIGN GEOFENCE</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">ROUTE</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/assign/route-vehicle')}}">ASSIGN ROUTE</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item dropdown">
