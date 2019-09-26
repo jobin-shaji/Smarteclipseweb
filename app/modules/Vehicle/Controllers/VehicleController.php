@@ -1628,7 +1628,8 @@ class VehicleController extends Controller {
       $vehicle_id=$request->vehicle_id;
       $start_date=$request->from_date;
       $end_date=$request->to_date;
-      $vehicle=Vehicle::find($vehicle_id);
+     
+      $vehicle=Vehicle::find($vehicle_id); 
       if($vehicle==null){
              $data = array('status' => 'failed',
                            'message' => 'vehicle doesnot exist',
