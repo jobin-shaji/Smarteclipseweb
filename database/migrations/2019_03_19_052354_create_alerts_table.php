@@ -17,9 +17,7 @@ class CreateAlertsTable extends Migration
             $table->increments('id');
             $table->integer('alert_type_id');
             $table->dateTime('device_time');
-            $table->integer('vehicle_id');
             $table->integer('gps_id');
-            $table->integer('client_id');
             $table->string('latitude');
             $table->string('longitude');
             $table->integer('status');

@@ -49,18 +49,18 @@
                             </select>
                           </div>
                           </div>
-                           <div class="col-lg-2 col-md-3"> 
-                          <div class="form-group">                    
-                            <label> from Date</label>
-                            <input type="text" class="date_expiry form-control" id="assignfromDate" name="fromDate">
+                          <!-- <div class="col-lg-2 col-md-3"> 
+                            <div class="form-group">                    
+                              <label> from Date</label>
+                              <input type="text" class="date_expiry form-control" id="assignfromDate" name="fromDate">
+                            </div>
                           </div>
-                        </div>
                           <div class="col-lg-2 col-md-3"> 
-                          <div class="form-group">                    
-                            <label> to date</label>
-                            <input type="text" class="datepicker form-control" id="assignToDate" name="toDate">
-                          </div>
-                          </div>
+                            <div class="form-group">                    
+                              <label> to date</label>
+                              <input type="text" class="datepicker form-control" id="assignToDate" name="toDate">
+                            </div>
+                          </div> -->
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
                             <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="selectGeofence()">Geofence Schedule </button>
@@ -76,8 +76,8 @@
                       <th>Geofence Name</th>
                       <th>Vehicle</th>
                       <th>Register Number</th>
-                      <th>From Date</th>
-                      <th>To date</th>
+                      <!-- <th>From Date</th>
+                      <th>To date</th> -->
                       <th>Action</th>
                   </tr>
                 </thead>

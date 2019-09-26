@@ -296,23 +296,23 @@ function emergencyAlert(res){
         var latitude=res.alerts[0].latitude;
         var longitude=res.alerts[0].longitude;
         getPlaceNameFromLatLng(latitude,longitude);
-        var vehicle_id=res.alerts[0].vehicle.id;
+        var vehicle_id=res.alerts[0].gps.vehicle.id;
         if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
             $("#header-emergency").show();
             document.getElementById("header_em_id").value = res.alerts[0].id;
             document.getElementById("header_alert_vehicle_id").value = res.vehicle;
-            document.getElementById("header_decrypt_vehicle_id").value = res.alerts[0].vehicle.id;
-            $('#header_emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
-            $('#header_emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
+            $('#header_emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
+            $('#header_emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
             $('#header_emergency_vehicle_time').text(res.alerts[0].device_time);
         }else{
             var modal = document.getElementById('emergency');
             modal.style.display = "block";
             document.getElementById("em_id").value = res.alerts[0].id;
             document.getElementById("alert_vehicle_id").value = res.vehicle;
-            document.getElementById("decrypt_vehicle_id").value = res.alerts[0].vehicle.id;
-            $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
-            $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            document.getElementById("decrypt_vehicle_id").value = vehicle_id;
+            $('#emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
+            $('#emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
             $('#emergency_vehicle_time').text(res.alerts[0].device_time);
         }
        
