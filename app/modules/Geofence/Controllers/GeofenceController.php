@@ -58,13 +58,20 @@ class GeofenceController extends Controller {
             ]);
         }else{
             foreach ($request->polygons as $polygon) {
-                $string_version = implode(',', $polygon);
-                dd($string_version);
+                $response="";
+                foreach ($polygon as $single_coordinate) {
+                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                }
+                $response=rtrim($response,"#");
+                $last_id=Geofence::max('id');
+                $code_last_id=$last_id+1;
+                $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
                 Geofence::create([
                     'user_id' => $request->user()->id,
                     'name' => $request->name,
                     'cordinates' => $polygon,
-                    'fence_type_id' => 1
+                    'response' => $response,
+                    'code' => $code
                 ]);
             }
             return response()->json([
@@ -89,8 +96,7 @@ class GeofenceController extends Controller {
             'id', 
             'user_id',                      
             'name',                   
-            'cordinates',  
-            'fence_type_id',                                      
+            'cordinates',                                     
             'deleted_at'
         )
         ->withTrashed()
@@ -185,12 +191,12 @@ class GeofenceController extends Controller {
     }
      public function assignGeofenceList()
     {
-         $user_id=\Auth::user()->id;
+        $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
-        $geofence = Geofence::select('id','user_id','name','cordinates','fence_type_id','deleted_at')
+        $geofence = Geofence::select('id','user_id','name','cordinates','deleted_at')
         ->where('user_id',$user_id)
         ->get();
         
@@ -255,17 +261,20 @@ class GeofenceController extends Controller {
 
     public function geofenceResponse($vehicle_id)
     {
+        $response_string="";
         $vehicle = Vehicle::find($vehicle_id);
         $vehicle_geofences=VehicleGeofence::where('vehicle_id',$vehicle_id)->get();
         foreach ($vehicle_geofences as $single_geofence) {
             $geofence_id=$single_geofence->geofence_id;
-            $geofence_details=Geofence::select('cordinates')->where('id',$geofence_id)->first();
-            $aa= OtaResponse::create([
-                        'gps_id' => 1,
-                        'response' => $geofence_details
-                    ]);
-            return $aa;
+            $geofence_details=Geofence::where('id',$geofence_id)->first();
+            $response_string .=$geofence_details->code.'-1-'.$geofence_details->response.'&';
         }
+        $response_string="SET GF:".$response_string;
+        $geofence_response= OtaResponse::create([
+                    'gps_id' => $vehicle->gps_id,
+                    'response' => $response_string
+                ]);
+        return $geofence_response;
     }
 
 
