@@ -12,7 +12,7 @@ class VehicleGeofence extends Model
 
 	// vehicle geofence fillable data
 	protected $fillable = [
-        'vehicle_id','geofence_id','date_from', 'date_to', 'status','client_id'
+        'vehicle_id','geofence_id','date_from', 'date_to', 'status','client_id','alert_type'
     ];
 
     public function vehicle(){
