@@ -39,7 +39,7 @@
 
      <div class="col-lg-3 col-md-3 pt-2 ">
         <div class="form-group"> 
-           <button class="btn btn-sm btn-info form-control btn-play-back" onclick="playback()"> <i class="fa fa-filter" style="height:23px;"></i>Playback </button>                               
+           <button class="btn btn-sm btn-info form-control btn-play-back" onclick="getPlayBackData()"> <i class="fa fa-filter" style="height:23px;"></i>Playback </button>                               
         </div>
      </div>
   </div>
@@ -158,6 +158,8 @@
 @section('script')
 
 <script src="{{asset('js/gps/gps-location-track.js')}}"></script>
+<script src="{{asset('js/gps/gps-playback-data.js')}}"></script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=places&callback=initMap" async defer></script>
 @endsection
 
