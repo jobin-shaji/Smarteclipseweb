@@ -996,6 +996,7 @@ class DashboardController extends Controller
         // ->get();
        
         $gps = Gps::select('id','imei')->whereNotNull('lat')->whereNotNull('lon')->get();
+        
         return view('Dashboard::map-view',['gpss' => $gps]);
     }
 
