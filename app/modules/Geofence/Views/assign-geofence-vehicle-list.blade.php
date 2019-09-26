@@ -30,8 +30,8 @@
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">
                             <label>Vehicle</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="">select</option>
+                            <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                              <option value="">Select Vehicle</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
                               @endforeach  
@@ -41,11 +41,21 @@
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">                      
                             <label>Geofence</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Geofence" id="vehicle_geofence" name="vehicle_geofence">
-                              <option value="">Select</option>
+                            <select class="form-control select2" data-live-search="true" title="Select Geofence" id="vehicle_geofence" name="vehicle_geofence">
+                              <option value="">Select Geofence</option>
                               @foreach ($geofences as $geofence)
                               <option value="{{$geofence->id}}">{{$geofence->name}}</option>
                               @endforeach  
+                            </select>
+                          </div>
+                          </div>
+                          <div class="col-lg-2 col-md-3"> 
+                           <div class="form-group">                      
+                            <label>Alert Type</label>                          
+                            <select class="form-control select2" data-live-search="true" title="Select Alert Type" id="alert_type" name="alert_type">
+                              <option value="">Select Alert Type</option>
+                              <option value="1">Entry</option> 
+                              <option value="2">Exit</option> 
                             </select>
                           </div>
                           </div>
@@ -76,6 +86,7 @@
                       <th>Geofence Name</th>
                       <th>Vehicle</th>
                       <th>Register Number</th>
+                      <th>Alert Type</th>
                       <!-- <th>From Date</th>
                       <th>To date</th> -->
                       <th>Action</th>
