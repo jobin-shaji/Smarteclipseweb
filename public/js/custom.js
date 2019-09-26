@@ -107,9 +107,7 @@ $( ".date_expiry_edit" ).datetimepicker({
     maxDate: new Date()
  });
 
- $(function() {
-  $('.selectpicker').selectpicker();
-});
+
 
 
 function getUrl(){
