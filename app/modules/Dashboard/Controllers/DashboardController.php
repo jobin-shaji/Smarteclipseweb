@@ -79,16 +79,18 @@ class DashboardController extends Controller
         return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles]);
     }
     function getAlerts($client_id){
+        $user = \Auth::user();;
+        $single_gps =  $this->getVehicleGps($client_id,$user->id);
         $alerts = Alert::select(
             'id',
             'alert_type_id',
-            'vehicle_id',
             'status',
+            'gps_id',
             'created_at'
         )
         ->with('alertType:id,code,description')
         ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client_id)
+        ->whereIn('gps_id',$single_gps)
         ->orderBy('id', 'desc')->take(5)
         ->get();
         return $alerts; 
