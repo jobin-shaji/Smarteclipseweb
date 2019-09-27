@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 class TrackReportExport implements FromView
 {
@@ -14,9 +15,7 @@ class TrackReportExport implements FromView
     {  
 
       $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -66,18 +65,20 @@ class TrackReportExport implements FromView
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');     
+        ->with('gps.vehicle');     
         if($vehicle==0)
-       {         
-            $query = $query->where('client_id',$client)
-            ->groupBy('date');
-       }
+        {         
+            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }        
+            $query = $query->whereIn('gps_id',$gps_list)->groupBy('date');        }
        else
-       {
-        $query = $query->where('client_id',$client)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('date'); 
-       }      
+        {
+            $vehicle=Vehicle::find($vehicle); 
+            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
+        }      
         if($from){
              $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));

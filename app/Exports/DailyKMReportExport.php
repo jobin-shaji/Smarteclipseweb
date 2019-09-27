@@ -11,11 +11,10 @@ class DailyKMReportExport implements FromView
 {
 	protected $dailykmReportExport;
 	public function __construct($client,$vehicle,$from,$to)
-    {   
+    { 
+        $vehicle=Vehicle::find($vehicle);   
         $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -64,9 +63,8 @@ class DailyKMReportExport implements FromView
             \DB::raw('DATE(device_time) as date'),
             // \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number')       
-        ->where('client_id',$client)
-        ->where('vehicle_id',$vehicle)
+        ->with('gps.vehicle')       
+        ->where('gps_id',$vehicle->gps_id)
         ->groupBy('date');                      
         if($from){
            $search_from_date=date("Y-m-d", strtotime($from));
