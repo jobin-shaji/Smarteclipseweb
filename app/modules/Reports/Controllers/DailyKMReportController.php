@@ -22,11 +22,10 @@ class DailyKMReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
-        $vehicle = $request->data['vehicle'];      
+        $vehicle_id = $request->data['vehicle'];   
+        $vehicle=Vehicle::where('id',$vehicle_id)->first(); 
         $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -77,8 +76,7 @@ class DailyKMReportController extends Controller
             \DB::raw('sum(distance) as distance')
         )
         ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client_id)
-        ->where('vehicle_id',$vehicle)
+        ->where('gps_id',$vehicle->gps_id)
         ->groupBy('date');                     
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
