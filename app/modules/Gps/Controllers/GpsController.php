@@ -1022,8 +1022,8 @@ class GpsController extends Controller {
     }
      public function playbackPageData(Request $request){ 
       $gps_id=$request->gps_id;
-      $start_date=$request->from_date;
-      $end_date=$request->to_date;
+      $start_date=$request->start_date;
+      $end_date=$request->end_date;
       $vehicle=Gps::find($gps_id);
       if($vehicle==null){
              $data = array('status' => 'failed',
@@ -1032,15 +1032,19 @@ class GpsController extends Controller {
         return response()->json($data);
        }
 
-      $gpsData=GpsData::select('latitude','longitude')
-                        ->where('gps_id',$gps_id)
-                        ->whereNotNull('latitude')
-                        ->whereNotNull('longitude')
-                        ->orderBy('device_time','asc')
-                        ->get();
-
-       if($gpsData){
-          $response_data = array('status'  => 'success',
+        $gpsData=GpsData::select('latitude','longitude')
+        ->where('gps_id',$gps_id)
+        ->whereNotNull('latitude')
+        ->whereNotNull('longitude');
+        if($start_date)
+        {
+            $gpsData = $gpsData->where('device_time', '>=', $start_date)
+            ->where('device_time', '<=', $end_date);
+        }
+        $gpsData = $gpsData->orderBy('device_time','asc')
+        ->get();
+        if($gpsData){
+        $response_data = array('status'  => 'success',
                                 'message' => 'success',
                                 'locations'=>$gpsData,
                                 'code'    =>1
