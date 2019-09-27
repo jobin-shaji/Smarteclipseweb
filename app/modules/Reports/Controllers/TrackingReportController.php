@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 
 use DataTables;
@@ -25,9 +26,7 @@ class TrackingReportController extends Controller
         $to = $request->to_date;
         $vehicle = $request->vehicle;
         $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -76,18 +75,21 @@ class TrackingReportController extends Controller
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');     
+        ->with('gps.vehicle');     
         if($vehicle==0)
-       {         
-            $query = $query->where('client_id',$client_id)
-            ->groupBy('date');
-       }
+        { 
+            $gps_stocks=GpsStock::where('client_id',$client_id)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }        
+            $query = $query->whereIn('gps_id',$gps_list)->groupBy('date');
+        }
        else
-       {
-        $query = $query->where('client_id',$client_id)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('date'); 
-       }
+        {
+            $vehicle=Vehicle::find($vehicle); 
+            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
+        }
                
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
