@@ -12,10 +12,21 @@ class TotalKMReportExport implements FromView
 	protected $totalkmReportExport;
 	public function __construct($client,$vehicle,$from,$to)
     {   
+         if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::find($vehicle);
+            $single_vehicle_ids = $vehicle_details->gps_id;
+        }
+        else
+        {
+            $vehicle_details =Vehicle::where('client_id',$client_id)->get(); 
+            $single_vehicle_id = [];
+            foreach($vehicle_details as $vehicle_detail){
+                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+            }
+        }
         $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -64,17 +75,16 @@ class TotalKMReportExport implements FromView
             'device_time'
             // \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');
+        ->with('gps.vehicle');
        if($vehicle==0 || $vehicle==null)
        {
-            $query = $query->where('client_id',$client)
-            ->groupBy('vehicle_id');
+            $query = $query->whereIn('gps_id',$single_vehicle_id)
+            ->groupBy('gps_id');
        }
        else
        {
-            $query = $query->where('client_id',$client)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('vehicle_id');   
+            $query = $query->where('gps_id',$single_vehicle_ids)
+            ->groupBy('gps_id');      
        }             
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));

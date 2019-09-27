@@ -22,27 +22,41 @@ class OverSpeedReportController extends Controller
     }  
      public function overSpeedReportList(Request $request)
     {
+        $single_vehicle_id = [];
         $client= $request->data['client'];
         $vehicle= $request->data['vehicle'];
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
+        if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::find($vehicle);
+            $single_vehicle_ids = $vehicle_details->gps_id;
+        }
+        else
+        {
+            $vehicle_details =Vehicle::where('client_id',$client)->get(); 
+            
+            foreach($vehicle_details as $vehicle_detail){
+                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+
+            }
+        }
+       
         // dd($vehicle);
         $query =Alert::select(
             'id',
             'alert_type_id', 
             'device_time',    
-            'vehicle_id',
             'gps_id',
-            'client_id',  
             'latitude',
             'longitude', 
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number');
+        ->with('gps.vehicle:id,name,register_number');
        if($vehicle==0 || $vehicle==null)
         {
-            $query = $query->where('client_id',$client)
+            $query = $query->whereIn('gps_id',$single_vehicle_id)
             ->where('alert_type_id',12);
             // ->where('status',1);
             if($from){
@@ -53,9 +67,8 @@ class OverSpeedReportController extends Controller
         }
         else
         {
-            $query = $query->where('client_id',$client)
-            ->where('alert_type_id',12)
-            ->where('vehicle_id',$vehicle);
+            $query = $query ->where('gps_id',$single_vehicle_ids)
+            ->where('alert_type_id',12);
             // ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));

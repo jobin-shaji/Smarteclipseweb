@@ -55,8 +55,8 @@ function callBackDataTable(data=null){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'vehicle.name', name: 'vehicle.name'},
-            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
+            {data: 'gps.vehicle.name', name: 'gps.vehicle.name'},
+            {data: 'gps.vehicle.register_number', name: 'gpsvehicle.register_number'},
             {data: 'sleep', name: 'sleep'},
             {data: 'device_time', name: 'device_time'},
         ],        
