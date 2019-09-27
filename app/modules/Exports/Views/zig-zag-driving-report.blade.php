@@ -24,7 +24,7 @@
         ?> 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $zigzagdrivingReportExport->vehicle->register_number }}</td>           
+            <td>{{ $zigzagdrivingReportExport->gps->vehicle->register_number }}</td>           
             <td>{{ $zigzagdrivingReportExport->alertType->description }}</td>
             <td>{{ $address }}</td>
             <td>{{ $zigzagdrivingReportExport->device_time }}</td>         
