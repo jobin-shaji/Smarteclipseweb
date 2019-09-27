@@ -24,7 +24,7 @@
         ?> 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $accidentImpactAlertReportExport->vehicle->register_number }}</td>           
+            <td>{{ $accidentImpactAlertReportExport->gps->vehicle->register_number }}</td>           
             <td>{{ $accidentImpactAlertReportExport->alertType->description }}</td>
             <td>{{ $address }}</td>
             <td>{{ $accidentImpactAlertReportExport->device_time }}</td>         

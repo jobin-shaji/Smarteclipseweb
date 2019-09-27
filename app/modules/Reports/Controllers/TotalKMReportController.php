@@ -20,14 +20,29 @@ class TotalKMReportController extends Controller
 
     public function totalKMReportList(Request $request)
     {
+        $single_vehicle_id = [];
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
-        $vehicle = $request->data['vehicle'];
-        $query =GpsData::select(
-            'client_id',
+        $vehicle =$request->data['vehicle'];
+        if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::find($vehicle);
+            $single_vehicle_ids = $vehicle_details->gps_id;
+        }
+        else
+        {
+            $vehicle_details =Vehicle::where('client_id',$client_id)->get(); 
+            
+            foreach($vehicle_details as $vehicle_detail){
+                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+
+            }
+        }
+       
+
+       $query =GpsData::select(
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -76,29 +91,39 @@ class TotalKMReportController extends Controller
             'device_time'
             // \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');
-       if($vehicle==0 || $vehicle==null)
-       {
-            $query = $query->where('client_id',$client_id)
-            ->groupBy('vehicle_id');
-       }
-       else
-       {
-            $query = $query->where('client_id',$client_id)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('vehicle_id');   
-       }             
-        if($from){
-           $search_from_date=date("Y-m-d", strtotime($from));
+        ->with('gps.vehicle');
+        if($vehicle==0 || $vehicle==null || $from==null || $to==null)
+        {        
+            $query = $query->whereIn('gps_id',$single_vehicle_id)
+
+            ->groupBy('gps_id');
+        }
+        else if($vehicle==0 || $vehicle==null)
+        {        
+            $query = $query->whereIn('gps_id',$single_vehicle_id);
+            if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            }
+            // ->groupBy('gps_id');
         }
-        $totalkm_report = $query->get();     
-        return DataTables::of($totalkm_report)
-        ->addIndexColumn()
-        
-        ->addColumn('km', function ($totalkm_report) { 
+        else
+        {
+            $query = $query->where('gps_id',$single_vehicle_ids)
+            ->groupBy('gps_id');   
+            if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            }
+        }             
+       
+        $totalkm_report = $query->get(); 
 
+        return DataTables::of($totalkm_report)
+        ->addIndexColumn()        
+        ->addColumn('km', function ($totalkm_report) { 
         $earthRadius = 6371000;
         $lat_from=floatval($totalkm_report->first()->latitude);
         $lng_from=floatval($totalkm_report->first()->longitude);

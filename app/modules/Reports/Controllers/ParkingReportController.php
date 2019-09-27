@@ -22,14 +22,26 @@ class ParkingReportController extends Controller
     } 
     public function parkingReportList(Request $request)
     {
+        $single_vehicle_id = [];        
         $client_id=\Auth::user()->client->id;;
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
+        if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::find($vehicle);
+            $single_vehicle_ids = $vehicle_details->gps_id;
+        }
+        else
+        {
+            $vehicle_details =Vehicle::where('client_id',$client_id)->get();             
+            foreach($vehicle_details as $vehicle_detail){
+                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+
+            }
+        }
         $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -79,18 +91,17 @@ class ParkingReportController extends Controller
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number')
+        ->with('gps.vehicle')
         ->where('vehicle_mode','S');
             
         if($vehicle==0 || $vehicle==null )
        {         
-            $query = $query->where('client_id',$client_id)
+            $query = $query->whereIn('gps_id',$single_vehicle_id)
             ->groupBy('date');
        }
        else
        {
-        $query = $query->where('client_id',$client_id)
-            ->where('vehicle_id',$vehicle)
+        $query = $query->where('gps_id',$single_vehicle_ids)
             ->groupBy('date'); 
        }
         if($from){
