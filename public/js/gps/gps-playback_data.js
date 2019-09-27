@@ -1,8 +1,13 @@
 $(document).ready(function () {
+    moveZooms(map);
+ 
     getPlayBackData();
 });
 
-
+function moveZooms(map){
+  map.scrollWheelZoom.disable();
+  // map.setZoom(18);
+}
 function getPlayBackData(){
 	
 	var gps_id=$.urlParam('gps_id');
