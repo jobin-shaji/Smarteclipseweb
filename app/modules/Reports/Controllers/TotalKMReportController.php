@@ -24,10 +24,21 @@ class TotalKMReportController extends Controller
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
         $vehicle = $request->data['vehicle'];
-        $query =GpsData::select(
-            'client_id',
+        if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::find($vehicle);
+             $single_vehicle_id[] = $vehicle_details->gps_id;
+        }
+        else
+        {
+            $vehicle_details =Vehicle::where('client_id',$client_id);
+            $single_vehicle = [];
+            foreach($vehicle_details as $vehicle_detail){
+                $single_vehicle_id[] = $vehicle_detail->gps_id;
+            }
+        }
+       $query =GpsData::select(
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -79,7 +90,7 @@ class TotalKMReportController extends Controller
         ->with('vehicle:id,name,register_number');
        if($vehicle==0 || $vehicle==null)
        {
-            $query = $query->where('client_id',$client_id)
+            $query = $query->whereIn('gps_id',$client_id)
             ->groupBy('vehicle_id');
        }
        else

@@ -2,9 +2,10 @@ $(document).ready(function () {
      moveZooms(map);
     getPlayBackData();
 });
-function moveZooms(map){
+function moveZooms(map){ 
+    map.setZoom(17);
   map.scrollWheelZoom.disable();
-  // map.setZoom(18);
+ 
 }
 
 function getPlayBackData(){
