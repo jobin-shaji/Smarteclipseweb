@@ -18,8 +18,7 @@ function getPlayBackData(){
         url: "/gps_playback_data",
         dataType: "json",
         data:data,
-        success : function(res){
- 
+        success : function(res){ 
             if(res.status=="success"){
                  process(res.locations);
             } else {

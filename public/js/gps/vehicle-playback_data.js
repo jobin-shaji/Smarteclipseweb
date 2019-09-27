@@ -4,7 +4,6 @@ $(document).ready(function () {
 
 
 function getPlayBackData(){
-	
 	var vehicle_id=$.urlParam('vehicle_id');
 	var start_date=$.urlParam('from_date');
 	var end_date=$.urlParam('to_date');
@@ -12,8 +11,7 @@ function getPlayBackData(){
          vehicle_id : vehicle_id,
          start_date : start_date,
          end_date : end_date
-         };
-
+    };
      $.ajax({
             type: "GET",
             url: "/vehicle_playback_data",
@@ -42,5 +40,6 @@ $.urlParam = function(name){
     }
     else{
        return decodeURIComponent(results[1] || 0);
+      
     }
 }

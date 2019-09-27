@@ -32,7 +32,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="{{asset('js/h-script.js')}}"></script>
     <script src="{{asset('js/gps/gps-playback_data.js')}}"></script>
-
+<script>
+window.onload = function () {
+  // behavior.disable(H.mapevents.Behavior.WHEELZOOM);
+  // map.removeComponent(map.getComponentById("zoom.MouseWheel"));
+  // moveMapToBerlin(map);
+}
+</script>
      
 </body>
 
