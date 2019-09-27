@@ -1,7 +1,11 @@
 $(document).ready(function () {
+     moveZooms(map);
     getPlayBackData();
 });
-
+function moveZooms(map){
+  map.scrollWheelZoom.disable();
+  // map.setZoom(18);
+}
 
 function getPlayBackData(){
 	var vehicle_id=$.urlParam('vehicle_id');
