@@ -23,17 +23,16 @@ class AlertController extends Controller {
          
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->get();
-         $userAlert = UserAlerts::select(
+                    ->where('client_id',$client_id)
+                    ->get();
+        $userAlert = UserAlerts::select(
                 'id',
                 'client_id',
                 'alert_id',
                 'status'
                )
             ->with('alertType:id,code,description')                
-            ->where('client_id',$client_id)  
-                        
+            ->where('client_id',$client_id)           
             ->get();   
             // dd($userAlert);           
 		return view('Alert::alert-list',['vehicles'=>$vehicles,'userAlerts'=>$userAlert]);
@@ -70,7 +69,7 @@ class AlertController extends Controller {
                 'status',
                 'created_at')
                 ->with('alertType:id,code,description')
-                ->with('vehicle:id,name,register_number')
+                ->with('gps.vehicle')
                 ->with('gps:id,imei')
                 ->limit(1000);
                 // ->with('client:id,name');
@@ -84,7 +83,6 @@ class AlertController extends Controller {
                   
                     $alert =$alert->whereIn('gps_id',$single_vehicle_gps)
                     ->where('alert_type_id',$alert_id)
-                    ->where('vehicle_id',$vehicle_id)
                     ->where('status',0);
                     if($from){
                       $search_from_date=date("Y-m-d", strtotime($from));                      
