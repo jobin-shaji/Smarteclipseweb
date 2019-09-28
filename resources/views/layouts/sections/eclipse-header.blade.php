@@ -255,13 +255,13 @@
                                                <span class="system_info">Daily Report </span></div>
                                            
                                         </a>
-                                    </li>
+                                    </li> -->
 
-                                    <li class="sys_vapor cover_alertreport">
+                                    <!-- <li class="sys_vapor cover_alertreport">
                                         <a href="{{url('/alert-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
-                                            <span class="system_info" >Alert Report </span>
+                                           <span class="system_info" >Alert Report </span>
                                            </div>
                                           
                                         </a>
@@ -297,7 +297,7 @@
                                         </a>
                                     </li>
 
-                                     <!-- <li class="sys_vapor cover_parking_report">
+                                     <li class="sys_vapor cover_parking_report">
                                         <a href="{{url('/parking-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/parking-report.png"  />
@@ -314,7 +314,7 @@
                                            </div>
                                             
                                         </a>
-                                    </li> -->
+                                    </li>
                                      
                                    </ul>
                                    
