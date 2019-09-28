@@ -73,12 +73,7 @@ class IdleReportExport implements FromView
             'digital_output_status',
             'frame_number',
             'checksum',
-            'key1',
-            'value1',
-            'key2',
-            'value2',
-            'key3',
-            'value3',
+            
             'gf_id',
             'device_time',
             \DB::raw('sum(distance) as distance')

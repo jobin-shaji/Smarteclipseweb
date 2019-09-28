@@ -18,6 +18,7 @@ class OverSpeedReportExport implements FromView
         }
         else
         {
+            $single_vehicle_id=[];
             $vehicle_details =Vehicle::where('client_id',$client)->get(); 
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 

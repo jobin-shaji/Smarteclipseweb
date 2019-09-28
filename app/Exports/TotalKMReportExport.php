@@ -19,7 +19,7 @@ class TotalKMReportExport implements FromView
         }
         else
         {
-            $vehicle_details =Vehicle::where('client_id',$client_id)->get(); 
+            $vehicle_details =Vehicle::where('client_id',$client)->get(); 
             $single_vehicle_id = [];
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
