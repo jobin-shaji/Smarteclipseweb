@@ -244,14 +244,12 @@ class GeofenceController extends Controller {
                     'id',
                     'vehicle_id',
                     'geofence_id',
-                    'alert_type',
-                    // \DB::raw('DATE(date_from) as date_from'),
-                    // \DB::raw('DATE(date_to) as date_to')
+                    'alert_type'
                     )
-        ->with('vehicleGeofence:id,name')
-        ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client_id)
-        ->get();
+                ->with('vehicleGeofence:id,name')
+                ->with('vehicle:id,name,register_number')
+                ->where('client_id',$client_id)
+                ->get();
         return DataTables::of($geofence)
             ->addIndexColumn() 
             ->addColumn('alert', function ($geofence) {  
