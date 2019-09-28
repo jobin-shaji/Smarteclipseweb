@@ -6,38 +6,44 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 class GeofenceReportExport implements FromView
 {
 	protected $geofenceReportExport;
 	public function __construct($client,$vehicle,$from,$to)
     {        
-       if($vehicle==0)
+        if($vehicle==0)
         {
+            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }
             $query =GpsData::select(
                 'id',
-                'vehicle_id', 
+                'gps_id',
                 'alert_id',    
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number')
+            ->with('gps.vehicle')
             ->with('alert:id,code,description')
-            ->whereIn('alert_id',[18,19,20,21])
-            ->where('client_id',$client);
+            ->whereIn('gps_id',$gps_list)
+            ->whereIn('alert_id',[18,19,20,21]);
         }
         else
         {
+            $vehicle=Vehicle::find($vehicle); 
             $query =GpsData::select(
                 'id',
-                'vehicle_id', 
+                'gps_id',
                 'alert_id',    
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number')
+            ->with('gps.vehicle')
             ->with('alert:id,code,description')
             ->whereIn('alert_id',[18,19,20,21])
-            ->where('client_id',$client)
-            ->where('vehicle_id',$vehicle);
+            ->where('gps_id',$vehicle->gps_id);
         }       
         if($from){
            $search_from_date=date("Y-m-d", strtotime($from));

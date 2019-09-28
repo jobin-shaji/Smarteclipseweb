@@ -1003,7 +1003,7 @@ class VehicleController extends Controller {
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
-       
+      
          $decrypted_id = Crypt::decrypt($request->id);  
           
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
@@ -1626,9 +1626,10 @@ class VehicleController extends Controller {
     }
      public function playbackPageData(Request $request){ 
       $vehicle_id=$request->vehicle_id;
-      $start_date=$request->from_date;
-      $end_date=$request->to_date;
-      $vehicle=Vehicle::find($vehicle_id);
+      $start_date=$request->start_date;
+      $end_date=$request->end_date;
+     
+      $vehicle=Vehicle::find($vehicle_id); 
       if($vehicle==null){
              $data = array('status' => 'failed',
                            'message' => 'vehicle doesnot exist',
@@ -1636,12 +1637,17 @@ class VehicleController extends Controller {
         return response()->json($data);
        }
 
-      $gpsData=GpsData::select('latitude','longitude')
-                        ->where('gps_id',$vehicle->gps_id)
-                        ->whereNotNull('latitude')
-                        ->whereNotNull('longitude')
-                        ->orderBy('device_time','asc')
-                        ->get();
+        $gpsData=GpsData::select('latitude','longitude')
+        ->where('gps_id',$vehicle->gps_id)
+        ->whereNotNull('latitude')
+        ->whereNotNull('longitude');
+        if($start_date)
+        {
+            $gpsData = $gpsData->where('device_time', '>=', $start_date)
+            ->where('device_time', '<=', $end_date);
+        }
+        $gpsData = $gpsData->orderBy('device_time','asc')
+        ->get();
 
        if($gpsData){
           $response_data = array('status'  => 'success',

@@ -5,17 +5,19 @@ $(document).ready(function () {
 
 function selectGeofence(){
     var vehicle_id=$('#vehicle').val();
-    var geofence_id=$('#vehicle_geofence').val();        
+    var geofence_id=$('#vehicle_geofence').val(); 
+    var alert_type=$('#alert_type').val();        
     var client=$('meta[name = "client"]').attr('content'); 
-    var from_date = document.getElementById('assignfromDate').value;          
-    var to_date = document.getElementById('assignToDate').value;
+    // var from_date = document.getElementById('assignfromDate').value;          
+    // var to_date = document.getElementById('assignToDate').value;
     var url = 'already/assign-geofence';
      var data = {   
                     'vehicle_id':vehicle_id,
                     'client':client,
                     'geofence_id':geofence_id,
-                    'from_date':from_date, 
-                    'to_date':to_date
+                    'alert_type':alert_type,
+                    // 'from_date':from_date, 
+                    // 'to_date':to_date
                 };       
     backgroundPostData(url,data,'assignGeofenceCount',{alert:true});  
 }
@@ -40,17 +42,20 @@ function check(){
         alert('please enter vehicle');
     }
     else if(document.getElementById('vehicle_geofence').value == ''){
-        alert('please select Geofence');
+        alert('please select geofence');
+    }
+    else if(document.getElementById('alert_type').value == ''){
+        alert('please select alert type');
     }
     else{
-       
         var vehicle_id=$('#vehicle').val();
-        var geofence_id=$('#vehicle_geofence').val();        
+        var geofence_id=$('#vehicle_geofence').val();   
+        var alert_type=$('#alert_type').val();      
         var client=$('meta[name = "client"]').attr('content'); 
-          var from_date = document.getElementById('assignfromDate').value;          
-        var to_date = document.getElementById('assignToDate').value;
+        //   var from_date = document.getElementById('assignfromDate').value;          
+        // var to_date = document.getElementById('assignToDate').value;
         // $to_date = date("Y-m-d", strtotime($toDate));
-        var data = { 'vehicle_id':vehicle_id,'client':client, 'geofence_id':geofence_id, 'from_date':from_date, 'to_date':to_date};
+        var data = { 'vehicle_id':vehicle_id,'client':client,'geofence_id':geofence_id,'alert_type':alert_type};
         // console.log(data);
         callBackDataTable(data);
    }
@@ -92,11 +97,9 @@ function check(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'vehicle_geofence.name', name: 'vehicle_geofence.name'},
             {data: 'vehicle.name', name: 'vehicle.name'} ,
-            {data: 'vehicle.register_number', name: 'vehicle.register_number'} ,
-            {data: 'date_from', name: 'date_from'} ,
-            {data: 'date_to', name: 'date_to'},   
-
-             {data: 'action', name: 'action', orderable: false, searchable: false}
+            {data: 'vehicle.register_number', name: 'vehicle.register_number'} , 
+            {data: 'alert', name: 'alert'} , 
+            {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         

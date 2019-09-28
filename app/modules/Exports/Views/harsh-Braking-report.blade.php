@@ -24,7 +24,7 @@
         ?> 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $harshBrakingReportExport->vehicle->register_number }}</td>           
+            <td>{{ $harshBrakingReportExport->gps->vehicle->register_number }}</td>           
             <td>{{ $harshBrakingReportExport->alertType->description }}</td>
             <td>{{ $address }}</td>
             <td>{{ $harshBrakingReportExport->device_time }}</td>         

@@ -9,7 +9,7 @@ class Geofence extends Model
 	use SoftDeletes;    
 
 	protected $fillable=[
-		'user_id','cordinates','fence_type_id','name'
+		'user_id','cordinates','response','code','name'
 	];
 
 	protected $casts = [

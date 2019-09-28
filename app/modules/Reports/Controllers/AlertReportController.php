@@ -45,8 +45,7 @@ class AlertReportController extends Controller
         ->get();
 
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','!=','client')->first()->name;
-
+        $user_role=$user->roles->where('name','==','client')->first()->name;
         $fromDate=$this->checkRoleAlert($user_role);
         return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles,'from_date'=>$fromDate->format('d-m-Y')]);  
     }  
@@ -54,16 +53,11 @@ class AlertReportController extends Controller
     {
         $client= $request->client;
         $alert_id= $request->alertID;
-
         $vehicle_id= $request->vehicle_id;
-
-
-
         $from = $request->from_date;
         $to = $request->to_date;
-
-          $user=\Auth::user();
-        $user_role=$user->roles->where('name','!=','client')->first()->name;
+        $user=\Auth::user();
+        $user_role=$user->roles->where('name','==','client')->first()->name;
         $check_role_in_playback=$this->checkRolePlayback($user_role,$from);
         if($check_role_in_playback=="failed"){
          $response_data = array(
@@ -75,44 +69,52 @@ class AlertReportController extends Controller
          return response()->json($response_data); 
         }
 
-
-
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $single_vehicle_gps[] = $VehicleGps->gps_id;
+        }
+        dd($VehicleGpss);
         $query =Alert::select(
             'id',
             'alert_type_id', 
             'device_time',    
-            'vehicle_id',
             'gps_id',
-            'client_id',  
             'latitude',
             'longitude', 
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number'); 
+        ->with('gps.vehicle'); 
        if($alert_id==0 && $vehicle_id==0)
        {   
 
-            $query = $query->where('client_id',$client);
-            // ->where('status',1);
+            $query = $query->whereIn('gps_id',$single_vehicle_gps);
        }
        else if($alert_id!=0 && $vehicle_id==0)
        {          
-            $query = $query->where('client_id',$client)
+            $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('alert_type_id',$alert_id);
-            // ->where('status',1);
        }
        else if($alert_id==0 && $vehicle_id!=0)
        {
-            $query = $query->where('client_id',$client)
-            ->where('vehicle_id',$vehicle_id);
+            $vehicle=Vehicle::find($vehicle_id); 
+            $query = $query->whereIn('gps_id',$single_vehicle_gps)
+            ->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
        }
        else
        {
-            $query = $query->where('client_id',$client)
+            $vehicle=Vehicle::find($vehicle_id);
+            $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('alert_type_id',$alert_id)
-            ->where('vehicle_id',$vehicle_id);
+            ->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
        }        
         if($from){
@@ -152,13 +154,13 @@ class AlertReportController extends Controller
         ->make();
     }
     public function location(Request $request){
-      $decrypted_id = Crypt::decrypt($request->id);
-      $get_alerts=Alert::find($decrypted_id);
-       $alert_icon  =  AlertType:: select(['description',
+        $decrypted_id = Crypt::decrypt($request->id);
+        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $alert_icon  =  AlertType:: select(['description',
             'path'])->where('id',$get_alerts->alert_type_id)->first();  
-      $get_vehicle=Vehicle::select(['register_number',
-            'vehicle_type_id'])->where('id',$get_alerts->vehicle_id)->first();                    
-      return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );       
+        $get_vehicle=Vehicle::select(['id','register_number',
+            'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
+        return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );       
     }
 
      public function alertmap(Request $request){  

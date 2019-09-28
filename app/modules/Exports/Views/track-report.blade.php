@@ -32,8 +32,8 @@
 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $trackReportExport->vehicle->name }}</td>           
-            <td>{{ $trackReportExport->vehicle->register_number }}</td>
+            <td>{{ $trackReportExport->gps->vehicle->name }}</td>           
+            <td>{{ $trackReportExport->gps->vehicle->register_number }}</td>
             <td>{{ $motion }}</td>            
             <td>{{ $halt }}</td>
              <td>{{ $sleep }}</td> 

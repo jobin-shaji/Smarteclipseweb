@@ -79,16 +79,18 @@ class DashboardController extends Controller
         return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles]);
     }
     function getAlerts($client_id){
+        $user = \Auth::user();;
+        $single_gps =  $this->getVehicleGps($client_id,$user->id);
         $alerts = Alert::select(
             'id',
             'alert_type_id',
-            'vehicle_id',
             'status',
+            'gps_id',
             'created_at'
         )
         ->with('alertType:id,code,description')
         ->with('vehicle:id,name,register_number')
-        ->where('client_id',$client_id)
+        ->whereIn('gps_id',$single_gps)
         ->orderBy('id', 'desc')->take(5)
         ->get();
         return $alerts; 
@@ -308,17 +310,23 @@ class DashboardController extends Controller
     {
         if($request->user()->hasRole('client')){
             $client_id=\Auth::user()->client->id;
+            $all_gps=GpsStock::where('client_id',$client_id)->get();
+            $single_gps=[];
+            foreach ($all_gps as $gps) {
+                $single_gps[]=$gps->gps_id;
+            }
             $alerts = Alert::select(
                 'id',
                 'alert_type_id',
-                'vehicle_id',
+                'gps_id',
                 'latitude',
                 'longitude',
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number,driver_id')
-            ->with('vehicle.driver')
-            ->where('client_id',$client_id)
+            //->with('vehicle:id,name,register_number,driver_id')
+            ->with('gps.vehicle')
+            ->with('gps.vehicle.driver')
+            ->whereIn('gps_id',$single_gps)
             ->where('alert_type_id',21)
             ->where('status',0)
             ->get();
@@ -327,7 +335,8 @@ class DashboardController extends Controller
                     'status' => 'failed'
                 ];
             }else{
-                $vehicle_id = Crypt::encrypt($alerts[0]['vehicle_id']);
+                $vehicle_id=$alerts[0]->gps->vehicle->id;
+                $vehicle_id = Crypt::encrypt($vehicle_id);
                 $response = [
                     'status' => 'success',
                     'alerts' => $alerts,
@@ -341,9 +350,10 @@ class DashboardController extends Controller
     public function verifyEmergencyAlert(Request $request)
     {
         $decrypted_vehicle_id = Crypt::decrypt($request->id); 
+        $vehicle=Vehicle::find($decrypted_vehicle_id);
         $alerts = Alert::where('alert_type_id',21)
         ->where('status',0)
-        ->where('vehicle_id',$decrypted_vehicle_id)
+        ->where('gps_id',$vehicle->gps_id)
         ->get();
         if($alerts == null){
             return response()->json([

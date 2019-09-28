@@ -39,7 +39,7 @@
 
      <div class="col-lg-3 col-md-3 pt-2 ">
         <div class="form-group"> 
-           <button class="btn btn-sm btn-info form-control btn-play-back" onclick="playback()"> <i class="fa fa-filter" style="height:23px;"></i>Playback </button>                               
+           <button type="submit" class="btn btn-sm btn-info form-control btn-play-back" > <i class="fa fa-filter" style="height:23px;"></i>Playback </button>                               
         </div>
      </div>
 

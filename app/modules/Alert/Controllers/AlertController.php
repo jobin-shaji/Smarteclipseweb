@@ -23,17 +23,16 @@ class AlertController extends Controller {
          
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->get();
-         $userAlert = UserAlerts::select(
+                    ->where('client_id',$client_id)
+                    ->get();
+        $userAlert = UserAlerts::select(
                 'id',
                 'client_id',
                 'alert_id',
                 'status'
                )
             ->with('alertType:id,code,description')                
-            ->where('client_id',$client_id)  
-                        
+            ->where('client_id',$client_id)           
             ->get();   
             // dd($userAlert);           
 		return view('Alert::alert-list',['vehicles'=>$vehicles,'userAlerts'=>$userAlert]);
@@ -48,36 +47,42 @@ class AlertController extends Controller {
         $from = $request->from_date;
         $to = $request->to_date;
           // dd($alert_id);
-
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $single_vehicle_gps[] = $VehicleGps->gps_id;
+        }
         
         $alert = Alert::select(
                 'id',
                 'alert_type_id',
                 'device_time',
-                'vehicle_id',
                 'gps_id',
-                'client_id',
                 'latitude',
                 'longitude',
                 'status',
                 'created_at')
                 ->with('alertType:id,code,description')
-                ->with('vehicle:id,name,register_number')
+                ->with('gps.vehicle')
                 ->with('gps:id,imei')
-                ->limit(1000) 
-                ->with('client:id,name');
+                ->limit(1000);
+                // ->with('client:id,name');
                 if($alert_id==null && $vehicle_id==null)
                 { 
-                   $alert =$alert->where('client_id',$client_id)
+                   $alert =$alert->whereIn('gps_id',$single_vehicle_gps)
                     ->where('status',0);
                 }
-
                 else
                 {
                   
-                    $alert =$alert->where('client_id',$client_id)
+                    $alert =$alert->whereIn('gps_id',$single_vehicle_gps)
                     ->where('alert_type_id',$alert_id)
-                    ->where('vehicle_id',$vehicle_id)
                     ->where('status',0);
                     if($from){
                       $search_from_date=date("Y-m-d", strtotime($from));                      
@@ -345,13 +350,23 @@ class AlertController extends Controller {
         $user = $request->user();  
         $client=Client::where('user_id',$user->id)->first();
         $client_id=$client->id;
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $single_vehicle_gps[] = $VehicleGps->gps_id;
+        }
+         
         $alert = Alert::select(
             'id',
             'alert_type_id',
             'device_time',
-            'vehicle_id',
             'gps_id',
-            'client_id',
             'latitude',
             'longitude',
             'status',
@@ -361,7 +376,7 @@ class AlertController extends Controller {
         ->with('vehicle:id,name,register_number')
         ->with('gps:id,imei')
         ->with('client:id,name')
-        ->where('client_id',$client_id)
+        ->whereIn('gps_id',$single_vehicle_gps)
         ->where('status',0)
         ->orderBy('id','DESC')
         ->limit(4)
@@ -380,8 +395,20 @@ class AlertController extends Controller {
         $user=\Auth::user();
         if($user->hasRole('client')){
         $client_id=\Auth::user()->client->id;
-        $alert = Alert::select('id')
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
         ->where('client_id',$client_id)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $single_vehicle_gps[] = $VehicleGps->gps_id;
+        }
+        
+        $alert = Alert::select('id','gps_id')
+        ->whereIn('gps_id',$single_vehicle_gps)
         ->where('status',0)
         ->get()
         ->count();

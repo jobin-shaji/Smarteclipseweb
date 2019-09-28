@@ -10,6 +10,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -199,10 +200,7 @@ class ComplaintController extends Controller {
     public function create()
     {
         $client_id=\Auth::user()->client->id;
-        $client_user_id=\Auth::user()->id;
-        $devices=Gps::select('id','imei')
-                ->where('user_id',$client_user_id)
-                ->get();
+        $devices=GpsStock::with('gps')->where('client_id',$client_id)->get();
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
         return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type]);

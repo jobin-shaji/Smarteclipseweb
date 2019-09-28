@@ -77,7 +77,7 @@ class GpsData extends Model
     }
     public function vehicle()
     {
-        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
+        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id');
     }
     public function alert()
     {
