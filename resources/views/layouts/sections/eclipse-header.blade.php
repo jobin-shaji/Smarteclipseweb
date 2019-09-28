@@ -176,12 +176,13 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                     <ul class="ecosystem">
-                                    <li class="sys_vapor cover_dailyreport">
-                                        <a href="{{url('/daily-km-report')}}">
+                                    <li class="sys_vapor cover_total_km">
+                                        <a href="{{url('/total-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                               <span class="system_info">Daily Report </span></div>
-                                           
+                                           <span class="system_info" >Total KM  Report</span>
+                                           </div>
+                                            
                                         </a>
                                     </li>
 
@@ -195,17 +196,17 @@
                                         </a>
                                     </li>
 
-                                    <li class="sys_vapor cover_alertreport">
-                                        <a href="{{url('/alert-report')}}">
+                                    <li class="sys_vapor cover_over_speed">
+                                        <a href="{{url('/over-speed-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
-                                           <span class="system_info" >Alert Report </span>    
+                                               <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
+                                           <span class="system_info" >Over Speed  Report</span>
                                            </div>
-                                          
+                                            
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_tracking_report">
+                                    <li class="sys_vapor cover_tracking_report">
                                         <a href="{{url('/tracking-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/tracking-report.png"  />
@@ -247,25 +248,24 @@
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_total_km">
-                                        <a href="{{url('/total-km-report')}}">
+                                    <!-- <li class="sys_vapor cover_dailyreport">
+                                        <a href="{{url('/daily-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                           <span class="system_info" >Total KM  Report</span>
-                                           </div>
-                                            
+                                               <span class="system_info">Daily Report </span></div>
+                                           
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_over_speed">
-                                        <a href="{{url('/over-speed-report')}}">
+                                    <li class="sys_vapor cover_alertreport">
+                                        <a href="{{url('/alert-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
-                                           <span class="system_info" >Over Speed  Report</span>
+                                               <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
+                                            <span class="system_info" >Alert Report </span>
                                            </div>
-                                            
+                                          
                                         </a>
-                                    </li>
+                                    </li> -->
 
                                       <li class="sys_vapor cover_zig_zag">
                                         <a href="{{url('/zigzag-driving-report')}}">

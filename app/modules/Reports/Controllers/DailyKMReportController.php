@@ -22,65 +22,62 @@ class DailyKMReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
-        $vehicle_id = $request->data['vehicle']; 
-        if($vehicle_id){
-            $vehicle=Vehicle::find($vehicle_id); 
-            $query =GpsData::select(
-                'gps_id',
-                'header',
-                'vendor_id',
-                'firmware_version',
-                'imei',
-                'update_rate_ignition_on',
-                'update_rate_ignition_off',
-                'battery_percentage',
-                'low_battery_threshold_value',
-                'memory_percentage',
-                'digital_io_status',
-                'analog_io_status',
-                'activation_key',
-                'latitude',
-                'lat_dir',
-                'longitude',
-                'lon_dir',
-                'date',
-                'time',
-                'speed',
-                'alert_id',
-                'packet_status',
-                'gps_fix',
-                'mcc',
-                'mnc',
-                'lac',
-                'cell_id',
-                'heading',
-                'no_of_satelites',
-                'hdop',
-                'gsm_signal_strength',
-                'ignition',
-                'main_power_status',
-                'vehicle_mode',
-                'altitude',
-                'pdop',
-                'nw_op_name',
-                'nmr',
-                'main_input_voltage',
-                'internal_battery_voltage',
-                'tamper_alert',
-                'digital_input_status',
-                'digital_output_status',
-                'frame_number',
-                'checksum',            
-                'gf_id',
-                // 'device_time',
-                \DB::raw('DATE(device_time) as date'),
-                \DB::raw('sum(distance) as distance')
-            )
-            ->with('gps.vehicle')
-            ->where('gps_id',$vehicle->gps_id)
-            ->groupBy('date');   
-        }
-                          
+        $vehicle_id = $request->data['vehicle'];   
+        $vehicle=Vehicle::find($vehicle_id); 
+        $query =GpsData::select(
+            'gps_id',
+            'header',
+            'vendor_id',
+            'firmware_version',
+            'imei',
+            'update_rate_ignition_on',
+            'update_rate_ignition_off',
+            'battery_percentage',
+            'low_battery_threshold_value',
+            'memory_percentage',
+            'digital_io_status',
+            'analog_io_status',
+            'activation_key',
+            'latitude',
+            'lat_dir',
+            'longitude',
+            'lon_dir',
+            'date',
+            'time',
+            'speed',
+            'alert_id',
+            'packet_status',
+            'gps_fix',
+            'mcc',
+            'mnc',
+            'lac',
+            'cell_id',
+            'heading',
+            'no_of_satelites',
+            'hdop',
+            'gsm_signal_strength',
+            'ignition',
+            'main_power_status',
+            'vehicle_mode',
+            'altitude',
+            'pdop',
+            'nw_op_name',
+            'nmr',
+            'main_input_voltage',
+            'internal_battery_voltage',
+            'tamper_alert',
+            'digital_input_status',
+            'digital_output_status',
+            'frame_number',
+            'checksum',            
+            'gf_id',
+            // 'device_time',
+            \DB::raw('DATE(device_time) as date'),
+            \DB::raw('sum(distance) as distance')
+        )
+        ->with('gps.vehicle')
+        ->where('gps_id',$vehicle->gps_id)
+        ->groupBy('date');                     
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
