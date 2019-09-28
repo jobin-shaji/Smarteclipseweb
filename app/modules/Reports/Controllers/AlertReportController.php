@@ -45,7 +45,7 @@ class AlertReportController extends Controller
         ->get();
 
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','==','pro')->first()->name;
+        $user_role=$user->roles->where('name','==','client')->first()->name;
         $fromDate=$this->checkRoleAlert($user_role);
         return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles,'from_date'=>$fromDate->format('d-m-Y')]);  
     }  
@@ -80,6 +80,7 @@ class AlertReportController extends Controller
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
+        dd($VehicleGpss);
         $query =Alert::select(
             'id',
             'alert_type_id', 

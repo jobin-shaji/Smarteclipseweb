@@ -16,7 +16,7 @@ function check(){
         var alert_id=$('#alert').val();
         var vehicle_id=$('#vehicle').val();
         
-         var client=$('meta[name = "client"]').attr('content');
+        var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('alert_fromDate').value;
         var to_date = document.getElementById('alert_toDate').value;
         var data = { 'alertID':alert_id,'vehicle_id':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
