@@ -297,7 +297,7 @@
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_parking_report">
+                                     <!-- <li class="sys_vapor cover_parking_report">
                                         <a href="{{url('/parking-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/parking-report.png"  />
@@ -314,7 +314,7 @@
                                            </div>
                                             
                                         </a>
-                                    </li>
+                                    </li> -->
                                      
                                    </ul>
                                    
