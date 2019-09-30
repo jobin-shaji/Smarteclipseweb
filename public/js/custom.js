@@ -497,7 +497,7 @@ function downloadAlertReport(){
        var alert=alerts;
        var vehicle=vehicles;
      }
-     // console.log(alert);
+     // console.log(alerts);
     var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
     if(fromDate){

@@ -248,16 +248,16 @@
                                         </a>
                                     </li>
 
-                                    <!-- <li class="sys_vapor cover_dailyreport">
+                                    <li class="sys_vapor cover_dailyreport">
                                         <a href="{{url('/daily-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
                                                <span class="system_info">Daily Report </span></div>
                                            
                                         </a>
-                                    </li> -->
+                                    </li>
 
-                                    <!-- <li class="sys_vapor cover_alertreport">
+                                    <li class="sys_vapor cover_alertreport">
                                         <a href="{{url('/alert-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
@@ -265,7 +265,7 @@
                                            </div>
                                           
                                         </a>
-                                    </li> -->
+                                    </li>
 
                                       <li class="sys_vapor cover_zig_zag">
                                         <a href="{{url('/zigzag-driving-report')}}">
