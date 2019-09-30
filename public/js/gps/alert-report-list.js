@@ -60,7 +60,7 @@ function callBackDataTable(data=null){
             {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number'},
                    
             {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
-            {data: 'location', name: 'location'},
+            // {data: 'location', name: 'location'},
             {data: 'device_time', name: 'device_time'},
              {data: 'action', name: 'action', orderable: false, searchable: false}
            

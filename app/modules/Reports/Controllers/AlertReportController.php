@@ -1,10 +1,10 @@
 <?php
 namespace App\Modules\Reports\Controllers;
 
-use App\Exports\AlertReportExport;
-
 // alertReportExport
 use Illuminate\Http\Request;
+use App\Exports\AlertReportExport;
+
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Alert\Models\Alert;
@@ -51,9 +51,11 @@ class AlertReportController extends Controller
     }  
     public function alertReportList(Request $request)
     {
-        $client= $request->client;
+        // $client= $request->client;
+        $client= \Auth::user()->client->id;
         $alert_id= $request->alertID;
         $vehicle_id= $request->vehicle_id;
+        // dd($client);
         $from = $request->from_date;
         $to = $request->to_date;
         $user=\Auth::user();
@@ -80,7 +82,7 @@ class AlertReportController extends Controller
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        dd($VehicleGpss);
+        // dd($VehicleGpss);
         $query =Alert::select(
             'id',
             'alert_type_id', 
@@ -91,13 +93,15 @@ class AlertReportController extends Controller
             'status'
         )
         ->with('alertType:id,description')
-        ->with('gps.vehicle'); 
+        ->with('gps.vehicle')
+        ->orderBy('id', 'desc')
+        ->limit(1000); 
        if($alert_id==0 && $vehicle_id==0)
        {   
 
             $query = $query->whereIn('gps_id',$single_vehicle_gps);
        }
-       else if($alert_id!=0 && $vehicle_id==0)
+       else if($alert_id!=0 && $vehicle_id==0 || $vehicle_id==null)
        {          
             $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('alert_type_id',$alert_id);
@@ -126,25 +130,25 @@ class AlertReportController extends Controller
         // dd($alert);
         return DataTables::of($alert)
         ->addIndexColumn()
-        ->addColumn('location', function ($alert) {
-         $latitude= $alert->latitude;
-         $longitude=$alert->longitude;          
-        if(!empty($latitude) && !empty($longitude)){
-            //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-            $output = json_decode($geocodeFromLatLong);         
-            $status = $output->status;
-            //Get address from json data
-            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-            //Return address of the given latitude and longitude
-            if(!empty($address)){
-                 $location=$address;
-            return $location;
+    //     ->addColumn('location', function ($alert) {
+    //      $latitude= $alert->latitude;
+    //      $longitude=$alert->longitude;          
+    //     if(!empty($latitude) && !empty($longitude)){
+    //         //Send request and receive json data by address
+    //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+    //         $output = json_decode($geocodeFromLatLong);         
+    //         $status = $output->status;
+    //         //Get address from json data
+    //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+    //         //Return address of the given latitude and longitude
+    //         if(!empty($address)){
+    //              $location=$address;
+    //         return $location;
                 
-            }
+    //         }
         
-    }
-         })
+    // }
+    //      })
          ->addColumn('action', function ($alert) {
          $b_url = \URL::to('/');               
                     return "
@@ -173,7 +177,9 @@ class AlertReportController extends Controller
     }
     public function export(Request $request)
     {
-        $gps_id=$request->$request;   
+        return Excel::download(new AlertReportExport($request->id,$request->alert,$request->vehicle,$request->fromDate,$request->toDate), 'Alert-report.xlsx');
+        // dd($request->$gps_id);
+        // $gps_id=$request->$request;   
    
     }
 
