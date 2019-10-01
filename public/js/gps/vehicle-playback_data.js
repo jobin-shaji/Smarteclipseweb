@@ -3,7 +3,7 @@ $(document).ready(function () {
     getPlayBackData();
 });
 function moveZooms(map){ 
-    map.setZoom(17);
+    // map.setZoom(17);
   map.scrollWheelZoom.disable();
  
 }

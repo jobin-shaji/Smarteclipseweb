@@ -248,7 +248,7 @@
                                         </a>
                                     </li>
 
-                                    <!-- <li class="sys_vapor cover_dailyreport">
+                                    <li class="sys_vapor cover_dailyreport">
                                         <a href="{{url('/daily-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
@@ -265,7 +265,7 @@
                                            </div>
                                           
                                         </a>
-                                    </li> -->
+                                    </li>
 
                                       <li class="sys_vapor cover_zig_zag">
                                         <a href="{{url('/zigzag-driving-report')}}">

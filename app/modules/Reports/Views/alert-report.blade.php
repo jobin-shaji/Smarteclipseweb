@@ -78,7 +78,7 @@
                               <th>Sl.No</th>
                               <th>Vehicle</th>
                               <th>Alert Type</th>
-                              <th>Location</th>
+                             
                               <th>DateTime</th>
                               <th>Action</th>        
                             </tr>
