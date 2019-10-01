@@ -80,7 +80,6 @@ class AlertReportController extends Controller
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        dd($VehicleGpss);
         $query =Alert::select(
             'id',
             'alert_type_id', 

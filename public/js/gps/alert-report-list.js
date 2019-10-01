@@ -15,7 +15,6 @@ function check(){
     else{
         var alert_id=$('#alert').val();
         var vehicle_id=$('#vehicle').val();
-        
         var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('alert_fromDate').value;
         var to_date = document.getElementById('alert_toDate').value;

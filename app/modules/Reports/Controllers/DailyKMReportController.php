@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\GpsData;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Warehouse\Models\GpsStock;
 use DataTables;
 class DailyKMReportController extends Controller
 {
@@ -23,7 +24,6 @@ class DailyKMReportController extends Controller
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
         $vehicle_id = $request->data['vehicle'];   
-        $vehicle=Vehicle::find($vehicle_id); 
         $query =GpsData::select(
             'gps_id',
             'header',
@@ -76,14 +76,30 @@ class DailyKMReportController extends Controller
             \DB::raw('sum(distance) as distance')
         )
         ->with('gps.vehicle')
-        ->where('gps_id',$vehicle->gps_id)
-        ->groupBy('date');                     
-        if($from){
-            $search_from_date=date("Y-m-d", strtotime($from));
+        ->groupBy('date');  
+        if($vehicle_id==0 || $vehicle_id==null){
+            $gps_stocks=GpsStock::where('client_id',$client_id)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }
+            $query = $query->whereIn('gps_id',$gps_list);
+            if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)
                 ->whereDate('device_time', '<=', $search_to_date);
-        }
+            }    
+        }else{
+            $vehicle=Vehicle::find($vehicle_id); 
+            $query = $query->where('gps_id',$vehicle->gps_id);
+            if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)
+                ->whereDate('device_time', '<=', $search_to_date);
+            }
+        }                  
         $dailykm_report = $query->get();     
         return DataTables::of($dailykm_report)
         ->addIndexColumn()        
