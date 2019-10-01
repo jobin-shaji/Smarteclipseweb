@@ -45,7 +45,7 @@ class HarshBrakingReportController extends Controller
         //     ->where('status',1);
 
         // }   
-         if($vehicle==0 || $vehicle==null)
+        if($vehicle==0 || $vehicle==null)
         {
             $gps_stocks=GpsStock::where('client_id',$client)->get();
             $gps_list=[];

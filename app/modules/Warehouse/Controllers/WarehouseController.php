@@ -661,7 +661,7 @@ class WarehouseController extends Controller {
         $devices=array();
         foreach($gps_items as $gps_item){
             $single_gps= $gps_item->gps_id;
-            $devices[]=Gps::select('id','imei','version','e_sim_number','batch_number','employee_code','model_name')
+            $devices[]=Gps::select('id','imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name')
                         ->where('id',$single_gps)
                         ->first();
         }
