@@ -11,6 +11,8 @@ Route::post('/gps/{id}/edit','GpsController@update')->name('gps.update.p');
 Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
 Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
 Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
+Route::get('/gps-all','GpsController@allgpsList')->name('gps.all');
+Route::post('/gps-all-list','GpsController@getAllgpsList')->name('gps.all.list');
 
 Route::get('/gps/{id}/location/root','GpsController@rootlocation')->name('gps.location');
 Route::post('/gps/location-track/root','GpsController@rootlocationTrack')->name('gps.location-track');

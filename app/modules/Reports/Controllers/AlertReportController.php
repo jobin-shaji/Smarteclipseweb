@@ -4,7 +4,6 @@ namespace App\Modules\Reports\Controllers;
 // alertReportExport
 use Illuminate\Http\Request;
 use App\Exports\AlertReportExport;
-
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Alert\Models\Alert;
@@ -16,7 +15,6 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Gps\Models\GpsData;
 use Carbon\Carbon;
-
 
 use DataTables;
 use Auth;
