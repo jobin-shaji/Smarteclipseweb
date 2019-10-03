@@ -31,7 +31,7 @@ use DataTables;
 class GpsController extends Controller {
 
     public $cart;
-    //Display all gps
+    //Display gps in stock
 	public function gpsListPage()
     {
         return view('Gps::gps-list');
@@ -66,6 +66,46 @@ class GpsController extends Controller {
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps_stocks->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=activateGps(".$gps_stocks->gps_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Restore
                 </button>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+    //Display all gps list
+    public function allgpsList()
+    {
+        return view('Gps::all-gps-list');
+    }
+    //returns gps as json 
+    public function getAllgpsList()
+    {
+        $gps = Gps::select(
+            'id',
+            'serial_no',
+            'imei',
+            'imsi',
+            'icc_id',
+            'batch_number',
+            'employee_code',
+            'manufacturing_date',
+            'e_sim_number',
+            'model_name',
+            'version',
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->get();
+        return DataTables::of($gps)
+        ->addIndexColumn()
+        ->addColumn('action', function ($gps) {
+            $b_url = \URL::to('/');
+            if($gps->deleted_at == null){
+                return "
+                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                ";
+            }else{
+                 return "";
             }
         })
         ->rawColumns(['link', 'action'])
@@ -165,7 +205,7 @@ class GpsController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('gps.edit',$encrypted_gps_id));  
     }
-
+    
     // data of gps
     public function data(Request $request)
     {
