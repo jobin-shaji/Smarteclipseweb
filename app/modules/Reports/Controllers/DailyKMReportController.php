@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\GpsData;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Warehouse\Models\GpsStock;
 use DataTables;
 class DailyKMReportController extends Controller
 {
@@ -15,6 +16,7 @@ class DailyKMReportController extends Controller
     	$vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
+        
         return view('Reports::daily-km-report',['vehicles'=>$vehicles]);  
     }  
     public function dailyKMReportList(Request $request)
@@ -22,24 +24,10 @@ class DailyKMReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
+
         $vehicle_id = $request->data['vehicle'];  
-       $single_vehicle_id = [];
-        if($vehicle_id!=0 || $vehicle_id!=null)
-        {
-            $vehicle_details =Vehicle::find($vehicle);
-            $single_vehicle_ids = $vehicle_details->gps_id;
-        }
-        else
-        {
-            $vehicle_details =Vehicle::where('client_id',$client_id)->get(); 
-            
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+       
 
-
-            }
-        }
-        // dd($single_vehicle_id);
         $query =GpsData::select(
             'gps_id',
             'header',
@@ -91,34 +79,34 @@ class DailyKMReportController extends Controller
             \DB::raw('DATE(device_time) as date'),
             \DB::raw('sum(distance) as distance')
         )
-        ->with('gps.vehicle');
-        if($vehicle_id==0 || $vehicle_id==null || $from==null || $to==null)
-        {        
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->groupBy('gps_id');
-        }
-        else if($vehicle_id==0 || $vehicle_id==null)
-        {        
-            $query = $query->whereIn('gps_id',$single_vehicle_id);
+
+        ->with('gps.vehicle')
+        ->groupBy('date');  
+        if($vehicle_id==0 || $vehicle_id==null){
+            $gps_stocks=GpsStock::where('client_id',$client_id)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }
+            $query = $query->whereIn('gps_id',$gps_list);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-            // ->groupBy('gps_id');
-        }
-        else
-        {
-            $query = $query->where('gps_id',$single_vehicle_ids)
-            ->groupBy('gps_id');   
+                $query = $query->whereDate('device_time', '>=', $search_from_date)
+                ->whereDate('device_time', '<=', $search_to_date);
+            }    
+        }else{
+            $vehicle=Vehicle::find($vehicle_id); 
+            $query = $query->where('gps_id',$vehicle->gps_id);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+                $query = $query->whereDate('device_time', '>=', $search_from_date)
+                ->whereDate('device_time', '<=', $search_to_date);
             }
-        }       
-        $dailykm_report = $query->get(); 
-        // dd($dailykm_report);    
+        }                  
+        $dailykm_report = $query->get();     
+
         return DataTables::of($dailykm_report)
         ->addIndexColumn()        
         ->addColumn('km', function ($dailykm_report) { 

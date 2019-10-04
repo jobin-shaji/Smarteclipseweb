@@ -37,6 +37,9 @@
                                               <tr>
                                                 <th>Sl.No</th>
                                                 <th>IMEI</th>
+                                                <th>Serial No</th>
+                                                <th>ICC ID</th>
+                                                <th>IMSI</th>
                                                 <th>Version</th>
                                                 <th>Batch Number</th>
                                                 <th>Employee Code</th>
@@ -48,6 +51,9 @@
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$device->imei}}</td>
+                                                <td>{{$device->serial_no}}</td>
+                                                <td>{{$device->icc_id}}</td>
+                                                <td>{{$device->imsi}}</td>
                                                 <td>{{$device->version}}</td>
                                                 <td>{{$device->batch_number}}</td>
                                                 <td>{{$device->employee_code}}</td>
