@@ -32,6 +32,7 @@ class GeofenceReportController extends Controller
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
             }
+            // dd($gps_list);
             $query =GpsData::select(
                 'id',
                 'gps_id',
@@ -41,7 +42,9 @@ class GeofenceReportController extends Controller
             ->with('gps.vehicle')
             ->with('alert:id,code,description')
             ->whereIn('gps_id',$gps_list)
-            ->whereIn('alert_id',[18,19,20,21]);
+            ->whereIn('alert_id',[18,19,20,21])
+            ->orderBy('id', 'desc')
+            ->limit(1000);
         }
         else
         {
@@ -54,7 +57,9 @@ class GeofenceReportController extends Controller
             ->with('gps.vehicle')
             ->with('alert:id,code,description')
             ->whereIn('alert_id',[18,19,20,21])
-            ->where('gps_id',$vehicle->gps_id);
+            ->where('gps_id',$vehicle->gps_id)
+            ->orderBy('id', 'desc')
+            ->limit(1000);
         }       
         if($from){
             // $query = $query->whereBetween('device_time',[$from,$to]);

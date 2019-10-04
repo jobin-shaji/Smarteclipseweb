@@ -57,7 +57,9 @@ class OverSpeedReportController extends Controller
        if($vehicle==0 || $vehicle==null)
         {
             $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->where('alert_type_id',12);
+            ->where('alert_type_id',12)
+            ->orderBy('id', 'desc')
+            ->limit(1000);
             // ->where('status',1);
             if($from){
                $search_from_date=date("Y-m-d", strtotime($from));
@@ -68,7 +70,9 @@ class OverSpeedReportController extends Controller
         else
         {
             $query = $query ->where('gps_id',$single_vehicle_ids)
-            ->where('alert_type_id',12);
+            ->where('alert_type_id',12)
+            ->orderBy('id', 'desc')
+            ->limit(1000);
             // ->where('status',1);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));

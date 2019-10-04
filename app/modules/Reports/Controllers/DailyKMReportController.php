@@ -79,9 +79,10 @@ class DailyKMReportController extends Controller
             \DB::raw('DATE(device_time) as date'),
             \DB::raw('sum(distance) as distance')
         )
-
         ->with('gps.vehicle')
-        ->groupBy('date');  
+        ->groupBy('date')
+        ->orderBy('id', 'desc')        
+        ->limit(10);
         if($vehicle_id==0 || $vehicle_id==null){
             $gps_stocks=GpsStock::where('client_id',$client_id)->get();
             $gps_list=[];
