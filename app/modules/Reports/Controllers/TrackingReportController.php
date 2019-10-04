@@ -83,12 +83,16 @@ class TrackingReportController extends Controller
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
             }        
-            $query = $query->whereIn('gps_id',$gps_list)->groupBy('date');
+            $query = $query->whereIn('gps_id',$gps_list)->groupBy('date')
+            ->orderBy('id', 'desc')
+           ->limit(1000);
         }
        else
         {
             $vehicle=Vehicle::find($vehicle); 
-            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
+            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date')
+            ->orderBy('id', 'desc')
+            ->limit(1000); 
         }
                
         if($from){
