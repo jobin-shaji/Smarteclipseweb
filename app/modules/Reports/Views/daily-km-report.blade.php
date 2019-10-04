@@ -30,7 +30,11 @@ Daily KM Report
                           <div class="form-group">    
                             <label>Vehicle</label>           
                             <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+
+                              <option value="" selected="selected" disabled="disabled">select</option>
+
                               <option value="0">All</option>
+
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->name}}||{{$vehicles->register_number}}</option>
                               @endforeach  

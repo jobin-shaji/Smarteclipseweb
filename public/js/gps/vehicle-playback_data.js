@@ -4,10 +4,8 @@ $(document).ready(function () {
 });
 function moveZooms(map){ 
     // map.setZoom(17);
-  map.scrollWheelZoom.disable();
- 
+  map.scrollWheelZoom.disable(); 
 }
-
 function getPlayBackData(){
 	var vehicle_id=$.urlParam('vehicle_id');
 	var start_date=$.urlParam('from_date');
@@ -18,23 +16,19 @@ function getPlayBackData(){
          end_date : end_date
     };
      $.ajax({
-            type: "GET",
-            url: "/vehicle_playback_data",
-            dataType: "json",
-            data:data,
-            success : function(res){
-     
-                if(res.status=="success"){
-                     process(res.locations);
-                } else {
-                    alert("there is no playback data")
-                }
+        type: "GET",
+        url: "/vehicle_playback_data",
+        dataType: "json",
+        data:data,
+        success : function(res){
+ 
+            if(res.status=="success"){
+                 process(res.locations);
+            } else {
+                alert("there is no playback data")
             }
-        });
-
-
-
-
+        }
+    });
 }
 
 

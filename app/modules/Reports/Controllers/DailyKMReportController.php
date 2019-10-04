@@ -16,6 +16,7 @@ class DailyKMReportController extends Controller
     	$vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
+        
         return view('Reports::daily-km-report',['vehicles'=>$vehicles]);  
     }  
     public function dailyKMReportList(Request $request)
@@ -23,7 +24,10 @@ class DailyKMReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
-        $vehicle_id = $request->data['vehicle'];   
+
+        $vehicle_id = $request->data['vehicle'];  
+       
+
         $query =GpsData::select(
             'gps_id',
             'header',
@@ -75,6 +79,7 @@ class DailyKMReportController extends Controller
             \DB::raw('DATE(device_time) as date'),
             \DB::raw('sum(distance) as distance')
         )
+
         ->with('gps.vehicle')
         ->groupBy('date');  
         if($vehicle_id==0 || $vehicle_id==null){
@@ -101,6 +106,7 @@ class DailyKMReportController extends Controller
             }
         }                  
         $dailykm_report = $query->get();     
+
         return DataTables::of($dailykm_report)
         ->addIndexColumn()        
         ->addColumn('km', function ($dailykm_report) { 
