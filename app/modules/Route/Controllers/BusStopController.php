@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 
-class RouteController extends Controller {
+class BusStopController extends Controller {
     
     
 }

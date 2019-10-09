@@ -16,6 +16,7 @@ class TrackingReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::tracking-report',['vehicles'=>$vehicles]);  
     }  
@@ -75,8 +76,9 @@ class TrackingReportController extends Controller
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('gps.vehicle');     
-        if($vehicle==0)
+        ->with('gps.vehicle')
+        ->limit(1000);     
+        if($vehicle==0 || $vehicle==null)
         { 
             $gps_stocks=GpsStock::where('client_id',$client_id)->get();
             $gps_list=[];
@@ -84,15 +86,12 @@ class TrackingReportController extends Controller
                 $gps_list[]=$gps->gps_id;
             }        
             $query = $query->whereIn('gps_id',$gps_list)->groupBy('date')
-            ->orderBy('id', 'desc')
-           ->limit(1000);
+            ->orderBy('id', 'desc');
         }
        else
         {
             $vehicle=Vehicle::find($vehicle); 
-            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date')
-            ->orderBy('id', 'desc')
-            ->limit(1000); 
+            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
         }
                
         if($from){

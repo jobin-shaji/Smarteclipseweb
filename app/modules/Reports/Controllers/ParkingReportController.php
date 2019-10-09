@@ -17,6 +17,7 @@ class ParkingReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::parking-report',['vehicles'=>$vehicles]);  
     } 
