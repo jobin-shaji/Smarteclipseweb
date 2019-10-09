@@ -25,7 +25,6 @@ class ClientsTable extends Migration
             $table->integer('country_id');
             $table->integer('state_id');
             $table->integer('city_id');
-            $table->text('cordinates')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
