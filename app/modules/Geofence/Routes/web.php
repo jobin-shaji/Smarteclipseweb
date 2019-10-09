@@ -21,5 +21,6 @@ Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App
 	Route::post('save/school-fence','GeofenceController@saveSchoolFence');	
 
 	Route::post('/school-geofence/show','GeofenceController@schoolGeofenceShow')->name('school.geofence.show');
+	Route::post('edit/school-fence','GeofenceController@editSchoolFence');
 });
 

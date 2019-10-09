@@ -11,14 +11,11 @@ var labelIndex = 0;
 
 function initMap(res) {   
           map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
+          zoom: 12,
           center:{lat: latMap, lng: lngMap},
           mapTypeId: 'terrain',
 
-        });
-
-          
-
+        });          
         map.setOptions({ minZoom:5, maxZoom: 17 });
         var url = 'school-geofence/show';
         var geo_id= document.getElementById('g_id').value;

@@ -423,10 +423,11 @@
                                 @role('school')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
-                                      
+                                    @if(empty(\Auth::user()->geofence))  
                                     <a class="dropdown-item" href="{{url('/school/'.Crypt::encrypt(\Auth::user()->id).'/fence')}}">
-                                        <i class="fa fa-cog m-r-5 m-l-5"></i> GEOFENCE</a>                                        
-                                         
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i> GEOFENCE</a>
+                                    @endif                                        
+                                      
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole

@@ -161,7 +161,7 @@ function toast(res){
         vehicleModeCount(res);
     }
      else if(res.status == 'school geofence'){
-        window.location.href='/home';
+        window.location.href='/client/profile';
     } 
                 
 }

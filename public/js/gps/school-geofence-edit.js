@@ -25,36 +25,19 @@ var place_name="";
 var vertices;
 
 function initMap(){
-
-  //  var url = '/client-location';
-  //  var data = { };
-  //  backgroundPostData(url,data,'loadMap',{alert:false});
-
-  // }
   var latMap = parseFloat(document.getElementById('lat').value);
   var lngMap = parseFloat(document.getElementById('lng').value);
-  // var latMap=25.402282;
-  // var lngMap=51.189165;
-
-  //    function loadMap(res) {
-  // console.log(res);
-  //     // console.log(res);
-  //         latMap = res.latitude;
-  //         lngMap = res.longitude;
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: latMap, lng: lngMap},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
     zoom: 12
   });
   map.setOptions({ minZoom:5, maxZoom: 17 });
-
   var input1 = document.getElementById('search_place'); 
   autocomplete1 = new google.maps.places.Autocomplete(input1);
   var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
   var drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.POLYGON,
     // drawingMode: google.maps.drawing.OverlayType,
-
-
     drawingControl: true,
     drawingControlOptions: {
       position: google.maps.ControlPosition.TOP_CENTER,
@@ -86,29 +69,19 @@ function initMap(){
     {
       addArrays(polygon);
       drawingManager.setDrawingMode(null);
-      //   drawingManager.setOptions({
-      //   drawingControl: false
-      // });
     }
   });
 
 
   google.maps.event.addDomListener(savebutton, 'click', function() {  
-    var name= document.getElementById('name').value;
-    if(name !== "")
-    {
-      var url = 'save/school-fence';
+    
+      var url = 'edit/school-fence';
       var data = {
       polygons : allPolly,
       name : name
     };
     backgroundPostData(url,data,'none',{alert:true});  
-    // console.log(allPolly);
-    }
-    else
-    {
-      alert("Plese Enter Name");
-    }
+    // console.log(allPolly);   
   });
 
   // setSelection(newShape);
