@@ -16,6 +16,7 @@ class ZigZagDrivingReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::zig-zag-driving-report',['vehicles'=>$vehicles]);  
     }  
@@ -50,7 +51,8 @@ class ZigZagDrivingReportController extends Controller
             'status'
         )
         ->with('alertType:id,description')
-        ->with('gps.vehicle');
+        ->with('gps.vehicle')
+        ->limit(1000);
         if($vehicle==0 || $vehicle==null)
         {
             $query = $query->whereIn('gps_id',$single_vehicle_id)
@@ -78,23 +80,7 @@ class ZigZagDrivingReportController extends Controller
 
         return DataTables::of($zigzagdriving)
         ->addIndexColumn()
-        ->addColumn('location', function ($zigzagdriving) {
-            $latitude= $zigzagdriving->latitude;
-            $longitude=$zigzagdriving->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                     $location=$address;
-                return $location;                
-                }        
-            }
-        })
+        
          ->addColumn('action', function ($zigzagdriving) {
          $b_url = \URL::to('/');              
             return "

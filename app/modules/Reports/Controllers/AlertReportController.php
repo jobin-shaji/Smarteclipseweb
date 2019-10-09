@@ -40,6 +40,7 @@ class AlertReportController extends Controller
         // $client_id=\Auth::user()->client->id;
          $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        
         ->get();
 
         $user=\Auth::user();        

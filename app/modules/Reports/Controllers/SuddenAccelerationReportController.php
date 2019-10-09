@@ -17,6 +17,7 @@ class SuddenAccelerationReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::sudden-acceleration-report',['vehicles'=>$vehicles]);  
     }  
@@ -39,7 +40,7 @@ class SuddenAccelerationReportController extends Controller
         ->with('alertType:id,description')
         ->with('gps.vehicle')
         ->orderBy('id', 'desc')        
-        ->limit(100);        
+        ->limit(1000);        
         if($vehicle==0 || $vehicle==null)
         {
             $gps_stocks=GpsStock::where('client_id',$client)->get();

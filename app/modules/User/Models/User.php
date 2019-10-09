@@ -62,4 +62,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Modules\Dealer\Models\Dealer','root_id','id');
     } 
+    public function geofence()
+    {
+        return $this->hasone('App\Modules\Geofence\Models\Geofence','user_id','id');
+    }
 }

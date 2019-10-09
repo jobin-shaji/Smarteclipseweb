@@ -916,5 +916,59 @@ class ClientController extends Controller {
         }
     }
 
+    public function userProfileEdit()
+    {
+        $client_id = \Auth::user()->client->id;
+        $client_user_id = \Auth::user()->id;
+        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $user=User::find($client_user_id); 
+
+        // $client=\Auth::user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude;       
+        // return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
+        if($client == null)
+        {
+           return view('Client::404');
+        }
+
+        return view('Client::client-profile-edit',['client' => $client,'user' => $user,'lat' => $lat,'lng' => $lng]);
+    }
+
+     //update dealers details
+    public function profileUpdate(Request $request)
+    {
+        $client = Client::where('user_id', $request->id)->first();
+        if($client == null){
+           return view('Client::404');
+        } 
+        $rules = $this->clientProfileUpdateRules($client);
+        $this->validate($request, $rules);       
+        $client->name = $request->name;
+        $client->address = $request->address;
+        $client->save();
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->email = $request->email;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
+        $request->session()->flash('message', 'Client details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client.profile'));  
+    }
+ public function clientProfileUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
+            'email' => 'required|string|unique:users,email,'.$client->user_id
+           
+            
+        ];
+        return  $rules;
+    }
   #####################################################
 }

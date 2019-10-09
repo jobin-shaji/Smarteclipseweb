@@ -14,6 +14,7 @@ class TotalKMReportController extends Controller
     	$client_id=\Auth::user()->client->id;
     	 $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();    
         return view('Reports::total-km-report',['vehicles'=>$vehicles]);  
     }  
@@ -91,7 +92,8 @@ class TotalKMReportController extends Controller
             'device_time'
             // \DB::raw('sum(distance) as distance')
         )
-        ->with('gps.vehicle');
+        ->with('gps.vehicle')
+        ->limit(1000);
         if($vehicle==0 || $vehicle==null || $from==null || $to==null)
         {        
             $query = $query->whereIn('gps_id',$single_vehicle_id)
