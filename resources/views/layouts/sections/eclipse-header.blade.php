@@ -413,10 +413,20 @@
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                 <div class="dropdown-divider">
                                 </div>
-                                @role('client|school')
+                                @role('client')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
 
+                                    <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                                @endrole
+                                @role('school')
+                                    <a class="dropdown-item" href="{{url('/client/profile')}}">
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                      
+                                    <a class="dropdown-item" href="{{url('/school/'.Crypt::encrypt(\Auth::user()->id).'/fence')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i> GEOFENCE</a>                                        
+                                         
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole

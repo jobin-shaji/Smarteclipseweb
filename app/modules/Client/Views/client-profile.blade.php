@@ -19,14 +19,14 @@
   </nav> 
 
   <div class="row">
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-12 col-md-12">
       <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
         <div class="col-sm-12">
           <h2 class="page-header">
             <i class="fa fa-user"></i> 
           </h2>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               <div class="form-group has-feedback">
                 <label>Name</label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $client->name}}" disabled>
@@ -44,7 +44,15 @@
                 <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
               </div>       
             </div>
-          </div>
+              <div class="col-lg-6">
+                <input type="hidden" name="hd_id" id="g_id" value="{{$client->id}}">
+              <div id="map" style=" width:100%;height:320px; "></div>       
+            </div>
+
+          </div>  
+          
+
+
         </div>
       </div>
     </div>
@@ -97,5 +105,10 @@
 </div>
 </div>
 
+  @section('script')
+    <script src="{{asset('js/gps/school-geofence-details.js')}}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap"
+         async defer></script>
+  @endsection
 <div class="clearfix"></div>
 @endsection

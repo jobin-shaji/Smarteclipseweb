@@ -9,6 +9,8 @@ use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGeofence;
 use App\Modules\Vehicle\Models\VehicleRoute;
+use App\Modules\Client\Models\Client;
+
 use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -310,6 +312,83 @@ class GeofenceController extends Controller {
             'assign_geofence_count' => $geofences            
         ]);       
     }
-   
 
+    public function schoolFenceCreate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $client=\Auth::user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude;       
+        return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
+    }
+    public function saveSchoolFence(Request $request){
+        $user_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
+        if($request->polygons==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Please draw the geofence'
+            ]);
+        }else{ 
+        foreach ($request->polygons as $polygon) {
+                $response="";
+                foreach ($polygon as $single_coordinate) {
+                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                }
+                $response=rtrim($response,"#");
+                $last_id=Geofence::max('id');
+                $code_last_id=$last_id+1;
+                $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
+                Geofence::create([
+                    'user_id' => $request->user()->id,
+                    'name' => $request->name,
+                    'cordinates' => $polygon,
+                    'response' => $response,
+                    'code' => $code
+                ]);
+            }             
+            // $school_fence = Client::find($client_id);               
+            // $school_fence->cordinates = json_encode($request->polygons[0]);
+            // $school_fence->save(); 
+
+            // $request->session()->flash('message', 'Geofence added successfully');
+            // $request->session()->flash('alert-class', 'alert-success'); 
+            // return redirect(route('dashboard'));                 
+            return response()->json([
+                'status' => 'school geofence',
+                'title' => 'Success',
+                'redirect' => url('/home'),
+                'message' => 'Geofence added successfully'
+            ]);
+        }
+    }
+
+      public function schoolGeofenceShow(Request $request){  
+            
+            // $coordinates  =  Geofence:: select(['id','cordinates','name','user_id',
+            //      \DB::raw('DATE(created_at) as date')])
+            // ->with('user:id,username')
+            // ->where('id',$request->id)->first();              
+            $coordinates  =  Client:: select(['id','cordinates','name','user_id',
+                \DB::raw('DATE(created_at) as date')])
+            ->with('user:id,username')
+            ->where('id',$request->id)->first();
+            $cordinates=$coordinates->cordinates; 
+            $polygons = array();
+             dd($cordinates);
+            foreach ($cordinates as $cord) {                    
+                $p = new Geofence;
+                $p->lat = (float)$cord[0]; 
+                $p->lng = (float)$cord[1];
+                 array_push($polygons,$p);
+            }           
+            return response()->json([
+                'cordinates' => $polygons,
+                'geofence' => $coordinates,                
+                'status' => 'cordinate'
+            ]);
+
+
+    }
 }
