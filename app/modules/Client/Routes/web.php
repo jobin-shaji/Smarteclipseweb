@@ -50,6 +50,10 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::post('/client/{id}/profile','ClientController@saveUserLogo')->name('client.profile.p'); 
 	Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
 	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
+
+	Route::get('/client/profile/edit','ClientController@userProfileEdit')->name('client.profile.edit');
+	Route::post('/client/profile/{id}/edit','ClientController@profileUpdate')->name('client.profile.update.p');
+	
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {

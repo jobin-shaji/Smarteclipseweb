@@ -9,6 +9,8 @@ use App\Modules\Geofence\Models\Geofence;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGeofence;
 use App\Modules\Vehicle\Models\VehicleRoute;
+use App\Modules\Client\Models\Client;
+
 use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -310,6 +312,123 @@ class GeofenceController extends Controller {
             'assign_geofence_count' => $geofences            
         ]);       
     }
-   
 
+    public function schoolFenceCreate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $client=\Auth::user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude;       
+        return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
+    }
+    public function saveSchoolFence(Request $request){
+        $user_id=\Auth::user()->id;
+
+        $client_id=\Auth::user()->client->id;
+        if($request->polygons==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Please draw the geofence'
+            ]);
+        }else{ 
+        foreach ($request->polygons as $polygon) {
+                $response="";
+                foreach ($polygon as $single_coordinate) {
+                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                }
+                $response=rtrim($response,"#");
+                $last_id=Geofence::max('id');
+                $code_last_id=$last_id+1;
+                $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
+                if(\Auth::user()->geofence)
+                { 
+                    $geofence  =  Geofence::where('user_id',$user_id)->first(); 
+                    // dd($request->name);             
+                    $geofence->name=$request->name;
+                    $geofence->cordinates=$polygon;
+                    $geofence->response=$response;
+                    $geofence->code=$code;
+                    $geofence->save();
+                }
+                else
+                {
+                  
+                    Geofence::create([
+                    'user_id' => $request->user()->id,
+                    'name' => $request->name,
+                    'cordinates' => $polygon,
+                    'response' => $response,
+                    'code' => $code
+                ]);
+                }
+                
+            }                             
+            return response()->json([
+                'status' => 'school geofence',
+                'title' => 'Success',
+                'redirect' => url('/home'),
+                'message' => 'Geofence added successfully'
+            ]);
+        }
+    }
+
+      public function schoolGeofenceShow(Request $request){  
+            $user_id=\Auth::user()->id;
+            $coordinates  =  Geofence:: select(['id','cordinates','name','user_id',
+                \DB::raw('DATE(created_at) as date')])
+            ->with('user:id,username')
+            ->where('user_id',$user_id)->first();
+            if($coordinates)           
+            {           
+                 $cordinates=$coordinates->cordinates; 
+                 $polygons = array();
+                 foreach ($cordinates as $cord) {                    
+                     $p = new Geofence;
+                     $p->lat = (float)$cord[0]; 
+                     $p->lng = (float)$cord[1];
+                      array_push($polygons,$p);
+                 }           
+                 return response()->json([
+                     'cordinates' => $polygons,
+                     'geofence' => $coordinates,                
+                     'status' => 'cordinate'
+                 ]);
+             }
+
+
+    }
+     public function editSchoolFence(Request $request){
+        $user_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
+        if($request->polygons==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Please draw the geofence'
+            ]);
+        }else{ 
+        foreach ($request->polygons as $polygon) {
+                $response="";
+                foreach ($polygon as $single_coordinate) {
+                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                }
+                $response=rtrim($response,"#");
+                $last_id=Geofence::max('id');
+                $code_last_id=$last_id+1;
+                // $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
+                $geofence  =  Geofence::where('user_id',$user_id)->first(); 
+                $geofence->cordinates=$polygon;
+                $geofence->response=$response;
+                // $geofence->code=$code;
+                $geofence->save();                              
+            }                             
+            return response()->json([
+                'status' => 'school geofence',
+                'title' => 'Success',
+                'redirect' => url('/client/profile'),
+                'message' => 'Geofence added successfully'
+            ]);
+        }
+    }
 }
