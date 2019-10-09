@@ -94,7 +94,7 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
 
-	Route::get('/pickup-dropoff-report-based-on-student','PickupDropoffReportController@pickupReportBasedOnStudent')->name('pickup-dropoff-report-based-on-student');
+	Route::get('/pickup-dropoff-report-based-on-student','PickupDropoffReportController@pickupReportBasedOnStudent')->name('pickup.dropoff.report.based.on.student');
 	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
 
 	//missed-student-report
