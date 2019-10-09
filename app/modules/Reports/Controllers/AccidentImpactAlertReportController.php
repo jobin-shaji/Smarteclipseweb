@@ -16,6 +16,7 @@ class AccidentImpactAlertReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::accident-impact-alert-report',['vehicles'=>$vehicles]);  
     }  

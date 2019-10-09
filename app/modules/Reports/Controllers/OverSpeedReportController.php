@@ -17,6 +17,7 @@ class OverSpeedReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::over-speed-report',['vehicles'=>$vehicles]);  
     }  
@@ -53,7 +54,7 @@ class OverSpeedReportController extends Controller
             'status'
         )
         ->with('alertType:id,description')
-        ->with('gps.vehicle:id,name,register_number');
+        ->with('gps.vehicle');
        if($vehicle==0 || $vehicle==null)
         {
             $query = $query->whereIn('gps_id',$single_vehicle_id)
