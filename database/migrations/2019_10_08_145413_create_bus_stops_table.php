@@ -19,6 +19,7 @@ class CreateBusStopsTable extends Migration
             $table->integer('route_id');
             $table->string('latitude');
             $table->string('longitude');
+            $table->integer('client_id');
             $table->timestamps();
             $table->softDeletes();
         });
