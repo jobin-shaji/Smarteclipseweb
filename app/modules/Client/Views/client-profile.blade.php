@@ -47,12 +47,16 @@
                 <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
               </div>       
             </div>
-            @if(!empty(\Auth::user()->geofence))  
+            @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence))
+         
+
+             
               <div class="col-lg-6">
                 <input type="hidden" name="hd_id" id="g_id" value="{{$client->id}}">
               <div id="map" style=" width:90%;height:320px; "></div>       
             </div>
-            @endif
+           
+             @endif
           </div>  
           
 
@@ -108,12 +112,15 @@
  
 </div>
 </div>
-@if(!empty(\Auth::user()->geofence)) 
+ @if(\Auth::user()->roles->first()->name=='school' && !empty(\Auth::user()->geofence))
+    
+
   @section('script')
     <script src="{{asset('js/gps/school-geofence-details.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap"
          async defer></script>
   @endsection
-  @endif
+
+    @endif
 <div class="clearfix"></div>
 @endsection
