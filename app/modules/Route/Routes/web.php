@@ -26,3 +26,17 @@ Route::group(['middleware' => ['web','auth','role:client|school'] ,'namespace' =
 	Route::post('/route/schedule-activate','RouteController@activateScheduleRoute')->name('route.schedule-activate');
 
 });
+
+Route::group(['middleware' => ['web','auth','role:school'] ,'namespace' => 'App\Modules\Route\Controllers' ] , function () {
+
+	Route::get('/bus-stop','BusStopController@busStopList')->name('bus-stop');
+	Route::post('/bus-stop-list','BusStopController@getBusStopList')->name('bus-stop-list');
+	Route::get('/bus-stop/create','BusStopController@createBusStop')->name('bus-stop.create');
+	Route::post('/bus-stop/save_route','BusStopController@saveBusStop')->name('bus-stop.create.p');
+	Route::get('/bus-stop/{id}/edit','BusStopController@editBusStop')->name('bus-stop.edit');
+	Route::get('/bus-stop/{id}/details','BusStopController@viewBusStop')->name('bus-stop.details');
+	Route::post('/bus-stop/{id}/edit','BusStopController@updateBusStop')->name('bus-stop.update.p');
+	Route::post('/bus-stop/delete','BusStopController@deleteBusStop')->name('bus-stop.delete');
+	Route::post('/bus-stop/activate','BusStopController@activateBusStop')->name('bus-stop.activate');
+	
+});
