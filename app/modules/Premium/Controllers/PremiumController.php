@@ -21,5 +21,15 @@ class PremiumController extends Controller {
     	}
     }
 
+    public function premiumSchoolListPage()
+    {
+        if(\Auth::user()->hasRole('school_premium')){
+            return view('Premium::premium-school-premium');
+        }
+        else if(!\Auth::user()->hasRole(['school_premium'])){
+            return view('Premium::premium-school');
+        }
+    }
+
 
 }
