@@ -96,10 +96,38 @@ class StudentController extends Controller {
             'client_id' => $client_id,  
             'path' => $uploadedFile,     
         ]);
+        if($student){
+            $mobile=$request->mobile;
+            $message="Dear ".$request->parent_name.", Your login password of bus tracking application is ".$request->password.".\nFrom smarteclipse.com";
+            $this->sendSmsMessage($mobile,$message);
+        }
         $eid= encrypt($student->id);
         $request->session()->flash('message', 'New student created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('student'));        
+    }
+
+    public function sendSmsMessage($mobile,$message)
+    {
+        $text = urlencode($message);
+        $curl = curl_init();
+        // Send the POST request with cURL
+        curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => "http://reseller.smschub.com/api/sms/format/json",
+        CURLOPT_POST => 1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_HTTPHEADER => array('X-Authentication-Key:358afcb5cd344aa01d10eddb9f0345e0', 'X-Api-Method:MT'),
+        CURLOPT_POSTFIELDS => array(
+                                    'mobile' =>$mobile,
+                                    'route' => 'TL',
+                                    'text' => $text,
+                                    'sender' => 'vehiST')));
+            
+        // Send the request & save response to $response
+        $response = curl_exec($curl);  
+        // Close request to clear up some resources
+        curl_close($curl);
     }
 
     public function randomPassword() {
