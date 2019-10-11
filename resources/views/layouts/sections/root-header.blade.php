@@ -78,13 +78,13 @@
                 <li><a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES</a></li>
                 </ul>
             </li>
-            <li class="dropdown-submenu">
+            <!-- <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUBSCRIPTION</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{url('/subscription/create')}}">ADD SUBSCRIPTION</a></li>
                 <li><a class="dropdown-item" href="{{url('/subscription')}}">LIST SUBSCRIPTION</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >TRAFFIC RULES</a>
                 <ul class="dropdown-menu">
@@ -135,5 +135,17 @@
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
         </div> -->
-    </li>         
+    </li> 
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/subscription/create')}}">WARRANTY AND PLANS </a>
+            <a class="dropdown-item" href="{{url('/subscription')}}">LIST WARRANTY AND PLANS </a>
+          
+        </div>
+    </li> 
+  
 </ul>

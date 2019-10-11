@@ -45,6 +45,7 @@ class UsersTableSeeder extends Seeder
         $superiorUserRole = Role::create(['name' => 'superior']);
         $proUserRole = Role::create(['name' => 'pro']);
         $schoolUserRole = Role::create(['name' => 'school']);
+        $schoolPremiumUserRole = Role::create(['name' => 'school_premium']);
         
 
         $user =  DB::table('users')->insert([

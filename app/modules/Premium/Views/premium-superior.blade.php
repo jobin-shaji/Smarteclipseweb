@@ -100,7 +100,8 @@ Price: After 1 year 1200+Tax </li>
           <li><i class="far fa-file-alt"></i>Invoice</li>
           <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2%">Towing alert</li>
           <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
-          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform</li>
+          <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
+          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform*</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
           <li style="height:30px"></li> 
@@ -161,10 +162,10 @@ Price: After 1 year 1200+Tax </li>
            <li><i class="far fa-caret-square-left"></i>Route playback history(4 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(4 Geofences)</li>
           <li><img src="{{url('/')}}/assets/images/logo.png" style="margin:0 2%">Client Logo</li>
-          <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
+          
           <li><img src="{{url('/')}}/assets/images/immobilizer.png" style="margin:0 2%">Immobilizer</li>
-          <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)</li>
-          <li><img src="{{url('/')}}/assets/images/traffic.png" style="margin:0 2%">Traffic offence</li>
+          <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)*</li>
+          <li><img src="{{url('/')}}/assets/images/traffic.png" style="margin:0 2%">Traffic offence*</li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>

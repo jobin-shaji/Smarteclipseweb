@@ -16,7 +16,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading">Student Details</li>
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/School Details</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Student Details</li>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">

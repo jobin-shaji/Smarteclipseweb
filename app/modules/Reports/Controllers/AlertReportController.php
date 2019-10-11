@@ -43,9 +43,19 @@ class AlertReportController extends Controller
         
         ->get();
 
-        $user=\Auth::user();
-        $user_role=$user->roles->where('name','==','client')->first()->name;
-        $fromDate=$this->checkRoleAlert($user_role);
+        $user=\Auth::user();        
+        $get_user_role=$user->roles->Where('name','==', 'client')->first();
+        if($get_user_role)
+        {
+            $user_role=$get_user_role->name;
+            $fromDate=$this->checkRoleAlert($user_role);
+        }
+        else if($user->roles->Where('name','==', 'school')->first())
+        {
+            $fromDate=Carbon::now()->subMonth(1);
+             // $fromDate=$this->checkRoleAlert($user_role);
+        }
+        
         return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles,'from_date'=>$fromDate->format('d-m-Y')]); 
     } 
     public function alertReportList(Request $request)
@@ -58,8 +68,20 @@ class AlertReportController extends Controller
         $from = $request->from_date;
         $to = $request->to_date;
         $user=\Auth::user();
-        $user_role=$user->roles->where('name','==','client')->first()->name;
-        $check_role_in_playback=$this->checkRolePlayback($user_role,$from);
+        $get_user_role=$user->roles->Where('name','==', 'client')->first();
+        if($get_user_role)
+        {
+            $user_role=$get_user_role->name;
+            $check_role_in_playback=$this->checkRolePlayback($user_role,$from);
+        }
+        else if($user->roles->Where('name','==', 'school')->first())
+        {
+            $get_user_role=$user->roles->Where('name','==', 'school')->first();
+            $user_role=$get_user_role->name;
+            $check_role_in_playback=$this->checkRoleSchoolPlayback($user_role,$from);
+        }
+        // $user_role=$user->roles->where('name','==','client')->first()->name;
+        // $check_role_in_playback=$this->checkRolePlayback($user_role,$from);
         if($check_role_in_playback=="failed"){
          $response_data = array(
             'status'  => 'wrong_date',
@@ -69,7 +91,6 @@ class AlertReportController extends Controller
         );
          return response()->json($response_data);
         }
-
         $VehicleGpss=Vehicle::select(
             'id',
             'gps_id',
@@ -217,5 +238,16 @@ class AlertReportController extends Controller
     }
     // ---validate  date-----------------
 
+// ---validate  date-----------------
+    public function checkRoleSchoolPlayback($role,$user_from_date){
+      
+        $from_date=Carbon::now()->subMonth(1);               
+         if(Carbon::parse($from_date) <= Carbon::parse($user_from_date)){
+            $return="Success";
+         }else{
+            $return="failed";
+         }
+         return $return;
+    }
 
 }
