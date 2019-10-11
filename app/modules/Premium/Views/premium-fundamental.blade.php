@@ -103,7 +103,8 @@
           <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform*</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
-          <li style="height:30px"></li> 
+          <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
+Price: INR 1900+Tax </li>  
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
