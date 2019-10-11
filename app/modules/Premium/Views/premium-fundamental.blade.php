@@ -32,7 +32,7 @@
           <li><i class="far fa-map"></i>Point of interest</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-          <li style="height:24px"></li> 
+          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>Price: After 1 year 1200+Tax </li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -153,7 +153,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now</a></button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 2600+Tax)</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
@@ -223,7 +223,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now</a></button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now(INR 5 lakh+tax)</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
