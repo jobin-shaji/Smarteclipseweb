@@ -115,6 +115,6 @@ Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.upd
 Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
   // new playback
   Route::get('/vehicle_playback','VehicleController@playbackPage')->name('vehicle_playback');
-  Route::get('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
+  Route::post('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
 });
