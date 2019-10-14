@@ -135,7 +135,7 @@
     <!-- Datatables -->
     <script src="{{asset('playback/assets/js/plugin/datatables/datatables.min.js')}}"></script>
     <!-- Bootstrap Notify -->
-    <script src="{{asset('playback/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js'}}"></script>
+    <script src="{{asset('playback/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
     <!-- jQuery Vector Maps -->
     <!--<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
     <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>-->
@@ -167,7 +167,7 @@
 
         var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 });
         var objImg = document.createElement('img');
-        objImg.src = "{{asset('assets/img/Car.png')}}";
+        objImg.src = "{{asset('playback/assets/img/Car.png')}}";
         var outerElement = document.createElement('div')
         //outerElement.style.userSelect = 'none';
         //outerElement.style.webkitUserSelect = 'none';
