@@ -30,8 +30,7 @@
 </head>
 <body data-background-color="dark">
     <div class="wrapper overlay-sidebar">
-        <div class="main-header">
-        </div>
+        
         <div class="main-panel">
             <div class="content">
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
