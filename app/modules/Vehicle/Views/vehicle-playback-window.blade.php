@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GPS Vehicle Playback</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="{{asset(playback/assets/img/icon.png)}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <!-- Fonts and icons -->
     <script src="{{asset('playback/assets/js/plugin/webfont/webfont.min.js')}}"></script>
     <script>
@@ -22,8 +22,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
-    <link rel="stylesheet" href="{{asset(playback/assets/css/bootstrap.min.css)}}">
-    <link rel="stylesheet" href="{{asset(playback/assets/css/atlantis.min.css)}}">
+    <link rel="stylesheet" href="{{asset('playback/assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('playback/assets/css/atlantis.min.css')}}">
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{asset('playback/assets/css/demo.css')}}">
 
@@ -150,7 +150,7 @@
     <!-- Atlantis JS -->
     <script src="{{asset('playback/assets/js/atlantis.min.js')}}"></script>
     <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="{{'asset(playback/assets/js/setting-demo.js')}}"></script>
+    <script src="{{asset('playback/assets/js/setting-demo.js')}}"></script>
     <!--<script src="../assets/js/demo.js"></script>-->
     <script>
         var MapResult;
