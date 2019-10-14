@@ -10,14 +10,14 @@
     <script>
         WebFont.load({
             google: { "families": ["Lato:300,400,700,900"] },
-            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['assets/css/fonts.min.css'] },
+            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ["{{asset('playback/'assets/css/fonts.min.css')}}"] },
             active: function () {
                 sessionStorage.fonts = true;
             }
         });
     </script>
 
-    <script src="{{asset('palyback/assets/Scripts/jquery-3.3.1.js')}}"></script>
+    <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
     <!-- CSS Files -->
@@ -116,7 +116,7 @@
         <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="{{asset('playback(playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
+    <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
     <!-- jQuery UI -->
