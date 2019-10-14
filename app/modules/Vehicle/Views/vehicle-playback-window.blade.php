@@ -131,7 +131,7 @@
     <!-- jQuery Sparkline -->
     <script src="{{asset('playback/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
     <!-- Chart Circle -->
-    <script src="{{asset('playback/assets/js/plugin/chart-circle/circles.min.js')}"></script>
+    <script src="{{asset('playback/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
     <!-- Datatables -->
     <script src="{{asset('playback/assets/js/plugin/datatables/datatables.min.js')}}"></script>
     <!-- Bootstrap Notify -->
@@ -167,7 +167,7 @@
 
         var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 });
         var objImg = document.createElement('img');
-        objImg.src = 'assets/img/Car.png';
+        objImg.src = "{{asset('assets/img/Car.png')}}";
         var outerElement = document.createElement('div')
         //outerElement.style.userSelect = 'none';
         //outerElement.style.webkitUserSelect = 'none';
