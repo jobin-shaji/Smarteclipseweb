@@ -940,7 +940,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             
 
             var objImg = document.createElement('img');
-            objImg.src = 'assets/img/Car.png';
+            objImg.src = '{{asset("playback/assets/img/Car.png")}}';
             el = objImg;
             var carDirection = RotateDegree;
             console.log(RotateDegree);
