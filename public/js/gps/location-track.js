@@ -97,7 +97,7 @@ function getMarkers() {
                         $("#halt").hide();
                         $("#online").hide();
                         $("#offline").hide();
-                        vehicleColor="#ffa500";
+                        vehicleColor="#C7C7C9";
                     } else {
                         if(res.liveData.last_seen){
                             $('#last_seen').text(res.liveData.last_seen);
