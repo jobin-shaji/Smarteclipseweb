@@ -258,7 +258,7 @@
         });
         function CreateJsonDataFile(data) {
             var tmpstring = '';
-            tmpstring = tmpstring + '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>'
+            tmpstring = tmpstring + '< xml version="1.0" encoding="UTF-8" standalone="no" ?>'
             tmpstring = tmpstring + '<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">'
             tmpstring = tmpstring + '<metadata>'
             tmpstring = tmpstring + '<link href="http://www.mapstogpx.com">'
