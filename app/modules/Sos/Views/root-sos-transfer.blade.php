@@ -112,8 +112,11 @@
                     </div>
                   </div>
                   <div class="col-md-12 col-lg-6">
-                    <div id="warn">Please connect your camera to scan qr code .</div>
-                    <video id="preview" style="height:100%; width: 100%;"></video>
+                    <input type="checkbox" name="type" value="camera"> Camera enable/disable
+                    <div id="camera_enable" style="display: none">
+                      <div id="warn">Please connect your camera to scan QR code .</div>
+                      <video id="preview" style="height:100%; width: 100%;"></video>
+                    </div>
                   </div>
                 </div>
 
