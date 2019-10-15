@@ -94,7 +94,7 @@ function check(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'vehicle_geofence.name', name: 'vehicle_geofence.name'},
             {data: 'vehicle.name', name: 'vehicle.name'} ,
             {data: 'vehicle.register_number', name: 'vehicle.register_number'} , 
