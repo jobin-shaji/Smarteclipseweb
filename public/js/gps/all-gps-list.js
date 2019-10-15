@@ -11,6 +11,7 @@ function callBackDataTable(){
 
     $("#dataTable").DataTable({
         bStateSave: true,
+        responsive: true,
         bDestroy: true,
         bProcessing: true,
         serverSide: true,
