@@ -2,19 +2,20 @@
 <html lang="en">
    <head>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <title>GPS Vehicle Playback</title>
+      <title>CSS Corp Info</title>
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-      <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
+      <link rel="icon" href="{{asset('playback/asset(assets/img/icon.png')}}" type="image/x-icon" />
       <!-- Fonts and icons -->
       <script src="{{asset('playback/assets/js/plugin/webfont/webfont.min.js')}}"></script>
       <script>
          WebFont.load({
              google: { "families": ["Lato:300,400,700,900"] },
-             custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{asset("playback/assets/css/fonts.min.css")}}'] },
+             custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['assets/css/fonts.min.css'] },
              active: function () {
                  sessionStorage.fonts = true;
              }
          });
+         
       </script>
       <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
       <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
@@ -43,6 +44,7 @@
                <div class="page-inner mt--5">
                </div>
             </div>
+           
          </div>
          <!-- Custom template | don't include it in your project! -->
          <div class="custom-template" style="top:230px">
@@ -65,6 +67,7 @@
                               <input type="radio" name="optionsRadios" value="" checked="" id="optJson">
                               <span>Json</span>
                               </label>
+                             
                            </div>
                         </td>
                      </tr>
@@ -80,6 +83,7 @@
                         <td><label>start_date</label></td>
                         <td>
                            <textarea id="txtStartDate" style="width:140px;resize:none" rows="1">  </textarea>
+                           
                         </td>
                      </tr>
                      <tr id="trEndDate" style="width:90px">
@@ -125,6 +129,7 @@
                      </tr>
                      <tr style="width:90px">
                         <td style="font:bold"> Coverage : </td>
+                        
                      </tr>
                      <tr style="width:90px">
                         <td>
@@ -147,13 +152,14 @@
                   <button class="btn btn-primary btn-sm" id="btnPlay">Play</button>
                   <button class="btn btn-primary btn-sm" id="btnPause">Pause</button>
                   <button class="btn btn-primary btn-sm" id="btnReset">Reset</button>
-                 
+                
                </div>
             </div>
             <div class="custom-toggle">
                <i class="flaticon-settings"></i>
             </div>
          </div>
+         <!-- End Custom template -->
       </div>
       <!--   Core JS Files   -->
       <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
@@ -174,6 +180,9 @@
       <script src="{{asset('playback/assets/js/plugin/datatables/datatables.min.js')}}"></script>
       <!-- Bootstrap Notify -->
       <script src="{{asset('playback/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+      <!-- jQuery Vector Maps -->
+      <!--<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+         <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>-->
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
@@ -195,12 +204,13 @@
          var CurrentLinkID = '';
          var setTimeoutfunction;
          var TotalTimeTakeninsec = 0.0;
+         var pLinkID = '';
          //var icon = new H.map.Icon('assets/img/Car.png');
          //var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 }, { icon: icon });
          
          var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 });
          var objImg = document.createElement('img');
-         objImg.src = "{{asset('playback/assets/img/Car.png')}}";
+         objImg.src = 'assets/img/Car.png';
          var outerElement = document.createElement('div')
          //outerElement.style.userSelect = 'none';
          //outerElement.style.webkitUserSelect = 'none';
@@ -229,11 +239,16 @@
          var maptypes = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
          var map = new H.Map(mapContainer, maptypes.normal.map, { center: new H.geo.Point(52.11, 0.68), zoom: 5 });
          var zoomToResult = true;
+         
+         
          var uTurn = false;
+         
          new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
          var ui = H.ui.UI.createDefault(map, maptypes); // add UI
+         
          //platform.configure(H.map.render.panorama.RenderEngine); // setup the Streetlevel imagery
          window.addEventListener('resize', function () { map.getViewPort().resize(); });
+         
          // confidence filter
          var lastRespJsonObj = null;
          var DEFAULT_CONFIDENCE_LINK_STYLE = { lineWidth: 8, strokeColor: 'rgba(18, 65, 145, 0.7)', lineJoin: 'round' };
@@ -241,40 +256,74 @@
          var DEFAULT_OFFSET_STYLE = { lineWidth: 1, strokeColor: 'green', lineJoin: 'round' };
          var DEFAULT_TRACE_STYLE = { lineWidth: 1, strokeColor: 'black', lineJoin: 'round' };
          var linkHighlighted = false;
+         
          // icon/markers
          var icons = {};
+         
          // Info Bubbles for LinkInfo display
          var linkDataInfoBubble;
+         
          var full_geometry = new Array();
          var full_geometry_additional = new Array();
          var arrLinkGroup = new Array();
+         
          var objContainer = new H.map.Group();
          var inputTracePointGroup = new H.map.Group();
          var matchedTracePointGroup = new H.map.Group();
+         
          var MarkerStartEnd = new H.map.Group();
+         
          var secure = (location.protocol === 'https:') ? true : false;
          $(document).ready(function () {
-             //$("#btn10KM").trigger("click");
-             if ($('#exampleFormControlFile1').get(0).files.length === 0) {
-                 //alert("Kindly select the File to simulate the Route");
-                 $("#btnPlay").attr("disabled", true);
-                 $("#btnPause").attr("disabled", true);
-                 return;
-             }
+         
+             $('#txtVehicleID').val('13');
+             $('#txtStartDate').val('2019-10-01 10:10:10');
+             $('#txtEnddate').val('2019-10-05 10:10:10');
+             
+             $('#optServer').trigger('click');
+         
+             //$('#datetime').datetimepicker({
+             //    format: 'MM/DD/YYYY H:mm',
+             //});
+         
+         
+             //if ($('#exampleFormControlFile1').get(0).files.length === 0) {
+             //    $("#btnPlay").attr("disabled", true);
+             //    $("#btnPause").attr("disabled", true);
+             //    return;
+             //}
          });
+         
+         $('#optServer').click(function () {
+             //$('#trProcessMedium').hide();
+         
+             $('#trVehicle').show();
+             $('#trStartDate').show();
+             $('#trEndDate').show();
+             $('#trSelectFile').hide();
+             $('#btnGetRoute').show();
+            
+         });
+         
+         $('#optJson').click(function () {
+            // $('#trProcessMedium').hide();
+             //$('#trProcessMedium').hide();
+             $('#trVehicle').hide();
+             $('#trStartDate').hide();
+             $('#trEndDate').hide();
+             $('#trSelectFile').show();
+             $('#btnGetRoute').hide();
+         });
+         
          var strFileName = '';
          var JsonData = ''
          $('#exampleFormControlFile1').on('change', function () {
              if ($('#exampleFormControlFile1').get(0).files.length === 0) {
                  return;
              }
-             //$('#lblKMRouteCalculation').val('0');
-             //Reset();
-             //$('#exampleFormControlFile1').val('0');
-         //            $('#exampleFormControlFile1').val('');
              var fileReader = new FileReader();
              fileReader.onload = function () {
-                
+         
                  var data = fileReader.result;  // data <-- in this var you have the file data in Base64 format
                  if (strFileName == 'gpx') { LoadRMEAPI(data); }
                  else if (strFileName == 'json') {
@@ -289,37 +338,40 @@
              fileReader.readAsText($('#exampleFormControlFile1').prop('files')[0]);
              strFileName = $('#exampleFormControlFile1').prop('files')[0].name.split('.')[1];
          });
+         
          function CreateJsonDataFile(data) {
              var tmpstring = '';
-             tmpstring = tmpstring + '<?php echo '<?xml version="1.0" ?>' ?>'
+             tmpstring = tmpstring + '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>'
              tmpstring = tmpstring + '<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">'
              tmpstring = tmpstring + '<metadata>'
              tmpstring = tmpstring + '<link href="http://www.mapstogpx.com">'
              tmpstring = tmpstring + '<text>Sverrir Sigmundarson</text>'
              tmpstring = tmpstring + '</link>'
-             tmpstring = tmpstring + '<!--desc>Map data copyright 2019 Google</desc-->'
-             tmpstring = tmpstring + '<!--copyright author="Google Inc">'
-             tmpstring = tmpstring + '<year>2019</year>'
-             tmpstring = tmpstring + '<license>https://developers.google.com/maps/terms</license>'
-             tmpstring = tmpstring + '</copyright-->'
-             tmpstring = tmpstring + '<!--url>https://www.google.co.uk/maps/dir/Madurai, Tamil Nadu/Trichy, Tamil Nadu/@10.3578364,77.7444067,9z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x3b00c582b1189633:0xdc955b7264f63933!2m2!1d78.1197754!2d9.9252007!1m5!1m1!1s0x3baaf50ff2aecdad:0x6de02c3bedbbaea6!2m2!1d78.7046725!2d10.7904833?hl=en-GB&hl=en</url-->'
+             //tmpstring = tmpstring + '<!--desc>Map data copyright 2019 Google</desc-->'
+             //tmpstring = tmpstring + '<!--copyright author="Google Inc">'
+             //tmpstring = tmpstring + '<year>2019</year>'
+             //tmpstring = tmpstring + '<license>https://developers.google.com/maps/terms</license>'
+             //tmpstring = tmpstring + '</copyright-->'
+             //tmpstring = tmpstring + '<!--url>https://www.google.co.uk/maps/dir/Madurai, Tamil Nadu/Trichy, Tamil Nadu/@10.3578364,77.7444067,9z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x3b00c582b1189633:0xdc955b7264f63933!2m2!1d78.1197754!2d9.9252007!1m5!1m1!1s0x3baaf50ff2aecdad:0x6de02c3bedbbaea6!2m2!1d78.7046725!2d10.7904833?hl=en-GB&hl=en</url-->'
              tmpstring = tmpstring + '<time>2019-08-21T15:23:25Z</time>'
              tmpstring = tmpstring + '</metadata>'
              tmpstring = tmpstring + '<trk>'
-             tmpstring = tmpstring + '<name>Madurai to Trichy</name>'
+             tmpstring = tmpstring + '<name>XXXXX to XXXXX</name>'
              tmpstring = tmpstring + '<number>1</number>'
              tmpstring = tmpstring + '<trkseg>'
              var strLatitude = '';
              var strLongitude = '';
              var FlagLatitude = false;
              var FlagLongitude = false;
+         
              for (var i = 0; i < data.split(',').length - 1; i++) {
                  if (data.split(',')[i].indexOf('latitude') >= 0) {
                      strLatitude = data.split(',')[i].substring(data.split(',')[i].indexOf('latitude'), data.split(',')[i].length).split(':')[1]
                      FlagLatitude = true;
+         
                  }
                  if (data.split(',')[i].indexOf('longitude') >= 0) {
-                     strLongitude = data.split(',')[i].substring(data.split(',')[i].indexOf('longitude'), data.split(',')[i].length).split(':')[1].substring(0, 12)
+                     strLongitude = data.split(',')[i].substring(data.split(',')[i].indexOf('longitude'), data.split(',')[i].length).split(':')[1].substring(0, 12).replace("}", "")
                      FlagLongitude = true;
                  }
                  if ((FlagLatitude == true) && (FlagLongitude == true)) {
@@ -338,18 +390,26 @@
              tmpstring = tmpstring.replace('""', '"');
              return tmpstring;
          }
+         
          function LoadRMEAPI(data) {
+         
              var mapContainer = document.getElementById('markers');
              var url = 'https://rme.api.here.com/2/matchroute.json?app_id=vvfyuslVdzP04AK3BlBq&app_code=f63d__fBLLCuREIGNr6BjQ&routemode=car'
+         
              if (url.indexOf("matchroute.json") >= 0) {
                  var zip = new JSZip();
                  zip.file("temp.zip", data);
                  var content = zip.generate({ type: "base64", compression: "DEFLATE", compressionOptions: { level: 6 } });
                  url += "&file=" + encodeURIComponent(content);
+                // debugger;
                  getJSONP(url, gotRouteMatchResponse);
              }
+         
          }
+         
+         
          var gotRouteMatchResponse = function (respJsonObj) {
+             
              try {
                  inputTracePointGroup.removeAll();
                  matchedTracePointGroup.removeAll();
@@ -363,6 +423,7 @@
              }
              // safe json
              lastRespJsonObj = respJsonObj;
+         
              // parse links and show on map
              var routeLinks = respJsonObj.RouteLinks;
              var originalTraceStrip = null;
@@ -373,7 +434,7 @@
                  addLinkPointsToObjectContainer(routeLinks, true);
                  // draw the original and the matched trace points
                  tracePoints = respJsonObj.response.route[0].waypoint;
-         
+                 debugger;
                  for (var l = 0; l < tracePoints.length; l++) {
                      var p = tracePoints[l];
                      inputTracePointGroup.addObject(new H.map.Marker(new H.geo.Point(p.originalPosition.latitude, p.originalPosition.longitude), { icon: icons["#000000" + l] }));
@@ -399,12 +460,18 @@
              // should display the warnings … warnings = respJsonObj.Warnings;  if (warnings.length > 0) …
              mapVersion = respJsonObj.mapVersion; // RME's map version. Use it to cross reference with PDE.
          };
+         
          /**
          Creates and adds links which then gets stored in internal object container
          */
          var addLinkPointsToObjectContainer = function (routeLinks, callingCalculateRoute) {
              var lLinkId = -99999999999999999;
              for (var l = 0; l < routeLinks.length; l++) {
+         
+                 if (routeLinks[l].linkId == '810434384') {
+                     debugger;
+                 }
+         
                  var coords1 = callingCalculateRoute ? routeLinks[l].shape : routeLinks[l].shape.split(" "); //in calculateroute resource ths shape is already returned as array
                  var coords2 = new H.geo.Strip();
                  if (routeLinks[l].offset && routeLinks[l].offset < 1) {
@@ -420,12 +487,12 @@
                  totalDistance = totalDistance + routeLinks[l]['linkLength'];
                  arrLinkGroup.push({ 'linkid': routeLinks[l].linkId, 'segments': (coords1.length / 2) });
          
-                 if (routeLinks[l].linkId != lLinkId) {
+                 if (routeLinks[l].linkId != pLinkID) {
                      for (var c = 0; c < coords1.length; c += 2) {
                          coords2.pushLatLngAlt(coords1[c], coords1[c + 1], null); //if it is not offset link, just add new point
                          full_geometry.push(new H.geo.Point(coords1[c], coords1[c + 1]));
                          var objLatLan = new H.geo.Point(coords1[c], coords1[c + 1]);
-         
+                         console.log(routeLinks[l].linkId);
                          full_geometry_additional.push({
                              'attributes': objLatLan,
                              'linkid': routeLinks[l].linkId, 'mSecToReachLinkFromStart': routeLinks[l].mSecToReachLinkFromStart,
@@ -433,10 +500,11 @@
                          });
                      }
          
+                     pLinkID = routeLinks[l].linkId;
          
+                     
                      //arrLinkGroup.push({ 'linkid': routeLinks[l].linkId, 'segments': (coords1.length / 2) });
                      lLinkId = Math.abs(routeLinks[l].linkId);
-         
                      var lineStyle = makeConfidenceAwareStyle(routeLinks[l].confidence);
                      var linkPolyline;
                      var speed;
@@ -461,12 +529,12 @@
                  }
              }
          
-             //debugger;
+             debugger;
              totalDistance = (totalDistance / 1000).toFixed(2)
              $('#lblKMRouteCalculation').val(totalDistance); //.toFixed(2);
-             
+         
              /**
-             Helper to create the line style based on the links confidence value
+         Helper to create the line style based on the links confidence value
          */
              function makeConfidenceAwareStyle(c) {
                  if (c === undefined) {
@@ -491,6 +559,8 @@
                  }
                  return { lineWidth: 8, strokeColor: color, lineJoin: 'round' };
              }
+         
+         
              //var getCoordsWithOffset = function (coords1, distance, currentLink, numberOfLinks) {
              function getCoordsWithOffset(coords1, distance, currentLink, numberOfLinks) {
                  var temp = [];
@@ -531,6 +601,7 @@
          
                  return temp;
              }
+         
              var extractedStrip = new H.geo.Strip();
              for (var i = 0; i < full_geometry.length; i++) {
                  extractedStrip.pushPoint(full_geometry[i]);
@@ -778,15 +849,69 @@
          }
          );
          
-         $('#btnPlay').click(function () {
-             //debugger;
-            // bearsMarker = null;
-             if ($('#exampleFormControlFile1').get(0).files.length === 0) {
-                 alert("Kindly select the File to simulate the Route");
-                 $("#btnPlay").attr("disabled", false);
-                 return;
+         function getInputfromServer() {
+             debugger
+             var Objdata = {
+                 "vehicle_id": $('#txtVehicleID').val(),
+                 "start_date": $('#txtStartDate').val(),
+                 "end_date": $('#txtEnddate').val()
              }
          
+         
+             $.ajax({
+                 type: "POST",
+                 url: 'https://gpsvst.vehiclest.com/vehicle_replay',
+                 data: Objdata,
+                 async: false,
+                 //dataType: "json",
+                 //contentType: "application/json; charset=utf-8",
+                 success: function (response) {
+                     //debugger;
+                     JsonData = CreateJsonDataFile(JSON.stringify(response));                    
+                     LoadRMEAPI(JsonData);
+                     //LoadRMEAPI(JsonData);
+                     debugger;
+                     // alert("Saved Sucessfully!");
+                 },
+                 failure: function (response) {
+                     debugger;
+                     //alert("Not Saved");
+                     //sucessmessage = false;
+                 },
+                 error: function (response) {
+                     debugger;
+                     //alert("Error in Saving");
+                     //sucessmessage = false;
+                 }
+             });
+         
+            
+         }
+         
+         $('#btnGetRoute').click(function () {
+             getInputfromServer();
+            
+         });
+         
+         $('#btnPlay').click(function () {
+             //debugger;
+             // bearsMarker = null;
+         
+             var optServerChecked = $('[id="optServer"]').is(':checked');
+             var optJsonChecked = $('[id="optJson"]').is(':checked');
+             //debugger;
+             if (optServerChecked == true) {
+                 //getInputfromServer();
+             }
+             else if (optJsonChecked == true) {
+                 if ($('#exampleFormControlFile1').get(0).files.length === 0) {
+                     alert("Kindly select the File to simulate the Route");
+                     $("#btnPlay").attr("disabled", false);
+                     return;
+                 }
+             }
+         
+             //debugger;
              $('#lblSpeedValue').val('');
              $('#lblKMValue').val('');
              CurrentLinkID = '';
@@ -794,7 +919,7 @@
              TotalTimeTakeninsec = 0;
              TotalKM = 0;
          
-             $("#btnPlay").attr("disabled", true);
+             //$("#btnPlay").attr("disabled", true);
              $("#btnPause").attr("disabled", false);
              $("#btnReset").attr("disabled", false);
          
@@ -804,26 +929,47 @@
              MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[0]['lat'], full_geometry[0]['lng']), { icon: icons["#000000"] }));
              MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[full_geometry.length - 1]['lat'], full_geometry[full_geometry.length - 1]['lng']), { icon: icons["#000000"] }));
              map.addObject(MarkerStartEnd);
+         
+             //if (optJsonChecked == true) {
+             //    MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[0]['lat'], full_geometry[0]['lng']), { icon: icons["#000000"] }));
+             //    MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[full_geometry.length - 1]['lat'], full_geometry[full_geometry.length - 1]['lng']), { icon: icons["#000000"] }));
+             //    map.addObject(MarkerStartEnd);
+         
+             //}
              arrayCount = Pausecontinue('', inpUserSpeed);
          });
          
          function Pausecontinue(j, inpUserSpeed) {
-         
-             var items = full_geometry;
+             //debugger;
+             //var items = full_geometry;
+             var items = full_geometry_additional;
              var i;
              if ((j == undefined) || (j == '')) { i = 0 }
              else { i = j }
              var lblSpeedValue = document.getElementById('lblSpeedValue');
              setTimeoutfunction = (function loopIt(i) {
                  setTimeout(function () {
+         
+                     //if (full_geometry_additional[i]['linkid'] == '-571562901') {
+                     //    debugger;
+                     //    console.log('find')
+                     //}
+         
+                     //if (full_geometry_additional[i]['linkid'] == '-1211619850') {
+                     //    debugger;
+                     //    console.log('find')
+                     //}
+         
                      var tmp = 0.000;
                      var tmpspeed = (3600 / inpUserSpeed) * (full_geometry_additional[i]['linkLength'] / 1000);
          
                      //if (arrLinkGroup.find(o => o.linkid === full_geometry_additional[i]['linkid'])['segments'] == 0) {
                      //    debugger;
                      //}
-                     debugger;
-                     traceSpeed = (tmpspeed / arrLinkGroup.find(o => o.linkid === full_geometry_additional[i]['linkid'])['segments']);
+         
+                     //debugger;
+                     //traceSpeed = (tmpspeed / arrLinkGroup.find(o => o.linkid === full_geometry_additional[i]['linkid'])['segments']);
+                     traceSpeed = (tmpspeed / arrLinkGroup.find(o => o.linkid == full_geometry_additional[i]['linkid'])['segments']);
                      traceSpeed = traceSpeed * 1000; // secods to Milliseconds
                      CurrentLinkID = full_geometry_additional[i]['linkid'];
                      TotalTimeTakeninsec = TotalTimeTakeninsec + ((traceSpeed / 1000) / 60);
@@ -831,11 +977,9 @@
                      //TotalTimeTakeninsec = TotalTimeTakeninsec / 60;
                      $('#lblSpeedValue').val(TotalTimeTakeninsec.toFixed(2));
                      if (CurrentLinkID != PreviousLinkID) {
-                         //TotalTimeTakeninsec = TotalTimeTakeninsec + (traceSpeed / 1000);
-                         //$('#lblSpeedValue').val(TotalTimeTakeninsec.toFixed(2));
+                         //console.log(full_geometry_additional[i]['linkid']);
                          TotalKM = TotalKM + (full_geometry_additional[i]['linkLength'] / 1000);
                          $('#lblKMValue').val(TotalKM.toFixed(2))
-         
                      }
                      //debugger;
                      if (i < full_geometry_additional.length - 1) {
@@ -848,21 +992,19 @@
                      }
                      else {
                          var RotateDegree;
-                         debugger;
+                         //debugger;
                          RotateDegree = getDegree(full_geometry_additional[i]['attributes']['lat'], full_geometry_additional[i]['attributes']['lng'], full_geometry_additional[full_geometry_additional.length - 1]['attributes']['lat'], full_geometry_additional[full_geometry_additional.length - 1]['attributes']['lng']);
                          updateMarkerDirection(parisMarker, RotateDegree, full_geometry_additional[i].attributes["lat"], full_geometry_additional[i].attributes["lng"], true);
          
                      }
          
-         
-         
                      if (PauseFlage == true) {
                          arrayCount = i;
                          return i;
                      }
-                     //parisMarker.setPosition({ lat: full_geometry_additional[i].attributes["lat"], lng: full_geometry_additional[i].attributes["lng"] });
-                     //map.addObject(parisMarker);
+         
                      PreviousLinkID = full_geometry_additional[i]['linkid'];
+         
                      if (i < items.length - 1) loopIt(i + 1)
                  }, traceSpeed);
              })(i)
@@ -897,20 +1039,23 @@
              full_geometry_additional = new Array();
              full_geometry = new Array();
              arrLinkGroup = new Array();
-             FirstLoop = false;
+         
+         
              $('#lblSpeedValue').val('0');
              $('#lblKMValue').val('');
              $('#lblKMRouteCalculation').val('0');
              $('#exampleFormControlFile1').val('');
              $('#cmbSelect').prop('selectedIndex', 0);
-             //if ((bearsMarker != null) && (FirstLoop == true)) {
-             //    map.removeObject(bearsMarker);
-             //    bearsMarker = null;
-             //}
-             if (bearsMarker != null)  {
+             if ((bearsMarker != null) && (FirstLoop == true)) {
                  map.removeObject(bearsMarker);
                  bearsMarker = null;
              }
+         
+             //if (bearsMarker != null)  {
+             //    map.removeObject(bearsMarker);
+             //    bearsMarker = null;
+             //}
+             FirstLoop = false;
              inpUserSpeed = 10; // default Speed
              PauseFlage = true;
              $("#btnPause").html('Pause');
@@ -921,7 +1066,7 @@
              MarkerStartEnd.removeAll();
              objContainer.removeAll();
              traceSpeed = 0
-             
+         
              //map.removeObject(parisMarker);
              clearTimeout(setTimeoutfunction);
              //debugger;
@@ -931,8 +1076,8 @@
              //    debugger;
              //}
          
-            
-             
+         
+         
          }
          
          $('#btnReset').click(function () {
@@ -940,16 +1085,17 @@
              if ((PauseFlage == false) && ($('#exampleFormControlFile1').get(0).files.length !== 0) && ($("#btnPause").is(":enabled"))) {
                  alert('Kindly pause the Simulation to reset the Route.');
                  return;
-             }            
+             }
              $("#btnPlay").attr("disabled", true);
              $("#btnPause").attr("disabled", true);
              $("#btnReset").attr("disabled", false);
              Reset();
-             
+         
          
          
          });
          
+     
          
          updateMarkerDirection = function updateMarkerDirection(parisMarker, RotateDegree, Hlat, Hlng, isNeedToPrintonMap) {
              if (isNeedToPrintonMap == false) {
@@ -962,10 +1108,10 @@
              //outerElement.style.msUserSelect = 'none';
              //outerElement.style.mozUserSelect = 'none';
              //outerElement.style.cursor = 'default';
-             
+         
          
              var objImg = document.createElement('img');
-             objImg.src = '{{asset("playback/assets/img/Car.png")}}';
+             objImg.src = 'assets/img/Car.png';
              el = objImg;
              var carDirection = RotateDegree;
              console.log(RotateDegree);
@@ -984,8 +1130,9 @@
                  //bearsMarker = null;
                  map.removeObject(bearsMarker);
              }
-             debugger;
-             var domIcon = new H.map.DomIcon(outerElement, { anchor: { x: 20, y: 40 } });
+             //debugger;
+             //var domIcon = new H.map.DomIcon(outerElement, { anchor: { x: 20, y: 40 } });
+             var domIcon = new H.map.DomIcon(outerElement);
              //domIcon.setCenter(); 
              //domIcon.setCenter();
              bearsMarker = new H.map.DomMarker({ lat: Hlat, lng: Hlng }, {
@@ -996,9 +1143,9 @@
                  map.setZoom(16, true);
              }
              map.setCenter({ lat: Hlat, lng: Hlng }, true);
-         
              FirstLoop = true;
          }
+         
          function getDegree(lat1, long1, lat2, long2) {
              var dLon = (long2 - long1);
              var y = Math.sin(dLon) * Math.cos(lat2);
@@ -1007,13 +1154,17 @@
              var brng = Math.atan2(y, x);
              brng = radianstoDegree(brng);
              brng = (brng + 360) % 360;
-             // brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
+             brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
              return brng;
          }
          
          function radianstoDegree(x) {
              return x * 180.0 / Math.PI;
          }
+         
+                 //$('#exampleFormControlFile1').click(function () {
+                 //    Reset();
+                 //});
          
       </script>
    </body>
