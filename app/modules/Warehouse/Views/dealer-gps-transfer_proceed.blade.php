@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="form-group has-feedback">
-        <label class="srequired">GPS</label>
+        <label class="srequired">GPS List</label>
         <div class="row">
 
                @foreach  ($devices as $device )
