@@ -19,6 +19,7 @@ Route::post('/gps/location-track/root','GpsController@rootlocationTrack')->name(
 
 Route::get('/gps_playback','GpsController@playbackPage')->name('gps_playback');
 Route::get('/gps_playback_data','GpsController@playbackPageData')->name('gps_playback_data');
+Route::post('/gps-create-root-dropdown','GpsController@getGpsDetailsFromRoot')->name('gps-create-root-dropdown');
 
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
@@ -26,6 +27,8 @@ Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App
 //gps dealer list
 Route::get('/gps-dealer','GpsController@gpsDealerListPage')->name('gps-dealer');
 Route::post('/gps-dealer-list','GpsController@getDealerGps')->name('gps-dealer-list');
+
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {

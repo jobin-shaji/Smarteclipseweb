@@ -114,31 +114,64 @@ class GpsController extends Controller {
     //for gps creation
     public function create()
     {
-        return view('Gps::gps-create');
+        $gps = Gps::select('id', 'imei','serial_no','manufacturing_date')
+        ->whereNull('manufacturing_date')
+        ->get();
+        return view('Gps::gps-create',['devices'=>$gps]);
     }
 
+    //get address and mobile details based on dealer selection
+    public function getGpsDetailsFromRoot(Request $request)
+    {
+
+        $gps_id=$request->gps_id;       
+        $gps_details=Gps::select('id','serial_no','icc_id','imsi','imei','manufacturing_date','e_sim_number','batch_number','model_name','version','status','device_time','employee_code')
+        // ->with('employee:id,code')
+        ->where('id',$gps_id)
+        ->first();
+        
+        $imei=$gps_details->imei;
+        $model_name=$gps_details->model_name;
+        $version=$gps_details->version;
+        $icc_id=$gps_details->icc_id;
+        $imsi=$gps_details->imsi;
+        $batch_number=$gps_details->batch_number;
+        $employee_code=$gps_details->employee_code;
+        // $brand=$gps_details->version;        
+        return response()->json(array(
+            'response' => 'success',
+            'imei' => $imei,
+            'model_name' => $model_name,
+            'icc_id' => $icc_id,
+            'imsi' => $imsi,
+            'batch_number' => $batch_number,
+            'employee_code' => $employee_code,
+            // 'brand' => $brand,
+            'version' => $version
+        )); 
+    }
     //upload gps details to database table
     public function save(Request $request)
     {
         $root_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
-       
+        $gps = Gps::find($request->serial_no); 
+        // dd($gps);
+        if($gps == null){
+           return view('Gps::404');
+        }
         $rules = $this->gpsCreateRules();
-        $this->validate($request, $rules);
-        $gps = Gps::create([
-            'serial_no'=> $request->serial_no,
-            'imei'=> $request->imei,
-            'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
-            'icc_id'=> $request->icc_id,
-            'imsi'=> $request->imsi,
-            'e_sim_number'=> $request->e_sim_number,
-            'batch_number'=> $request->batch_number,
-            'employee_code'=> $request->employee_code,
-            'model_name'=> $request->model_name,
-            'version'=> $request->version,
-            // 'user_id' => $root_id,
-            'status'=>1
-        ]);
+        $this->validate($request, $rules);       
+        $gps->manufacturing_date = $request->manufacturing_date;
+        dd($request->manufacturing_date);
+        $gps->e_sim_number = $request->e_sim_number;       
+        $gps->save();
+        // $gps = Gps::create([
+        //     'serial_no'=> $request->serial_no,
+        //     'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
+        //     'e_sim_number'=> $request->e_sim_number,     
+        //     'status'=>1
+        // ]);
         if($gps){
            $gps_stock = GpsStock::create([
                 'gps_id'=> $gps->id,
@@ -1124,16 +1157,9 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'serial_no' => 'required|unique:gps',
-            'imei' => 'required|string|unique:gps|min:15|max:15',
-            'manufacturing_date' => 'required',
-            'icc_id' => 'required',
-            'imsi' => 'required',
-            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
-            'batch_number' => 'required',
-            'employee_code' => 'required',
-            'model_name' => 'required',
-            'version' => 'required'
+            'serial_no' => 'required',           
+            'manufacturing_date' => 'required',           
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11'           
         ];
         return  $rules;
     }
