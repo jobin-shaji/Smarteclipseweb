@@ -162,16 +162,10 @@ class GpsController extends Controller {
         }
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);       
-        $gps->manufacturing_date = $request->manufacturing_date;
-        dd($request->manufacturing_date);
+        $gps->manufacturing_date = $maufacture;
         $gps->e_sim_number = $request->e_sim_number;       
         $gps->save();
-        // $gps = Gps::create([
-        //     'serial_no'=> $request->serial_no,
-        //     'manufacturing_date'=> date("Y-m-d", strtotime($request->manufacturing_date)),
-        //     'e_sim_number'=> $request->e_sim_number,     
-        //     'status'=>1
-        // ]);
+        
         if($gps){
            $gps_stock = GpsStock::create([
                 'gps_id'=> $gps->id,

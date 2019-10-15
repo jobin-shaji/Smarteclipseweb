@@ -102,10 +102,13 @@ $( ".date_expiry_edit" ).datetimepicker({
     minDate: moment().millisecond(0).second(0).minute(0).hour(0)     
     // minDate: moment().subtract(1,'d')
  });
+
  $( ".manufacturing_date" ).datetimepicker({ 
     format: 'DD-MM-YYYY',
     minDate: '2019-01-01',       
-    maxDate: new Date()
+    maxDate: new Date(),
+    useCurrent: false
+   
  });
 
 
