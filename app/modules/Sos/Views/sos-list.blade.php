@@ -36,9 +36,9 @@
                   <tr>
                       <th>Sl.No</th>
                       <th>Serial NO</th>
+                      <th>Model Name</th>
                       <th>Manufacturing Date</th>
                       <th>Brand</th>
-                      <th>Model Name</th>
                       <th>Version</th>
                       <th>Action</th>
                   </tr>

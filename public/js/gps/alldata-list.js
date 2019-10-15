@@ -108,7 +108,7 @@ function callBackDataTable(value){
         // },
 
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'imei', name: 'imei', orderable: false},
             {data: 'count', name: 'count',orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time'},
