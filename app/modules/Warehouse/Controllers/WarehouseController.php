@@ -271,7 +271,7 @@ class WarehouseController extends Controller {
         }else{
             $rules = $this->gpsRootTransferNullRule();
         }
-        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one qr code']);
+        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one QR code']);
         $dealer_user_id=$request->dealer_user_id;
         $dealer_name=$request->dealer_name;
         $address=$request->address;
@@ -447,7 +447,7 @@ class WarehouseController extends Controller {
         }else{
             $rules = $this->gpsDealerTransferNullRule();
         }
-        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one qr code']);
+        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one QR code']);
         $sub_dealer_user_id=$request->sub_dealer_user_id;
         $sub_dealer_name=$request->sub_dealer_name;
         $address=$request->address;
@@ -608,7 +608,7 @@ class WarehouseController extends Controller {
         }else{
             $rules = $this->gpsSubDealerTransferNullRule();
         }
-        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one qr code']);
+        $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one QR code']);
         $client_user_id=$request->client_user_id;
         $client = Client::where('user_id',$client_user_id)->first();
         $client_id=$client->id;

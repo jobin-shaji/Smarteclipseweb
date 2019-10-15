@@ -37,6 +37,16 @@
             </span>
           @endif
           </div>
+
+          <div class="form-group has-feedback">
+            <label class="srequired">Model Name</label>
+            <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ $sos->model_name}}"> 
+          @if ($errors->has('model_name'))
+            <span class="help-block">
+            <strong class="error-text">{{ $errors->first('model_name') }}</strong>
+            </span>
+          @endif
+          </div>
           
 
           <div class="form-group has-feedback">
@@ -61,19 +71,7 @@
             <strong class="error-text">{{ $errors->first('brand') }}</strong>
             </span>
           @endif
-          </div>
-          
-
-          <div class="form-group has-feedback">
-            <label class="srequired">Model Name</label>
-            <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ $sos->model_name}}"> 
-          @if ($errors->has('model_name'))
-            <span class="help-block">
-            <strong class="error-text">{{ $errors->first('model_name') }}</strong>
-            </span>
-          @endif
-          </div>
-          
+          </div>          
 
           <div class="form-group has-feedback">
             <label class="srequired">Version</label>
