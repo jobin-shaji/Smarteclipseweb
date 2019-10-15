@@ -1631,7 +1631,7 @@ class VehicleController extends Controller {
      
       $vehicle=Vehicle::find($vehicle_id); 
       if($vehicle==null){
-             $data = array('status' => 'failed',
+             $data = array('status' => 200,
                            'message' => 'vehicle doesnot exist',
                            'code'=>0);
         return response()->json($data);
@@ -1650,13 +1650,13 @@ class VehicleController extends Controller {
         ->get();
 
        if($gpsData){
-          $response_data = array('status'  => 'success',
+          $response_data = array('status'  => 200,
                                 'message' => 'success',
                                 'locations'=>$gpsData,
                                 'code'    =>1
                                 );
           }else{
-          $response_data = array('status'  => 'failed',
+          $response_data = array('status'  => 200,
                                 'message' => 'failed',
                                 'code'    =>0);
           }
