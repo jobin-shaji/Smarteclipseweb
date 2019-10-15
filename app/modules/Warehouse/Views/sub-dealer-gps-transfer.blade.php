@@ -8,19 +8,17 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1"> 
-
-  <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer</li>
-        @if(Session::has('message'))
-        <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-            {{ Session::get('message') }}  
-          </div>
-        </div>
-        @endif
-        
       </ol>
+      @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
+          </div>
+        @endif 
     </nav>
     
     <div class="card-body">
@@ -116,7 +114,7 @@
                 <div class="col-md-12 col-lg-6">
                   <input type="checkbox" name="type" value="camera"> Camera enable/disable
                   <div id="camera_enable" style="display: none">
-                    <div id="warn">Please connect your camera to scan QR code .</div>
+                    <div id="warn">Please connect your camera to scan QR code.</div>
                     <video id="preview" style="height:100%; width: 100%;"></video>
                   </div>
                 </div>
