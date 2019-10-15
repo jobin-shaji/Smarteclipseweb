@@ -18,7 +18,7 @@
  
     <div class="container-fluid">
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive scrollmenu">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12">
@@ -37,9 +37,9 @@
                                               <tr>
                                                 <th>Sl.No</th>
                                                 <th>Serial NO</th>
+                                                <th>Model Name</th>
                                                 <th>Version</th>
                                                 <th>Brand</th>
-                                                <th>Model Name</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -47,9 +47,9 @@
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$device->imei}}</td>
+                                                <td>{{$device->model_name}}</td>
                                                 <td>{{$device->version}}</td>
                                                 <td>{{$device->brand}}</td>
-                                                <td>{{$device->model_name}}</td>
                                               </tr>
                                               @endforeach
                                             </tbody>
