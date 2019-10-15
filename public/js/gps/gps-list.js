@@ -36,12 +36,12 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'gps.imei', name: 'gps.imei'},
-            {data: 'gps.serial_no', name: 'gps.serial_no'},
-            {data: 'gps.e_sim_number', name: 'gps.e_sim_number'},
-            {data: 'gps.batch_number', name: 'gps.batch_number'},
-            {data: 'gps.employee_code', name: 'gps.employee_code'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'gps.imei', name: 'gps.imei', orderable: false},
+            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
+            {data: 'gps.e_sim_number', name: 'gps.e_sim_number', orderable: false},
+            {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
+            {data: 'gps.employee_code', name: 'gps.employee_code', orderable: false},
             {data: 'gps.version', name: 'gps.version'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
@@ -51,19 +51,23 @@ function callBackDataTable(){
 }
 
 function delGps(gps){
-    var url = 'gps/delete';
-    var data = {
-        uid : gps
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this device?')){
+        var url = 'gps/delete';
+        var data = {
+            uid : gps
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 function activateGps(gps){
-    var url = 'gps/activate';
-    var data = {
-        id : gps
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this device?')){
+        var url = 'gps/activate';
+        var data = {
+            id : gps
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

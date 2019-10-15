@@ -298,37 +298,49 @@ class WarehouseController extends Controller {
         $to_user_id = $request->dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
-        $uniqid=uniqid();
-        $order_number=$uniqid.date("Y-m-d h:i:s");
-        if($gps_array){
-            $gps_transfer = GpsTransfer::create([
-              "from_user_id" => $from_user_id, 
-              "to_user_id" => $to_user_id,
-              "order_number" => $order_number,
-              "scanned_employee_code" => $scanned_employee_code,
-              "invoice_number" => $invoice_number,
-              "dispatched_on" => date('Y-m-d H:i:s')
-            ]);
-            $last_id_in_gps_transfer=$gps_transfer->id;
+        $transferred_devices=[];
+        $transfer_inprogress_devices = GpsStock::select('gps_id')->where('dealer_id',0)->whereIn('gps_id',$gps_array)->get();
+        foreach ($transfer_inprogress_devices as $devices) {
+            $transferred_devices[]=$devices->gps_id;
         }
-        if($last_id_in_gps_transfer){
-            foreach ($gps_array as $gps_id) {
-                $gps_transfer_item = GpsTransferItems::create([
-                  "gps_id" => $gps_id, 
-                  "gps_transfer_id" => $last_id_in_gps_transfer
+        if($transferred_devices){
+            $request->session()->flash('message', 'Sorry!! Gps list contains already transferred devices');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('gps.transfer.root'));
+        }else{
+            $uniqid=uniqid();
+            $order_number=$uniqid.date("Y-m-d h:i:s");
+            if($gps_array){
+                $gps_transfer = GpsTransfer::create([
+                  "from_user_id" => $from_user_id, 
+                  "to_user_id" => $to_user_id,
+                  "order_number" => $order_number,
+                  "scanned_employee_code" => $scanned_employee_code,
+                  "invoice_number" => $invoice_number,
+                  "dispatched_on" => date('Y-m-d H:i:s')
                 ]);
-                if($gps_transfer_item){
-                    //update gps stock table
-                    $gps = GpsStock::where('gps_id',$gps_id)->first();
-                    $gps->dealer_id =0;
-                    $gps->save();
+                $last_id_in_gps_transfer=$gps_transfer->id;
+            }
+            if($last_id_in_gps_transfer){
+                foreach ($gps_array as $gps_id) {
+                    $gps_transfer_item = GpsTransferItems::create([
+                      "gps_id" => $gps_id, 
+                      "gps_transfer_id" => $last_id_in_gps_transfer
+                    ]);
+                    if($gps_transfer_item){
+                        //update gps stock table
+                        $gps = GpsStock::where('gps_id',$gps_id)->first();
+                        $gps->dealer_id =0;
+                        $gps->save();
+                    }
                 }
             }
+            $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
         }
-        $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-        $request->session()->flash('message', 'Gps Transfer successfully completed!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
+        
     }
 
     // gps transfer list - dealer

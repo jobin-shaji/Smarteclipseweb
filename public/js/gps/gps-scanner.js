@@ -3,7 +3,7 @@ var purl = getUrl() + '/'+'gps-scan' ;
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length > 0) {
-    $('#warn').html('Scan Qr Code');
+    $('#warn').html('Scan QR Code');
     scanner.start(cameras[0]);
   } else {
      $('#warn').html('Camera not found , Please connect your camera');
@@ -64,6 +64,16 @@ function deleteValueArray(gps_id){
     }
 
 }
+
+$(function() {
+  $('input[name="type"]').on('click', function() {
+    if ($(this).is(':checked'))
+      $(this).next('#camera_enable').show();
+    else
+      $(this).next('#camera_enable').hide();
+  });
+});
+
 
 
 
