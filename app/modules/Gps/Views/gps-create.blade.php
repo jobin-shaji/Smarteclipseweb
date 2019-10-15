@@ -114,7 +114,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">Batch Number</label>
-                        <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" id="batch_number" name="batch_number" value="{{ old('batch_number') }}" required > 
+                        <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" id="batch_number" name="batch_number" value="{{ old('batch_number') }}" required readonly="readonly"> 
                          @if ($errors->has('batch_number'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('batch_number') }}</strong>
