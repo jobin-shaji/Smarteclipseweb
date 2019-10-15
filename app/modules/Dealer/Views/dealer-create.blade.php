@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required autocomplete="off"> 
                     @if ($errors->has('name'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('name') }}</strong>
@@ -42,7 +42,7 @@
                   
                   <div class="form-group has-feedback">
                     <label class="srequired">Address</label>
-                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required>
+                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required autocomplete="off"> 
                     @if ($errors->has('address'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('address') }}</strong>
@@ -52,7 +52,7 @@
                  
                   <div class="form-group has-feedback">
                     <label class="srequired">Mobile No.</label>
-                    <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" min="1" required>
+                    <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" min="1" required autocomplete="off">
                     @if ($errors->has('mobile'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('mobile') }}</strong>
@@ -62,7 +62,7 @@
                  
                   <div class="form-group has-feedback">
                     <label class="srequired">Email.</label>
-                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required>
+                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required autocomplete="off">
                     @if ($errors->has('email'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('email') }}</strong>
@@ -73,7 +73,7 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label>Username</label>
-                    <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}" >
+                    <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}" autocomplete="off" >
                     @if ($errors->has('username'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('username') }}</strong>
