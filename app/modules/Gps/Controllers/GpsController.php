@@ -1153,7 +1153,9 @@ class GpsController extends Controller {
         $rules = [
             'serial_no' => 'required',           
             'manufacturing_date' => 'required',           
-            'e_sim_number' => 'required|string|unique:gps|min:11|max:11'           
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
+            'batch_number' => 'required|regex:/^[A-Za-z0-9]{4}\d{4}$/'   
+                    
         ];
         return  $rules;
     }
