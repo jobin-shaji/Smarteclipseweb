@@ -32,17 +32,23 @@
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group has-feedback">
                         <label class="srequired">Serial No</label>
-                        <input type="text" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ old('serial_no') }}" required> 
+                         <select class="form-control select2 GpsData" id="serial_no" name="serial_no" data-live-search="true" title="Select Serial number" required>
+                          <option value="" selected="selected" disabled="disabled">Select Serial number</option>
+                          @foreach($devices as $device)
+                          <option value="{{$device->id}}">{{$device->serial_no}}</option>
+                          @endforeach
+                        </select>
                          @if ($errors->has('serial_no'))
-                        <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
-                        </span>
-                      @endif
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
+                          </span>
+                        @endif
+                       
                       </div>
 
                       <div class="form-group has-feedback">
                         <label class="srequired">IMEI</label>
-                        <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ old('imei') }}" required> 
+                        <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" id="imei" name="imei" value="{{ old('imei') }}" required readonly="readonly"> 
                          @if ($errors->has('imei'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -52,7 +58,7 @@
                      
                       <div class="form-group has-feedback">
                         <label class="srequired">Model Name</label>
-                        <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" name="model_name" value="{{ old('model_name') }}" required>   
+                        <input type="text" class="form-control {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" id="model_name" name="model_name" value="{{ old('model_name') }}" required readonly="readonly">   
                         @if ($errors->has('model_name'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('model_name') }}</strong>
@@ -73,23 +79,14 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">ICC ID</label>
-                        <input type="text" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ old('icc_id') }}" required> 
+                        <input type="text" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" id="icc_id" name="icc_id" value="{{ old('icc_id') }}" required readonly="readonly"> 
                          @if ($errors->has('icc_id'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('icc_id') }}</strong>
                         </span>
                       @endif
                       </div>
-
-                      <div class="form-group has-feedback">
-                        <label class="srequired">IMSI</label>
-                        <input type="text" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ old('imsi') }}" required> 
-                         @if ($errors->has('imsi'))
-                        <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('imsi') }}</strong>
-                        </span>
-                      @endif
-                      </div>                                               
+                                            
                     </div>
                   </div>
                 </div>
@@ -103,10 +100,11 @@
               <div class="col-sm-12">                    
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="card-body_vehicle wizard-content">   
+                    <div class="card-body_vehicle wizard-content"> 
+
                       <div class="form-group has-feedback">
                         <label class="srequired">E-SIM Number</label>
-                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" >
+                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number" >
                         @if ($errors->has('e_sim_number'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
@@ -116,7 +114,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">Batch Number</label>
-                        <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" name="batch_number" value="{{ old('batch_number') }}" required> 
+                        <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" id="batch_number" name="batch_number" value="{{ old('batch_number') }}" required readonly="readonly"> 
                          @if ($errors->has('batch_number'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('batch_number') }}</strong>
@@ -126,7 +124,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">Employee Code</label>
-                        <input type="text" class="form-control {{ $errors->has('employee_code') ? ' has-error' : '' }}" placeholder="Employee Code" name="employee_code" value="{{ old('employee_code') }}" required> 
+                        <input type="text" class="form-control {{ $errors->has('employee_code') ? ' has-error' : '' }}" placeholder="Employee Code" id="employee_code" name="employee_code" value="{{ old('employee_code') }}" required readonly="readonly"> 
                          @if ($errors->has('employee_code'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('employee_code') }}</strong>
@@ -135,18 +133,17 @@
                       </div>
 
                       <div class="form-group has-feedback">
-                        <label class="srequired">Brand</label>
-                        <input type="text" class="form-control {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Brand" name="brand" value="{{ old('brand') }}" required> 
-                         @if ($errors->has('brand'))
+                        <label class="srequired">IMSI</label>
+                        <input type="text" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" id="imsi" name="imsi" value="{{ old('imsi') }}" required readonly="readonly"> 
+                         @if ($errors->has('imsi'))
                         <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('brand') }}</strong>
+                            <strong class="error-text">{{ $errors->first('imsi') }}</strong>
                         </span>
                       @endif
-                      </div>
-
+                      </div>   
                       <div class="form-group has-feedback">
                         <label class="srequired">Version</label>
-                        <input type="text" class="form-control {{ $errors->has('version') ? ' has-error' : '' }}" placeholder="Version" name="version" value="{{ old('version') }}" required> 
+                        <input type="text" class="form-control {{ $errors->has('version') ? ' has-error' : '' }}" placeholder="Version" id="version" name="version" value="{{ old('version') }}" required readonly="readonly"> 
                          @if ($errors->has('version'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('version') }}</strong>
@@ -175,4 +172,7 @@
 </section>
 
 <div class="clearfix"></div>
+@section('script')
+  <script src="{{asset('js/gps/gps-create.js')}}"></script>
+@endsection
 @endsection
