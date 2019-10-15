@@ -53,6 +53,7 @@
                   <div class="form-group has-feedback">
                     <label class="srequired">Mobile No.</label>
                     <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" min="1" required autocomplete="off">
+
                     @if ($errors->has('mobile'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('mobile') }}</strong>
