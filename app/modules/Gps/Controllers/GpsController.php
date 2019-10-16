@@ -401,7 +401,14 @@ class GpsController extends Controller {
                 ->get();
         return DataTables::of($gps)
             ->addIndexColumn()
-            ->make();
+            ->addColumn('action', function ($gps) {
+            $b_url = \URL::to('/');
+            if($gps->deleted_at == null){
+                return "<a href=".$b_url."/gps/".Crypt::encrypt($gps->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
 
     //////////////////////////GPS SUB DEALER///////////////////////////////////
@@ -443,6 +450,7 @@ class GpsController extends Controller {
                         return "
                             <b style='color:#008000';>Active</b>
                             <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                             <button onclick=deactivateGpsStatus(".$gps_stock->gps_id.") class='btn btn-xs btn-danger'></i>Deactivate</button>
                         ";
                         }else{ 

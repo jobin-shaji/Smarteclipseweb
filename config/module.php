@@ -33,7 +33,7 @@ return  [
        'ClassDivision',
        'RouteBatch',
        'Warehouse',
-       'Employee'
+       'Employee',
     ]
 ]
 
