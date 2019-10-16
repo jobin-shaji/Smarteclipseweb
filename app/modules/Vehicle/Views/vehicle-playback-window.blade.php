@@ -4,7 +4,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <title>CSS Corp Info</title>
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-      <link rel="icon" href="{{asset('playback/asset(assets/img/icon.png')}}" type="image/x-icon" />
+      <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
       <!-- Fonts and icons -->
       <script src="{{asset('playback/assets/js/plugin/webfont/webfont.min.js')}}"></script>
       <script>
@@ -29,14 +29,7 @@
    </head>
    <body data-background-color="dark">
       <div class="wrapper overlay-sidebar">
-         <div class="main-header">
-            <!-- End Logo Header -->
-            <!-- Navbar Header -->
-            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
-               <div class="container-fluid"><span class="text" style="font-size:20px;font-weight:100;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color:white">HERE RME API DEMO</span></div>
-            </nav>
-            <!-- End Navbar -->
-         </div>
+        
          <div class="main-panel">
             <div class="content">
                <!--<div id="markers" style="width:1800px;height:780px"></div>-->
@@ -210,7 +203,7 @@
          
          var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 });
          var objImg = document.createElement('img');
-         objImg.src = 'assets/img/Car.png';
+         objImg.src = '{{asset("playback/assets/img/Car.png")}}';
          var outerElement = document.createElement('div')
          //outerElement.style.userSelect = 'none';
          //outerElement.style.webkitUserSelect = 'none';
