@@ -199,7 +199,7 @@ class WarehouseController extends Controller {
     //get scanned gps and check gps status
     public function getScannedGps(Request $request)
     {
-        $device_imei=$request->imei;
+        $device_serial_no=$request->serial_no;
         $user = \Auth::user();
         $user_stock_devices=[];
         if($user->hasRole('root'))
@@ -218,9 +218,9 @@ class WarehouseController extends Controller {
         foreach($stock_devices as $device){
             $user_stock_devices[] = $device->gps_id;
         }
-        $device = Gps::select('id', 'imei','batch_number','employee_code')
+        $device = Gps::select('id', 'serial_no','batch_number','employee_code')
                         ->whereIn('id',$user_stock_devices)
-                        ->where('imei',$device_imei)
+                        ->where('serial_no',$device_serial_no)
                         ->first();
         if($device==null){
             return response()->json(array(
@@ -229,14 +229,14 @@ class WarehouseController extends Controller {
             ));
         }else{
             $gps_id=$device->id;
-            $gps_imei=$device->imei;
+            $gps_serial_no=$device->serial_no;
             $gps_batch_number=$device->batch_number;
             $gps_employee_code=$device->employee_code;
             return response()->json(array(
                 'status' => 1,
                 'title' => 'success',
                 'gps_id' => $gps_id,
-                'gps_imei' => $gps_imei,
+                'gps_serial_no' => $gps_serial_no,
                 'gps_batch_number' => $gps_batch_number,
                 'gps_employee_code' => $gps_employee_code
             ));
@@ -284,7 +284,7 @@ class WarehouseController extends Controller {
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
         }
-        $devices = Gps::select('id', 'imei')
+        $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
         return view('Warehouse::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
@@ -460,7 +460,7 @@ class WarehouseController extends Controller {
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
         }
-        $devices = Gps::select('id', 'imei')
+        $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
         return view('Warehouse::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
@@ -623,7 +623,7 @@ class WarehouseController extends Controller {
         foreach ($gps_array as $gps_id) {
             $gps_list[]=$gps_id;
         }
-        $devices = Gps::select('id', 'imei')
+        $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
         return view('Warehouse::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);

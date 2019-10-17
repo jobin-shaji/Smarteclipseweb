@@ -187,6 +187,11 @@
       <!-- Atlantis DEMO methods, don't include it in your project! -->
       <script src="{{asset('playback/assets/js/setting-demo.js')}}"></script>
       <!--<script src="../assets/js/demo.js"></script>-->
+      <script type="text/javascript">
+        $(document).ready(function() {
+           getInputfromServer();
+      </script>
+
       <script>
          var MapResult;
          var PauseFlage = false;
@@ -245,7 +250,7 @@
          // confidence filter
          var lastRespJsonObj = null;
          var DEFAULT_CONFIDENCE_LINK_STYLE = { lineWidth: 8, strokeColor: 'rgba(18, 65, 145, 0.7)', lineJoin: 'round' };
-         var HOVER_LINK_STYLE = { lineWidth: 8, strokeColor: 'rgba(255, 65, 145, 1)', lineJoin: "round" };
+         var HOVER_LINK_STYLE = { lineWidth: 5, strokeColor: 'rgba(255, 65, 145, 1)', lineJoin: "round" };
          var DEFAULT_OFFSET_STYLE = { lineWidth: 1, strokeColor: 'green', lineJoin: 'round' };
          var DEFAULT_TRACE_STYLE = { lineWidth: 1, strokeColor: 'black', lineJoin: 'round' };
          var linkHighlighted = false;
@@ -275,16 +280,7 @@
              
              $('#optServer').trigger('click');
          
-             //$('#datetime').datetimepicker({
-             //    format: 'MM/DD/YYYY H:mm',
-             //});
-         
-         
-             //if ($('#exampleFormControlFile1').get(0).files.length === 0) {
-             //    $("#btnPlay").attr("disabled", true);
-             //    $("#btnPause").attr("disabled", true);
-             //    return;
-             //}
+             
          });
          
          $('#optServer').click(function () {
@@ -340,12 +336,7 @@
              tmpstring = tmpstring + '<link href="http://www.mapstogpx.com">'
              tmpstring = tmpstring + '<text>Sverrir Sigmundarson</text>'
              tmpstring = tmpstring + '</link>'
-             //tmpstring = tmpstring + '<!--desc>Map data copyright 2019 Google</desc-->'
-             //tmpstring = tmpstring + '<!--copyright author="Google Inc">'
-             //tmpstring = tmpstring + '<year>2019</year>'
-             //tmpstring = tmpstring + '<license>https://developers.google.com/maps/terms</license>'
-             //tmpstring = tmpstring + '</copyright-->'
-             //tmpstring = tmpstring + '<!--url>https://www.google.co.uk/maps/dir/Madurai, Tamil Nadu/Trichy, Tamil Nadu/@10.3578364,77.7444067,9z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x3b00c582b1189633:0xdc955b7264f63933!2m2!1d78.1197754!2d9.9252007!1m5!1m1!1s0x3baaf50ff2aecdad:0x6de02c3bedbbaea6!2m2!1d78.7046725!2d10.7904833?hl=en-GB&hl=en</url-->'
+            
              tmpstring = tmpstring + '<time>2019-08-21T15:23:25Z</time>'
              tmpstring = tmpstring + '</metadata>'
              tmpstring = tmpstring + '<trk>'
@@ -824,7 +815,7 @@
              var map = new H.Map(document.getElementById('markers'),
                  defaultLayers.normal.map, {
                      center: { lat: dataLat, lng: dataLon },
-                     zoom: 3,
+                     zoom: 12,
                      pixelRatio: pixelRatio
                  });
              var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
@@ -844,13 +835,16 @@
          
          function getInputfromServer() {
              debugger
+
+             var vehicle_id=$.urlParam('vehicle_id');
+             var start_date=$.urlParam('from_date');
+             var end_date=$.urlParam('to_date');
              var Objdata = {
-                 "vehicle_id": $('#txtVehicleID').val(),
-                 "start_date": $('#txtStartDate').val(),
-                 "end_date": $('#txtEnddate').val()
-             }
-         
-         
+                     vehicle_id : vehicle_id,
+                     start_date : start_date,
+                     end_date : end_date
+                };
+
              $.ajax({
                  type: "POST",
                  url: 'https://gpsvst.vehiclest.com/vehicle_replay',
@@ -880,6 +874,8 @@
          
             
          }
+
+
          
          $('#btnGetRoute').click(function () {
              getInputfromServer();
@@ -1096,15 +1092,9 @@
                  return;
              }
              var outerElement = document.createElement('div')
-             //outerElement.style.userSelect = 'none';
-             //outerElement.style.webkitUserSelect = 'none';
-             //outerElement.style.msUserSelect = 'none';
-             //outerElement.style.mozUserSelect = 'none';
-             //outerElement.style.cursor = 'default';
-         
-         
+          
              var objImg = document.createElement('img');
-             objImg.src = 'assets/img/Car.png';
+             objImg.src = '{{asset("playback/assets/img/Car.png")}}';
              el = objImg;
              var carDirection = RotateDegree;
              console.log(RotateDegree);
