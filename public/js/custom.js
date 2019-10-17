@@ -992,7 +992,7 @@ function clientGps(res)
     length=res.devices.length;
    // console.log(res.devices[0].imei);
  for (var i = 0; i < length; i++) {
-         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].imei+'</option>';  
+         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
          $("#gps").append(gps);   
      }    
 }
