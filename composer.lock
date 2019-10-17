@@ -1918,8 +1918,19 @@
                     "role": "Developer"
                 }
             ],
+<<<<<<< HEAD
             "description": "PHP Client for using Nexmo's API.",
             "time": "2019-05-13T20:27:43+00:00"
+=======
+            "description": "A simple API extension for DateTime.",
+            "homepage": "http://carbon.nesbot.com",
+            "keywords": [
+                "date",
+                "datetime",
+                "time"
+            ],
+            "time": "2019-10-14T05:51:36+00:00"
+>>>>>>> a7a89ec684c57f8b0a7c9ea4be94e371db7a50fe
         },
         {
             "name": "nikic/php-parser",

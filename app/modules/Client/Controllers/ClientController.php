@@ -223,8 +223,8 @@ class ClientController extends Controller {
     public function clientUpdateRules($subdealer)
     {
         $rules = [
-            'name' => 'required',
-            'phone_number' => 'required|string|min:10|max:10'
+            'name' => 'required|unique:clients,name,'.$subdealer->id,
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
             
         ];
         return  $rules;

@@ -840,7 +840,6 @@ class ServicerController extends Controller {
     {
         $user = $request->user();
         $client_id=$request->client_id;
-
         $client = Client::find($client_id);
         $gps_stocks = GpsStock::select(
             'gps_id',
@@ -992,7 +991,7 @@ class ServicerController extends Controller {
             'name' => 'required',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'address' => 'required',
-           'mobile' => 'required|string|min:10'
+            'mobile' => 'required|string|min:10|unique:users,mobile,'.$user->id
             
         ];
         return  $rules;

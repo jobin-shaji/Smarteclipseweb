@@ -42,6 +42,7 @@ function callBackDataTable(){
             {data: 'gps.batch_number', name: 'gps.batch_number'},
             {data: 'gps.employee_code', name: 'gps.employee_code'},
             {data: 'gps.model_name', name: 'gps.model_name'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
