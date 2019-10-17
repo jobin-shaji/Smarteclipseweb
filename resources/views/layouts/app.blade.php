@@ -80,7 +80,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.jpg" height="40px"></b></span>
+                                <span class="logo-lg"><b><img src="{{asset('images/logo.png')}}" height="40px"></b></span>
                             </li>
                         @else
                             <li class="nav-item dropdown">
