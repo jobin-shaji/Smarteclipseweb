@@ -96,7 +96,7 @@
             </div>
             <div class="col-lg-2 col-md-12">
             <?php 
-              $qr=$gps->imei;
+              $qr=$gps->serial_no;
             ?>
        
             {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}

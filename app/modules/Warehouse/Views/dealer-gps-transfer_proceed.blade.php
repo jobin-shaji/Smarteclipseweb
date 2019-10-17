@@ -59,12 +59,12 @@
         </div>
       </div>
       <div class="form-group has-feedback">
-        <label class="srequired">GPS List</label>
+        <label class="srequired">GPS List (serial numbers)</label>
         <div class="row">
 
                @foreach  ($devices as $device )
                 <div class="col-md-3">
-                    <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->imei}}
+                    <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->serial_no}}
                 </div>
               @endforeach
 
