@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="form-group has-feedback">
-        <label class="srequired">GPS List (serial number)</label>
+        <label class="srequired">GPS List (serial numbers)</label>
         <div class="row">
 
                @foreach  ($devices as $device )

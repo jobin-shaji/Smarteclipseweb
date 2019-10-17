@@ -29,7 +29,7 @@
                       <th>#</th>
                       <th>Vehicle Name</th>
                       <th>Register Number</th>
-                      <th>IMEI</th>
+                      <th>Serial Number</th>
                       <th>Vehicle Type</th>
                       <th>Dealer</th>
                       <th>Sub Dealer</th>

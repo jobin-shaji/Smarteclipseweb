@@ -51,7 +51,7 @@ class VehicleController extends Controller {
             ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
             ->with('driver:id,name')
-            ->with('gps:id,imei')
+            ->with('gps:id,imei,serial_no')
             ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()
@@ -867,7 +867,7 @@ class VehicleController extends Controller {
             )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,imei')
+            ->with('gps:id,imei,serial_no')
             ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()

@@ -34,7 +34,7 @@
                             <th>Sl.No</th>
                             <th>Vehicle Name</th>
                             <th>Register Number</th>
-                            <th>IMEI</th>
+                            <th>Serial Number</th>
                             <th>Driver</th>
                             <th>Vehicle Type</th>
                             <th style="width:160px;">Action</th>
