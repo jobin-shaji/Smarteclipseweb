@@ -40,7 +40,7 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'register_number', name: 'register_number'},
-            {data: 'gps.imei', name: 'gps.imei'},
+            {data: 'gps.serial_no', name: 'gps.serial_no'},
             {data: 'driver', name: 'driver'},
             {data: 'vehicle_type.name', name: 'vehicle_type.name'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
