@@ -462,7 +462,7 @@ class DashboardController extends Controller
                 'odometer' => $odometer.' km',
                 'mode' => $vehcile_mode,
                 'satelite' => $satelite,
-                'battery_status' => $battery_status.' V',
+                'battery_status' => $battery_status.' %',
                 'address' => $address
                 // 'longitude' => $gps_data->longitude
             );
