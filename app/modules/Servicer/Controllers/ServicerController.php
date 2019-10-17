@@ -271,7 +271,7 @@ class ServicerController extends Controller {
         )
         ->where('user_id',$user_id)
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -368,7 +368,7 @@ class ServicerController extends Controller {
         )
         ->where('user_id',$user_id)
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -414,7 +414,7 @@ class ServicerController extends Controller {
         )
         ->where('servicer_id',$user_id)
         ->whereNull('job_complete_date')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
@@ -711,7 +711,7 @@ class ServicerController extends Controller {
         ->where('servicer_id',$user_id)
         ->whereNotNull('job_complete_date')
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -879,7 +879,7 @@ class ServicerController extends Controller {
             $servicer_gps[] = $servicer_job->gps_id;
         }     
         // dd($servicer_gps);
-        $devices=Gps::select('id','imei')
+        $devices=Gps::select('id','imei','serial_no')
         ->whereIn('id',$stock_gps_id)
         ->whereNotIn('id',$single_gps)
         ->whereNotIn('id',$servicer_gps)
@@ -930,7 +930,7 @@ class ServicerController extends Controller {
         ->where('user_id',$user_id)
         ->whereNotNull('job_complete_date')
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
