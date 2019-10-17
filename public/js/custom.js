@@ -1,44 +1,37 @@
+$(function () {
+    $('.select2').select2();           
+        $('#fromDate,#toDate').datetimepicker({
+            useCurrent: false,
+            minDate: moment()
+        });
+        $('#fromDate').datetimepicker().on('dp.change', function (e) {
+            var startdate=$(this).data('fromdate');
+            var incrementDay = moment(new Date(e.date));
+            incrementDay.add(1, 'days');
+            $('#toDate').data('DateTimePicker').minDate(incrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+        $('#toDate').datetimepicker().on('dp.change', function (e) {
+            
+            var decrementDay = moment(new Date(e.date));
+            decrementDay.subtract(1, 'days');
+            $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+        $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
+            var incrementDay = moment(new Date(e.date));
+            incrementDay.add(1, 'days');
+            $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
 
-
- $(function () {
-    
-
-    $('.select2').select2();
-
-           
-            $('#fromDate,#toDate').datetimepicker({
-                useCurrent: false,
-                minDate: moment()
-            });
-            $('#fromDate').datetimepicker().on('dp.change', function (e) {
-                var startdate=$(this).data('fromdate');
-                var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
-                $('#toDate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-
-            $('#toDate').datetimepicker().on('dp.change', function (e) {
-                
-                var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
-                $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-            $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
-                var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
-                $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-
-            $('#assignToDate').datetimepicker().on('dp.change', function (e) {
-                
-                var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
-                $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
+        $('#assignToDate').datetimepicker().on('dp.change', function (e) {
+            
+            var decrementDay = moment(new Date(e.date));
+            decrementDay.subtract(1, 'days');
+            $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
 
 
             $('#playback_fromDate').datetimepicker().on('dp.change', function (e) {
@@ -94,7 +87,8 @@
  });
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        minDate: new Date()
+        // minDate: new Date()
+        minDate: moment().millisecond(0).second(0).minute(0).hour(0)    
          
  });
 $( ".date_expiry_edit" ).datetimepicker({ 
@@ -106,8 +100,9 @@ $( ".date_expiry_edit" ).datetimepicker({
  $( ".manufacturing_date" ).datetimepicker({ 
     format: 'DD-MM-YYYY',
     minDate: '2019-01-01',       
-    maxDate: new Date(),
-    useCurrent: false
+    // maxDate: new Date(),
+    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
+    // useCurrent: false
    
  });
 
