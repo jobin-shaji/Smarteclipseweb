@@ -26,6 +26,7 @@
                                   <tr>
                                     <th>Sl.No</th>
                                     <th>IMEI</th>
+                                    <th>Serial Number</th>
                                     <th>Version</th>
                                     <th>Batch Number</th>
                                     <th>Employee Code</th>
