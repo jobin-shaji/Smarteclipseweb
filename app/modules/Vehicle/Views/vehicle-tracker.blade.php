@@ -26,14 +26,14 @@
      <div class="col-lg-4 col-md-3">
         <div class="form-group">
            <label> From Date</label>
-           <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate">
+           <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" autocomplete="off">
         </div>
      </div>
 
      <div class="col-lg-4 col-md-3">
         <div class="form-group">                   
            <label> To date</label>
-            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate">
+            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" autocomplete="off">
         </div>
      </div>
 

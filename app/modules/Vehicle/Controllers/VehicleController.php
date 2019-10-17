@@ -540,7 +540,7 @@ class VehicleController extends Controller {
         ->where('client_id',$client_id)
         ->with('Fromdriver:id,name')
         ->with('Todriver:id,name')
-        ->with('vehicle:id,name,register_number')
+        ->with('vehicle:id,name,register_number')        
         ->get();
 // dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
