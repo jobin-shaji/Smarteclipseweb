@@ -6,15 +6,16 @@ $(function () {
         });
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
-            var incrementDay = moment(new Date(e.date));
+            var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
             incrementDay.add(1, 'days');
+
             $('#toDate').data('DateTimePicker').minDate(incrementDay);
             $(this).data("DateTimePicker").hide();
         });
         $('#toDate').datetimepicker().on('dp.change', function (e) {
             
             var decrementDay = moment(new Date(e.date));
-            decrementDay.subtract(1, 'days');
+            decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
         });
@@ -78,12 +79,12 @@ $(function () {
 
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
-        // maxDate: new Date() 
+        maxDate: new Date() 
     });
 
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        // maxDate: new Date() 
+        maxDate: new Date() 
  });
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',

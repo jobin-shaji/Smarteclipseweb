@@ -76,7 +76,6 @@ class DriverController extends Controller {
         }else{                   
                 return "
               
-                <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View!'><i class='fas fa-eye'></i> View </a>
                 <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='fas fa-check'></i> Ativate</button>";
             }
         })
