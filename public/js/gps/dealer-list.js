@@ -43,32 +43,40 @@ function callBackDataTable(){
     });
 }
 function delDealers(dealer){
-    var url = 'dealer/delete';
-    var data = {
-        uid : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this user?')){
+        var url = 'dealer/delete';
+        var data = {
+            uid : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateDealer(dealer){
-    var url = 'dealer/activate';
-    var data = {
-        id : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this user?')){
+        var url = 'dealer/activate';
+        var data = {
+            id : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 function disableDealers(dealer){
-    var url = 'dealer/disable';
-    var data = {
-        id : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this user?')){
+        var url = 'dealer/disable';
+        var data = {
+            id : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function enableDealer(dealer){
-    var url = 'dealer/enable';
-    var data = {
-        id : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this user?')){
+        var url = 'dealer/enable';
+        var data = {
+            id : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 

@@ -43,17 +43,21 @@ function callBackDataTable(){
     });
 }
 function delServicer(servicer){
-    var url = 'servicer/delete';
-    var data = {
-        id : servicer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this servicer?')){
+        var url = 'servicer/delete';
+        var data = {
+            id : servicer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 function activateServicer(servicer){
-    var url = 'servicer/activate';
-    var data = {
-        id : servicer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this servicer?')){
+        var url = 'servicer/activate';
+        var data = {
+            id : servicer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 

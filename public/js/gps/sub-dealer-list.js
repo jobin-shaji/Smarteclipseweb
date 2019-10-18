@@ -46,16 +46,20 @@ function callBackDataTable(){
 }
 
 function disableSubDealers(sub_dealer){
-    var url = 'sub-dealer/disable';
-    var data = {
-        id : sub_dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this user?')){
+        var url = 'sub-dealer/disable';
+        var data = {
+            id : sub_dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function enableSubDealer(sub_dealer){
-    var url = 'sub-dealer/enable';
-    var data = {
-        id : sub_dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this user?')){
+        var url = 'sub-dealer/enable';
+        var data = {
+            id : sub_dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
