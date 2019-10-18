@@ -45,50 +45,8 @@
             <div class="custom-content">
                <div class="switcher">
                   <table id="tblInputForm">
-                     <tr id="trProcessMedium" style="width:90px">
-                        <td>
-                           <label>Process Medium</label>
-                        </td>
-                        <td>
-                           <div class="form-check" id="optprocessMedium">
-                              <!--<input type="radio" name="gender" value="male"> Male<br>-->
-                              <label>
-                              <input type="radio" name="optionsRadios" value="" id="optServer">
-                              <span>Server</span>
-                              </label>
-                              <label>
-                              <input type="radio" name="optionsRadios" value="" checked="" id="optJson">
-                              <span>Json</span>
-                              </label>
-                             
-                           </div>
-                        </td>
-                     </tr>
-                     <tr id="trVehicle" style="width:90px">
-                        <td>
-                           <label>Vehicle ID</label>
-                        </td>
-                        <td>
-                           <textarea id="txtVehicleID" style="width:140px;resize:none" rows="1">  </textarea>
-                        </td>
-                     </tr>
-                     <tr id="trStartDate" style="width:90px">
-                        <td><label>start_date</label></td>
-                        <td>
-                           <textarea id="txtStartDate" style="width:140px;resize:none" rows="1">  </textarea>
-                           
-                        </td>
-                     </tr>
-                     <tr id="trEndDate" style="width:90px">
-                        <td><label>end_date</label></td>
-                        <td>
-                           <textarea id="txtEnddate" style="width:140px;resize:none" rows="1">  </textarea>
-                        </td>
-                     </tr>
-                     <tr style="width:90px" id="trSelectFile">
-                        <td><label>Select File</label></td>
-                        <td><input type="file" class="form-control-file" id="exampleFormControlFile1"></td>
-                     </tr>
+                    
+                   
                      <tr style="width:90px">
                         <td><label>Select Speed (km/hr)         </label></td>
                         <td>
@@ -104,12 +62,7 @@
                               <option value="80">80</option>
                               <option value="90">90</option>
                               <option value="100">100</option>
-                              <option value="1000">1000</option>
-                              <option value="1870">1870</option>
-                              <option value="2000">2000</option>
-                              <option value="3000">3000</option>
-                              <option value="6000">6000</option>
-                              <option value="7000">7000</option>
+                              <option value="200">200</option>
                            </select>
                         </td>
                      </tr>
@@ -141,7 +94,6 @@
                         </td>
                      </tr>
                   </table>
-                  <button class="btn btn-primary btn-sm" id="btnGetRoute">Route</button>
                   <button class="btn btn-primary btn-sm" id="btnPlay">Play</button>
                   <button class="btn btn-primary btn-sm" id="btnPause">Pause</button>
                   <button class="btn btn-primary btn-sm" id="btnReset">Reset</button>
@@ -190,6 +142,9 @@
       <script type="text/javascript">
         $(document).ready(function() {
            getInputfromServer();
+           playVehicle()
+           
+           });
       </script>
 
       <script>
@@ -834,7 +789,7 @@
          );
          
          function getInputfromServer() {
-             debugger
+    
 
              var vehicle_id=$.urlParam('vehicle_id');
              var start_date=$.urlParam('from_date');
@@ -850,25 +805,17 @@
                  url: 'https://gpsvst.vehiclest.com/vehicle_replay',
                  data: Objdata,
                  async: false,
-                 //dataType: "json",
-                 //contentType: "application/json; charset=utf-8",
                  success: function (response) {
-                     //debugger;
+                
                      JsonData = CreateJsonDataFile(JSON.stringify(response));                    
                      LoadRMEAPI(JsonData);
-                     //LoadRMEAPI(JsonData);
-                     debugger;
-                     // alert("Saved Sucessfully!");
+                    
                  },
                  failure: function (response) {
-                     debugger;
-                     //alert("Not Saved");
-                     //sucessmessage = false;
+                    
                  },
                  error: function (response) {
-                     debugger;
-                     //alert("Error in Saving");
-                     //sucessmessage = false;
+                    
                  }
              });
          
@@ -876,31 +823,12 @@
          }
 
 
+        
          
-         $('#btnGetRoute').click(function () {
-             getInputfromServer();
-            
-         });
-         
-         $('#btnPlay').click(function () {
-             //debugger;
-             // bearsMarker = null;
-         
-             var optServerChecked = $('[id="optServer"]').is(':checked');
-             var optJsonChecked = $('[id="optJson"]').is(':checked');
-             //debugger;
-             if (optServerChecked == true) {
-                 //getInputfromServer();
-             }
-             else if (optJsonChecked == true) {
-                 if ($('#exampleFormControlFile1').get(0).files.length === 0) {
-                     alert("Kindly select the File to simulate the Route");
-                     $("#btnPlay").attr("disabled", false);
-                     return;
-                 }
-             }
-         
-             //debugger;
+        
+          // function playVehicle(){
+           $('#btnPlay').click(function () {
+           
              $('#lblSpeedValue').val('');
              $('#lblKMValue').val('');
              CurrentLinkID = '';
@@ -918,15 +846,12 @@
              MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[0]['lat'], full_geometry[0]['lng']), { icon: icons["#000000"] }));
              MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[full_geometry.length - 1]['lat'], full_geometry[full_geometry.length - 1]['lng']), { icon: icons["#000000"] }));
              map.addObject(MarkerStartEnd);
-         
-             //if (optJsonChecked == true) {
-             //    MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[0]['lat'], full_geometry[0]['lng']), { icon: icons["#000000"] }));
-             //    MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[full_geometry.length - 1]['lat'], full_geometry[full_geometry.length - 1]['lng']), { icon: icons["#000000"] }));
-             //    map.addObject(MarkerStartEnd);
-         
-             //}
+             map.setZoom(16, true);
+             
              arrayCount = Pausecontinue('', inpUserSpeed);
-         });
+
+          });
+         
          
          function Pausecontinue(j, inpUserSpeed) {
              //debugger;
@@ -939,25 +864,12 @@
              setTimeoutfunction = (function loopIt(i) {
                  setTimeout(function () {
          
-                     //if (full_geometry_additional[i]['linkid'] == '-571562901') {
-                     //    debugger;
-                     //    console.log('find')
-                     //}
-         
-                     //if (full_geometry_additional[i]['linkid'] == '-1211619850') {
-                     //    debugger;
-                     //    console.log('find')
-                     //}
+                   
          
                      var tmp = 0.000;
                      var tmpspeed = (3600 / inpUserSpeed) * (full_geometry_additional[i]['linkLength'] / 1000);
          
-                     //if (arrLinkGroup.find(o => o.linkid === full_geometry_additional[i]['linkid'])['segments'] == 0) {
-                     //    debugger;
-                     //}
-         
-                     //debugger;
-                     //traceSpeed = (tmpspeed / arrLinkGroup.find(o => o.linkid === full_geometry_additional[i]['linkid'])['segments']);
+                    
                      traceSpeed = (tmpspeed / arrLinkGroup.find(o => o.linkid == full_geometry_additional[i]['linkid'])['segments']);
                      traceSpeed = traceSpeed * 1000; // secods to Milliseconds
                      CurrentLinkID = full_geometry_additional[i]['linkid'];
@@ -1145,10 +1057,15 @@
              return x * 180.0 / Math.PI;
          }
          
-                 //$('#exampleFormControlFile1').click(function () {
-                 //    Reset();
-                 //});
-         
+         $.urlParam = function(name){
+              var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+              if (results==null){
+                 return null;
+              }
+              else{
+                 return decodeURIComponent(results[1] || 0);
+              }
+          }
       </script>
    </body>
 </html>
