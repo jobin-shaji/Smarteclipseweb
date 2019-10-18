@@ -24,7 +24,7 @@
         ?> 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $overspeedReportExport->vehicle->register_number }}</td>           
+            <td>{{ $overspeedReportExport->gps->vehicle->register_number }}</td>           
             <td>{{ $overspeedReportExport->alertType->description }}</td>
             <td>{{ $address }}</td>
             <td>{{ $overspeedReportExport->device_time }}</td>         
