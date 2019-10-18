@@ -278,7 +278,7 @@ class GeofenceController extends Controller {
             ->addColumn('action', function ($geofence) {  
             $b_url = \URL::to('/');              
             return "
-                <button onclick=deleteAssignedGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='fas fa-trash'></i> Deactivate </button>
+                <button onclick=deleteAssignedGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='fas fa-trash'></i> Delete </button>
                 <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->geofence_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View Geofence</a> ";               
             })
             ->rawColumns(['link', 'action'])         
