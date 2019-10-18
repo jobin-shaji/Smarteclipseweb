@@ -46,17 +46,21 @@ function callBackDataTable(){
 }
 
 function disableEndUser(end_user){
-    var url = 'client/disable';
-    var data = {
-        id : end_user
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this user?')){
+        var url = 'client/disable';
+        var data = {
+            id : end_user
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function enableEndUser(end_user){
-    var url = 'client/enable';
-    var data = {
-        id : end_user
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this user?')){
+        var url = 'client/enable';
+        var data = {
+            id : end_user
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 

@@ -50,18 +50,22 @@ function callBackDataTable(){
 }
 
 function deactivateGpsStatus(gps_id){
-    var url = 'gps-status/deactivate';
-    var data = {
-        id : gps_id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this device?')){
+        var url = 'gps-status/deactivate';
+        var data = {
+            id : gps_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateGpsStatus(gps_id){
-    var url = 'gps-status/activate';
-    var data = {
-        id : gps_id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this device?')){
+        var url = 'gps-status/activate';
+        var data = {
+            id : gps_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 
