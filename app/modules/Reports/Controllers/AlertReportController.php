@@ -40,7 +40,7 @@ class AlertReportController extends Controller
         // $client_id=\Auth::user()->client->id;
          $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
-        
+        ->withTrashed()
         ->get();
 
         $user=\Auth::user();        
@@ -97,6 +97,7 @@ class AlertReportController extends Controller
             'client_id'
         )
         ->where('client_id',$client)
+        ->withTrashed()
         ->get();     
         $single_vehicle_gps = [];
         foreach($VehicleGpss as $VehicleGps){
@@ -128,14 +129,14 @@ class AlertReportController extends Controller
        }
        else if($alert_id==0 && $vehicle_id!=0)
        {
-            $vehicle=Vehicle::find($vehicle_id);
+            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
             $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
        }
        else
        {
-            $vehicle=Vehicle::find($vehicle_id);
+            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
             $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('alert_type_id',$alert_id)
             ->where('gps_id',$vehicle->gps_id);

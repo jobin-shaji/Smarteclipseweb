@@ -60,7 +60,7 @@ class DailyKMReportExport implements FromView
             'frame_number',
             'checksum',            
             'gf_id',
-            \DB::raw('DATE(device_time) as date'),
+            \DB::raw('DATE(device_time) as date')
             // \DB::raw('sum(distance) as distance')
         )
         ->with('gps.vehicle')       
@@ -79,7 +79,7 @@ class DailyKMReportExport implements FromView
                 ->whereDate('device_time', '<=', $search_to_date);
             }    
         }else{
-            $vehicle=Vehicle::find($vehicle); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query = $query->where('gps_id',$vehicle->gps_id);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
