@@ -3,7 +3,7 @@ var purl = getUrl() + '/'+'gps-scan' ;
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length > 0) {
-    $('#warn').html('Scan Qr Code');
+    $('#warn').html('Scan QR Code');
     scanner.start(cameras[0]);
   } else {
      $('#warn').html('Camera not found , Please connect your camera');
@@ -11,8 +11,8 @@ Instascan.Camera.getCameras().then(function (cameras) {
 }).catch(function (e) {
 });
 scanner.addListener('scan', function (content) {
-  var imei=content;
-  var data = { imei : imei };
+  var serial_no=content;
+  var data = { serial_no : serial_no };
   $.ajax({
       type:'POST',
       url: purl,
@@ -29,11 +29,11 @@ scanner.addListener('scan', function (content) {
             }else{
                 items.push(res.gps_id);
                 var gps_imei_id=res.gps_id;
-                var gps_imei=res.gps_imei;
+                var gps_serial_no=res.gps_serial_no;
                 var gps_batch_number=res.gps_batch_number;
                 var gps_employee_code=res.gps_employee_code;
                 $("#gps_id").val(items); 
-                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_imei + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                 $("table tbody").append(markup);
                 var value = $('#gps_id').val();
                 if (value) {
@@ -64,6 +64,16 @@ function deleteValueArray(gps_id){
     }
 
 }
+
+$(function() {
+  $('input[name="type"]').on('click', function() {
+    if ($(this).is(':checked'))
+      $(this).next('#camera_enable').show();
+    else
+      $(this).next('#camera_enable').hide();
+  });
+});
+
 
 
 

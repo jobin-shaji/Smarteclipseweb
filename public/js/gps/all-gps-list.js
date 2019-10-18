@@ -11,6 +11,7 @@ function callBackDataTable(){
 
     $("#dataTable").DataTable({
         bStateSave: true,
+        responsive: true,
         bDestroy: true,
         bProcessing: true,
         serverSide: true,
@@ -36,7 +37,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'imei', name: 'imei'},
             {data: 'serial_no', name: 'serial_no'},
             {data: 'icc_id', name: 'icc_id'},

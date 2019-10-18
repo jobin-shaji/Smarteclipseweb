@@ -17,7 +17,7 @@
   
     <div class="container-fluid">
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive scrollmenu">
                 <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12">
@@ -26,10 +26,12 @@
                                   <tr>
                                     <th>Sl.No</th>
                                     <th>IMEI</th>
+                                    <th>Serial Number</th>
                                     <th>Version</th>
                                     <th>Batch Number</th>
                                     <th>Employee Code</th>
                                     <th>Model Name</th>
+                                    <th>Action</th>
                                   </tr>
                               </thead>
                           </table>

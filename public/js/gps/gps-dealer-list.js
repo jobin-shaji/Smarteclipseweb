@@ -37,10 +37,12 @@ function callBackDataTable(){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'gps.imei', name: 'gps.imei' },
+            {data: 'gps.serial_no', name: 'gps.serial_no' },
             {data: 'gps.version', name: 'gps.version'},
             {data: 'gps.batch_number', name: 'gps.batch_number'},
             {data: 'gps.employee_code', name: 'gps.employee_code'},
             {data: 'gps.model_name', name: 'gps.model_name'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

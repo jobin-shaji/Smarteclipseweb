@@ -1,44 +1,38 @@
+$(function () {
+    $('.select2').select2();           
+        $('#fromDate,#toDate').datetimepicker({
+            useCurrent: false,
+            minDate: moment()
+        });
+        $('#fromDate').datetimepicker().on('dp.change', function (e) {
+            var startdate=$(this).data('fromdate');
+            var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
+            incrementDay.add(1, 'days');
 
+            $('#toDate').data('DateTimePicker').minDate(incrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+        $('#toDate').datetimepicker().on('dp.change', function (e) {
+            
+            var decrementDay = moment(new Date(e.date));
+            decrementDay.subtract(0, 'days');
+            $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+        $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
+            var incrementDay = moment(new Date(e.date));
+            incrementDay.add(1, 'days');
+            $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
 
- $(function () {
-    
-
-    $('.select2').select2();
-
-           
-            $('#fromDate,#toDate').datetimepicker({
-                useCurrent: false,
-                minDate: moment()
-            });
-            $('#fromDate').datetimepicker().on('dp.change', function (e) {
-                var startdate=$(this).data('fromdate');
-                var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
-                $('#toDate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-
-            $('#toDate').datetimepicker().on('dp.change', function (e) {
-                
-                var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
-                $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-            $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
-                var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
-                $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-
-            $('#assignToDate').datetimepicker().on('dp.change', function (e) {
-                
-                var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
-                $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
+        $('#assignToDate').datetimepicker().on('dp.change', function (e) {
+            
+            var decrementDay = moment(new Date(e.date));
+            decrementDay.subtract(1, 'days');
+            $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
 
 
             $('#playback_fromDate').datetimepicker().on('dp.change', function (e) {
@@ -85,16 +79,17 @@
 
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
-        // maxDate: new Date() 
+        maxDate: new Date() 
     });
 
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        // maxDate: new Date() 
+        maxDate: new Date() 
  });
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        minDate: new Date()
+        // minDate: new Date()
+        minDate: moment().millisecond(0).second(0).minute(0).hour(0)    
          
  });
 $( ".date_expiry_edit" ).datetimepicker({ 
@@ -102,9 +97,14 @@ $( ".date_expiry_edit" ).datetimepicker({
     minDate: moment().millisecond(0).second(0).minute(0).hour(0)     
     // minDate: moment().subtract(1,'d')
  });
+
  $( ".manufacturing_date" ).datetimepicker({ 
-    format: 'DD-MM-YYYY',       
-    maxDate: new Date()
+    format: 'DD-MM-YYYY',
+    minDate: '2019-01-01',       
+    // maxDate: new Date(),
+    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
+    // useCurrent: false
+   
  });
 
 
@@ -988,7 +988,7 @@ function clientGps(res)
     length=res.devices.length;
    // console.log(res.devices[0].imei);
  for (var i = 0; i < length; i++) {
-         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].imei+'</option>';  
+         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
          $("#gps").append(gps);   
      }    
 }

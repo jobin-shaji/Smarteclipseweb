@@ -40,6 +40,7 @@ class SosController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
+        ->orderBy('id','desc')
         ->where('user_id',$user_id)
         ->get();
         return DataTables::of($sos)
@@ -55,8 +56,6 @@ class SosController extends Controller {
                 </button>";
             }else{
                  return "
-                <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-                <a href=".$b_url."/sos/".Crypt::encrypt($sos->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=activateSos(".$sos->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Activate
                 </button>";
             }
@@ -194,7 +193,7 @@ class SosController extends Controller {
         $encrypted_sos_id = encrypt($sos->id);
         $request->session()->flash('message', ' Sos updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('sos.edit',$encrypted_sos_id));  
+        return redirect(route('sos.details',$encrypted_sos_id));  
     }
 
     //delete sos details
@@ -534,7 +533,7 @@ class SosController extends Controller {
         }else{
             $rules = $this->sosRootTransferNullRule();
         }
-        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one qr code']);
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one QR code']);
         $this->validate($request, $rules);
         $dealer_user_id=$request->dealer_user_id;
         $dealer_name=$request->dealer_name;
@@ -562,37 +561,48 @@ class SosController extends Controller {
         $to_user_id = $request->dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
-        $uniqid=uniqid();
-        $order_number=$uniqid.date("Y-m-d h:i:s");
-        if($sos_array){
-            $sos_transfer = SosTransfer::create([
-              "from_user_id" => $from_user_id, 
-              "to_user_id" => $to_user_id,
-              "order_number" => $order_number,
-              "scanned_employee_code" => $scanned_employee_code,
-              "invoice_number" => $invoice_number,
-              "dispatched_on" => date('Y-m-d H:i:s')
-            ]);
-            $last_id_in_sos_transfer=$sos_transfer->id;
+        $transferred_devices=[];
+        $transfer_inprogress_devices = Sos::select('id')->where('user_id',null)->whereIn('id',$sos_array)->get();
+        foreach ($transfer_inprogress_devices as $devices) {
+            $transferred_devices[]=$devices->id;
         }
-        if($last_id_in_sos_transfer){
-            foreach ($sos_array as $sos_id) {
-                $sos_transfer_item = SosTransferItems::create([
-                  "sos_id" => $sos_id, 
-                  "sos_transfer_id" => $last_id_in_sos_transfer
+        if($transferred_devices){
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer-root.create'));
+        }else{
+            $uniqid=uniqid();
+            $order_number=$uniqid.date("Y-m-d h:i:s");
+            if($sos_array){
+                $sos_transfer = SosTransfer::create([
+                  "from_user_id" => $from_user_id, 
+                  "to_user_id" => $to_user_id,
+                  "order_number" => $order_number,
+                  "scanned_employee_code" => $scanned_employee_code,
+                  "invoice_number" => $invoice_number,
+                  "dispatched_on" => date('Y-m-d H:i:s')
                 ]);
-                if($sos_transfer_item){
-                    //update sos table
-                    $sos = Sos::find($sos_id);
-                    $sos->user_id =null;
-                    $sos->save();
+                $last_id_in_sos_transfer=$sos_transfer->id;
+            }
+            if($last_id_in_sos_transfer){
+                foreach ($sos_array as $sos_id) {
+                    $sos_transfer_item = SosTransferItems::create([
+                      "sos_id" => $sos_id, 
+                      "sos_transfer_id" => $last_id_in_sos_transfer
+                    ]);
+                    if($sos_transfer_item){
+                        //update sos table
+                        $sos = Sos::find($sos_id);
+                        $sos->user_id =null;
+                        $sos->save();
+                    }
                 }
             }
+            $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
+            $request->session()->flash('message', 'Sos Transfer successfully completed!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
-        $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-        $request->session()->flash('message', 'Sos Transfer successfully completed!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
     }
 
     // create dealer sos transfer
@@ -635,7 +645,7 @@ class SosController extends Controller {
         }else{
             $rules = $this->sosDealerTransferNullRule();
         }
-        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one qr code']);
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one QR code']);
         $this->validate($request, $rules);
         $sub_dealer_user_id=$request->sub_dealer_user_id;
         $sub_dealer_name=$request->sub_dealer_name;
@@ -663,37 +673,48 @@ class SosController extends Controller {
         $to_user_id = $request->sub_dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
-        $uniqid=uniqid();
-        $order_number=$uniqid.date("Y-m-d h:i:s");
-        if($sos_array){
-            $sos_transfer = SosTransfer::create([
-              "from_user_id" => $from_user_id, 
-              "to_user_id" => $to_user_id,
-              "order_number" => $order_number,
-              "scanned_employee_code" => $scanned_employee_code,
-              "invoice_number" => $invoice_number,
-              "dispatched_on" => date('Y-m-d H:i:s')
-            ]);
-            $last_id_in_sos_transfer=$sos_transfer->id;
+        $transferred_devices=[];
+        $transfer_inprogress_devices = Sos::select('id')->where('user_id',null)->whereIn('id',$sos_array)->get();
+        foreach ($transfer_inprogress_devices as $devices) {
+            $transferred_devices[]=$devices->id;
         }
-        if($last_id_in_sos_transfer){
-            foreach ($sos_array as $sos_id) {
-                $sos_transfer_item = SosTransferItems::create([
-                  "sos_id" => $sos_id, 
-                  "sos_transfer_id" => $last_id_in_sos_transfer
+        if($transferred_devices){
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer-dealer.create'));
+        }else{
+            $uniqid=uniqid();
+            $order_number=$uniqid.date("Y-m-d h:i:s");
+            if($sos_array){
+                $sos_transfer = SosTransfer::create([
+                  "from_user_id" => $from_user_id, 
+                  "to_user_id" => $to_user_id,
+                  "order_number" => $order_number,
+                  "scanned_employee_code" => $scanned_employee_code,
+                  "invoice_number" => $invoice_number,
+                  "dispatched_on" => date('Y-m-d H:i:s')
                 ]);
-                if($sos_transfer_item){
-                    //update sos table
-                    $sos = Sos::find($sos_id);
-                    $sos->user_id =null;
-                    $sos->save();
+                $last_id_in_sos_transfer=$sos_transfer->id;
+            }
+            if($last_id_in_sos_transfer){
+                foreach ($sos_array as $sos_id) {
+                    $sos_transfer_item = SosTransferItems::create([
+                      "sos_id" => $sos_id, 
+                      "sos_transfer_id" => $last_id_in_sos_transfer
+                    ]);
+                    if($sos_transfer_item){
+                        //update sos table
+                        $sos = Sos::find($sos_id);
+                        $sos->user_id =null;
+                        $sos->save();
+                    }
                 }
             }
+            $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
+            $request->session()->flash('message', 'Sos Transfer successfully completed!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
-        $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-        $request->session()->flash('message', 'Sos Transfer successfully completed!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
     }
 
     // create sub dealer sos transfer
@@ -736,7 +757,7 @@ class SosController extends Controller {
         }else{
             $rules = $this->sosSubDealerTransferNullRule();
         }
-        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one qr code']);
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one QR code']);
         $this->validate($request, $rules);
         $client_user_id=$request->client_user_id;
         $client_name=$request->client_name;
@@ -759,43 +780,60 @@ class SosController extends Controller {
     // save dealer sos transfer/transfer sos from sub dealer to client
     public function proceedConfirmSubDealerSosTransfer(Request $request) 
     {
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $clientsOfSubdealer=Client::select('user_id')->where('sub_dealer_id',$sub_dealer_id)->get();
+        $singleClientsOfSubdealer=[];
+        foreach ($clientsOfSubdealer as $client) {
+            $singleClientsOfSubdealer[]=$client->user_id;
+        }
         $from_user_id = \Auth::user()->id;
         $sos_array = $request->sos_id;
         $to_user_id = $request->client_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
-        $uniqid=uniqid();
-        $order_number=$uniqid.date("Y-m-d h:i:s");
-        if($sos_array){
-            $sos_transfer = SosTransfer::create([
-              "from_user_id" => $from_user_id, 
-              "to_user_id" => $to_user_id,
-              "order_number" => $order_number,
-              "scanned_employee_code" => $scanned_employee_code,
-              "invoice_number" => $invoice_number,
-              "dispatched_on" => date('Y-m-d H:i:s'),
-              "accepted_on" => date('Y-m-d H:i:s')
-            ]);
-            $last_id_in_sos_transfer=$sos_transfer->id;
+        $transferred_devices=[];
+        $transfer_inprogress_devices = Sos::select('id')->whereIn('user_id',$singleClientsOfSubdealer)->whereIn('id',$sos_array)->get();
+        foreach ($transfer_inprogress_devices as $devices) {
+            $transferred_devices[]=$devices->id;
         }
-        if($last_id_in_sos_transfer){
-            foreach ($sos_array as $sos_id) {
-                $sos_transfer_item = SosTransferItems::create([
-                  "sos_id" => $sos_id, 
-                  "sos_transfer_id" => $last_id_in_sos_transfer
+        if($transferred_devices){
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer-sub-dealer.create'));
+        }else{
+            $uniqid=uniqid();
+            $order_number=$uniqid.date("Y-m-d h:i:s");
+            if($sos_array){
+                $sos_transfer = SosTransfer::create([
+                  "from_user_id" => $from_user_id, 
+                  "to_user_id" => $to_user_id,
+                  "order_number" => $order_number,
+                  "scanned_employee_code" => $scanned_employee_code,
+                  "invoice_number" => $invoice_number,
+                  "dispatched_on" => date('Y-m-d H:i:s'),
+                  "accepted_on" => date('Y-m-d H:i:s')
                 ]);
-                if($sos_transfer_item){
-                    //update sos table
-                    $sos = Sos::find($sos_id);
-                    $sos->user_id =$to_user_id;
-                    $sos->save();
+                $last_id_in_sos_transfer=$sos_transfer->id;
+            }
+            if($last_id_in_sos_transfer){
+                foreach ($sos_array as $sos_id) {
+                    $sos_transfer_item = SosTransferItems::create([
+                      "sos_id" => $sos_id, 
+                      "sos_transfer_id" => $last_id_in_sos_transfer
+                    ]);
+                    if($sos_transfer_item){
+                        //update sos table
+                        $sos = Sos::find($sos_id);
+                        $sos->user_id =$to_user_id;
+                        $sos->save();
+                    }
                 }
             }
+            $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
+            $request->session()->flash('message', 'Sos Transfer successfully completed!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
-        $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-        $request->session()->flash('message', 'Sos Transfer successfully completed!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
     }
 
     //view sos transfer list
@@ -1040,7 +1078,7 @@ class SosController extends Controller {
           'sos_id' => 'required',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
         ];
         return $rules;
     }
@@ -1051,7 +1089,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
       ];
         return $rules;
     }
@@ -1062,7 +1100,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'sub_dealer_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required|unique:sos_transfers'
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
         ];
         return $rules;
     }
@@ -1073,7 +1111,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
       ];
         return $rules;
     }
@@ -1084,7 +1122,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required|unique:sos_transfers'
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
         ];
         return $rules;
     }

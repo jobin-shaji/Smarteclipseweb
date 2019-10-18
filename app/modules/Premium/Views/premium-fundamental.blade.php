@@ -32,7 +32,7 @@
           <li><i class="far fa-map"></i>Point of interest</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-          <li style="height:24px"></li> 
+          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>Price: After 1 year 1200+Tax </li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -99,10 +99,12 @@
           <li><i class="far fa-file-alt"></i>Invoice</li>
           <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2%">Towing alert</li>
           <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
-          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform</li>
+          <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
+          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform*</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
-          <li style="height:30px"></li> 
+          <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
+Price: INR 1900+Tax </li>  
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
@@ -153,7 +155,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now</a></button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 2600+Tax)</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
@@ -161,10 +163,10 @@
            <li><i class="far fa-caret-square-left"></i>Route playback history(4 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(4 Geofences)</li>
           <li><img src="{{url('/')}}/assets/images/logo.png" style="margin:0 2%">Client Logo</li>
-          <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
+          
           <li><img src="{{url('/')}}/assets/images/immobilizer.png" style="margin:0 2%">Immobilizer</li>
-          <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)</li>
-          <li><img src="{{url('/')}}/assets/images/traffic.png" style="margin:0 2%">Traffic offence</li>
+          <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)*</li>
+          <li><img src="{{url('/')}}/assets/images/traffic.png" style="margin:0 2%">Traffic offence*</li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
@@ -223,7 +225,7 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now</a></button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now(INR 5 lakh+tax)</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">

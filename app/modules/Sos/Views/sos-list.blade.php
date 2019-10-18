@@ -26,7 +26,7 @@
 
   <div class="container-fluid">
     <div class="card-body">
-      <div class="table-responsive">
+      <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
@@ -36,9 +36,9 @@
                   <tr>
                       <th>Sl.No</th>
                       <th>Serial NO</th>
+                      <th>Model Name</th>
                       <th>Manufacturing Date</th>
                       <th>Brand</th>
-                      <th>Model Name</th>
                       <th>Version</th>
                       <th>Action</th>
                   </tr>

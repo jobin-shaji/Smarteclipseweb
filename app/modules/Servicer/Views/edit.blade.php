@@ -40,6 +40,11 @@
                         <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{$servicer->name}}" > 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                       </div>
+                        @if ($errors->has('name'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('name') }}</strong>
+                      </span>
+                    @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
@@ -47,6 +52,11 @@
                         <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $servicer->address }}" >
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
+                        @if ($errors->has('address'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('address') }}</strong>
+                      </span>
+                    @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
@@ -54,6 +64,12 @@
                         <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $servicer->user->mobile}}" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
+                      @if ($errors->has('mobile'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                      </span>
+                    @endif
+
                     </div>
                      @if (!($errors->has('email')))
                     <div class="form-group row" style="float:none!important">               

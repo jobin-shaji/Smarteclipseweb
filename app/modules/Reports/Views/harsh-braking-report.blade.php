@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="card-body">
       <div >
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 scrollmenu">
           <div class="row">
             <div class="col-sm-12">
               <div class="col-md-12 col-md-offset-1">

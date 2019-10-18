@@ -53,6 +53,11 @@
               </div>
 
               <div class="form-group has-feedback">
+                <label>Model Name</label>
+                <input type="text" class="form-control" value="{{ $sos->model_name}}" disabled> 
+              </div>
+
+              <div class="form-group has-feedback">
                 <label>Manufacturing Date</label>
                 <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($sos->manufacturing_date))}}" disabled> 
               </div>
@@ -60,11 +65,6 @@
                <div class="form-group has-feedback">
                 <label>Brand</label>
                 <input type="text" class="form-control" value="{{ $sos->brand}}" disabled> 
-              </div>
-
-              <div class="form-group has-feedback">
-                <label>Model Name</label>
-                <input type="text" class="form-control" value="{{ $sos->model_name}}" disabled> 
               </div>
 
               <div class="form-group has-feedback">

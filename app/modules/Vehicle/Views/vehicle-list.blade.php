@@ -24,7 +24,7 @@
    
     <div class="container-fluid">
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive scrollmenu">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12">
@@ -34,7 +34,7 @@
                             <th>Sl.No</th>
                             <th>Vehicle Name</th>
                             <th>Register Number</th>
-                            <th>IMEI</th>
+                            <th>Serial Number</th>
                             <th>Driver</th>
                             <th>Vehicle Type</th>
                             <th style="width:160px;">Action</th>
