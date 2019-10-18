@@ -122,8 +122,8 @@ function toast(res){
         console.log( res.message, res.title);
     }
     else if(res.status == 0) {
-        console.log('Error', res.message);
-        toastr.error(res.message, 'Error');
+        // console.log('Error', res.message);
+        // toastr.error(res.message, 'Error');
     }
     else if(res.status == 'dbcount'){
         dbcount(res);
