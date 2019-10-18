@@ -51,7 +51,7 @@ class VehicleController extends Controller {
             ->where('client_id',$client_id)
             ->with('vehicleType:id,name')
             ->with('driver:id,name')
-            ->with('gps:id,imei')
+            ->with('gps:id,imei,serial_no')
             ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()
@@ -540,7 +540,7 @@ class VehicleController extends Controller {
         ->where('client_id',$client_id)
         ->with('Fromdriver:id,name')
         ->with('Todriver:id,name')
-        ->with('vehicle:id,name,register_number')
+        ->with('vehicle:id,name,register_number')        
         ->get();
 // dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
@@ -867,7 +867,7 @@ class VehicleController extends Controller {
             )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,imei')
+            ->with('gps:id,imei,serial_no')
             ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()
@@ -1752,7 +1752,7 @@ class VehicleController extends Controller {
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'required',
-            'path' => 'required'
+            'path' => 'required|mimes:jpeg,png|max:4096'
 
         ];
         return  $rules;
@@ -1763,7 +1763,8 @@ class VehicleController extends Controller {
     {
         $rules = [
             'vehicle_id' => 'required',
-            'expiry_date' => 'nullable'
+            'expiry_date' => 'nullable',
+            'path'=>'mimes:jpeg,png|max:4096'
 
         ];
         return  $rules;

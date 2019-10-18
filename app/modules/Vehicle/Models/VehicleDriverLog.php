@@ -22,6 +22,6 @@ class VehicleDriverLog extends Model
 
     // vehicle
     public function vehicle(){
-    	return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
+    	return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id')->withTrashed();
     }
 }
