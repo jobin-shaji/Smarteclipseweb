@@ -45,7 +45,7 @@ Daily KM Report
                           <div class="col-lg-3 col-md-3">          
                           <div class="form-group">          
                             <label> From Date</label>
-                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate">
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                           </div>
 
@@ -54,7 +54,7 @@ Daily KM Report
                            <div class="form-group">          
 
                             <label> To date</label>
-                            <input type="text" class="datepicker form-control" id="toDate" name="toDate">
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
 

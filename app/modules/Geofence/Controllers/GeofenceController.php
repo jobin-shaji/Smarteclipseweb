@@ -112,12 +112,13 @@ class GeofenceController extends Controller {
             $b_url = \URL::to('/');
             if($geofence->deleted_at == null){  
             return " 
-             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>           
+             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>  
+             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> Edit</i> </a>         
                            
                 <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate </button>";
                 }else{ 
                 return "
-                <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>  
+                
                 <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>";
             }
         })
@@ -430,5 +431,51 @@ class GeofenceController extends Controller {
                 'message' => 'Geofence added successfully'
             ]);
         }
+    }
+
+    public function fenceEdit(Request $request)
+    {
+        
+        $decrypted = Crypt::decrypt($request->id);
+        $user_id=\Auth::user()->id;
+        $client=\Auth::user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude; 
+        $geofence = Geofence::find(decrypt($request->id));  
+        return view('Geofence::fence-edit',['lat' => $lat,'lng' => $lng,'geofence_id'=>$decrypted,'geofence'=>$geofence]);        
+    }
+
+
+    public function updateFence(Request $request){
+        $user_id=\Auth::user()->id;
+        $client_id=\Auth::user()->client->id;
+        $name=$request->name;
+        $geofence_id=$request->geofence_id;
+        $geofence  =  Geofence::where('id',$geofence_id)->first(); 
+        $geofence->name=$name;
+        if($request->polygons!=null){
+        foreach ($request->polygons as $polygon) {
+                $response="";
+                foreach ($polygon as $single_coordinate) {
+                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                }
+                $response=rtrim($response,"#");
+                $last_id=Geofence::max('id');
+                $code_last_id=$last_id+1;
+                $geofence->cordinates=$polygon;
+               
+                $geofence->response=$response;
+                // $geofence->code=$code;
+                                             
+            } 
+        } 
+        $geofence->save();                            
+        return response()->json([
+            'status' => 'edit geofence',
+            'title' => 'Success',
+            'redirect' => url('/geofence'),
+            'message' => 'Geofence added successfully'
+        ]);
+        
     }
 }

@@ -453,6 +453,14 @@ class DashboardController extends Controller
         {
             $vehcile_mode="Stopped";
         }
+        // if($battery_status>=)
+        // {
+
+        // }
+        // else if($battery_status>=)
+        // {
+            
+        // }
         if($gps){     
             $response_data = array(
                 'status'  => 'vehicle_status',
