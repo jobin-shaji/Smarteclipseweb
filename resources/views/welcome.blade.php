@@ -81,12 +81,12 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <!-- <div class="title m-b-md">
                     SMART ECLIPSE
                 </div>
 
 
-                <div class="links">Developed by <a href="http://vstmobility.com">VST Mobility Solutions</a>
+                <div class="links">Developed by <a href="http://vstmobility.com">VST Mobility Solutions</a> -->
 
                 </div>
             </div>
