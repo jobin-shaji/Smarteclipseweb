@@ -23,18 +23,18 @@ class AlertController extends Controller {
          
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
-                    ->where('client_id',$client_id)
-                    ->get();
+        ->where('client_id',$client_id)
+        ->get();
         $userAlert = UserAlerts::select(
-                'id',
-                'client_id',
-                'alert_id',
-                'status'
-               )
-            ->with('alertType:id,code,description')                
-            ->where('client_id',$client_id)           
-            ->get();   
-            // dd($userAlert);           
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description')                
+        ->where('client_id',$client_id)           
+        ->get();   
+        // dd($userAlert);           
 		return view('Alert::alert-list',['vehicles'=>$vehicles,'userAlerts'=>$userAlert]);
 	}
 
@@ -46,7 +46,6 @@ class AlertController extends Controller {
         $vehicle_id= $request->vehicle_id;            
         $from = $request->from_date;
         $to = $request->to_date;
-          // dd($alert_id);
         $VehicleGpss=Vehicle::select(
             'id',
             'gps_id',
@@ -58,7 +57,15 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        
+        $count = Alert::whereIn('gps_id', $single_vehicle_gps)->where('status',0)->count();  
+       
+           $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
+            foreach($confirm_alerts as $confirm_alert){
+                $confirm_alert->status=1;
+                $confirm_alert->save(); 
+            }    
+          // dd($alert_id);
+               
         $alert = Alert::select(
                 'id',
                 'alert_type_id',
@@ -72,64 +79,13 @@ class AlertController extends Controller {
                 ->with('gps.vehicle')
                 ->with('gps:id,imei')
                 ->orderBy('id', 'desc')
-                ->limit(1000);
-                // ->with('client:id,name');
-                if($alert_id==null && $vehicle_id==null)
-                { 
-                   $alert =$alert->whereIn('gps_id',$single_vehicle_gps)
-                    ->where('status',0);
-                }
-                else
-                {
-                  
-                    $alert =$alert->whereIn('gps_id',$single_vehicle_gps)
-                    ->where('alert_type_id',$alert_id)
-                    ->where('status',0);
-                    if($from){
-                      $search_from_date=date("Y-m-d", strtotime($from));                      
-                      $search_to_date=date("Y-m-d", strtotime($to));
-                      $alert = $alert->whereDate('device_time', '>=', $search_from_date)
-                      ->whereDate('device_time', '<=', $search_to_date);
-                    }                   
-                } 
-                $alert =$alert->get();
+                ->whereIn('gps_id',$single_vehicle_gps)
+                ->where('status',1)
+                ->limit($count)
+                ->get();
                 return DataTables::of($alert)
                 ->addIndexColumn()
-        //      ->addColumn('address', function ($alert) {
-        //          $latitude=$alert->latitude;
-        //         $longitude=$alert->longitude;
-        //     if(!empty($latitude) && !empty($longitude)){
-        //     //Send request and receive json data by address
-        //     $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-        //     $output = json_decode($geocodeFromLatLong);         
-        //     $status = $output->status;
-        //     //Get address from json data
-        //     $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-        // }
-
-
-        //     return  $address ;
-        // })
-            // ->addColumn('location', function ($alert) {
-            //      $latitude= $alert->latitude;
-            //      $longitude=$alert->longitude;          
-            //     if(!empty($latitude) && !empty($longitude)){
-            //         //Send request and receive json data by address
-            //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-            //         $output = json_decode($geocodeFromLatLong);         
-            //         $status = $output->status;
-            //         //Get address from json data
-            //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-            //         //Return address of the given latitude and longitude
-            //         if(!empty($address)){
-            //              $location=$address;
-            //         return $location;
-                        
-            //         }
-                
-            //     }
-            // })
-            ->addColumn('action', function ($alert) {
+                ->addColumn('action', function ($alert) {
                 // <button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
                  $b_url = \URL::to('/');
             return "
@@ -142,21 +98,43 @@ class AlertController extends Controller {
     // alert verification
     public function verifyAlert(Request $request)
     {
-        $alert = Alert::find($request->id);
-        if($alert == null){
-            return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Alert does not exist'
-            ]);
+        $flag=$request->flag;
+        // dd($flag);
+        $user = $request->user();  
+        $client=Client::where('user_id',$user->id)->first();
+        $client_id=$client->id;
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $alert->status = 1;
-        $alert->save();
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Alert verified successfully'
-        ]);
+        $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
+        foreach($confirm_alerts as $confirm_alert){
+            $confirm_alert->status=1;
+            $confirm_alert->save(); 
+        }   
+
+        // $alert = Alert::find($request->id);
+        // if($alert == null){
+        //     return response()->json([
+        //         'status' => 0,
+        //         'title' => 'Error',
+        //         'message' => 'Alert does not exist'
+        //     ]);
+        // }
+        // $alert->status = 1;
+        // $alert->save();
+        // return response()->json([
+        //     'status' => 1,
+        //     'title' => 'Success',
+        //     'message' => 'Alert verified successfully'
+        // ]);
      }
 
     //alert creation page
@@ -348,6 +326,7 @@ class AlertController extends Controller {
     //Alert Notification
     public function notification(Request $request)
     {
+        $flag=$request->flag;
         $user = $request->user();  
         $client=Client::where('user_id',$user->id)->first();
         $client_id=$client->id;
@@ -362,7 +341,12 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-         
+        // $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
+        // foreach($confirm_alerts as $confirm_alert){
+        //     $confirm_alert->status=1;
+        //     $confirm_alert->save(); 
+        // }    
+ 
         $alert = Alert::select(
             'id',
             'alert_type_id',
@@ -382,17 +366,20 @@ class AlertController extends Controller {
         ->orderBy('id','DESC')
         ->limit(4)
         ->get();
+        // dd($alert);
         if($user->hasRole('client')){
             return response()->json([                          
                 'alert' => $alert,
-                'status' => 'alertNotification'           
+                'status' => 'alertNotification',
+                'flag' => $flag           
             ]);
         }  
     }
 
 
-    function notificationAlertCount()
+    function notificationAlertCount(Request $request)
     {
+        $flag=$request->flag;
         $user=\Auth::user();
         if($user->hasRole('client')){
         $client_id=\Auth::user()->client->id;
@@ -415,7 +402,8 @@ class AlertController extends Controller {
         ->count();
             return response()->json([                          
                 'notification_count' => $alert,
-                'status' => 'success'           
+                'status' => 'success',
+                'flag' => $flag          
             ]);
         }else{
            return response()->json([                          

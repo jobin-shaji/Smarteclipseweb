@@ -356,7 +356,7 @@
 
                         @role('client')
                         <li class="nav-item dropdown">
-                            <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
+                            <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
                                 <span class="bell_value" id="bell_notification_count">0</span>
                             </span><i class="mdi mdi-bell font-24"></i>
                             
