@@ -80,7 +80,19 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <span class="logo-lg"><b><img src="{{asset('images/logo.png')}}" height="40px"></b></span>
+                                <?php
+                                $url=url()->current();
+                                $rayfleet_key="rayfleet";
+                                $eclipse_key="eclipse";
+                                if (strpos($url, $rayfleet_key) == true) {  ?>
+                                    <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.jpg" height="40px"></b></span>
+                                <?php } 
+                                else if (strpos($url, $eclipse_key) == true) { ?>
+                                    <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.png" height="40px"></b></span> 
+                                <?php }
+                                else { ?>
+                                    <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.png" height="40px"></b></span> 
+                                <?php } ?> 
                             </li>
                         @else
                             <li class="nav-item dropdown">

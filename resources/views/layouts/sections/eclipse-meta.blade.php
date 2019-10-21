@@ -64,7 +64,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
-    <title>GPS-Admin</title>
+    <title>SMART ECLIPSE</title>
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
     <!-- Custom CSS -->

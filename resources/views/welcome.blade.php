@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>GPS ECLIPSE</title>
+        <title>SMART ECLIPSE</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -81,12 +81,12 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <!-- <div class="title m-b-md">
                     SMART ECLIPSE
                 </div>
 
 
-                <div class="links">Developed by <a href="http://vstmobility.com">VST Mobility Solutions</a>
+                <div class="links">Developed by <a href="http://vstmobility.com">VST Mobility Solutions</a> -->
 
                 </div>
             </div>
