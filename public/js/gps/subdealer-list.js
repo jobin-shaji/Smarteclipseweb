@@ -44,17 +44,21 @@ function callBackDataTable(){
     });
 }
 function delSubDealers(dealer){
-    var url = 'sub-dealer/delete';
-    var data = {
-        uid : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this user?')){
+        var url = 'sub-dealer/delete';
+        var data = {
+            uid : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateSubDealer(dealer){
-    var url = 'sub-dealer/activate';
-    var data = {
-        id : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this user?')){
+        var url = 'sub-dealer/activate';
+        var data = {
+            id : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 

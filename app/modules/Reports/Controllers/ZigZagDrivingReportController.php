@@ -29,12 +29,12 @@ class ZigZagDrivingReportController extends Controller
         $to = $request->data['to_date']; 
         if($vehicle!=0)
         {
-            $vehicle_details =Vehicle::find($vehicle);
+            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
             $single_vehicle_ids = $vehicle_details->gps_id;
         }
         else
         {
-            $vehicle_details =Vehicle::where('client_id',$client)->get(); 
+            $vehicle_details =Vehicle::where('client_id',$client)->withTrashed()->get(); 
             
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 

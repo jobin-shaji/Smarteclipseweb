@@ -43,17 +43,21 @@ function callBackDataTable(){
     });
 }
 function delEmployee(employee){
-    var url = 'employee/delete';
-    var data = {
-        uid : employee
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this employee?')){
+        var url = 'employee/delete';
+        var data = {
+            uid : employee
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateEmployee(employee){
-    var url = 'employee/activate';
-    var data = {
-        id : employee
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this employee?')){
+        var url = 'employee/activate';
+        var data = {
+            id : employee
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 

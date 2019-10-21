@@ -14,7 +14,7 @@ Daily KM Report
   <div class="container-fluid">
     <div class="card-body">
       <div >
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 scrollmenu">
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
           <div class="row">
             <div class="col-sm-12">
               <div class="col-md-12 col-md-offset-1">
@@ -25,18 +25,13 @@ Daily KM Report
                         
                         <div class="cover_div_search">
                         <div class="row">
-                          
                           <div class="col-lg-3 col-md-3"> 
-                          <div class="form-group">    
-                            <label>Vehicle</label>           
-                            <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-
-                              <option value="" selected="selected" disabled="disabled">select</option>
-
+                           <div class="form-group">
+                            <label>Vehicle</label>                     
+                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="0">All</option>
-
                               @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->name}}||{{$vehicles->register_number}}</option>
+                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                               @endforeach  
                             </select>
                           </div>
@@ -45,7 +40,7 @@ Daily KM Report
                           <div class="col-lg-3 col-md-3">          
                           <div class="form-group">          
                             <label> From Date</label>
-                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate">
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                           </div>
 
@@ -54,7 +49,7 @@ Daily KM Report
                            <div class="form-group">          
 
                             <label> To date</label>
-                            <input type="text" class="datepicker form-control" id="toDate" name="toDate">
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
 
