@@ -71,6 +71,7 @@ class AlertController extends Controller {
                 ->with('alertType:id,code,description')
                 ->with('gps.vehicle')
                 ->with('gps:id,imei')
+                ->orderBy('id', 'desc')
                 ->limit(1000);
                 // ->with('client:id,name');
                 if($alert_id==null && $vehicle_id==null)

@@ -90,7 +90,7 @@ class TrackingReportController extends Controller
         }
        else
         {
-            $vehicle=Vehicle::find($vehicle); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
         }
                

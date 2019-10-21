@@ -94,7 +94,7 @@ class DailyKMReportController extends Controller
                 ->whereDate('device_time', '<=', $search_to_date);
             }    
         }else{
-            $vehicle=Vehicle::find($vehicle_id); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle_id); 
             $query = $query->where('gps_id',$vehicle->gps_id);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));

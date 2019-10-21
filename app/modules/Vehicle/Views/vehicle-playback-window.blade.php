@@ -1033,8 +1033,6 @@ Create matched/unmatched markers that can be used to draw the original/matched t
         full_geometry_additional = new Array();
         full_geometry = new Array();
         arrLinkGroup = new Array();
-
-
         $('#lblSpeedValue').val('0');
         $('#lblKMValue').val('');
         $('#lblKMRouteCalculation').val('0');

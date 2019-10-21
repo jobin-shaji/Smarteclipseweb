@@ -49,7 +49,7 @@ class GeofenceReportController extends Controller
         }
         else
         {
-            $vehicle=Vehicle::find($vehicle); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query =GpsData::select(
                 'id', 
                 'alert_id',    
