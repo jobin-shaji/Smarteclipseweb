@@ -11,7 +11,7 @@
         @foreach($totalkmReportExport as $totalkmReportExport)
         <?php
 
-               $earthRadius = 6371000;
+        $earthRadius = 6371000;
         $lat_from=floatval($totalkmReportExport->first()->latitude);
         $lng_from=floatval($totalkmReportExport->first()->longitude);
         $lat_to=floatval($totalkmReportExport->latitude);
@@ -25,7 +25,7 @@
         $lonDelta = $lonTo - $lonFrom;
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
         cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-        $km = $angle * $earthRadius; 
+        $km = round($angle * $earthRadius,2); 
         ?>
         <tr>           
             <td>{{ $loop->iteration }}</td>
