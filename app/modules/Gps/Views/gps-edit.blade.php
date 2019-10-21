@@ -32,7 +32,7 @@
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group has-feedback">
                         <label class="srequired">Serial No</label>
-                        <input type="number" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ $gps->serial_no}}" min="0"> 
+                        <input type="text" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ $gps->serial_no}}" min="0"> 
                           @if ($errors->has('serial_no'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('serial_no') }}</strong>

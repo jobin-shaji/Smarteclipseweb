@@ -1,36 +1,20 @@
 $(document).ready(function () {
+  
     callBackDataTable();
+    // viewAlerts(ddata)
 });
 
 
-function check(){
-    if(document.getElementById('vehicle').value == ''){
-        alert('please select vehicle');
-    }
-    //  else if(document.getElementById('alert').value == ''){
-    //     alert('please select alert');
-    // }
-    // else if(document.getElementById('fromDate').value == ''){
-    //     alert('please enter from date');
-    // }else if(document.getElementById('toDate').value == ''){
-    //     alert('please enter to date');
-    // }
-    else{
-        var alert_id=$('#alert').val();
-        var vehicle_id=$('#vehicle').val();        
-        var client=$('meta[name = "client"]').attr('content');
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
-        var data = { 'alertID':alert_id,'vehicle_id':vehicle_id,'alert_id':alert_id,'client':client, 'from_date':from_date , 'to_date':to_date};
-        callBackDataTable(data);        
-    }
-}
+
 
 
 function callBackDataTable(data=null){
-    // var  data = {
+   
+    // // var  data = {
     
-    // }; 
+    // // }; 
+    // var flag=read;
+    // // alert(flag);
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -45,7 +29,12 @@ function callBackDataTable(data=null){
             data:data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
-            }
+            },
+                createdRow: function ( row, data, index ) {
+                if ( data['status'] ==1) {
+                    $('td', row).css('background-color', 'rgb(243, 204, 204)');
+                }
+            },
         },
        
         fnDrawCallback: function (oSettings, json) {

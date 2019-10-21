@@ -144,10 +144,10 @@ function toast(res){
 
         notification(res);
     } 
-    else if(res.status == 'alertNotification'){
-
-        alertNotification(res);
-    } 
+    // else if(res.status == 'alertNotification'){
+    //     console.log(1);
+    //     alertNotification(res);
+    // } 
      else if(res.status == 'mobile_already'){
 
         driverMobileExisted(res);
@@ -279,6 +279,11 @@ function backgroundPostData(url, data, callBack, options) {
                     
                          playBackData(res);
                 }
+
+                else if(callBack== 'alertNotification'){
+                    console.log(1);
+                    alertNotification(res);
+                } 
 
 
 
@@ -935,24 +940,30 @@ function notification(res){
       }              
 }
 
-function alerts(){  
+function clientAlerts(){ 
+    // alert(1);
+ var flag;
     var url = 'alert-notification';
-    var data = {};   
+    var data = {
+        flag:1
+    };   
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
-
-    console.log(res);
+    // console.log(res);
     $("#alert_notification").empty();
-   // var expired_documents;
-
     length=res.alert.length;
+
     for (var i = 0; i < length; i++) {
      description=res.alert[i].alert_type.description;
-    
+    console.log(description);
         var alert='<a class="dropdown-item" >'+description+'</a>';  
         $("#alert_notification").append(alert);       
-    }  
+    } 
+    if(res.flag==1)
+    {
+        $("#bell_notification_count").text('0');
+    } 
   
 }
 
@@ -1034,6 +1045,7 @@ function vehicleInvoice(res){
   // alert(res);
 }
 function removeRole(client_user_id,role){
+  // alert(role);
     var url = 'client/role/delete';
     var data = {
         client_user_id : client_user_id,
@@ -1090,25 +1102,27 @@ function rootSubdealer(res)
 
 // ---------------check notification-----------------------------------
     setInterval(function() {
+       
         var url = 'notification_alert_count';
-        var data = { 
-        };
+        var data = {};
         backgroundPostData(url,data,'notificationCount',{alert:false});
     }, 8000);//hai
 
     $( document ).ready(function() {
+        var flag;
         var url = 'notification_alert_count';
-        var data = { 
-        };
+        var data = {};
         backgroundPostData(url,data,'notificationCount',{alert:false});
       });
 // ---------------check notification-----------------------------------
 
     function notificationCount(res){
+        
         if(res.status=="success"){
             var count_notification=res.notification_count;
-            $("#bell_notification_count").text(count_notification);
-
+            
+                $("#bell_notification_count").text(count_notification);
+                      
         }
     }
 

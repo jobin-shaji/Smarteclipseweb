@@ -41,7 +41,7 @@ class MainBatteryDisconnectReportExport implements FromView
         }
         else
         {
-            $vehicle=Vehicle::find($vehicle); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query = $query->where('alert_type_id',11)->where('gps_id',$vehicle->gps_id);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
