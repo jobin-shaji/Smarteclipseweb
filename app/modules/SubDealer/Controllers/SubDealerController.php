@@ -227,11 +227,11 @@ class SubDealerController extends Controller {
         }
         $did=encrypt($subdealer->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($subdealer);
+        $rules=$this->updatePasswordRule();
         $this->validate($request,$rules);
         $subdealer->password=bcrypt($request->password);
         $subdealer->save();
-        $request->session()->flash('message','SubDealer Password updated successfully');
+        $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('sub.dealers.change-password',$did));
     }
@@ -323,7 +323,7 @@ class SubDealerController extends Controller {
         ];
         return  $rules;
     }
-    public function updateDepotUserRuleChangePassword()
+    public function updatePasswordRule()
     {
         $rules=[
             'password' => 'required|string|min:6|confirmed'

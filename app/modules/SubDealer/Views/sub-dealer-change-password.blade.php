@@ -10,7 +10,7 @@
   <section class="hilite-content">
      <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Sub Dealer</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Change Password</li>
     </ol>
      @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -26,8 +26,7 @@
         <div class="card-body wizard-content">      <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-edit"> Change Password</i> 
+          <h2 class="page-header"> 
           </h2>
         </div>
         <!-- /.col -->
@@ -62,7 +61,7 @@
         </div>
 
         <div class="col-md-3 ">
-              <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
+              <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
             </div>
         </div>
           <div class="row">
