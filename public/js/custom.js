@@ -1,13 +1,14 @@
 $(function () {
-    // alert({{ Auth::check() }});
-//     if ({{ Auth::check() }} == true) {
-//     var id = "{{ Auth::user()->id }}";
-//     alert(id);
-// }
+
+var d = new Date();
+var free_months=d.setMonth(d.getMonth() - 3);
+
     $('.select2').select2();           
         $('#fromDate,#toDate').datetimepicker({
             useCurrent: false,
             minDate: moment()
+            // minDate: new Date(currentYear, currentMonth-3, currentDate),
+            // maxDate: new Date(currentYear, currentMonth+3, currentDate)
         });
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
@@ -24,6 +25,13 @@ $(function () {
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
         });
+
+        
+
+
+
+
+
         $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
             var incrementDay = moment(new Date(e.date));
             incrementDay.add(1, 'days');
@@ -82,6 +90,15 @@ $(function () {
 
 // dateTimepicker
 
+var d = new Date();
+free_date=d.setMonth(d.getMonth() - 1);
+fundamental_date=d.setMonth(d.getMonth() - 2);
+superior_date=d.setMonth(d.getMonth() - 4);
+
+pro_date=d.setMonth(d.getMonth() - 6);
+
+
+
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date() 
@@ -91,6 +108,27 @@ $(function () {
         format: 'DD-MM-YYYY',
         maxDate: new Date() 
  });
+$( ".datepickerFreebies" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:free_date
+ });
+$( ".datepickerFundamental" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:fundamental_date
+ });
+$( ".datepickerSuperior" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:superior_date
+ });
+$( ".datepickerPro" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:pro_date
+ });
+
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         // minDate: new Date()
