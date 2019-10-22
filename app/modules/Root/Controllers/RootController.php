@@ -9,6 +9,7 @@ use App\Modules\Employee\Models\EmployeeDesignation;
 use App\Modules\Employee\Models\EmploymentType;
 use App\Modules\Employee\Models\BloodGroup;
 use App\Modules\Depot\Models\State;
+use Illuminate\Support\Facades\Crypt;
 use DataTables;
 use DB;
 use App\Modules\User\Models\User;
@@ -65,6 +66,41 @@ class RootController extends Controller {
         }
 
         return back();
+    }
+
+    public function changeRootPassword(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $user = User::where('id', $decrypted)->first();
+        if($user == null){
+           return view('Root::404');
+        }
+        return view('Root::root-change-password',['user' => $user]);
+    }
+
+    //update password
+    public function updateRootPassword(Request $request)
+    {
+        $user=User::find($request->id);
+        if($user== null){
+            return view('Root::404');
+        }
+        $did=encrypt($user->id);
+        $rules=$this->updateRootPasswordRule();
+        $this->validate($request,$rules);
+        $user->password=bcrypt($request->password);
+        $user->save();
+        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('root.change.password',$did));  
+    }
+
+    public function updateRootPasswordRule()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
     }
 
     //rules for adding a state user
