@@ -35,7 +35,7 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url({{asset('Ray-Fleet-Home.jpg')}});
+                    background-image: url({{asset('assets/images/rayfleet_home.jpg')}});
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: contain;
@@ -49,7 +49,7 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url({{asset('images/Smart-Eclipse-Home.jpg')}});
+                    background-image: url({{asset('assets/images/eclipse_home.jpg')}});
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: contain;
@@ -63,7 +63,7 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url({{asset('images/Smart-Eclipse-Home.jpg')}});
+                    background-image: url({{asset('assets/images/eclipse_home.jpg')}});
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: contain;
