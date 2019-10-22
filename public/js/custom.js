@@ -119,11 +119,10 @@ function toast(res){
     
    if(res.status == 1){
         toastr.success( res.message, res.title);
-        console.log( res.message, res.title);
+
     }
     else if(res.status == 0) {
-        // console.log('Error', res.message);
-        // toastr.error(res.message, 'Error');
+      
     }
     else if(res.status == 'dbcount'){
         dbcount(res);
@@ -144,10 +143,7 @@ function toast(res){
 
         notification(res);
     } 
-    // else if(res.status == 'alertNotification'){
-    //     console.log(1);
-    //     alertNotification(res);
-    // } 
+    
      else if(res.status == 'mobile_already'){
 
         driverMobileExisted(res);
@@ -281,7 +277,6 @@ function backgroundPostData(url, data, callBack, options) {
                 }
 
                 else if(callBack== 'alertNotification'){
-                    // console.log(1);
                     alertNotification(res);
                 } 
                 else if(callBack== 'downloadData'){
@@ -689,7 +684,10 @@ function downloadOverSpeedReport(){
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
-         backgroundPostData(url,data,'downloadData',{alert:false});
+        downloadFile(url,data);
+         // backgroundPostData(url,data,'downloadData',{alert:false});
+         
+         
         // 
     }else{
         var data = {
@@ -700,14 +698,15 @@ function downloadOverSpeedReport(){
 }
 function downloadData(res)
 {
-    if(res.length!=0)
-    {
-        downloadFile(url,data);
-    }
-    else
-    {
-        alert("No records");
-    }
+    console.log(res.data);
+    // if(res.length!=0)
+    // {
+    //     downloadFile(url,data);
+    // }
+    // else
+    // {
+    //     alert("No records");
+    // }
     
 }
 
@@ -958,8 +957,7 @@ function notification(res){
 }
 
 function clientAlerts(){ 
-    // alert(1);
- var flag;
+  var flag;
     var url = 'alert-notification';
     var data = {
         flag:1
@@ -967,21 +965,15 @@ function clientAlerts(){
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
-    // console.log(res);
     $("#alert_notification").empty();
     length=res.alert.length;
 
     for (var i = 0; i < length; i++) {
      description=res.alert[i].alert_type.description;
-    console.log(description);
+
         var alert='<a class="dropdown-item" >'+description+'</a>';  
         $("#alert_notification").append(alert);       
-    } 
-    if(res.flag==1)
-    {
-        $("#bell_notification_count").text('0');
-    } 
-  
+    }   
 }
 
 function downloadLabel(id){

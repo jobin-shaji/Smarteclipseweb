@@ -71,28 +71,8 @@ class OverSpeedReportController extends Controller
     } 
     public function export(Request $request)
     {
-        $single_vehicle_id = [];
-        $client = \Auth::user()->client->id;
-        if($request->vehicle!=0)
-        {
-            $vehicle_details =Vehicle::withTrashed()->find($client,$request->vehicle);
-            $single_vehicle_id= $vehicle_details->gps_id;
-        }
-        else
-        {
-            $vehicle_details =Vehicle::withTrashed()->where('client_id',$client)->get(); 
-            
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
-            }
-        }
-        $overspeed =  $this->overSpeedAlerts($single_vehicle_id,$client,$request->vehicle,$request->fromDate,$request->toDate);
-        $count=$overspeed->count();
-        if($count!=0)
-        {
-            return Excel::download(new OverSpeedReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'over-speed-report.xlsx');
-        }
-       
+
+       return Excel::download(new OverSpeedReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'over-speed-report.xlsx');
     } 
 
 
