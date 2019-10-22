@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-   Sudden Acceleration Report
+   Harsh Acceleration Report
 @endsection
 @section('content')
 
@@ -8,14 +8,14 @@
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title"> Sudden Acceleration Report</h4>
+        <h4 class="page-title"> Harsh Acceleration Report</h4>
       </div>
     </div>
   </div>
   <div class="container-fluid">
     <div class="card-body">
       <div >
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 scrollmenu">
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
           <div class="row">
             <div class="col-sm-12">
               <div class="col-md-12 col-md-offset-1">

@@ -1,8 +1,14 @@
 $(function () {
+
+var d = new Date();
+var free_months=d.setMonth(d.getMonth() - 3);
+
     $('.select2').select2();           
         $('#fromDate,#toDate').datetimepicker({
             useCurrent: false,
             minDate: moment()
+            // minDate: new Date(currentYear, currentMonth-3, currentDate),
+            // maxDate: new Date(currentYear, currentMonth+3, currentDate)
         });
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
@@ -19,6 +25,13 @@ $(function () {
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
         });
+
+        
+
+
+
+
+
         $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
             var incrementDay = moment(new Date(e.date));
             incrementDay.add(1, 'days');
@@ -77,6 +90,15 @@ $(function () {
 
 // dateTimepicker
 
+var d = new Date();
+free_date=d.setMonth(d.getMonth() - 1);
+fundamental_date=d.setMonth(d.getMonth() - 2);
+superior_date=d.setMonth(d.getMonth() - 4);
+
+pro_date=d.setMonth(d.getMonth() - 6);
+
+
+
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date() 
@@ -86,6 +108,27 @@ $(function () {
         format: 'DD-MM-YYYY',
         maxDate: new Date() 
  });
+$( ".datepickerFreebies" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:free_date
+ });
+$( ".datepickerFundamental" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:fundamental_date
+ });
+$( ".datepickerSuperior" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:superior_date
+ });
+$( ".datepickerPro" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:pro_date
+ });
+
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         // minDate: new Date()
@@ -119,11 +162,10 @@ function toast(res){
     
    if(res.status == 1){
         toastr.success( res.message, res.title);
-        console.log( res.message, res.title);
+
     }
     else if(res.status == 0) {
-        // console.log('Error', res.message);
-        // toastr.error(res.message, 'Error');
+      
     }
     else if(res.status == 'dbcount'){
         dbcount(res);
@@ -144,10 +186,7 @@ function toast(res){
 
         notification(res);
     } 
-    // else if(res.status == 'alertNotification'){
-    //     console.log(1);
-    //     alertNotification(res);
-    // } 
+    
      else if(res.status == 'mobile_already'){
 
         driverMobileExisted(res);
@@ -281,8 +320,11 @@ function backgroundPostData(url, data, callBack, options) {
                 }
 
                 else if(callBack== 'alertNotification'){
-                    console.log(1);
                     alertNotification(res);
+                } 
+                else if(callBack== 'downloadData'){
+                    // console.log(1);
+                    downloadData(res);
                 } 
 
 
@@ -686,12 +728,29 @@ function downloadOverSpeedReport(){
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
         downloadFile(url,data);
+         // backgroundPostData(url,data,'downloadData',{alert:false});
+         
+         
+        // 
     }else{
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
     }
+}
+function downloadData(res)
+{
+    console.log(res.data);
+    // if(res.length!=0)
+    // {
+    //     downloadFile(url,data);
+    // }
+    // else
+    // {
+    //     alert("No records");
+    // }
+    
 }
 
 
@@ -941,8 +1000,7 @@ function notification(res){
 }
 
 function clientAlerts(){ 
-    // alert(1);
- var flag;
+  var flag;
     var url = 'alert-notification';
     var data = {
         flag:1
@@ -950,21 +1008,15 @@ function clientAlerts(){
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
-    // console.log(res);
     $("#alert_notification").empty();
     length=res.alert.length;
 
     for (var i = 0; i < length; i++) {
      description=res.alert[i].alert_type.description;
-    console.log(description);
+
         var alert='<a class="dropdown-item" >'+description+'</a>';  
         $("#alert_notification").append(alert);       
-    } 
-    if(res.flag==1)
-    {
-        $("#bell_notification_count").text('0');
-    } 
-  
+    }   
 }
 
 function downloadLabel(id){

@@ -155,16 +155,31 @@ class GpsController extends Controller {
     {
         $root_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
-        $gps = Gps::find($request->serial_no); 
-        // dd($gps);
-        if($gps == null){
-           return view('Gps::404');
-        }
+        // $gps = Gps::find($request->serial_no); 
+        // // dd($gps);
+        // if($gps == null){
+        //    return view('Gps::404');
+        // }
         $rules = $this->gpsCreateRules();
-        $this->validate($request, $rules);       
-        $gps->manufacturing_date = $maufacture;
-        $gps->e_sim_number = $request->e_sim_number;       
-        $gps->save();
+        $this->validate($request, $rules);  
+
+        // $gps->manufacturing_date = $maufacture;
+        // $gps->e_sim_number = $request->e_sim_number;       
+        // $gps->save();
+
+        $gps = Gps::create([
+            'serial_no'=>$request->serial_no,
+            'icc_id'=>$request->icc_id,
+            'imsi'=>$request->imsi,
+            'imei'=>$request->imei,
+            'manufacturing_date'=>$maufacture,
+            'e_sim_number'=>$request->e_sim_number,
+            'batch_number'=>$request->batch_number,
+            'model_name'=>$request->model_name,
+            'version'=>$request->version,
+            'employee_code'=>$request->employee_code,
+            'status'=>1
+            ]); 
         
         if($gps){
            $gps_stock = GpsStock::create([
@@ -1159,11 +1174,16 @@ class GpsController extends Controller {
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
-            'serial_no' => 'required',           
+            'serial_no' => 'required|unique:gps',           
             'manufacturing_date' => 'required',           
-            // 'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
-            
-                    
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
+            'icc_id' => 'required|string|unique:gps',
+            'imsi' => 'required|string|unique:gps',
+            'imei' => 'required|string|unique:gps',
+            'batch_number' => 'required',
+            'model_name' => 'required',
+            'version' => 'required',
+            'employee_code' => 'required',          
         ];
         return  $rules;
     }

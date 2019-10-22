@@ -458,15 +458,21 @@
                                 @endrole
                                 @role('root')
                                     <a style="margin-left: 15px;">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('dealer')
                                     <a class="dropdown-item" href="{{url('/dealer/profile')}}">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    <a class="dropdown-item" href="{{url('/dealers/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('sub_dealer')
                                     <a class="dropdown-item" href="{{url('/sub-dealer/profile')}}">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    <a class="dropdown-item" href="{{url('/sub-dealers/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 
                                 <a class="dropdown-item" href="{{ route('logout') }}"

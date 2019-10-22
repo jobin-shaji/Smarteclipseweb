@@ -31,7 +31,7 @@ class OverSpeedReportController extends Controller
         if($vehicle!=0)
         {
             $vehicle_details =Vehicle::withTrashed()->find($vehicle);
-            $single_vehicle_ids = $vehicle_details->gps_id;
+            $single_vehicle_id= $vehicle_details->gps_id;
         }
         else
         {
@@ -39,49 +39,9 @@ class OverSpeedReportController extends Controller
             
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
-
             }
         }
-       
-        // dd($vehicle);
-        $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'gps_id',
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('gps.vehicle');
-       if($vehicle==0 || $vehicle==null)
-        {
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->where('alert_type_id',12)
-            ->orderBy('id', 'desc')
-            ->limit(1000);
-            // ->where('status',1);
-            if($from){
-               $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-        }
-        else
-        {
-            $query = $query ->where('gps_id',$single_vehicle_ids)
-            ->where('alert_type_id',12)
-            ->orderBy('id', 'desc')
-            ->limit(1000);
-            // ->where('status',1);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-        }  
-        $overspeed = $query->get();   
+        $overspeed =  $this->overSpeedAlerts($single_vehicle_id,$client,$vehicle,$from,$to);        
         return DataTables::of($overspeed)
         ->addIndexColumn()
         ->addColumn('location', function ($overspeed) {
@@ -111,7 +71,51 @@ class OverSpeedReportController extends Controller
     } 
     public function export(Request $request)
     {
+
        return Excel::download(new OverSpeedReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'over-speed-report.xlsx');
     } 
-   
+
+
+    function overSpeedAlerts($single_vehicle_id,$client,$vehicle,$from,$to)
+    {
+        // dd($vehicle);
+        $query =Alert::select(
+            'id',
+            'alert_type_id', 
+            'device_time',    
+            'gps_id',
+            'latitude',
+            'longitude', 
+            'status'
+        )
+        ->with('alertType:id,description')
+        ->with('gps.vehicle');
+       if($vehicle==0 || $vehicle==null)
+        {
+            $query = $query->whereIn('gps_id',$single_vehicle_id)
+            ->where('alert_type_id',12)
+            ->orderBy('id', 'desc')
+            ->limit(1000);
+            // ->where('status',1);
+            if($from){
+               $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            }
+        }
+        else
+        {
+            $query = $query ->where('gps_id',$single_vehicle_id)
+            ->where('alert_type_id',12)
+            ->orderBy('id', 'desc')
+            ->limit(1000);
+            // ->where('status',1);
+            if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            }
+        }  
+        return $overspeed = $query->get();   
+    }   
 }
