@@ -430,7 +430,7 @@ class DashboardController extends Controller
         }
         $network_status=$gps->network_status;
         $fuel_status=$gps->fuel_status;
-        $speed=$gps->speed;
+        $speed=round($gps->speed);
         $odometer=$gps->odometer;
         $mode=$gps->mode;
         $satelite=$satelite;
@@ -477,7 +477,7 @@ class DashboardController extends Controller
                 'status'  => 'vehicle_status',
                 'network_status' => $net_status,
                 'fuel_status' => $fuel_status.' L',
-                'speed' => $speed.' Kmh',
+                'speed' => $speed.' km/h',
                 'odometer' => $odometer.' km',
                 'mode' => $vehcile_mode,
                 'satelite' => $satelite,
