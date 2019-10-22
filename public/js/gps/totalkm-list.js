@@ -59,10 +59,10 @@ function callBackDataTable(){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'gps.vehicle.name', name: 'gps.vehicle.name'},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number'},
-            {data: 'km', name: 'km'},
+            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
+            {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false},
+            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
+            {data: 'km', name: 'km', orderable: false},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });

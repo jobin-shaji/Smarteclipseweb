@@ -177,9 +177,8 @@ class GpsController extends Controller {
             'batch_number'=>$request->batch_number,
             'model_name'=>$request->model_name,
             'version'=>$request->version,
-            'employee_code'=>$request->employee_code
-                // 'gps_id'=> $gps->id,
-                // 'inserted_by' => $root_id
+            'employee_code'=>$request->employee_code,
+            'status'=>1
             ]); 
         
         if($gps){
