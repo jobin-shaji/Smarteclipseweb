@@ -7,8 +7,6 @@ Route::get('/dealer/create','DealerController@create')->name('dealer.create');
 Route::post('/dealer/create','DealerController@save')->name('dealer.create.p');
 Route::get('/dealers/{id}/edit','DealerController@edit')->name('dealers.edit');
 Route::post('/dealers/{id}/edit','DealerController@update')->name('dealers.update.p'); 
-Route::get('/dealers/{id}/change-password','DealerController@changePassword')->name('dealers.change-password');
-Route::post('/dealer/{id}/update-password','DealerController@updatePassword')->name('dealer.update-password.p'); 
 Route::get('/dealers/{id}/details','DealerController@details')->name('dealers.details');
 Route::post('/dealer/delete','DealerController@deleteDealer')->name('dealer.delete');
 Route::post('/dealer/activate','DealerController@activateDealer')->name('dealer.activate');
@@ -18,5 +16,12 @@ Route::post('/dealer/enable','DealerController@enableDealer')->name('dealer.enab
 
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
 	Route::get('/dealer/profile','DealerController@dealerProfile')->name('dealer.profile');
+});
+
+Route::group(['middleware' => ['web','auth','role:root|dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
+
+Route::get('/dealers/{id}/change-password','DealerController@changePassword')->name('dealers.change-password');
+Route::post('/dealer/{id}/update-password','DealerController@updatePassword')->name('dealer.update-password.p'); 
+
 });
 

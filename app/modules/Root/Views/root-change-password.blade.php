@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-  User Profile
+  Change Password
 @endsection
 @section('content')
 
@@ -21,13 +21,13 @@
       <div class="col-lg-6 col-md-12">
         <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            <h2 class="page-header">
-            </h2>
-              <form  method="POST" action="{{route('client.update-password.p',$client->user_id)}}">
+            <h4 class="page-header">
+            </h4>
+              <form  method="POST" action="{{route('root.update.password.p',$user->id)}}">
                 {{csrf_field()}}
                   <div class="row">
                     <div class="col-md-6">
-                      <input type="hidden" name="id" value="{{$client->user_id}}">
+                      <input type="hidden" name="id" value="{{$user->id}}">
                         <div class="form-group has-feedback">
                           <label class="srequired">New Password</label>
                             <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
