@@ -281,8 +281,12 @@ function backgroundPostData(url, data, callBack, options) {
                 }
 
                 else if(callBack== 'alertNotification'){
-                    console.log(1);
+                    // console.log(1);
                     alertNotification(res);
+                } 
+                else if(callBack== 'downloadData'){
+                    // console.log(1);
+                    downloadData(res);
                 } 
 
 
@@ -685,13 +689,26 @@ function downloadOverSpeedReport(){
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
-        downloadFile(url,data);
+         backgroundPostData(url,data,'downloadData',{alert:false});
+        // 
     }else{
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
     }
+}
+function downloadData(res)
+{
+    if(res.length!=0)
+    {
+        downloadFile(url,data);
+    }
+    else
+    {
+        alert("No records");
+    }
+    
 }
 
 

@@ -38,13 +38,13 @@
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                    
                             <label> from Date</label>
-                            <input type="text" class="datepicker form-control" data-fromdate="{{$from_date}}" id="alert_fromDate" name="fromDate" onkeydown="return false">
+                            <input type="text" class="datepicker form-control" data-fromdate="{{$from_date}}" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                         </div>
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                    
                             <label> to date</label>
-                            <input type="text" class="datepicker form-control" id="alert_toDate" name="toDate" onkeydown="return false">
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
 
