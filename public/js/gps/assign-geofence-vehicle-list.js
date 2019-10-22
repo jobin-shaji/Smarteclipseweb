@@ -107,5 +107,14 @@ function check(){
     });
 }
 
+function deleteAssignedGeofence(assigned_geofence_id){
+    if(confirm('Are you sure want to delete this?')){
+        var url = 'geofence-assigned/delete';
+        var data = {
+            id : assigned_geofence_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
+}
 
 

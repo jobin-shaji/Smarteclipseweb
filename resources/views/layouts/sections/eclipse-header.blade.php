@@ -12,15 +12,40 @@
                                                <!--End Logo icon -->
                          <!-- Logo text -->
                    <span class="logo-text">
-                        @role('client')
+                        @role('client|school')
                             @if(\Auth::user()->client->logo)
                               <img class="light-logo"  src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
-                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />
+                                <?php
+                                $url=url()->current();
+                                $rayfleet_key="rayfleet";
+                                $eclipse_key="eclipse";
+                                if (strpos($url, $rayfleet_key) == true) {  ?>
+                                    <img src="{{ url('/') }}/assets/images/logo-s.jpg" alt="homepage" class="light-logo" /> 
+                                <?php } 
+                                else if (strpos($url, $eclipse_key) == true) { ?>
+                                    <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" /> 
+                                <?php }
+                                else { ?>
+                                    <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />  
+                                <?php } ?>  
                             @endif
                         @endrole
-                        @role('root|dealer|sub_dealer|servicer|school')
-                            <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />    
+
+                        @role('root|dealer|sub_dealer|servicer')
+                            <?php
+                            $url=url()->current();
+                            $rayfleet_key="rayfleet";
+                            $eclipse_key="eclipse";
+                            if (strpos($url, $rayfleet_key) == true) {  ?>
+                                <img src="{{ url('/') }}/assets/images/logo-s.jpg" alt="homepage" class="light-logo" /> 
+                            <?php } 
+                            else if (strpos($url, $eclipse_key) == true) { ?>
+                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" /> 
+                            <?php }
+                            else { ?>
+                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />  
+                            <?php } ?>  
                         @endrole                      
                         </span>
                         <!-- Logo icon -->
@@ -356,7 +381,7 @@
 
                         @role('client')
                         <li class="nav-item dropdown">
-                            <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
+                            <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
                                 <span class="bell_value" id="bell_notification_count">0</span>
                             </span><i class="mdi mdi-bell font-24"></i>
                             

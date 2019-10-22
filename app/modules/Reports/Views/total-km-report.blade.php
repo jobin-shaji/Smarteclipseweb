@@ -14,7 +14,7 @@ Total KM Report
   <div class="container-fluid">
     <div class="card-body">
       <div >
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 scrollmenu">
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
           <div class="row">
             <div class="col-sm-12">
               <div class="col-md-12 col-md-offset-1">
@@ -38,13 +38,13 @@ Total KM Report
                           <div class="col-lg-3 col-md-3"> 
                            <div class="form-group">                    
                             <label> from Date</label>
-                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate">
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                         </div>
                           <div class="col-lg-3 col-md-3">  
                            <div class="form-group">                   
                             <label> to date</label>
-                            <input type="text" class="datepicker form-control" id="toDate" name="toDate">
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">

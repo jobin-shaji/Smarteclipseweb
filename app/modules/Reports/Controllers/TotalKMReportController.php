@@ -28,14 +28,12 @@ class TotalKMReportController extends Controller
         $vehicle =$request->data['vehicle'];
         if($vehicle!=0)
         {
-            $vehicle_details =Vehicle::find($vehicle);
+            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
             $single_vehicle_ids = $vehicle_details->gps_id;
         }
         else
         {
-            $vehicle_details =Vehicle::where('client_id',$client_id)->get(); 
-            
-            foreach($vehicle_details as $vehicle_detail){
+            $vehicle_details =Vehicle::where('client_id',$client_id)->withTrashed()->get();            foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
 
             }
@@ -97,29 +95,22 @@ class TotalKMReportController extends Controller
         if($vehicle==0 || $vehicle==null || $from==null || $to==null)
         {        
             $query = $query->whereIn('gps_id',$single_vehicle_id)
-
-            ->groupBy('gps_id');
+            ->groupBy('gps_id');            
         }
         else if($vehicle==0 || $vehicle==null)
         {        
-            $query = $query->whereIn('gps_id',$single_vehicle_id);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-            // ->groupBy('gps_id');
+            $query = $query->whereIn('gps_id',$single_vehicle_id);           
         }
         else
         {
             $query = $query->where('gps_id',$single_vehicle_ids)
-            ->groupBy('gps_id');   
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-        }             
+            ->groupBy('gps_id');               
+        }   
+        if($from){
+            $search_from_date=date("Y-m-d", strtotime($from));
+            $search_to_date=date("Y-m-d", strtotime($to));
+            $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        }          
        
         $totalkm_report = $query->get(); 
 
@@ -140,7 +131,7 @@ class TotalKMReportController extends Controller
         $lonDelta = $lonTo - $lonFrom;
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
         cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-        return $angle * $earthRadius;                            
+        return round($angle * $earthRadius,2);                            
             
         })
         ->make();

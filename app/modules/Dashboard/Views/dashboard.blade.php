@@ -307,12 +307,7 @@
                       <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                     </div>
                     <div class="min-gap"></div>
-                    <div class="label-group">
-                      <p class="title">
-                        <span><i class="fas fa-tachometer-alt"></i></span>
-                      </p>
-                      <p class="caption">80</p>
-                    </div>
+                   
                   </div>
                 </div>
               @endforeach  
@@ -565,12 +560,7 @@
                       <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                     </div>
                     <div class="min-gap"></div>
-                    <div class="label-group">
-                      <p class="title">
-                        <span><i class="fas fa-tachometer-alt"></i></span>
-                      </p>
-                      <p class="caption">80</p>
-                    </div>
+                   
                   </div>
                 </div>
               @endforeach  

@@ -33,7 +33,7 @@ class GeofenceReportExport implements FromView
         }
         else
         {
-            $vehicle=Vehicle::find($vehicle); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query =GpsData::select(
                 'id',
                 'gps_id',

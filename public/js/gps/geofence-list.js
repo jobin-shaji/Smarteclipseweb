@@ -31,7 +31,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name' },            
             {data: 'clients.name', name: 'clients.name',searchable: false},           
             {data: 'action', name: 'action', orderable: false, searchable: false},           
@@ -40,18 +40,22 @@ function callBackDataTable(){
     });
 }
 function delGeofence(geofence){
-    var url = 'geofence/delete';
-    var data = {
-        uid : geofence
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this?')){
+        var url = 'geofence/delete';
+        var data = {
+            uid : geofence
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 function activateGeofence(geofence){
-    var url = 'geofence/activate';
-    var data = {
-        id : geofence
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this?')){
+        var url = 'geofence/activate';
+        var data = {
+            id : geofence
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
  function mapsView(geofence_id){
          

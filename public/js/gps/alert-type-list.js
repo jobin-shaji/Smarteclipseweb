@@ -42,17 +42,21 @@ function callBackDataTable(){
     });
 }
 function delAlertType(alert_type){
-    var url = 'alert-type/delete';
-    var data = {
-        uid : alert_type
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to deactivate this alert type?')){
+        var url = 'alert-type/delete';
+        var data = {
+            uid : alert_type
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 function activateAlertType(alert_type){
-    var url = 'alert-type/activate';
-    var data = {
-        id : alert_type
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure want to activate this alert type?')){
+        var url = 'alert-type/activate';
+        var data = {
+            id : alert_type
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 

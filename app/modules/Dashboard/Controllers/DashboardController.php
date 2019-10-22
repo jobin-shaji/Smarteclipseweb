@@ -68,10 +68,21 @@ class DashboardController extends Controller
     function clientDashboardIndex()
     {
         $client_id=\Auth::user()->client->id;
-        $alerts =  $this->getAlerts($client_id);   
+        $alerts =  $this->getAlerts($client_id);  
+        $gps_stocks = GpsStock::select('gps_id')->where('client_id',$client_id)->get(); 
+        $single_gps_in_stocks=[];
+        foreach ($gps_stocks as $gps) {
+            $single_gps_in_stocks[]=$gps->gps_id;
+        }
+        $gpss = Gps::select('id')->whereNotNull('lat')->whereNotNull('lon')->get(); 
+        $single_gps=[];
+        foreach ($gpss as $gps) {
+            $single_gps[]=$gps->id;
+        }
+        
         $vehicles = Vehicle::select('id','register_number','name','gps_id')
         ->where('client_id',$client_id)
-        // ->with('gpsValue')
+        ->whereIn('gps_id',$single_gps)
         ->get();
         $single_vehicle =  $this->getSingleVehicle($client_id);
         $expired_documents =  $this->getExpiredDocuments($single_vehicle);
@@ -453,6 +464,14 @@ class DashboardController extends Controller
         {
             $vehcile_mode="Stopped";
         }
+        // if($battery_status>=)
+        // {
+
+        // }
+        // else if($battery_status>=)
+        // {
+            
+        // }
         if($gps){     
             $response_data = array(
                 'status'  => 'vehicle_status',

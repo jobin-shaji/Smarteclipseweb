@@ -18,6 +18,7 @@ class CreateOtaResponsesTable extends Migration
             $table->integer('gps_id');
             $table->text('response');
             $table->dateTime('verified_at')->nullable();
+            $table->dateTime('sent_at')->nullable();
             $table->timestamps();
         });
     }

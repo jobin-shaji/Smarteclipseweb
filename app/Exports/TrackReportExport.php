@@ -76,7 +76,7 @@ class TrackReportExport implements FromView
             $query = $query->whereIn('gps_id',$gps_list)->groupBy('date');        }
        else
         {
-            $vehicle=Vehicle::find($vehicle); 
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
         }      
         if($from){

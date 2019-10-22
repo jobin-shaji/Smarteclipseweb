@@ -19,11 +19,15 @@
       @endif       
     </nav>          
     <div class="container-fluid">
-      <div class="panel-heading">  
+      <div class="panel-heading"> 
+      <h3>{{$user->client->name}}</h3> 
       </div>              
       <div class="card-body">
         <div class="table-responsive">
-          <form method="post" action="{{route('client.role.create.p',$client_user_id)}}"> 
+        
+          
+          <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4"> 
+            <form method="post" action="{{route('client.role.create.p',$client_user_id)}}"> 
           {{csrf_field()}}
             <div class="row">
               <div class="col-lg-3 col-md-3">
@@ -31,6 +35,7 @@
                   <label>Create Role</label>                        
                   <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="client_role" name="client_role">
                     <option value=" ">Select</option>
+                    <!-- <option value="client">Freebies</option> -->
                     <option value="fundamental">Fundamental</option>
                     <option value="superior">superior</option>
                     <option value="pro">pro</option>                   
@@ -39,15 +44,16 @@
               </div>  
               <button type="submit" id="button"  class="btn btn-primary  ">Create Role</button>
             </div>
-          
-          <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
+                    
             <div class="row">
               <div class="col-sm-12">
                 <table id="client_roles" class="table table-hover table-bordered  table-striped datatable" style="width:50%" id="dataTable">
                   <thead>
                     <tr>
                      <th>Sl.No</th>                              
-                      <th>Role Type</th>                            
+                      <th>Role Type</th>  
+                      <th>Action</th> 
+                                            
                     </tr>
                   </thead>
                   <tbody>
@@ -58,7 +64,8 @@
                           <th><?php echo $i;?></th>
                           <th id ="role">{{$role->name}}</th>
                           <input type="hidden" name="role_name" id="role_name" value="{{$role->name}}">
-                          
+             
+                          <th>  <button type="submit" onclick="removeRole({{$user->id}} ,{{$role->id}})" id="button"  class="btn btn-primary  ">Delete </th>
                         </tr>
                         <?php $i++;?>
                       @endif 
@@ -67,8 +74,9 @@
                 </table>
               </div>
             </div>
+             </form> 
           </div>
-          </form>
+         
 
         </div>
       </div>

@@ -74,9 +74,9 @@ class DriverController extends Controller {
              <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
             <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
         }else{                   
-                return "
-              
-                <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='fas fa-check'></i> Ativate</button>";
+            return "
+          
+            <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='fas fa-check'></i> Activate</button>";
             }
         })
         ->rawColumns(['link', 'action'])
