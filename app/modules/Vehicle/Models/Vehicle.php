@@ -24,7 +24,7 @@ class Vehicle extends Model
 
     // driver
     public function driver(){
-        return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id');
+        return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id')->withTrashed();
     }
 
     // client
