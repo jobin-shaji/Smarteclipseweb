@@ -64,7 +64,20 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
-    <title>SMART ECLIPSE</title>
+    <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+      if (strpos($url, $rayfleet_key) == true) {  ?>
+          <title>RAYFLEET</title> 
+      <?php } 
+      else if (strpos($url, $eclipse_key) == true) { ?>
+          <title>SMART ECLIPSE</title>
+      <?php }
+      else { ?>
+          <title>SMART ECLIPSE</title> 
+    <?php } ?>  
+    
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
     <!-- Custom CSS -->
