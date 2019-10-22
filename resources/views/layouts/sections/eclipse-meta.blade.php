@@ -62,8 +62,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
+    
     <?php
       $url=url()->current();
       $rayfleet_key="rayfleet";
@@ -72,9 +71,13 @@
           <title>RAYFLEET</title> 
       <?php } 
       else if (strpos($url, $eclipse_key) == true) { ?>
+          <!-- Favicon icon -->
+          <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
           <title>SMART ECLIPSE</title>
       <?php }
       else { ?>
+          <!-- Favicon icon -->
+          <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
           <title>SMART ECLIPSE</title> 
     <?php } ?>  
     
