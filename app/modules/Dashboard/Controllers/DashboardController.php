@@ -420,7 +420,8 @@ class DashboardController extends Controller
 
     public function vehicleDetails(Request $request)
     {
-
+        $user = $request->user(); 
+        
         $address="";
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
@@ -429,7 +430,13 @@ class DashboardController extends Controller
          $satelite=$gps->satllite;   
         }
         $network_status=$gps->network_status;
-        $fuel_status=$gps->fuel_status;
+        if($user->hasRole('fundamental|pro|superior')){
+        $fuel_status=$gps->fuel_status."L";
+        }
+        else
+        {
+            $fuel_status="upgrade version";
+        }
         $speed=round($gps->speed);
         $odometer=$gps->odometer;
         $mode=$gps->mode;
@@ -439,7 +446,8 @@ class DashboardController extends Controller
         if(!empty($latitude) && !empty($longitude)){
             $address =  $this->getAddress($latitude,$longitude); 
         }
-        $battery_status=$gps->battery_status;
+        $battery_status=(int)$gps->battery_status;
+
         if($network_status>=50)
         {
             $net_status="Good";
@@ -476,7 +484,7 @@ class DashboardController extends Controller
             $response_data = array(
                 'status'  => 'vehicle_status',
                 'network_status' => $net_status,
-                'fuel_status' => $fuel_status.' L',
+                'fuel_status' => $fuel_status,
                 'speed' => $speed.' km/h',
                 'odometer' => $odometer.' km',
                 'mode' => $vehcile_mode,

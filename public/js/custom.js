@@ -1,4 +1,9 @@
 $(function () {
+    // alert({{ Auth::check() }});
+//     if ({{ Auth::check() }} == true) {
+//     var id = "{{ Auth::user()->id }}";
+//     alert(id);
+// }
     $('.select2').select2();           
         $('#fromDate,#toDate').datetimepicker({
             useCurrent: false,

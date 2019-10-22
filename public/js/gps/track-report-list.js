@@ -54,16 +54,16 @@ function callBackDataTable(data=null){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'gps.vehicle.name', name: 'gps.vehicle.name'},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number'},
-            {data: 'motion', name: 'motion'},
-            {data: 'sleep', name: 'sleep'},
-            {data: 'halt', name: 'halt'},
-            {data: 'ac_on', name: 'ac_on'},
-            {data: 'ac_off', name: 'ac_off'},
-            {data: 'km', name: 'km'},
-            {data: 'device_time', name: 'device_time'},
+            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
+            {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false},
+            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
+            {data: 'motion', name: 'motion', orderable: false},
+            {data: 'sleep', name: 'sleep', orderable: false},
+            {data: 'halt', name: 'halt', orderable: false},
+            {data: 'ac_on', name: 'ac_on', orderable: false},
+            {data: 'ac_off', name: 'ac_off', orderable: false},
+            {data: 'km', name: 'km', orderable: false},
+            {data: 'device_time', name: 'device_time', orderable: false},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });

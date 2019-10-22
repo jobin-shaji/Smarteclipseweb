@@ -46,12 +46,12 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'vehicle.name', name: 'vehicle.name'},
-            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'route.name', name: 'route.name'},
-            {data: 'location', name: 'location'},
-            {data: 'deviating_time', name: 'deviating_time'},
+            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
+            {data: 'vehicle.name', name: 'vehicle.name', orderable: false},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number', orderable: false},
+            {data: 'route.name', name: 'route.name', orderable: false},
+            {data: 'location', name: 'location', orderable: false},
+            {data: 'deviating_time', name: 'deviating_time', orderable: false},
 
         ],
         
