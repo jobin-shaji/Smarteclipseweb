@@ -13,7 +13,7 @@
               <h3 id="gps">
                 <div class="loader"></div>
               </h3>
-              <p>Gps In Stock</p>
+              <p>GPS In Stock</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>

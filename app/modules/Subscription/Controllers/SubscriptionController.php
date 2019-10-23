@@ -69,7 +69,7 @@ class SubscriptionController extends Controller
             'name'
             ])
             ->get();
-            // dd()
+            // dd($plans);
         return view('Subscription::subscription-add',['countries'=>$countries,'plans'=>$plans]);
     }
     // save subscription

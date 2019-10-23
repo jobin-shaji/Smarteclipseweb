@@ -89,7 +89,7 @@ class ParkingReportController extends Controller
             'checksum',
             
             'gf_id',
-            'device_time',
+            \DB::raw('DATE(device_time) as device_time'),
             \DB::raw('sum(distance) as distance')
         )
         ->with('gps.vehicle')

@@ -7,7 +7,7 @@ Parking Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  parking Report</h4>
+        <h4 class="page-title">  Parking Report</h4>
       </div>
     </div>
   </div>
@@ -37,13 +37,13 @@ Parking Report
                           </div>
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
-                            <label> from Date</label>
+                            <label> From Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
-                            <label> to date</label>
+                            <label> To Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
@@ -66,7 +66,7 @@ Parking Report
                               <th>Vehicle</th>
                               <th>Register Number</th>                              
                               <th>Parking</th>                              
-                              <th>Date&Time</th>        
+                              <th>Date</th>        
                             </tr>
                         </thead>
                     </table>
