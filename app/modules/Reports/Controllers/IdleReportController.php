@@ -87,10 +87,9 @@ class IdleReportController extends Controller
             'digital_input_status',
             'digital_output_status',
             'frame_number',
-            'checksum',
-            
+            'checksum',            
             'gf_id',
-            'device_time',
+           \DB::raw('DATE(device_time) as device_time'),           
             \DB::raw('sum(distance) as distance')
         )
         ->with('gps.vehicle')
