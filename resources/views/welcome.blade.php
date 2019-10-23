@@ -38,7 +38,7 @@
                     background-image: url({{asset('assets/images/rayfleet_home.jpg')}});
                     background-repeat: no-repeat;
                     background-position: center;
-                    background-size: contain;
+                    background-size: cover;
             }
               <?php } 
               else if (strpos($url, $eclipse_key) == true) { ?>
@@ -69,6 +69,8 @@
                     background-size: contain;
             }
             <?php } ?> 
+
+
 
             .full-height {
                 height: 100vh;
