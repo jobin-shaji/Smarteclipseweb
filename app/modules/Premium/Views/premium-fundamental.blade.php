@@ -104,7 +104,7 @@
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
           <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: INR 1900+Tax </li>  
+Price: INR 2400+Tax </li>  
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
@@ -155,7 +155,7 @@ Price: INR 1900+Tax </li>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 2600+Tax)</a></button>
+      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 3100+Tax)</a></button>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">

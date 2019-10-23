@@ -94,11 +94,7 @@ var d = new Date();
 free_date=d.setMonth(d.getMonth() - 1);
 fundamental_date=d.setMonth(d.getMonth() - 2);
 superior_date=d.setMonth(d.getMonth() - 4);
-
 pro_date=d.setMonth(d.getMonth() - 6);
-
-
-
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date() 

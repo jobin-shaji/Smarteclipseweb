@@ -171,7 +171,7 @@ Price: INR 1900+Tax </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
           <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: INR 2600+Tax </li> 
+Price: INR 3100+Tax </li> 
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
