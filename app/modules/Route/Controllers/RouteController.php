@@ -231,6 +231,7 @@ class RouteController extends Controller {
        ->with('vehicle:id,name,register_number')
         ->where('client_id',$client_id)
         ->get();
+        // dd($route);
         return DataTables::of($route)
             ->addIndexColumn() 
             ->addColumn('action', function ($route) { 

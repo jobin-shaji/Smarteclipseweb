@@ -65,6 +65,7 @@
       </div>
     </div>
   </div>
+  @if(\Auth::user()->hasRole('superior|pro'))
   
   <div class="col-lg-6 col-md-12">
     <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image">  
@@ -109,6 +110,7 @@
       </div>
     </div>
   </div>
+@endif
  
 </div>
 </div>

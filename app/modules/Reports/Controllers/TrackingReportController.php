@@ -26,6 +26,7 @@ class TrackingReportController extends Controller
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
+       
         $query =GpsData::select(
             'gps_id',
             'header',
@@ -73,7 +74,7 @@ class TrackingReportController extends Controller
             'frame_number',
             'checksum',
             'gf_id',
-            'device_time',
+            \DB::raw('DATE(device_time) as device_time'),
             \DB::raw('sum(distance) as distance')
         )
         ->with('gps.vehicle')
@@ -88,18 +89,20 @@ class TrackingReportController extends Controller
             $query = $query->whereIn('gps_id',$gps_list)->groupBy('date')
             ->orderBy('id', 'desc');
         }
-       else
-        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle); 
-            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
-        }
+       // else
+       //  {
+       //      $vehicle=Vehicle::withTrashed()->find($vehicle); 
+       //      $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
+       //  }
                
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $track_report = $query->get();     
+        $track_report = $query->get();  
+
+        dd($track_report);  
         return DataTables::of($track_report)
         ->addIndexColumn()
          ->addColumn('motion', function ($track_report) {                    

@@ -116,6 +116,7 @@ class AlertReportController extends Controller
         ->with('alertType:id,description')
         ->with('gps.vehicle')
         ->orderBy('id', 'desc')
+        ->whereNotIn('alert_type_id',[17,18,23,24])
         ->limit(1000);
        if($alert_id==0 && $vehicle_id==0)
        {  

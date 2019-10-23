@@ -522,10 +522,9 @@ class ClientController extends Controller {
         if($request->role_name!=null)
         {
             $user->removeRole($request->role_name);
-        
-        // if($request->role_name!='client'){
-            $user->assignRole($request->client_role);
         }
+            $user->assignRole($request->client_role);
+        
         $roles = $user->roles;
         return redirect(route('client.subscription',$request->id));
 
