@@ -89,11 +89,11 @@ class TrackingReportController extends Controller
             $query = $query->whereIn('gps_id',$gps_list)->groupBy('date')
             ->orderBy('id', 'desc');
         }
-       // else
-       //  {
-       //      $vehicle=Vehicle::withTrashed()->find($vehicle); 
-       //      $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
-       //  }
+       else
+        {
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
+            $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
+        }
                
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
@@ -102,7 +102,7 @@ class TrackingReportController extends Controller
         }
         $track_report = $query->get();  
 
-        dd($track_report);  
+        // dd($track_report);  
         return DataTables::of($track_report)
         ->addIndexColumn()
          ->addColumn('motion', function ($track_report) {                    
