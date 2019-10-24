@@ -5,8 +5,8 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/client/disable','ClientController@disableClient')->name('client.disable');
 	Route::post('/client/enable','ClientController@enableClient')->name('client.enable');
 	Route::get('/client/{id}/subscription','ClientController@subscription')->name('client.subscription');
+	Route::get('client/{user_id}/{role_id}/subscription-delete','ClientController@clientSubscriptionDelete')->name('client.subscription.delete');
 	Route::post('/client-role-create/{id}','ClientController@addUserRole')->name('client.role.create.p');
-	Route::post('/client/role/delete','ClientController@deleteClientRole')->name('client.role.delete');
 
 	Route::get('/root/client/create','ClientController@clientCreate')->name('root.client.create');
 	Route::post('/select/subdealer','ClientController@selectSubdealer')->name('client.role.delete');

@@ -290,10 +290,6 @@ function backgroundPostData(url, data, callBack, options) {
 
                     AssignClientRole(res);
                 }
-                else if(callBack =='removeClientRole'){
-
-                    removeClientRole(res);
-                }
                 else if(callBack =='rootSubdealer'){
 
                     rootSubdealer(res);
@@ -1092,22 +1088,6 @@ function downloadInvoice(){
 function vehicleInvoice(res){    
   // alert(res);
 }
-function removeRole(client_user_id,role){
-  // alert(role);
-    var url = 'client/role/delete';
-    var data = {
-        client_user_id : client_user_id,
-        client_role : role
-    };
-    backgroundPostData(url,data,'removeClientRole',{alert:true});  
-}
-function removeClientRole(res)
-{
-    location.reload();
-    // $('#client_roles').text(res.vehicles);
-}
-
-
 
 $(".cover_track_data").hover(function () {
     $(this).find('.track_status').toggleClass("track_status_hover");
