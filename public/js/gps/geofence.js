@@ -41,7 +41,8 @@ function initMap(){
   //     // console.log(res);
   //         latMap = res.latitude;
   //         lngMap = res.longitude;
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'),
+   {
     center: {lat: latMap, lng: lngMap},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
     zoom: 12
   });
@@ -169,6 +170,7 @@ function locationSearch(){
       var lat=results[0].geometry.location.lat();
       var lng=results[0].geometry.location.lng();
       map.panTo(new google.maps.LatLng(lat,lng));
+      map.setOptions({ maxZoom: 17 });
     } else {
       alert("Something got wrong " + status);
     }
