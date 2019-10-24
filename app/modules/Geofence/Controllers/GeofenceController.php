@@ -150,9 +150,7 @@ class GeofenceController extends Controller {
                 $success=$this->geofenceResponse($single_vehicle_geofence->vehicle_id);
             } 
         } 
-        if($success) {
-            $geofence->delete();
-        }        
+        $geofence->delete();   
 
         return response()->json([
             'status' => 1,
