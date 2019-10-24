@@ -505,10 +505,8 @@ class ClientController extends Controller {
     public function subscription(Request $request)
     {
         $client_user_id=Crypt::decrypt($request->id);
-        // dd($client_user_id);
         $user = User::find(Crypt::decrypt($request->id));  
         $roles = $user->roles;
-        // dd($roles);
         return view('Client::client-subscription',compact('roles'),['client_user_id'=>$request->id,'user'=>$user]);
     }
 
@@ -530,18 +528,15 @@ class ClientController extends Controller {
 
     }
 
-    //delete client role s from table
-    public function deleteClientRole(Request $request)
+    //delete client roles from table
+    public function clientSubscriptionDelete(Request $request)
     {
-        // dd($request->client_user_id);
-        $client_user_id=$request->client_user_id;
-
-        $user = User::find($request->client_user_id); 
-
-        $encrypt=Crypt::encrypt($client_user_id);         
-        $user->removeRole($request->client_role);
+        $decrypted_user_id = Crypt::decrypt($request->user_id); 
+        $decrypted_role_id = Crypt::decrypt($request->role_id); 
+        $user = User::find($decrypted_user_id);         
+        $user->removeRole($decrypted_role_id);
         $roles = $user->roles;      
-        return redirect(route('client.subscription',$encrypt));
+        return redirect(route('client.subscription',$request->user_id));
         
     }
 
