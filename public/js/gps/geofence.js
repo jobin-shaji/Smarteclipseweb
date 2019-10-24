@@ -163,6 +163,7 @@ function addArrays(polygon) {
   allPolly.push(poly);
 }
 function locationSearch(){
+
   place_name=$('#search_place').val();
   var geocoder =  new google.maps.Geocoder();
   geocoder.geocode( { 'address':place_name}, function(results, status) {
@@ -170,7 +171,7 @@ function locationSearch(){
       var lat=results[0].geometry.location.lat();
       var lng=results[0].geometry.location.lng();
       map.panTo(new google.maps.LatLng(lat,lng));
-      map.setOptions({ maxZoom: 17 });
+      map.setOptions({Zoom: 17});
     } else {
       alert("Something got wrong " + status);
     }
