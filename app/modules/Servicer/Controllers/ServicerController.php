@@ -513,12 +513,15 @@ class ServicerController extends Controller {
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
         $this->validate($request,$rules);      
-        $job_completed_date=date("Y-m-d", strtotime($request->job_completed_date)); 
+        // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
+        $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
         $servicer_job->comment = $request->comment;
-         $servicer_job->status = 1;
+        $servicer_job->status = 1;
         $servicer_job->save();
+        if($servicer_job)
+        {        
         $name= $request->name;         
         $register_number = $request->register_number;
         $vehicle_type_id = $request->vehicle_type_id;
@@ -541,7 +544,7 @@ class ServicerController extends Controller {
             'driver_id' => $driver_id,
             'status' => 1
         ]);
-        $this->validate($request, $rules, $custom_messages);
+        // $this->validate($request, $rules, $custom_messages);
         $file=$request->path;
         $installation_photo=$request->installation_photo;
         $activation_photo=$request->activation_photo;
@@ -590,67 +593,17 @@ class ServicerController extends Controller {
             'expiry_date' => null,
             'path' => $uploadedVehicleFile,
         ]);
-        $service_job_id=Crypt::encrypt($servicer_job->id);
+        // dd($servicer_job->id);
+        // $service_job_id=Crypt::encrypt($servicer_job->id);
         $request->session()->flash('message', 'job  completed successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('job.list'));  
+        return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+    }
+        // return redirect(route('job.list'));  
         // return redirect(route('job-complete.certificate',$service_job_id));  
     }
     // save vehicle
-    public function servicerSaveVehicle(Request $request)
-    {
-
-        // $client_id=\Auth::user()->servicer->id;
-       // $client_id= $request->client;         
-        $name= $request->name;         
-        $register_number = $request->register_number;
-        $vehicle_type_id = $request->vehicle_type_id;
-        $gps_id = $request->gps_id;
-        $client_id = $request->client_id;
-        $servicer_job_id = $request->servicer_job_id;
-
-        $engine_number = $request->engine_number;
-        $chassis_number = $request->chassis_number;
-        $path = $request->path;
-        
-        if($gps_id!=null)
-        {
-            $vehicle_create= Vehicle::create([
-                'name' => $name,
-                'register_number' => $register_number,
-                'vehicle_type_id' => $vehicle_type_id,
-                'gps_id' => $gps_id,
-                'client_id' => $client_id,
-                'servicer_job_id' => $servicer_job_id,
-                'engine_number' => $engine_number,
-                'chassis_number' => $chassis_number,
-                'status' => 1
-            ]);
-            // $vehicle_id=$vehicle_create->id;
-            
-        }         
-          $vehicle = Vehicle::select(
-            'name',
-            'register_number',
-            'vehicle_type_id',
-            'gps_id',
-            'client_id',
-            'servicer_job_id',
-            'engine_number',
-            'chassis_number'               
-        )
-        ->with('gps:id,name,imei')
-       // ->with('vehicle:id,name,register_number')
-        ->where('servicer_job_id',$servicer_job_id)
-        ->get();
-        return DataTables::of($vehicle)
-            ->addIndexColumn() 
-            
-            ->rawColumns(['link'])         
-            ->make();
- 
-        
-    }
+   
      public function jobCompleteCertificate(Request $request)
     {
 
@@ -763,16 +716,21 @@ class ServicerController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id); 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+
         $client_id=$servicer_job->client_id;
+       
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
             'register_number',
-            'name'
+            'name',
+            'servicer_job_id',
+            'client_id'
         )
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
+         // dd($client_id);
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -1011,7 +969,7 @@ class ServicerController extends Controller {
      public function servicercompleteJobRules()
     {
         $rules = [          
-            'job_completed_date' => 'required',
+            // 'job_completed_date' => 'required',
             'name' => 'required',
             'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
