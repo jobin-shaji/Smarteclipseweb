@@ -490,6 +490,7 @@ class GeofenceController extends Controller {
         $name=$request->name;
         $geofence_id=$request->geofence_id;
         $geofence  =  Geofence::where('id',$geofence_id)->first(); 
+        $old_geofence_response=$geofence->response;
         $geofence->name=$name;
         if($request->polygons!=null){
         foreach ($request->polygons as $polygon) {
@@ -498,16 +499,24 @@ class GeofenceController extends Controller {
                     $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
                 }
                 $response=rtrim($response,"#");
-                $last_id=Geofence::max('id');
-                $code_last_id=$last_id+1;
                 $geofence->cordinates=$polygon;
-               
                 $geofence->response=$response;
-                // $geofence->code=$code;
-                                             
             } 
         } 
-        $geofence->save();                            
+        $geofence->save(); 
+        $new_geofence_response=$geofence->response;      
+        if($new_geofence_response != $old_geofence_response)  
+        {
+            $vehicle_geofences=VehicleGeofence::select('vehicle_id')->where('geofence_id',$geofence_id)->get();
+            $vehicle_list=[];
+            foreach ($vehicle_geofences as $single_vehicle_geofence) {
+                $vehicle_list[]=$single_vehicle_geofence->vehicle_id;
+                $vehicle_list=array_unique($vehicle_list);
+            }
+            foreach($vehicle_list as $single_vehicle_geofence){
+                $this->geofenceResponse($single_vehicle_geofence);
+            }
+        }                 
         return response()->json([
             'status' => 'edit geofence',
             'title' => 'Success',
