@@ -10,7 +10,7 @@ Route::get('/gps/{id}/edit','GpsController@edit')->name('gps.edit');
 Route::post('/gps/{id}/edit','GpsController@update')->name('gps.update.p');
 Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
 Route::post('/gps/activate','GpsController@activateGps')->name('gps.activate');
-Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
+
 Route::get('/gps-all','GpsController@allgpsList')->name('gps.all');
 Route::post('/gps-all-list','GpsController@getAllgpsList')->name('gps.all.list');
 
@@ -53,10 +53,11 @@ Route::get('/subscription-success','GpsController@subscriptionSuccess')->name('s
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
 Route::get('/gps/{id}/details','GpsController@details')->name('gps.details');
 });
 
-
+Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 

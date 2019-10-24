@@ -124,5 +124,7 @@
   @endsection
 
     @endif
-<div class="clearfix"></div>
+
 @endsection
+
+<div class="clearfix"></div>
