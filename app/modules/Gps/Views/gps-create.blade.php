@@ -106,7 +106,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">E-SIM Number</label>
-                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number" >
+                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number" required>
                         @if ($errors->has('e_sim_number'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>

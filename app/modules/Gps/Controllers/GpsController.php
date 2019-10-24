@@ -1180,7 +1180,7 @@ class GpsController extends Controller {
             'e_sim_number' => 'required|string|unique:gps|min:11|max:11',
             'icc_id' => 'required|string|unique:gps',
             'imsi' => 'required|string|unique:gps',
-            'imei' => 'required|string|unique:gps',
+            'imei' => 'required|string|unique:gps|min:15|max:15',
             'batch_number' => 'required',
             'model_name' => 'required',
             'version' => 'required',
