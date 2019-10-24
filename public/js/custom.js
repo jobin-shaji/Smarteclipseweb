@@ -141,8 +141,8 @@ $( ".date_expiry_edit" ).datetimepicker({
     format: 'DD-MM-YYYY',
     minDate: '2019-01-01',       
     // maxDate: new Date(),
-    maxDate: moment().millisecond(0).second(0).minute(0).hour(0),
-    useCurrent: false
+    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
+    // useCurrent: false
    
  });
 

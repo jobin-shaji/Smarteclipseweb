@@ -62,7 +62,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">ICC ID</label>
-                        <input type="number" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ $gps->icc_id}}" min="0"> 
+                        <input type="text" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ $gps->icc_id}}" min="0"> 
                           @if ($errors->has('icc_id'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('icc_id') }}</strong>
@@ -72,7 +72,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">IMSI</label>
-                        <input type="number" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ $gps->imsi}}" min="0"> 
+                        <input type="text" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ $gps->imsi}}" min="0"> 
                           @if ($errors->has('imsi'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('imsi') }}</strong>
