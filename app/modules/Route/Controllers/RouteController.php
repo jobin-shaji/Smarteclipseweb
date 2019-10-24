@@ -487,7 +487,7 @@ class RouteController extends Controller {
     public function routeCreateRules()
     {
         $rules = [
-            'name' => 'required|unique:routes'
+            'name' => 'required'
         ];
         return  $rules;
     }
