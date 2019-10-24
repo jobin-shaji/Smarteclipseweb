@@ -1013,7 +1013,7 @@ class ServicerController extends Controller {
         $rules = [          
             'job_completed_date' => 'required',
             'name' => 'required',
-            'register_number' => 'required',
+            'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
             'gps_id' => 'required',
             'client_id' => 'required',
@@ -1021,10 +1021,10 @@ class ServicerController extends Controller {
             'engine_number' => 'required',
             'chassis_number' => 'required',
             'name' => 'required',
-            'path' => 'required',
-            'installation_photo' => 'required',
-            'activation_photo' => 'required',
-            'vehicle_photo' => 'required',
+            'path' => 'required|mimes:jpeg,png|max:4096',
+            'installation_photo' => 'required|mimes:jpeg,png|max:4096',
+            'activation_photo' => 'required|mimes:jpeg,png|max:4096',
+            'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
             'comment' => 'required',
             'driver'=>'required'
 
