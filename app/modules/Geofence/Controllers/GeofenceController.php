@@ -128,7 +128,8 @@ class GeofenceController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        return view('Geofence::geofence-details',['id' => $decrypted]);
+        $geofence=Geofence::find($decrypted);
+        return view('Geofence::geofence-details',['id' => $decrypted,'geofence' => $geofence]);
     }
 
     public function deleteGeofence(Request $request)

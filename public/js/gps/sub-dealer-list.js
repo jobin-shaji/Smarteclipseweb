@@ -31,13 +31,13 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
             {data: 'name', name: 'name' },            
-            {data: 'address', name: 'address',searchable: false},           
-            {data: 'user.mobile', name: 'user.mobile'},
-            {data: 'user.email', name: 'user.email',searchable: false},          
-            {data: 'dealer.name', name: 'dealer.name',searchable: false},
-            {data: 'working_status', name: 'working_status',searchable: false},        
+            {data: 'address', name: 'address',searchable: false, orderable: false},           
+            {data: 'user.mobile', name: 'user.mobile', orderable: false},
+            {data: 'user.email', name: 'user.email', orderable: false},          
+            {data: 'dealer.name', name: 'dealer.name',orderable: false},
+            {data: 'working_status', name: 'working_status',orderable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

@@ -54,10 +54,7 @@ function initMap(res) {
                     fillOpacity: 0.35
                   });
                   bermudaTriangle.setMap(map);
-                  
-                   document.getElementById("geofence_name").innerHTML = res.geofence.name;
-                   document.getElementById("user").innerHTML = res.geofence.user.username;
-                  document.getElementById("created_date").innerHTML = res.geofence.date;
+                
                    // locs(res.geofence);
             },
             error: function (err) {

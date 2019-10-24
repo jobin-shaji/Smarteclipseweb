@@ -24,7 +24,6 @@
             <div class="col-md-12">
             <div class="col-md-6">               
               <h2 class="page-header">
-            <i class="fa fa-edit">Sub Dealer details</i> 
           </h2>
            </div>
             <div class="col-md-6"> 
@@ -60,12 +59,11 @@
             <div class="form-group row" style="float:none!important">
               <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label> 
               <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
-                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $user->mobile}}" min="0">
               </div>
-              @if ($errors->has('phone_number'))
+              @if ($errors->has('mobile'))
               <span class="help-block">
-              <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+              <strong class="error-text">{{ $errors->first('mobile') }}</strong>
               </span>
               @endif
             </div>
