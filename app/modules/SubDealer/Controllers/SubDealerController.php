@@ -114,7 +114,7 @@ class SubDealerController extends Controller {
             User::where('username', $request->username)->first()->assignRole('sub_dealer');
         }
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New dealer created successfully!'); 
+        $request->session()->flash('message', 'New sub dealer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
          return redirect(route('subdealers'));        
     }
@@ -177,29 +177,27 @@ class SubDealerController extends Controller {
     public function update(Request $request)
     {
         $subdealer = subdealer::where('user_id', $request->id)->first();
+        $user = User::find($request->id);
         if($subdealer == null){
            return view('SubDealer::404');
         } 
-        $rules = $this->subdealersUpdateRules($subdealer);
+        $rules = $this->subdealersUpdateRules($user);
         $this->validate($request, $rules);       
         $subdealer->name = $request->name;
         $subdealer->save();
-        $user = User::find($request->id);
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile;
         $user->save();
         $did = encrypt($user->id);
-        // $subdealer->phone_number = $request->phone_number;       
-        // $did = encrypt($subdealer->id);
-        $request->session()->flash('message', 'SubDealer details updated successfully!');
+        $request->session()->flash('message', 'Sub dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sub.dealers.edit',$did));  
     }
      //validation for employee updation
-    public function subdealersUpdateRules($subdealer)
+    public function subdealersUpdateRules($user)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|numeric|min:10|max:10'
+            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
             
         ];
         return  $rules;
@@ -316,6 +314,8 @@ class SubDealerController extends Controller {
 
     public function user_create_rules(){
         $rules = [
+            'name' => 'required',
+            'address' => 'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|max:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
