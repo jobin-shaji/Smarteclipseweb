@@ -101,6 +101,7 @@ class GpsController extends Controller {
             $b_url = \URL::to('/');
             if($gps->deleted_at == null){
                 return "
+                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                 ";
             }else{
