@@ -809,9 +809,10 @@ class ServicerController extends Controller {
         $stock_gps_id = [];
         foreach($gps_stocks as $stock_gps){
             $stock_gps_id[] = $stock_gps->gps_id;
-        }
-
-        $vehicle_device = Vehicle::select(
+        }       
+        if($stock_gps_id)
+        {        
+            $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
             'register_number',
@@ -858,6 +859,15 @@ class ServicerController extends Controller {
                 'code'    =>0
             );
         }
+    }
+    else
+    {
+         $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0
+            );
+    }
         return response()->json($response_data); 
         // }
     }

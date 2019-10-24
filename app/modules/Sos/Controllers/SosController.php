@@ -1130,7 +1130,7 @@ class SosController extends Controller {
     //validation for sos creation
     public function sosCreateRules(){
         $rules = [
-            'serial_no' => 'required|string|min:15|max:15|unique:sos,imei',
+            'serial_no' => 'required|string|unique:sos,imei',
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',
@@ -1142,7 +1142,7 @@ class SosController extends Controller {
     //validation for sos updation
     public function sosUpdateRules($sos){
         $rules = [
-            'serial_no' => 'required|string|min:15|max:15|unique:sos,imei,'.$sos->id,
+            'serial_no' => 'required|string|unique:sos,imei,'.$sos->id,
             'manufacturing_date' => 'required',
             'brand' => 'required',
             'model_name' => 'required',
