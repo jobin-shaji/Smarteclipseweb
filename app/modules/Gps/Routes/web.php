@@ -55,9 +55,8 @@ Route::get('/subscription-success','GpsController@subscriptionSuccess')->name('s
 Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 Route::get('/gps/{id}/details','GpsController@details')->name('gps.details');
-});
-
 Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
+});
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
