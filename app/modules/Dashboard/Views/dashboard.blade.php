@@ -101,7 +101,7 @@
                         <h3 id="total_gps_dealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>Total GPS</p>
+                        <p>GPS In Stock</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
@@ -193,7 +193,7 @@
           <div class="icon">
             <i class="fa fa-tablet"></i>
           </div>
-          <a href="/gps-transfers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/gps-transfers-subdealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -204,7 +204,7 @@
             <h3 id="subdealer_client">
               <div class="loader"></div>
             </h3>
-            <p>Client</p>
+            <p>Clients</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>

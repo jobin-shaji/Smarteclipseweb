@@ -208,17 +208,19 @@ class DashboardController extends Controller
     function dealerDashboardView($user){
         $dealer_user_id=$user->id;
         $dealer_id=$user->dealer->id;
-        $total_gps=GpsStock::where('dealer_id',$dealer_id)->count();
-        $transferred_gpss = GpsTransfer::withTrashed()->where('from_user_id',$dealer_user_id)->get();
-        $single_transferred_gps = [];
-        foreach($transferred_gpss as $transferred_gps){
-            $single_transferred_gps[] = $transferred_gps->id;
+        $total_gps=GpsStock::where('dealer_id',$dealer_id)->whereNull('subdealer_id')->count();
+        $sub_dealers_of_dealers=SubDealer::select('id')->where('dealer_id',$dealer_id)->get();
+        $single_sub_dealers_array=[];
+        foreach($sub_dealers_of_dealers as $sub_dealers_array){
+            $single_sub_dealers_array[] = $sub_dealers_array->id;
         }
-        $transferred_gps_items = GpsTransferItems::whereIn('gps_transfer_id',$single_transferred_gps)->count();            
+        $transferred_accepted_gps_count=GpsStock::whereIn('subdealer_id',$single_sub_dealers_array)->where('dealer_id',$dealer_id)->count();
+        $transferred_gps_count=GpsStock::where('dealer_id',$dealer_id)->where('subdealer_id',0)->count();  
+        $total_transferred_gps=$transferred_accepted_gps_count+$transferred_gps_count;
         return response()->json([
             'subdealers' => SubDealer::where('dealer_id',$dealer_id)->count(),
             'total_gps' => $total_gps,
-            'transferred_gps' => $transferred_gps_items,
+            'transferred_gps' => $total_transferred_gps,
             'status' => 'dbcount'           
         ]);
     }
@@ -226,17 +228,16 @@ class DashboardController extends Controller
         $sub_dealer_user_id=$user->id;
         $sub_dealer_id=$user->subdealer->id;
         $total_gps=GpsStock::where('subdealer_id',$sub_dealer_id)->count();
-        $transferred_gpss = GpsTransfer::withTrashed()->where('from_user_id',$sub_dealer_user_id)->get();
-        $single_transferred_gps = [];
-        foreach($transferred_gpss as $transferred_gps){
-            $single_transferred_gps[] = $transferred_gps->id;
+        $clients_of_subdealers=Client::select('id')->where('sub_dealer_id',$sub_dealer_id)->get();
+        $single_clients_array=[];
+        foreach($clients_of_subdealers as $clients_array){
+            $single_clients_array[] = $clients_array->id;
         }
-        $transferred_gps_items = GpsTransferItems::whereIn('gps_transfer_id',$single_transferred_gps)->count();
-
+        $transferred_gps_count=GpsStock::whereIn('client_id',$single_clients_array)->where('subdealer_id',$sub_dealer_id)->count(); 
         return response()->json([
             'clients' => Client::where('sub_dealer_id',$sub_dealer_id)->count(),
             'total_gps' => $total_gps,
-            'transferred_gps' => $transferred_gps_items,
+            'transferred_gps' => $transferred_gps_count,
             'status' => 'dbcount'           
         ]);
     }  
