@@ -956,9 +956,9 @@ class VehicleController extends Controller {
                               )
                               ->where('id',$get_vehicle->gps_id)
                               ->first();
-           
+           $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
- $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+ 
         if($track_data){
 
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);

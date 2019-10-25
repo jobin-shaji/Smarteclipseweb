@@ -2,7 +2,7 @@ $(function () {
 
     ////// auto log out 
 
-    const timeout = 60000;  // 900000 ms = 15 minutes
+    const timeout = 900000;  // 900000 ms = 15 minutes
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
         clearTimeout(idleTimer);
@@ -348,7 +348,7 @@ function backgroundPostData(url, data, callBack, options) {
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
             // toastr.error(message, 'Error');
-            console.log(message);
+            // console.log(message);
         }
     });
 
