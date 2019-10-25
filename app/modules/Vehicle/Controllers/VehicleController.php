@@ -923,7 +923,8 @@ class VehicleController extends Controller {
     {
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+        // $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-15 minutes"));
         $offline="Offline";
         $track_data=Gps::select('lat as latitude',
                       'lon as longitude',
@@ -940,6 +941,7 @@ class VehicleController extends Controller {
                     ->where('device_time', '<=',$currentDateTime)
                     ->where('id',$get_vehicle->gps_id)
                     ->first();
+
         $minutes=0;
         if($track_data == null){
             $track_data = Gps::select('lat as latitude',
@@ -955,9 +957,9 @@ class VehicleController extends Controller {
                               )
                               ->where('id',$get_vehicle->gps_id)
                               ->first();
-            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+           
         }
-
+ $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         if($track_data){
 
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);

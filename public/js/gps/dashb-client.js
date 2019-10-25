@@ -36,6 +36,7 @@ window.setInterval(function() {
    // alert(1);
  if (track_flag == 0) {
 
+  // dashcount();
   getVehicleSequence();
  }
 }, 100000);
@@ -51,6 +52,15 @@ function getVehicleSequence() {
  deleteMarkers();
 
 }
+
+// function dashcount() {
+
+//  var url = 'dash-count';
+//  var data = {};
+//  backgroundPostData(url, data, 'dbcount', {alert: false});
+//  // deleteMarkers();
+
+// }
 
 function vehicleTrack(res) {
 if(res.status!="failed"){
