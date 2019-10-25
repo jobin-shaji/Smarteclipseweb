@@ -1,7 +1,22 @@
 $(function () {
 
-var d = new Date();
-var free_months=d.setMonth(d.getMonth() - 3);
+    ////// auto log out 
+
+    const timeout = 60000;  // 900000 ms = 15 minutes
+    var idleTimer = null;
+    $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
+        clearTimeout(idleTimer);
+
+        idleTimer = setTimeout(function () {
+            document.getElementById('logout-form').submit();
+        }, timeout);
+    });
+    $("body").trigger("mousemove");
+
+    ///////
+
+    var d = new Date();
+    var free_months=d.setMonth(d.getMonth() - 3);
 
     $('.select2').select2();           
         $('#fromDate,#toDate').datetimepicker({
@@ -325,12 +340,17 @@ function backgroundPostData(url, data, callBack, options) {
                     // console.log(1);
                     downloadData(res);
                 } 
+                else if(callBack== 'modecount'){
+                    // console.log(1);
+                    modecount(res);
+                } 
                
             }
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
+            // toastr.error(message, 'Error');
+            console.log(message);
         }
     });
 

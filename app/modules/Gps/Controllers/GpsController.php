@@ -627,8 +627,7 @@ class GpsController extends Controller {
              })
          ->addColumn('servertime', function ($items) {
                 $servertime=0;
-                $servertime=Carbon::parse($items->created_at)->timezone('Asia/Kolkata')->diffForHumans();
-                return $servertime;
+                return $items->created_at;
              })
          ->addColumn('action', function ($items) {
              $b_url = \URL::to('/');
