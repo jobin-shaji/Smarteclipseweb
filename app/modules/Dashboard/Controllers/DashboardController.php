@@ -151,7 +151,8 @@ class DashboardController extends Controller
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first(); 
         $currentDateTime=Date('Y-m-d H:i:s');
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));      
+         // $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-3 minutes"));
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-15 minutes"));      
         if($client)
         {
             $single_vehicle =  $this->getVehicleGps($client->id,$user->id);    
@@ -530,7 +531,7 @@ class DashboardController extends Controller
             $client=Client::where('user_id',$user->id)->first();
             $gps_id =  $this->getVehicleGps($client->id,$user->id);        
             $currentDateTime=Date('Y-m-d H:i:s');
-            $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+            $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-15 minutes"));
             // userID list of vehicles
             $vehiles_details=Gps::Select(
                 'id',
@@ -591,9 +592,9 @@ class DashboardController extends Controller
             $single_vehicle_type= $single_vehicle->vehicleType;
             $currentDateTime=Date('Y-m-d H:i:s');
             $device_time= $vehicle_data->device_time;
-            $oneMinut_currentDateTime=date($currentDateTime,strtotime("-2 minutes"));
+            $oneMinut_currentDateTime=date($currentDateTime,strtotime("-15 minutes"));
             $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
-            if($time_diff_minut<=2)
+            if($time_diff_minut<=15)
             {
                 $modes=$vehicle_data->mode;
             }
@@ -629,9 +630,9 @@ class DashboardController extends Controller
         $gps_ecrypt_id=Crypt::encrypt($vehicle_data->id);
         $currentDateTime=Date('Y-m-d H:i:s');
         $device_time= $vehicle_data->device_time;
-        $oneMinut_currentDateTime=date($currentDateTime,strtotime("-2 minutes"));
+        $oneMinut_currentDateTime=date($currentDateTime,strtotime("-15 minutes"));
         $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
-            if($time_diff_minut<=2)
+            if($time_diff_minut<=15)
             {
                 $modes=$vehicle_data->mode;
             }
@@ -672,10 +673,11 @@ class DashboardController extends Controller
     }
     public function vehicleMode(Request $request)
     {
+        // dd($request->vehicle_mode)
         $vehicle_mode=$request->vehicle_mode;
         $user = $request->user();  
         $currentDateTime=Date('Y-m-d H:i:s');
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-15 minutes"));
         if($user->hasRole('client|school')){
             $client=Client::where('user_id',$user->id)->first();
             $gps_id =  $this->getVehicleGps($client->id,$user->id);         
@@ -1034,7 +1036,7 @@ class DashboardController extends Controller
     {
         $user = $request->user();
         $currentDateTime=Date('Y-m-d H:i:s');
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));             
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-15 minutes"));             
         $single_vehicle=0;
             
             $moving =  $this->getMoving($single_vehicle,$oneMinut_currentDateTime,$currentDateTime);
