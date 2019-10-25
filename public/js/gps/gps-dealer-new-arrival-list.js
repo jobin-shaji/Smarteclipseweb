@@ -35,9 +35,9 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'from_user.username', name: 'from_user.username', searchable: false},
-            {data: 'dispatched_on', name: 'dispatched_on'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'from_user.username', name: 'from_user.username', orderable: false},
+            {data: 'dispatched_on', name: 'dispatched_on', orderable: false},
             {data: 'count', name: 'count'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ],

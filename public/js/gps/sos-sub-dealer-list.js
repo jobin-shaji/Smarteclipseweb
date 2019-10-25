@@ -35,12 +35,12 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'imei', name: 'imei'},
-            {data: 'version', name: 'version'},
-            {data: 'brand', name: 'brand'},
-            {data: 'model_name', name: 'model_name'},
-            {data: 'user.username', name: 'user.username'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'imei', name: 'imei', orderable: false},
+            {data: 'version', name: 'version', orderable: false},
+            {data: 'brand', name: 'brand', orderable: false},
+            {data: 'model_name', name: 'model_name', orderable: false},
+            {data: 'user.username', name: 'user.username', orderable: false},
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

@@ -35,7 +35,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
             {data: 'gps.imei', name: 'gps.imei', orderable: false},
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},

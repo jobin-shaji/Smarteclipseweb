@@ -96,7 +96,7 @@ class SubDealerController extends Controller {
     {   
          $dealer_id = \Auth::user()->dealer->id;
         if($request->user()->hasRole('dealer')){
-        $rules = $this->user_create_rules();
+        $rules = $this->subdealerCreateRules();
         $this->validate($request, $rules);
         $user = User::create([
             'username' => $request->username,
@@ -123,8 +123,6 @@ class SubDealerController extends Controller {
         return view('SubDealer::subdealer-list');
     }
 
-
-  
     public function getSubDealerlist(Request $request)
     {
        
@@ -192,18 +190,8 @@ class SubDealerController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sub.dealers.edit',$did));  
     }
-     //validation for employee updation
-    public function subdealersUpdateRules($user)
-    {
-        $rules = [
-            'name' => 'required',
-            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
-            
-        ];
-        return  $rules;
-    }
 
-    //     //for edit page of subdealer password
+    //for edit page of subdealer password
     public function changePassword(Request $request)
     {
          $decrypted = Crypt::decrypt($request->id);
@@ -287,7 +275,7 @@ class SubDealerController extends Controller {
         ]);
     }
 
-//////////////////////////////////////Sub Dealer Profile-start////////////////////////
+////////////////////////Sub Dealer Profile-start/////////////////////
 
     //Sub Dealer profile view
     public function subDealerProfile()
@@ -303,16 +291,9 @@ class SubDealerController extends Controller {
         return view('SubDealer::sub-dealer-profile',['sub_dealer' => $sub_dealer,'user' => $user]);
     }
 
-//////////////////////////////////////Sub Dealer Profile-end/////////////////////////
+/////////////////////////////////Sub Dealer Profile-end////////////////////
 
-    public function passwordUpdateRules(){
-        $rules=[
-            'password' => 'required|string|min:6|confirmed'
-        ];
-        return $rules;
-    }
-
-    public function user_create_rules(){
+    public function subdealerCreateRules(){
         $rules = [
             'name' => 'required',
             'address' => 'required',
@@ -323,6 +304,18 @@ class SubDealerController extends Controller {
         ];
         return  $rules;
     }
+
+    //validation for employee updation
+    public function subdealersUpdateRules($user)
+    {
+        $rules = [
+            'name' => 'required',
+            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
+            
+        ];
+        return  $rules;
+    }
+
     public function updatePasswordRule()
     {
         $rules=[
