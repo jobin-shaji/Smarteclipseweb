@@ -13,6 +13,7 @@ var free_months=d.setMonth(d.getMonth() - 3);
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
             var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
+
             incrementDay.add(1, 'days');
 
             $('#toDate').data('DateTimePicker').minDate(incrementDay);
@@ -92,6 +93,7 @@ var free_months=d.setMonth(d.getMonth() - 3);
 
 var d = new Date();
 free_date=d.setMonth(d.getMonth() - 1);
+
 fundamental_date=d.setMonth(d.getMonth() - 2);
 superior_date=d.setMonth(d.getMonth() - 4);
 pro_date=d.setMonth(d.getMonth() - 6);

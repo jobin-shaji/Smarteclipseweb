@@ -33,7 +33,9 @@ function initMap() {
 // check each 10 sec
 
 window.setInterval(function() {
+   // alert(1);
  if (track_flag == 0) {
+
   getVehicleSequence();
  }
 }, 100000);
