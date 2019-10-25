@@ -99,6 +99,9 @@ function getMarkers() {
                         $("#offline").hide();
                         vehicleColor=" #cbcbbc";
                     } else {
+                      // if(res.liveData.last_seen >'1 hour ago'){
+                        
+                      // }
                         if(res.liveData.last_seen){
                             $('#last_seen').text(res.liveData.last_seen);
                         }
