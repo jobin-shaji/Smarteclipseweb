@@ -15,13 +15,10 @@
             </div>
             @endif  
         </nav>
-
-  
-
   
   <form id="playback_form">
  <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
-  <div class="cover_playback" style="width:33%;">
+  <div class="cover_playback" style="width:43%;">
     <div class="row">
      <div class="col-lg-4 col-md-3">
         <div class="form-group">
