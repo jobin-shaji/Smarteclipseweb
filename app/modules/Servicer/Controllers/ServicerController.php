@@ -207,15 +207,15 @@ class ServicerController extends Controller {
         $job_date=date("Y-m-d", strtotime($request->job_date));
         
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        // $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
-        if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('sub-dealer.assign.servicer'));        
-        }
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['logitude'];        
+        // if($placeLatLng==null){
+        //       $request->session()->flash('message', 'Enter correct location'); 
+        //       $request->session()->flash('alert-class', 'alert-danger'); 
+        //       return redirect(route('sub-dealer.assign.servicer'));        
+        // }
+        // $location_lat=$placeLatLng['latitude'];
+        // $location_lng=$placeLatLng['logitude'];        
         $user_id=\Auth::user()->id;
         $servicer = ServicerJob::create([
             'servicer_id' => $request->servicer,
@@ -227,8 +227,9 @@ class ServicerController extends Controller {
             'gps_id' => $request->gps, 
             'job_date' => $job_date,                
             'status' => 0,
-            'latitude'=>$location_lat,
-            'longitude'=>$location_lng              
+            'location'=>$request->search_place
+            // 'latitude'=>$location_lat,
+            // 'longitude'=>$location_lng              
         ]); 
         // $gps = Gps::find($request->gps);
         // $gps->user_id = null;        
@@ -404,9 +405,7 @@ class ServicerController extends Controller {
             'gps_id',
             'job_complete_date', 
             \DB::raw('Date(job_date) as job_date'),                 
-            'created_at',
-            'latitude',
-            'longitude',
+            'created_at',           
             'location',
             'status'
         )
@@ -671,8 +670,7 @@ class ServicerController extends Controller {
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
             'status',
-            'latitude',
-            'longitude',
+            'location',
             'gps_id'
         )
         ->where('servicer_id',$user_id)
@@ -695,27 +693,27 @@ class ServicerController extends Controller {
             }
                        
          })
-         ->addColumn('location', function ($servicer_job) {                    
-            $latitude= $servicer_job->latitude;
-            $longitude=$servicer_job->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                    $location=$address;
-                    return $location;                                 
-                }        
-            }
-            else
-            {
-                return "No Address";
-            }
-         }) 
+         // ->addColumn('location', function ($servicer_job) {                    
+         //    $latitude= $servicer_job->latitude;
+         //    $longitude=$servicer_job->longitude;          
+         //    if(!empty($latitude) && !empty($longitude)){
+         //        //Send request and receive json data by address
+         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+         //        $output = json_decode($geocodeFromLatLong);         
+         //        $status = $output->status;
+         //        //Get address from json data
+         //        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+         //        //Return address of the given latitude and longitude
+         //        if(!empty($address)){
+         //            $location=$address;
+         //            return $location;                                 
+         //        }        
+         //    }
+         //    else
+         //    {
+         //        return "No Address";
+         //    }
+         // }) 
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
                 return "
