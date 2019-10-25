@@ -342,6 +342,7 @@ class ServicerController extends Controller {
             ]); 
             $request->session()->flash('message', 'Assign  servicer successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
+            
             return redirect(route('sub-dealer.assign.servicer'));  
     }
     public function subDealerAssignServicerList()
