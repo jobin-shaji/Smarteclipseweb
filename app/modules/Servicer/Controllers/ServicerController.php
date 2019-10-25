@@ -513,88 +513,104 @@ class ServicerController extends Controller {
         $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
-        $servicer_job->comment = $request->comment;
-        $servicer_job->status = 1;
-        $servicer_job->save();
-        if($servicer_job)
-        {        
-        $name= $request->name;         
-        $register_number = $request->register_number;
-        $vehicle_type_id = $request->vehicle_type_id;
-        $gps_id = $request->gps_id;
-        $client_id = $request->client_id;
-        $servicer_job_id = $request->servicer_job_id;
-        $engine_number = $request->engine_number;
-        $chassis_number = $request->chassis_number;
         $driver_id=$request->driver;
         // $path = $request->path;
-        $vehicle_create= Vehicle::create([
-            'name' => $name,
-            'register_number' => $register_number,
-            'vehicle_type_id' => $vehicle_type_id,
-            'gps_id' => $gps_id,
-            'client_id' => $client_id,
-            'servicer_job_id' =>$servicer_job->id,
-            'engine_number' => $engine_number,
-            'chassis_number' => $chassis_number,
-            'driver_id' => $driver_id,
-            'status' => 1
-        ]);
-        // $this->validate($request, $rules, $custom_messages);
-        $file=$request->path;
-        $installation_photo=$request->installation_photo;
-        $activation_photo=$request->activation_photo;
-        $vehicle_photo=$request->vehicle_photo;
+        $driver = Driver::find($driver_id);
+        if($driver)
+        {
+            
        
-        $getFileExt   = $file->getClientOriginalExtension();
-        $uploadedFile =   time().'.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents';
-        $file->move($destinationPath,$uploadedFile);
-
-        $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
-        $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
-        $installation_photo->move($destinationPath,$uploadedInstallationFile);
-
-        $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
-        $uploadedActivationFile =   time().'.'.$getActivationFileExt;
-        $activation_photo->move($destinationPath,$uploadedActivationFile);
-
-        $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
-        $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
-        $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
+            $servicer_job->comment = $request->comment;
+            $servicer_job->status = 1;
+            $servicer_job->save();
+            if($servicer_job)
+            {        
+            $name= $request->name;         
+            $register_number = $request->register_number;
+            $vehicle_type_id = $request->vehicle_type_id;
+            $gps_id = $request->gps_id;
+            $client_id = $request->client_id;
+            $servicer_job_id = $request->servicer_job_id;
+            $engine_number = $request->engine_number;
+            $chassis_number = $request->chassis_number;
 
 
-        $documents = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 1,
-            'expiry_date' => null,
-            'path' => $uploadedFile,
-        ]);
-        $installation_documents = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 6,
-            'expiry_date' => null,
-            'path' => $uploadedInstallationFile,
-        ]);
-        $activation_documents = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 7,
-            'expiry_date' => null,
-            'path' => $uploadedActivationFile,
-        ]);
-        $vehicle_photo = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 8,
-            'expiry_date' => null,
-            'path' => $uploadedVehicleFile,
-        ]);
-        // dd($servicer_job->id);
-        // $service_job_id=Crypt::encrypt($servicer_job->id);
-        $request->session()->flash('message', 'job  completed successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+
+            $vehicle_create= Vehicle::create([
+                'name' => $name,
+                'register_number' => $register_number,
+                'vehicle_type_id' => $vehicle_type_id,
+                'gps_id' => $gps_id,
+                'client_id' => $client_id,
+                'servicer_job_id' =>$servicer_job->id,
+                'engine_number' => $engine_number,
+                'chassis_number' => $chassis_number,
+                'driver_id' => $driver_id,
+                'status' => 1
+            ]);
+            // $this->validate($request, $rules, $custom_messages);
+            $file=$request->path;
+            $installation_photo=$request->installation_photo;
+            $activation_photo=$request->activation_photo;
+            $vehicle_photo=$request->vehicle_photo;
+           
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'documents';
+            $file->move($destinationPath,$uploadedFile);
+
+            $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
+            $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
+            $installation_photo->move($destinationPath,$uploadedInstallationFile);
+
+            $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
+            $uploadedActivationFile =   time().'.'.$getActivationFileExt;
+            $activation_photo->move($destinationPath,$uploadedActivationFile);
+
+            $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
+            $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
+            $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
+
+
+            $documents = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 1,
+                'expiry_date' => null,
+                'path' => $uploadedFile,
+            ]);
+            $installation_documents = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 6,
+                'expiry_date' => null,
+                'path' => $uploadedInstallationFile,
+            ]);
+            $activation_documents = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 7,
+                'expiry_date' => null,
+                'path' => $uploadedActivationFile,
+            ]);
+            $vehicle_photo = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 8,
+                'expiry_date' => null,
+                'path' => $uploadedVehicleFile,
+            ]);
+            // dd($servicer_job->id);
+            // $service_job_id=Crypt::encrypt($servicer_job->id);
+            $request->session()->flash('message', 'Job  completed successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+        }
     }
+    else
+    {
+        $request->session()->flash('message', 'Driver doesnot exist!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+       return view('Servicer::404');
+    }
+
         // return redirect(route('job.list'));  
         // return redirect(route('job-complete.certificate',$service_job_id));  
     }

@@ -39,10 +39,10 @@ function createDriver(res){
         }
         else
         { 
-            var closable = alertify.alert().setting('closable');
-            alertify.alert()
-            .setting({'label':'OK','message': 'Mobile should be number'}).show();              
-            // alert("Mobile number should be number");
+            // var closable = alertify.alert().setting('closable');
+            // alertify.alert()
+            // .setting({'label':'OK','message': 'Mobile should be number'}).show();              
+            alert("Mobile number should be number");
         // return false;
         }    
     }          

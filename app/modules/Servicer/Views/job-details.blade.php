@@ -107,6 +107,8 @@
                          <strong class="error-text">{{ $errors->first('driver') }}</strong>
                          </span>
                          @endif
+
+
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Driver </button>
                       </div>               
                         <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
@@ -256,7 +258,7 @@
             </div>
           </form>
            <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" >
     
       <!-- Modal content-->
       <div class="modal-content">
@@ -264,8 +266,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title"></h4>
         </div>
-        <div class="modal-body">
-
+        <div class="modal-body" >
           <form  method="POST" id="form1">
       {{csrf_field()}}
       <div class="row">
@@ -290,7 +291,7 @@
                                <div class="form-group row" style="float:none!important">
                                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
                                  <div class="form-group has-feedback">
-                                     <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" id="mobile" value="{{ old('mobile') }}" > 
+                                     <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" id="mobile" value="{{ old('mobile') }}" > 
                                   </div>
                                   @if ($errors->has('mobile'))
                                     <span class="help-block">
