@@ -36,7 +36,7 @@ window.setInterval(function() {
    // alert(1);
  if (track_flag == 0) {
 
-  // dashcount();
+  dashcount();
   getVehicleSequence();
  }
 }, 100000);
@@ -53,14 +53,22 @@ function getVehicleSequence() {
 
 }
 
-// function dashcount() {
+function dashcount() {
 
-//  var url = 'dash-count';
-//  var data = {};
-//  backgroundPostData(url, data, 'dbcount', {alert: false});
-//  // deleteMarkers();
+ var url = 'dash-count';
+ var data = {};
+ backgroundPostData(url, data, 'modecount', {alert: false});
+ // deleteMarkers();
 
-// }
+}
+function modecount(res) {
+  $('#moving').text(res.moving);
+      $('#idle').text(res.idle);
+      $('#stop').text(res.stop);
+      $('#offline').text(res.offline);
+
+  }
+
 
 function vehicleTrack(res) {
 if(res.status!="failed"){

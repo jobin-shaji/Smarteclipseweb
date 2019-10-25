@@ -328,6 +328,10 @@ function backgroundPostData(url, data, callBack, options) {
                     // console.log(1);
                     downloadData(res);
                 } 
+                else if(callBack== 'modecount'){
+                    // console.log(1);
+                    modecount(res);
+                } 
 
 
 
