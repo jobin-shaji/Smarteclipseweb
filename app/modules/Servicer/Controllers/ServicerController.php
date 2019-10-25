@@ -347,7 +347,6 @@ class ServicerController extends Controller {
     public function getSubDealerAssignServicerList()
     {
         $user_id=\Auth::user()->id;
-
         $servicer_job = ServicerJob::select(
             'id', 
             'servicer_id',
@@ -366,6 +365,7 @@ class ServicerController extends Controller {
         ->with('user:id,username')
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
+        ->whereNull('job_complete_date')
         ->with('servicer:id,name')
         ->get();       
         return DataTables::of($servicer_job)
