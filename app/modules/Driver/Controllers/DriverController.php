@@ -109,7 +109,7 @@ class DriverController extends Controller {
         $did = encrypt($driver->id);
         $request->session()->flash('message', 'Driver details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('driver.edit',$did));  
+        return redirect(route('driver.details',$did));  
     }
 
     public function performanceScore()

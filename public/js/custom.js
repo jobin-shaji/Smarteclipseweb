@@ -156,9 +156,6 @@ $( ".date_expiry_edit" ).datetimepicker({
    
  });
 
-
-
-
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
@@ -328,11 +325,6 @@ function backgroundPostData(url, data, callBack, options) {
                     // console.log(1);
                     downloadData(res);
                 } 
-
-
-
-
-
                
             }
         },
