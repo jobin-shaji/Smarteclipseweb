@@ -79,7 +79,6 @@ class VehicleController extends Controller {
                     
                 }else{
                      return "
-                    <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view'><i class='fas fa-eye'></i> View </a>
                     <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
                 }
              })
