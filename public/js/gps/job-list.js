@@ -29,7 +29,7 @@ $(document).ready(function () {
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'job_id', name: 'job_id'},
           
             // {data: 'servicer.name', name: 'servicer.name'},
