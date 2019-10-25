@@ -309,17 +309,17 @@ class ServicerController extends Controller {
         $job_date=date("Y-m-d", strtotime($request->job_date));        
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
 
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        // $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
-        if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('sub-dealer.assign.servicer'));        
-        }
+        // if($placeLatLng==null){
+        //       $request->session()->flash('message', 'Enter correct location'); 
+        //       $request->session()->flash('alert-class', 'alert-danger'); 
+        //       return redirect(route('sub-dealer.assign.servicer'));        
+        // }
 
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['logitude'];
-        
+        // $location_lat=$placeLatLng['latitude'];
+        // $location_lng=$placeLatLng['logitude'];
+        $location=$request->search_place;
 
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
@@ -332,8 +332,9 @@ class ServicerController extends Controller {
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
                 'status' => 0, 
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng           
+                'location'=>$location 
+                // 'latitude'=>$location_lat,
+                // 'longitude'=>$location_lng           
             ]); 
             $request->session()->flash('message', 'Assign  servicer successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
@@ -406,6 +407,7 @@ class ServicerController extends Controller {
             'created_at',
             'latitude',
             'longitude',
+            'location',
             'status'
         )
         ->where('servicer_id',$user_id)
@@ -427,27 +429,27 @@ class ServicerController extends Controller {
                 return "Service" ; 
             }                       
          }) 
-        ->addColumn('location', function ($servicer_job) {                    
-            $latitude= $servicer_job->latitude;
-            $longitude=$servicer_job->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                    $location=$address;
-                    return $location;                                 
-                }        
-            }
-            else
-            {
-                return "No Address";
-            }
-         })
+        // ->addColumn('location', function ($servicer_job) {                    
+        //     $latitude= $servicer_job->latitude;
+        //     $longitude=$servicer_job->longitude;          
+        //     if(!empty($latitude) && !empty($longitude)){
+        //         //Send request and receive json data by address
+        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+        //         $output = json_decode($geocodeFromLatLong);         
+        //         $status = $output->status;
+        //         //Get address from json data
+        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        //         //Return address of the given latitude and longitude
+        //         if(!empty($address)){
+        //             $location=$address;
+        //             return $location;                                 
+        //         }        
+        //     }
+        //     else
+        //     {
+        //         return "No Address";
+        //     }
+        //  })
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
                 return "
@@ -742,7 +744,7 @@ class ServicerController extends Controller {
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
-         // dd($client_id);
+        
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -960,7 +962,8 @@ class ServicerController extends Controller {
             'job_type' => 'required',
             'description' => 'required',
             'gps' => 'required',
-            'job_date' => 'required'            
+            'job_date' => 'required',
+            'search_place'=>'required'            
         ];
         return  $rules;
     }
