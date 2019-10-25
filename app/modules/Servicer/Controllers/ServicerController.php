@@ -82,19 +82,15 @@ class ServicerController extends Controller {
     public function update(Request $request)
     {
         $servicer = Servicer::find($request->id);
+        $user = User::find($servicer->user->id);
         if($servicer == null){
            return view('User::404');
         }
-
-        $rules = $this->servicerUpdateRules($servicer->user);
+        $rules = $this->servicerUpdateRules($user);
         $this->validate($request,$rules);
-
-  
         $servicer->name = $request->name;
         $servicer->address = $request->address;
         $servicer->save();
-
-        $user = User::find($servicer->user->id);
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->save();
@@ -182,7 +178,6 @@ class ServicerController extends Controller {
                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>"; 
                 }else{
                      return "
-                    <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
                     <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
 
                 }
@@ -934,7 +929,7 @@ class ServicerController extends Controller {
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
-            'mobile' => 'required|string|min:10|max:10'  
+            'mobile' => 'required|string|min:10|max:10|unique:users'  
            
         ];
         return  $rules;
@@ -958,9 +953,8 @@ class ServicerController extends Controller {
         $rules = [
             'name' => 'required',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'address' => 'required',
-            'mobile' => 'required|string|min:10|unique:users,mobile,'.$user->id
-            
         ];
         return  $rules;
     }
