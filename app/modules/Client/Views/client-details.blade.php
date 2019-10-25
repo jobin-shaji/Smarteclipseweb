@@ -27,7 +27,6 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <h2 class="page-header">
-                      <i class="fa fa-user"></i> 
                     </h2>
                   </div>
                 </div>

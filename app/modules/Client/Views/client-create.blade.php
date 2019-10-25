@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  Client Creation
+  End User Creation
 @endsection
 @section('content')   
 <style type="text/css">
@@ -10,7 +10,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Client</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create End User</li>
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -70,10 +70,12 @@
                         @endif
                       </div>
                       <div class="form-group row" style="float:none!important">
-                      <label class="srequired">State</label>
-                        <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
-                        <option selected disabled>Select Country First</option>
-                        </select>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
+                        <div class="form-group ">
+                          <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
+                          <option selected disabled>Select Country First</option>
+                          </select>
+                        </div>
                         @if ($errors->has('state_id'))
                           <span class="help-block">
                               <strong class="error-text">{{ $errors->first('state_id') }}</strong>
@@ -82,10 +84,12 @@
                       </div> 
 
                        <div class="form-group has-feedback">
-                      <label class="srequired">City</label>
-                        <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
-                        <option selected disabled>Select Country and state First</option>
-                        </select>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
+                        <div class="form-group ">
+                          <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
+                          <option selected disabled>Select Country and state First</option>
+                          </select>
+                        </div>
                         @if ($errors->has('city_id'))
                           <span class="help-block">
                               <strong class="error-text">{{ $errors->first('city_id') }}</strong>
@@ -147,7 +151,7 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client Category</label> 
                         <div class="form-group has-feedback">
-                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}">
+                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
                             <option value="" selected disabled>Select Client Category</option>
                             <option value="school">School</option>
                             <option value="other">Others</option>
@@ -163,7 +167,7 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}" autocomplete="off">
+                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}" required autocomplete="off">
                         </div>
                         @if ($errors->has('username'))
                           <span class="help-block">
@@ -175,14 +179,14 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password">
                         </div>
                       </div>
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm password</label> 
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation">
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                         </div>
                         @if ($errors->has('password'))
                           <span class="help-block">

@@ -200,7 +200,7 @@ class ClientController extends Controller {
         if($placeLatLng==null){
             $request->session()->flash('message', 'Enter correct location'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
-            return redirect(route('client.create'));        
+            return redirect(route('client.edit',encrypt($client->user_id)));        
         }
 
         $location_lat=$placeLatLng['latitude'];
@@ -216,7 +216,7 @@ class ClientController extends Controller {
         // $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'Client details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('client.edit',$did));  
+        return redirect(route('client.details',$did));  
     }
 
     //validation for employee updation
