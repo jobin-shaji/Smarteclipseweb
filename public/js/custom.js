@@ -2,7 +2,7 @@ $(function () {
 
     ////// auto log out 
 
-    const timeout = 60000;  // 900000 ms = 15 minutes
+    const timeout = 180000;  // 900000 ms = 15 minutes
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
         clearTimeout(idleTimer);
