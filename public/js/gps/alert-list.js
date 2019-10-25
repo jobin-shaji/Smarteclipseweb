@@ -41,12 +41,12 @@ function callBackDataTable(data=null){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'alert_type.description', name: 'alert_type.description'},
-            {data: 'gps.vehicle.name', name: 'gps.vehicle.name'},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'alert_type.description', name: 'alert_type.description', orderable: false, searchable: false},
+            {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false},
+            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
             // {data: 'location', name: 'location'},
-            {data: 'device_time', name: 'device_time'},
+            {data: 'device_time', name: 'device_time', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

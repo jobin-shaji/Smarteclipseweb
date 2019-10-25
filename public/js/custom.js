@@ -171,9 +171,6 @@ $( ".date_expiry_edit" ).datetimepicker({
    
  });
 
-
-
-
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
