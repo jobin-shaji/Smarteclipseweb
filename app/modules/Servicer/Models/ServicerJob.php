@@ -10,7 +10,7 @@ class ServicerJob extends Model
 	 use SoftDeletes;
 
 	 protected $fillable = [
-        'servicer_id', 'client_id','job_id','job_type','user_id','description','job_date','job_complete_date','status','latitude','longitude','gps_id','comment'
+        'servicer_id', 'client_id','job_id','job_type','user_id','description','job_date','job_complete_date','status','latitude','longitude','gps_id','comment','location'
     ];
     public function user()
 	  {

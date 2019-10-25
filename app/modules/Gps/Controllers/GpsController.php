@@ -627,7 +627,8 @@ class GpsController extends Controller {
              })
          ->addColumn('servertime', function ($items) {
                 $servertime=0;
-                return $items->created_at;
+                 $servertime=Carbon::parse($items->created_at)->diffForHumans();
+                return $servertime;
              })
          ->addColumn('action', function ($items) {
              $b_url = \URL::to('/');
