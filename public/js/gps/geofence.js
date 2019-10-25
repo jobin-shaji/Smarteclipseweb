@@ -59,7 +59,7 @@ function initMap(){
     drawingControl: true,
     drawingControlOptions: {
       position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [ 'polygon']
+      drawingModes: [ 'polygon'],
     },
 
     markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
@@ -96,7 +96,8 @@ function initMap(){
 
   google.maps.event.addDomListener(savebutton, 'click', function() {
     var name= document.getElementById('name').value;
-    if(name !== "")
+    var polygon_length=allPolly.length;
+    if(name !== "" && polygon_length >0)
     {
       var url = 'save/fence';
       var data = {
@@ -104,7 +105,10 @@ function initMap(){
       name : name
     };
     backgroundPostData(url,data,'none',{alert:true});  
-    // console.log(allPolly);
+    }
+    else if(polygon_length ==0)
+    {
+      alert("Please draw your area");
     }
     else
     {

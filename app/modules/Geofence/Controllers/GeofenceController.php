@@ -113,7 +113,7 @@ class GeofenceController extends Controller {
             if($geofence->deleted_at == null){  
             return " 
              <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>  
-             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> Edit</i> </a>         
+             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-edit'> Redraw</i> </a>         
                            
                 <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate </button>";
                 }else{ 
