@@ -16,6 +16,8 @@ use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
+use App\Modules\Servicer\Models\ServicerJob;
+
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
 use DataTables;
@@ -172,7 +174,7 @@ class DashboardController extends Controller
             return $this->subDealerDashboardView($user);           
         }
          else if($user->hasRole('servicer')){
-            return $this->subDealerDashboardView($user);           
+            return $this->servicerDashboardView($user);           
         }
         else if($user->hasRole('client')){
            return response()->json([
@@ -209,6 +211,17 @@ class DashboardController extends Controller
             'status' => 'dbcount'
         ]);
     }
+    function servicerDashboardView($user)
+    {
+         $servicer_id=$user->servicer->id;
+        return response()->json([
+            
+            'pending_jobs' => ServicerJob::whereNull('job_complete_date')->where('servicer_id',$servicer_id)->count(), 
+            'completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->count(),
+            'status' => 'dbcount'
+        ]);
+    }
+    
     function dealerDashboardView($user){
         $dealer_user_id=$user->id;
         $dealer_id=$user->dealer->id;
