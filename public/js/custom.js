@@ -337,11 +337,9 @@ function backgroundPostData(url, data, callBack, options) {
                     alertNotification(res);
                 } 
                 else if(callBack== 'downloadData'){
-                    // console.log(1);
                     downloadData(res);
                 } 
                 else if(callBack== 'modecount'){
-                    // console.log(1);
                     modecount(res);
                 } 
                
