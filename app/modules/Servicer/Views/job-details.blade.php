@@ -82,7 +82,7 @@
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">GPS</label>
                          <div class="form-group has-feedback">
                            <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="gps_id" name="gps_id" required>
-                              <option value="{{$servicer_job->gps->id}}">{{$servicer_job->gps->imei}}</option>
+                              <option value="{{$servicer_job->gps->id}}">{{$servicer_job->gps->serial_no}}</option>
                             </select>                           
                          </div>
                          @if ($errors->has('gps_id'))

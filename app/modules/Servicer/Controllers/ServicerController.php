@@ -479,7 +479,7 @@ class ServicerController extends Controller {
         )
         ->withTrashed()
         ->where('id', $decrypted)
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->first();
         $client_id=$servicer_job->client_id;

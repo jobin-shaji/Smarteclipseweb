@@ -923,7 +923,7 @@ class VehicleController extends Controller {
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
         // $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-15 minutes"));
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-10 minutes"));
         $offline="Offline";
         $track_data=Gps::select('lat as latitude',
                       'lon as longitude',
