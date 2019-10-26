@@ -53,6 +53,7 @@ function initMap(){
   var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
   var drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.POLYGON,
+     
     // drawingMode: google.maps.drawing.OverlayType,
 
 
@@ -144,7 +145,7 @@ function clearSelection() {
 function setSelection(shape) {
   clearSelection();
   selectedShape = shape;
-  shape.setEditable(true);
+  shape.setEditable(false);
 }
 
 function removeLineSegment() {

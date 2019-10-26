@@ -46,12 +46,13 @@ function initMap(){
     zoom: 12
   });
   map.setOptions({ minZoom:5, maxZoom: 17 });
-
+// marker.setDraggable(false);
   var input1 = document.getElementById('search_place'); 
   autocomplete1 = new google.maps.places.Autocomplete(input1);
   var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
   var drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.POLYGON,
+    // drawingMode: marker.setDraggable(false),
     // drawingMode: google.maps.drawing.OverlayType,
 
 
@@ -141,7 +142,7 @@ function clearSelection() {
 function setSelection(shape) {
   clearSelection();
   selectedShape = shape;
-  shape.setEditable(true);
+  shape.setEditable(false);
 }
 
 function removeLineSegment() {
