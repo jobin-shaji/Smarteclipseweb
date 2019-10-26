@@ -31,9 +31,9 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'name', name: 'name' },            
-            {data: 'clients.name', name: 'clients.name',searchable: false},           
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'name', name: 'name' , orderable: false,searchable: false},            
+            {data: 'clients.name', name: 'clients.name',searchable: false, orderable: false},           
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

@@ -960,9 +960,7 @@ class VehicleController extends Controller {
         }
  
         if($track_data){
-
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
-
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             $reponseData=array(
                         "latitude"=>$snapRoute['lat'],
