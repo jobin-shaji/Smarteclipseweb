@@ -112,6 +112,7 @@ class ServicerController extends Controller {
                 'message' => 'Servicer does not exist'
             ]);
         }
+        $servicer->user->delete();
         $servicer->delete(); 
         return response()->json([
             'status' => 1,
@@ -140,6 +141,7 @@ class ServicerController extends Controller {
                 'message' => 'Servicer does not exist'
              ]);
         }
+        $servicer->user->restore();
         $servicer->restore();
         return response()->json([
             'status' => 1,
@@ -452,7 +454,7 @@ class ServicerController extends Controller {
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> View</a>";
           
         })
         ->rawColumns(['link', 'action'])
