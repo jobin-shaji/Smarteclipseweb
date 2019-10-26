@@ -112,6 +112,7 @@ class ServicerController extends Controller {
                 'message' => 'Servicer does not exist'
             ]);
         }
+        $servicer->user->delete();
         $servicer->delete(); 
         return response()->json([
             'status' => 1,
@@ -140,6 +141,7 @@ class ServicerController extends Controller {
                 'message' => 'Servicer does not exist'
              ]);
         }
+        $servicer->user->restore();
         $servicer->restore();
         return response()->json([
             'status' => 1,

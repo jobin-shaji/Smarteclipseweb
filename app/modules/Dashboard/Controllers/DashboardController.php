@@ -171,6 +171,9 @@ class DashboardController extends Controller
         else if($user->hasRole('sub_dealer')){
             return $this->subDealerDashboardView($user);           
         }
+         else if($user->hasRole('servicer')){
+            return $this->subDealerDashboardView($user);           
+        }
         else if($user->hasRole('client')){
            return response()->json([
             // 'gps' => Gps::where('user_id',$user->id)->count(),

@@ -235,7 +235,7 @@
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <h3 id="gps">
+              <h3 id="new_jobs">
                 <div class="loader"></div>
               </h3>
               <p>NEW JOBS</p>
@@ -249,7 +249,7 @@
         <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
           <div class="small-box bg-yellow bxs">
             <div class="inner">
-              <h3 id="dealer">
+              <h3 id="completed_jobs">
                 <div class="loader"></div>
               </h3>
               <p>COMPLETED JOBS</p>
