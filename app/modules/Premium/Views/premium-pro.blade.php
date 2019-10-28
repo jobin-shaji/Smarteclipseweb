@@ -33,7 +33,7 @@
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
           <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: After 1 year 1200+Tax </li> 
+Price: After 1 year 1700+Tax </li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -104,8 +104,7 @@ Price: After 1 year 1200+Tax </li>
           <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform*</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
-         <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: INR 1900+Tax </li> 
+         <li style="height:0"></li> 
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
@@ -170,8 +169,8 @@ Price: INR 1900+Tax </li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
-          <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: INR 3100+Tax </li> 
+          <li><img src="{{url('/')}}/assets/images/api.png" style="margin:0 2%">AC ON/OFF</li>
+          <li style="height:0"></li> 
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">

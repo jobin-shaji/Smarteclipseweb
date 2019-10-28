@@ -94,14 +94,15 @@ Price: After 1 year 1700+Tax </li>
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
+        $encryption_id=encrypt(2);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (QAR 120)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 120)</a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (INR 2400+Tax)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 2400+Tax)</a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (INR 2400+Tax)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 2400+Tax)</a></button>
       <?php } ?> 
 
       <div class="card-body">
@@ -170,14 +171,15 @@ Price: After 1 year 1700+Tax </li>
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
       <?php
+        $encryption_id=encrypt(3);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (QAR 155)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 155)</a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (INR 3100+Tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 3100+Tax)</a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (INR 3100+Tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 3100+Tax)</a></button>
       <?php } ?> 
       
       <div class="card-body">
@@ -194,6 +196,7 @@ Price: After 1 year 1700+Tax </li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
+          <li><img src="{{url('/')}}/assets/images/api.png" style="margin:0 2%">AC ON/OFF</li>
           <li style="height:0"></li> 
         </ul>
         <p>
@@ -250,14 +253,15 @@ Price: After 1 year 1700+Tax </li>
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
       <?php
+        $encryption_id=encrypt(4);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (QAR 25000)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 25000)</a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (INR 5 lakh+tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 5 lakh+tax)</a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (INR 5 lakh+tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 5 lakh+tax)</a></button>
       <?php } ?> 
       
       <div class="card-body">

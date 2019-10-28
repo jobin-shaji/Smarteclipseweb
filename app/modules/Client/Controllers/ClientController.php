@@ -15,6 +15,8 @@ use App\Modules\TrafficRules\Models\City;
 use DB;
 use App\Modules\Client\Models\Voucher;
 use App\Modules\Client\Models\ClientTransaction;
+use App\Modules\Subscription\Models\Plan;
+use App\Modules\Subscription\Models\Subscription;
 use DataTables;
 class ClientController extends Controller {
    
@@ -290,15 +292,24 @@ class ClientController extends Controller {
     }
 
     public function paymentsView(Request $request){
-        $plan = $request->plan;
-        $amount = 5000;
+        $decrypted_plan_id = $request->plan;
+        $plan_id=decrypt($decrypted_plan_id);
+        $plan=Plan::find($plan_id);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        if (strpos($url, $rayfleet_key) == true) { 
+            $subscription=Subscription::where('plan_id',$plan_id)->where('country_id',178)->first();
+        }else{
+            $subscription=Subscription::where('plan_id',$plan_id)->where('country_id',101)->first();
+        }
+        $amount = $subscription->amount;
         $voucher = Voucher::create([
                     'reference_id' => time().rand(1000,5000),
                     'client_id' => $request->user()->client->id,
-                    'amount' => 5000,
-                    'subscription' => $plan
+                    'amount' => $amount,
+                    'subscription' => $plan->name
                    ]);       
-        return view('Client::payment',['plan' => $plan, 'amount' => $amount, 'reference_Id' => $voucher->reference_id]);
+        return view('Client::payment',['plan' => $plan->name, 'amount' => $amount, 'reference_Id' => $voucher->reference_id]);
     }
 
     public function paymentReview(Request $request){
