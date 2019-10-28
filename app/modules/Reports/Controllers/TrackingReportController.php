@@ -119,9 +119,9 @@ class TrackingReportController extends Controller
             // $M_mode =  $this->modeTime($from,$to,$track_report->gps_id);    
 
            $v_mode=$track_report->sleep->where('vehicle_mode','M')->count();
-           $motion= gmdate("H:i:s",$M_mode);          
+           $motion= gmdate("H:i:s",$v_mode);          
             
-            return $v_mode;           
+            return $motion;           
          })
         ->addColumn('sleep', function ($track_report) {  
             $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
