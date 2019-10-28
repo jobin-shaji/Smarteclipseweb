@@ -13,6 +13,7 @@ use App\Modules\Geofence\Models\Geofence;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
@@ -102,7 +103,7 @@ class DashboardController extends Controller
         )
         ->with('alertType:id,code,description') 
         ->where('status',1)               
-        ->where('client_id',$client)           
+        ->where('client_id',$client_id)           
         ->get();
         $alert_id=[];
         foreach ($userAlerts as $userAlert) {
