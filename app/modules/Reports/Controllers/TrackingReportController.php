@@ -26,78 +26,53 @@ class TrackingReportController extends Controller
     {
         $client_id=\Auth::user()->client->id;
         $from = date('Y-m-d', strtotime($request->from_date));
+        // dd($request->from_date);
         $to = date('Y-m-d', strtotime($request->to_date));
         $vehicle = $request->vehicle;
         $sleep=0;
         $halt=0;
         $motion=0;
         $offline=0;
+        $time=0;
         $initial_time = 0;
-        $previus_time =0;
-        $previud_mode = 0;
+        $previous_time =0;
+        $previous_mode = 0;
         $vehicle_sleep=0;
         $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
-        $gps_modes=GpsModeChange::where('device_time','>=',$from)
-           ->where('device_time','<=',$to)  
+        $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
+           ->where('device_time','<=',$request->to_date)  
            ->where('gps_id',$vehicleGps->gps_id)
            ->get();
-
+         // dd($gps_modes);
         foreach ($gps_modes as $mode) {
         if($initial_time == 0){
             $initial_time = $mode->device_time;
-            $previus_time = $mode->device_time;
-            $previud_mode = $mode->mode;
+            $previous_time = $mode->device_time;
+            $previous_mode = $mode->mode;
         }else{
             if($mode->mode == "S"){
-               $time = strtotime($mode->device_time) - strtotime($previus_time);
-               //  date('Y-m-d', strtotime($time));
-               // echo "<br>";
-                $sleep= $sleep+$time;
-                $vehicle_sleep= gmdate("H:i:s",$sleep);                  
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+                $sleep= $sleep+$time;   
+                // dd($time);              
             }
-            if($mode->mode == "M"){
-               $time = strtotime($mode->device_time) - strtotime($previus_time);
-               //  date('Y-m-d', strtotime($time));
-               // echo "<br>";
-                $sleep= $sleep+$time;
-                $vehicle_motion= gmdate("H:i:s",$sleep);                  
+            else if($mode->mode == "M"){
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+               $motion= $motion+$time;              
+            }
+            else if($mode->mode == "H"){
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+               $halt= $halt+$time;                            
             }
         }
-        $previus_time = $mode->device_time;
+        $previous_time = $mode->device_time;
       }
+// dd($halt);
       return response()->json([           
-            'sleep' => $vehicle_sleep,  
-            'motion' => $vehicle_motion,   
-            'halt' => $vehicle_motion,          
-
+            'sleep' => gmdate("H:i:s",$sleep),  
+            'motion' => gmdate("H:i:s",$motion),   
+            'halt' => gmdate("H:i:s",$halt),          
             'status' => 'track_report'           
         ]);           
-    // dd($vehicle_sleep);
-        // $query =GpsData::select(
-        //     'gps_id',           
-        //     'imei',           
-        //     'latitude',            
-        //     'longitude',           
-        //     'date',
-        //     'time',
-        //     'speed',
-        //     'alert_id',                    
-        //     'vehicle_mode',           
-        //     \DB::raw('DATE(device_time) as device_time'),
-        //     \DB::raw('sum(distance) as distance')
-        // )
-        // ->with('gps.vehicle')
-        // ->limit(1000);     
-        // if($from)
-        // {           
-        //     $vehicle=Vehicle::withTrashed()->find($vehicle); 
-        //     $search_from_date=date("Y-m-d", strtotime($from));
-        //     $search_to_date=date("Y-m-d", strtotime($to));
-        //     $query = $query->where('gps_id',$vehicle->gps_id)->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date)->groupBy('date');       
-                 
-        //  }
-        // $track_report = $query->get();  
-        
     }
     public function export(Request $request)
     {

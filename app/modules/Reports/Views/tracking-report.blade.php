@@ -3,6 +3,12 @@
    Tracking Report
 @endsection
 @section('content')
+
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
+    
+
 <div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
@@ -38,13 +44,13 @@
                           <div class="col-lg-3 col-md-3">   
                           <div class="form-group">                   
                             <label> From Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datetimepicker @endif form-control" id="fromDate" name="fromDate" >
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datetimepicker @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datetimepicker @endif form-control" id="toDate" name="toDate">
                           </div>
                           </div>
 
@@ -74,11 +80,10 @@
                          <tbody>
                             <tr>
 
-                            
-                             <td id="sleep"></td>
-                             <td></td>
-                             <td></td>
-                             <td></td>
+                             <td id="sl"></td>
+                             <td id="motion"></td>
+                            <td id="sleep"></td>
+                             <td id="halt"></td>
                             
                             </tr>
                         </tbody>

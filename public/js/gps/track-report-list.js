@@ -97,8 +97,12 @@ function trackMode()
    
 }
 function vehicleTrackReport(res){
-    console.log(res.sleep)
+    
+    $('#sl').text("1");
+      
       $('#sleep').text(res.sleep);
+        $('#motion').text(res.motion);
+          $('#halt').text(res.halt);
      
         
   }
