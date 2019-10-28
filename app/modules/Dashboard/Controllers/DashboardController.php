@@ -94,6 +94,20 @@ class DashboardController extends Controller
     function getAlerts($client_id){
         $user = \Auth::user();;
         $single_gps =  $this->getVehicleGps($client_id,$user->id);
+         $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+           } 
         $alerts = Alert::select(
             'id',
             'alert_type_id',
@@ -104,6 +118,8 @@ class DashboardController extends Controller
         ->with('alertType:id,code,description')
         ->with('vehicle:id,name,register_number')
         ->whereIn('gps_id',$single_gps)
+        ->whereIn('alert_type_id',$alert_id)
+        ->whereNotIn('alert_type_id',[17,18,23,24])
         ->orderBy('id', 'desc')->take(5)
         ->get();
         return $alerts; 
