@@ -22,7 +22,7 @@
         </div> -->
       </div>
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Freebies </h4>
+        <h4 class="my-0 font-weight-normal">Freebies</h4>
       </div>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
@@ -33,7 +33,7 @@
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
           <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: After 1 year 1700+Tax </li> 
+Price: After 1 year 1200+Tax </li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -90,20 +90,6 @@ Price: After 1 year 1700+Tax </li>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Fundamental</h4>
       </div>
-      <?php
-        $url=url()->current();
-        $rayfleet_key="rayfleet";
-        $eclipse_key="eclipse";
-        if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (QAR 120)</a></button>
-        <?php } 
-        else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (INR 2400+Tax)</a></button>
-        <?php }
-        else { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (INR 2400+Tax)</a></button>
-      <?php } ?> 
-
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
@@ -115,10 +101,11 @@ Price: After 1 year 1700+Tax </li>
           <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2%">Towing alert</li>
           <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
           <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
-          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform *</li>
+          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform*</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
-          <li style="height:30px"></li> 
+         <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
+Price: INR 1900+Tax </li> 
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
@@ -169,17 +156,6 @@ Price: After 1 year 1700+Tax </li>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <?php
-        if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (QAR 155)</a></button>
-        <?php } 
-        else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (INR 3100+Tax)</a></button>
-        <?php }
-        else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (INR 3100+Tax)</a></button>
-      <?php } ?> 
-      
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
@@ -194,7 +170,8 @@ Price: After 1 year 1700+Tax </li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
-          <li style="height:0"></li> 
+          <li style="height:30px"><i class="fa fa-inr" aria-hidden="true"></i>
+Price: INR 3100+Tax </li> 
         </ul>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
@@ -249,17 +226,6 @@ Price: After 1 year 1700+Tax </li>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
-      <?php
-        if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (QAR 25000)</a></button>
-        <?php } 
-        else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (INR 5 lakh+tax)</a></button>
-        <?php }
-        else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (INR 5 lakh+tax)</a></button>
-      <?php } ?> 
-      
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
