@@ -236,7 +236,8 @@ class DriverController extends Controller {
                 'alert_type_id',
                 'device_time',
                 'gps_id'
-            )               
+            ) 
+            ->limit(50)              
             ->with('gps:id,imei,serial_no')
             ->whereIn('alert_type_id',array(1,12,13,14,15,16))
             ->with('vehicle')

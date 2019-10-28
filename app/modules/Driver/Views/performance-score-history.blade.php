@@ -67,7 +67,6 @@ Performance Score History
 												<th>Alert Type</th>
 												<th>Point</th>
 												<th>DateTime</th>
-												<!--  <th>Action</th> -->   
 				                            </tr>
 				                        </thead>
 				                    </table>
