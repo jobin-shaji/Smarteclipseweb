@@ -3,6 +3,12 @@
    Tracking Report
 @endsection
 @section('content')
+
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
+    
+
 <div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
@@ -28,7 +34,7 @@
                           <div class="form-group"> 
                           <label>Vehicle</label>                           
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="0">All</option>
+                              <option value="" disabled="disabled" selected="selected">select</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
                               @endforeach  
@@ -38,42 +44,49 @@
                           <div class="col-lg-3 col-md-3">   
                           <div class="form-group">                   
                             <label> From Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datetimepicker @endif form-control" id="fromDate" name="fromDate" >
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datetimepicker @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datetimepicker @endif form-control" id="toDate" name="toDate">
                           </div>
                           </div>
 
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
-                            <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadTrackReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>                        </div>
-                          </div>
-                          
+                            <button class="btn btn-sm btn-info btn2 form-control" onclick="trackMode()"> <i class="fa fa-search"></i> </button>
+                            <!-- <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadTrackReport()">
+                              <i class="fa fa-file"></i>Download Excel</button> -->                       
+                               </div>
+                          </div>                          
                         </div>
                       </div>
-                      </div>
-               
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                      </div>    
+
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <th>Vehicle</th>
-                              <th>Register Number</th>
+                              <!-- <th>Vehicle</th>
+                              <th>Register Number</th> -->
                               <th>Run</th>
                               <th>Sleep</th>
                               <th>Idle</th>                              
-                              <th>AC ON</th>
-                              <th>AC OFF</th>
-                              <th>Total KM</th>
-                              <th>Date</th>        
+                                      
                             </tr>
                         </thead>
+                         <tbody>
+                            <tr>
+
+                             <td id="sl"></td>
+                             <td id="motion"></td>
+                            <td id="sleep"></td>
+                             <td id="halt"></td>
+                            
+                            </tr>
+                        </tbody>
                     </table>
                   </div>
                   </div>
