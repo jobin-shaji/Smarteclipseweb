@@ -52,25 +52,41 @@ class TrackingReportController extends Controller
         }else{
             if($mode->mode == "S"){
                $time = strtotime($mode->device_time) - strtotime($previous_time);
-                $sleep= $sleep+$time;   
+                $sleep= $sleep+$time; 
+                 if($sleep<0)
+                {
+                    $sleep="0";                   
+                }    
                 // dd($time);              
             }
             else if($mode->mode == "M"){
                $time = strtotime($mode->device_time) - strtotime($previous_time);
-               $motion= $motion+$time;              
+               $motion= $motion+$time;  
+                if($motion<0)
+               {
+                $motion="0";
+                
+               }  
+                              
             }
             else if($mode->mode == "H"){
                $time = strtotime($mode->device_time) - strtotime($previous_time);
-               $halt= $halt+$time;                            
+               $halt= $halt+$time;   
+               // dd($halt) ;
+               if($halt<0)
+               {
+                $halt="0";               
+               }  
+                                    
             }
         }
         $previous_time = $mode->device_time;
       }
-// dd($halt);
+     
       return response()->json([           
-            'sleep' => gmdate("H:i:s",$sleep),  
-            'motion' => gmdate("H:i:s",$motion),   
-            'halt' => gmdate("H:i:s",$halt),          
+            'sleep' => $this->timeFormate($sleep),  
+            'motion' => $this->timeFormate($motion),   
+            'halt' => $this->timeFormate($halt),          
             'status' => 'track_report'           
         ]);           
     }
@@ -80,38 +96,13 @@ class TrackingReportController extends Controller
         return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
     }
 
-    public function modeTime(){
-      $from="2019-10-23 10:10:10";
-      $to="2019-10-26 10:10:10";
-      $gps_id=5;
-      $sleep=0;
-      $halt=0;
-      $motion=0;
-      $offline=0;
-      $initial_time = 0;
-      $previus_time =0;
-      $previud_mode = 0;
-
-      $gps_modes=GpsModeChange::where('device_time','>=',$from)
-                                   ->where('device_time','<=',$to)  
-                                   ->where('gps_id',$gps_id)
-                                   ->get();
-      foreach ($gps_modes as $mode) {
-        if($initial_time == 0){
-            $initial_time = $mode->device_time;
-            $previus_time = $mode->device_time;
-            $previud_mode = $mode->mode;
-        }else{
-            if($mode->mode == "S"){
-               $time = strtotime($mode->device_time) - strtotime($previus_time);
-               echo date('Y-m-d', strtotime($time));
-               echo "<br>";
-                $sleep = $sleep+$time;
-            }
-        }
-
-        $previus_time = $mode->device_time;
-      }
-                               
+    function timeFormate($second){
+      $hours = floor($second / 3600);
+      $mins = floor($second / 60 % 60);
+      $secs = floor($second % 60);
+      $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+      return $timeFormat;
     }
+
+    
 }
