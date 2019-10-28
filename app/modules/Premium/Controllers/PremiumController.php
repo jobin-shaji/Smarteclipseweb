@@ -4,12 +4,15 @@ namespace App\Modules\Premium\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Subscription\Models\Subscription;
+use Illuminate\Support\Facades\Crypt;
 
 class PremiumController extends Controller {
 
     //All states 
     public function premiumListPage()
     {
+        $subscription=Subscription::all();
     	if(\Auth::user()->hasRole('fundamental')){
     		return view('Premium::premium-fundamental');
     	}
