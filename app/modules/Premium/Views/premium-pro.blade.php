@@ -32,8 +32,14 @@
           <li><i class="far fa-map"></i>Point of interest</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: After 1 year 1700+Tax </li> 
+          <?php
+        $url=url()->current();
+        if (strpos($url, "rayfleet") == true) {  ?>
+          <li style="height:24px"><i class="fa fa-qar" aria-hidden="true"></i>Price: After 1 year QAR 85 </li> 
+        <?php } 
+        else { ?>
+          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>Price: After 1 year 1700+Tax </li> 
+        <?php } ?> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
