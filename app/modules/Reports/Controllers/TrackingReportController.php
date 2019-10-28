@@ -87,7 +87,10 @@ class TrackingReportController extends Controller
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
-            }        
+            }    
+            // $M_mode =  $this->modeTime($from,$to,$track_report->gps_id); 
+
+                
             $query = $query->whereIn('gps_id',$gps_list)->groupBy('date')
             ->orderBy('id', 'desc');
         }
