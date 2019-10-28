@@ -58,8 +58,15 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $count = Alert::whereIn('gps_id', $single_vehicle_gps)->where('status',0)->count();  
-       
+        $alert_count = Alert::whereIn('gps_id', $single_vehicle_gps)->where('status',0)->count();  
+        if($alert_count<=200)
+        { 
+            $count=$alert_count;
+        }
+        else
+        {
+            $count=200;
+        }
            $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
             foreach($confirm_alerts as $confirm_alert){
                 $confirm_alert->status=1;
@@ -98,8 +105,8 @@ class AlertController extends Controller {
                 ->whereIn('alert_type_id',$alert_id)
                 ->whereNotIn('alert_type_id',[17,18,23,24])
                 ->where('status',1)
-                ->limit(200)
-                // ->limit($count)
+                // ->limit(100)
+                ->limit($count)
                 ->get();
                 return DataTables::of($alert)
                 ->addIndexColumn()
