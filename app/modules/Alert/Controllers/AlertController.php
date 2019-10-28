@@ -59,13 +59,13 @@ class AlertController extends Controller {
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
         $alert_count = Alert::whereIn('gps_id', $single_vehicle_gps)->where('status',0)->count();  
-        if($alert_count<=200)
+        if($alert_count<=100)
         { 
             $count=$alert_count;
         }
         else
         {
-            $count=200;
+            $count=100;
         }
            $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
             foreach($confirm_alerts as $confirm_alert){
@@ -96,23 +96,24 @@ class AlertController extends Controller {
                 'latitude',
                 'longitude',
                 'status',
-                'created_at')
-                ->with('alertType:id,code,description')
-                ->with('gps.vehicle')
-                ->with('gps:id,imei')
-                ->orderBy('id', 'desc')
-                ->whereIn('gps_id',$single_vehicle_gps)
-                ->whereIn('alert_type_id',$alert_id)
-                ->whereNotIn('alert_type_id',[17,18,23,24])
-                ->where('status',1)
-                // ->limit(100)
-                ->limit($count)
-                ->get();
-                return DataTables::of($alert)
-                ->addIndexColumn()
-                ->addColumn('action', function ($alert) {
-                // <button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
-                 $b_url = \URL::to('/');
+                'created_at'
+            )
+            ->with('alertType:id,code,description')
+            ->with('gps.vehicle')
+            ->with('gps:id,imei')
+            ->orderBy('id', 'desc')
+            ->whereIn('gps_id',$single_vehicle_gps)
+            ->whereIn('alert_type_id',$alert_id)
+            ->whereNotIn('alert_type_id',[17,18,23,24])
+            ->where('status',1)
+            // ->limit(100)
+            ->limit($count)
+            ->get();
+            return DataTables::of($alert)
+            ->addIndexColumn()
+            ->addColumn('action', function ($alert) {
+            // <button onclick=VerifyAlert(".$alert->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
+             $b_url = \URL::to('/');
             return "
              <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         })
