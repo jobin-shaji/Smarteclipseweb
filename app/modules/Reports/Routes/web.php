@@ -83,6 +83,13 @@ Route::get('/offline-report','OfflineReportController@accidentImpactAlertReport'
 Route::get('/mainbattery-disconnect-report','MainBatteryDisconnectReportController@mainBatteryDisconnectReport')->name('mainbattery-disconnect-report');
 Route::post('/mainbattery-disconnect-report-list','MainBatteryDisconnectReportController@mainBatteryDisconnectReportList')->name('mainbattery-disconnect-report-list');
 Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectReportController@export')->name('main.battery.disconnect.report.export');
+
+
+// test mode change
+  Route::get('/mode-changes','TrackingReportController@modeTime')->name('mode-changes');
+
+// test mode change
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {

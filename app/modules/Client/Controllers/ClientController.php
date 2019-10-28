@@ -69,7 +69,18 @@ class ClientController extends Controller {
         
         if($request->user()->hasRole('sub_dealer'))
         {
-            $rules = $this->user_create_rules();
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rafleet_user_create_rules();
+            }
+            else
+            {
+               $rules = $this->user_create_rules();
+            }
+           
             $this->validate($request, $rules);
             $user = User::create([
                 'username' => $request->username,
@@ -193,7 +204,18 @@ class ClientController extends Controller {
         if($client == null){
            return view('Client::404');
         } 
-        $rules = $this->clientUpdateRules($client);
+        $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rayfleetClientUpdateRules($client);
+            }
+            else
+            {
+               $rules = $this->clientUpdateRules($client);
+            }
+           
+       
         $this->validate($request, $rules);       
         $client->name = $request->name;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
@@ -229,6 +251,17 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+
+    public function rayfleetClientUpdateRules($subdealer)
+    {
+        $rules = [
+            'name' => 'required|unique:clients,name,'.$subdealer->id,
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
+            
+        ];
+        return  $rules;
+    }
+    
 
     //for edit page of subdealer password
     public function changePassword(Request $request)
@@ -719,7 +752,20 @@ class ClientController extends Controller {
     {      
         if($request->user()->hasRole('root'))
         {
-            $rules = $this->root_user_create_rules();
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rayfleetRootUserCreate_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) { 
+                $rules = $this->root_user_create_rules();
+            }
+            else
+            {
+               $rules = $this->root_user_create_rules();
+            }
+           
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
             $placeLatLng=$this->getPlaceLatLng($request->search_place);
@@ -874,6 +920,25 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+
+     public function rafleet_user_create_rules()
+        {
+            $rules = [
+                'name' => 'required',
+                'address' => 'required',
+                'client_category' => 'required',
+                'country_id' => 'required',
+                'state_id' => 'required',
+                'city_id' => 'required',
+                'username' => 'required|unique:users',
+                'mobile' => 'required|string|min:11|max:11|unique:users',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ];
+            return  $rules;
+        }
+    
+    
     ###############################################################################
 
     // root create client validation
@@ -894,6 +959,25 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+    public function rayfleetRootUserCreate_rules()
+    {
+        $rules = [
+            'sub_dealer' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'client_category' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
+            'username' => 'required|unique:users',
+            'mobile' => 'required|string||min:11|max:11unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+
+    
 
 #####################################################################################
     function getPlaceLatLng($address)
@@ -942,7 +1026,20 @@ class ClientController extends Controller {
         if($client == null){
            return view('Client::404');
         } 
-        $rules = $this->clientProfileUpdateRules($client);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetClientProfileUpdateRules($client);
+        }
+        else if (strpos($url, $eclipse_key) == true) { 
+            $rules = $this->clientProfileUpdateRules($client);
+        }
+        else
+        {
+           $rules = $this->clientProfileUpdateRules($client);
+        }
+        
         $this->validate($request, $rules);       
         $client->name = $request->name;
         $client->address = $request->address;
@@ -970,5 +1067,18 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+    public function rayfleetClientProfileUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$client->user_id,
+            'email' => 'required|string|unique:users,email,'.$client->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    
   #####################################################
 }

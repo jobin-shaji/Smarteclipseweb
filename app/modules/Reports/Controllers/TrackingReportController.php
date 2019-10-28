@@ -7,6 +7,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Gps\Models\GpsModeChange;
+
 
 use DataTables;
 class TrackingReportController extends Controller
@@ -95,22 +97,29 @@ class TrackingReportController extends Controller
             $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
         }
                
-        if($from){
+        if($from)
+         {
             $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-        }
+
+                // $M_mode =  $this->modeTime($from,$to,$track_report->gps_id); 
+         }
         $track_report = $query->get();  
 
         // dd($track_report);  
+
         return DataTables::of($track_report)
         ->addIndexColumn()
-         ->addColumn('motion', function ($track_report) {                    
-            $M_mode=$track_report->sleep->where('vehicle_mode','M')->count();
+        ->addColumn('motion', function ($track_report) { 
+         // dd($from);  
+            // $M_mode =  $this->modeTime($from,$to,$track_report->gps_id);    
+
+           $v_mode=$track_report->sleep->where('vehicle_mode','M')->count();
            $motion= gmdate("H:i:s",$M_mode);          
             
-            return $motion;           
-        })
+            return $v_mode;           
+         })
         ->addColumn('sleep', function ($track_report) {  
             $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
              $sleep= gmdate("H:i:s",$v_mode);         
@@ -141,5 +150,40 @@ class TrackingReportController extends Controller
     {
         // dd($request->fromDate);    
         return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
+    }
+
+    public function modeTime(){
+      $from="2019-10-23 10:10:10";
+      $to="2019-10-26 10:10:10";
+      $gps_id=5;
+      $sleep=0;
+      $halt=0;
+      $motion=0;
+      $offline=0;
+      $initial_time = 0;
+      $previus_time =0;
+      $previud_mode = 0;
+
+      $gps_modes=GpsModeChange::where('device_time','>=',$from)
+                                   ->where('device_time','<=',$to)  
+                                   ->where('gps_id',$gps_id)
+                                   ->get();
+      foreach ($gps_modes as $mode) {
+        if($initial_time == 0){
+            $initial_time = $mode->device_time;
+            $previus_time = $mode->device_time;
+            $previud_mode = $mode->mode;
+        }else{
+            if($mode->mode == "S"){
+               $time = strtotime($mode->device_time) - strtotime($previus_time);
+               echo date('Y-m-d', strtotime($time));
+               echo "<br>";
+                $sleep = $sleep+$time;
+            }
+        }
+
+        $previus_time = $mode->device_time;
+      }
+                               
     }
 }
