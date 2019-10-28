@@ -16,6 +16,9 @@ class PremiumController extends Controller {
     	else if(\Auth::user()->hasRole('superior')){
     		return view('Premium::premium-superior');
     	}
+        else if(\Auth::user()->hasRole('pro')){
+            return view('Premium::premium-pro');
+        }
     	else if(!\Auth::user()->hasRole(['superior','fundamental','pro'])){
     		return view('Premium::premium-client');
     	}

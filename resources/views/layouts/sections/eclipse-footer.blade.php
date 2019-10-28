@@ -8,7 +8,7 @@
 				      <b>RAYFLEET</b> &nbsp;Version 0.1
 				    </div>
 				    Developed by  
-				    <strong> <a href="https://www.linkedin.com/company/gulf-business-development-group/?originalSubdomain=in">Gulf Business Development Group .</a>.</strong>
+				    <strong> <a href="http://www.tecnositafgulf.qa" target="_blank">Gulf Business Development Group .</a>.</strong>
 				 </footer>
           <?php } 
           else if (strpos($url, $eclipse_key) == true) { ?>
@@ -17,7 +17,7 @@
 				      <b>ECLIPSE</b> &nbsp;Version 0.1
 				    </div>
 				    Developed by  
-				    <strong> <a href="http://vstmobility.com">VST Mobility Solutions</a>.</strong>
+				    <strong> <a href="http://vstmobility.com" target="_blank">VST Mobility Solutions</a>.</strong>
 				 </footer>
           <?php }
           else { ?>
@@ -26,7 +26,7 @@
 				      <b>ECLIPSE</b> &nbsp;Version 0.1
 				    </div>
 				    Developed by  
-				    <strong> <a href="http://vstmobility.com">VST Mobility Solutions</a>.</strong>
+				    <strong> <a href="http://vstmobility.com" target="_blank">VST Mobility Solutions</a>.</strong>
 				 </footer>
    <?php } ?>
 

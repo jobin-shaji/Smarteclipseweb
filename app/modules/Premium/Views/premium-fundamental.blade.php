@@ -155,7 +155,20 @@ Price: INR 2400+Tax </li>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 3100+Tax)</a></button>
+      <?php
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(QAR 155)</a></button>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 3100+Tax)</a></button>
+        <?php }
+        else { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now(INR 3100+Tax)</a></button>
+      <?php } ?> 
+      
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
@@ -225,7 +238,17 @@ Price: INR 2400+Tax </li>
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now(INR 5 lakh+tax)</a></button>
+      <?php
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now(QAR 25000)</a></button>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now(INR 5 lakh+tax)</a></button>
+        <?php }
+        else { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now(INR 5 lakh+tax)</a></button>
+      <?php } ?> 
+      
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
