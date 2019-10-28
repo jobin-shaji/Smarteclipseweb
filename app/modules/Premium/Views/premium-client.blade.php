@@ -57,30 +57,30 @@
         <div class="collapse" id="collapseExample">
           <div class="card card-body" style="margin:0!important">
           <ul class="list-unstyled mt-3 mb-4">
-                   <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
-                  <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
-                   <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
-                   <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
-                  </ul>
+            <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
+            <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
+            <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+            <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
+            <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
+            <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
+            <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
+            <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
+            <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
+          </ul>
           </div>
         </div>
         <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Try Now</button> -->

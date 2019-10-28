@@ -10652,7 +10652,7 @@ html[dir=ltr] body .p-l-0 {
 @media (min-width:768px) {
     #main-wrapper {}
     #main-wrapper[data-sidebartype=full] .topbar .top-navbar .navbar-header {
-        width: 250px
+        width: 180px
     }
     #main-wrapper.mini-sidebar .topbar .top-navbar .navbar-header {
         width:auto
@@ -11334,7 +11334,7 @@ ul.list-style-none li a:hover {
     padding: 0px 15px;
     font-size: 0.875rem;
     line-height: 64px;
-    }
+}
 
 .topbar .top-navbar .navbar-nav>.nav-item:hover {
     background: rgba(0, 0, 0, 0.05)
