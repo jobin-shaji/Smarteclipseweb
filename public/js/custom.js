@@ -342,6 +342,10 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack== 'modecount'){
                     modecount(res);
                 } 
+                else if(callBack=='vehicleTrackReport')
+                {
+                   vehicleTrackReport(res) 
+                }
                
             }
         },
