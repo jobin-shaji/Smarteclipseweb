@@ -22,7 +22,21 @@ class DriverController extends Controller {
     public function save(Request $request)
     {    
         $client_id=\Auth::user()->client->id; 
-        $rules = $this->driver_create_rules();
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetDriverCreateRules();
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+            $rules = $this->driver_create_rules();
+        }
+        else
+        {
+           $rules = $this->driver_create_rules();
+        }
+        
         $this->validate($request, $rules);           
         $client = Driver::create([            
             'name' => $request->name,            
@@ -50,6 +64,18 @@ class DriverController extends Controller {
         ];
         return  $rules;
     }
+    public function rayfleetDriverCreateRules()
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'mobile' => 'required|string|min:11|max:11|unique:drivers',
+            
+        ];
+        return  $rules;
+    }
+
+    
     public function getDriverlist(Request $request)
     {
         $client_id=\Auth::user()->client->id;
@@ -100,7 +126,22 @@ class DriverController extends Controller {
         if($driver == null){
            return view('Driver::404');
         } 
-        $rules = $this->driverUpdateRules($driver);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetDriverUpdateRules($driver);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+            $rules = $this->driverUpdateRules($driver);
+        }
+        else
+        {
+           $rules = $this->driverUpdateRules($driver);
+        }
+
+        
         $this->validate($request, $rules);       
         $driver->name = $request->name;
         $driver->address = $request->address;
@@ -329,6 +370,19 @@ class DriverController extends Controller {
         ];
         return  $rules;
     }
+     //validation for employee updation
+    public function rayfleetDriverUpdateRules($driver)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'mobile' => 'required|string|min:11|max:11|unique:drivers,mobile,'.$driver->id
+            
+        ];
+        return  $rules;
+    }
+
+    
     
     // details page
     public function details(Request $request)
