@@ -1740,7 +1740,7 @@ class VehicleController extends Controller {
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'nullable',
-            'path' => 'required'
+            'path' => 'required|mimes:jpeg,png|max:4096'
 
         ];
         return  $rules;

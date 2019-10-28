@@ -82,7 +82,8 @@ class AlertController extends Controller {
                 ->whereIn('gps_id',$single_vehicle_gps)
                 ->whereNotIn('alert_type_id',[17,18,23,24])
                 ->where('status',1)
-                ->limit($count)
+                ->limit(200)
+                // ->limit($count)
                 ->get();
                 return DataTables::of($alert)
                 ->addIndexColumn()
