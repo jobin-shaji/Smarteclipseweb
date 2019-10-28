@@ -76,6 +76,9 @@ class ClientController extends Controller {
             if (strpos($url, $rayfleet_key) == true) {
                  $rules = $this->rafleet_user_create_rules();
             }
+            else if (strpos($url, $eclipse_key) == true) {
+                 $rules = $this->user_create_rules();
+            }
             else
             {
                $rules = $this->user_create_rules();

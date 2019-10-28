@@ -103,6 +103,20 @@ class AlertReportController extends Controller
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+           }              
         // dd($VehicleGpss);
         $query =Alert::select(
             'id',
@@ -116,6 +130,7 @@ class AlertReportController extends Controller
         ->with('alertType:id,description')
         ->with('gps.vehicle')
         ->orderBy('id', 'desc')
+        ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
         ->limit(1000);
        if($alert_id==0 && $vehicle_id==0)
