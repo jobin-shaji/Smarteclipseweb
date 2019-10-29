@@ -109,6 +109,7 @@ class AlertController extends Controller {
             // ->limit(100)
             ->limit($count)
             ->get();
+
             return DataTables::of($alert)
             ->addIndexColumn()
             ->addColumn('action', function ($alert) {
@@ -367,12 +368,22 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        // $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
-        // foreach($confirm_alerts as $confirm_alert){
-        //     $confirm_alert->status=1;
-        //     $confirm_alert->save(); 
-        // }    
- 
+         
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client_id)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+           }   
+         
         $alert = Alert::select(
             'id',
             'alert_type_id',
@@ -388,6 +399,7 @@ class AlertController extends Controller {
         ->with('gps:id,imei')
         ->with('client:id,name')
         ->whereIn('gps_id',$single_vehicle_gps)
+        ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
         ->where('status',0)
         ->orderBy('id','DESC')
