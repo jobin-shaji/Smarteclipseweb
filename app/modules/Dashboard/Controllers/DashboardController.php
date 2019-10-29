@@ -122,8 +122,7 @@ class DashboardController extends Controller
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
         ->orderBy('id', 'desc')->take(5)
-        ->get();
-       
+        ->get();       
         return $alerts; 
     }
     function getSingleVehicle($client_id){

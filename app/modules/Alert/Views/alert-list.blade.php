@@ -26,7 +26,7 @@ All Alerts
               <div class="panel-heading">
                
               </div>
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                 <thead>
                   <tr>
                     <th>Sl.No</th>
@@ -34,11 +34,23 @@ All Alerts
                     <th>Vehicle Name</th>
                     <th>Register Number</th>
                     <!-- <th>Location</th> -->
-                    <th>DateTime</th>
-                    <th>Action</th>
+                    <th>DateTime</th>                 
                   </tr>
                 </thead>
+                <tbody>
+                   @foreach($alerts as $alert)                  
+                    <tr>           
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $alert->alertType->description }}</td>           
+                        <td>{{ $alert->gps->vehicle->name}}</td>
+                        <td>{{ $alert->gps->vehicle->register_number }}</td>
+                        <td>{{ $alert->created_at }}</td>                               
+                    </tr>
+                    @endforeach
+                </tbody>
               </table>
+             {{ $alerts->appends(['sort' => 'votes'])->links() }}
+              
             </div>
           </div>
         </div>
