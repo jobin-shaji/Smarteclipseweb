@@ -622,6 +622,7 @@ class DashboardController extends Controller
                     $mode="O";
                   }
                 }
+                $vehicle_id=Crypt::encrypt($vehicle->id);
 
                 $vehicleTrackData[]=array(
                                     "id"=>$vehicle->gps->id,
@@ -631,7 +632,7 @@ class DashboardController extends Controller
                                     "lon_dir"=>$vehicle->gps->lon_dir,
                                     "imei"=>$vehicle->gps->imei,
                                     "mode"=>$mode,
-                                    "vehicle_id"=>$vehicle->id,
+                                    "vehicle_id"=> $vehicle_id,
                                     "vehicle_name"=>$vehicle->name,
                                     "register_number"=>$vehicle->register_number,
                                     "vehicle_svg"=>$vehicle->vehicleType->svg_icon,
