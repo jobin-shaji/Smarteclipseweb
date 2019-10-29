@@ -23,6 +23,7 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	Route::get('/drivers-score-page','DriverController@driverScorePage')->name('drivers-score-page');
 	Route::post('/driver-score','DriverController@driverScore')->name('driver.score');
+	Route::post('/driver-score-alerts','DriverController@driverScoreAlerts')->name('driver.score-alerts');
 });
 
 Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Driver\Controllers' ] , function() {
