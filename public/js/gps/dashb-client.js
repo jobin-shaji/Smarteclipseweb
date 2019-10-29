@@ -39,7 +39,7 @@ window.setInterval(function() {
   dashcount();
   getVehicleSequence();
  }
-}, 100000);
+}, 10000);
 // check each 10 sec
 
 function getVehicleSequence() {
@@ -331,8 +331,6 @@ function addVehicleToVehicleList(vehicle_name, reg, gpsID) {
   '<div class="min-gap"></div>' +
   '<div class="label-group">' +
   '<p class="title">' +
-  '<span><i class="fas fa-tachometer-alt"></i></span>' +
-  '</p>' +
   '<p class="caption"></p>' +
   '</div>' +
 

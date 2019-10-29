@@ -922,9 +922,15 @@ class VehicleController extends Controller {
     {
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
-        // $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-2 minutes"));
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-10 minutes"));
+        $last_update_time=date('Y-m-d H:i:s',strtotime("-1 minutes"));
         $offline="Offline";
+
+
+        $gps=Gps::find($get_vehicle->gps_id);
+        $gps_mode=$gps->mode;
+        if($gps_mode=="S"){
+            $last_update_time=date('Y-m-d H:i:s',strtotime("-10 minutes"));
+          }
         $track_data=Gps::select('lat as latitude',
                       'lon as longitude',
                       'heading as angle',
@@ -936,7 +942,7 @@ class VehicleController extends Controller {
                       'ignition as ign',
                       'gsm_signal_strength as signalStrength'
                       )
-                    ->where('device_time', '>=',$oneMinut_currentDateTime)
+                    ->where('device_time', '>=',$last_update_time)
                     ->where('device_time', '<=',$currentDateTime)
                     ->where('id',$get_vehicle->gps_id)
                     ->first();
