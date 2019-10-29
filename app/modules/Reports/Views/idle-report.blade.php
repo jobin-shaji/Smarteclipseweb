@@ -38,13 +38,13 @@ Idle Report
                           <div class="col-md-3"> 
                           <div class="form-group">                    
                             <label> From Date</label>
-                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
                           </div>
                           </div>
                           <div class="col-md-3">
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" >
+                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
                           </div>
                           </div>
 

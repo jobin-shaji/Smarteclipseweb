@@ -24,11 +24,13 @@ class Client extends Model
   public function all_driver_points(){
       return $this->hasMany('App\Modules\Client\Models\ClientAlertPoint','client_id','id');
   }
-  // // client
-  // public function subDealer()
-  // {
-  //   return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','id','sub_dealer_id');
-  // }
+
+   public function vehicles() 
+    {
+        return $this->hasMany('App\Modules\Vehicle\Models\Vehicle', 'client_id')->whereNull('deleted_at')->orderBy('id', 'desc');
+    }
+
+
 
   
 }
