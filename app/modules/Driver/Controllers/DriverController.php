@@ -226,7 +226,12 @@ class DriverController extends Controller {
         $from = $request->from_date;
         $to = $request->to_date;
 
-        $vehicles = Vehicle::where('client_id',$client_id)->get();
+        $drivers = Driver::where('client_id',$client_id)->get();
+        $single_drivers = [];
+        foreach($drivers as $driver){
+            $single_drivers[] = $driver->id;
+        }
+        $vehicles = Vehicle::where('client_id',$client_id)->whereIn('driver_id',$single_drivers)->get();
         $single_gps = [];
         foreach($vehicles as $vehicle){
             $single_gps[] = $vehicle->gps_id;
