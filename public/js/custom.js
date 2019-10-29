@@ -346,6 +346,19 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                    vehicleTrackReport(res) 
                 }
+                else if(callBack=='vehicleIdleReport')
+                {
+                   vehicleIdleReport(res) 
+                }
+                else if(callBack=='vehicleParkingReport')
+                {
+                   vehicleParkingReport(res) 
+                }
+
+                
+
+
+                
                
             }
         },
