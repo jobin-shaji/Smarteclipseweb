@@ -96,6 +96,7 @@ class TrackingReportController extends Controller
         return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
     }
 
+
     function timeFormate($second){
       $hours = floor($second / 3600);
       $mins = floor($second / 60 % 60);
@@ -104,5 +105,5 @@ class TrackingReportController extends Controller
       return $timeFormat;
     }
 
-    
+
 }

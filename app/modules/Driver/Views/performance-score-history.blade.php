@@ -63,7 +63,7 @@ Performance Score History
 												<th>Vehicle Name</th>
 												<th>Register Number</th>
 												<th>Driver Name</th>
-												<th>Serial No.</th>
+												<th>GPS-Serial Number</th>
 												<th>Alert Type</th>
 												<th>Point</th>
 												<th>DateTime</th>
