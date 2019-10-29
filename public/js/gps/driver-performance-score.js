@@ -45,29 +45,17 @@ function callBackDataTable(data=null){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', searchable: false},
-            
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number', orderable: false},
-            {data: 'driver_name', name: 'driver_name', orderable: false},
-            {data: 'gps.imei', name: 'gps.imei', orderable: false},
+            {data: 'driver.name', name: 'driver.name', orderable: false},
+            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'description', name: 'description', orderable: false},
-            
-            {data: 'client_alert_point.driver_point', name: 'client_alert_point.driver_point', orderable: false},
-            {data: 'device_time', name: 'device_time', orderable: false},         
+            {data: 'points', name: 'points', orderable: false},
+            {data: 'created_at', name: 'created_at', orderable: false},         
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-}
-
-function VerifyAlert(alert_id){
-    if(confirm('Are you sure want to verify this alert?')){
-        var url = 'alert/verify';
-        var data = {
-        id : alert_id
-        };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
-    } 
 }
 
 
