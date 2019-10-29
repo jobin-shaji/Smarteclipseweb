@@ -161,19 +161,19 @@ class UsersTableSeeder extends Seeder
         DB::table('plans')->insert([
             'name' => 'Freebies(Renewal)'
         ]);
-         DB::table('plans')->insert([
+        DB::table('plans')->insert([
             'name' => 'Fundamental(upgrade)'
         ]);
-          DB::table('plans')->insert([
+        DB::table('plans')->insert([
             'name' => 'Superior(upgrate)'
         ]);
-           DB::table('plans')->insert([
+        DB::table('plans')->insert([
             'name' => 'Pro'
         ]);
-            DB::table('plans')->insert([
+        DB::table('plans')->insert([
             'name' => 'Hardware Warranty(for one year)'
         ]);
-             DB::table('plans')->insert([
+        DB::table('plans')->insert([
             'name' => 'Hardware Warranty(for 4 year)'
         ]);
         

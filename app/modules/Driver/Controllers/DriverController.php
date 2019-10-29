@@ -7,6 +7,7 @@ use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\Subdealer\Models\Subdealer;
 use App\Modules\Driver\Models\Driver;
 use App\Modules\Driver\Models\DriverBehaviour;
+use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -22,7 +23,21 @@ class DriverController extends Controller {
     public function save(Request $request)
     {    
         $client_id=\Auth::user()->client->id; 
-        $rules = $this->driver_create_rules();
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetDriverCreateRules();
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+            $rules = $this->driver_create_rules();
+        }
+        else
+        {
+           $rules = $this->driver_create_rules();
+        }
+        
         $this->validate($request, $rules);           
         $client = Driver::create([            
             'name' => $request->name,            
@@ -50,6 +65,18 @@ class DriverController extends Controller {
         ];
         return  $rules;
     }
+    public function rayfleetDriverCreateRules()
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'mobile' => 'required|string|min:11|max:11|unique:drivers',
+            
+        ];
+        return  $rules;
+    }
+
+    
     public function getDriverlist(Request $request)
     {
         $client_id=\Auth::user()->client->id;
@@ -100,7 +127,22 @@ class DriverController extends Controller {
         if($driver == null){
            return view('Driver::404');
         } 
-        $rules = $this->driverUpdateRules($driver);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetDriverUpdateRules($driver);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+            $rules = $this->driverUpdateRules($driver);
+        }
+        else
+        {
+           $rules = $this->driverUpdateRules($driver);
+        }
+
+        
         $this->validate($request, $rules);       
         $driver->name = $request->name;
         $driver->address = $request->address;
@@ -180,66 +222,67 @@ class DriverController extends Controller {
     {
 
         $client_id=\Auth::user()->client->id;
-         $driver_id= $request->driver_id;            
+        $driver_id= $request->driver_id;            
         $from = $request->from_date;
         $to = $request->to_date;
 
-         $vehicles = Vehicle::select('id','register_number')
-                    ->where('client_id',$client_id)
-                    ->get();
-            $single_vehicle = [];
-            foreach($vehicles as $vehicle){
-                $single_vehicle[] = $vehicle->id;
-            }
-            $performance_Score = DriverBehaviour::select(
+        $vehicles = Vehicle::where('client_id',$client_id)->get();
+        $single_gps = [];
+        foreach($vehicles as $vehicle){
+            $single_gps[] = $vehicle->gps_id;
+        }
+        $alerts = Alert::select(
                 'id',
-                'vehicle_id',
-                'driver_id',
-                'gps_id',
-                'alert_id',
-                'points',                
-                'created_at'
-            )               
-            ->with('alert:id,alert_type_id')
-            ->with('driver:id,name')
-            ->with('vehicle:id,name,register_number')
-            ->with('gps:id,imei')
-            ->with('client:id,name'); 
+                'alert_type_id',
+                'device_time',
+                'gps_id'
+            ) 
+            ->limit(50)              
+            ->with('gps:id,imei,serial_no')
+            ->whereIn('alert_type_id',array(1,12,13,14,15,16))
+            ->with('vehicle')
+            ->with('clientAlertPoint');
             if($driver_id==null && $from==null && $to==null)
             {
-                 $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle);
+                 $alerts = $alerts->whereIn('gps_id',$single_gps);
             }
             else if($driver_id!=null && $from==null && $to==null)
             {
-                $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-                ->where('driver_id',$driver_id);
+                $vehicles = Vehicle::where('driver_id',$driver_id)->get();
+                $single_driver_gps = [];
+                foreach($vehicles as $vehicle){
+                    $single_driver_gps[] = $vehicle->gps_id;
+                }
+                $alerts = $alerts->whereIn('gps_id',$single_driver_gps);
             }
             else
             {
-                $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-                ->where('driver_id',$driver_id);
+                $vehicles = Vehicle::where('driver_id',$driver_id)->get();
+                $single_driver_gps = [];
+                foreach($vehicles as $vehicle){
+                    $single_driver_gps[] = $vehicle->gps_id;
+                }
+                $alerts = $alerts->whereIn('gps_id',$single_driver_gps);
                 if($from){
                   $search_from_date=date("Y-m-d", strtotime($from));                      
                   $search_to_date=date("Y-m-d", strtotime($to));
-                  $performance_Score = $performance_Score->whereDate('created_at', '>=', $search_from_date)
-                  ->whereDate('created_at', '<=', $search_to_date);
+                  $alerts = $alerts->whereDate('device_time', '>=', $search_from_date)
+                  ->whereDate('device_time', '<=', $search_to_date);
                 }
 
 
             }       
-             $performance_Score = $performance_Score->get();
-            return DataTables::of($performance_Score)
+             $alerts = $alerts->get();
+            return DataTables::of($alerts)
             ->addIndexColumn()
-            ->addColumn('description', function ($performance_Score) {
-                $description=$performance_Score->alert->alertType->description;
-                return $description;
-                    
+            ->addColumn('description', function ($alerts) {
+                $description=$alerts->alertType->description;
+                return $description;  
+            }) 
+            ->addColumn('driver_name', function ($alerts) {
+                $driver_name=$alerts->vehicle->driver->name;
+                return $driver_name;  
             })            
-            ->addColumn('action', function ($performance_Score) {
-                $b_url = \URL::to('/');
-            return "<button onclick=VerifyAlert(".$performance_Score->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Verify'><i class='fa fa-check' ></i></button>
-             <a href=".$b_url."/alert/report/".Crypt::encrypt($performance_Score->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
-        })
         ->rawColumns(['link', 'action'])
         ->make();
     }
@@ -329,6 +372,19 @@ class DriverController extends Controller {
         ];
         return  $rules;
     }
+     //validation for employee updation
+    public function rayfleetDriverUpdateRules($driver)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'mobile' => 'required|string|min:11|max:11|unique:drivers,mobile,'.$driver->id
+            
+        ];
+        return  $rules;
+    }
+
+    
     
     // details page
     public function details(Request $request)

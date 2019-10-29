@@ -17,7 +17,7 @@
         @foreach($trackReportExport as $trackReportExport) 
         <?php 
             $M_mode=$trackReportExport->sleep->where('vehicle_mode','M')->count();
-            $motion= gmdate("H:i:s",$M_mode); 
+            $motion= gmdate("H:i:s",$v_mode); 
             $v_mode=$trackReportExport->sleep->where('vehicle_mode','S')->count(); 
             $sleep= gmdate("H:i:s",$v_mode);
             $H_mode=$trackReportExport->sleep->where('vehicle_mode','H')->count();

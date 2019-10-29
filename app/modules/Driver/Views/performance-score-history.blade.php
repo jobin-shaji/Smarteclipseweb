@@ -63,11 +63,10 @@ Performance Score History
 												<th>Vehicle Name</th>
 												<th>Register Number</th>
 												<th>Driver Name</th>
-												<th>Gps</th>
-												<th>Alert</th>
-												<th>Points</th>
+												<th>Serial No.</th>
+												<th>Alert Type</th>
+												<th>Point</th>
 												<th>DateTime</th>
-												<!--  <th>Action</th> -->   
 				                            </tr>
 				                        </thead>
 				                    </table>

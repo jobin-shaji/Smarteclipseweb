@@ -93,8 +93,7 @@ class IdleReportController extends Controller
             \DB::raw('sum(distance) as distance')
         )
         ->with('gps.vehicle')
-        ->where('vehicle_mode','H');
-            
+        ->where('vehicle_mode','H');            
         if($vehicle==0 || $vehicle==null )
        {         
             $query = $query->whereIn('gps_id',$single_vehicle_id)

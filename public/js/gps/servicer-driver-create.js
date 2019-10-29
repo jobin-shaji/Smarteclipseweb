@@ -5,12 +5,12 @@ function createDriver(res){
         // alertify.confirm('please enter name', function(){ alertify.success('Ok') });
         var closable = alertify.alert().setting('closable');
         alertify.alert()
-        .setting({'label':'OK','message': 'please enter name'}).show();
+        .setting({'label':'OK','message': 'Please enter name'}).show();
     }
     else if(document.getElementById('mobile').value == '' ){
          var closable = alertify.alert().setting('closable');
         alertify.alert()
-        .setting({'label':'OK','message': 'please enter mobile number'}).show();
+        .setting({'label':'OK','message': 'Please enter mobile number'}).show();
         
     }
     else if(document.getElementById('address').value == ''){

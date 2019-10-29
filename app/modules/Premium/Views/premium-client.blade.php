@@ -32,8 +32,14 @@
           <li><i class="far fa-map"></i>Point of interest</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>
-Price: After 1 year 1700+Tax </li> 
+        <?php
+        $url=url()->current();
+        if (strpos($url, "rayfleet") == true) {  ?>
+          <li style="height:24px"><i class="fa fa-qar" aria-hidden="true"></i>Price: After 1 year QAR 85 </li> 
+        <?php } 
+        else { ?>
+          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>Price: After 1 year 1700+Tax </li> 
+        <?php } ?> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -51,30 +57,30 @@ Price: After 1 year 1700+Tax </li>
         <div class="collapse" id="collapseExample">
           <div class="card card-body" style="margin:0!important">
           <ul class="list-unstyled mt-3 mb-4">
-                   <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
-                  <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
-                   <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
-                   <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
-                  </ul>
+            <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
+            <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
+            <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+            <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
+            <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
+            <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
+            <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
+            <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
+            <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
+          </ul>
           </div>
         </div>
         <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Try Now</button> -->
@@ -94,14 +100,15 @@ Price: After 1 year 1700+Tax </li>
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
+        $encryption_id=encrypt(2);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (QAR 120)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 120)</a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (INR 2400+Tax)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 2400+Tax)</a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now (INR 2400+Tax)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 2400+Tax)</a></button>
       <?php } ?> 
 
       <div class="card-body">
@@ -170,14 +177,15 @@ Price: After 1 year 1700+Tax </li>
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
       <?php
+        $encryption_id=encrypt(3);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (QAR 155)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 155)</a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (INR 3100+Tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 3100+Tax)</a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now (INR 3100+Tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 3100+Tax)</a></button>
       <?php } ?> 
       
       <div class="card-body">
@@ -194,6 +202,7 @@ Price: After 1 year 1700+Tax </li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
+          <li><img src="{{url('/')}}/assets/images/api.png" style="margin:0 2%">AC ON/OFF</li>
           <li style="height:0"></li> 
         </ul>
         <p>
@@ -250,14 +259,15 @@ Price: After 1 year 1700+Tax </li>
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
       <?php
+        $encryption_id=encrypt(4);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (QAR 25000)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 25000)</a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (INR 5 lakh+tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 5 lakh+tax)</a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now (INR 5 lakh+tax)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 5 lakh+tax)</a></button>
       <?php } ?> 
       
       <div class="card-body">

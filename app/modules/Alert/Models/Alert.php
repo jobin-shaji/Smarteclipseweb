@@ -13,6 +13,10 @@ class Alert extends Model
 	 return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
 	}
 
+	public function clientAlertPoint(){
+	 	return $this->hasOne('App\Modules\Client\Models\ClientAlertPoint','alert_type_id','alert_type_id')->where('client_id',\Auth::user()->client->id);
+	}
+
 	public function gps(){
 	  return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id')->withTrashed();
 	}
@@ -24,5 +28,7 @@ class Alert extends Model
 	public function alertType(){
 	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_type_id');
 	}
+
+	
 
 }

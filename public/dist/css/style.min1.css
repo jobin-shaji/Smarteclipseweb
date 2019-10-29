@@ -4812,6 +4812,7 @@ input[type=submit].btn-block {
 }
 
 .navbar-brand {
+    width: 200px;
     display: inline-block;
     padding-top: 0.33594rem;
     padding-bottom: 0.33594rem;
@@ -10718,7 +10719,7 @@ html[dir=ltr] body .p-l-0 {
 @media (min-width:768px) {
     #main-wrapper {}
     #main-wrapper[data-sidebartype=full] .topbar .top-navbar .navbar-header {
-        width: 250px
+        width: 180px
     }
     #main-wrapper.mini-sidebar .topbar .top-navbar .navbar-header {
         width:auto
@@ -16520,7 +16521,7 @@ h1.text-white i {
 
 
     span.logo-text {
-    margin-left: 25%;
+    margin-left: 3%;
     }
 
     .nav-item i.fa.fa-home {
