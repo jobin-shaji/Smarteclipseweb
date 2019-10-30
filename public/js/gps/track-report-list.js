@@ -81,6 +81,7 @@ function trackMode()
         var vehicle_id=$('#vehicle').val();       
         var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('fromDate').value;
+        console.log(from_date);
         var to_date = document.getElementById('toDate').value;
         var data = {'vehicle':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
         var url = '/track-report-list';

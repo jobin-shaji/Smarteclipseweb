@@ -21,12 +21,14 @@ use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
+use App\Modules\Gps\Models\GpsModeChange;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
 use Auth;
 use DataTables;
+use DB;
 
 class GpsController extends Controller {
 
@@ -1170,8 +1172,120 @@ class GpsController extends Controller {
         return $userData;
 
     }
-
     
+    public function travelSummery(){
+        $gps = Gps::all();
+        $summery=array();
+        $total_data=array('sleep' =>0,  
+                          'motion' =>0,   
+                          'halt' =>0
+                        ); 
+        return view('Gps::travel-summery',['gps' => $gps,'summery'=>$summery,'full_summery'=>$total_data]);
+    }
+
+    public function travelSummeryData(Request $request){
+        $from_date=$request->from_date;
+        $to_date=$request->to_date;
+        $gps_id=$request->gps_id;
+
+        $gps = Gps::all();
+
+        $sleep=0;
+        $halt=0;
+        $motion=0;
+        $time=0;
+        $initial_time=0;
+        $previous_time=0;
+        $previous_mode=0;
+        $vehicle_sleep=0;
+        $previous_id=0;
+
+        $summery=array(); 
+        $gps_mode_change=GpsModeChange::
+                                    where('device_time','>=',$from_date)
+                                  ->where('device_time','<=',$to_date)
+                                  ->where('gps_id',$gps_id)
+                                  ->orderBy('device_time','asc')
+                                  ->get();
+
+                     
+        foreach ($gps_mode_change as $changes) 
+         {
+         if($initial_time == 0){
+
+
+            $initial_time = $changes->device_time;
+
+            $previous_time = $changes->device_time;
+            $previous_mode = $changes->mode;
+            $previous_id=$changes->id;
+          }else{
+
+           
+            if($changes->mode == "S"){
+               $time = strtotime($changes->device_time) - strtotime($previous_time);
+                $sleep= $sleep+$time; 
+                 if($sleep<0)
+                {
+                    $sleep="0";                   
+                }                
+          }else if($changes->mode == "M"){
+               $time = strtotime($changes->device_time) - strtotime($previous_time);
+               $motion= $motion+$time;  
+                if($motion<0)
+               {
+                $motion="0";
+                
+               }  
+                              
+            }
+            else if($changes->mode == "H"){
+               $time = strtotime($changes->device_time) - strtotime($previous_time);
+               $halt= $halt+$time;   
+               // dd($halt) ;
+               if($halt<0)
+               {
+                $halt="0";               
+               }  
+                                    
+            }
+              $date1 = strtotime($previous_time);  
+              $date2 = strtotime($changes->device_time);
+              $diff = abs($date2 - $date1); 
+              $seconds = $this->timeFormate(floor($diff)); 
+      
+              $summery[]=array(
+                                'id'=>$previous_id,
+                                'mode'=>$previous_mode,
+                                'device_time'=>$previous_time,
+                                'first'=>$previous_time,
+                                'second'=>$changes->device_time,
+                                'timedifference'=>$seconds
+                              ); 
+
+          } 
+        $previous_time = $changes->device_time;
+        $previous_mode=$changes->mode;
+                                    
+      }    
+
+       $total_data=array('sleep' => $this->timeFormate($sleep),  
+                          'motion' => $this->timeFormate($motion),   
+                          'halt' => $this->timeFormate($halt)
+                        ); 
+
+
+        return view('Gps::travel-summery',['gps' => $gps,'summery'=>$summery,'full_summery'=>$total_data]);
+    }
+    // time
+    function timeFormate($second){
+      $hours = floor($second / 3600);
+      $mins = floor($second / 60 % 60);
+      $secs = floor($second % 60);
+      $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+      return $timeFormat;
+    }
+
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [
