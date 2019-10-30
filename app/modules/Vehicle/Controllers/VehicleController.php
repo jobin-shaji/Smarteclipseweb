@@ -973,7 +973,7 @@ class VehicleController extends Controller {
                         "longitude"=>$snapRoute['lng'],
                         "angle"=>$track_data->angle,
                         "vehicleStatus"=>$track_data->vehicleStatus,
-                        "speed"=>ltrim($track_data->speed,'0'),
+                        "speed"=>round($track_data->speed),
                         "dateTime"=>$track_data->dateTime,
                         "power"=>$track_data->power,
                         "ign"=>$track_data->ign,
