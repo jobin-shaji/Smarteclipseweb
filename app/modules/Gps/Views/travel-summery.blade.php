@@ -3,7 +3,7 @@
 <section class="hilite-content">
       <!-- title row -->
      
-     <form  method="POST" action="{{route('gps.search-travel-summery.p')}}">
+     <form  method="POST" action="{{route('gps.search-travel-summary.p')}}">
         {{csrf_field()}}
       <div class="row">
 
