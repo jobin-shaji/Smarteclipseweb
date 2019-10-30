@@ -26,7 +26,6 @@ class TrackingReportController extends Controller
     {
         $client_id=\Auth::user()->client->id;
         $from = date('Y-m-d', strtotime($request->from_date));
-        // dd($request->from_date);
         $to = date('Y-m-d', strtotime($request->to_date));
         $vehicle = $request->vehicle;
         $sleep=0;
@@ -38,12 +37,14 @@ class TrackingReportController extends Controller
         $previous_time =0;
         $previous_mode = 0;
         $vehicle_sleep=0;
+
         $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
+
         $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
            ->where('device_time','<=',$request->to_date)  
            ->where('gps_id',$vehicleGps->gps_id)
            ->get();
-         // dd($gps_modes);
+
         foreach ($gps_modes as $mode) {
         if($initial_time == 0){
             $initial_time = $mode->device_time;
@@ -56,8 +57,7 @@ class TrackingReportController extends Controller
                  if($sleep<0)
                 {
                     $sleep="0";                   
-                }    
-                // dd($time);              
+                }                
             }
             else if($mode->mode == "M"){
                $time = strtotime($mode->device_time) - strtotime($previous_time);

@@ -82,6 +82,9 @@ Route::post('/allbthdata-list','GpsController@getAllBthData')->name('allbthdata-
 Route::get('/id/{id}/pased','GpsController@pasedData')->name('id-pased');
 
 // Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
+Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-summery');
+Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
+
 
 
 });
