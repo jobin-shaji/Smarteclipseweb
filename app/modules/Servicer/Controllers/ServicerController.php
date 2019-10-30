@@ -117,7 +117,7 @@ class ServicerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Servicer deleted successfully'
+            'message' => 'Servicer deactivated successfully'
         ]);
     }
 

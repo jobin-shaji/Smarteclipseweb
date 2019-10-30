@@ -387,7 +387,7 @@ class ComplaintController extends Controller {
         ->addColumn('action', function ($complaints) {                
             $b_url = \URL::to('/');
             return "
-            <a href=".$b_url."/assign-complaint/".Crypt::encrypt($complaints->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";           
+            <a href=".$b_url."/assign-complaint/".Crypt::encrypt($complaints->id)."/details class='btn btn-xs btn-info'>Complaint completion</a>";           
         })           
         ->addColumn('assigned_by', function ($complaints) { 
             return $complaints->assignedBy->username;
