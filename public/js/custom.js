@@ -259,6 +259,8 @@ function backgroundPostData(url, data, callBack, options) {
                     selectVehicleTrack(res);
                 }else if(callBack =='driverScore'){
                     driverScore(res);
+                }else if(callBack =='driverScoreAlerts'){
+                    driverScoreAlerts(res);
                 }else if(callBack == 'emergencyAlert'){
                     emergencyAlert(res);
                 }else if(callBack == 'getPlaceName'){

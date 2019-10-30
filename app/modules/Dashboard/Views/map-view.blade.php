@@ -31,7 +31,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color:#129a00!important">
+              <h1 class="text-white" style="color:#84b752!important">
               <!-- <img src="assets/images/moving.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -47,7 +47,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color: #0077ae!important">
+              <h1 class="text-white" style="color: #69b4b9!important">
                <!--  <img src="assets/images/idling.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -63,7 +63,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color: #999!important">
+              <h1 class="text-white" style="color: #858585!important">
                 <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -79,7 +79,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color:#fc4343!important">
+              <h1 class="text-white" style="color:#c41900!important">
                 <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>

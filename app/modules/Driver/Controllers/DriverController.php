@@ -309,6 +309,67 @@ class DriverController extends Controller {
         return response()->json($score); 
     }
 
+    //driver score alerts
+    public function driverScoreAlerts(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;
+        $harsh_braking_alerts=Alert::where('alert_type_id',1)->get();
+        $single_harsh_braking_alerts = [];
+        foreach($harsh_braking_alerts as $harsh_braking_alert){
+            $single_harsh_braking_alerts[] = $harsh_braking_alert->id;
+        }
+        $over_speed_alerts=Alert::where('alert_type_id',12)->get();
+        $single_over_speed_alerts = [];
+        foreach($over_speed_alerts as $over_speed_alert){
+            $single_over_speed_alerts[] = $over_speed_alert->id;
+        }
+        $tilt_alerts=Alert::where('alert_type_id',13)->get();
+        $single_tilt_alerts = [];
+        foreach($tilt_alerts as $tilt_alert){
+            $single_tilt_alerts[] = $tilt_alert->id;
+        }
+        $impact_alerts=Alert::where('alert_type_id',14)->get();
+        $single_impact_alerts = [];
+        foreach($impact_alerts as $impact_alert){
+            $single_impact_alerts[] = $impact_alert->id;
+        }
+        $over_speed_gf_entry_alerts=Alert::where('alert_type_id',15)->get();
+        $single_over_speed_gf_entry_alerts = [];
+        foreach($over_speed_gf_entry_alerts as $over_speed_gf_entry_alert){
+            $single_over_speed_gf_entry_alerts[] = $over_speed_gf_entry_alert->id;
+        }
+        $over_speed_gf_exit_alerts=Alert::where('alert_type_id',16)->get();
+        $single_over_speed_gf_exit_alerts = [];
+        foreach($over_speed_gf_exit_alerts as $over_speed_gf_exit_alert){
+            $single_over_speed_gf_exit_alerts[] = $over_speed_gf_exit_alert->id;
+        }
+        $drivers = Driver::where('client_id',$client_id)->get();
+        $score=[];
+        foreach($drivers as $driver){
+            $harsh_breaking_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_harsh_braking_alerts)->count();
+            $overspeed_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_over_speed_alerts)->count();
+            $tilt_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_tilt_alerts)->count();
+            $impact_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_impact_alerts)->count();
+            $overspeed_gf_entry_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_over_speed_gf_entry_alerts)->count();
+            $overspeed_gf_exit_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_over_speed_gf_exit_alerts)->count();
+            $background_border_color='rgba('.rand(1,255).','.rand(1,255).','.rand(1,255);
+            $score[]=array(
+                    'label' => $driver->name,    
+                    'data'=>[$harsh_breaking_count, 
+                            $overspeed_count,
+                            $tilt_count,
+                            $impact_count,       
+                            $overspeed_gf_entry_count,
+                            $overspeed_gf_exit_count
+                            ],
+                    'backgroundColor' => [$background_border_color.',.2)'],
+                    'borderColor'=> [$background_border_color.',.7)'],
+                    'borderWidth'=> 2
+                    );
+        }
+        return response()->json($score); 
+    }
+
 
     //Client Driver Create
     public function clientDriverCreate(Request $request)
