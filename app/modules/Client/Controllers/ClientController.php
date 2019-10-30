@@ -147,7 +147,7 @@ class ClientController extends Controller {
         'name',                   
         'address',                                       
         'deleted_at'
-    )
+        )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
         ->where('sub_dealer_id',$subdealer)
@@ -156,7 +156,7 @@ class ClientController extends Controller {
         ->addIndexColumn()
         ->addColumn('action', function ($client) {
              $b_url = \URL::to('/');
-        if($client->user->deleted_at == null){ 
+        if($client->user->deleted_at == null && $client->deleted_at == null){ 
             return "
             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
@@ -444,22 +444,19 @@ class ClientController extends Controller {
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
         ->with('user:id,email,mobile,deleted_at')
-        ->where('deleted_at',NULL)
         ->get();
         return DataTables::of($client)
         ->addIndexColumn()  
         ->addColumn('working_status', function ($client) {
             $b_url = \URL::to('/');
-            if($client->user->deleted_at == null){ 
+            if($client->user->deleted_at == null && $client->deleted_at == null){ 
             return "
                 <b style='color:#008000';>Enabled</b>
                 <button onclick=disableEndUser(".$client->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
-                
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
 
-                 <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
-
-                  <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
               
             ";
             }else{ 
@@ -476,14 +473,16 @@ class ClientController extends Controller {
     //delete client details from table
     public function disableClient(Request $request)
     {
-        $client = User::find($request->id);
-        if($client == null){
+        $client_user = User::find($request->id);
+        $client = Client::where('user_id',$request->id)->first();
+        if($client_user == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Client does not exist'
             ]);
         }
+        $client_user->delete();
         $client->delete();
         return response()->json([
             'status' => 1,
@@ -495,14 +494,16 @@ class ClientController extends Controller {
     // restore emplopyee
     public function enableClient(Request $request)
     {
-        $client = User::withTrashed()->find($request->id);
-        if($client==null){
+        $client_user = User::withTrashed()->find($request->id);
+        $client = Client::withTrashed()->where('user_id',$request->id)->first();
+        if($client_user==null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Client does not exist'
             ]);
         }
+        $client_user->restore();
         $client->restore();
         return response()->json([
             'status' => 1,
@@ -599,6 +600,7 @@ class ClientController extends Controller {
             ]);
         }
         $client->user->delete();
+        $client->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -619,7 +621,7 @@ class ClientController extends Controller {
         }
 
         $client->user->restore();
-
+        $client->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',

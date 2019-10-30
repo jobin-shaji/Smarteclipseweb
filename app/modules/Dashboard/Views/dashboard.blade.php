@@ -29,7 +29,7 @@
               <h3 id="dealer">
                 <div class="loader"></div>
               </h3>
-              <p>Dealers</p>
+              <p>Active Dealers</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -45,10 +45,10 @@
               <h3 id="sub_dealer">
                 <div class="loader"></div>
               </h3>
-              <p>Sub Dealers</p>
+              <p>Active Subdealers</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <i class="fa fa-user"></i>
             </div>
             <a href="/sub-dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -61,10 +61,10 @@
               <h3 id="client">
                 <div class="loader"></div>
               </h3>
-              <p>Clients</p>
+              <p>Active Clients</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <i class="fa fa-user"></i>
             </div>
             <a href="/client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -95,7 +95,21 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="row">
-                  <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+                  <div class="col-lg-2 col-xs-6 new_arrival_dashboard_grid dash_grid">
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_new_arrival_dealer">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>GPS New Arrivals</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-tablet"></i>
+                      </div>
+                      <a href="/gps-dealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-xs-6 gps_dashboard_grid dash_grid">
                     <div class="small-box bg-green bxs">
                       <div class="inner">
                         <h3 id="total_gps_dealer">
@@ -109,7 +123,7 @@
                       <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+                  <div class="col-lg-2 col-xs-6 transferred_gps_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-green bxs">
                       <div class="inner">
@@ -125,19 +139,34 @@
                     </div>
                   </div>
                   <!-- ./col -->
-                  <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+                  <div class="col-lg-2 col-xs-6 sub_dealer_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-yellow bxs">
                       <div class="inner">
                         <h3 id="dealer_subdealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>Sub Dealers</p>
+                        <p>Active Subdealers</p>
                       </div>
                       <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fa fa-user"></i>
                       </div>
                       <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-xs-6 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="dealer_client">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Active Clients</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      <a href="/dealer-client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
                 </div>
@@ -166,6 +195,20 @@
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <div class="row">
+      <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_new_arrival_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS New Arrivals</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-subdealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
       <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
       <!-- small box -->
         <div class="small-box bg-green bxs">
@@ -181,7 +224,7 @@
           <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-green bxs">
           <div class="inner">
@@ -197,14 +240,14 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-blue bxs">
           <div class="inner">
             <h3 id="subdealer_client">
               <div class="loader"></div>
             </h3>
-            <p>Clients</p>
+            <p>Active Clients</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>

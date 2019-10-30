@@ -16876,11 +16876,6 @@ padding: 15px 10px;
 }
 
 /*----------------------------------------dashboard root---------------------*/
-
-.gps_dashboard_grid {
-    background: #41A659;
-
-}
 .dash_grid{
   font-size: 15px;
   color:#fff;
@@ -16933,6 +16928,14 @@ padding: 15px 10px;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
+.gps_dashboard_grid {
+    background: #41A659;
+}
+
+.transferred_gps_dashboard_grid {
+    background: #6A6F75;
+}
+
 .dealer_dashboard_grid {
     background: #56C1EF;
 }
@@ -16943,6 +16946,10 @@ padding: 15px 10px;
 
 .client_dashboard_grid{
     background: #DD4B39;
+}
+
+.new_arrival_dashboard_grid{
+    background: #CE447B;
 }
 
 /*--------------------bredcrump-----------------------*/

@@ -23,8 +23,11 @@ function dbcount(res){
       $('#client').text(res.clients);
       $('#vehicle').text(res.vehicles);
       $('#dealer_subdealer').text(res.subdealers);
+      $('#dealer_client').text(res.clients);
+      $('#gps_new_arrival_dealer').text(res.new_arrivals);
       $('#total_gps_dealer').text(res.total_gps);
       $('#transferred_gps_dealer').text(res.transferred_gps);
+      $('#gps_new_arrival_subdealer').text(res.new_arrivals);
       $('#total_gps_subdealer').text(res.total_gps);
       $('#transferred_gps_subdealer').text(res.transferred_gps);
       $('#subdealer_client').text(res.clients);
