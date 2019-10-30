@@ -58,7 +58,7 @@ function rootGpsUser(res){
         backgroundColor: [
                 'rgba( 109, 193, 241, 1)',
                 'rgba( 246, 156, 53, 1)',
-                'rgba( 241, 62, 38 , 1'
+                'rgba( 241, 62, 38 , 1)'
 
                 
             ],
