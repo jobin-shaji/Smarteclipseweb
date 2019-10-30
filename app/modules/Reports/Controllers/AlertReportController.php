@@ -36,6 +36,8 @@ class AlertReportController extends Controller
         }
         $AlertType=AlertType::select('id','code','description')
         ->whereIn('id',$alert_id)
+        ->whereNotIn('id',[17,18,23,24])
+        
         ->get();
         // $client_id=\Auth::user()->client->id;
          $vehicles=Vehicle::select('id','name','register_number','client_id')
@@ -64,9 +66,10 @@ class AlertReportController extends Controller
         $client= \Auth::user()->client->id;
         $alert_id= $request->alertID;
         $vehicle_id= $request->vehicle_id;
-        // dd($client);
+       
         $from = $request->from_date;
         $to = $request->to_date;
+         // dd($from);
         $user=\Auth::user();
         $get_user_role=$user->roles->Where('name','==', 'client')->first();
         if($get_user_role)
@@ -103,22 +106,11 @@ class AlertReportController extends Controller
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $userAlerts = UserAlerts::select(
-            'id',
-            'client_id',
-            'alert_id',
-            'status'
-        )
-        ->with('alertType:id,code,description') 
-        ->where('status',1)               
-        ->where('client_id',$client)           
-        ->get();
-        $alert_id=[];
-        foreach ($userAlerts as $userAlert) {
-              $alert_id[]=$userAlert->alert_id;
-           }              
-        // dd($VehicleGpss);
+
+                   
+       // dd($alert_id);
         $query =Alert::select(
+          
             'id',
             'alert_type_id',
             'device_time',   
@@ -130,9 +122,10 @@ class AlertReportController extends Controller
         ->with('alertType:id,description')
         ->with('gps.vehicle')
         ->orderBy('id', 'desc')
-        ->whereIn('alert_type_id',$alert_id)
-        ->whereNotIn('alert_type_id',[17,18,23,24])
-        ->limit(1000);
+        ->where('alert_type_id',$alert_id)
+        ->whereNotIn('alert_type_id',[17,18,23,24]);
+        // ->limit(1000);
+        // dd($query);
        if($alert_id==0 && $vehicle_id==0)
        {  
 
@@ -164,35 +157,51 @@ class AlertReportController extends Controller
           $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
         $alert = $query->get(); 
+       // dd($alert);
+        if($alert)
+        {
+        $response_data = array('status'  => 'success',
+           'message' => 'success',
+           'code'    =>1,
+           'alertData' => $alert
+        );
+        }else{
+            $response_data = array('status'  => 'failed',
+             'message' => 'failed',
+              'code'    =>0
+            );
+        }
+             // dd($response_data['liveData']['ign']);
+        return response()->json($alert); 
         // dd($alert);
-        return DataTables::of($alert)
-        ->addIndexColumn()
-    //     ->addColumn('location', function ($alert) {
-    //      $latitude= $alert->latitude;
-    //      $longitude=$alert->longitude;         
-    //     if(!empty($latitude) && !empty($longitude)){
-    //         //Send request and receive json data by address
-    //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap');
-    //         $output = json_decode($geocodeFromLatLong);        
-    //         $status = $output->status;
-    //         //Get address from json data
-    //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-    //         //Return address of the given latitude and longitude
-    //         if(!empty($address)){
-    //              $location=$address;
-    //         return $location;
+    //     return DataTables::of($alert)
+    //     ->addIndexColumn()
+    // //     ->addColumn('location', function ($alert) {
+    // //      $latitude= $alert->latitude;
+    // //      $longitude=$alert->longitude;         
+    // //     if(!empty($latitude) && !empty($longitude)){
+    // //         //Send request and receive json data by address
+    // //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap');
+    // //         $output = json_decode($geocodeFromLatLong);        
+    // //         $status = $output->status;
+    // //         //Get address from json data
+    // //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+    // //         //Return address of the given latitude and longitude
+    // //         if(!empty($address)){
+    // //              $location=$address;
+    // //         return $location;
                
-    //         }
+    // //         }
        
-    // }
-    //      })
-         ->addColumn('action', function ($alert) {
-         $b_url = \URL::to('/');              
-                    return "
-                    <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
-                })
-            ->rawColumns(['link', 'action'])
-        ->make();
+    // // }
+    // //      })
+    //      ->addColumn('action', function ($alert) {
+    //      $b_url = \URL::to('/');              
+    //                 return "
+    //                 <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+    //             })
+    //         ->rawColumns(['link', 'action'])
+    //     ->make();
     }
     public function location(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);

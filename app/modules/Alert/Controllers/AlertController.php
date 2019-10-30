@@ -13,6 +13,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 use DataTables;
 
 class AlertController extends Controller {
@@ -69,7 +70,8 @@ class AlertController extends Controller {
                 'latitude',
                 'longitude',
                 'status',
-                'created_at'
+                'created_at',
+                'device_time'
             )
             ->with('alertType:id,code,description')
             ->with('gps.vehicle')
@@ -78,8 +80,13 @@ class AlertController extends Controller {
             ->whereIn('gps_id',$single_vehicle_gps)
             ->whereIn('alert_type_id',$alert_id)
             ->whereNotIn('alert_type_id',[17,18,23,24])
-            ->where('status',1)         
-            ->paginate(15);           
+            ->where('status',1) 
+            ->paginate(15);
+          
+    //->paginate($this->paginateLimit);
+
+// $alerts = Paginator::make($alerts->all(), $alerts->count(), 10);    
+
         return view('Alert::alert-list',['alerts'=>$alerts]);
 	}
     // alert verification
