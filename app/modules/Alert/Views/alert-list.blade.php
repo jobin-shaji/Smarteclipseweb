@@ -16,7 +16,6 @@ All Alerts
       </div>
     @endif 
   </nav>
-
   <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive">
@@ -34,7 +33,8 @@ All Alerts
                     <th>Vehicle Name</th>
                     <th>Register Number</th>
                     <!-- <th>Location</th> -->
-                    <th>DateTime</th>                 
+                    <th>DateTime</th> 
+                    <th>Action</th>                 
                   </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,9 @@ All Alerts
                         <td>{{ $alert->alertType->description }}</td>           
                         <td>{{ $alert->gps->vehicle->name}}</td>
                         <td>{{ $alert->gps->vehicle->register_number }}</td>
-                        <td>{{ $alert->created_at }}</td>                               
+                        <td>{{ $alert->device_time }}</td>  
+                         <td> <a href="/alert/report/{{Crypt::encrypt($alert->id)}}/mapview"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>      
+
                     </tr>
                     @endforeach
                 </tbody>
@@ -58,7 +60,4 @@ All Alerts
     </div>               
   </div>            
 </div>
-@endsection
-@section('script')
-<script src="{{asset('js/gps/alert-list.js')}}"></script>
 @endsection
