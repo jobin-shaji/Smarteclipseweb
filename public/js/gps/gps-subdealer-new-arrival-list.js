@@ -47,7 +47,7 @@ function callBackDataTable(){
 }
 
 function acceptSubDealerGpsTransfer(gps_transfer_id){
-    if(confirm('Are you sure want to accept this?')){
+    if(confirm('Are you sure to accept this?')){
         var url = 'gps-transfer-subdealer/accept';
         var data = {
             id : gps_transfer_id

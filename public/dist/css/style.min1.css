@@ -16972,6 +16972,16 @@ li.breadcrumb-item a {
     border-radius: 5px;
     margin-bottom: 5px;
 }
+
+.callout.callout-warning {
+   
+    color: #F4F4F4;
+    background: #DE7171;
+    padding: 15px;
+    /*width: 25%;*/
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
 .card.geofence.data_list_cover.pull-right {
     height: 219px;
 }
