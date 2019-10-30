@@ -29,7 +29,7 @@ Alert Report
                              <div class="form-group">    
                             <label>Vehicle</label>                      
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="0">All</option>
+                              <option value="" selected="selected" disabled="disabled">select</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->name}}||{{$vehicles->register_number}}</option>
                               @endforeach  
@@ -66,24 +66,26 @@ Alert Report
                     <div class="col-md-3">
                       <label>Select Alert Type:</label>
                       <select class="form-control selectpicker" data-live-search="true" title="Select Alert Type" id="alert" name="alert">
-                      <option value="0">All</option>
+                      <option value="" selected="selected" disabled="disabled">select</option>
                         @foreach ($Alerts as $Alerts)
                         <option value="{{$Alerts->id}}">{{$Alerts->description}}</option>
                       @endforeach
                     </select>
                     </div>
                   </div>
-                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                         <thead>
                           <tr>
                              <th>Sl.No</th>
                               <th>Vehicle</th>
                               <th>Alert Type</th>                             
-                              <th>DateTime</th>
-                              <th>Action</th>      
+                              <th>DateTime</th>                                   
                           </tr>
                         </thead>
+                        <tbody id="alerttabledata">                          
+                        </tbody>
                       </table>
+                      
                     </div>
                   </div>
                 </div>

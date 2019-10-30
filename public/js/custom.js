@@ -356,6 +356,11 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                    vehicleParkingReport(res) 
                 }
+                else if(callBack=='alertsReport')
+                {
+                   alertsReport(res) 
+                }
+                
 
                 
 
