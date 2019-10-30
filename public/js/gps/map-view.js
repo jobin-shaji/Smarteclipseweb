@@ -88,16 +88,16 @@ if(res.status!="failed"){
   var color = "";
   var vehicle_status = "";
   if (mode == 'M') {
-   car_color = "#2DB05D";
+   car_color = "#84b752";
    vehicle_status = "Online";
   } else if (mode == 'H') {
-   car_color = "#5474F5";
+   car_color = "#69b4b9";
    vehicle_status = "Idle"
   } else if (mode == 'S') {
-   car_color = "#A1A3AB";
+   car_color = "#858585";
    vehicle_status = "Stop"
   } else {
-   car_color = "#DB2133";
+   car_color = "#c41900";
    vehicle_status = "Offline"
   }
 

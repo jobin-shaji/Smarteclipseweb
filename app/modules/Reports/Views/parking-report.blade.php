@@ -38,16 +38,15 @@ Parking Report
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> From Date</label>
-                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" >
+                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate">
+                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
                           </div>
                           </div>
-
                             <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
                             <button class="btn btn-sm btn-info btn2 form-control" onclick="trackMode()"> <i class="fa fa-search"></i> </button>

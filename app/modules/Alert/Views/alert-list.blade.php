@@ -16,7 +16,6 @@ All Alerts
       </div>
     @endif 
   </nav>
-
   <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive">
@@ -26,7 +25,7 @@ All Alerts
               <div class="panel-heading">
                
               </div>
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                 <thead>
                   <tr>
                     <th>Sl.No</th>
@@ -34,11 +33,26 @@ All Alerts
                     <th>Vehicle Name</th>
                     <th>Register Number</th>
                     <!-- <th>Location</th> -->
-                    <th>DateTime</th>
-                    <th>Action</th>
+                    <th>DateTime</th> 
+                    <th>Action</th>                 
                   </tr>
                 </thead>
+                <tbody>
+                   @foreach($alerts as $alert)                  
+                    <tr>           
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $alert->alertType->description }}</td>           
+                        <td>{{ $alert->gps->vehicle->name}}</td>
+                        <td>{{ $alert->gps->vehicle->register_number }}</td>
+                        <td>{{ $alert->device_time }}</td>  
+                         <td> <a href="/alert/report/{{Crypt::encrypt($alert->id)}}/mapview"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>      
+
+                    </tr>
+                    @endforeach
+                </tbody>
               </table>
+             {{ $alerts->appends(['sort' => 'votes'])->links() }}
+              
             </div>
           </div>
         </div>
@@ -46,7 +60,4 @@ All Alerts
     </div>               
   </div>            
 </div>
-@endsection
-@section('script')
-<script src="{{asset('js/gps/alert-list.js')}}"></script>
 @endsection
