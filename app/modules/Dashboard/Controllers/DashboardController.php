@@ -1141,6 +1141,8 @@ class DashboardController extends Controller
                      $offline=$offline+1;
                    }
                 }else if($vehicle->gps->mode=="S"){
+                   $last_updated_time = date('Y-m-d H:i:s', strtotime("-10 minutes"));
+
                     if($vehicle->gps->device_time <= $currentDateTime && $vehicle->gps->device_time >= $last_updated_time){
                       $sleep=$sleep+1;
                    }else{
