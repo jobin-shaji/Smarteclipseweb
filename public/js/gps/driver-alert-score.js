@@ -8,16 +8,29 @@ $(document).ready(function() {
 
 
 function driverScoreAlerts(res) {
-  //console.log(res);
   var ctxL = document.getElementById("driver-behaviour-alerts").getContext('2d');
   var myLineChart = new Chart(ctxL, {
   type: 'line',
   data: {
-  labels: ["Harsh breaking", "Over speed", "Tilt", "Impact", "Overspeed+GF Entry", "Overspeed+GF Exit"],
+  labels: ["Harsh break", "Overspeed", "Tilt", "Impact", "OS+GF Entry", "OS+GF Exit"],
   datasets: res
   },
   options: {
-  responsive: true
+  responsive: true,
+  scales: {
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Alert Type'
+      }
+    }],
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Count'
+      }
+    }]
+  } 
   }
   });
 }
