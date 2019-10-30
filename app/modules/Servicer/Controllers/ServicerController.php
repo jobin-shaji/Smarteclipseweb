@@ -939,6 +939,20 @@ class ServicerController extends Controller {
         ->make();
     }
 
+     public function servicerProfile()
+    {
+        $servicer_id = \Auth::user()->servicer->id;
+        $servicer_user_id = \Auth::user()->id;
+        $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
+        $user=User::find($servicer_user_id); 
+        if($servicer == null)
+        {
+           return view('Servicer::404');
+        }
+        return view('Servicer::servicer-profile',['servicer' => $servicer,'user' => $user]);
+    }
+
+
     
     public function servicerCreateRules()
     {
