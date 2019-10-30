@@ -117,7 +117,7 @@ class ServicerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Servicer deleted successfully'
+            'message' => 'Servicer deactivated successfully'
         ]);
     }
 
@@ -938,6 +938,20 @@ class ServicerController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+
+     public function servicerProfile()
+    {
+        $servicer_id = \Auth::user()->servicer->id;
+        $servicer_user_id = \Auth::user()->id;
+        $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
+        $user=User::find($servicer_user_id); 
+        if($servicer == null)
+        {
+           return view('Servicer::404');
+        }
+        return view('Servicer::servicer-profile',['servicer' => $servicer,'user' => $user]);
+    }
+
 
     
     public function servicerCreateRules()

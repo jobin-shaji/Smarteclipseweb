@@ -31,8 +31,7 @@ function alertsReport(res){
         var alertdatas = '<tr><td>'+j+'</td>'+
         '<td>'+res[i].gps.vehicle.name+'</td>'+
         '<td>'+res[i].alert_type.description+'</td>'+
-        '<td>'+res[i].device_time+'</td>'+
-       
+        '<td>'+res[i].device_time+'</td>'+       
         '</tr>';
         $("#alerttabledata").append(alertdatas);
     }

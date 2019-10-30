@@ -80,6 +80,7 @@
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
     <!-- Custom CSS -->
+    
     <link href="{{ url('/') }}/dist/css/style.min1.css" rel="stylesheet">
 
     
