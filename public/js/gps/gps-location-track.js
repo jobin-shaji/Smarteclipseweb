@@ -84,20 +84,20 @@ function getMarkers() {
                         $("#halt").hide();
                         $("#offline").hide();
                         $("#sleep").hide();
-                        vehicleColor="#203a17";
+                        vehicleColor="#84b752";
                     } else if (res.liveData.vehicleStatus == 'H') {
                         $("#halt").show();
                         $("#online").hide();
                         $("#offline").hide();
                         $("#sleep").hide();
-                        vehicleColor="#c1c431";
+                        vehicleColor="#69b4b9";
 
                     } else if (res.liveData.vehicleStatus == 'S') {
                         $("#sleep").show();
                         $("#halt").hide();
                         $("#online").hide();
                         $("#offline").hide();
-                        vehicleColor="#ffa500";
+                        vehicleColor="#858585";
                     } else {
                         if(res.liveData.last_seen){
                             $('#last_seen').text(res.liveData.last_seen);
@@ -106,7 +106,7 @@ function getMarkers() {
                         $("#sleep").hide();
                         $("#halt").hide();
                         $("#online").hide();
-                        vehicleColor="#711307";
+                        vehicleColor="#c41900";
 
                     }
                     if (res.liveData.ign == 1) {

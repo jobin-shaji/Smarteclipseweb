@@ -62,16 +62,16 @@
                      <div class="cover_ofline"><b>
                       <div class="cover_status"> 
                         <span id="online" style="display: none;">
-                            <i class="fa fa-circle" style="color:green;" aria-hidden="true"></i> Online
+                            <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Online
                         </span>
                         <span id="halt" style="display: none;">
-                            <i class="fa fa-circle" style="color:yellow;" aria-hidden="true"></i> Halt
+                            <i class="fa fa-circle" style="color:#69b4b9;" aria-hidden="true"></i> Halt
                         </span>
                         <span id="sleep" style="display: none;">
-                            <i class="fa fa-circle" style="color:orange;" aria-hidden="true"></i> Sleep
+                            <i class="fa fa-circle" style="color:#858585;" aria-hidden="true"></i> Sleep
                         </span>
                         <span id="offline" style="display: none;font-size: 13px;">
-                            <i class="fa fa-circle" style="color:red;" aria-hidden="true"></i> Last seen <span id="last_seen"></span>
+                            <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Last seen <span id="last_seen"></span>
                         </span>
                       </div>
 
