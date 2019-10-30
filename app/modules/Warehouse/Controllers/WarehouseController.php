@@ -304,7 +304,7 @@ class WarehouseController extends Controller {
             $transferred_devices[]=$devices->gps_id;
         }
         if($transferred_devices){
-            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps.transfer.root'));
         }else{
@@ -481,7 +481,7 @@ class WarehouseController extends Controller {
             $transferred_devices[]=$devices->gps_id;
         }
         if($transferred_devices){
-            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer-dealer.create'));
         }else{
@@ -645,7 +645,7 @@ class WarehouseController extends Controller {
             $transferred_devices[]=$devices->gps_id;
         }
         if($transferred_devices){
-            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer-sub-dealer.create'));
         }else{
