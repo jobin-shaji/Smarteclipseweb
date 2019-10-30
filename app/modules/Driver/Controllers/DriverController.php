@@ -352,8 +352,7 @@ class DriverController extends Controller {
             $impact_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_impact_alerts)->count();
             $overspeed_gf_entry_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_over_speed_gf_entry_alerts)->count();
             $overspeed_gf_exit_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_over_speed_gf_exit_alerts)->count();
-            $background_color=["rgba(255, 206, 86, 0.2)"];
-            $border_color=["rgba(255, 206, 86, 1)"];
+            $background_border_color='rgba('.rand(1,255).','.rand(1,255).','.rand(1,255);
             $score[]=array(
                     'label' => $driver->name,    
                     'data'=>[$harsh_breaking_count, 
@@ -363,8 +362,8 @@ class DriverController extends Controller {
                             $overspeed_gf_entry_count,
                             $overspeed_gf_exit_count
                             ],
-                    'backgroundColor' => $background_color,
-                    'borderColor'=> $border_color,
+                    'backgroundColor' => [$background_border_color.',.2)'],
+                    'borderColor'=> [$background_border_color.',.7)'],
                     'borderWidth'=> 2
                     );
         }
