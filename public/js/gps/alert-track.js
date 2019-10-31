@@ -63,44 +63,12 @@ function initMap(res) {
  
    function locs(locationName)
    {
-    // alert(1);
-    var windowLatLng = new google.maps.LatLng(43.25,-68.03);
      var infowindow = new google.maps.InfoWindow();
-     google.maps.event.addListener(marker, 'click', function() {
-        // infowindow.setContent(title);
-        infoWindow.setOptions({
-            content: "<div>This is the html content.</div>",
-            position: windowLatLng,
-        });
-        // infoWindow.open(map); 
+     google.maps.event.addListener(marker, 'mouseover', function() {
+        infowindow.setContent(title);
         infowindow.open(map, this);
     });
   
-
-
-//     function initialize() 
-//     {
-//         infoWindow = new google.maps.InfoWindow();
-//         var windowLatLng = new google.maps.LatLng(43.25,-68.03);
-//         infoWindow.setOptions({
-//             content: "<div>This is the html content.</div>",
-//             position: windowLatLng,
-//         });
-//         infoWindow.open(map); 
-//     } // end initialize
-
-// google.setOnLoadCallback(initialize);
-
-
-
-
-
-
-
-
-
-
-
   
     var title ='<div id="content" style="width:150px;">' +
     '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">Alert Map</span></div>'+  

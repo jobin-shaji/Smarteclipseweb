@@ -111,12 +111,28 @@ if(res.status!="failed"){
    vehicle_status = "Offline"
   }
 
+
   var title = '<div id="content" style="width:150px;">' +
    '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:' + car_color + ';" aria-hidden="true"></i></span>' + vehicle_status +
    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>' + vehicle_name + '</i></span></div>' +
    '<div style="padding-top:5px; padding-left:16px;"><i class="fa fa-car"></i><span style="margin-right:5px;">:</span>' + reg + ' </div>' +
    '<a href=/vehicles/' + vehicle_id + '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;padding-right:40px;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" title="Alerts" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>' +
    '</div>';
+
+
+
+// var title = 
+//       '<div style="width:13%;float:left">'+
+//     '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
+//        '<h3 class="h3 mb-3 font-weight-normal" style="text-align: left!important;font-size:1.25rem;margin-bottom:0!important ">Offline<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+//           '<span aria-hidden="true" >&times</span>'+
+//           '</button></h3>'+
+
+//     '<p style="text-align:left!important;margin-bottom: -1rem!important;font-size:.9rem!important"><code>Last updated 12/10/19, 4:50PM</code><br><img src="images/driver1.svg" width=22 height=22><b>Driver Name,</b> Mobile Number<br><img src="images/vehicle.svg" width=22 height=22><b>Vehicle Name,</b> Plate Number</p>'+
+//   '</div>'+
+// '<button class="btn-pop type="submit"><img src="images/alarm.svg" width=16 height=16>Alerts</button>'+
+// '<button class="btn-pop type="submit"><img src="images/live-track.svg" width=16 height=16>Live Track</button>'+
+// '<button class="btn-pop type="submit"><img src="images/reply.svg" width=16 height=16>Route Replay</button></div';
 
 
   var path = JSONObject[i].vehicle_svg;

@@ -455,7 +455,10 @@ class DashboardController extends Controller
         }
         $network_status=$gps->network_status;
         if($user->hasRole('fundamental|pro|superior')){
-        $fuel_status=$gps->fuel_status."L";
+          $fuel =$gps->fuel_status*100/15;
+          $fuel = (int)$fuel;
+
+        $fuel_status=$fuel."%";
         }
         else
         {
