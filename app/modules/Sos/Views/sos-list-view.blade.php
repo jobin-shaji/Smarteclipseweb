@@ -4,7 +4,7 @@
 <div class="page-wrapper page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS LIST</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS List</li>
         
       </ol>
        @if(Session::has('message'))
@@ -18,21 +18,17 @@
  
     <div class="container-fluid">
     <div class="card-body">
-        <div class="table-responsive scrollmenu">
+        <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
-                              <div class="col-md-10 col-md-offset-1">
+                              <div class="col-md-11 col-md-offset-1">
                                   <div class="panel panel-default">
-                                      <div class="panel-heading">SOS LIST
-                                          <a href="{{route('sos.create')}}">
-                                          </a>
-                                      </div>
                                       <div class="table-responsive">
                                       <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="width:100%">
+                                          <table class="table table-bordered  table-striped " style="width:100%;">
                                             <thead>
                                               <tr>
                                                 <th>Sl.No</th>

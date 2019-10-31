@@ -24,12 +24,15 @@
     <div class="col-lg-6 col-md-12">
   
       <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
-          <div class="col-sm-12">
+          <div class="col-md-12">
             <h2 class="page-header">
               <i class="fa fa-user"></i> 
             </h2>
               <div class="row">
                 <div class="col-md-6">
+                  <div class="col-md-2">
+                    <a href="{{url('/dealers/profile-edit')}}"><button class="btn btn-sm btn-info form-control" >Edit Profile</button></a>
+                  </div>
                   <div class="form-group has-feedback">
                     <label>Name</label>
                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealer->name}}" disabled>
@@ -54,13 +57,6 @@
          </div>
     </div>
   </div>
-
-
-  <div class="page-wrapper_cover"></div>
-</div>
-
-
-
  
 <div class="clearfix"></div>
 
