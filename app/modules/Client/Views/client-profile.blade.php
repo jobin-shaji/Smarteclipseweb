@@ -29,7 +29,7 @@
             <div class="col-lg-6">
               <div class="col-sm-2">
                 <a href="{{url('/client/profile/edit')}}"><button class="btn btn-sm btn-info form-control" >EDIT</button></a>
-            </div>
+              </div>
               <div class="form-group has-feedback">
                 <label>Name</label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $client->name}}" disabled>

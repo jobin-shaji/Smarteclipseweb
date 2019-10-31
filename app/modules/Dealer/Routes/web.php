@@ -16,6 +16,8 @@ Route::post('/dealer/enable','DealerController@enableDealer')->name('dealer.enab
 
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
 	Route::get('/dealer/profile','DealerController@dealerProfile')->name('dealer.profile');
+	Route::get('/dealers/profile-edit','DealerController@editDealerProfile')->name('dealers.profile.edit');
+	Route::post('/dealers/{id}/profile/edit','DealerController@updateDealerProfile')->name('dealers.profile.update.p'); 
 });
 
 Route::group(['middleware' => ['web','auth','role:root|dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {

@@ -809,7 +809,7 @@ class WarehouseController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps transfer cancelled successfully'
+            'message' => 'GPS transfer cancelled successfully'
         ]);
     }
 
@@ -844,7 +844,7 @@ class WarehouseController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps transfer cancelled successfully'
+            'message' => 'GPS transfer cancelled successfully'
         ]);
     }
 

@@ -52,7 +52,7 @@ function callBackDataTable(){
 }
 
 function cancelSosTransfer(sos_transfer_id){
-    if(confirm('Are you sure want to cancel this?')){
+    if(confirm('Are you sure to cancel this?')){
         var url = 'sos-transfer/cancel';
         var data = {
             id : sos_transfer_id

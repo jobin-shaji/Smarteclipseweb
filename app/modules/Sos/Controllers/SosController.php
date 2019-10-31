@@ -191,7 +191,7 @@ class SosController extends Controller {
         $sos->save();
 
         $encrypted_sos_id = encrypt($sos->id);
-        $request->session()->flash('message', ' Sos updated successfully!'); 
+        $request->session()->flash('message', ' SOS updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sos.details',$encrypted_sos_id));  
     }
@@ -203,14 +203,14 @@ class SosController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Sos does not exist'
+                'message' => 'SOS does not exist'
             ]);
         }
         $sos->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Sos deleted successfully'
+            'message' => 'SOS deleted successfully'
         ]);
     }
 
@@ -222,7 +222,7 @@ class SosController extends Controller {
              return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Sos does not exist'
+                'message' => 'SOS does not exist'
              ]);
         }
 
@@ -231,7 +231,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Sos restored successfully'
+            'message' => 'SOS restored successfully'
         ]);
     }
 
@@ -567,7 +567,7 @@ class SosController extends Controller {
             $transferred_devices[]=$devices->id;
         }
         if($transferred_devices){
-            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, SOS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer-root.create'));
         }else{
@@ -599,7 +599,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'Sos Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -679,7 +679,7 @@ class SosController extends Controller {
             $transferred_devices[]=$devices->id;
         }
         if($transferred_devices){
-            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, SOS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer-dealer.create'));
         }else{
@@ -711,7 +711,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'Sos Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -797,7 +797,7 @@ class SosController extends Controller {
             $transferred_devices[]=$devices->id;
         }
         if($transferred_devices){
-            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, Gps list contains already transferred devices');
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, SOS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer-sub-dealer.create'));
         }else{
@@ -830,7 +830,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'Sos Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -889,7 +889,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Sos accepted successfully'
+            'message' => 'SOS accepted successfully'
         ]);
     }
 
@@ -924,7 +924,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Sos transfer cancelled successfully'
+            'message' => 'SOS transfer cancelled successfully'
         ]);
     }
 
