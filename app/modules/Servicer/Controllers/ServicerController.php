@@ -953,7 +953,134 @@ class ServicerController extends Controller {
     }
 
 
-    
+
+     //for edit page of employee password
+    public function changePassword(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $servicer = Servicer::where('user_id', $decrypted)->first();
+        // $dealer = Dealer::find($decrypted);
+        if($servicer == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::servicer-change-password',['servicer' => $servicer]);
+    }
+    //update password
+    public function updatePassword(Request $request)
+    {
+        $servicer=User::find($request->id);
+        if($servicer== null){
+            return view('SubDealer::404');
+        }
+        $did=encrypt($servicer->id);
+        // dd($request->password);
+        $rules=$this->updatePasswordRule();
+        $this->validate($request,$rules);
+        $servicer->password=bcrypt($request->password);
+        $servicer->save();
+        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('servicer.change-password',$did));
+    }
+
+    public function servicerProfileEdit()
+    {
+        $servicer_id = \Auth::user()->servicer->id;
+        $servicer_user_id = \Auth::user()->id;
+        $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
+        $user=User::find($servicer_user_id); 
+
+       
+        if($servicer == null)
+        {
+           return view('Servicer::404');
+        }
+
+        return view('Servicer::servicer-profile-edit',['servicer' => $servicer,'user' => $user]);
+    }
+     //update dealers details
+    public function profileUpdate(Request $request)
+    {
+        $servicer = Servicer::where('user_id', $request->id)->first();
+        if($servicer == null){
+           return view('Client::404');
+        } 
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetservicerProfileUpdateRules($servicer);
+        }
+        else if (strpos($url, $eclipse_key) == true) { 
+            $rules = $this->servicerProfileUpdateRules($servicer);
+        }
+        else
+        {
+           $rules = $this->servicerProfileUpdateRules($servicer);
+        }
+        
+        $this->validate($request, $rules);       
+        $servicer->name = $request->name;
+        $servicer->address = $request->address;
+        $servicer->save();
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->email = $request->email;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
+        $request->session()->flash('message', 'Service engineer details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('servicer.profile'));  
+    }
+    public function servicerProfileUpdateRules($servicer)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$servicer->user_id,
+            'email' => 'required|string|unique:users,email,'.$servicer->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    public function rayfleetservicerProfileUpdateRules($servicer)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$servicer->user_id,
+            'email' => 'required|string|unique:users,email,'.$servicer->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    public function clientProfileUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
+            'email' => 'required|string|unique:users,email,'.$client->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+
+
+
+
+    public function updatePasswordRule()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+    }
     public function servicerCreateRules()
     {
         $rules = [
