@@ -1,3 +1,6 @@
+function getUrl(){
+  return $('meta[name = "domain"]').attr('content');
+}
 var items = [];
 var purl = getUrl() + '/'+'sos-scan' ;
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
