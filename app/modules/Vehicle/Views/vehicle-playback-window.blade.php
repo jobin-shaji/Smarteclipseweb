@@ -796,7 +796,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
 
         $.ajax({
             type: "POST",
-            url: <?php echo url('/'); ?>'/vehicle_replay',
+            url: "/vehicle_replay",
             data: Objdata,
             async: false,
             //dataType: "json",
