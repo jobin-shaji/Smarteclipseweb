@@ -165,7 +165,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Fundamental(upgrade)'
         ]);
         DB::table('plans')->insert([
-            'name' => 'Superior(upgrate)'
+            'name' => 'Superior(upgrade)'
         ]);
         DB::table('plans')->insert([
             'name' => 'Pro'
