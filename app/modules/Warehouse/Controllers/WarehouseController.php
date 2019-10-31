@@ -737,7 +737,7 @@ class WarehouseController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps accepted successfully'
+            'message' => 'GPS accepted successfully'
         ]);
     }
 
@@ -774,7 +774,7 @@ class WarehouseController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps accepted successfully'
+            'message' => 'GPS accepted successfully'
         ]);
     }
 
