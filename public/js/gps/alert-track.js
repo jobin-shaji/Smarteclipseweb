@@ -64,15 +64,36 @@ function initMap(res) {
    function locs(locationName)
    {
     // alert(1);
+    var windowLatLng = new google.maps.LatLng(43.25,-68.03);
      var infowindow = new google.maps.InfoWindow();
-     // google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(title);
+     google.maps.event.addListener(marker, 'click', function() {
+        // infowindow.setContent(title);
+        infoWindow.setOptions({
+            content: "<div>This is the html content.</div>",
+            position: windowLatLng,
+        });
+        // infoWindow.open(map); 
         infowindow.open(map, this);
-    // });
+    });
   
 
 
-  
+//     function initialize() 
+//     {
+//         infoWindow = new google.maps.InfoWindow();
+//         var windowLatLng = new google.maps.LatLng(43.25,-68.03);
+//         infoWindow.setOptions({
+//             content: "<div>This is the html content.</div>",
+//             position: windowLatLng,
+//         });
+//         infoWindow.open(map); 
+//     } // end initialize
+
+// google.setOnLoadCallback(initialize);
+
+
+
+
 
 
 
