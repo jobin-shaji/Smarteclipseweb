@@ -19,7 +19,8 @@
                 {{ Session::get('message') }}  
             </div>
           </div>
-        @endif 
+      @endif 
+      <h4>GPS Transfer</h4>
     </nav>
     
       <div class="card-body">

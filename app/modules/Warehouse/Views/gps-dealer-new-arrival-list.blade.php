@@ -17,7 +17,7 @@
     </ol>
   </nav>
   <div class="container-fluid">
-    <div class="card-body">
+    <div class="card-body"><h4>GPS New Arrivals</h4>
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                         
           <div class="row">
@@ -25,7 +25,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                     <tr>
-                      <th>Sl.No</th>
+                      <th>SL.No</th>
                       <th>From </th>
                       <th>Transferred On</th>
                       <th>Count</th>

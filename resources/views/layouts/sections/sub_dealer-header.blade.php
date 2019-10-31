@@ -26,7 +26,7 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/sos-new')}}">NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/sos-sub-dealer')}}">LIST SOS</a>  
+                                <a class="dropdown-item" href="{{url('/sos-sub-dealer')}}">SOS LIST</a>  
                                 <a class="dropdown-item" href="{{url('/sos-transfer-sub-dealer/create')}}">TRANSFER SOS</a> 
                                 <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LOG </a>                          
                             </div>

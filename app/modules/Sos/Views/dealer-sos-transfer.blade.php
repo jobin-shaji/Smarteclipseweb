@@ -14,13 +14,13 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer</li>
         @if(Session::has('message'))
         <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            <div class="callout {{ Session::get('callout-class', 'callout-warning') }}" style="margin-bottom: 0!important;">
             {{ Session::get('message') }}  
           </div>
         </div>
         @endif
-        
       </ol>
+      <h4>SOS Transfer</h4>
     </nav>
     
     <div class="card-body">
@@ -116,7 +116,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-lg-1 col-md-1">
                   <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button">Transfer</button>
                 </div>
               </div>
