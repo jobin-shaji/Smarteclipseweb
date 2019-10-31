@@ -454,28 +454,22 @@ class DashboardController extends Controller
          $satelite=$gps->satllite;   
         }
         $network_status=$gps->network_status;
-        if(\Auth::user()->hasRole('root'))
-        {
-        
-            $fuel =$gps->fuel_status*100/15;
-            $fuel = (int)$fuel;
-            $fuel_status=$fuel."%";        
+        if($user->hasRole('root')){
+          $fuel =$gps->fuel_status*100/15;
+          $fuel = (int)$fuel;
+
+            $fuel_status=$fuel."%";
+        }      
+        else if($user->hasRole('fundamental|pro|superior')){
+          $fuel =$gps->fuel_status*100/15;
+          $fuel = (int)$fuel;
+
+        $fuel_status=$fuel."%";
         }
         else
-        {   
-            if($user->client_user->hasRole('fundamental|pro|superior')){
-              $fuel =$gps->fuel_status*100/15;
-              $fuel = (int)$fuel;
-
-              $fuel_status=$fuel."%";
-            }
-            else
-            {
-                $fuel_status="upgrade version";
-            }
-
+        {
+            $fuel_status="upgrade version";
         }
-        
         $speed=round($gps->speed);
         $odometer=$gps->odometer;
         $mode=$gps->mode;
