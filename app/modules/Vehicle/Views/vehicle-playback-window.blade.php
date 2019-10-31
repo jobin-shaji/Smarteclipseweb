@@ -193,7 +193,7 @@
        <script type="text/javascript">
    $(document).ready(function() {
      getInputfromServer();
-     playVehicle()
+     // playVehicle();
    });
 </script>
 <script>
