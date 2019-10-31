@@ -66,11 +66,10 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 
 	Route::get('/servicer/profile','ServicerController@servicerProfile')->name('servicer.profile');
-	// Route::post('/servicer/{id}/profile','ServicerController@saveUserLogo')->name('servicer.profile.p'); 
-	// Route::get('/servicer/{id}/change-password','ServicerController@changePassword')->name('servicer.change-password');
-	// Route::post('/servicer/{id}/update-password','ServicerController@updatePassword')->name('servicer.update-password.p'); 
-	// Route::get('/servicer/profile/edit','ServicerController@userProfileEdit')->name('servicer.profile.edit');
-	// Route::post('/servicer/profile/{id}/edit','ServicerController@profileUpdate')->name('servicer.profile.update.p');
+	Route::get('/servicer/{id}/change-password','ServicerController@changePassword')->name('servicer.change-password');
+	Route::post('/servicer/{id}/update-password','ServicerController@updatePassword')->name('servicer.update-password.p'); 
+	Route::get('/servicer-profile-edit','ServicerController@servicerProfileEdit')->name('servicer.profile.edit');
+	Route::post('/servicer/profile/{id}/edit','ServicerController@profileUpdate')->name('servicer.profile.update.p');
 	
 
 

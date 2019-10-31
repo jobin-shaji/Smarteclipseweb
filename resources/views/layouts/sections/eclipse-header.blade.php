@@ -478,8 +478,8 @@
                                     <a class="dropdown-item" href="{{url('/servicer/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
                                     </a>
-                                   <!--  <a class="dropdown-item" href="{{url('/servicer/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
-                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a> -->
+                                    <a class="dropdown-item" href="{{url('/servicer/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
