@@ -19,8 +19,8 @@
             </div>
           </div>
           @endif
-          
         </ol>
+        <h4>SOS Transfer</h4>
       </nav>
     
       <div class="card-body">
