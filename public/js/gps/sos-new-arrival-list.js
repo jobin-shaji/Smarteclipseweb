@@ -47,7 +47,7 @@ function callBackDataTable(){
 }
 
 function acceptSosTransfer(sos_transfer_id){
-    if(confirm('Are you sure want to accept this?')){
+    if(confirm('Are you sure to accept this?')){
         var url = 'sos-transfer/accept';
         var data = {
             id : sos_transfer_id
