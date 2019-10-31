@@ -63,12 +63,23 @@ function initMap(res) {
  
    function locs(locationName)
    {
+    // alert(1);
      var infowindow = new google.maps.InfoWindow();
-     google.maps.event.addListener(marker, 'click', function() {
+     // google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(title);
         infowindow.open(map, this);
-    });
+    // });
   
+
+
+  
+
+
+
+
+
+
+
   
     var title ='<div id="content" style="width:150px;">' +
     '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">Alert Map</span></div>'+  

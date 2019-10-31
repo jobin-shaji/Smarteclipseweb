@@ -22,36 +22,53 @@ Alert Report
                 <div class="panel panel-default">
                   <div >
                     <div class="panel-body">
+                      <form method="get" action="{{route('alert-report-list')}}">
+                         {{csrf_field()}}
                       <div class="panel-heading">
                         <div class="cover_div_search">
-                        <div class="row">
-                          <div class="col-lg-3 col-md-3">
+                          
+                          <div class="row">
+                          <div class="col-lg-2 col-md-2">
                              <div class="form-group">    
                             <label>Vehicle</label>                      
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="" selected="selected" disabled="disabled">select</option>
-                              @foreach ($vehicles as $vehicles)
+                              @foreach ($vehicles as $vehicles)                          
                               <option value="{{$vehicles->id}}">{{$vehicles->name}}||{{$vehicles->register_number}}</option>
+                             
                               @endforeach  
                             </select>
                           </div>
                            </div>
-                          <div class="col-lg-3 col-md-3"> 
+                             <div class="col-lg-2 col-md-2">
+                             <div class="form-group">    
+                              <label>Select Alert Type:</label>                 
+                              <select class="form-control selectpicker" data-live-search="true" title="Select Alert Type" id="alert" name="alert">
+                                 <option value="" selected="selected" disabled="disabled">select</option>
+                                @foreach ($Alerts as $Alerts)
+                                  <option value="{{$Alerts->id}}">{{$Alerts->description}}</option>
+                                @endforeach
+                            </select>
+                          </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2"> 
                             <div class="form-group">                      
                             <label> From Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                         </div>
-                          <div class="col-lg-3 col-md-3"> 
+                          <div class="col-lg-2 col-md-2"> 
                            <div class="form-group">                     
                             <label> To Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
 
-                            <div class="col-lg-3 col-md-3 pt-4">  
+                            <div class="col-lg-3 col-md-3 pt-5">  
                            <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
+                            <button type="submit" class="btn btn-sm btn-info btn2 form-control" > <i class="fa fa-search"></i> </button>
+                            <!-- <button t class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button> -->
+
 
                             <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadAlertReport()">
                               <i class="fa fa-file"></i>Download Excel</button>                    
@@ -63,28 +80,40 @@ Alert Report
                       </div>
                       </div>
                        <div class="row" style="margin-bottom: 13px;">
-                    <div class="col-md-3">
-                      <label>Select Alert Type:</label>
-                      <select class="form-control selectpicker" data-live-search="true" title="Select Alert Type" id="alert" name="alert">
-                      <option value="" selected="selected" disabled="disabled">select</option>
-                        @foreach ($Alerts as $Alerts)
-                        <option value="{{$Alerts->id}}">{{$Alerts->description}}</option>
-                      @endforeach
-                    </select>
-                    </div>
+                  
                   </div>
+                </form> 
+                 @if(isset($alertReports))                
                       <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                         <thead>
                           <tr>
                              <th>Sl.No</th>
                               <th>Vehicle</th>
+                              <th>Register number</th>
                               <th>Alert Type</th>                             
-                              <th>DateTime</th>                                   
+                              <th>DateTime</th>  
+                              <th>Action</th>                                   
                           </tr>
                         </thead>
-                        <tbody id="alerttabledata">                          
-                        </tbody>
-                      </table>
+                                           
+                        <tbody>
+                        @foreach($alertReports as $alertReport)                  
+                        <tr>           
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $alertReport->gps->vehicle->name}}</td>
+                            <td>{{ $alertReport->gps->vehicle->register_number }}</td>
+                            <td>{{ $alertReport->alertType->description }}</td>                                      
+                            <td>{{ $alertReport->device_time }}</td>  
+                            <td> <a href="/alert/report/{{Crypt::encrypt($alertReport->id)}}/mapview"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>        
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                     
+                      {{$from}}
+                    </table>
+                      {{ $alertReports->appends(['sort' => 'votes','vehicle' =>$vehicle_id,'alert' => $alert_id,'fromDate' =>$from,'toDate' => $to])->links() }}
+                    @endif
                       
                     </div>
                   </div>

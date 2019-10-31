@@ -1071,7 +1071,7 @@ class ClientController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.profile'));  
     }
- public function clientProfileUpdateRules($client)
+    public function clientProfileUpdateRules($client)
     {
         $rules = [
             'name' => 'required',

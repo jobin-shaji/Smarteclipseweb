@@ -10,7 +10,9 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	// alert report 
 	Route::get('/alert-report','AlertReportController@alertReport')->name('alert-report');
-	Route::post('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
+	Route::get('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
+	// Route::post('/alert-report-list-demo','AlertReportController@alertReportListDemo')->name('alert-report-list-demo');
+
 	Route::get('/alert/report/{id}/mapview','AlertReportController@location')->name('alert.report.mapview');
 	Route::post('/alert/report/show','AlertReportController@alertmap')->name('alert.report.show');
 		Route::post('/alert-report/export','AlertReportController@export')->name('alert.report.export');

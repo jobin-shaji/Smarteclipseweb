@@ -39,6 +39,7 @@ class ParkingReportController extends Controller
         $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
            ->where('device_time','<=',$request->to_date)  
            ->where('gps_id',$vehicleGps->gps_id)
+           ->orderBy('device_time','asc')
            ->get();
          // dd($gps_modes);
         foreach ($gps_modes as $mode) {
