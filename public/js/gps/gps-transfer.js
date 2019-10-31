@@ -52,7 +52,7 @@ function callBackDataTable(){
 }
 
 function cancelRootGpsTransfer(gps_transfer_id){
-    if(confirm('Are you sure want to cancel this?')){
+    if(confirm('Are you sure to cancel this?')){
         var url = 'gps-transfer-root/cancel';
         var data = {
             id : gps_transfer_id
