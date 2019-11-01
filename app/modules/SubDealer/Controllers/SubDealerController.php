@@ -95,15 +95,15 @@ class SubDealerController extends Controller {
     }
     //upload employee details to database table
     public function save(Request $request)
-    {   
-         $dealer_id = \Auth::user()->dealer->id;
+    { 
+        $dealer_id = \Auth::user()->dealer->id;
         if($request->user()->hasRole('dealer')){
         $rules = $this->subdealerCreateRules();
         $this->validate($request, $rules);
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'mobile' => $request->mobile,
+            'mobile' => $request->mobile_number,
             'status' => 1,
             'password' => bcrypt($request->password),
         ]);
@@ -185,12 +185,12 @@ class SubDealerController extends Controller {
         $this->validate($request, $rules);       
         $subdealer->name = $request->name;
         $subdealer->save();
-        $user->mobile = $request->mobile;
+        $user->mobile = $request->mobile_number;
         $user->save();
-        $did = encrypt($user->id);
+        $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'Sub dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('sub.dealers.edit',$did));  
+        return redirect(route('sub.dealer.details',$did));  
     }
 
     //for edit page of subdealer password
@@ -219,7 +219,7 @@ class SubDealerController extends Controller {
         $this->validate($request,$rules);
         $subdealer->password=bcrypt($request->password);
         $subdealer->save();
-        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('message','Password updated successfully!');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('sub.dealers.change-password',$did));
     }
@@ -253,7 +253,7 @@ class SubDealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Subdealer deleted successfully'
+            'message' => 'Subdealer deactivated successfully'
         ]);
     }
 
@@ -274,7 +274,7 @@ class SubDealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Subdealer restored successfully'
+            'message' => 'Subdealer activated successfully'
         ]);
     }
 
@@ -301,7 +301,7 @@ class SubDealerController extends Controller {
             'name' => 'required',
             'address' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|max:10|unique:users',
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
@@ -313,7 +313,7 @@ class SubDealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
             
         ];
         return  $rules;

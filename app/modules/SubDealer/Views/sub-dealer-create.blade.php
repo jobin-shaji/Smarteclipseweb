@@ -7,19 +7,19 @@ Create Sub Dealer
 
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
-<div class="page-wrapper-root1">
-   <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create  Sub Dealer</li>
-    </ol>
+  <div class="page-wrapper-root1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Sub Dealer</li>
+      </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
               {{ Session::get('message') }}  
           </div>
         </div>
-        @endif 
-  </nav>
+      @endif 
+    </nav>
            
     <div class="container-fluid">
       <div class="card" style="margin:0 0 0 1%">
@@ -35,7 +35,7 @@ Create Sub Dealer
           {{csrf_field()}}
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>SUB DEALER INFO</h4>
+              <h4 class="card-title">
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                   <div class="form-group has-feedback">
@@ -61,11 +61,11 @@ Create Sub Dealer
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                   <div class="form-group has-feedback">
-                    <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" min="0">
+                    <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" min="0">
                   </div>
-                  @if ($errors->has('mobile'))
+                  @if ($errors->has('mobile_number'))
                   <span class="help-block">
-                  <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                  <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
                   </span>
                   @endif
                 </div>
@@ -110,7 +110,7 @@ Create Sub Dealer
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-md-1 ">
                   <button type="submit" class="btn btn-primary btn-md form-btn ">Create</button>
                 </div>
               </div>

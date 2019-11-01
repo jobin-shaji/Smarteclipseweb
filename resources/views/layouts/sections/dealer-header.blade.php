@@ -39,7 +39,7 @@
                                 <div class="dropdown-divider"></div>
                               
                                  <a class="dropdown-item" href="{{url('/sub-dealer/create')}}">ADD SUB DEALER<span></span></a>
-                                   <a class="dropdown-item" href="{{url('/subdealers')}}">LIST SUB DEALER<span></span></a>
+                                   <a class="dropdown-item" href="{{url('/subdealers')}}">LIST SUB DEALERS<span></span></a>
                             </div>
                         </li>
                            <li class="nav-item dropdown">
