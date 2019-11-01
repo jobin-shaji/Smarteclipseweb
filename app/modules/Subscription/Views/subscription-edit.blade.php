@@ -29,32 +29,12 @@
                 <div class="col-md-6 col-lg-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">Plan</label>
-                    <select class="form-control {{ $errors->has('country_id') ? ' has-error' : '' }}"  name="plan_id" value="{{ old('plan_id') }}" required>
-                      <option>Select Plan</option>
-                      @foreach($plans as $plan)
-                      <option value="{{$plan->id}}" @if($plan->id==$subscription->plan_id){{"selected"}} @endif>{{$plan->name}}</option>
-                      @endforeach
-                    </select>
-                    @if ($errors->has('plan_id'))
-                      <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('plan_id') }}</strong>
-                      </span>
-                    @endif
+                    <input type="text" class="form-control {{ $errors->has('plan_id') ? ' has-error' : '' }}" placeholder="Plan" name="plan_id" value="{{ $subscription->plan->name}}" readonly> 
                   </div>
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Country</label>
-                    <select class="form-control {{ $errors->has('country_id') ? ' has-error' : '' }}"  name="country_id" id="country_id" value="{{ old('country_id') }}" required>
-                      <option>Select Country</option>
-                      @foreach($countries as $country)
-                      <option value="{{$country->id}}" @if($country->id==$subscription->country_id){{"selected"}} @endif>{{$country->name}}</option>
-                      @endforeach
-                    </select>
-                    @if ($errors->has('country_id'))
-                      <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('country_id') }}</strong>
-                      </span>
-                    @endif
+                    <input type="text" class="form-control {{ $errors->has('country') ? ' has-error' : '' }}" placeholder="Country" name="country" value="{{ $subscription->country->name}}" readonly>
                   </div>
                   
                   <div class="form-group has-feedback">
