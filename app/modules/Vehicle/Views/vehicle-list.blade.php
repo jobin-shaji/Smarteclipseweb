@@ -7,7 +7,6 @@
 <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-page-heading">Vehicle List</li>
             <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Vehicle</li>
         </ol>
         @if(Session::has('message'))
@@ -17,11 +16,10 @@
             </div>
         </div>
         @endif 
-    </nav>
-   
+    </nav>   
     <div class="container-fluid">
         <div class="card-body"><h4>Vehicle List</h4>
-            <div class="table-responsive scrollmenu">
+            <div class="table-responsive">
                 <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12">
@@ -45,10 +43,7 @@
         </div>
     </div>
 </div>
-
-
 @endsection
-
 @section('script')
     <script src="{{asset('js/gps/vehicle-list.js')}}"></script>
 @endsection
