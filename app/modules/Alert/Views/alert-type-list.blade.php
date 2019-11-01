@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  View Alert Type
+  List Alert Types
 @endsection
 @section('content')
 
@@ -8,7 +8,7 @@
   <div class="page-wrapper-root1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Alert Type</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Alert Types</li>
       </ol>
       @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -18,15 +18,7 @@
       </div>
       @endif 
     </nav>
-    <div class="page-breadcrumb">
-      <div class="row">
-        <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">View Alert Type</h4>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
+    <div class="container-fluid"><h4>Alert Type List</h4>
       <div class="card-body">
         <div class="table-responsive scrollmenu">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     

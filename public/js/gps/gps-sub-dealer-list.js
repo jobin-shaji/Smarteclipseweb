@@ -50,7 +50,7 @@ function callBackDataTable(){
 }
 
 function deactivateGpsStatus(gps_id){
-    if(confirm('Are you sure want to deactivate this device?')){
+    if(confirm('Are you sure to deactivate this device?')){
         var url = 'gps-status/deactivate';
         var data = {
             id : gps_id
@@ -59,7 +59,7 @@ function deactivateGpsStatus(gps_id){
     }
 }
 function activateGpsStatus(gps_id){
-    if(confirm('Are you sure want to activate this device?')){
+    if(confirm('Are you sure to activate this device?')){
         var url = 'gps-status/activate';
         var data = {
             id : gps_id
