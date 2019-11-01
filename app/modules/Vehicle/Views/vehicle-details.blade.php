@@ -199,7 +199,7 @@
                             <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                               <thead>
                                 <tr>
-                                  <th>#</th>
+                                  <th>SL No.</th>
                                   <th>Document Type</th>
                                   <th>Expiry Date</th>
                                   <th>Action</th>
