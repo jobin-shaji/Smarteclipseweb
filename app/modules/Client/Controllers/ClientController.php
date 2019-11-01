@@ -93,6 +93,7 @@ class ClientController extends Controller {
                 'mobile' => $request->mobile,
                 'status' => 1,
                 'password' => bcrypt($request->password),
+                'role' => 4,
             ]);
             $client = Client::create([            
                 'user_id' => $user->id,
@@ -564,13 +565,27 @@ class ClientController extends Controller {
         $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
         $user = User::find($client_user_id); 
-        $roles = $user->roles;
+        if($request->client_role==6)
+        {
+            $user->role = 1;
+            $user->save();
+        }
+        else if($request->client_role==7)
+        {
+            $user->role = 2;
+            $user->save();
+        }
+        else if($request->client_role==8)
+        {
+            $user->role = 3;
+            $user->save();
+        }
+        $roles = $user->roles;             
         if($request->role_name!=null)
         {
             $user->removeRole($request->role_name);
         }
-            $user->assignRole($request->client_role);
-        
+        $user->assignRole($request->client_role);        
         $roles = $user->roles;
         return redirect(route('client.subscription',$request->id));
 
@@ -581,8 +596,11 @@ class ClientController extends Controller {
     {
         $decrypted_user_id = Crypt::decrypt($request->user_id); 
         $decrypted_role_id = Crypt::decrypt($request->role_id); 
-        $user = User::find($decrypted_user_id);         
+        $user = User::find($decrypted_user_id); 
+        $user->role = 0;
+        $user->save();        
         $user->removeRole($decrypted_role_id);
+
         $roles = $user->roles;      
         return redirect(route('client.subscription',$request->user_id));
         

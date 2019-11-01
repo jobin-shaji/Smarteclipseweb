@@ -53,7 +53,7 @@ class UsersTableSeeder extends Seeder
             'mobile' => 123456,
             'email' => 'phpdeveloper01@vehiclest.in',
             'password' => bcrypt('123456'),
-            'status' => 1,
+            'status' => 1
         ]);
 
         DB::table('roots')->insert([
@@ -107,10 +107,9 @@ class UsersTableSeeder extends Seeder
             'mobile' => 123453,
             'email' => 'phpdeveloper04@vehiclest.in',
             'password' => bcrypt('123456'),
-            'status' => 1
+            'status' => 1,
+            'role' => 0
         ]);
-
-
         DB::table('clients')->insert([
             'address' => 'vst',
             'name' => 'client',
@@ -175,6 +174,58 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('plans')->insert([
             'name' => 'Hardware Warranty(for 4 year)'
+        ]);
+
+
+        DB::table('subscriptions')->insert([
+            'plan_id' => 1,
+            'country_id'=>101,
+            'amount'=>1700
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 2,
+            'country_id'=>101,
+            'amount'=>2400
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 3,
+            'country_id'=>101,
+            'amount'=>3100
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 4,
+            'country_id'=>101,
+            'amount'=>500000
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 5,
+            'country_id'=>101,
+            'amount'=>800
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 6,
+            'country_id'=>101,
+            'amount'=>2800
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 1,
+            'country_id'=>178,
+            'amount'=>85
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 2,
+            'country_id'=>178,
+            'amount'=>120
+        ]);
+        DB::table('subscriptions')->insert([
+            'plan_id' => 3,
+            'country_id'=>178,
+            'amount'=>155
+        ]);      
+        DB::table('subscriptions')->insert([
+            'plan_id' => 4,
+            'country_id'=>178,
+            'amount'=>25000
         ]);
         
     }

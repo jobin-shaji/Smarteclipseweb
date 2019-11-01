@@ -673,7 +673,8 @@
     <div class="dashboard-main-Right cover_vehicle_track_list">
       <div class="iconsbg1234">
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
-          <div class="card card-hover">
+          <!-- <div class="card card-hover"> -->
+             <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#84b752!important">
