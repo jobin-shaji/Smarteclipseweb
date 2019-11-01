@@ -33,7 +33,7 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $confirm_alerts = DB::select( DB::raw("UPDATE Alerts SET status = '1' WHERE IN gps_id = '$single_vehicle_gps'"); );
+        $confirm_alerts = DB::select( DB::raw("UPDATE Alerts SET status = '1' WHERE IN gps_id = '$single_vehicle_gps'"));
         // $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get(); 
 
         // foreach($confirm_alerts as $confirm_alert){
