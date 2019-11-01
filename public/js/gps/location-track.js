@@ -11,7 +11,7 @@ function getUrl() {
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
 var numDeltas = 100;
-var delay = 10; //milliseconds
+var delay = 5; //milliseconds
 var i = 0;
 // var posLat = 10.107570;
 // var posLng = 76.345665;
@@ -33,7 +33,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 16,
+        zoom: 21,
         mapTypeId: 'roadmap'
 
     });  
