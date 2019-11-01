@@ -1056,16 +1056,16 @@ class VehicleController extends Controller {
     }
 
     public function export(Request $request){
-
-
-
         $from = $request->fromDate;
         $to = $request->toDate;
-        $vehicle = $request->vehicle;      
-        $query =GpsData::select(
-            'client_id',
+        $vehicle = $request->vehicle;           
+        if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
+            $single_vehicle_ids = $vehicle_details->gps_id;
+        }
+         $query =GpsData::select(
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -1115,9 +1115,8 @@ class VehicleController extends Controller {
             \DB::raw('DATE(device_time) as date'),
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number')
-
-        ->where('vehicle_id',$vehicle)
+        ->with('gps.vehicle')
+        ->where('gps_id',$single_vehicle_ids)
         ->groupBy('date');                     
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
@@ -1127,7 +1126,7 @@ class VehicleController extends Controller {
         }
         $vehicle_invoice = $query->get();  
 
-        $pdf = PDF::loadView('Vehicle::invoice-pdf-download',['vehicle_invoice'=> $vehicle_invoice]);
+        $pdf = PDF::loadView('Vehicle::invoice-pdf-download',['vehicle_invoices'=> $vehicle_invoice]);
         return $pdf->download('Invoice.pdf');
     }
 

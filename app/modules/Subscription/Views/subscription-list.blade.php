@@ -12,7 +12,7 @@
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+            <div class="callout {{ Session::get('callout-class', 'callout-warning') }}" style="margin-bottom: 0!important;">
             {{ Session::get('message') }}  
           </div>
         </div>
@@ -20,7 +20,7 @@
     </nav>    
     <div class="container-fluid">
       <div class="card-body">
-        <div class="table-responsive scrollmenu">
+        <div class="table-responsive">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">
               <div class="col-sm-12">
