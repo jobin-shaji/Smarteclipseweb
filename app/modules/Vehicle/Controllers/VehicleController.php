@@ -916,6 +916,12 @@ class VehicleController extends Controller {
             $latitude=$track_data->latitude;
             $longitude= $track_data->longitude;
         }
+
+        $snapRoute=$this->LiveSnapRoot($latitude,$longitude);
+        $latitude=$snapRoute['lat'];
+        $longitude=$snapRoute['lng'];
+
+
         return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
     }
     public function locationTrack(Request $request)
