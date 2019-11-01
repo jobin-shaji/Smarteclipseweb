@@ -151,7 +151,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/subscription/create')}}">WARRANTY AND PLANS </a>
+            <a class="dropdown-item" href="{{url('/subscription/create')}}">ADD WARRANTY AND PLANS </a>
             <a class="dropdown-item" href="{{url('/subscription')}}">LIST WARRANTY AND PLANS </a>
           
         </div>
