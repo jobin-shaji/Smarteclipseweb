@@ -25,9 +25,6 @@ class GeofenceController extends Controller {
         // $client = $request->user()->client;
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude;
-
-
-
         $geofence = Geofence::select(
             'id', 
             'user_id'                                  
@@ -51,7 +48,8 @@ class GeofenceController extends Controller {
             return view('Geofence::geofence-list');
         }
 	}
-	public function saveFence(Request $request){
+	public function saveFence(Request $request)
+    {
         if($request->polygons==null){
             return response()->json([
                 'status' => 0,

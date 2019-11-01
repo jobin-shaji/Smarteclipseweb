@@ -1,70 +1,57 @@
 @extends('layouts.eclipse')
 @section('title')
-Create Geofence
+  Create Geofence
 @endsection
 @section('content')   
 @if(Session::has('message'))
 <div class="pad margin no-print">
-   <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+    <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
       {{ Session::get('message') }}  
-   </div>
+    </div>
 </div>
 @endif  
 <section class="hilite-content">
-   <!-- title row -->
-   <div class="page-wrapper_new_map">
-      <!-- ============================================================== -->
-      <!-- Bread crumb and right sidebar toggle -->
-      <!-- ============================================================== -->
-      <div class="page-breadcrumb route_breadcumb">
-         <div class="row">
-           
-            <div class="col-lg-8">
-     
-                  <div style="float:left!important">
-                   <div class="form-group">
-                     
-                     <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add fence name" name="name" id="name" value="" required> 
-                  </div>
-               </div>
-<div style="float:left!important">
-                  <div class="form-group">  
-                     <button class="btn btn-xs btn-info form-control" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i> SAVE FENCE</button>
-                     </div>
-                  </div>
-                     <div style="float:left!important">
-                  <div class="form-group">  
-                     <button type="button" onclick='removeLineSegment()'  class="btn btn-primary btn-flat cbtn_undo_geofence" title="Clear the points in map" name="reset">Refresh</button>                                
-                  </div>
-                  </div>
-                               <div style="float:left!important;margin:0 0 0 16%">   
-                      <div class="form-group">
-                           <form onsubmit="return locationSearch();">
-                           <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
-                            <input type="hidden" class="form-control" placeholder="Search Place" name="lat" id="lat" value="{{$lat}}" required>  
-
-                          <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
-
-                        
-                          </div>
-                       </div>
-                      <div style="float:left!important">
-                           <div class="form-group">  
-                           <button class="btn btn-xs btn-info form-control" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                                
-                        </div>
-                      </div> 
-                      </form>
-                    </div> 
-                     <div class="col-lg-4 d-flex no-block align-items-center" style="text-align:right;">
-               <h4 class="page-title">Please plot points on the map to create geofence</h4>
-            </div>   
-   </div>
-                </div>   
-            
-
-     
-         <div id="map" style=" width:100%;height:540px;"></div>
-   </div>
+  <div class="page-wrapper_new_map">
+    <div class="page-breadcrumb route_breadcumb">
+      <div class="row">
+        <div class="col-lg-8">
+          <div style="float:left!important">
+            <div class="form-group">
+              <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Add fence name" name="name" id="name" value="" required> 
+            </div>
+          </div>
+          <div style="float:left!important">
+            <div class="form-group">  
+              <button class="btn btn-xs btn-info form-control" id="savebutton"> <i class="fa fa-filter" style="height:23px;"></i> SAVE FENCE</button>
+            </div>
+          </div>
+          <div style="float:left!important">
+            <div class="form-group">  
+              <button type="button" onclick='removeLineSegment()'  class="btn btn-primary btn-flat cbtn_undo_geofence" title="Clear the points in map" name="reset">Refresh</button>                            
+            </div>
+          </div>
+          <form onsubmit="return locationSearch();">
+            <div style="float:left!important;margin:0 0 0 16%">   
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search Place" name="place_name" id="search_place" value="" required>  
+                <input type="hidden" class="form-control" placeholder="Search Place" name="lat" id="lat" value="{{$lat}}" required>  
+                <input type="hidden"  name="lng" id="lng" value="{{$lng}}" required>  
+              </div>
+            </div>
+            <div style="float:left!important">
+              <div class="form-group">  
+                <button class="btn btn-xs btn-info form-control" id="search_location" typle="submit"> <i class="fa fa-filter" style="height:23px;"></i> SEARCH</button>                   
+              </div>
+            </div> 
+          </form>
+        </div> 
+        <div class="col-lg-4 d-flex no-block align-items-center" style="text-align:right;">
+          <h4 class="page-title">Please plot points on the map to create Geofence</h4>
+        </div>   
+      </div>
+    </div>   
+    <div id="map" style=" width:100%;height:540px;"></div>
+  </div>
 </section>
 @section('script')
 <script src="{{asset('js/gps/geofence.js')}}"></script>

@@ -20,16 +20,8 @@
         </div>
       @endif       
     </nav>    
-    <div class="card-body">
+    <div class="card-body"><h4>Edit End User Details</h4>
       <div class="table-responsive">
-        <?php 
-          $password=$user->password;
-          if($user){
-            $encript=Crypt::encrypt($user->id)
-        ?>
-        <a href="{{route('client.change-password-subdealer',$encript)}}">
-          <button class="btn btn-xs">Password Change</button>
-        </a><?php } ?>
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  
           <div class="row">
             <div class="col-sm-12">
@@ -49,10 +41,10 @@
                  
                     <div class="form-group has-feedback">
                       <label class="srequired">Mobile No.</label>
-                        <input type="number" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}">
-                        @if ($errors->has('phone_number'))
+                        <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}">
+                        @if ($errors->has('mobile_number'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
                           </span>
                         @endif
                     </div>
@@ -71,7 +63,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-3 ">
+                  <div class="col-md-1 ">
                     <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
                   </div>
                 </div>
