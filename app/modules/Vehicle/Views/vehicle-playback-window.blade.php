@@ -1358,11 +1358,5 @@ Create matched/unmatched markers that can be used to draw the original/matched t
 
 
     </script>
-
-    <style type="text/css">
-      i.flaticon-settings {
-          background-image: "https://image.flaticon.com/icons/png/512/0/375.png";
-      }
-          </style>
 </body>
 </html>
