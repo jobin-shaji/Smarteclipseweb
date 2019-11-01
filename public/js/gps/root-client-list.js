@@ -46,7 +46,7 @@ function callBackDataTable(){
 }
 
 function disableEndUser(end_user){
-    if(confirm('Are you sure want to deactivate this user?')){
+    if(confirm('Are you sure to deactivate this user?')){
         var url = 'client/disable';
         var data = {
             id : end_user
@@ -55,7 +55,7 @@ function disableEndUser(end_user){
     }
 }
 function enableEndUser(end_user){
-    if(confirm('Are you sure want to activate this user?')){
+    if(confirm('Are you sure to activate this user?')){
         var url = 'client/enable';
         var data = {
             id : end_user
