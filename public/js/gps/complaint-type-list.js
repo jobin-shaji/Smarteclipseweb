@@ -46,7 +46,7 @@ function callBackDataTable(){
 }
 
 function delComplaintType(id){
-    if(confirm('Are you sure want to deactivate this?')){
+    if(confirm('Are you sure to deactivate this?')){
         var url = 'complaint-type/delete';
         var data = {
             id : id
@@ -55,7 +55,7 @@ function delComplaintType(id){
     }
 }
 function activateComplaintType(id){
-    if(confirm('Are you sure want to activate this?')){
+    if(confirm('Are you sure to activate this?')){
         var url = 'complaint-type/activate';
         var data = {
             id : id

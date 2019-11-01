@@ -48,7 +48,7 @@ function callBackDataTable(){
 }
 
 function deleteSubscription(id){
-    if(confirm('Are you sure want to deactivate this?')){
+    if(confirm('Are you sure to deactivate this?')){
         var url = 'subscription/delete';
         var data = {
             id : id
@@ -58,7 +58,7 @@ function deleteSubscription(id){
 }
 
 function activateSubscription(id){
-    if(confirm('Are you sure want to activate this?')){
+    if(confirm('Are you sure to activate this?')){
         var url = 'subscription/activate';
         var data = {
             id : id

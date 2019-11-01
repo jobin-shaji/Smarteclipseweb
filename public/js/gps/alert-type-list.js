@@ -42,7 +42,7 @@ function callBackDataTable(){
     });
 }
 function delAlertType(alert_type){
-    if(confirm('Are you sure want to deactivate this alert type?')){
+    if(confirm('Are you sure to deactivate this alert type?')){
         var url = 'alert-type/delete';
         var data = {
             uid : alert_type
@@ -51,7 +51,7 @@ function delAlertType(alert_type){
     } 
 }
 function activateAlertType(alert_type){
-    if(confirm('Are you sure want to activate this alert type?')){
+    if(confirm('Are you sure to activate this alert type?')){
         var url = 'alert-type/activate';
         var data = {
             id : alert_type

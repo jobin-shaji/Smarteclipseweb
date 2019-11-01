@@ -43,7 +43,7 @@ function callBackDataTable(){
     });
 }
 function delEmployee(employee){
-    if(confirm('Are you sure want to deactivate this employee?')){
+    if(confirm('Are you sure to deactivate this employee?')){
         var url = 'employee/delete';
         var data = {
             uid : employee
@@ -52,7 +52,7 @@ function delEmployee(employee){
     }
 }
 function activateEmployee(employee){
-    if(confirm('Are you sure want to activate this employee?')){
+    if(confirm('Are you sure to activate this employee?')){
         var url = 'employee/activate';
         var data = {
             id : employee

@@ -55,7 +55,7 @@ function disableSubDealers(sub_dealer){
     }
 }
 function enableSubDealer(sub_dealer){
-    if(confirm('Are you sure want to activate this user?')){
+    if(confirm('Are you sure to activate this user?')){
         var url = 'sub-dealer/enable';
         var data = {
             id : sub_dealer
