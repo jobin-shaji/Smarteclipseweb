@@ -40,7 +40,7 @@ function callBackDataTable(){
     });
 }
 function delGeofence(geofence){
-    if(confirm('Are you sure want to deactivate this?')){
+    if(confirm('Are you sure to deactivate this?')){
         var url = 'geofence/delete';
         var data = {
             uid : geofence
@@ -49,7 +49,7 @@ function delGeofence(geofence){
     } 
 }
 function activateGeofence(geofence){
-    if(confirm('Are you sure want to activate this?')){
+    if(confirm('Are you sure to activate this?')){
         var url = 'geofence/activate';
         var data = {
             id : geofence

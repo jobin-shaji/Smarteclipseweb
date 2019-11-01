@@ -54,7 +54,7 @@ function callBackDataTable(data=null){
 }
 
 function VerifyAlert(alert_id){
-    if(confirm('Are you sure want to verify this alert?')){
+    if(confirm('Are you sure to verify this alert?')){
         var url = 'alert/verify';
         var data = {
         id : alert_id

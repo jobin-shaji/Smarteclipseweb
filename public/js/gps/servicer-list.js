@@ -43,7 +43,7 @@ function callBackDataTable(){
     });
 }
 function delServicer(servicer){
-    if(confirm('Are you sure want to deactivate this servicer?')){
+    if(confirm('Are you sure to deactivate this servicer?')){
         var url = 'servicer/delete';
         var data = {
             id : servicer
@@ -52,7 +52,7 @@ function delServicer(servicer){
     } 
 }
 function activateServicer(servicer){
-    if(confirm('Are you sure want to activate this servicer?')){
+    if(confirm('Are you sure to activate this servicer?')){
         var url = 'servicer/activate';
         var data = {
             id : servicer

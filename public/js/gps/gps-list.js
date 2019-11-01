@@ -51,7 +51,7 @@ function callBackDataTable(){
 }
 
 function delGps(gps){
-    if(confirm('Are you sure want to deactivate this device?')){
+    if(confirm('Are you sure to deactivate this device?')){
         var url = 'gps/delete';
         var data = {
             uid : gps
@@ -61,7 +61,7 @@ function delGps(gps){
 }
 
 function activateGps(gps){
-    if(confirm('Are you sure want to activate this device?')){
+    if(confirm('Are you sure to activate this device?')){
         var url = 'gps/activate';
         var data = {
             id : gps

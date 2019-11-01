@@ -48,7 +48,7 @@ function callBackDataTable(){
 }
 
 function deleteTrafficRule(id){
-    if(confirm('Are you sure want to deactivate this?')){
+    if(confirm('Are you sure to deactivate this?')){
         var url = 'traffic-rule/delete';
         var data = {
             id : id
@@ -58,7 +58,7 @@ function deleteTrafficRule(id){
 }
 
 function activateTrafficRule(id){
-    if(confirm('Are you sure want to activate this?')){
+    if(confirm('Are you sure to activate this?')){
         var url = 'traffic-rule/activate';
         var data = {
             id : id
