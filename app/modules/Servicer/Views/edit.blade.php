@@ -2,28 +2,23 @@
 @section('title')
     Create Client
 @endsection
-
-
 @section('content')
 
-
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
-<div class="page-wrapper-root1">
- <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Servicer Details</li>
-         </ol>
-         @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}  
-            </div>
+  <div class="page-wrapper-root1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Servicer Details</li>
+      </ol>
+      @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
           </div>
-        @endif  
-         
-        </nav>
+        </div>
+      @endif  
+    </nav>
 
-           
       <div class="container-fluid">                    
         <div class="card-body">
           <div class="table-responsive">

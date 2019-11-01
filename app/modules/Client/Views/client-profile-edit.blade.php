@@ -33,18 +33,38 @@
               <div class="form-group has-feedback">
                 <label>Name</label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $client->name}}" >
+                @if ($errors->has('name'))
+                  <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('name') }}</strong>
+                  </span>
+                @endif
               </div>
               <div class="form-group has-feedback">
                 <label>Address</label>
                 <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$client->address}}" >
+                @if ($errors->has('address'))
+                  <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('address') }}</strong>
+                  </span>
+                @endif
               </div>
               <div class="form-group has-feedback">
                 <label>Mobile No.</label>
-                <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}" >
+                <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="phone_number" value="{{ $user->mobile}}" >
+                @if ($errors->has('phone_number'))
+                  <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                  </span>
+                @endif
               </div>
              <div class="form-group has-feedback">
                 <label>Email</label>
                 <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" >
+                @if ($errors->has('email'))
+                  <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('email') }}</strong>
+                  </span>
+                @endif
               </div>
               <div class="form-group has-feedback">
               <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
