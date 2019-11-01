@@ -895,6 +895,7 @@ class VehicleController extends Controller {
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request){
+
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
         $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
@@ -932,17 +933,20 @@ class VehicleController extends Controller {
         $offline="Offline";
 
 
-        $gps=Gps::find($get_vehicle->gps_id);
+        $gps=GpsData::where('gps_id',$get_vehicle->gps_id)
+                     ->orderBy('device_time','desc')
+                      ->first();
+
         $gps_mode=$gps->mode;
         if($gps_mode=="S"){
             $last_update_time=date('Y-m-d H:i:s',strtotime("-10 minutes"));
           }
-        $track_data=Gps::select('lat as latitude',
-                      'lon as longitude',
+        $track_data=GpsData::select('latitude as latitude',
+                      'longitude as longitude',
                       'heading as angle',
-                      'mode as vehicleStatus',
+                      'vehicle_mode as vehicleStatus',
                       'speed',
-                      'battery_status',
+                      'battery_percentage',
                       'device_time as dateTime',
                       'main_power_status as power',
                       'ignition as ign',
@@ -950,23 +954,25 @@ class VehicleController extends Controller {
                       )
                     ->where('device_time', '>=',$last_update_time)
                     ->where('device_time', '<=',$currentDateTime)
-                    ->where('id',$get_vehicle->gps_id)
+                    ->where('gps_id',$get_vehicle->gps_id)
+                    ->orderBy('device_time','desc')
                     ->first();
 
         $minutes=0;
         if($track_data == null){
-            $track_data = Gps::select('lat as latitude',
-                              'lon as longitude',
+            $track_data = GpsData::select('latitude as latitude',
+                              'longitude as longitude',
                               'heading as angle',
                               'speed',
-                              'battery_status',
+                              'battery_percentage',
                               'device_time as dateTime',
                               'main_power_status as power',
                               'ignition as ign',
                               'gsm_signal_strength as signalStrength',
                               \DB::raw("'$offline' as vehicleStatus")
                               )
-                              ->where('id',$get_vehicle->gps_id)
+                              ->where('gps_id',$get_vehicle->gps_id)
+                              ->orderBy('device_time','desc')
                               ->first();
            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
@@ -991,6 +997,7 @@ class VehicleController extends Controller {
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
                       );
+
 
 
             $response_data = array('status'  => 'success',
@@ -1831,4 +1838,5 @@ class VehicleController extends Controller {
  
 /////////////// snap root for live data///////////////////////////////////
 
+   
 }

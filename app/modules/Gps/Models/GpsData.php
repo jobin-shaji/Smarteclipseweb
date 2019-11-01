@@ -63,7 +63,8 @@ class GpsData extends Model
     	'value2',
     	'key3',
     	'value3',
-    	'gf_id'
+    	'gf_id',
+        'device_time'
     ];
 
     // dealer
