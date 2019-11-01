@@ -33,9 +33,9 @@
                   <label>Create Role</label>                        
                   <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="client_role" name="client_role">
                     <option value=" ">Select</option>
-                    <option value="fundamental">Fundamental</option>
-                    <option value="superior">superior</option>
-                    <option value="pro">pro</option>                   
+                    <option value="6">Fundamental</option>
+                    <option value="7">superior</option>
+                    <option value="8">pro</option>                   
                   </select>
                 </div>
               </div>  
@@ -59,7 +59,7 @@
                         <tr>
                           <th><?php echo $i;?></th>
                           <th id ="role">{{$role->name}}</th>
-                          <input type="hidden" name="role_name" id="role_name" value="{{$role->name}}">
+                          <input type="hidden" name="role_name" id="role_name" value="{{$role->id}}">
                           <th><a href="/client/{{Crypt::encrypt($user->id)}}/{{Crypt::encrypt($role->id)}}/subscription-delete" class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a></th>
                         </tr>
                         <?php $i++;?>
