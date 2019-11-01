@@ -33,7 +33,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 21,
+        zoom: 19,
         mapTypeId: 'roadmap'
 
     });  
