@@ -44,7 +44,7 @@ function callBackDataTable(){
     });
 }
 function delClient(client){
-    if(confirm('Are you sure want to deactivate this user?')){
+    if(confirm('Are you sure to deactivate this user?')){
         var url = 'client/delete';
         var data = {
             uid : client
@@ -53,7 +53,7 @@ function delClient(client){
     }
 }
 function activateClient(client){
-    if(confirm('Are you sure want to activate this user?')){
+    if(confirm('Are you sure to activate this user?')){
         var url = 'client/activate';
         var data = {
             id : client

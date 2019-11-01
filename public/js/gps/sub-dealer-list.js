@@ -46,7 +46,7 @@ function callBackDataTable(){
 }
 
 function disableSubDealers(sub_dealer){
-    if(confirm('Are you sure want to deactivate this user?')){
+    if(confirm('Are you sure to deactivate this user?')){
         var url = 'sub-dealer/disable';
         var data = {
             id : sub_dealer

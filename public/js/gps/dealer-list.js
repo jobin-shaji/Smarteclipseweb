@@ -43,7 +43,7 @@ function callBackDataTable(){
     });
 }
 function delDealers(dealer){
-    if(confirm('Are you sure want to deactivate this user?')){
+    if(confirm('Are you sure to deactivate this user?')){
         var url = 'dealer/delete';
         var data = {
             uid : dealer
@@ -52,7 +52,7 @@ function delDealers(dealer){
     }
 }
 function activateDealer(dealer){
-    if(confirm('Are you sure want to activate this user?')){
+    if(confirm('Are you sure to activate this user?')){
         var url = 'dealer/activate';
         var data = {
             id : dealer
@@ -62,7 +62,7 @@ function activateDealer(dealer){
 }
 
 function disableDealers(dealer){
-    if(confirm('Are you sure want to deactivate this user?')){
+    if(confirm('Are you sure to deactivate this user?')){
         var url = 'dealer/disable';
         var data = {
             id : dealer
@@ -71,7 +71,7 @@ function disableDealers(dealer){
     }
 }
 function enableDealer(dealer){
-    if(confirm('Are you sure want to activate this user?')){
+    if(confirm('Are you sure to activate this user?')){
         var url = 'dealer/enable';
         var data = {
             id : dealer
