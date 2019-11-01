@@ -1,5 +1,7 @@
 @extends('layouts.eclipse')
 @section('content')
+
+<!--  -->
 <!-- ROOT ROLE-START -->
 @role('root')
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
@@ -816,6 +818,7 @@
 </div>
 </section>
 @section('script')
+
 <script src="{{asset('js/gps/mdb.js')}}"></script>
 <script src="{{asset('js/gps/dashb.js')}}"></script>
 @role('client')
