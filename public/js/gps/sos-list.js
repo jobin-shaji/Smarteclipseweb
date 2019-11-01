@@ -50,7 +50,7 @@ function callBackDataTable(){
 }
 
 function delSos(sos){
-    if(confirm('Are you sure want to deactivate this sos?')){
+    if(confirm('Are you sure to deactivate this sos?')){
         var url = 'sos/delete';
         var data = {
             uid : sos
@@ -60,7 +60,7 @@ function delSos(sos){
 }
 
 function activateSos(sos){
-    if(confirm('Are you sure want to activate this device?')){
+    if(confirm('Are you sure to activate this device?')){
         var url = 'sos/activate';
         var data = {
             id : sos

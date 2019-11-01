@@ -51,7 +51,7 @@ function callBackDataTable(){
  }
 
  function deleteVehicle(vehicle){
-    if(confirm('Are you sure want to deactivate this vehicle?')){
+    if(confirm('Are you sure  to deactivate this vehicle?')){
         var url = 'vehicle/delete';
         var data = {
             vid : vehicle
@@ -61,7 +61,7 @@ function callBackDataTable(){
 }
 
  function activateVehicle(vehicle,gps_id){
-    if(confirm('Are you sure want to activate this vehicle?')){
+    if(confirm('Are you sure  to activate this vehicle?')){
         var url = 'vehicle/activate';
         var data = {
              id : vehicle,

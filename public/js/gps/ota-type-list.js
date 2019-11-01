@@ -48,7 +48,7 @@ function callBackDataTable(){
  }
 
  function deleteOtaType(id){
-    if(confirm('Are you sure want to deactivate this?')){
+    if(confirm('Are you sure to deactivate this?')){
         var url = 'ota-type/delete';
         var data = {
             id : id
@@ -58,7 +58,7 @@ function callBackDataTable(){
 }
 
  function activateOtaType(id){
-    if(confirm('Are you sure want to activate this?')){
+    if(confirm('Are you sure to activate this?')){
         var url = 'ota-type/activate';
         var data = {
              id : id

@@ -46,7 +46,7 @@ function callBackDataTable(){
  }
 
  function deleteRoute(route){
-    if(confirm('Are you sure want to deactivate this?')){
+    if(confirm('Are you sure to deactivate this?')){
         var url = 'route/delete';
         var data = {
             id : route
@@ -56,7 +56,7 @@ function callBackDataTable(){
 }
 
  function activateRoute(route){
-    if(confirm('Are you sure want to activate this?')){
+    if(confirm('Are you sure to activate this?')){
         var url = 'route/activate';
         var data = {
              id : route

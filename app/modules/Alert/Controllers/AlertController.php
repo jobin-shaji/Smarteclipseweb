@@ -21,7 +21,7 @@ class AlertController extends Controller {
     //Display all alerts
 	public function alerts()
     {
-       $client_id=\Auth::user()->client->id;        
+        $client_id=\Auth::user()->client->id;        
         $VehicleGpss=Vehicle::select(
             'id',
             'gps_id',
@@ -33,21 +33,13 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $alert_count = Alert::whereIn('gps_id', $single_vehicle_gps)->where('status',0)->count();  
+        $confirm_alerts = DB::select( DB::raw("UPDATE Alerts SET status = '1' WHERE IN gps_id = '$single_vehicle_gps'"); );
+        // $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get(); 
 
-        if($alert_count<=25)
-        { 
-            $count=$alert_count;
-        }
-        else
-        {
-            $count=25;
-        }
-        $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();   
-        foreach($confirm_alerts as $confirm_alert){
-            $confirm_alert->status=1;
-            $confirm_alert->save(); 
-        }  
+        // foreach($confirm_alerts as $confirm_alert){
+        //     $confirm_alert->status=1;
+        //     $confirm_alert->save(); 
+        // }  
         $userAlerts = UserAlerts::select(
             'id',
             'client_id',
@@ -82,11 +74,6 @@ class AlertController extends Controller {
             ->whereNotIn('alert_type_id',[17,18,23,24])
             ->where('status',1) 
             ->paginate(15);
-          
-    //->paginate($this->paginateLimit);
-
-// $alerts = Paginator::make($alerts->all(), $alerts->count(), 10);    
-
         return view('Alert::alert-list',['alerts'=>$alerts]);
 	}
     // alert verification

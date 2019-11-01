@@ -43,7 +43,7 @@ function callBackDataTable(){
     });
 }
 function delDriver(driver){
-    if(confirm('Are you sure want to deactivate this driver?')){
+    if(confirm('Are you sure to deactivate this driver?')){
         var url = 'driver/delete';
         var data = {
             uid : driver
@@ -52,7 +52,7 @@ function delDriver(driver){
     }
 }
 function activateDriver(driver){
-    if(confirm('Are you sure want to activate this driver?')){
+    if(confirm('Are you sure to activate this driver?')){
         var url = 'driver/activate';
         var data = {
             id : driver
