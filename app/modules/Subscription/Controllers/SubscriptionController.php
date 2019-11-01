@@ -77,15 +77,24 @@ class SubscriptionController extends Controller
     {
         $rules = $this->subscriptionCreateRules();
         $this->validate($request, $rules);
-        $subscription = Subscription::create([
-            'plan_id' => $request->plan_id,
-            'country_id' => $request->country_id,
-            'amount' => $request->amount
-           ]);
-        $request->session()->flash('message', 'New subscription plan created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-
-        return redirect(route('subscription.details',Crypt::encrypt($subscription->id)));
+        $plan_id=$request->plan_id;
+        $country_id=$request->country_id;
+        $amount=$request->amount;
+        $subscription_history=Subscription::where('country_id',$country_id)->where('plan_id',$plan_id)->count();
+        if($subscription_history == 0){
+            $subscription = Subscription::create([
+                'plan_id' => $plan_id,
+                'country_id' => $country_id,
+                'amount' => $amount
+                ]);
+            $request->session()->flash('message', 'New subscription plan created successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('subscription.details',Crypt::encrypt($subscription->id)));
+        }else{
+            $request->session()->flash('message', 'This plan in this country is already exist!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('subscription'));
+        }
     }
 
     // subscription details
@@ -123,16 +132,13 @@ class SubscriptionController extends Controller
         }
         $rules = $this->subscriptionUpdateRules();
         $this->validate($request, $rules);
-
-        $subscription->plan_id = $request->plan_id;
-        $subscription->country_id = $request->country_id;
         $subscription->amount = $request->amount;
         $subscription->save();
 
         $encrypted_subscription_id = encrypt($subscription->id);
         $request->session()->flash('message', 'subscription plan details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('subscription.edit',$encrypted_subscription_id));  
+        return redirect(route('subscription.details',$encrypted_subscription_id));  
     }
 
     // delete subscription
@@ -189,8 +195,6 @@ class SubscriptionController extends Controller
     public function subscriptionUpdateRules()
     {
         $rules = [
-            'plan_id' => 'required',
-            'country_id' => 'required',
             'amount' => 'required'
         ];
         return  $rules;
