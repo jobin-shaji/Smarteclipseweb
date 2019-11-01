@@ -120,4 +120,7 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
 });
 Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
  Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+
+
+
 });
