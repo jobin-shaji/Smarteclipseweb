@@ -88,9 +88,10 @@ function initMap(){
     {
       addArrays(polygon);
       drawingManager.setDrawingMode(null);
-      //   drawingManager.setOptions({
-      //   drawingControl: false
-      // });
+        drawingManager.setOptions({
+        drawingControl: false
+      });
+      alert("If you want to redraw,click on refresh button");
     }
   });
 
@@ -149,8 +150,9 @@ function setSelection(shape) {
 }
 
 function removeLineSegment() {
-  allPolly =[];
-  deleteSelectedShape();
+  // allPolly =[];
+  // deleteSelectedShape();
+  window.location.reload();
 }
 
 function addArrays(polygon) {

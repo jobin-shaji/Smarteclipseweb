@@ -90,7 +90,7 @@ class ClientController extends Controller {
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
                 'role' => 4,
@@ -237,7 +237,7 @@ class ClientController extends Controller {
         $client->longitude=$location_lng;
         $client->save();
         $user = User::find($request->id);
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile_number;
         $user->save();
         $did = encrypt($user->id);
         // $subdealer->phone_number = $request->phone_number;       
@@ -251,8 +251,8 @@ class ClientController extends Controller {
     public function clientUpdateRules($subdealer)
     {
         $rules = [
-            'name' => 'required|unique:clients,name,'.$subdealer->id,
-            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
+            'name' => 'required',
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
             
         ];
         return  $rules;
@@ -261,8 +261,8 @@ class ClientController extends Controller {
     public function rayfleetClientUpdateRules($subdealer)
     {
         $rules = [
-            'name' => 'required|unique:clients,name,'.$subdealer->id,
-            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
+            'name' => 'required',
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
             
         ];
         return  $rules;
@@ -647,7 +647,7 @@ class ClientController extends Controller {
         ]);
     }
 
-//////////////////////////////////////User Profile/////////////////////////////////////
+//////////////////////////////User Profile////////////////////////
 
     //user profile view
     public function userProfile()
@@ -692,7 +692,63 @@ class ClientController extends Controller {
         return redirect(route('client.profile'));   
     }
 
-//////////////////////////////////////User Change Password//////////////////////////////
+    public function userProfileEdit()
+    {
+        $client_id = \Auth::user()->client->id;
+        $client_user_id = \Auth::user()->id;
+        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $user=User::find($client_user_id); 
+
+        // $client=\Auth::user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude;       
+        // return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
+        if($client == null)
+        {
+           return view('Client::404');
+        }
+
+        return view('Client::client-profile-edit',['client' => $client,'user' => $user,'lat' => $lat,'lng' => $lng]);
+    }
+
+     //update dealers details
+    public function profileUpdate(Request $request)
+    {
+        $client = Client::where('user_id', $request->id)->first();
+        if($client == null){
+           return view('Client::404');
+        } 
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetClientProfileUpdateRules($client);
+        }
+        else if (strpos($url, $eclipse_key) == true) { 
+            $rules = $this->clientProfileUpdateRules($client);
+        }
+        else
+        {
+           $rules = $this->clientProfileUpdateRules($client);
+        }
+        
+        $this->validate($request, $rules);       
+        $client->name = $request->name;
+        $client->address = $request->address;
+        $client->save();
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->email = $request->email;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
+        $request->session()->flash('message', 'Client details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client.profile'));  
+    }
+
+///////////////////////////User Change Password////////////////////
 
     //user change password view
     public function userPasswordChange()
@@ -855,7 +911,7 @@ class ClientController extends Controller {
         return redirect(route('client'));        
     }
 
-////////////////////////////////////Update client role-start//////////////////////////
+/////////////////////////Update client role-start//////////
 
     public static function updateClientRole($new_role)
     {
@@ -948,7 +1004,7 @@ class ClientController extends Controller {
             'state_id' => 'required',
             'city_id' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|max:10|unique:users',
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
@@ -965,7 +1021,7 @@ class ClientController extends Controller {
                 'state_id' => 'required',
                 'city_id' => 'required',
                 'username' => 'required|unique:users',
-                'mobile' => 'required|string|min:11|max:11|unique:users',
+                'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6|confirmed',
             ];
@@ -1032,62 +1088,6 @@ class ClientController extends Controller {
         } else {
             return null;
         }
-    }
-
-    public function userProfileEdit()
-    {
-        $client_id = \Auth::user()->client->id;
-        $client_user_id = \Auth::user()->id;
-        $client = Client::withTrashed()->where('id', $client_id)->first();
-        $user=User::find($client_user_id); 
-
-        // $client=\Auth::user()->client;
-        $lat=(float)$client->latitude;
-        $lng=(float)$client->longitude;       
-        // return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
-        if($client == null)
-        {
-           return view('Client::404');
-        }
-
-        return view('Client::client-profile-edit',['client' => $client,'user' => $user,'lat' => $lat,'lng' => $lng]);
-    }
-
-     //update dealers details
-    public function profileUpdate(Request $request)
-    {
-        $client = Client::where('user_id', $request->id)->first();
-        if($client == null){
-           return view('Client::404');
-        } 
-        $url=url()->current();
-        $rayfleet_key="rayfleet";
-        $eclipse_key="eclipse";
-        if (strpos($url, $rayfleet_key) == true) {
-             $rules = $this->rayfleetClientProfileUpdateRules($client);
-        }
-        else if (strpos($url, $eclipse_key) == true) { 
-            $rules = $this->clientProfileUpdateRules($client);
-        }
-        else
-        {
-           $rules = $this->clientProfileUpdateRules($client);
-        }
-        
-        $this->validate($request, $rules);       
-        $client->name = $request->name;
-        $client->address = $request->address;
-        $client->save();
-        $user = User::find($request->id);
-        $user->mobile = $request->phone_number;
-        $user->email = $request->email;
-        $user->save();
-        $did = encrypt($user->id);
-        // $subdealer->phone_number = $request->phone_number;       
-        // $did = encrypt($subdealer->id);
-        $request->session()->flash('message', 'Client details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('client.profile'));  
     }
     public function clientProfileUpdateRules($client)
     {

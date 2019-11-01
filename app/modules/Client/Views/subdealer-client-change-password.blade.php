@@ -22,8 +22,6 @@
       <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  
         <div class="row">
           <div class="col-sm-12">
-            <h2 class="page-header">
-            </h2>
             <form  method="POST" action="{{route('client.update-password.subdealer',$client->user_id)}}">
             {{csrf_field()}}
               <div class="row">
@@ -45,7 +43,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-md-2 ">
                   <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
                 </div>
               </div>
