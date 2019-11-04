@@ -460,14 +460,14 @@ class DriverController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'driver does not exist'
+                'message' => 'Driver does not exist'
             ]);
         }
         $driver->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'driver deleted successfully'
+            'message' => 'Driver deactivated successfully'
         ]);
     }
 
@@ -480,7 +480,7 @@ class DriverController extends Controller {
              return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'driver does not exist'
+                'message' => 'Driver does not exist'
              ]);
         }
 
@@ -489,20 +489,7 @@ class DriverController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Driver restored successfully'
+            'message' => 'Driver activated successfully'
         ]);
-    }
-//update driver performance
-
-
-     public function driverUpdateperformanceRules($driver)
-    {
-        $rules = [
-            'name' => 'required',
-            'address' => 'required',
-            'mobile' => 'required|numeric'
-            
-        ];
-        return  $rules;
     }
 }
