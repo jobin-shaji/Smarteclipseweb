@@ -200,9 +200,12 @@ var hospital_flag=0;
 $('#poi_atm').click(function(){
     deleteMarkersPOI();
     if(atm_flag==0){
+       $('.poi_atm').css('background', ' #f2b231 '); 
+        $('.poi_hopital').css('background', '#FFFFFF'); 
+          $('.poi_petrol').css('background', '#FFFFFF'); 
         var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
         service.nearbySearch(
-          {location: pyrmont, radius: 5000, type:['atm']},
+          {location: pyrmont, radius: 1000, type:['atm']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
               createMarkers(results);
@@ -210,6 +213,7 @@ $('#poi_atm').click(function(){
 
          atm_flag=1;
          }else{
+          $('.poi_atm').css('background', '#FFFFFF'); 
            deleteMarkersPOI();
            atm_flag=0;
          }
@@ -221,9 +225,12 @@ $('#poi_atm').click(function(){
 $('#poi_petrol').click(function(){
         deleteMarkersPOI();
         if(petrol_flag==0){
-        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        service.nearbySearch(
-          {location: pyrmont, radius: 5000, type:['gas_station']},
+          $('.poi_petrol').css('background', ' #f2b231 '); 
+          $('.poi_hopital').css('background', '#FFFFFF'); 
+          $('.poi_atm').css('background', '#FFFFFF'); 
+          var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
+          service.nearbySearch(
+          {location: pyrmont, radius: 1000, type:['gas_station']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
               createMarkers(results);
@@ -231,23 +238,28 @@ $('#poi_petrol').click(function(){
 
           petrol_flag=1;
          }else{
+           $('.poi_petrol').css('background', '#FFFFFF'); 
            deleteMarkersPOI();
            petrol_flag=0;
          }
   
     });
  $('#poi_hopital').click(function(){
+          $('.poi_hopital').css('background', ' #f2b231 '); 
+          $('.poi_petrol').css('background', '#FFFFFF'); 
+          $('.poi_atm').css('background', '#FFFFFF'); 
         deleteMarkersPOI();
         if(hospital_flag==0){
           var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
           service.nearbySearch(
-            {location: pyrmont, radius: 5000, type:['hospital']},
+            {location: pyrmont, radius: 1000, type:['hospital']},
              function(results, status, pagination) {
              if (status !== 'OK') return;
                 createMarkers(results);
               });
           hospital_flag=1;
          }else{
+          $('.poi_hopital').css('background', '#FFFFFF'); 
            deleteMarkersPOI();
            hospital_flag=0;
         }
@@ -268,6 +280,7 @@ $('#poi_petrol').click(function(){
           };
           var marker = new google.maps.Marker({
             icon: image,
+
             title: place.name,
             position: place.geometry.location,
             data:place.vicinity

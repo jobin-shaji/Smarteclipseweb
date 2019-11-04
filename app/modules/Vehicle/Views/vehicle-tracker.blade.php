@@ -137,7 +137,7 @@
               @endrole
 
         <div class="cover_poi">
-          <div class="poi_atm poi_item">
+          <div  class="poi_atm poi_item">
             <a href="#" id="poi_atm">
             <img src="{{ url('/') }}/images/ATM.png">
             </a>
