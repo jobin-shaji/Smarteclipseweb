@@ -55,8 +55,8 @@
        <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
                       
                         <div class="card data_list_cover pull-right" style="width: 16rem;">
-                            <div class="card-body data_list_body">
-                              <h2 class="card-title" id="user"></h2>
+                            <div class="card-body data_list_body " >
+                              <p class="capitalize"><h2 class="card-title" id="user"></h2></p>
                                 
                               
 
