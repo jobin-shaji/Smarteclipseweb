@@ -467,7 +467,7 @@ class DriverController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'driver deleted successfully'
+            'message' => 'driver deactivated successfully'
         ]);
     }
 
@@ -489,7 +489,7 @@ class DriverController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Driver restored successfully'
+            'message' => 'Driver activated successfully'
         ]);
     }
 //update driver performance
