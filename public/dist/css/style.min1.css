@@ -16759,7 +16759,8 @@ button.btn.btn-primary.address_btn {
     margin-top: 11px;
 }*/
 .card.data_list_cover {
-    background: #e5e4e2;
+    text-align: center;
+    background: #ffffff;
     position: fixed;
     z-index: 1;
     border-radius: 55px;
