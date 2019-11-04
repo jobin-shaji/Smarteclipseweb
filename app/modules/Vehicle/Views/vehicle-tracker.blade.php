@@ -29,7 +29,7 @@
 
      <div class="col-lg-4 col-md-3">
         <div class="form-group">                   
-           <label> To date</label>
+           <label> To Date</label>
             <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" autocomplete="off" required>
         </div>
      </div>
