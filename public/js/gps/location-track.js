@@ -10,7 +10,7 @@ function getUrl() {
    var strokeWeight = document.getElementById('strokeWeight').value;
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
-var numDeltas = 100;
+var numDeltas = 300;
 var delay = 5; //milliseconds
 var i = 0;
 // var posLat = 10.107570;
@@ -33,7 +33,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 19,
+        zoom: 21,
         mapTypeId: 'roadmap'
 
     });  
@@ -192,7 +192,14 @@ var POI_markers = [];
 var lat=posLat;
 var lng=posLng;
 var service = new google.maps.places.PlacesService(map);
+var atm_flag=0;
+var petrol_flag=0;
+var hospital_flag=0;
+
+
 $('#poi_atm').click(function(){
+    deleteMarkersPOI();
+    if(atm_flag==0){
         var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
         service.nearbySearch(
           {location: pyrmont, radius: 5000, type:['atm']},
@@ -200,11 +207,20 @@ $('#poi_atm').click(function(){
            if (status !== 'OK') return;
               createMarkers(results);
             });
+
+         atm_flag=1;
+         }else{
+           deleteMarkersPOI();
+           atm_flag=0;
+         }
  
 
  });
-$('#poi_petrol').click(function(){
 
+
+$('#poi_petrol').click(function(){
+        deleteMarkersPOI();
+        if(petrol_flag==0){
         var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
         service.nearbySearch(
           {location: pyrmont, radius: 5000, type:['gas_station']},
@@ -212,17 +228,29 @@ $('#poi_petrol').click(function(){
            if (status !== 'OK') return;
               createMarkers(results);
             });
+
+          petrol_flag=1;
+         }else{
+           deleteMarkersPOI();
+           petrol_flag=0;
+         }
   
     });
  $('#poi_hopital').click(function(){
-   
-        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        service.nearbySearch(
-          {location: pyrmont, radius: 5000, type:['hospital']},
-           function(results, status, pagination) {
-           if (status !== 'OK') return;
-              createMarkers(results);
-            });
+        deleteMarkersPOI();
+        if(hospital_flag==0){
+          var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
+          service.nearbySearch(
+            {location: pyrmont, radius: 5000, type:['hospital']},
+             function(results, status, pagination) {
+             if (status !== 'OK') return;
+                createMarkers(results);
+              });
+          hospital_flag=1;
+         }else{
+           deleteMarkersPOI();
+           hospital_flag=0;
+        }
     });
 
 // ---------------find nearest map points-----------------
