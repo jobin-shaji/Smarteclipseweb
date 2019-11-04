@@ -1,14 +1,15 @@
 function getUrl() {
     return $('meta[name = "domain"]').attr('content');
 }
- var vehiclePath = document.getElementById('svg_con').value;
-  var start_lat = document.getElementById('lat').value;
-   var start_lng = document.getElementById('lng').value;
-
-   var vehicle_scale = document.getElementById('vehicle_scale').value;
-  var opacity = document.getElementById('opacity').value;
-   var strokeWeight = document.getElementById('strokeWeight').value;
-
+capitalize = function(str1){
+  return str1.charAt(0).toUpperCase() + str1.slice(1);
+}
+var vehiclePath = document.getElementById('svg_con').value;
+var start_lat = document.getElementById('lat').value;
+var start_lng = document.getElementById('lng').value;
+var vehicle_scale = document.getElementById('vehicle_scale').value;
+var opacity = document.getElementById('opacity').value;
+var strokeWeight = document.getElementById('strokeWeight').value;
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
 var numDeltas = 300;
 var delay = 5; //milliseconds
@@ -26,7 +27,6 @@ var map;
 var vehicleColor = "#0C2161";
 // var vehicleScale = "0.5";
 var vehicleScale = vehicle_scale;
-
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -118,12 +118,13 @@ function getMarkers() {
                       {
                          document.getElementById("ignition").innerHTML = "Ignition OFF";
                       }
+                      
                     // document.getElementById("user").innerHTML = res.client_name;
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
                     document.getElementById("car_speed").innerHTML = res.liveData.speed;
                     document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
                     document.getElementById("car_location").innerHTML = res.liveData.place;
-                    document.getElementById("user").innerHTML = res.vehicle_name;
+                    document.getElementById("user").innerHTML = capitalize(res.vehicle_name);
 
                     
 

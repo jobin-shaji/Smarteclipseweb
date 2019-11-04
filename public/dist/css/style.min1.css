@@ -17391,7 +17391,7 @@ img {
 img.cover_vehicle_icon {
     margin-bottom: 11px;
 }
-
+.capitalize { text-transform: capitalize; }
 /*.cover_playback {
     position: relative;
     position: fixed;
