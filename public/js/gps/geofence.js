@@ -110,7 +110,7 @@ function initMap(){
     }
     else if(polygon_length ==0)
     {
-      alert("Please draw your area");
+      alert("Please draw the Geofence");
     }
     else
     {

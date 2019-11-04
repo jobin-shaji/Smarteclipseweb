@@ -39,13 +39,13 @@ function check(){
 
 
     if(document.getElementById('vehicle').value == ''){
-        alert('please enter vehicle');
+        alert('Please enter vehicle');
     }
     else if(document.getElementById('vehicle_geofence').value == ''){
-        alert('please select geofence');
+        alert('Please select geofence');
     }
     else if(document.getElementById('alert_type').value == ''){
-        alert('please select alert type');
+        alert('Please select alert type');
     }
     else{
         var vehicle_id=$('#vehicle').val();
