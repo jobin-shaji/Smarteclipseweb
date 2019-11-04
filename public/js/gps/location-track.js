@@ -205,7 +205,7 @@ $('#poi_atm').click(function(){
           $('.poi_petrol').css('background', '#FFFFFF'); 
         var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
         service.nearbySearch(
-          {location: pyrmont, radius: 1000, type:['atm']},
+          {location: pyrmont, radius: 1400, type:['atm']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
               createMarkers(results);
@@ -230,7 +230,7 @@ $('#poi_petrol').click(function(){
           $('.poi_atm').css('background', '#FFFFFF'); 
           var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
           service.nearbySearch(
-          {location: pyrmont, radius: 1000, type:['gas_station']},
+          {location: pyrmont, radius: 3000, type:['gas_station']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
               createMarkers(results);
