@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  Driver Creation
+ Add driver
 @endsection
 @section('content')   
       
@@ -9,7 +9,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-page-heading">Driver Creation</li>
+        <li class="breadcrumb-page-heading"><b>Add driver</b> </li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Driver</li>
      </ol>
        @if(Session::has('message'))
