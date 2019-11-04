@@ -316,7 +316,7 @@
                                         <a href="{{url('/idle-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/idle-report.png"  />
-                                            <span class="system_info" >Idle Report</span>
+                                            <span class="system_info" >Halt Report</span>
                                            </div>
                                            
                                         </a>
@@ -392,8 +392,7 @@
                                
                             </div>
                                 <a class="dropdown-item" href="{{url('/alert')}}">VIEW ALL ALERTS</a>
-
-                                                            </div>
+                            </div>
                         </li>                      
                         <li class="nav-item dropdown">
                             <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>

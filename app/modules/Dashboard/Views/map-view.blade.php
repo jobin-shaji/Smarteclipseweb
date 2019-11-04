@@ -54,7 +54,7 @@
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
                 <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">IDLE</h5> -->
+                <!-- <h5 class="text-white">Halt</h5> -->
               </span>
             </div>
           </div>

@@ -102,7 +102,7 @@ if(res.status!="failed"){
    vehicle_status = "Online";
   } else if (mode == 'H') {
    car_color = "#69b4b9";
-   vehicle_status = "Idle"
+   vehicle_status = "Halt"
   } else if (mode == 'S') {
    car_color = "#858585";
    vehicle_status = "Stop"

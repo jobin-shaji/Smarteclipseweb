@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-Idle Report
+Halt Report
 @endsection
 @section('content')
 <div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Idle Report</h4>
+        <h4 class="page-title">  Halt Report</h4>
       </div>
     </div>
   </div>
@@ -63,8 +63,8 @@ Idle Report
                             <tr>
                               <th>Sl.No</th>
                               <th>Vehicle</th>
-                              <th>Register Number</th>                              
-                              <th>Idle</th>                                                               
+                              <th>Register Number</th>                         
+                              <th>Halt</th>                                                               
                             </tr>
                         </thead>
                          <tbody>
