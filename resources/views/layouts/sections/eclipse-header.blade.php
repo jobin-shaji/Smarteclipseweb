@@ -316,7 +316,7 @@
                                         <a href="{{url('/idle-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/idle-report.png"  />
-                                            <span class="system_info" >Idle Report</span>
+                                            <span class="system_info" >Halt Report</span>
                                            </div>
                                            
                                         </a>

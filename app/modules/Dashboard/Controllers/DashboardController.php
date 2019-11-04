@@ -498,7 +498,7 @@ class DashboardController extends Controller
         }
         else if($mode=="H")
         {
-            $vehcile_mode="Idle";
+            $vehcile_mode="Halt";
         }
         else 
         {
