@@ -6,7 +6,7 @@
 <div class="page-wrapper_new">  
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-page-heading">All Vehicle Documents</li>
+      <li class="breadcrumb-page-heading"><b>All Vehicle Documents</b></li>
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Documents</li>
     </ol>
     @if(Session::has('message'))
