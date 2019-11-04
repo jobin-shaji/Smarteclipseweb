@@ -73,7 +73,7 @@
                               <th>Register Number</th> -->
                               <th>Run</th>
                               <th>Sleep</th>
-                              <th>Idle</th>                              
+                              <th>Halt</th>                              
                                       
                             </tr>
                         </thead>

@@ -5,7 +5,7 @@
         <th>Vehicle</th>
         <th>Register Number</th>
         <th>Run</th>
-        <th>Idle</th>
+        <th>Halt</th>
         <th>Sleep</th>
         <th>AC ON</th>
         <th>AC OFF</th>

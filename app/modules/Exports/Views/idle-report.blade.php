@@ -4,7 +4,7 @@
         <th>Sl.No</th>
         <th>Vehicle</th>
         <th>Register Number</th>
-        <th>Idle</th>
+        <th>Halt</th>
         <th>DateTime</th> 
     </tr>
     </thead>
