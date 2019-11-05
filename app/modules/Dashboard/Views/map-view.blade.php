@@ -99,7 +99,8 @@
                box-shadow: 1px 1px 21px 1px #ccc">
             <div class="col-6 m-t-15">
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
-                <img src="assets/images/network-status.png">
+                <img src="assets/images/network-status.png" id="network_online">
+                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
                 <medium id="network_status" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -127,7 +128,11 @@
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/vehicle-status.png">
+                <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                <img src="assets/images/stop-dashboard.png" id="vehicle_stop" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                 <medium id="mode" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>

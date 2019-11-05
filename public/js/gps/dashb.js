@@ -55,16 +55,44 @@ function getVehicle(value)
 }
 function vehicle_details(res){
   var network_status=res.network_status;
+  var vehicle_mode=res.mode;
   if(network_status=="Connection Lost"){
-    //$("#network_online").hide();
+    $("#network_offline").show();
+    $("#network_online").hide();
   }else{
-    //$("#network_online").show();
+    $("#network_online").show();
+    $("#network_offline").hide();
+  }
+  if(vehicle_mode=="Moving"){
+    $("#vehicle_moving").show();
+    $("#vehicle_status").hide();
+    $("#vehicle_halt").hide();
+    $("#vehicle_sleep").hide();
+    $("#vehicle_stop").hide();
+  }else if(vehicle_mode=="Halt"){
+    $("#vehicle_moving").hide();
+    $("#vehicle_status").hide();
+    $("#vehicle_halt").show();
+    $("#vehicle_sleep").hide();
+    $("#vehicle_stop").hide();
+  }else if(vehicle_mode=="Sleep"){
+    $("#vehicle_moving").hide();
+    $("#vehicle_status").hide();
+    $("#vehicle_halt").hide();
+    $("#vehicle_sleep").show();
+    $("#vehicle_stop").hide();
+  }else{
+    $("#vehicle_moving").hide();
+    $("#vehicle_status").hide();
+    $("#vehicle_halt").hide();
+    $("#vehicle_sleep").hide();
+    $("#vehicle_stop").show();
   }
   $('#network_status').text(network_status);
   $('#fuel_status').text(res.fuel_status);
   $('#speed').text(res.speed);
   $('#odometer').text(res.odometer);
-  $('#mode').text(res.mode);
+  $('#mode').text(vehicle_mode);
   $('#satelite').text(res.satelite);
   $('#battery_status').text(res.battery_status);
   var address=res.address;
