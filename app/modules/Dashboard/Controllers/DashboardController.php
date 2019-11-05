@@ -528,7 +528,9 @@ class DashboardController extends Controller
             $fuel_status="upgrade version";
         }
         $speed=round($gps->speed);
-        $odometer=$gps->odometer;
+        $gps_meter=$gps->km;
+        $gps_km=$gps_meter/1000;
+        $odometer=round($gps_km);
         $mode=$gps->mode;
         $satelite=$satelite;
         $latitude=$gps->lat;
