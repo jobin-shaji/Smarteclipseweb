@@ -29,7 +29,7 @@
 
      <div class="col-lg-4 col-md-3">
         <div class="form-group">                   
-           <label> To date</label>
+           <label> To Date</label>
             <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" autocomplete="off" required>
         </div>
      </div>
@@ -55,8 +55,8 @@
        <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
                       
                         <div class="card data_list_cover pull-right" style="width: 16rem;">
-                            <div class="card-body data_list_body">
-                              <h2 class="card-title" id="user"></h2>
+                            <div class="card-body data_list_body " >
+                              <p class="capitalize"><h2 class="card-title" id="user"></h2></p>
                                 
                               
 
@@ -137,7 +137,7 @@
               @endrole
 
         <div class="cover_poi">
-          <div class="poi_atm poi_item">
+          <div  class="poi_atm poi_item">
             <a href="#" id="poi_atm">
             <img src="{{ url('/') }}/images/ATM.png">
             </a>

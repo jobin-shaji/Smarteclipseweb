@@ -16751,8 +16751,16 @@ button.btn.btn-primary.address_btn {
 /*--------------popup model--------------------*/
 
 
-.card.data_list_cover {
+/*.card.data_list_cover {
     background: #f2f3f4;
+    position: fixed;
+    z-index: 1;
+    border-radius: 55px;
+    margin-top: 11px;
+}*/
+.card.data_list_cover {
+    text-align: center;
+    background: #ffffff;
     position: fixed;
     z-index: 1;
     border-radius: 55px;
@@ -16763,10 +16771,17 @@ button.btn.btn-primary.address_btn {
     margin-left: 55px;
 }
 
-a.btn.btn-block.btn-social.btn-bitbucket.track_item {
+/*a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     background: #5d5d5d;
     color: #fff;
     border-radius: 10px;
+}*/
+
+a.btn.btn-block.btn-social.btn-bitbucket.track_item {
+    background: #ffffff;
+    color: #000;
+    border-radius: 10px;
+border: solid 1px #ddd;
 }
 
 .col-sm-12.social-buttons i {
@@ -17377,8 +17392,8 @@ img {
 img.cover_vehicle_icon {
     margin-bottom: 11px;
 }
-
-.cover_playback {
+.capitalize { text-transform: capitalize; }
+/*.cover_playback {
     position: relative;
     position: fixed;
     z-index: 9999;
@@ -17388,7 +17403,20 @@ img.cover_vehicle_icon {
     padding: 14px;
     border-radius: 24px;
     color: #fff;
+}*/
+.cover_playback {
+    position: relative;
+    position: fixed;
+    z-index: 9999;
+    right: 73px;
+    bottom: 23px;
+    background: #e5e4e2;
+    padding: 14px;
+    border-radius: 24px;
+    color: #000;
+border: solid 1px #ddd;
 }
+
 
 .cover_playback .btn-play-back {
     border-radius: 7px;

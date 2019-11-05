@@ -31,7 +31,7 @@
             {{csrf_field()}}
             <div class="row">
               <div class="col-lg-6 col-md-12">
-                  <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>DRIVER INFO</h4>
+                  <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span><b>DRIVER INFORMATION</b></h4>
                   <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                       <div class="form-group has-feedback">
