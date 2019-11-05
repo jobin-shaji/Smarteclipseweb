@@ -509,25 +509,25 @@ console.log(data);
                     } else {
                         var URL = window.URL || window.webkitURL;
                         var downloadUrl = URL.createObjectURL(blob);
-                        console.log(downloadUrl);
-                        // if (filename) { 
-                        //     // use HTML5 a[download] attribute to specify filename
-                        //     var a = document.createElement("a");
-                        //     // console.log(typeof a.download);
-                        //     // safari doesn't support this yet
-                        //     if (typeof a.download === 'undefined') {
-                        //         // window.location = downloadUrl;
-                        //     } else {
-
-                        //         a.href = downloadUrl;
-                        //         a.download = filename;
-                        //         document.body.appendChild(a);
-                        //         a.target = "_blank";
-                        //         a.click();
-                        //     }
-                        // } else {
-                        //     window.location = downloadUrl;
-                        // }
+                        
+                        if (filename) { 
+                            // use HTML5 a[download] attribute to specify filename
+                            var a = document.createElement("a");
+                            // console.log(typeof a.download);
+                            // safari doesn't support this yet
+                            if (typeof a.download === 'undefined') {
+                                // window.location = downloadUrl;
+                            } else {
+                                // console.log(document.body.appendChild(a));
+                                a.href = downloadUrl;
+                                a.download = filename;
+                                document.body.appendChild(a);
+                                a.target = "_blank";
+                                a.click();
+                            }
+                        } else {
+                            window.location = downloadUrl;
+                        }
                     }   
 
                 } catch (ex) {
