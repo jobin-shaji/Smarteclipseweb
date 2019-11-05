@@ -19,6 +19,7 @@
   <form id="playback_form">
  <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
   <div class="cover_playback" style="width:43%;">
+
     <div class="row">
      <div class="col-lg-4 col-md-3">
         <div class="form-group">
@@ -35,9 +36,10 @@
      </div>
 
      <div class="col-lg-3 col-md-3 pt-2 ">
-        <div class="form-group"> 
-           <button type="submit" class="btn btn-sm btn-info form-control btn-play-back" > <i class="fa fa-filter" style="height:23px;"></i>Playback </button>                               
+        <div class="form-group" style="margin:5% 0 0 15%!important"> 
+           <button type="submit" class="btn btn-sm btn-info form-control btn-play-back" > <span style="color:#000"><i class="fa fa-filter"></i>Playback</span> </button>                               
         </div>
+
      </div>
 
   </div>
@@ -56,7 +58,7 @@
                       
                         <div class="card data_list_cover pull-right" style="width: 16rem;">
                             <div class="card-body data_list_body " >
-                              <p class="capitalize"><h2 class="card-title" id="user"></h2></p>
+                              <p class="capitalize"><h2 class="card-title" id="user" style="font-size:20px!important"></h2></p>
                                 
                               
 
@@ -82,7 +84,7 @@
 
                         <div class="col-sm-12 social-buttons">
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i class="fa fa-car"></i><label id="vehicle_name"></label></a>
+                                <i class="fa fa-car"></i><label id="vehicle_name"></label><div style="float:right;width:200px"><div id="odometer" class="odometer">000506</div></div></a>
 
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
@@ -105,20 +107,25 @@
                                     <?php } ?>
                                 </span>
                             </a>
-
+ <a class="btn btn-block btn-social btn-bitbucket track_item">
+                                <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">Moving Time : </label></b>
+                            </a>
+ <a class="btn btn-block btn-social btn-bitbucket track_item">
+                                <i><image src="/assets/images/stop1-b.png" width="22" height="20"></i><b><label id="car_bettary">Stop Time : </label></b>
+                            </a>
+ <a class="btn btn-block btn-social btn-bitbucket track_item">
+                               <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">Halt Time :</label></b>
+                            </a>
+ <a class="btn btn-block btn-social btn-bitbucket track_item">
+                                <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">Sleep Time: </label></b>
+                            </a>                                                      
                             <div class="viewmore_location">
-                                <i class="fa fa-map-marker"></i>-<b><span id="car_location"></span></b>
+                                <i class="fa fa-map-marker"></i>-<b><span id="car_location" style="font-size: .7rem!important"></span></b>
                             </div>
 
+                            
                             <hr>
-                        </div>
-                         </b>
-                  </div>
-                 
-
-              </div>
-          </div>
-            <?php
+<?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
             ?>
 
@@ -135,6 +142,16 @@
                   </div>
 
               @endrole
+
+
+                        </div>
+                         </b>
+                  </div>
+                 
+
+              </div>
+          </div>
+            
 
         <div class="cover_poi">
           <div  class="poi_atm poi_item">
@@ -162,9 +179,126 @@
 </section>
 
 @section('script')
-
+<link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
+<script src="{{asset('js/odometer.js')}}"></script>
 <script src="{{asset('js/gps/location-track.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=places&callback=initMap" async defer></script>
+
+<script>
+
+        var scrollNumber0 = new gScrollNumber(".scroll-number-0", {
+           width: 50,
+           color: "white",
+           fontSize: 16,
+           autoSizeContainerWidth: true
+        });
+        var scrollNumber1 = new gScrollNumber(".scroll-number-1", {
+            width: 50,
+            color: "white",
+            fontSize: 16,
+            autoSizeContainerWidth: true
+        });
+        var value0,value1;
+        value0 = 0;
+        value1 = 0;
+        setInterval(function () {
+            scrollNumber0.run(value0++);
+            scrollNumber1.run(value1 += 2);
+        }, 1000);
+    </script>
+  <!-------------------------------------second one----------------------------------------->
+  <script>
+  setTimeout(function(){
+    odometer.innerHTML = 103487;
+}, 1000);
+</script>
+
+
 @endsection
 
 @endsection
+
+ <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
+<style>
+  .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.25rem 0.75rem;
+        /* line-height: 1.5; */
+    border-radius: 2px;
+    
+}
+.btn {
+    background: #f7b018;
+    border: none;
+    color: white;
+    padding: 0!important;
+    cursor: pointer;
+    font-size: 12px!important;
+    float: right;
+    margin:3 0!important;
+}
+.cover_playback {
+    position: relative;
+    position: fixed;
+    z-index: 9999;
+    left: 2%;
+    bottom: 23px;
+    background: #e5e4e2;
+    padding: 14px;
+    border-radius: 24px;
+    color: #000;
+border: solid 2px #f4af19
+}
+
+.cover_poi {
+    position: fixed;
+    z-index: 2;
+    left: 40px;
+    top: 203px;
+}
+
+.poi_item {
+    padding-top: 8px;
+    border: solid 4px #f7af18;
+    margin: 10% 0;
+}
+a.btn.btn-block.btn-social.btn-bitbucket.track_item {
+    background: #fff!important;
+    text-align: left;
+    line-height: 0%;
+    color: #000;
+    border-radius: 10px;
+    border:solid 1px #f7af18!important;
+}
+
+
+.card-body {
+   min-height:0!important;
+}
+.card.data_list_cover {
+    background: #f2f3f4;
+    position: fixed;
+    z-index: 1;
+    border-radius: 50px;
+    margin-top: 0!important;
+    border: solid 4px #f4af19;
+}
+
+.share_button {
+    bottom:0!important;
+    right: 0!important;
+    position:relative!important;
+    z-index: 2;
+    float: left;
+    margin:0 0 0 21%!important;
+}
+  </style>

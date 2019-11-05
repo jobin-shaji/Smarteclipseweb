@@ -1,8 +1,8 @@
 $(function () {
 
-    ////// auto log out 
 
-    const timeout = 900000;  // 900000 ms = 15 minutes
+    const timeout = 180000;  // 900000 ms = 15 minutes
+
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
         clearTimeout(idleTimer);
@@ -474,7 +474,7 @@ function verifyAlertResponse(res){
 function downloadFile(url,data){
 
     var purl = getUrl() + '/'+url ;
-console.log(data);
+// console.log(data);
     $.ajax({
             cache: false,
             type: 'POST',
@@ -516,7 +516,7 @@ console.log(data);
                             if (typeof a.download === 'undefined') {
                                 // window.location = downloadUrl;
                             } else {
-                                // console.log(document.body.appendChild(a));
+                                // console.log(blob);
                                 a.href = downloadUrl;
                                 a.download = filename;
                                 document.body.appendChild(a);
