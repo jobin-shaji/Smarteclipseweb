@@ -54,16 +54,21 @@ function getVehicle(value)
      backgroundPostData(url,data,'vehicle_details',{alert:true});
 }
 function vehicle_details(res){
-      $('#network_status').text(res.network_status);
-      $('#fuel_status').text(res.fuel_status);
-      $('#speed').text(res.speed);
-      $('#odometer').text(res.odometer);
-      $('#mode').text(res.mode);
-      $('#satelite').text(res.satelite);
-      $('#battery_status').text(res.battery_status);
-      var address=res.address;
-      $('#address').text(address);
-        
+  var network_status=res.network_status;
+  if(network_status=="Connection Lost"){
+    //$("#network_online").hide();
+  }else{
+    //$("#network_online").show();
+  }
+  $('#network_status').text(network_status);
+  $('#fuel_status').text(res.fuel_status);
+  $('#speed').text(res.speed);
+  $('#odometer').text(res.odometer);
+  $('#mode').text(res.mode);
+  $('#satelite').text(res.satelite);
+  $('#battery_status').text(res.battery_status);
+  var address=res.address;
+  $('#address').text(address);
   }
 
 
