@@ -360,6 +360,10 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                    alertsReport(res) 
                 }
+                else if(callBack=='TotalKM')
+                {
+                   TotalKM(res) 
+                }
                 
 
                 
@@ -472,7 +476,7 @@ function verifyAlertResponse(res){
 function downloadFile(url,data){
 
     var purl = getUrl() + '/'+url ;
-
+console.log(data);
     $.ajax({
             cache: false,
             type: 'POST',
@@ -505,24 +509,25 @@ function downloadFile(url,data){
                     } else {
                         var URL = window.URL || window.webkitURL;
                         var downloadUrl = URL.createObjectURL(blob);
+                        console.log(downloadUrl);
+                        // if (filename) { 
+                        //     // use HTML5 a[download] attribute to specify filename
+                        //     var a = document.createElement("a");
+                        //     // console.log(typeof a.download);
+                        //     // safari doesn't support this yet
+                        //     if (typeof a.download === 'undefined') {
+                        //         // window.location = downloadUrl;
+                        //     } else {
 
-                        if (filename) { 
-                            // use HTML5 a[download] attribute to specify filename
-                            var a = document.createElement("a");
-
-                            // safari doesn't support this yet
-                            if (typeof a.download === 'undefined') {
-                                // window.location = downloadUrl;
-                            } else {
-                                a.href = downloadUrl;
-                                a.download = filename;
-                                document.body.appendChild(a);
-                                a.target = "_blank";
-                                a.click();
-                            }
-                        } else {
-                            window.location = downloadUrl;
-                        }
+                        //         a.href = downloadUrl;
+                        //         a.download = filename;
+                        //         document.body.appendChild(a);
+                        //         a.target = "_blank";
+                        //         a.click();
+                        //     }
+                        // } else {
+                        //     window.location = downloadUrl;
+                        // }
                     }   
 
                 } catch (ex) {
@@ -874,6 +879,34 @@ function downloadMainBatteryDisconnectReport(){
 }
 
 
+// function downloadTotalKMReport(){    
+//     var url = 'total-km-report/export';
+//     var  vehicles=$('#vehicle').val();   
+//     if(vehicles==null)
+//     {
+//        var vehicle=0;
+//     }
+//     else
+//     {
+//        var vehicle=vehicles;
+//     }
+//     // console.log(alert);
+//     var fromDate=$('#fromDate').val();
+//     var toDate=$('#toDate').val();
+//     if(fromDate){
+//         var data = {
+//         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+//         };
+//         console.log(url);
+//         downloadFile(url,data);
+//     }else{
+//         var data = {
+//             id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+//         };
+//         downloadFile(url,data);
+//     }
+// }
+
 function downloadTotalKMReport(){    
     var url = 'total-km-report/export';
     var  vehicles=$('#vehicle').val();   
@@ -892,14 +925,49 @@ function downloadTotalKMReport(){
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
+        
+       
         downloadFile(url,data);
     }else{
+        
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+            id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
     }
 }
+
+
+
+// function selectDealer(dealer)
+// {
+//     var url = 'select/subdealer';
+//     var data = {
+//         dealer : dealer      
+//     };
+//     backgroundPostData(url,data,'rootSubdealer',{alert:true}); 
+// }
+
+// function TotalKM(res)
+// {
+//     console.log(res);
+//     //  $("#sub_dealer").empty();
+//     //   // var sub_dealer='  <option value=""  >select</option>';  
+//     //     // $("#sub_dealer").append(sub_dealer); 
+//     // var length=res.sub_dealers.length
+//     // for (var i = 0; i < length; i++) {     
+//     //      sub_dealer='  <option value="'+res.sub_dealers[i].id+'"  >'+res.sub_dealers[i].name+'</option>';  
+//     //     $("#sub_dealer").append(sub_dealer);  
+//     // } 
+// }
+
+
+
+
+
+
+
+
 
 function downloadDailyKMReport(){    
     var url = 'daily-km-report/export';
