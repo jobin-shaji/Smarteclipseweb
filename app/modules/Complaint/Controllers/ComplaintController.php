@@ -65,8 +65,11 @@ class ComplaintController extends Controller {
     //upload complaints to database table
     public function saveComplaintType(Request $request)
     {
+        $custom_messages = [
+        'name.required' => 'Please mention the reason'
+        ];
         $rules = $this->complaint_type_create_rules();
-        $this->validate($request, $rules);
+        $this->validate($request, $rules, $custom_messages);
         $complaint_type = ComplaintType::create([
             'name' => $request->name,
             'complaint_category' => $request->complaint_category
