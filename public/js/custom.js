@@ -371,8 +371,6 @@ function backgroundPostData(url, data, callBack, options) {
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            // toastr.error(message, 'Error');
-            // console.log(message);
         }
     });
 
@@ -562,7 +560,6 @@ function getPolygonData(url, data, callBack, options) {
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
         }
     });
 
