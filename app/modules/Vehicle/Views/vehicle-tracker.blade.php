@@ -19,7 +19,7 @@
   <form id="playback_form">
  <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
   <div class="cover_playback" style="width:43%;">
-    <div id="odometer" class="odometer">000506</div>
+
     <div class="row">
      <div class="col-lg-4 col-md-3">
         <div class="form-group">
@@ -84,7 +84,7 @@
 
                         <div class="col-sm-12 social-buttons">
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i class="fa fa-car"></i><label id="vehicle_name"></label></a>
+                                <i class="fa fa-car"></i><label id="vehicle_name"></label><div style="float:right;width:200px"><div id="odometer" class="odometer">000506</div></div></a>
 
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
@@ -122,6 +122,8 @@
                             <div class="viewmore_location">
                                 <i class="fa fa-map-marker"></i>-<b><span id="car_location" style="font-size: .7rem!important"></span></b>
                             </div>
+
+                            
                             <hr>
 <?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
@@ -177,7 +179,8 @@
 </section>
 
 @section('script')
-
+<link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
+<script src="{{asset('js/odometer.js')}}"></script>
 <script src="{{asset('js/gps/location-track.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=places&callback=initMap" async defer></script>
 

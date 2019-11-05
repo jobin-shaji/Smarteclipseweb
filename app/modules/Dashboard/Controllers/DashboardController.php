@@ -277,7 +277,7 @@ class DashboardController extends Controller
     }
 
     function offlineGpsDataBasedOnDeviceTime($single_gps_id,$oneMinute_currentDateTime){
-        $device_time=GpsData::select('device_time')->where('gps_id',$single_gps_id)->orderBy('device_time', 'DESC')->first();
+        $device_time=GpsData::select('device_time')->where('gps_id',$single_gps_id)->latest('device_time')->first();
         if($device_time){
             if($device_time->device_time <= $oneMinute_currentDateTime){
                 return $single_gps_id;
@@ -289,7 +289,7 @@ class DashboardController extends Controller
     }
 
     function onlineGpsDataBasedOnDeviceTime($single_gps_id,$oneMinute_currentDateTime,$currentDateTime){
-        $device_time=GpsData::select('device_time')->where('gps_id',$single_gps_id)->orderBy('device_time', 'DESC')->first();
+        $device_time=GpsData::select('device_time')->where('gps_id',$single_gps_id)->latest('device_time')->first();
         if($device_time){
             if($device_time->device_time <= $currentDateTime && $device_time->device_time >= $oneMinute_currentDateTime){
                 return $single_gps_id;
@@ -506,7 +506,7 @@ class DashboardController extends Controller
         $address="";
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
-        $device_time=GpsData::select('device_time')->where('gps_id',$request->gps_id)->orderBy('device_time', 'DESC')->first();
+        $device_time=GpsData::select('device_time')->where('gps_id',$request->gps_id)->latest('device_time')->first();
         $currentDateTime = Date('Y-m-d H:i:s');
         $last_updated_time = date('Y-m-d H:i:s', strtotime("-11 minutes"));
         if($gps->satllite!=null){
@@ -676,7 +676,7 @@ class DashboardController extends Controller
         foreach ($clients_gps as $item) 
         {
             foreach($item->vehicles as $vehicle){
-                $device_time=GpsData::select('device_time')->where('gps_id',$vehicle->gps_id)->orderBy('device_time', 'DESC')->first();
+                $device_time=GpsData::select('device_time')->where('gps_id',$vehicle->gps_id)->latest('device_time')->first();
                 if($vehicle->gps && $vehicle->gps->lat != null){
                     if($vehicle->gps->mode=="M"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
@@ -736,7 +736,7 @@ class DashboardController extends Controller
         {
             foreach($item->vehicles as $vehicle){
                 if($vehicle->gps && $vehicle->gps->lat != null){
-                    $device_time=GpsData::select('device_time')->where('gps_id',$vehicle->gps_id)->orderBy('device_time', 'DESC')->first();
+                    $device_time=GpsData::select('device_time')->where('gps_id',$vehicle->gps_id)->latest('device_time')->first();
                     if($vehicle->gps->mode=="M"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $mode="M";
@@ -1150,13 +1150,9 @@ class DashboardController extends Controller
         );
         return response()->json($sub_dealer_gps_sale); 
     }
-    public function mapView(){
-        // $gps = Vehicle::select('id','gps_id')
-        // ->with('gps:id,imei')
-        // ->get();
-       
+    public function mapView()
+    {
         $gps = Gps::select('id','imei')->whereNotNull('lat')->whereNotNull('lon')->get();
-        
         return view('Dashboard::map-view',['gpss' => $gps]);
     }
 
@@ -1182,36 +1178,40 @@ class DashboardController extends Controller
 
 
     public function vehicleRunningStatus($client_id){
+        $user = \Auth::user(); 
         $currentDateTime = Date('Y-m-d H:i:s');
         $last_updated_time = date('Y-m-d H:i:s', strtotime("-11 minutes"));
         $sleep=0;
         $online=0;
         $halt=0;
         $offline=0;
-        $count=0;
-        $clients_gps=Client::where('id',$client_id)->with(['vehicles'=>function($vehicle)
-          {$vehicle->with(['gps'=>function($item){
-                          $item->where('status',1);
-                         }]);
-          }])->get();
-        foreach ($clients_gps as $item) 
-        {
-            foreach($item->vehicles as $vehicle){
-                $device_time=GpsData::select('device_time')->where('gps_id',$vehicle->gps_id)->orderBy('device_time', 'DESC')->first();
-                if($vehicle->gps && $vehicle->gps->lat != null){
-                    if($vehicle->gps->mode=="M"){
+        $count=0;       
+        // $clients_gps=Client::where('id',$client_id)->with(['vehicles'=>function($vehicle)
+        //   {$vehicle->with(['gps'=>function($item){
+        //                   $item->where('status',1);
+        //                  }]);
+        //   }])->get();
+        $client=Client::where('user_id',$user->id)->first();
+        $gps_id =  $this->getVehicleGps($client->id,$user->id); 
+        // foreach ($clients_gps as $item) 
+        // {
+            foreach($gps_id as $single_gps_id){
+                $gps=Gps::find($single_gps_id);
+                $device_time=GpsData::select('device_time')->where('gps_id',$single_gps_id)->latest('device_time')->first();
+                if($gps && $gps->lat != null){
+                    if($gps->mode=="M"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $online=$online+1;
                         }else{
                             $offline=$offline+1;
                         }
-                    }else if($vehicle->gps->mode=="H"){
+                    }else if($gps->mode=="H"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $halt=$halt+1;
                         }else{
                             $offline=$offline+1;
                         }
-                    }else if($vehicle->gps->mode=="S"){
+                    }else if($gps->mode=="S"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $sleep=$sleep+1;
                         }else{
@@ -1221,7 +1221,7 @@ class DashboardController extends Controller
                     $count++;
                 }
             }
-        }
+        //}
         $vehicle_status=["moving"=>$online,
                           "idle"=>$halt,
                           "stop"=>$sleep,
@@ -1241,7 +1241,7 @@ class DashboardController extends Controller
             $single_vehicle_type= $single_vehicle->vehicleType;
             $currentDateTime=Date('Y-m-d H:i:s');
 
-            $device_time=GpsData::select('device_time')->where('gps_id',$vehicle_data->id)->orderBy('device_time', 'DESC')->first();
+            $device_time=GpsData::select('device_time')->where('gps_id',$vehicle_data->id)->latest('device_time')->first();
             $device_time= $device_time->device_time;
             $oneMinut_currentDateTime=date($currentDateTime,strtotime("-11 minutes"));
             $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);

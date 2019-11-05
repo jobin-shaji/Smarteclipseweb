@@ -375,8 +375,6 @@ function backgroundPostData(url, data, callBack, options) {
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            // toastr.error(message, 'Error');
-            // console.log(message);
         }
     });
 
@@ -476,7 +474,7 @@ function verifyAlertResponse(res){
 function downloadFile(url,data){
 
     var purl = getUrl() + '/'+url ;
-console.log(data);
+// console.log(data);
     $.ajax({
             cache: false,
             type: 'POST',
@@ -509,25 +507,25 @@ console.log(data);
                     } else {
                         var URL = window.URL || window.webkitURL;
                         var downloadUrl = URL.createObjectURL(blob);
-                        console.log(downloadUrl);
-                        // if (filename) { 
-                        //     // use HTML5 a[download] attribute to specify filename
-                        //     var a = document.createElement("a");
-                        //     // console.log(typeof a.download);
-                        //     // safari doesn't support this yet
-                        //     if (typeof a.download === 'undefined') {
-                        //         // window.location = downloadUrl;
-                        //     } else {
-
-                        //         a.href = downloadUrl;
-                        //         a.download = filename;
-                        //         document.body.appendChild(a);
-                        //         a.target = "_blank";
-                        //         a.click();
-                        //     }
-                        // } else {
-                        //     window.location = downloadUrl;
-                        // }
+                        
+                        if (filename) { 
+                            // use HTML5 a[download] attribute to specify filename
+                            var a = document.createElement("a");
+                            // console.log(typeof a.download);
+                            // safari doesn't support this yet
+                            if (typeof a.download === 'undefined') {
+                                // window.location = downloadUrl;
+                            } else {
+                                // console.log(blob);
+                                a.href = downloadUrl;
+                                a.download = filename;
+                                document.body.appendChild(a);
+                                a.target = "_blank";
+                                a.click();
+                            }
+                        } else {
+                            window.location = downloadUrl;
+                        }
                     }   
 
                 } catch (ex) {
@@ -567,7 +565,6 @@ function getPolygonData(url, data, callBack, options) {
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
         }
     });
 
