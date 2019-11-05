@@ -8,8 +8,7 @@
 html, body {
   height: 100%!important;
   margin: 0;
-  overflow-y: hidden; // hide vertical
-overflow-x: hidden; // hide horizontal  
+  
 }
 
 
@@ -16794,7 +16793,7 @@ button.btn.btn-primary.address_btn {
     z-index: 1;
     border-radius: 55px;
     margin-top: 11px;
-    border: solid 2px #46eb21;
+    border: solid 4px #f4af19;
 }
 
 /*.card.data_list_cover.pull-right {
@@ -17473,18 +17472,7 @@ img.cover_vehicle_icon {
 border: solid 1px #ddd;
 }*/
 
-.cover_playback {
-    position: relative;
-    position: fixed;
-    z-index: 9999;
-    left: 2%;
-        background: #e5e4e2;
-    padding: 14px;
-    border-radius: 24px;
-    color: #000;
-border: solid 2px #46eb21;
-margin:25% 0 0 ;
-}
+
 
 .cover_playback .btn-play-back {
     border-radius: 7px;
