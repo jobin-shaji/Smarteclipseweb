@@ -91,10 +91,12 @@ class TotalKMReportExport implements FromView
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $this->totalkmReportExport = $query->get();          
+        $this->totalkmReportExport = $query->get();   
+
     }
     public function view(): View
 	{
+        // dd($this->totalkmReportExport); 
        return view('Exports::total-km-report', [
             'totalkmReportExport' => $this->totalkmReportExport
         ]);

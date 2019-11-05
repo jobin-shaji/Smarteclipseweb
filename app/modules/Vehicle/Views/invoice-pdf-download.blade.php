@@ -17,7 +17,7 @@
         <td>{{ $vehicle_invoice->date }}</td>           
         <td>{{ $vehicle_invoice->gps->vehicle->register_number }}</td>
         <td><?php echo "NA"; ?></td>            
-        <td><?php echo "NA"; ?></td>              
+        <td>{{$vehicle_invoice->gps->km}}</td>              
     </tr>
     @endforeach
   </tbody>
