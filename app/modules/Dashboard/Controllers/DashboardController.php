@@ -1186,29 +1186,32 @@ class DashboardController extends Controller
         $halt=0;
         $offline=0;
         $count=0;       
-        $clients_gps=Client::where('id',$client_id)->with(['vehicles'=>function($vehicle)
-          {$vehicle->with(['gps'=>function($item){
-                          $item->where('status',1);
-                         }]);
-          }])->get();
-        foreach ($clients_gps as $item) 
-        {
-            foreach($item->vehicles as $vehicle){
-                $device_time=GpsData::select('device_time')->where('gps_id',$vehicle->gps_id)->latest('device_time')->first();
-                if($vehicle->gps && $vehicle->gps->lat != null){
-                    if($vehicle->gps->mode=="M"){
+        // $clients_gps=Client::where('id',$client_id)->with(['vehicles'=>function($vehicle)
+        //   {$vehicle->with(['gps'=>function($item){
+        //                   $item->where('status',1);
+        //                  }]);
+        //   }])->get();
+        $client=Client::where('user_id',$user->id)->first();
+        $gps_id =  $this->getVehicleGps($client->id,$user->id); 
+        // foreach ($clients_gps as $item) 
+        // {
+            foreach($gps_id as $single_gps_id){
+                $gps=Gps::find($single_gps_id);
+                $device_time=GpsData::select('device_time')->where('gps_id',$single_gps_id)->latest('device_time')->first();
+                if($gps && $gps->lat != null){
+                    if($gps->mode=="M"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $online=$online+1;
                         }else{
                             $offline=$offline+1;
                         }
-                    }else if($vehicle->gps->mode=="H"){
+                    }else if($gps->mode=="H"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $halt=$halt+1;
                         }else{
                             $offline=$offline+1;
                         }
-                    }else if($vehicle->gps->mode=="S"){
+                    }else if($gps->mode=="S"){
                         if($device_time <= $currentDateTime && $device_time >= $last_updated_time){
                             $sleep=$sleep+1;
                         }else{
@@ -1218,7 +1221,7 @@ class DashboardController extends Controller
                     $count++;
                 }
             }
-        }
+        //}
         $vehicle_status=["moving"=>$online,
                           "idle"=>$halt,
                           "stop"=>$sleep,
