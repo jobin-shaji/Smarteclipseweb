@@ -437,7 +437,7 @@
                            @role('client')      
                                <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="40"></a>
                              @endrole
-                             @role('root|dealer|sub_dealer')
+                             @role('root|dealer|sub_dealer|servicer')
                                 <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
                                 @endrole
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
