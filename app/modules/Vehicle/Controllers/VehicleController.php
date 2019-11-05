@@ -1007,8 +1007,8 @@ class VehicleController extends Controller {
             }
         
             $reponseData=array(
-                        "latitude"=>$snapRoute['lat'],
-                        "longitude"=>$snapRoute['lng'],
+                        "latitude"=>floatval($snapRoute['lat']),
+                        "longitude"=>floatval($snapRoute['lng']),
                         "angle"=>$angle,
                         "vehicleStatus"=>$track_data->vehicleStatus,
                         "speed"=>round($track_data->speed),
