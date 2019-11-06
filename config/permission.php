@@ -98,7 +98,7 @@ return [
          * role is updated. Then the cache will be flushed immediately.
          */
 
-        'expiration_time' => 60 * 24,
+        'expiration_time' => 600 * 24,
 
         /*
          * The key to use when tagging and prefixing entries in the cache.
