@@ -24,6 +24,7 @@ use App\Modules\Warehouse\Models\GpsStock;
 use DataTables;
 use DB;
 use Carbon\Carbon; 
+use Config;
 class DashboardController extends Controller
 {
     /**
@@ -169,7 +170,7 @@ class DashboardController extends Controller
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first(); 
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-120 minutes"));      
+        $oneMinut_currentDateTime=Config::get('eclipse.offline_time');      
         if($user->hasRole('root')){
             return $this->rootDashboardView();             
         }
@@ -506,8 +507,8 @@ class DashboardController extends Controller
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
         $device_time=GpsData::select('device_time')->where('gps_id',$request->gps_id)->latest('device_time')->first();
-        $offline_time_difference = date('Y-m-d H:i:s', strtotime("-120 minutes"));
-        $connection_lost_time_difference = date('Y-m-d H:i:s', strtotime("-11 minutes"));
+        $offline_time_difference = Config::get('eclipse.offline_time');
+        $connection_lost_time_difference = Config::get('eclipse.connection_lost_time');
         if($gps->satllite!=null){
          $satelite=$gps->satllite;   
         }
@@ -666,7 +667,7 @@ class DashboardController extends Controller
     public function vehicleRunningDetails($client_id)
     {  
         $vehicleTrackData=[];
-        $last_updated_time = date('Y-m-d H:i:s', strtotime("-120 minutes"));
+        $last_updated_time = Config::get('eclipse.offline_time');
         $clients_gps=Client::where('id',$client_id)
                                     ->with(['vehicles'=>function($vehicle)
                                      {$vehicle->with(['gps'=>function($item){
@@ -725,7 +726,7 @@ class DashboardController extends Controller
 
     public function vehicleDataListRoot($vehiles_details){
         $vehicleTrackData=[];
-        $last_updated_time = date('Y-m-d H:i:s', strtotime("-120 minutes"));
+        $last_updated_time = Config::get('eclipse.offline_time');
         foreach ($vehiles_details as $single_gps) 
         {
             if($single_gps->lat != null){
@@ -787,7 +788,7 @@ class DashboardController extends Controller
     {
         $vehicle_mode=$request->vehicle_mode;
         $user = $request->user();  
-        $oneMinute_currentDateTime=date('Y-m-d H:i:s',strtotime("-120 minutes"));
+        $oneMinute_currentDateTime=Config::get('eclipse.offline_time');
         if($user->hasRole('client|school')){
             $client=Client::where('user_id',$user->id)->first();
             $gps_id =  $this->getVehicleGps($client->id,$user->id);      
@@ -1150,7 +1151,7 @@ class DashboardController extends Controller
      public function vehicleModeCount(Request $request)
     {
         $user = $request->user();
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-120 minutes"));
+        $oneMinut_currentDateTime=Config::get('eclipse.offline_time');
         $single_vehicle=0;
             
         $moving =  $this->getMoving($single_vehicle,$oneMinut_currentDateTime);
@@ -1168,7 +1169,7 @@ class DashboardController extends Controller
 
 
     public function vehicleRunningStatus($client_id){
-        $date_before_eleven_minutes = date('Y-m-d H:i:s', strtotime("-120 minutes"));
+        $date_before_eleven_minutes = Config::get('eclipse.offline_time');
         $sleep=0;
         $online=0;
         $halt=0;
@@ -1226,9 +1227,8 @@ class DashboardController extends Controller
 
             $device_time=GpsData::select('device_time')->where('gps_id',$vehicle_data->id)->latest('device_time')->first();
             $device_time= $device_time->device_time;
-            $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("-120 minutes"));
-            $time_diff_minut=$this->twoDateTimeDiffrence($device_time,$oneMinut_currentDateTime);
-            if($time_diff_minut<=120)
+            $oneMinut_currentDateTime=Config::get('eclipse.offline_time');
+            if($device_time >= $oneMinut_currentDateTime)
             {
                 $modes=$vehicle_data->mode;
             }
