@@ -128,7 +128,7 @@ function getMarkers() {
                     document.getElementById("user").innerHTML = res.vehicle_name.toUpperCase();
 
                     
-                    transition(res)
+                    transition(res);
                     setTimeout(getMarkers, 5000);
                 
             }
@@ -204,7 +204,7 @@ function setMarketLocation(loc,angle)
     }
  var timerEvent=null;
  var clickedPointCurrent;
- var clickedPointRecent;
+ var clickedPointRecent=null;
  var clickedPointCurrentlatlng;
  var clickedPointRecentlatlng;
 //Load google map
@@ -213,6 +213,7 @@ function setMarketLocation(loc,angle)
      angle=result.liveData.angle;
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
+    
 
      if(clickedPointRecent==undefined || clickedPointRecent==null)
      {
@@ -229,23 +230,22 @@ function setMarketLocation(loc,angle)
 // -------------------it will return snappede point between two points------------------
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
-
-    $.ajax({
-     url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
-    crossDomain: true,
-    dataType: 'jsonp'
-     }).done(function(response) {
-    if (response.error) {
-      alert("error" + response.error.message);
-      return;
-    }
-    $.each(response.snappedPoints, function (i, snap_data) {
-    var loc=snap_data.location;
-    var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-    addToLocationQueue(latlng,angle);
-    });
-   });
- }
+      $.ajax({
+       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+      crossDomain: true,
+      dataType: 'jsonp'
+       }).done(function(response) {
+      if (response.error) {
+        alert("error" + response.error.message);
+        return;
+      }
+      $.each(response.snappedPoints, function (i, snap_data) {
+      var loc=snap_data.location;
+      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
+      addToLocationQueue(latlng,angle);
+      });
+     });
+   }
 // ---------------------draw polyline--------------------------
 // ---------------------que list--------------------------
    var locationQueue=[];
