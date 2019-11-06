@@ -961,7 +961,7 @@ class VehicleController extends Controller {
                     ->orderBy('device_time','desc')
                     ->first();
 
-    
+
 
         $minutes=0;
         if($track_data == null){
@@ -1844,6 +1844,7 @@ class VehicleController extends Controller {
         $lng = $b_lng;
         $route = $lat . "," . $lng;
         $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
+        echo $url;
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {
