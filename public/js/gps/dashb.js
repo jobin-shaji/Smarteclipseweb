@@ -95,6 +95,7 @@ function vehicle_details(res){
   $('#mode').text(vehicle_mode);
   $('#satelite').text(res.satelite);
   $('#battery_status').text(res.battery_status);
+  $('#ignition').text(res.ignition);
   var address=res.address;
   $('#address').text(address);
   }
