@@ -92,4 +92,8 @@ class GpsData extends Model
     {
         return $this->belongsToMany('App\Modules\Gps\Models\GpsData', 'vehicle_gps',  'vehicle_id' ,'gps_id')->withPivot('id');
     } 
+    public function dailyKm()
+    {
+        return $this->hasOne('App\Modules\Vehicle\Models\DailyKm','gps_id','gps_id')->whereDate('device_time');
+    }
 }
