@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
 use DataTables;
+use Config;
 
 class VehicleController extends Controller {
     
@@ -929,20 +930,14 @@ class VehicleController extends Controller {
     {
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
-        $last_update_time=date('Y-m-d H:i:s',strtotime("-11 minutes"));
+        $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
         $offline="Offline";
-
-
-        $gps=GpsData::where('gps_id',$get_vehicle->gps_id)
-                     ->orderBy('device_time','desc')
-                      ->first();
+        $gps=GpsData::where('gps_id',$get_vehicle->gps_id)->latest('device_time')->first();
 
         $gps_mode=$gps->mode;
         if($gps_mode=="S"){
-            $last_update_time=date('Y-m-d H:i:s',strtotime("-10 minutes"));
-          }
-
-
+            $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
+        }
         $track_data=GpsData::select('latitude as latitude',
                       'longitude as longitude',
                       'heading as angle',
@@ -958,11 +953,8 @@ class VehicleController extends Controller {
                     ->where('device_time', '>=',$last_update_time)
                     ->where('device_time', '<=',$currentDateTime)
                     ->where('gps_id',$get_vehicle->gps_id)
-                    ->orderBy('device_time','desc')
+                    ->latest('device_time')
                     ->first();
-
-
-
         $minutes=0;
         if($track_data == null){
             $track_data = GpsData::select('latitude as latitude',
@@ -978,7 +970,7 @@ class VehicleController extends Controller {
                               \DB::raw("'$offline' as vehicleStatus")
                               )
                               ->where('gps_id',$get_vehicle->gps_id)
-                              ->orderBy('device_time','desc')
+                              ->latest('device_time')
                               ->first();
            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
@@ -998,8 +990,8 @@ class VehicleController extends Controller {
                    ->where('gps_id',$track_data->gps_id)
                    ->where('heading','!=','00.000')
                    ->whereNotNull('heading')
-                   ->orderBy('device_time','desc')
-                  ->first();
+                   ->latest('device_time')
+                    ->first();
               
                  $angle=$h_track_data->heading; 
                  
