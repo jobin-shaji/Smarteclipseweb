@@ -981,10 +981,7 @@ class VehicleController extends Controller {
 
             
             if(floatval($track_data->angle) <= 0)
-             {
-
-           
-
+            {
                 $h_track_data = GpsData::
                    select('heading','gps_id','device_time')
                    ->where('gps_id',$track_data->gps_id)
@@ -993,9 +990,7 @@ class VehicleController extends Controller {
                    ->latest('device_time')
                     ->first();
               
-                 $angle=$h_track_data->heading; 
-                 
-    
+                $angle=$h_track_data->heading; 
             }
             else
             {
@@ -1011,7 +1006,7 @@ class VehicleController extends Controller {
                         "dateTime"=>$track_data->dateTime,
                         "power"=>$track_data->power,
                         "ign"=>$track_data->ign,
-                        "battery_status"=>ltrim($track_data->battery_status,'0'),
+                        "battery_status"=>round($track_data->battery_status),
                         "signalStrength"=>$track_data->signalStrength,
                         "last_seen"=>$minutes,
                         "fuel"=>"",
