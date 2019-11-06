@@ -52,6 +52,7 @@ function initMap(){
         map: map,
         icon: icon
     });
+    map.setOptions({maxZoom:17,minZoom:9});
     getMarkers(map);
 }
 
@@ -155,7 +156,7 @@ function getMarkers() {
                     fillColor: vehicleColor, //<-- Car Color, you can change it 
                     // fillOpacity: 1,
                     // strokeWeight: 1,
-                    fillOpacity: parseFloat(opacity),
+                    fillOpacity: 0.7,
                     strokeWeight: parseFloat(strokeWeight),
                     anchor: new google.maps.Point(0, 5),
                     rotation:angle  //<-- Car angle
