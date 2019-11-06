@@ -432,7 +432,7 @@ function dbcount(res){
       $('#offline').text(res.offline);      
 }
 
-//updated all aaaaa
+//vehicle deatails in right side box of dashboard
 function getVehicle(value)
 {  
   var url = '/vehicle-detail';
