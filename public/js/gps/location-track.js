@@ -4,6 +4,7 @@ function getUrl() {
 capitalize = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
 }
+ var recentPoppedLocation;
 var vehiclePath = document.getElementById('svg_con').value;
 var start_lat = document.getElementById('lat').value;
 var start_lng = document.getElementById('lng').value;
@@ -27,10 +28,10 @@ var vehicleScale = vehicle_scale;
 var angle=0;
 
 
- var clickedPointRecent;
- var clickedPointCurrentlatlng;
+ var clickedPointRecent=null;
+ var clickedPointCurrentlatlng=null;
  var locationQueue=[];
- var recentPoppedLocation=null;
+
 
 
 function initMap(){
