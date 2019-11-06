@@ -647,11 +647,10 @@ class DashboardController extends Controller
                 'mode',
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number,gps_id')
+            //->with('vehicle:id,name,register_number,gps_id')
             ->whereNotNull('mode')
             ->whereNotNull('lat') 
-            ->whereNotNull('lon')  
-            ->orderBy('id','desc')                 
+            ->whereNotNull('lon')                
             ->get(); 
             $response_track_data=$this->vehicleDataListRoot($vehiles_details); 
         }  
