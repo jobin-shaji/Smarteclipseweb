@@ -26,11 +26,11 @@ var vehicleColor = "#0C2161";
 var vehicleScale = vehicle_scale;
 var angle=0;
 
-
+var recentPoppedLocation=null;
  var clickedPointRecent;
  var clickedPointCurrentlatlng;
  var locationQueue=[];
- var recentPoppedLocation=null;
+ 
 
 
 function initMap(){
@@ -186,9 +186,10 @@ function setMarketLocation(loc,angle)
     function doWork()
     {
       var current=popFromLocationQueue();
- 
+       console.log(current);
       if(current!=null)
        {
+
 
 
         if(recentPoppedLocation==null)
@@ -197,10 +198,13 @@ function setMarketLocation(loc,angle)
             drawLine(current[0],current[0]);            
         }
         else{   
+            
             drawLine(recentPoppedLocation[0],current[0]);
             setMarketLocation(current[0],current[1]);
          }
+        
         recentPoppedLocation = current[0];
+        
      }
     else{
      
@@ -214,7 +218,7 @@ function setMarketLocation(loc,angle)
 //Load google map
   function transition(result)
     {
-      console.log(clickedPointRecent);
+     
      angle=result.liveData.angle;
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
