@@ -539,15 +539,16 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <!-- <img src="assets/images/towing-dash.png"> -->
+                <i class="fa fa-key" style="color: #f39e10;font-size: 24px;"></i>
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
@@ -798,15 +799,16 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <!-- <img src="assets/images/towing-dash.png"> -->
+                <i class="fa fa-key" style="color: #f39e10;font-size: 24px;"></i>
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
