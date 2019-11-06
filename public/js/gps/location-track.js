@@ -256,7 +256,7 @@ function setMarketLocation(loc,angle)
     function addToLocationQueue(loc,angle)
      {
        var location_angle=[loc,angle];
-       locationQueue.push(location_angle);
+       locationQueue.push(loc);
      }
     function popFromLocationQueue()
     {
