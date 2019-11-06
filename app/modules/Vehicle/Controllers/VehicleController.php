@@ -1674,7 +1674,8 @@ class VehicleController extends Controller {
         $gpsData=GpsData::select('latitude','longitude')
         ->where('gps_id',$vehicle->gps_id)
         ->whereNotNull('latitude')
-        ->whereNotNull('longitude');
+        ->whereNotNull('longitude')
+        ->limit(100);
         if($start_date)
         {
             $gpsData = $gpsData->where('device_time', '>=', $start_date)
