@@ -180,7 +180,7 @@ function setMarketLocation(loc,angle)
         var arranged_location=offsetCenter(loc)
         marker.setPosition(arranged_location); 
         map.setZoom(19);
-        map.panTo(arranged_location);      
+        // map.panTo(arranged_location);      
     }
 
     function doWork()
