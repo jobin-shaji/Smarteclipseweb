@@ -152,11 +152,11 @@ function getMarkers() {
         moveMarker();
         var icon = { // car icon
                     path:vehiclePath,
-                    scale: parseFloat(vehicleScale),
+                    scale:0.7,
                     fillColor: vehicleColor, //<-- Car Color, you can change it 
                     // fillOpacity: 1,
                     // strokeWeight: 1,
-                    fillOpacity: 0.7,
+                    fillOpacity: parseFloat(opacity),
                     strokeWeight: parseFloat(strokeWeight),
                     anchor: new google.maps.Point(0, 5),
                     rotation:angle  //<-- Car angle
