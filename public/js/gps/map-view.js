@@ -79,9 +79,9 @@ function vehicleTrack(res) {
       }
       var gpsID = JSONObject[i].id;
       var imei = JSONObject[i].imei;
-      //var reg = JSONObject[i].register_number;
+      var reg = JSONObject[i].register_number;
       var gps_encrypt_id = JSONObject[i].gps_encrypt_id;
-      //var vehicle_name = JSONObject[i].vehicle_name;
+      var vehicle_name = JSONObject[i].vehicle_name;
       var loc = new google.maps.LatLng(lat, lng);
       var mode = JSONObject[i].mode;
       var color = "";
@@ -117,7 +117,7 @@ function vehicleTrack(res) {
       addMarker(loc, title, car_color, path, scale, fillOpacity, strokeWeight, gpsID);
       // console.log(imei);
       if (track_flag != 0) {
-        addGpsToGpsList(vehicle_name, reg, gpsID,imei);
+        addGpsToGpsList(gpsID,imei);
       }
     }
     setMapOnAll(map);
@@ -282,7 +282,7 @@ function clearMarkers() {
  setMapOnAll(null);
 }
 
-function addGpsToGpsList(vehicle_name, reg, gpsID,imei) {
+function addGpsToGpsList(gpsID,imei) {
   var vehicleData ='<option value="'+gpsID+'">'+imei+'</option>';
   $("#gps_id").append(vehicleData);
 }
