@@ -42,6 +42,13 @@ Route::post('/sudden-acceleration-report/export','SuddenAccelerationReportContro
 Route::post('/totalkm-report-list','TotalKMReportController@totalKMReportList')->name('totalkm-report-list');
 Route::post('/total-km-report/export','TotalKMReportController@export')->name('total.km.report.export');
 
+
+// km repor
+	Route::get('/km-report','TotalKMReportController@kmReport')->name('km-report');
+Route::post('/km-report-list','TotalKMReportController@kmReportList')->name('km-report-list');
+Route::post('/km-report/export','TotalKMReportController@kmExport')->name('km.report.export');
+
+
 	
 //Daily KM report
 	Route::get('/daily-km-report','DailyKMReportController@dailyKMReport')->name('daily-km-report');

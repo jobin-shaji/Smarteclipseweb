@@ -210,6 +210,16 @@
                                             
                                         </a>
                                     </li>
+                                     <li class="sys_vapor cover_total_km">
+                                        <a href="{{url('/km-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                           <span class="system_info" >KM  Report</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
 
                                     <li class="sys_vapor cover_geofence">
                                         <a href="{{url('/geofence-report')}}">
@@ -340,6 +350,8 @@
                                             
                                         </a>
                                     </li>
+                                    
+                                    
                                      
                                    </ul>
                                    
@@ -437,7 +449,7 @@
                            @role('client')      
                                <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="40"></a>
                              @endrole
-                             @role('root|dealer|sub_dealer')
+                             @role('root|dealer|sub_dealer|servicer')
                                 <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
                                 @endrole
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">

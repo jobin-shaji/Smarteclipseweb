@@ -35,12 +35,11 @@ function dbcount(res){
 //updated all aaaaa
 function getVehicle(value)
 {  
-
-   var url = '/vehicle-detail';
-     var data = { 
-      gps_id : value
-     };
-     backgroundPostData(url,data,'vehicle_details',{alert:true});
+  var url = '/vehicle-detail';
+  var data = { 
+    gps_id : value
+  };
+  backgroundPostData(url,data,'vehicle_details',{alert:true});
 }
 function vehicle_details(res){
   var network_status=res.network_status;
@@ -84,6 +83,7 @@ function vehicle_details(res){
   $('#mode').text(vehicle_mode);
   $('#satelite').text(res.satelite);
   $('#battery_status').text(res.battery_status);
+  $('#ignition').text(res.ignition);
   var address=res.address;
   $('#address').text(address);      
 }

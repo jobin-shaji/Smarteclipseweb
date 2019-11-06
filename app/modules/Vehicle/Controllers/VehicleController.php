@@ -941,6 +941,8 @@ class VehicleController extends Controller {
         if($gps_mode=="S"){
             $last_update_time=date('Y-m-d H:i:s',strtotime("-10 minutes"));
           }
+
+
         $track_data=GpsData::select('latitude as latitude',
                       'longitude as longitude',
                       'heading as angle',
@@ -950,6 +952,7 @@ class VehicleController extends Controller {
                       'device_time as dateTime',
                       'main_power_status as power',
                       'ignition as ign',
+                      'gps_id',
                       'gsm_signal_strength as signalStrength'
                       )
                     ->where('device_time', '>=',$last_update_time)
@@ -957,6 +960,8 @@ class VehicleController extends Controller {
                     ->where('gps_id',$get_vehicle->gps_id)
                     ->orderBy('device_time','desc')
                     ->first();
+
+
 
         $minutes=0;
         if($track_data == null){
@@ -968,6 +973,7 @@ class VehicleController extends Controller {
                               'device_time as dateTime',
                               'main_power_status as power',
                               'ignition as ign',
+                              'gps_id',
                               'gsm_signal_strength as signalStrength',
                               \DB::raw("'$offline' as vehicleStatus")
                               )
@@ -980,10 +986,34 @@ class VehicleController extends Controller {
         if($track_data){
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+
+            
+            if(floatval($track_data->angle) <= 0)
+             {
+
+           
+
+                $h_track_data = GpsData::
+                   select('heading','gps_id','device_time')
+                   ->where('gps_id',$track_data->gps_id)
+                   ->where('heading','!=','00.000')
+                   ->whereNotNull('heading')
+                   ->orderBy('device_time','desc')
+                  ->first();
+              
+                 $angle=$h_track_data->heading; 
+                 
+    
+            }
+            else
+            {
+                $angle=$track_data->angle;
+            }
+        
             $reponseData=array(
-                        "latitude"=>$snapRoute['lat'],
-                        "longitude"=>$snapRoute['lng'],
-                        "angle"=>$track_data->angle,
+                        "latitude"=>floatval($snapRoute['lat']),
+                        "longitude"=>floatval($snapRoute['lng']),
+                        "angle"=>$angle,
                         "vehicleStatus"=>$track_data->vehicleStatus,
                         "speed"=>round($track_data->speed),
                         "dateTime"=>$track_data->dateTime,
@@ -1814,6 +1844,7 @@ class VehicleController extends Controller {
         $lng = $b_lng;
         $route = $lat . "," . $lng;
         $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
+    
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {

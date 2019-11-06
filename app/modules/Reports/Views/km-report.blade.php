@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-Daily KM Report
+Total KM Report
 @endsection
 @section('content')
-<div class="page-wrapper_new box box-primary">
+<div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Daily KM Report</h4>
+        <h4 class="page-title">KM Report</h4>
       </div>
     </div>
   </div>
@@ -22,63 +22,48 @@ Daily KM Report
                   <div >
                     <div class="panel-body">
                       <div class="panel-heading">
-                        
                         <div class="cover_div_search">
                         <div class="row">
-                          <div class="col-lg-3 col-md-3"> 
+                           <div class="col-lg-3 col-md-3"> 
                            <div class="form-group">
-                            <label>Vehicle</label>                     
+                            <label>Vehicle</label>                           
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                <option value="" selected="selected" disabled="disabled">Select</option>
                               <option value="0">All</option>
                               @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
+                              <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
                               @endforeach  
                             </select>
                           </div>
                           </div>
-
-                          <div class="col-lg-3 col-md-3">          
-                          <div class="form-group">          
-                            <label> From Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                           <div class="col-lg-3 col-md-3"> 
+                           <div class="form-group">
+                            <label>Report type</label>                           
+                            <select class="form-control selectpicker" data-live-search="true" title="Select report type" id="report" name="report">
+                              <option value="" selected="selected" disabled="disabled">Select</option>
+                              <option value="1">Today</option>
+                              <option value="2">Yesterday</option>
+                              <option value="3">This Week</option>
+                              <option value="4">This Month</option>                            
+                            </select>
                           </div>
-                          </div>
-
-
-                          <div class="col-lg-3 col-md-3">  
-                           <div class="form-group">          
-
-                            <label> To Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
-                          </div>
-                          </div>
-
-
-                          <div class="col-lg-3 col-md-3 pt-4">  
+                          </div>                         
+                           <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
                             <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
-
-                           <!--  <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadDailyKMReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>    -->                
-                              
-                          </div>
-                          </div>
-
-
+                            <button class="btn btn-sm btn1 btn-primary form-control" id="excel" onclick="downloadKMReport()">
+                              <i class="fa fa-file"></i>Download Excel</button>                        </div>
+                          </div>                        
                         </div>
-
                       </div>
-
-
-                      </div>                  
+                      </div>                                 
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
                             <tr>
                               <th>Sl.No</th>
                               <th>Vehicle</th>
                               <th>Register Number</th>                          
-                              <th>Daily KM</th> 
-                              <th>Date</th>    
+                              <th>Total KM</th>
                             </tr>
                         </thead>
                     </table>
@@ -97,7 +82,7 @@ Daily KM Report
 </div>
 </section>
 @section('script')
-    <script src="{{asset('js/gps/dailykm-list.js')}}"></script>
+    <script src="{{asset('js/gps/km-list.js')}}"></script>
 @endsection
 @endsection
 

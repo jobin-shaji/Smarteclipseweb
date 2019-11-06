@@ -8,8 +8,7 @@
 html, body {
   height: 100%!important;
   margin: 0;
-  overflow-y: hidden; // hide vertical
-overflow-x: hidden; // hide horizontal  
+  
 }
 
 
@@ -5293,7 +5292,7 @@ input[type=submit].btn-block {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1.25rem
+    padding: 0.6rem
 }
 
 .card-title {
@@ -11080,7 +11079,8 @@ ul.list-style-none li a:hover {
 .card .card-title {
     position: relative;
     font-weight: 600;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    margin-left: 80px;
 }
 
 .card .card-actions {
@@ -11855,7 +11855,7 @@ ul.list-style-none li a:hover {
 }
 
 .waves-effect.waves-orange .waves-ripple {
-    background-color: rgba(255, 152, 0, 0.7)
+    background-color: rgba(500, 000, 0, 0.9)
 }
 
 .waves-effect.waves-purple .waves-ripple {
@@ -16794,7 +16794,7 @@ button.btn.btn-primary.address_btn {
     z-index: 1;
     border-radius: 55px;
     margin-top: 11px;
-    border: solid 2px #46eb21;
+    border: solid 4px #f4af19;
 }
 
 /*.card.data_list_cover.pull-right {
@@ -17194,7 +17194,7 @@ border-radius: 6px 0 6px 6px;
 }
 .poi_item {
     padding-top: 8px;
-    border: solid 4px #f7af18;
+    border: solid 4px #fdfbf7;
     margin: 10% 0;
 }
  /*-------------------tooltip--------------------------------*/
@@ -17430,7 +17430,7 @@ li.sys_vapor.cover_dailyreport {
 }
 .system_icon {
     padding: 12px;
-    width: 222px;
+    width: 200px;
 }
 
 li.sys_vapor span {
@@ -17473,18 +17473,7 @@ img.cover_vehicle_icon {
 border: solid 1px #ddd;
 }*/
 
-.cover_playback {
-    position: relative;
-    position: fixed;
-    z-index: 9999;
-    left: 2%;
-        background: #e5e4e2;
-    padding: 14px;
-    border-radius: 24px;
-    color: #000;
-border: solid 2px #46eb21;
-margin:25% 0 0 ;
-}
+
 
 .cover_playback .btn-play-back {
     border-radius: 7px;

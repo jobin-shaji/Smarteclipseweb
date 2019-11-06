@@ -16,7 +16,7 @@
                  
             <select id="gps_id" name=""  class="form-control vehicle_gps_id select2"  onchange="getVehicle(this.value)">
               <option value="" disabled selected>Select</option>
-             @foreach ($gpss as $gps)
+              @foreach ($gpss as $gps)
                 <option  value="{{$gps->id}}">{{$gps->imei}}</option>
               @endforeach  
             </select> 
@@ -147,15 +147,16 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <!-- <img src="assets/images/towing-dash.png"> -->
+                <i class="fa fa-key" style="color: #f39e10;font-size: 24px;"></i>
+                <h4 class="m-b-0 m-t-5 score_data_text">Ingition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
@@ -178,8 +179,6 @@
 </div>
 </section>
 @section('script')
-
-<script src="{{asset('js/gps/m_dashb.js')}}"></script>
 <script src="{{asset('js/gps/map-view.js')}}"></script>
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
