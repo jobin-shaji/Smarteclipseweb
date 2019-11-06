@@ -70,7 +70,7 @@
                      <div class="cover_ofline"><b>
                       <div class="cover_status" style="margin-left: 40px"> 
                         <span id="online" style="display: none;">
-                            <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Online
+                            <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Moving
                         </span>
                         <span id="halt" style="display: none;">
                             <i class="fa fa-circle" style="color:#69b4b9;" aria-hidden="true"></i> Halt
@@ -97,7 +97,7 @@
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label></b>%
                             </a>
-                            <a class="btn btn-block btn-social btn-bitbucket track_item">
+                            <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-plug"></i>
                                 <span id="car_charging">
                                     <?php 
@@ -108,23 +108,23 @@
                                     <i class="fa fa-times"></i>
                                     <?php } ?>
                                 </span>
-                            </a>
- <a class="btn btn-block btn-social btn-bitbucket track_item">
+                            </a> -->
+                            <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
                             </a>
- <a class="btn btn-block btn-social btn-bitbucket track_item">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i><image src="/assets/images/stop1-b.png" width="22" height="20"></i><b><label id="car_bettary">STOP TIME : </label></b>
                             </a>
- <a class="btn btn-block btn-social btn-bitbucket track_item">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">HALT TIME :</label></b>
                             </a>
- <a class="btn btn-block btn-social btn-bitbucket track_item">
+                            <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b>
-                            </a>                                                      
+                            </a>  -->                                                     
                             <div class="viewmore_location">
                                 <i class="fa fa-map-marker"></i>-<b><span id="car_location" style="font-size: .7rem!important"></span></b>
                             </div>
-                            <div id="odometer" class="odometer" style="margin-left: 80px">000000</div>
+                            <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
 
                             <hr>
 <?php
