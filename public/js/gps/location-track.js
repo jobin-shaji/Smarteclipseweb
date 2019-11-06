@@ -4,7 +4,7 @@ function getUrl() {
 capitalize = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
 }
- var recentPoppedLocation;
+var recentPoppedLocation;
 var vehiclePath = document.getElementById('svg_con').value;
 var start_lat = document.getElementById('lat').value;
 var start_lng = document.getElementById('lng').value;
