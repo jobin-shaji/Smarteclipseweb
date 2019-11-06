@@ -58,8 +58,8 @@ Daily KM Report
                            <div class="form-group">          
                             <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
 
-                           <!--  <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadDailyKMReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>    -->                
+                            <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadDailyKMReport()">
+                              <i class="fa fa-file"></i>Download Excel</button>                   
                               
                           </div>
                           </div>

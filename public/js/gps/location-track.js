@@ -4,6 +4,7 @@ function getUrl() {
 capitalize = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
 }
+var recentPoppedLocation;
 var vehiclePath = document.getElementById('svg_con').value;
 var start_lat = document.getElementById('lat').value;
 var start_lng = document.getElementById('lng').value;
@@ -26,11 +27,13 @@ var vehicleColor = "#0C2161";
 var vehicleScale = vehicle_scale;
 var angle=0;
 
+
 var recentPoppedLocation=null;
  var clickedPointRecent;
  var clickedPointCurrentlatlng;
  var locationQueue=[];
  
+
 
 
 function initMap(){
@@ -39,7 +42,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 21,
+        zoom: 18,
         mapTypeId: 'roadmap'
 
     });  
@@ -62,7 +65,7 @@ function initMap(){
 }
 
 
- setTimeout(getMarkers, 5000);
+ setTimeout(getMarkers, 1000);
 function getMarkers() {
 
     var url = 'vehicles/location-track';
@@ -119,11 +122,18 @@ function getMarkers() {
 
                     }
                     if (res.liveData.ign == 1) {
-                        document.getElementById("ignition").innerHTML = "Ignition ON";
-                     }else
-                      {
-                         document.getElementById("ignition").innerHTML = "Ignition OFF";
-                      }
+                      document.getElementById("ignition").innerHTML = "Ignition ON";
+                    }else
+                    {
+                      document.getElementById("ignition").innerHTML = "Ignition OFF";
+                    }
+
+                    if(res.liveData.power == 1) {
+                      document.getElementById("car_power").innerHTML = "Connected";
+                    }else
+                    {
+                      document.getElementById("car_power").innerHTML = "Disconnected";
+                    }
                       
                     // document.getElementById("user").innerHTML = res.client_name;
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
@@ -134,7 +144,7 @@ function getMarkers() {
 
                     
                     transition(res)
-                    setTimeout(getMarkers, 5000);
+                    setTimeout(getMarkers, 10000);
                 
             }
 
@@ -179,8 +189,8 @@ function setMarketLocation(loc,angle)
         marker.setIcon(icon);
         var arranged_location=offsetCenter(loc)
         marker.setPosition(arranged_location); 
-        map.setZoom(19);
-        map.panTo(arranged_location);      
+        // map.setZoom(16);
+        // map.panTo(arranged_location);      
     }
 
     function doWork()
@@ -209,7 +219,7 @@ function setMarketLocation(loc,angle)
     else{
      
      }
-    setTimeout(doWork,98);
+    setTimeout(doWork,140);
     }
  var timerEvent=null;
  var clickedPointCurrent;
@@ -321,7 +331,7 @@ function checkDistanceBetweenTwoPoints(first_point,second_pont)
     }
   }
   // ----------------------distance between two points---------------------
-  $('document').ready(function(){setTimeout(doWork,98);});
+  $('document').ready(function(){setTimeout(doWork,140);});
 
 
 
