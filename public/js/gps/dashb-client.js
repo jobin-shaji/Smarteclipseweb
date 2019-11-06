@@ -432,4 +432,4 @@ $(document).ready(function() {
 
 $('.cover_track_data').click(function(){
    $('.track_status').css('display','none');
-  });
+});
