@@ -170,7 +170,7 @@ class DashboardController extends Controller
         $dealers=Dealer::where('user_id',$user->id)->first();
         $subdealers=SubDealer::where('user_id',$user->id)->first();
         $client=Client::where('user_id',$user->id)->first(); 
-        $oneMinut_currentDateTime=Config::get('eclipse.offline_time');      
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));      
         if($user->hasRole('root')){
             return $this->rootDashboardView();             
         }
@@ -507,12 +507,13 @@ class DashboardController extends Controller
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
         $device_time=GpsData::select('device_time')->where('gps_id',$request->gps_id)->latest('device_time')->first();
-        $offline_time_difference = Config::get('eclipse.offline_time');
-        $connection_lost_time_difference = Config::get('eclipse.connection_lost_time');
+        $offline_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
+        $connection_lost_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
         if($gps->satllite!=null){
          $satelite=$gps->satllite;   
         }
         $network_status=$gps->network_status;
+        $ignition=$gps->ignition;
         if($user->hasRole('root')){
             $fuel =$gps->fuel_status*100/15;
             $fuel = (int)$fuel;
@@ -582,6 +583,11 @@ class DashboardController extends Controller
         {
             $vehcile_mode="Offline";
         }
+        if($ignition == 1){
+            $ignition="On";
+        }else{
+            $ignition="Off";
+        }
         if($gps){     
             $response_data = array(
                 'status'  => 'vehicle_status',
@@ -592,6 +598,7 @@ class DashboardController extends Controller
                 'mode' => $vehcile_mode,
                 'satelite' => $satelite,
                 'battery_status' => $battery_status.' %',
+                'ignition' => $ignition,
                 'address' => $address
             );
         }
@@ -640,11 +647,10 @@ class DashboardController extends Controller
                 'mode',
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number,gps_id')
+            //->with('vehicle:id,name,register_number,gps_id')
             ->whereNotNull('mode')
             ->whereNotNull('lat') 
-            ->whereNotNull('lon')  
-            ->orderBy('id','desc')                 
+            ->whereNotNull('lon')                
             ->get(); 
             $response_track_data=$this->vehicleDataListRoot($vehiles_details); 
         }  
@@ -667,7 +673,7 @@ class DashboardController extends Controller
     public function vehicleRunningDetails($client_id)
     {  
         $vehicleTrackData=[];
-        $last_updated_time = Config::get('eclipse.offline_time');
+        $last_updated_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         $clients_gps=Client::where('id',$client_id)
                                     ->with(['vehicles'=>function($vehicle)
                                      {$vehicle->with(['gps'=>function($item){
@@ -726,7 +732,7 @@ class DashboardController extends Controller
 
     public function vehicleDataListRoot($vehiles_details){
         $vehicleTrackData=[];
-        $last_updated_time = Config::get('eclipse.offline_time');
+        $last_updated_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         foreach ($vehiles_details as $single_gps) 
         {
             if($single_gps->lat != null){
@@ -788,7 +794,7 @@ class DashboardController extends Controller
     {
         $vehicle_mode=$request->vehicle_mode;
         $user = $request->user();  
-        $oneMinute_currentDateTime=Config::get('eclipse.offline_time');
+        $oneMinute_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         if($user->hasRole('client|school')){
             $client=Client::where('user_id',$user->id)->first();
             $gps_id =  $this->getVehicleGps($client->id,$user->id);      
@@ -1151,7 +1157,7 @@ class DashboardController extends Controller
      public function vehicleModeCount(Request $request)
     {
         $user = $request->user();
-        $oneMinut_currentDateTime=Config::get('eclipse.offline_time');
+        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         $single_vehicle=0;
             
         $moving =  $this->getMoving($single_vehicle,$oneMinut_currentDateTime);
@@ -1169,7 +1175,7 @@ class DashboardController extends Controller
 
 
     public function vehicleRunningStatus($client_id){
-        $date_before_eleven_minutes = Config::get('eclipse.offline_time');
+        $date_before_eleven_minutes = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         $sleep=0;
         $online=0;
         $halt=0;
@@ -1227,7 +1233,7 @@ class DashboardController extends Controller
 
             $device_time=GpsData::select('device_time')->where('gps_id',$vehicle_data->id)->latest('device_time')->first();
             $device_time= $device_time->device_time;
-            $oneMinut_currentDateTime=Config::get('eclipse.offline_time');
+            $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
             if($device_time >= $oneMinut_currentDateTime)
             {
                 $modes=$vehicle_data->mode;

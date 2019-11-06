@@ -941,6 +941,8 @@ class VehicleController extends Controller {
         if($gps_mode=="S"){
             $last_update_time=date('Y-m-d H:i:s',strtotime("-10 minutes"));
           }
+
+
         $track_data=GpsData::select('latitude as latitude',
                       'longitude as longitude',
                       'heading as angle',
@@ -958,6 +960,8 @@ class VehicleController extends Controller {
                     ->where('gps_id',$get_vehicle->gps_id)
                     ->orderBy('device_time','desc')
                     ->first();
+
+
 
         $minutes=0;
         if($track_data == null){
@@ -1840,6 +1844,7 @@ class VehicleController extends Controller {
         $lng = $b_lng;
         $route = $lat . "," . $lng;
         $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
+    
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {

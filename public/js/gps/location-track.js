@@ -25,6 +25,12 @@ var map;
 var vehicleColor = "#0C2161";
 var vehicleScale = vehicle_scale;
 var angle=0;
+
+
+ var clickedPointRecent;
+ var clickedPointCurrentlatlng;
+
+
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -55,9 +61,6 @@ function initMap(){
 
 
  setTimeout(getMarkers, 5000);
-
-
-
 function getMarkers() {
 
     var url = 'vehicles/location-track';
@@ -204,16 +207,16 @@ function setMarketLocation(loc,angle)
     }
  var timerEvent=null;
  var clickedPointCurrent;
- var clickedPointRecent=null;
- var clickedPointCurrentlatlng;
+
  var clickedPointRecentlatlng;
 //Load google map
   function transition(result)
     {
+      console.log(clickedPointRecent);
      angle=result.liveData.angle;
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
-    
+      
 
      if(clickedPointRecent==undefined || clickedPointRecent==null)
      {
@@ -221,7 +224,7 @@ function setMarketLocation(loc,angle)
      }
      else
      { 
-      var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
+      // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
       getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle);       
      }
      clickedPointRecent = clickedPointCurrent;
@@ -230,24 +233,22 @@ function setMarketLocation(loc,angle)
 // -------------------it will return snappede point between two points------------------
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
-    
-    console.log(unsnappedWaypoints);
-    $.ajax({
-     url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
-    crossDomain: true,
-    dataType: 'jsonp'
-     }).done(function(response) {
-    if (response.error) {
-      alert("error" + response.error.message);
-      return;
-    }
-    $.each(response.snappedPoints, function (i, snap_data) {
-    var loc=snap_data.location;
-    var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-    addToLocationQueue(latlng,angle);
-    });
-   });
- }
+      $.ajax({
+       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+      crossDomain: true,
+      dataType: 'jsonp'
+       }).done(function(response) {
+      if (response.error) {
+        alert("error" + response.error.message);
+        return;
+      }
+      $.each(response.snappedPoints, function (i, snap_data) {
+      var loc=snap_data.location;
+      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
+      addToLocationQueue(latlng,angle);
+      });
+     });
+   }
 // ---------------------draw polyline--------------------------
 // ---------------------que list--------------------------
    var locationQueue=[];
