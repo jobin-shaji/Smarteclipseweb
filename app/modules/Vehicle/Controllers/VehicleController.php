@@ -941,6 +941,8 @@ class VehicleController extends Controller {
         if($gps_mode=="S"){
             $last_update_time=date('Y-m-d H:i:s',strtotime("-10 minutes"));
           }
+
+
         $track_data=GpsData::select('latitude as latitude',
                       'longitude as longitude',
                       'heading as angle',
@@ -958,6 +960,8 @@ class VehicleController extends Controller {
                     ->where('gps_id',$get_vehicle->gps_id)
                     ->orderBy('device_time','desc')
                     ->first();
+
+    
 
         $minutes=0;
         if($track_data == null){
