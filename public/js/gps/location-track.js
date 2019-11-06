@@ -4,6 +4,7 @@ function getUrl() {
 capitalize = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
 }
+ var recentPoppedLocation;
 var vehiclePath = document.getElementById('svg_con').value;
 var start_lat = document.getElementById('lat').value;
 var start_lng = document.getElementById('lng').value;
@@ -27,10 +28,10 @@ var vehicleScale = vehicle_scale;
 var angle=0;
 
 
- var clickedPointRecent;
- var clickedPointCurrentlatlng;
+ var clickedPointRecent=null;
+ var clickedPointCurrentlatlng=null;
  var locationQueue=[];
- var recentPoppedLocation=null;
+
 
 
 function initMap(){
@@ -39,7 +40,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 21,
+        zoom: 18,
         mapTypeId: 'roadmap'
 
     });  
@@ -62,7 +63,7 @@ function initMap(){
 }
 
 
- setTimeout(getMarkers, 5000);
+ setTimeout(getMarkers, 1000);
 function getMarkers() {
 
     var url = 'vehicles/location-track';
@@ -134,7 +135,7 @@ function getMarkers() {
 
                     
                     transition(res)
-                    setTimeout(getMarkers, 5000);
+                    setTimeout(getMarkers, 10000);
                 
             }
 
@@ -179,8 +180,8 @@ function setMarketLocation(loc,angle)
         marker.setIcon(icon);
         var arranged_location=offsetCenter(loc)
         marker.setPosition(arranged_location); 
-        map.setZoom(19);
-        map.panTo(arranged_location);      
+        // map.setZoom(16);
+        // map.panTo(arranged_location);      
     }
 
     function doWork()
@@ -205,7 +206,7 @@ function setMarketLocation(loc,angle)
     else{
      
      }
-    setTimeout(doWork,98);
+    setTimeout(doWork,140);
     }
  var timerEvent=null;
  var clickedPointCurrent;
@@ -317,7 +318,7 @@ function checkDistanceBetweenTwoPoints(first_point,second_pont)
     }
   }
   // ----------------------distance between two points---------------------
-  $('document').ready(function(){setTimeout(doWork,98);});
+  $('document').ready(function(){setTimeout(doWork,140);});
 
 
 
