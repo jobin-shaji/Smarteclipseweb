@@ -62,7 +62,7 @@ function initMap(){
 }
 
 
- setTimeout(getMarkers, 7000);
+ setTimeout(getMarkers, 3000);
 function getMarkers() {
 
     var url = 'vehicles/location-track';
@@ -134,7 +134,7 @@ function getMarkers() {
 
                     
                     transition(res)
-                    setTimeout(getMarkers, 7000);
+                    setTimeout(getMarkers, 30000);
                 
             }
 
@@ -205,7 +205,7 @@ function setMarketLocation(loc,angle)
     else{
      
      }
-    setTimeout(doWork,120);
+    setTimeout(doWork,200);
     }
  var timerEvent=null;
  var clickedPointCurrent;
@@ -317,7 +317,7 @@ function checkDistanceBetweenTwoPoints(first_point,second_pont)
     }
   }
   // ----------------------distance between two points---------------------
-  $('document').ready(function(){setTimeout(doWork,120);});
+  $('document').ready(function(){setTimeout(doWork,200);});
 
 
 
