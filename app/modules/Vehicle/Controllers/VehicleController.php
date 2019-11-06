@@ -1832,11 +1832,10 @@ class VehicleController extends Controller {
     }
 /////////////// snap root for live data///////////////////////////////////
     function LiveSnapRoot($b_lat, $b_lng) {
-        dd($b_lat);
         $lat = $b_lat;
         $lng = $b_lng;
         if($lat != null){
-            $route = $lat . "," . $lng;
+            $route = $lat.",".$lng;
             $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
             $geocode_stats = file_get_contents($url);
             $output_deals = json_decode($geocode_stats);
