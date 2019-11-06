@@ -936,35 +936,6 @@ function downloadTotalKMReport(){
 
 
 
-// function selectDealer(dealer)
-// {
-//     var url = 'select/subdealer';
-//     var data = {
-//         dealer : dealer      
-//     };
-//     backgroundPostData(url,data,'rootSubdealer',{alert:true}); 
-// }
-
-// function TotalKM(res)
-// {
-//     console.log(res);
-//     //  $("#sub_dealer").empty();
-//     //   // var sub_dealer='  <option value=""  >select</option>';  
-//     //     // $("#sub_dealer").append(sub_dealer); 
-//     // var length=res.sub_dealers.length
-//     // for (var i = 0; i < length; i++) {     
-//     //      sub_dealer='  <option value="'+res.sub_dealers[i].id+'"  >'+res.sub_dealers[i].name+'</option>';  
-//     //     $("#sub_dealer").append(sub_dealer);  
-//     // } 
-// }
-
-
-
-
-
-
-
-
 
 function downloadDailyKMReport(){    
     var url = 'daily-km-report/export';
@@ -1262,5 +1233,29 @@ function rootSubdealer(res)
                       
         }
     }
+
+/////////////////////////Km Report/////////////////////////
+function downloadKMReport(){    
+    var url = 'km-report/export';
+    var  vehicle=$('#vehicle').val(); 
+    var  report_type=$('#report').val();   
+    if(vehicle==null)
+    {
+       alert("Please select Vehicle")
+    }
+    else if(report_type==null)
+    {
+      alert("Please select Report Type")
+    }
+    else
+    {
+      
+        var data = {
+    id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'report_type':report_type
+    };      
+    downloadFile(url,data);
+    }   
+   
+}
 
    
