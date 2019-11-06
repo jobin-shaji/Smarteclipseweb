@@ -33,7 +33,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 17,
+        zoom: 18,
         mapTypeId: 'roadmap'
 
     });  
@@ -52,7 +52,7 @@ function initMap(){
         map: map,
         icon: icon
     });
-    map.setOptions({maxZoom:17,minZoom:9});
+    map.setOptions({maxZoom:18,minZoom:9});
     getMarkers(map);
 }
 
