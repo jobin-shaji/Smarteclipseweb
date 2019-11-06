@@ -128,7 +128,7 @@ function getMarkers() {
                     document.getElementById("user").innerHTML = res.vehicle_name.toUpperCase();
 
                     
-                    transition(res)
+                    transition(res);
                     setTimeout(getMarkers, 5000);
                 
             }
