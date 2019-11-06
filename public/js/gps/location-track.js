@@ -29,10 +29,10 @@ var angle=0;
 
 
 var recentPoppedLocation=null;
- var clickedPointRecent;
- var clickedPointCurrentlatlng;
- var locationQueue=[];
- 
+var clickedPointRecent;
+var clickedPointCurrentlatlng;
+var locationQueue=[];
+
 
 
 
@@ -45,11 +45,11 @@ function initMap(){
         zoom: 18,
         mapTypeId: 'roadmap'
 
-    });  
+    }); 
      var icon = { // car icon
         path: vehiclePath,
         scale: parseFloat(vehicleScale),
-        fillColor: vehicleColor, //<-- Car Color, you can change it 
+        fillColor: vehicleColor, //<-- Car Color, you can change it
         // fillOpacity: 1,
         // strokeWeight: 1,
         fillOpacity: parseFloat(opacity),
@@ -65,7 +65,7 @@ function initMap(){
 }
 
 
- setTimeout(getMarkers, 1000);
+setTimeout(getMarkers, 1000);
 function getMarkers() {
 
     var url = 'vehicles/location-track';
@@ -109,7 +109,7 @@ function getMarkers() {
                         vehicleColor=" #858585";
                     } else {
                       // if(res.liveData.last_seen >'1 hour ago'){
-                        
+                       
                       // }
                         if(res.liveData.last_seen){
                             $('#last_seen').text(res.liveData.last_seen);
@@ -134,7 +134,7 @@ function getMarkers() {
                     {
                       document.getElementById("car_power").innerHTML = "Disconnected";
                     }
-                      
+                     
                     // document.getElementById("user").innerHTML = res.client_name;
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
                     document.getElementById("car_speed").innerHTML = res.liveData.speed;
@@ -142,10 +142,10 @@ function getMarkers() {
                     document.getElementById("car_location").innerHTML = res.liveData.place;
                     document.getElementById("user").innerHTML = res.vehicle_name.toUpperCase();
 
-                    
+                   
                     transition(res)
                     setTimeout(getMarkers, 10000);
-                
+               
             }
 
         },
@@ -177,7 +177,7 @@ function setMarketLocation(loc,angle)
   {
 
     var angle=parseFloat(angle);
-    var icon = { // car icon       
+    var icon = { // car icon      
         path:"M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805",
         rotation:angle,
         fillOpacity: 1.2,
@@ -188,9 +188,9 @@ function setMarketLocation(loc,angle)
         var icon;
         marker.setIcon(icon);
         var arranged_location=offsetCenter(loc)
-        marker.setPosition(arranged_location); 
+        marker.setPosition(arranged_location);
         // map.setZoom(16);
-        // map.panTo(arranged_location);      
+        // map.panTo(arranged_location);     
     }
 
     function doWork()
@@ -203,45 +203,45 @@ function setMarketLocation(loc,angle)
 
 
         if(recentPoppedLocation==null)
-        {  
+        { 
             setMarketLocation(current[0],current[1]);
-            drawLine(current[0],current[0]);            
+            drawLine(current[0],current[0]);           
         }
-        else{   
-            
+        else{  
+           
             drawLine(recentPoppedLocation[0],current[0]);
             setMarketLocation(current[0],current[1]);
          }
-        
+       
         recentPoppedLocation = current[0];
-        
+       
      }
     else{
-     
+    
      }
     setTimeout(doWork,140);
     }
- var timerEvent=null;
- var clickedPointCurrent;
+var timerEvent=null;
+var clickedPointCurrent;
 
- var clickedPointRecentlatlng;
+var clickedPointRecentlatlng;
 //Load google map
   function transition(result)
     {
-     
+    
      angle=result.liveData.angle;
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
-      
+     
 
      if(clickedPointRecent==undefined || clickedPointRecent==null)
      {
         getSnappedPoint([clickedPointCurrent],angle)
      }
      else
-     { 
+     {
       // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
-      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle);       
+      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle);      
      }
      clickedPointRecent = clickedPointCurrent;
      clickedPointRecentlatlng=clickedPointCurrentlatlng;
@@ -250,7 +250,7 @@ function setMarketLocation(loc,angle)
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
       $.ajax({
-       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true',
       crossDomain: true,
       dataType: 'jsonp'
        }).done(function(response) {
@@ -267,7 +267,7 @@ function setMarketLocation(loc,angle)
    }
 // ---------------------draw polyline--------------------------
 // ---------------------que list--------------------------
-   
+  
     function addToLocationQueue(loc,angle)
      {
        var location_angle=[loc,angle];
@@ -277,14 +277,14 @@ function setMarketLocation(loc,angle)
     {
      if(locationQueue.length>0)
       {
-            return locationQueue.splice(0,1)[0];    
+            return locationQueue.splice(0,1)[0];   
       }
         else
         return null;
     }
 // ---------------------que list--------------------------
 // ---------------------center on  a marker--------------------------
-function offsetCenter(latlng) 
+function offsetCenter(latlng)
   {
     var offsetx=1;
     var offsety=0;
@@ -310,7 +310,7 @@ function checkDistanceBetweenTwoPoints(first_point,second_pont)
     var lon2=second_pont.lng();
     var unit="K";
 
-    if ((lat1 == lat2) && (lon1 == lon2)) 
+    if ((lat1 == lat2) && (lon1 == lon2))
     {
         return 0;
     }
@@ -349,9 +349,9 @@ var hospital_flag=0;
 $('#poi_atm').click(function(){
     deleteMarkersPOI();
     if(atm_flag==0){
-       $('.poi_atm').css('background', ' #f2b231 '); 
-        $('.poi_hopital').css('background', '#FFFFFF'); 
-          $('.poi_petrol').css('background', '#FFFFFF'); 
+       $('.poi_atm').css('background', ' #f2b231 ');
+        $('.poi_hopital').css('background', '#FFFFFF');
+          $('.poi_petrol').css('background', '#FFFFFF');
         var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
         service.nearbySearch(
           {location: pyrmont, radius: 1400, type:['atm']},
@@ -362,21 +362,21 @@ $('#poi_atm').click(function(){
 
          atm_flag=1;
          }else{
-          $('.poi_atm').css('background', '#FFFFFF'); 
+          $('.poi_atm').css('background', '#FFFFFF');
            deleteMarkersPOI();
            atm_flag=0;
          }
- 
 
- });
+
+});
 
 
 $('#poi_petrol').click(function(){
         deleteMarkersPOI();
         if(petrol_flag==0){
-          $('.poi_petrol').css('background', ' #f2b231 '); 
-          $('.poi_hopital').css('background', '#FFFFFF'); 
-          $('.poi_atm').css('background', '#FFFFFF'); 
+          $('.poi_petrol').css('background', ' #f2b231 ');
+          $('.poi_hopital').css('background', '#FFFFFF');
+          $('.poi_atm').css('background', '#FFFFFF');
           var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
           service.nearbySearch(
           {location: pyrmont, radius: 3000, type:['gas_station']},
@@ -387,16 +387,16 @@ $('#poi_petrol').click(function(){
 
           petrol_flag=1;
          }else{
-           $('.poi_petrol').css('background', '#FFFFFF'); 
+           $('.poi_petrol').css('background', '#FFFFFF');
            deleteMarkersPOI();
            petrol_flag=0;
          }
-  
+ 
     });
- $('#poi_hopital').click(function(){
-          $('.poi_hopital').css('background', ' #f2b231 '); 
-          $('.poi_petrol').css('background', '#FFFFFF'); 
-          $('.poi_atm').css('background', '#FFFFFF'); 
+$('#poi_hopital').click(function(){
+          $('.poi_hopital').css('background', ' #f2b231 ');
+          $('.poi_petrol').css('background', '#FFFFFF');
+          $('.poi_atm').css('background', '#FFFFFF');
         deleteMarkersPOI();
         if(hospital_flag==0){
           var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
@@ -408,15 +408,15 @@ $('#poi_petrol').click(function(){
               });
           hospital_flag=1;
          }else{
-          $('.poi_hopital').css('background', '#FFFFFF'); 
+          $('.poi_hopital').css('background', '#FFFFFF');
            deleteMarkersPOI();
            hospital_flag=0;
         }
     });
 
 // ---------------find nearest map points-----------------
- var infowindow = new google.maps.InfoWindow();
- function createMarkers(places) {
+var infowindow = new google.maps.InfoWindow();
+function createMarkers(places) {
         deleteMarkersPOI();
         var bounds = new google.maps.LatLngBounds();
         for (var i = 0, place; place = places[i]; i++) {
@@ -441,11 +441,11 @@ $('#poi_petrol').click(function(){
           POI_markers.push(marker);
           bounds.extend(place.geometry.location);
 
-         
+        
         }
         map.fitBounds(bounds);
-        setMapOnAllPOI(map); 
-        
+        setMapOnAllPOI(map);
+       
       }
       function setMapOnAllPOI(map) {
         for (var i = 0; i < POI_markers.length; i++) {
@@ -465,9 +465,9 @@ $('#poi_petrol').click(function(){
       function deleteMarkersPOI() {
         clearMarkersPOI();
          POI_markers = [];
-        
+       
       }
-     
+    
 // ---------------find nearest map points-----------------
 // -------------------playback---------------------------
 
