@@ -205,7 +205,7 @@ function setMarketLocation(loc,angle)
     else{
      
      }
-    setTimeout(doWork,50);
+    setTimeout(doWork,140);
     }
  var timerEvent=null;
  var clickedPointCurrent;
@@ -317,7 +317,7 @@ function checkDistanceBetweenTwoPoints(first_point,second_pont)
     }
   }
   // ----------------------distance between two points---------------------
-  $('document').ready(function(){setTimeout(doWork,50);});
+  $('document').ready(function(){setTimeout(doWork,140);});
 
 
 
