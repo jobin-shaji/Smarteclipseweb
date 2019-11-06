@@ -29,6 +29,8 @@ var angle=0;
 
  var clickedPointRecent;
  var clickedPointCurrentlatlng;
+ var locationQueue=[];
+ var recentPoppedLocation=null;
 
 
 function initMap(){
@@ -251,8 +253,7 @@ function setMarketLocation(loc,angle)
    }
 // ---------------------draw polyline--------------------------
 // ---------------------que list--------------------------
-   var locationQueue=[];
-   var recentPoppedLocation=null;
+   
     function addToLocationQueue(loc,angle)
      {
        var location_angle=[loc,angle];
