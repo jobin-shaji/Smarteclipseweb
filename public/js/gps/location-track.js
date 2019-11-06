@@ -40,7 +40,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 21,
+        zoom: 18,
         mapTypeId: 'roadmap'
 
     });  
@@ -180,7 +180,7 @@ function setMarketLocation(loc,angle)
         marker.setIcon(icon);
         var arranged_location=offsetCenter(loc)
         marker.setPosition(arranged_location); 
-        map.setZoom(19);
+        // map.setZoom(16);
         // map.panTo(arranged_location);      
     }
 
