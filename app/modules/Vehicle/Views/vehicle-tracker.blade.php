@@ -82,10 +82,10 @@
               <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label></b> km/h
+              <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label> km/h</b> 
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label></b>%
+              <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label> %</b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-plug"></i><b><label id="car_power"></label></b>
@@ -103,7 +103,7 @@
               <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b>
             </a>                                                      
             <div class="viewmore_location">
-              <i class="fa fa-map-marker"></i>-<b><span id="car_location" style="font-size: .7rem!important"></span></b>
+              <i class="fa fa-map-marker"></i><b><span id="car_location" style="font-size: .7rem!important"></span></b>
             </div>
             <div id="odometer" class="odometer" style="margin-left: 80px">000000</div>
 
