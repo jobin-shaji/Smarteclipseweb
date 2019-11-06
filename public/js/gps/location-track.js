@@ -268,7 +268,7 @@ function setMarketLocation(loc,angle)
 // ---------------------center on  a marker--------------------------
 function offsetCenter(latlng) 
   {
-    var offsetx=-9;
+    var offsetx=1;
     var offsety=0;
     // offsetx is the distance you want that point to move to the right, in pixels
     // offsety is the distance you want that point to move upwards, in pixels
