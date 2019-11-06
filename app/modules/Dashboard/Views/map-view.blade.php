@@ -179,8 +179,6 @@
 </div>
 </section>
 @section('script')
-
-<script src="{{asset('js/gps/m_dashb.js')}}"></script>
 <script src="{{asset('js/gps/map-view.js')}}"></script>
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
