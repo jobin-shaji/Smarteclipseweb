@@ -57,10 +57,11 @@ class DailyKMReportController extends Controller
         // dd($dailykm_report);    
         return DataTables::of($dailykm_report)
         ->addIndexColumn()        
-        // ->addColumn('km', function ($dailykm_report) { 
-        //     return $dailykm_report->dailyKm->where('date',$dailykm_report->date)->first()->km;
-                      
-        // })
+       ->addColumn('totalkm', function ($dailykm_report) {
+          $gps_km=$dailykm_report->km;
+          $km=round($gps_km/1000);
+            return $km;
+        })
         ->make();
     }
     public function export(Request $request)

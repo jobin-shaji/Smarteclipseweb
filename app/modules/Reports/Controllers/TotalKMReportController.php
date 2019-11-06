@@ -66,12 +66,13 @@ class TotalKMReportController extends Controller
             $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
         }                     
         $totalkm_report = $query->get();
-
-
-
         return DataTables::of($totalkm_report)
         ->addIndexColumn()        
-       
+        ->addColumn('totalkm', function ($totalkm_report) {
+          $gps_km=$totalkm_report->km;
+          $km=round($gps_km/1000);
+            return $km;
+        })
         ->make();
     }
     public function export(Request $request)
@@ -155,7 +156,11 @@ class TotalKMReportController extends Controller
         $km_report = $query->get();
         return DataTables::of($km_report)
         ->addIndexColumn()        
-       
+        ->addColumn('totalkm', function ($km_report) {
+          $gps_km=$km_report->km;
+          $km=round($gps_km/1000);
+            return $km;
+        })
         ->make();
     }
      public function kmExport(Request $request)
