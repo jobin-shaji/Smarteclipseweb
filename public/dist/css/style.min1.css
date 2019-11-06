@@ -5292,7 +5292,7 @@ input[type=submit].btn-block {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1.25rem
+    padding: 0.6rem
 }
 
 .card-title {
@@ -11079,7 +11079,8 @@ ul.list-style-none li a:hover {
 .card .card-title {
     position: relative;
     font-weight: 600;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    margin-left: 80px;
 }
 
 .card .card-actions {
@@ -17193,7 +17194,7 @@ border-radius: 6px 0 6px 6px;
 }
 .poi_item {
     padding-top: 8px;
-    border: solid 4px #f7af18;
+    border: solid 4px #fdfbf7;
     margin: 10% 0;
 }
  /*-------------------tooltip--------------------------------*/

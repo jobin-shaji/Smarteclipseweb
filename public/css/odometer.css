@@ -32,12 +32,12 @@
     position: fixed;
     z-index: 9999;
     left: 2%;
-    bottom: 23px;
+    bottom: 60px;
     background: #e5e4e2;
     padding: 14px;
     border-radius: 24px;
     color: #000;
-border: solid 2px #f4af19
+border: solid 2px #9e9d9a8c
 }
 
 .cover_poi {
@@ -49,7 +49,8 @@ border: solid 2px #f4af19
 
 .poi_item {
     padding-top: 8px;
-    border: solid 4px #f7af18;
+    /*border: outset #88868375;*/
+    box-shadow: 5px 5px #88868375;
     margin: 10% 0;
 }
 a.btn.btn-block.btn-social.btn-bitbucket.track_item {
@@ -71,7 +72,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     z-index: 1;
     border-radius: 50px;
     margin-top: 0!important;
-    border: solid 4px #f4af19;
+    border: outset #9e9d9a8c;
 }
 
 .share_button {
