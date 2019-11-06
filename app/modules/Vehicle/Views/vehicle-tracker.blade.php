@@ -4,7 +4,20 @@
 <section class="content box">
 <div class="page-wrapper_new_map">
 
-  
+<!--   <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Live Track</li>
+         </ol>
+          @if(Session::has('message'))
+            <div class="pad margin no-print">
+               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                  {{ Session::get('message') }}  
+               </div>
+            </div>
+            @endif  
+        </nav>
+   -->
+
   <form id="playback_form">
  <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
   <div class="cover_playback" style="width:43%;">
@@ -55,7 +68,7 @@
                     <b>
                     </b></p>
                      <div class="cover_ofline"><b>
-                      <div class="cover_status"> 
+                      <div class="cover_status" style="margin-left: 40px"> 
                         <span id="online" style="display: none;">
                             <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Online
                         </span>
@@ -73,7 +86,7 @@
 
                         <div class="col-sm-12 social-buttons">
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i class="fa fa-car"></i><label id="vehicle_name"></label><div style="float:right;width:200px"><div id="odometer" class="odometer">000506</div></div></a>
+                                <i class="fa fa-car"></i><label id="vehicle_name"></label></a>
 
                             <a class="btn btn-block btn-social btn-bitbucket track_item">
                                 <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
@@ -90,29 +103,29 @@
                                     <?php 
                                       $plug_Status=1; 
                                       if($plug_Status==1){ ?>
-                                    <i class="fa fa-check"></i>
+                                    
                                     <?php }else{ ?>
                                     <i class="fa fa-times"></i>
                                     <?php } ?>
                                 </span>
                             </a>
  <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">Moving Time : </label></b>
+                                <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
                             </a>
  <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i><image src="/assets/images/stop1-b.png" width="22" height="20"></i><b><label id="car_bettary">Stop Time : </label></b>
+                                <i><image src="/assets/images/stop1-b.png" width="22" height="20"></i><b><label id="car_bettary">STOP TIME : </label></b>
                             </a>
  <a class="btn btn-block btn-social btn-bitbucket track_item">
-                               <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">Halt Time :</label></b>
+                               <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">HALT TIME :</label></b>
                             </a>
  <a class="btn btn-block btn-social btn-bitbucket track_item">
-                                <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">Sleep Time: </label></b>
+                                <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b>
                             </a>                                                      
                             <div class="viewmore_location">
                                 <i class="fa fa-map-marker"></i>-<b><span id="car_location" style="font-size: .7rem!important"></span></b>
                             </div>
+                            <div id="odometer" class="odometer" style="margin-left: 80px">000000</div>
 
-                            
                             <hr>
 <?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
@@ -181,86 +194,3 @@
 @endsection
 
 <!--  <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script> -->
-<style>
-  .btn {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 0.25rem 0.75rem;
-        /* line-height: 1.5; */
-    border-radius: 2px;
-    
-}
-.btn {
-    background: #f7b018;
-    border: none;
-    color: white;
-    padding: 0!important;
-    cursor: pointer;
-    font-size: 12px!important;
-    float: right;
-    margin:3 0!important;
-}
-.cover_playback {
-    position: relative;
-    position: fixed;
-    z-index: 9999;
-    left: 2%;
-    bottom: 23px;
-    background: #e5e4e2;
-    padding: 14px;
-    border-radius: 24px;
-    color: #000;
-border: solid 2px #f4af19
-}
-
-.cover_poi {
-    position: fixed;
-    z-index: 2;
-    left: 40px;
-    top: 203px;
-}
-
-.poi_item {
-    padding-top: 8px;
-    border: solid 4px #f7af18;
-    margin: 10% 0;
-}
-a.btn.btn-block.btn-social.btn-bitbucket.track_item {
-    background: #fff!important;
-    text-align: left;
-    line-height: 0%;
-    color: #000;
-    border-radius: 10px;
-    border:solid 1px #f7af18!important;
-}
-
-
-.card-body {
-   min-height:0!important;
-}
-.card.data_list_cover {
-    background: #f2f3f4;
-    position: fixed;
-    z-index: 1;
-    border-radius: 50px;
-    margin-top: 0!important;
-    border: solid 4px #f4af19;
-}
-
-.share_button {
-    bottom:0!important;
-    right: 0!important;
-    position:relative!important;
-    z-index: 2;
-    float: left;
-    margin:0 0 0 21%!important;
-}
-  </style>
