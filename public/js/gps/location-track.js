@@ -230,24 +230,22 @@ function setMarketLocation(loc,angle)
 // -------------------it will return snappede point between two points------------------
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
-    
-    console.log(unsnappedWaypoints);
-    $.ajax({
-     url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
-    crossDomain: true,
-    dataType: 'jsonp'
-     }).done(function(response) {
-    if (response.error) {
-      alert("error" + response.error.message);
-      return;
-    }
-    $.each(response.snappedPoints, function (i, snap_data) {
-    var loc=snap_data.location;
-    var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-    addToLocationQueue(latlng,angle);
-    });
-   });
- }
+      $.ajax({
+       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+      crossDomain: true,
+      dataType: 'jsonp'
+       }).done(function(response) {
+      if (response.error) {
+        alert("error" + response.error.message);
+        return;
+      }
+      $.each(response.snappedPoints, function (i, snap_data) {
+      var loc=snap_data.location;
+      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
+      addToLocationQueue(latlng,angle);
+      });
+     });
+   }
 // ---------------------draw polyline--------------------------
 // ---------------------que list--------------------------
    var locationQueue=[];
