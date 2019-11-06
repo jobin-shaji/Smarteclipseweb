@@ -3,6 +3,7 @@
 @section('content')
 <section class="content box">
 <div class="page-wrapper_new_map">
+
 <!--   <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Live Track</li>
@@ -16,6 +17,7 @@
             @endif  
         </nav>
    -->
+
   <form id="playback_form">
  <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
   <div class="cover_playback" style="width:43%;">
@@ -182,43 +184,16 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
 <script src="{{asset('js/odometer.js')}}"></script>
 <script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=geometry,places&callback=initMap" async defer></script>
 
-<script>
 
-        var scrollNumber0 = new gScrollNumber(".scroll-number-0", {
-           width: 50,
-           color: "white",
-           fontSize: 16,
-           autoSizeContainerWidth: true
-        });
-        var scrollNumber1 = new gScrollNumber(".scroll-number-1", {
-            width: 50,
-            color: "white",
-            fontSize: 16,
-            autoSizeContainerWidth: true
-        });
-        var value0,value1;
-        value0 = 0;
-        value1 = 0;
-        setInterval(function () {
-            scrollNumber0.run(value0++);
-            scrollNumber1.run(value1 += 2);
-        }, 1000);
-    </script>
-  <!-------------------------------------second one----------------------------------------->
-  <script>
-  setTimeout(function(){
-    odometer.innerHTML = 103487;
-}, 1000);
-</script>
 
 
 @endsection
 
 @endsection
 
- <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
+<!--  <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script> -->
 <style>
   .btn {
     display: inline-block;

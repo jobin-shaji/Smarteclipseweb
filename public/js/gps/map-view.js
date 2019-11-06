@@ -394,3 +394,7 @@ $(document).ready(function() {
   closeDuration: 300
  });
 });
+
+$('.cover_track_data').click(function(){
+   $('.track_status').css('display','none');
+});
