@@ -181,8 +181,8 @@
 </section>
 
 @section('script')
-<link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
-<script src="{{asset('js/odometer.js')}}"></script>
+<!-- <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}"> -->
+<!-- <script src="{{asset('js/odometer.js')}}"></script> -->
 <script src="{{asset('js/gps/location-track.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=geometry,places&callback=initMap" async defer></script>
 
