@@ -79,9 +79,9 @@ function vehicleTrack(res) {
       }
       var gpsID = JSONObject[i].id;
       var imei = JSONObject[i].imei;
-      var reg = JSONObject[i].register_number;
+      //var reg = JSONObject[i].register_number;
       var gps_encrypt_id = JSONObject[i].gps_encrypt_id;
-      var vehicle_name = JSONObject[i].vehicle_name;
+      //var vehicle_name = JSONObject[i].vehicle_name;
       var loc = new google.maps.LatLng(lat, lng);
       var mode = JSONObject[i].mode;
       var color = "";
