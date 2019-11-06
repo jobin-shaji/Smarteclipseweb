@@ -230,6 +230,9 @@ function setMarketLocation(loc,angle)
 // -------------------it will return snappede point between two points------------------
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
+     console.log(unsnappedWaypoints);
+
+     
       $.ajax({
        url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
       crossDomain: true,
