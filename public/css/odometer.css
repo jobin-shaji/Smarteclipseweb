@@ -25,14 +25,13 @@
     cursor: pointer;
     font-size: 12px!important;
     float: right;
-    margin:3 0!important;
+    margin:1% 0!important;
 }
 .cover_playback {
-    position: relative;
-    position: fixed;
+        position: fixed;
     z-index: 9999;
     left: 2%;
-    bottom: 60px;
+    bottom:100px;
     background: #e5e4e2;
     padding: 14px;
     border-radius: 24px;
@@ -43,8 +42,8 @@ border: solid 2px #9e9d9a8c
 .cover_poi {
     position: fixed;
     z-index: 2;
-    left: 40px;
-    top: 203px;
+    left: 2%;
+    top: 22%;
 }
 
 .poi_item {
@@ -52,6 +51,11 @@ border: solid 2px #9e9d9a8c
     /*border: outset #88868375;*/
     box-shadow: 5px 5px #88868375;
     margin: 10% 0;
+    background:#fff;
+    -webkit-box-shadow: 0px 17px 20px 5px rgba(153,153,153,1);
+-moz-box-shadow: 0px 17px 20px 5px rgba(153,153,153,1);
+box-shadow: 0px 17px 20px 5px rgba(153,153,153,1);
+
 }
 a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     background: #fff!important;
@@ -59,7 +63,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     line-height: 0%;
     color: #000;
     border-radius: 10px;
-    border:solid 1px #f7af18!important;
+   
 }
 
 
@@ -72,7 +76,10 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     z-index: 1;
     border-radius: 50px;
     margin-top: 0!important;
-    border: outset #9e9d9a8c;
+    border: solid 2px #9e9d9a8c;
+ -webkit-box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
+-moz-box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
+box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
 }
 
 .share_button {
