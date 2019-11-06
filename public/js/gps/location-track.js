@@ -120,11 +120,18 @@ function getMarkers() {
 
                     }
                     if (res.liveData.ign == 1) {
-                        document.getElementById("ignition").innerHTML = "Ignition ON";
-                     }else
-                      {
-                         document.getElementById("ignition").innerHTML = "Ignition OFF";
-                      }
+                      document.getElementById("ignition").innerHTML = "Ignition ON";
+                    }else
+                    {
+                      document.getElementById("ignition").innerHTML = "Ignition OFF";
+                    }
+
+                    if(res.liveData.power == 1) {
+                      document.getElementById("car_power").innerHTML = "Connected";
+                    }else
+                    {
+                      document.getElementById("car_power").innerHTML = "Disconnected";
+                    }
                       
                     // document.getElementById("user").innerHTML = res.client_name;
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
