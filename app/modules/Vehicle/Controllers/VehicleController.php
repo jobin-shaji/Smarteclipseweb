@@ -907,11 +907,15 @@ class VehicleController extends Controller {
                               ->first();   
         if($track_data==null)
         {
-            return view('Vehicle::location-error');
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
         }
         else if($track_data->latitude==null || $track_data->longitude==null)
         {
-            return view('Vehicle::location-error');
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
         }
         else
         {
