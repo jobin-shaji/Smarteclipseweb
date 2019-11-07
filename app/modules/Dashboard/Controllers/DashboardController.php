@@ -512,7 +512,7 @@ class DashboardController extends Controller
         if($gps->satllite!=null){
          $satelite=$gps->satllite;   
         }
-        $network_status=$gps->network_status;
+        $network_status=$gps->gsm_signal_strength;
         $ignition=$gps->ignition;
         if($user->hasRole('root')){
             $fuel =$gps->fuel_status*100/15;
@@ -541,15 +541,15 @@ class DashboardController extends Controller
         }
         $battery_status=(int)$gps->battery_status;
 
-        if($network_status>=50 &&  $device_time->device_time >= $connection_lost_time_difference)
+        if($network_status>=19 &&  $device_time->device_time >= $connection_lost_time_difference)
         {
             $net_status="Good";
         }
-        else if(($network_status<50 &&  $device_time->device_time >= $connection_lost_time_difference) || ($network_status>=20 &&  $device_time->device_time >= $connection_lost_time_difference))
+        else if(($network_status<19 && $network_status>=13 &&  $device_time->device_time >= $connection_lost_time_difference))
         {
             $net_status="Average";
         }
-        else if(($network_status<20 && $device_time->device_time >= $connection_lost_time_difference))
+        else if(($network_status<=12 && $device_time->device_time >= $connection_lost_time_difference))
         {
             $net_status="Poor";
         }else{
