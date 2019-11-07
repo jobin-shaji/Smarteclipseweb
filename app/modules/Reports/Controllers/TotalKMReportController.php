@@ -138,7 +138,8 @@ class TotalKMReportController extends Controller
             'date',  
             \DB::raw('SUM(km) as km')    
         )
-        ->with('gps.vehicle') 
+        ->with('gps.vehicle')
+        // ->with('alert')  
         ->groupBy('gps_id')   
         ->orderBy('id', 'desc');             
          if($vehicle==0 || $vehicle==null)
@@ -153,15 +154,41 @@ class TotalKMReportController extends Controller
         if($report_type){            
             $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
         }                     
-        $km_report = $query->get();
-        return DataTables::of($km_report)
-        ->addIndexColumn()        
-        ->addColumn('totalkm', function ($km_report) {
-          $gps_km=$km_report->km;
-          $km=round($gps_km/1000);
-            return $km;
-        })
-        ->make();
+        $km_report = $query->first();
+        return response()->json([
+                'dailykm' => $km_report,               
+                'status' => 'kmReport'           
+            ]);
+
+    //     $response_data = array(
+    //             'status'  => 'success',
+    //             'message' => 'success',
+    //             'code'    =>1,                              
+    //             'polyline' => $playback,
+    //             'markers' => $playbackData,
+                
+    //         );
+    //     }else{
+    //         $response_data = array(
+    //             'status'  => 'failed',
+    //             'message' => 'failed',
+    //             'code'    =>0
+    //         );
+    //     }
+
+    
+    // return response()->json($response_data); 
+
+
+
+        // return DataTables::of($km_report)
+        // ->addIndexColumn()        
+        // ->addColumn('totalkm', function ($km_report) {
+        //   $gps_km=$km_report->km;
+        //   $km=round($gps_km/1000);
+        //     return $km;
+        // })
+        // ->make();
     }
      public function kmExport(Request $request)
     {

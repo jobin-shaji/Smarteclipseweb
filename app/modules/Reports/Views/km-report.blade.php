@@ -67,6 +67,132 @@ Total KM Report
                             </tr>
                         </thead>
                     </table>
+                    <ul class="ecosystem">
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/total-KM.svg"  />
+                            <span class="system_info" >Total KM : </span><label id="total_km"></label>
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/stops.svg"  />
+                            <span class="system_info" >No of Stops : </span><label id="no_of_stops"></label>
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Speed : </span><label id="speed">
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Alerts : </span><label id="alerts">
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Ignition Duration : </span><label id="ig_duration"></label>
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Driver Behavoiur : </span><label id="driver_behaviour"></label>
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Geofence :</span><label id="geofence"></label>
+                          </div>                     
+                      </li>
+                       <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Overspeed :</span><label id="overspeed"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Zig Zag Driving :</span><label id="zig_zag"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Accident Impact :</span><label id="acciednt_impact"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Route Deviation :</span><label id="route_deviation"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <span class="system_info" >Harsh Braking :</span><label id="harsh_braking"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >Sudden Acceleration :</span><label id="sudden_acceleration"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >Main Battery Disconnect :</span><label id="main_battery_disconnect"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >Moving Duration :</span><label id="moving_duration"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >Halt Duration :</span><label id="halt_duration"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >Sleep Duration :</span><label id="sleep_duration"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >Offline Duration :</span><label id="offline_duration"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >AC - Idle Duration :</span><label id="idle_duration"></label>
+                          </div>                     
+                      </li>
+                      <li class="sys_vapor cover_total_km">
+                          <div class="system_icon">
+                            <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                            <span class="system_info" >AC - Motion Duration :</span><label id="idle_duration">
+                          </div>                     
+                      </li>
+
+
+
+                    </ul>
+ 
                 </div>
                   </div>
                 </div>

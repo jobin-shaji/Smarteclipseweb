@@ -15,5 +15,9 @@ class DailyKm extends Model
     {
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
     }
+     public function alert()
+    {
+        return $this->hasMany('App\Modules\Alert\Models\Alert','gps_id','gps_id')->count();
+    }
 }
 
