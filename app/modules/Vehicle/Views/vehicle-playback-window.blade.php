@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>CSS Corp Info</title>
+    <title>Smart Eclipse</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <!-- Fonts and icons -->
@@ -17,8 +17,6 @@
         });
 
     </script>
-
-
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
@@ -29,70 +27,14 @@
     <link rel="stylesheet" href="{{asset('playback/assets/css/atlantis.min.css')}}">
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{asset('playback/assets/css/demo.css')}}">
+    <link rel="stylesheet" href="{{asset('playback/assets/css/custom_playback.css')}}">
 
 </head>
-
 <body data-background-color="dark">
-    <style>
-        #cover-spin {
-            position: fixed;
-            width: 100%;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background-color: rgba(255,255,255,0.7);
-            z-index: 9999;
-            display: none;
-        }
 
-        @-webkit-keyframes spin {
-            from {
-                -webkit-transform: rotate(0deg);
-            }
-
-            to {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        #cover-spin::after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 48%;
-            top: 40%;
-            width: 40px;
-            height: 40px;
-            border-style: solid;
-            border-color: black;
-            border-top-color: transparent;
-            border-width: 4px;
-            border-radius: 50%;
-            -webkit-animation: spin .8s linear infinite;
-            animation: spin .8s linear infinite;
-        }
-    </style>
 
     <div class="wrapper overlay-sidebar">
-        <div class="main-header">
-
-            <!-- End Logo Header -->
-            <!-- Navbar Header -->
-        
-            <!-- End Navbar -->
-        </div>
-
+      
         <div class="main-panel">
             <div class="content">
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
@@ -105,26 +47,23 @@
         <div id="cover-spin"></div>
 
         <!-- Custom template | don't include it in your project! -->
-        <div class="custom-template" style="top:230px">
+        <div class="custom-template open" style="top:230px">
             <div class="title">Route PlayBack</div>
             <div class="custom-content">
                 <div class="switcher">
                     <table id="tblInputForm">
-                      
+                        <tr id="trProcessMedium">
+                        
                         <tr>
                             <td><label style="font-weight:bold">Select Speed (km/hr)         </label></td>
                             <td>
                                 <select id="cmbSelect">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                    <option value="60">60</option>
-                                    <option value="70">70</option>
-                                    <option value="80">80</option>
-                                    <option value="90">90</option>
-                                    <option value="100">100</option>                                  
+
+                                   
+                                    <option value="40">1X</option>
+                                    <option value="80">2X</option>
+                                    <option value="100">3X</option>
+                                    
                                 </select>
                             </td>
                         </tr>
@@ -157,18 +96,16 @@
                         </tr>
                     </table>
 
-                   
                     <button class="btn btn-primary btn-sm" id="btnPlay">Play</button>
                     <button class="btn btn-primary btn-sm" id="btnPause">Pause</button>
-                    <button class="btn btn-primary btn-sm" id="btnReset">Reset</button>
+                    
                 </div>
             </div>
-            <div class="custom-toggle">
-                <i class="flaticon-settings"></i>
-            </div>
+            
         </div>
         <!-- End Custom template -->
     </div>
+
     <!--   Core JS Files   -->
     <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/popper.min.js')}}"></script>
@@ -189,10 +126,7 @@
     <script src="{{asset('playback/assets/js/plugin/datatables/datatables.min.js')}}"></script>
     <!-- Bootstrap Notify -->
     <script src="{{asset('playback/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-    <!-- jQuery Vector Maps -->
-    <!--<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-    <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>-->
-
+   
 
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
@@ -208,15 +142,12 @@
     <!-- Atlantis DEMO methods, don't include it in your project! -->
     <script src="{{asset('playback/assets/js/setting-demo.js')}}"></script>
     <!--<script src="../assets/js/demo.js"></script>-->
-
     <script type="text/javascript">
        $(document).ready(function() {
          getInputfromServer();
          // playVehicle();
        });
     </script>
-
-
     <script>
         var MapResult;
         var PauseFlage = false;
@@ -235,6 +166,9 @@
         var arrTotalKMLink = new Array();
         var timeoutHandle;
         var previousCoorinates;
+        var intSegforColorid = 0;
+        var arrPloyLineforBlack = new Array();
+        var arrPloyLineforSpeedcolr = new Array();
 
         var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 });
         var objImg = document.createElement('img');
@@ -254,19 +188,30 @@
             app_code = "f63d__fBLLCuREIGNr6BjQ";
 
         var mapContainer = document.getElementById('markers');
-        //var platform = new H.service.Platform({ app_code: app_code, app_id: app_id, useCIT: true, useHTTPS: secure });
         var platform = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
         var maptypes = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
-        //var map = new H.Map(mapContainer, maptypes.normal.map, { center: new H.geo.Point(52.11, 0.68), zoom: 5 });
-        var map = new H.Map(mapContainer, maptypes.normal.map, { center: new H.geo.Point(52.11, 0.68), zoom: 5 });
+
+     
+        var map = new H.Map(mapContainer, maptypes.normal.map);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (location) {
+                debugger;
+                currrentlat = location.coords.latitude;
+                currentlan = location.coords.longitude;
+                map.setCenter({ lat: location.coords.latitude, lng: location.coords.longitude });
+                map.setZoom(14);
+            });
+        }
+        map.setCenter({ lat: 10.055860, lng: 76.354247 });
+        map.setZoom(14);
+        //End of Change Log : REQ_ID-05112019_01 : Load Map position based on GeoLocation
+
         var zoomToResult = true;
-
-
         var mapTileService = platform.getMapTileService({
             type: 'base'
         });
         var parameters = {};
-       
+
         var uTurn = false;
 
         new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
@@ -296,19 +241,13 @@
         var objContainer = new H.map.Group();
         var inputTracePointGroup = new H.map.Group();
         var matchedTracePointGroup = new H.map.Group();
+        var objContainerforSpeedColr = new H.map.Group();
+        var objContainerforBlackColr = new H.map.Group();
 
         var MarkerStartEnd = new H.map.Group();
 
         var secure = (location.protocol === 'https:') ? true : false;
-        $(document).ready(function () {
-            $('#txtVehicleID').val('13');
-            $('#dtStartDate').val(new moment(Date()).format('YYYY-MM-DDThh:mm:ss'));
-            $('#dtEnddate').val(new moment(Date()).format('YYYY-MM-DDThh:mm:ss'))
-            document.getElementById("dtStartDate").max = new moment(Date()).format('YYYY-MM-DDThh:mm:01');
-            document.getElementById("dtEnddate").max = new moment(Date()).format('YYYY-MM-DDThh:mm:01');
-            $('#optServer').trigger('click');
-        });
-
+   
         $('#optServer').click(function () {
             $('#trVehicle').show();
             $('#trStartDate').show();
@@ -408,7 +347,7 @@
                 zip.file("temp.zip", data);
                 var content = zip.generate({ type: "base64", compression: "DEFLATE", compressionOptions: { level: 6 } });
                 url += "&file=" + encodeURIComponent(content);
-                debugger;
+                //debugger;
                 getJSONP(url, gotRouteMatchResponse);
                 //$('#cover-spin').hide(0);
             }
@@ -462,13 +401,13 @@
             if (originalTraceStrip !== null) {
                 objContainer.addObject(new H.map.Polyline(originalTraceStrip, { zIndex: 4, style: DEFAULT_TRACE_STYLE }));
             }
-            map.addObject(objContainer);
+            //map.addObject(objContainer); // REQ_ID-05112019_03 : Remove the Color based on speed
             if (zoomToResult) map.setViewBounds(objContainer.getBounds());
             zoomToResult = true;
             // should display the warnings … warnings = respJsonObj.Warnings;  if (warnings.length > 0) …
             mapVersion = respJsonObj.mapVersion; // RME's map version. Use it to cross reference with PDE.
             $('#cover-spin').hide(0);
-        };    
+        };
 
         var gis = {
             ///**
@@ -561,7 +500,7 @@
             toDeg: function (n) { return n * 180 / Math.PI; },
             toRad: function (n) { return n * Math.PI / 180; }
         };
-        
+
         function getAllPointsbetweenPoints(Startpoint, EndPoint, linkID, travelledSec, traveledDistance) {
             var pLat = 0.00;
             var pLng = 0.00;
@@ -621,12 +560,12 @@ Creates and adds links which then gets stored in internal object container
                     for (var c = 0; c < coords1.length; c += 2) {
                         coords2.pushLatLngAlt(coords1[c], coords1[c + 1], null); //if it is not offset link, just add new point
                         full_geometry.push(new H.geo.Point(coords1[c], coords1[c + 1]));
-                        var objLatLan = new H.geo.Point(coords1[c], coords1[c + 1]);                       
+                        var objLatLan = new H.geo.Point(coords1[c], coords1[c + 1]);
                         //debugger;
                         if (previousCoorinates != undefined) {
                             if ((previousCoorinates.lat != objLatLan.lat) && (previousCoorinates.lng != objLatLan.lng)) {
                                 getAllPointsbetweenPoints(previousCoorinates, objLatLan, routeLinks[l].linkId, routeLinks[l].mSecToReachLinkFromStart, routeLinks[l].linkLength)
-                            }                           
+                            }
                         }
 
                         full_geometry_additional.push({
@@ -634,7 +573,7 @@ Creates and adds links which then gets stored in internal object container
                             'linkid': routeLinks[l].linkId, 'mSecToReachLinkFromStart': routeLinks[l].mSecToReachLinkFromStart,
                             'linkLength': routeLinks[l].linkLength,
                             'pointType': 'O'
-                        });                        
+                        });
                         previousCoorinates = objLatLan;
 
                     }
@@ -642,32 +581,71 @@ Creates and adds links which then gets stored in internal object container
                     lLinkId = Math.abs(routeLinks[l].linkId);
                     var lineStyle = makeConfidenceAwareStyle(routeLinks[l].confidence);
                     var linkPolyline;
+                    var linkPolylineforSpeedColor;
+                    //var linkPolylineforBlackColor;
+
                     var speed;
                     var lineStyle1;
+                    var lineStyleforSpeedColor;
+                    var lineStyleforBlackColor;
+
                     speed = ((routeLinks[l].linkLength / 1000) / ((routeLinks[l].mSecToReachLinkFromStart / 1000) / 3600));
                     if (routeLinks[l].mSecToReachLinkFromStart == 0) { // Start Position
-                        lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "blue" };
+                        //lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "blue" };
+                        lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "#8990f5" };
+                        lineStyleforSpeedColor = { lineJoin: "round", lineWidth: 4, strokeColor: "blue" };
+                        lineStyleforBlackColor = { lineJoin: "round", lineWidth: 8, strokeColor: "black" };
                     }
                     else if (speed > 80) {
-                        lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "red" };
+                        //lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "red" };
+                        lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "#ffb3b8" };
+                        lineStyleforSpeedColor = { lineJoin: "round", lineWidth: 4, strokeColor: "red" };
+                        lineStyleforBlackColor = { lineJoin: "round", lineWidth: 8, strokeColor: "black" };
                     }
                     else if ((speed > 50) && (speed < 80)) {
                         lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "#FFBF00" }; //"Amber"
+                        //lineStyleforSpeedColor = { lineJoin: "round", lineWidth: 4, strokeColor: "#FFBF00" };
+                        lineStyleforSpeedColor = { lineJoin: "round", lineWidth: 4, strokeColor: "#fdffcf" };
+                        lineStyleforBlackColor = { lineJoin: "round", lineWidth: 8, strokeColor: "black" };
                     }
                     else {
                         lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "blue" };
+                        //lineStyleforSpeedColor = { lineJoin: "round", lineWidth: 4, strokeColor: "blue" };
+                        lineStyle1 = { lineJoin: "round", lineWidth: 8, strokeColor: "#b6bafc" };
+                        lineStyleforBlackColor = { lineJoin: "round", lineWidth: 8, strokeColor: "black" };
                     }
                     linkPolyline = new H.map.Polyline(coords2, { zIndex: 3, style: lineStyle1 });
                     linkPolyline.setData(routeLinks[l]);
                     linkPolyline.addEventListener('tap', createTapLinkHandler(linkPolyline));
                     objContainer.addObject(linkPolyline);
-                    arrPloyLine.push({ 'linkID': routeLinks[l].linkId, 'polyline': linkPolyline });
+                    //linkPolylineforSpeedColor
+
+                    linkPolylineforSpeedColor = new H.map.Polyline(coords2, { zIndex: 3, style: lineStyleforSpeedColor });
+                    linkPolylineforSpeedColor.setData(routeLinks[l]);
+                    linkPolylineforSpeedColor.addEventListener('tap', createTapLinkHandler(linkPolylineforSpeedColor));
+                    objContainerforSpeedColr.addObject(linkPolylineforSpeedColor);
+
+                    //linkPolylineforBlackColor
+
+                    //linkPolylineforBlackColor = new H.map.Polyline(coords2, { zIndex: 3, style: lineStyleforBlackColor });
+                    //linkPolylineforBlackColor.setData(routeLinks[l]);
+                    //linkPolylineforBlackColor.addEventListener('tap', createTapLinkHandler(linkPolylineforBlackColor));
+                    //objContainerforBlackColr.addObject(linkPolylineforBlackColor);
+
+
+                    //var linkPolylineforSpeedColr = new H.map.Polyline(coords2, { zIndex: 5, style: { lineJoin: "round", lineWidth: 2, strokeColor: "black" } });
+
+                    debugger;
+                    intSegforColorid = intSegforColorid + 1;
+                    arrPloyLine.push({ 'linkID': routeLinks[l].linkId, 'polyline': linkPolyline, 'segid': intSegforColorid });
+                    arrPloyLineforSpeedcolr.push({ 'linkID': routeLinks[l].linkId, 'polyline': linkPolylineforSpeedColor });
+                    //arrPloyLineforBlack.push({ 'linkID': routeLinks[l].linkId, 'polyline': linkPolylineforBlackColor, 'segid': intSegforColorid });
                 }
             }
 
-            debugger;
+            //debugger;
             totalDistance = (totalDistance / 1000).toFixed(2)
-            $('#lblKMRouteCalculation').val(totalDistance); //.toFixed(2);         
+            $('#lblKMRouteCalculation').val(totalDistance); //.toFixed(2);
 
 
             /**
@@ -928,7 +906,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                     callback(response);
                 }
                 finally {
-                    debugger
+                    //debugger
                     $('#cover-spin').hide(0);
                     delete getJSONP[cbnum];
                     script.parentNode.removeChild(script);
@@ -988,52 +966,56 @@ Create matched/unmatched markers that can be used to draw the original/matched t
         }
         );
 
-         function getInputfromServer() {
-        
-
-        var vehicle_id=$.urlParam('vehicle_id');
-        var start_date=$.urlParam('from_date');
-        var end_date=$.urlParam('to_date');
-        var Objdata = {
+        function getInputfromServer() {
+          var vehicle_id=$.urlParam('vehicle_id');
+          var start_date=$.urlParam('from_date');
+          var end_date=$.urlParam('to_date');
+          var Objdata = {
                         vehicle_id : vehicle_id,
                         start_date : start_date,
                         end_date : end_date
                       };
+            //debugger;
+            $.ajax({
+                type: "POST",
+                url: '/vehicle_replay',
+                data: Objdata,
+                async: false,
+                //dataType: "json",
+                //contentType: "application/json; charset=utf-8",
+                success: function (response) {
 
-
-        $.ajax({
-            type: "POST",
-            url: "/vehicle_replay",
-            data: Objdata,
-            async: false,
-            //dataType: "json",
-            //contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                //debugger;
-                if (response.locations.length > 0) {
-                    JsonData = CreateJsonDataFile(JSON.stringify(response));
-                    LoadRMEAPI(JsonData);
+                    console.log(response);
+                    //debugger;
+                    if (response == undefined) {
+                        alert('No input available');
+                        $('#cover-spin').hide(0);
+                    }
+                    if (response.locations.length > 0) {
+                        JsonData = CreateJsonDataFile(JSON.stringify(response));
+                        LoadRMEAPI(JsonData);
+                        $("#btnPlay").attr("disabled", false);
+                    }
+                    else {
+                        alert('No data to display the Route');
+                        $('#cover-spin').hide(0);
+                        $("#btnPlay").attr("disabled", true);
+                        return;
+                    }
+                },
+                failure: function (response) {
+                    //debugger;
                     $("#btnPlay").attr("disabled", false);
-                }
-                else {
-                    alert('No data to display the Route');
                     $('#cover-spin').hide(0);
-                    $("#btnPlay").attr("disabled", true);
-                    return;
+                },
+                error: function (response) {
+                    //debugger;
+                    $("#btnPlay").attr("disabled", false);
+                    $('#cover-spin').hide(0);
                 }
-            },
-            failure: function (response) {
-                //debugger;
-                $("#btnPlay").attr("disabled", false);
-                $('#cover-spin').hide(0);
-            },
-            error: function (response) {
-                //debugger;
-                $("#btnPlay").attr("disabled", false);
-                $('#cover-spin').hide(0);
-            }
-        });           
-    }
+            });
+        }
+
         $('#btnGetRoute').click(function () {
 
             if ($('#txtVehicleID').val() <= 0) {
@@ -1088,7 +1070,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             MarkerStartEnd.addObject(new H.map.Marker(new H.geo.Point(full_geometry[full_geometry.length - 1]['lat'], full_geometry[full_geometry.length - 1]['lng']), { icon: icons["#000000"] }));
             map.addObject(MarkerStartEnd);
 
-           
+
             blPlayCompleted = false;
             clearInterval(timeoutHandle);
             clearTimeout(timeoutHandle);
@@ -1117,7 +1099,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                     }
                     var tmp = 0.000;
 
-                    debugger;
+                    //debugger;
                     var SegmentLength = 0
                     var arrLinkGroupSegment = arrLinkGroup.filter(x => ((x['linkid'] == full_geometry_additional[i]['linkid']) &&
                         (x['mSecToReachLinkFromStart'] == full_geometry_additional[i]['mSecToReachLinkFromStart']) &&
@@ -1134,23 +1116,8 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                     CurrentLinkID = full_geometry_additional[i]['linkid'];
                     TotalTimeTakeninsec = TotalTimeTakeninsec + ((traceSpeed / 1000) / 60);
                     var tmpPolyline;
-                    if (arrPloyLine.find(o => o.linkID == full_geometry_additional[i]['linkid']) != undefined) {
-                        tmpPolyline = arrPloyLine.find(o => o.linkID == full_geometry_additional[i]['linkid'])['polyline'];
-                        if ($('#cmbSelect').val() == 0) {
-                            objContainer.addObject(arrPloyLine.find(o => o.linkID == full_geometry_additional[i]['linkid'])['polyline'].setStyle({ lineWidth: 8, strokeColor: 'green', lineJoin: 'round' }));
+                    
 
-                        }
-                        else if ($('#cmbSelect').val() > 80) {
-                            objContainer.addObject(arrPloyLine.find(o => o.linkID == full_geometry_additional[i]['linkid'])['polyline'].setStyle({ lineWidth: 8, strokeColor: 'red', lineJoin: 'round' }));
-                        }
-                        else if (($('#cmbSelect').val() >= 50) && ($('#cmbSelect').val() <= 80)) {
-                            objContainer.addObject(arrPloyLine.find(o => o.linkID == full_geometry_additional[i]['linkid'])['polyline'].setStyle({ lineWidth: 8, strokeColor: '#FFBF00', lineJoin: 'round' }));
-                        }
-                        else {
-                            objContainer.addObject(arrPloyLine.find(o => o.linkID == full_geometry_additional[i]['linkid'])['polyline'].setStyle({ lineWidth: 8, strokeColor: 'green', lineJoin: 'round' }));
-                        }
-                        map.addObject(objContainer);
-                    }
                     $('#lblSpeedValue').val(TotalTimeTakeninsec.toFixed(2));
                     if (CurrentLinkID != PreviousLinkID) {
                         //console.log(full_geometry_additional[i]['linkid']);
@@ -1166,6 +1133,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                             var RotateDegree;
                             RotateDegree = getDegree(full_geometry_additional[i]['attributes']['lat'], full_geometry_additional[i]['attributes']['lng'], full_geometry_additional[i + 1]['attributes']['lat'], full_geometry_additional[i + 1]['attributes']['lng']);
                             updateMarkerDirection(parisMarker, RotateDegree, full_geometry_additional[i].attributes["lat"], full_geometry_additional[i].attributes["lng"], true);
+                            DrawBlackLine(full_geometry_additional[i]['attributes']['lat'], full_geometry_additional[i]['attributes']['lng'], full_geometry_additional[i + 1]['attributes']['lat'], full_geometry_additional[i + 1]['attributes']['lng']); //REQ_ID-05112019_04 : Draw the black Line based on vehicle Movement
                         }
 
                     }
@@ -1174,13 +1142,14 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                         //debugger;
                         RotateDegree = getDegree(full_geometry_additional[i]['attributes']['lat'], full_geometry_additional[i]['attributes']['lng'], full_geometry_additional[full_geometry_additional.length - 1]['attributes']['lat'], full_geometry_additional[full_geometry_additional.length - 1]['attributes']['lng']);
                         updateMarkerDirection(parisMarker, RotateDegree, full_geometry_additional[i].attributes["lat"], full_geometry_additional[i].attributes["lng"], true);
+                        DrawBlackLine(full_geometry_additional[i]['attributes']['lat'], full_geometry_additional[i]['attributes']['lng'], full_geometry_additional[i + 1]['attributes']['lat'], full_geometry_additional[i + 1]['attributes']['lng']); //REQ_ID-05112019_04 : Draw the black Line based on vehicle Movement
                         //clearTimeout(setTimeoutfunction);
                         blPlayCompleted = true;
                     }
 
                     if (PauseFlage == true) {
                         arrayCount = i;
-                        debugger
+                        //debugger
                         clearInterval(timeoutHandle);
                         //clearTimeout(timeoutHandle);
                         return i;
@@ -1192,7 +1161,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                         loopIt(i + 1)
                     }
                     else {
-                        debugger;
+                        //debugger;
 
                     }
                 }, traceSpeed);
@@ -1201,6 +1170,22 @@ Create matched/unmatched markers that can be used to draw the original/matched t
         }
 
        
+        function DrawBlackLine(StartLat, StartLng, EndLat, EndLng) {
+            var tmpCoords = new H.geo.Strip();
+            var linkPolylineforBlackColor;
+            var StartPoint = new H.geo.Point(StartLat, StartLng);
+            var EndPoint = new H.geo.Point(EndLat, EndLng);
+            tmpCoords.pushPoint(StartPoint)
+            tmpCoords.pushPoint(EndPoint)
+            var blacklineStyle;
+            blacklineStyle = { lineJoin: "round", lineWidth: 3, strokeColor: "black" };
+            linkPolylineforBlackColor = new H.map.Polyline(tmpCoords, { zIndex: 3, style: blacklineStyle });
+            objContainerforBlackColr.addObject(linkPolylineforBlackColor);
+            map.addObject(objContainerforBlackColr);
+        }
+
+       
+
         $('#btnPause').click(function () {
             $("#btnPlay").attr("disabled", true);
             $("#btnPause").attr("disabled", false);
@@ -1296,7 +1281,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             var outerElement = document.createElement('div')
             //outerElement.style.alignContent = "Left";
             var objImg = document.createElement('img');
-            objImg.src = '{{asset("playback/assets/img/Car.png")}}';
+            objImg.src = "{{asset('playback/assets/img/Car.png')}}";
             el = objImg;
             var carDirection = RotateDegree;
             //console.log(RotateDegree);
@@ -1307,7 +1292,8 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                 el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
             }
             outerElement.appendChild(el);
-            outerElement.style.top = "-20px";
+            //outerElement.style.top = "-20px";
+            outerElement.style.top = "-15px"; //REQ_ID-05112019_02 : Change the Speed based on Condition : Reason : Adjustment in Position for Black color Line
             if (FirstLoop == true) {
                 map.removeObject(bearsMarker);
             }
@@ -1316,6 +1302,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                 icon: domIcon
             });
             console.log(Hlat + ',' + Hlng);
+
             map.addObject(bearsMarker);
             if (FirstLoop == false) {
                 map.setZoom(18, true);
@@ -1345,8 +1332,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             return x * 180.0 / Math.PI;
         }
 
-
-         $.urlParam = function(name){
+           $.urlParam = function(name){
           var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
           if (results==null){
              return null;
@@ -1354,7 +1340,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
           else{
              return decodeURIComponent(results[1] || 0);
           }
-      }
+        }
 
 
     </script>
