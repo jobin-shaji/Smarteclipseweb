@@ -11,7 +11,7 @@ function getUrl() {
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
 var numDeltas = 300;
-var delay = 5; //milliseconds
+var delay = 20; //milliseconds
 var i = 0;
 // var posLat = 10.107570;
 // var posLng = 76.345665;
