@@ -94,6 +94,6 @@ class GpsData extends Model
     } 
     public function dailyKm()
     {
-        return $this->hasOne('App\Modules\Vehicle\Models\DailyKm','gps_id','gps_id')->whereDate('device_time');
+        return $this->hasOne('App\Modules\Vehicle\Models\DailyKm','gps_id','gps_id');
     }
 }

@@ -17,7 +17,7 @@ class DailyKm extends Model
     }
      public function alert()
     {
-        return $this->hasMany('App\Modules\Alert\Models\Alert','gps_id','gps_id')->count();
+        return $this->hasMany('App\Modules\Alert\Models\Alert','gps_id','gps_id');
     }
 }
 

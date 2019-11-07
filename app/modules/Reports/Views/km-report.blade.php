@@ -29,7 +29,7 @@ Total KM Report
                             <label>Vehicle</label>                           
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                                 <option value="" selected="selected" disabled="disabled">Select</option>
-                              <option value="0">All</option>
+                             
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
                               @endforeach  
@@ -82,7 +82,7 @@ Total KM Report
                       </li>
                        <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
-                            <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
+                            <img src="{{ url('/') }}/SVG-Icons/speed.svg"  />
                             <span class="system_info" >Speed : </span><label id="speed">
                           </div>                     
                       </li>
@@ -155,25 +155,25 @@ Total KM Report
                       <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                            <span class="system_info" >Moving Duration :</span><label id="moving_duration"></label>
+                            <span class="system_info" >Moving Duration :</span><label id="moving"></label>
                           </div>                     
                       </li>
                       <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                            <span class="system_info" >Halt Duration :</span><label id="halt_duration"></label>
+                            <span class="system_info" >Halt Duration :</span><label id="halt"></label>
                           </div>                     
                       </li>
                       <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                            <span class="system_info" >Sleep Duration :</span><label id="sleep_duration"></label>
+                            <span class="system_info" >Sleep Duration :</span><label id="sleep"></label>
                           </div>                     
                       </li>
                       <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                            <span class="system_info" >Offline Duration :</span><label id="offline_duration"></label>
+                            <span class="system_info" >Offline Duration :</span><label id="offline"></label>
                           </div>                     
                       </li>
                       <li class="sys_vapor cover_total_km">

@@ -28,9 +28,22 @@ function check(){
 
 function kmReport(res)
 {
-    var km =res.dailykm.km/1000;
+    // console.log(res.vehicle_modes);
+    if(res.dailykm==null)
+    {
+       var km =0;
+    }
+    else{
+         var km =res.dailykm.km/1000;
+         
+    }
+   
     $('#total_km').text(km);
     $('#speed').text(res.dailykm.gps.speed);
+     $('#sleep').text(res.sleep);
+     $('#moving').text(res.motion);
+     $('#halt').text(res.halt);
+    
     // $('#ig_duration').text(res.dailykm.alerts);
 }
 
