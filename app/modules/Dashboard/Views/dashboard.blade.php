@@ -524,7 +524,7 @@
                 <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
                 <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
                 <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
-                <img src="assets/images/stop-dashboard.png" id="vehicle_stop" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                 <medium id="mode" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -539,15 +539,15 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <img src="assets/images/ignition-dashboard.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
@@ -783,7 +783,7 @@
                 <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
                 <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
                 <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
-                <img src="assets/images/stop-dashboard.png" id="vehicle_stop" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                 <medium id="mode" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -798,15 +798,15 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <img src="assets/images/ignition-dashboard.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  

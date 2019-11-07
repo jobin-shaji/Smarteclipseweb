@@ -210,6 +210,16 @@
                                             
                                         </a>
                                     </li>
+                                     <li class="sys_vapor cover_total_km">
+                                        <a href="{{url('/km-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                           <span class="system_info" >KM  Report</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
 
                                     <li class="sys_vapor cover_geofence">
                                         <a href="{{url('/geofence-report')}}">
@@ -340,6 +350,8 @@
                                             
                                         </a>
                                     </li>
+                                    
+                                    
                                      
                                    </ul>
                                    

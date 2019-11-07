@@ -1,44 +1,28 @@
 $(document).ready(function () { 
-    // document.getElementById('excel').style.visibility = 'hidden';
-   var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-today = dd + '-' + mm + '-' + yyyy;
-    var  data = {
-          from_date : today,
-          to_date : today
-    }; 
-    
+  
     // var today = new Date();
-    callBackDataTable(data);
+    // callBackDataTable();
 });
 
 function check(){
      
-     if(document.getElementById('vehicle').value == ''){
+    if(document.getElementById('vehicle').value == ''){
         alert('Please Select Vehicle');
     }
-    // else if(document.getElementById('fromDate').value == ''){
-    //     alert('please enter from date');
-    // }else if(document.getElementById('toDate').value == ''){
-    //     alert('please enter to date');
-    // }
+    else if(document.getElementById('report').value == ''){
+        alert('Please Select Report Type');
+    }
     else{
-        
-
         callBackDataTable();
     }
 }
 function callBackDataTable(){
     var vehicle =document.getElementById('vehicle').value;
-    var from_date =document.getElementById('fromDate').value;
-    var to_date = document.getElementById('toDate').value;
+    var report_type =document.getElementById('report').value;
     var  data = {
         vehicle : vehicle,
-        from_date : from_date,
-        to_date : to_date
+        report_type : report_type
+      
     }; 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -48,7 +32,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'totalkm-report-list',
+            url: 'km-report-list',
             type: 'POST',
             data: {
                 'data': data

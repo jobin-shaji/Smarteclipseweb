@@ -33,7 +33,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 16,
+        zoom: 18,
         mapTypeId: 'roadmap'
 
     });  
@@ -52,6 +52,7 @@ function initMap(){
         map: map,
         icon: icon
     });
+    map.setOptions({maxZoom:18,minZoom:9});
     getMarkers(map);
 }
 
@@ -151,7 +152,7 @@ function getMarkers() {
         moveMarker();
         var icon = { // car icon
                     path:vehiclePath,
-                    scale: parseFloat(vehicleScale),
+                    scale:0.7,
                     fillColor: vehicleColor, //<-- Car Color, you can change it 
                     // fillOpacity: 1,
                     // strokeWeight: 1,

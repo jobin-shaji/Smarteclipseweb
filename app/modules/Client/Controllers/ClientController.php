@@ -98,7 +98,7 @@ class ClientController extends Controller {
             $client = Client::create([            
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
-                'name' => $request->name,            
+                'name' => strtoupper($request->name),            
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
