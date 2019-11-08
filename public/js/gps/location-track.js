@@ -329,12 +329,12 @@ function initMap(){
     }
 
     function moveMarker() {
-
+        infowindow.open(map, marker);
         posLat += deltaLat;
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
         marker.setPosition(offsetCenter(latlng));
-        marker.setDuration(2000);
+        // marker.setDuration(2000);
 
         if (i != numDeltas) {
             i++;
@@ -507,8 +507,17 @@ $( "#playback_form" ).submit(function( event ) {
 });
 
 // -------------------playback---------------------------
+var contentString = 
+ '<div style="width:13%;float:left">'+
+ '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
 
 
+ 'Speed,</b>-/km<br><b>Vehicle Name,</b> Plate Number</p>'+
+ '</div>';
+
+var infowindow = new google.maps.InfoWindow({
+    content: contentString
+});
 
 
 
