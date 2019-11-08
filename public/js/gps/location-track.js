@@ -29,8 +29,6 @@ var locationQueue=[];
 var recentPoppedLocation;
 
 
-
-
 $('document').ready(function(){setTimeout(getMarkers,5000);}); 
 $('document').ready(function(){setTimeout(doWork,500);});  
 
