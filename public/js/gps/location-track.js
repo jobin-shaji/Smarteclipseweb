@@ -47,11 +47,14 @@ function initMap(){
         strokeWeight: parseFloat(strokeWeight),
         anchor: new google.maps.Point(0, 5),
         rotation: 0 //<-- Car angle
-    };
+      };
+
+
     marker = new google.maps.Marker({
         map: map,
         icon: icon
     });
+    
     map.setOptions({maxZoom:18,minZoom:9});
     getMarkers(map);
 }
