@@ -953,6 +953,7 @@ class VehicleController extends Controller {
                     )
                     ->where('device_time', '>=',$last_update_time)
                     ->where('gps_id',$get_vehicle->gps_id)
+                    ->where('gps_fix',1)
                     ->latest('device_time')
                     ->first();
         $minutes=0;
@@ -970,6 +971,7 @@ class VehicleController extends Controller {
                               \DB::raw("'$offline' as vehicleStatus")
                               )
                               ->where('gps_id',$get_vehicle->gps_id)
+                              ->where('gps_fix',1)
                               ->latest('device_time')
                               ->first();
            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
