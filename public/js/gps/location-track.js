@@ -276,9 +276,9 @@ function initMap(){
            if(recent_angle_increment_value==undefined){
              recent_angle_increment_value=angle;
            }
-           angle=(parseFloat(recent_angle_increment_value) + parseFloat(increment_angle))%360;
-           console.log(angle);
-           recent_angle_increment_value=angle;
+           // angle=(parseFloat(recent_angle_increment_value) + parseFloat(increment_angle))%360;
+           // recent_angle_increment_value=angle;
+            angle=parseFloat(angle);
 
          }else{
           angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
