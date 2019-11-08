@@ -157,8 +157,22 @@
 @section('script')
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
 <!-- <script src="{{asset('js/odometer.js')}}"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,geometry,places"></script>
+
 <script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=geometry,places&callback=initMap" async defer></script>
+<script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>
+<script src="{{asset('js/gps_animation/markerAnimate.js')}}"></script>
+<script src="{{asset('js/gps_animation/SlidingMarker.js')}}"></script>
+
+
+
+
+
+
+
+
+
+
 
 
 
