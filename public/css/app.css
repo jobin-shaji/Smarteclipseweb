@@ -23,4 +23,19 @@ font-weight: 400;font-size: 1.2rem;color:#000!important;
 box-shadow: 0px 8px 11px 0px rgba(102,102,102,1);
 }
 
+.form-control {
+    display: block;
+    width: 90%;
+    height: calc(1em + .7rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 

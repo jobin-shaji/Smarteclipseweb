@@ -5,6 +5,20 @@ $(document).ready(function () {
 });
 
 function check(){
+    $('#total_km').empty();
+    $('#speed').empty();
+    $('#sleep').empty();
+    $('#moving').empty();
+    $('#halt').empty();
+    $('#sudden_acceleration').empty();
+    $('#harsh_braking').empty();
+    $('#main_battery_disconnect').empty();
+    $('#accident_impact').empty();
+    $('#overspeed').empty();
+    $('#zig_zag').empty();
+    $('#alerts').empty();
+    $('#route_deviation').empty();
+    $('#geofence').empty();
      
     if(document.getElementById('vehicle').value == ''){
         alert('Please Select Vehicle');
@@ -28,22 +42,28 @@ function check(){
 
 function kmReport(res)
 {
-    // console.log(res.vehicle_modes);
-    if(res.dailykm==null)
-    {
-       var km =0;
-    }
-    else{
-         var km =res.dailykm.km/1000;
-         
-    }
-   
+
+    var km =res.dailykm.km/1000;
     $('#total_km').text(km);
     $('#speed').text(res.dailykm.gps.speed);
-     $('#sleep').text(res.sleep);
-     $('#moving').text(res.motion);
-     $('#halt').text(res.halt);
+    $('#sleep').text(res.sleep);
+    $('#moving').text(res.motion);
+    $('#halt').text(res.halt);
+    $('#sudden_acceleration').text(res.sudden_acceleration);
+    $('#harsh_braking').text(res.harsh_braking);
+    $('#main_battery_disconnect').text(res.main_battery_disconnect);
+    $('#accident_impact').text(res.accident_impact);
+    $('#overspeed').text(res.over_speed);
+    $('#zig_zag').text(res.zig_zag);
+    $('#alerts').text(res.user_alert);
+    $('#route_deviation').text(res.route_deviation);
+    $('#geofence').text(res.geofence);
+
+
+
+
     
+
     // $('#ig_duration').text(res.dailykm.alerts);
 }
 

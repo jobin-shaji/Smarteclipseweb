@@ -9,6 +9,9 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Alert\Models\Alert;
+use App\Modules\Alert\Models\UserAlerts;
+use App\Modules\Route\Models\RouteDeviation;
+
 
 use App\Modules\Vehicle\Models\DailyKm;
 use Carbon\Carbon;
@@ -185,15 +188,54 @@ class TotalKMReportController extends Controller
             'longitude', 
             'status'
         )
-        ->with('alertType:id,description')
         ->where('gps_id',$single_vehicle_id)
+        ->whereDate('device_time', '>=', $search_from_date)
+        ->whereDate('device_time', '<=', $search_to_date)
         ->get();
-dd($alerts);
+        $user_alert = UserAlerts::select(
+            'alert_id'
+        )
+        ->where('client_id',$client_id)
+        ->where('status',1)
+        ->get();
+        $alert_id = [];
+        foreach($user_alert as $user_alert){
+            $alert_id[] = $user_alert->alert_id;
+        }
+
+        $route_deviation =RouteDeviation::select(
+            'id',
+            'vehicle_id', 
+            'deviating_time'
+        )
+        ->where('vehicle_id',$vehicle)       
+        ->where('client_id',$client_id)
+        ->whereDate('deviating_time', '>=', $search_from_date)
+        ->whereDate('deviating_time', '<=', $search_to_date)
+        ->count();
+
+
+        // dd($alerts->whereIn('id',$alert_id));
         return response()->json([
             'dailykm' => $km_report, 
             'sleep' => $this->timeFormate($sleep),  
             'motion' => $this->timeFormate($motion),   
-            'halt' => $this->timeFormate($halt),                
+            'halt' => $this->timeFormate($halt), 
+            'sudden_acceleration' => $alerts->where('alert_type_id',2)->count(), 
+            'harsh_braking' => $alerts->where('alert_type_id',1)->count(),               
+            'main_battery_disconnect' => $alerts->where('alert_type_id',11)->count(),               
+            'accident_impact' => $alerts->where('alert_type_id',14)->count(),  
+            'zig_zag' => $alerts->where('alert_type_id',3)->count(), 
+            'over_speed' => $alerts->where('alert_type_id',12)->count(),  
+            'user_alert' => $alerts->whereIn('alert_type_id',$alert_id)->count(),
+            'geofence' => $alerts->whereIn('alert_type_id',[18,19,20,21])->count(),
+
+            'route_deviation' => $route_deviation,             
+
+
+
+
+
             'status' => 'kmReport'           
         ]);
 

@@ -74,12 +74,12 @@ Total KM Report
                             <span class="system_info" >Total KM : </span><label id="total_km"></label>
                           </div>                     
                       </li>
-                       <li class="sys_vapor cover_total_km">
+                       <!-- <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/stops.svg"  />
                             <span class="system_info" >No of Stops : </span><label id="no_of_stops"></label>
                           </div>                     
-                      </li>
+                      </li> -->
                        <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/speed.svg"  />
@@ -92,18 +92,18 @@ Total KM Report
                             <span class="system_info" >Alerts : </span><label id="alerts">
                           </div>                     
                       </li>
-                       <li class="sys_vapor cover_total_km">
+                      <!--  <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
                             <span class="system_info" >Ignition Duration : </span><label id="ig_duration"></label>
                           </div>                     
-                      </li>
-                       <li class="sys_vapor cover_total_km">
+                      </li> -->
+                       <!-- <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
                             <span class="system_info" >Driver Behavoiur : </span><label id="driver_behaviour"></label>
                           </div>                     
-                      </li>
+                      </li> -->
                        <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
@@ -125,7 +125,7 @@ Total KM Report
                       <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/Total-KM-report.png"  />
-                            <span class="system_info" >Accident Impact :</span><label id="acciednt_impact"></label>
+                            <span class="system_info" >Accident Impact :</span><label id="accident_impact"></label>
                           </div>                     
                       </li>
                       <li class="sys_vapor cover_total_km">
@@ -170,7 +170,7 @@ Total KM Report
                             <span class="system_info" >Sleep Duration :</span><label id="sleep"></label>
                           </div>                     
                       </li>
-                      <li class="sys_vapor cover_total_km">
+                     <!--  <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
                             <span class="system_info" >Offline Duration :</span><label id="offline"></label>
@@ -187,7 +187,7 @@ Total KM Report
                             <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
                             <span class="system_info" >AC - Motion Duration :</span><label id="idle_duration">
                           </div>                     
-                      </li>
+                      </li> -->
 
 
 
