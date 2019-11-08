@@ -74,10 +74,10 @@ class TrackingReportController extends Controller
                $time = strtotime($mode->device_time) - strtotime($previous_time);
                $halt= $halt+$time;   
                // dd($halt) ;
-               if($halt<0)
-               {
+              if($halt<0)
+              {
                 $halt="0";               
-               }  
+              }  
                                     
             }
         }
@@ -96,8 +96,6 @@ class TrackingReportController extends Controller
         // dd($request->fromDate);    
         return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
     }
-
-
     function timeFormate($second){
       $hours = floor($second / 3600);
       $mins = floor($second / 60 % 60);
