@@ -1,5 +1,4 @@
-  @extends('layouts.eclipse')
-
+@extends('layouts.eclipse')
 @section('content')
 <section class="content box">
 <div class="page-wrapper_new_map">
@@ -89,6 +88,9 @@
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-plug"></i><b><label id="car_power"></label></b>
+            </a> 
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i class="fa fa-signal"></i><b><label id="network_status"></label></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>

@@ -895,8 +895,8 @@ class VehicleController extends Controller {
     }
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
-    public function location(Request $request){
-
+    public function location(Request $request)
+    {
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
         $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
@@ -907,11 +907,15 @@ class VehicleController extends Controller {
                               ->first();   
         if($track_data==null)
         {
-            return view('Vehicle::location-error');
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
         }
         else if($track_data->latitude==null || $track_data->longitude==null)
         {
-            return view('Vehicle::location-error');
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
         }
         else
         {
@@ -931,13 +935,10 @@ class VehicleController extends Controller {
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
         $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
+        $connection_lost_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
         $offline="Offline";
-        $gps=GpsData::where('gps_id',$get_vehicle->gps_id)->latest('device_time')->first();
-
-        $gps_mode=$gps->mode;
-        if($gps_mode=="S"){
-            $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
-        }
+        $signal_strength="Connection Lost";
+    
         $track_data=GpsData::select('latitude as latitude',
                       'longitude as longitude',
                       'heading as angle',
@@ -949,9 +950,8 @@ class VehicleController extends Controller {
                       'ignition as ign',
                       'gps_id',
                       'gsm_signal_strength as signalStrength'
-                      )
+                    )
                     ->where('device_time', '>=',$last_update_time)
-                    ->where('device_time', '<=',$currentDateTime)
                     ->where('gps_id',$get_vehicle->gps_id)
                     ->latest('device_time')
                     ->first();
@@ -966,7 +966,7 @@ class VehicleController extends Controller {
                               'main_power_status as power',
                               'ignition as ign',
                               'gps_id',
-                              'gsm_signal_strength as signalStrength',
+                              \DB::raw("'$signal_strength' as signalStrength"),
                               \DB::raw("'$offline' as vehicleStatus")
                               )
                               ->where('gps_id',$get_vehicle->gps_id)
@@ -979,16 +979,15 @@ class VehicleController extends Controller {
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
 
-            
             if(floatval($track_data->angle) <= 0)
             {
                 $h_track_data = GpsData::
                    select('heading','gps_id','device_time')
-                   ->where('gps_id',$track_data->gps_id)
-                   ->where('heading','!=','00.000')
-                   ->whereNotNull('heading')
-                   ->latest('device_time')
-                    ->first();
+                        ->where('gps_id',$track_data->gps_id)
+                        ->where('heading','!=','000.00')
+                        ->whereNotNull('heading')
+                        ->latest('device_time')
+                        ->first();
               
                 $angle=$h_track_data->heading; 
             }
@@ -996,7 +995,6 @@ class VehicleController extends Controller {
             {
                 $angle=$track_data->angle;
             }
-        
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
                         "longitude"=>floatval($snapRoute['lng']),
@@ -1006,17 +1004,15 @@ class VehicleController extends Controller {
                         "dateTime"=>$track_data->dateTime,
                         "power"=>$track_data->power,
                         "ign"=>$track_data->ign,
-                        "battery_status"=>round($track_data->battery_status),
+                        "battery_status"=>round($track_data->battery_percentage),
                         "signalStrength"=>$track_data->signalStrength,
+                        "connection_lost_time"=>$connection_lost_time,
                         "last_seen"=>$minutes,
                         "fuel"=>"",
                         "ac"=>"",
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
                       );
-
-
-
             $response_data = array('status'  => 'success',
                            'message' => 'success',
                            'code'    =>1,
@@ -1026,7 +1022,6 @@ class VehicleController extends Controller {
                            'vehicle_name' => $get_vehicle->name,
                            'liveData' => $reponseData
                             );
-
         }else{
             $response_data = array('status'  => 'failed',
                            'message' => 'failed',
