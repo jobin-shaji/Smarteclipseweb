@@ -31,7 +31,7 @@ var recentPoppedLocation;
 
 
 
-$('document').ready(function(){setTimeout(getMarkers,1000);}); 
+$('document').ready(function(){setTimeout(getMarkers,5000);}); 
 $('document').ready(function(){setTimeout(doWork,500);});  
 
 
@@ -224,7 +224,7 @@ function initMap(){
                     
                     transition(res);
                     // track(map, res);
-                    setTimeout(getMarkers, 1000);
+                    setTimeout(getMarkers, 5000);
             }
 
         },
