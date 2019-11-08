@@ -42,7 +42,11 @@ function apiBackgroundPostData(url, data, callBack, options) {
                          gpsData(res);
                 }else if(callBack=='gpsDataBth'){
                          gpsDataBth(res);
+                }else if(callBack=='alldata'){
+                         alldata(res);
                 }
+
+
            }
         },
         error: function (err) {
