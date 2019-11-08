@@ -364,13 +364,10 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                    TotalKM(res) 
                 }
-                
-
-                
-
-
-                
-               
+                else if(callBack=='kmReport')
+                {
+                    kmReport(res);
+                }
             }
         },
         error: function (err) {
