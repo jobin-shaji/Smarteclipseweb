@@ -11,11 +11,8 @@ use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\Route\Models\RouteDeviation;
-
-
 use App\Modules\Vehicle\Models\DailyKm;
 use Carbon\Carbon;
-
 use DataTables;
 class TotalKMReportController extends Controller
 {
