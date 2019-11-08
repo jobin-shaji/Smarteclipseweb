@@ -92,7 +92,7 @@
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-signal"></i><b><label id="network_status"></label></b>
             </a> 
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
@@ -102,12 +102,12 @@
               <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">HALT TIME :</label></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b>
+              <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b> -->
             </a>                                                      
             <div class="viewmore_location">
               <i class="fa fa-map-marker"></i><b><span id="car_location" style="font-size: .7rem!important"></span></b>
             </div>
-            <div id="odometer" class="odometer" style="margin-left: 80px">000000</div>
+            <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
 
             <hr>
             <?php
