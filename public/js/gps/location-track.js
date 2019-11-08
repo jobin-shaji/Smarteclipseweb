@@ -41,7 +41,7 @@ $('document').ready(function(){
   setTimeout(getMarkers,5000);
 
 }); 
-$('document').ready(function(){setTimeout(doWork,7000);});  
+$('document').ready(function(){setTimeout(doWork,1000);});  
 
 
 // ---------------------que list--------------------------
@@ -134,7 +134,7 @@ function doWork()
      
      }
 
-    setTimeout(doWork,7000);
+    setTimeout(doWork,1000);
     }
 
 
@@ -334,7 +334,7 @@ function initMap(){
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
         marker.setPosition(offsetCenter(latlng));
-        // marker.setDuration(2000);
+        marker.setDuration(10);
 
         if (i != numDeltas) {
             i++;
