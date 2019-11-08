@@ -32,9 +32,7 @@ var recent_angle_latlng=null;
 var current_angle_latlng;
 var service;
 
-
-
-
+$('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
 $('document').ready(function(){
   initMap();
@@ -42,6 +40,7 @@ $('document').ready(function(){
 
 }); 
 $('document').ready(function(){setTimeout(doWork,1000);});  
+
 
 
 // ---------------------que list--------------------------
