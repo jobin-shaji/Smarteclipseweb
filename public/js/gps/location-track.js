@@ -61,8 +61,6 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       return null;
   }
 
-
-
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
       $.ajax({
