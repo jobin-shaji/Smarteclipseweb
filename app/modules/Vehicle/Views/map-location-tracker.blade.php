@@ -8,13 +8,13 @@
           <div class="col-lg-2 col-md-2"> 
             <div class="form-group">                      
               <label> From Date</label>
-              <input type="datetime-local" class="form-control" id="from_date" name="from_date">
+              <input type="text" class="datetimepicker form-control" id="from_date" name="from_date">
             </div>
           </div>
           <div class="col-lg-2 col-md-2"> 
             <div class="form-group">                     
               <label> To Date</label>
-              <input type="datetime-local" class="form-control" id="to_date" name="to_date">
+              <input type="text" class="datetimepicker form-control" id="to_date" name="to_date">
               <input type="hidden" class="form-control" id="gps_id" name="gps_id" value="{{$gps->id}}">
             </div>
           </div>
