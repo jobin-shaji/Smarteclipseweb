@@ -113,10 +113,9 @@ function callBackDataTable(value){
             {data: 'count', name: 'count',orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time'},
             {data: 'forhuman', name: 'forhuman',orderable: false, searchable: false},
-             {data: 'created_at', name: 'created_at'},
+            {data: 'created_at', name: 'created_at'},
             {data: 'servertime', name: 'servertime',orderable: false, searchable: false},
-            {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false
-          },
+            {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false},
            {data: 'action', name: 'action',orderable: false, searchable: false
           },
         ],
