@@ -281,7 +281,9 @@ function initMap(){
             angle=parseFloat(angle);
 
          }else{
-          angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
+          // angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
+            angle=parseFloat(angle);
+          
          }
          
         }
