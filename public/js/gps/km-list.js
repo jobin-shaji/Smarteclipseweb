@@ -58,12 +58,6 @@ function kmReport(res)
     $('#alerts').text(res.user_alert);
     $('#route_deviation').text(res.route_deviation);
     $('#geofence').text(res.geofence);
-
-
-
-
-    
-
     // $('#ig_duration').text(res.dailykm.alerts);
 }
 

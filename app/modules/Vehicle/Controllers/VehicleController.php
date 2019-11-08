@@ -895,8 +895,8 @@ class VehicleController extends Controller {
     }
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
-    public function location(Request $request){
-
+    public function location(Request $request)
+    {
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
         $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
@@ -907,11 +907,15 @@ class VehicleController extends Controller {
                               ->first();   
         if($track_data==null)
         {
-            return view('Vehicle::location-error');
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
         }
         else if($track_data->latitude==null || $track_data->longitude==null)
         {
-            return view('Vehicle::location-error');
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
         }
         else
         {
@@ -980,7 +984,7 @@ class VehicleController extends Controller {
                 $h_track_data = GpsData::
                    select('heading','gps_id','device_time')
                         ->where('gps_id',$track_data->gps_id)
-                        ->where('heading','!=','00.000')
+                        ->where('heading','!=','000.00')
                         ->whereNotNull('heading')
                         ->latest('device_time')
                         ->first();
