@@ -30,13 +30,18 @@ var recentPoppedLocation;
 
 var recent_angle_latlng=null;
 var current_angle_latlng;
+var service;
 
 
 
 
 
-$('document').ready(function(){setTimeout(getMarkers,5000);}); 
-$('document').ready(function(){setTimeout(doWork,5000);});  
+$('document').ready(function(){
+  initMap();
+  setTimeout(getMarkers,5000);
+
+}); 
+$('document').ready(function(){setTimeout(doWork,1000);});  
 
 
 // ---------------------que list--------------------------
@@ -150,10 +155,17 @@ function initMap(){
     });  
 
 
-    marker = new google.maps.Marker({});
+    // marker = new google.maps.Marker({});
+    marker = new SlidingMarker({});
+
+    // marker = new google.maps.Marker({});
+
+
     
     map.setOptions({maxZoom:18,minZoom:9});
      getMarkers(map);
+
+  service = new google.maps.places.PlacesService(map);
  }
 
 
@@ -317,11 +329,13 @@ function initMap(){
     }
 
     function moveMarker() {
-
+        infowindow.open(map, marker);
         posLat += deltaLat;
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
         marker.setPosition(offsetCenter(latlng));
+        marker.setDuration(10);
+
         if (i != numDeltas) {
             i++;
             setTimeout(moveMarker, delay);
@@ -364,7 +378,7 @@ function offsetCenter(latlng)
 var POI_markers = [];
 var lat=posLat;
 var lng=posLng;
-var service = new google.maps.places.PlacesService(map);
+
 var atm_flag=0;
 var petrol_flag=0;
 var hospital_flag=0;
@@ -493,8 +507,17 @@ $( "#playback_form" ).submit(function( event ) {
 });
 
 // -------------------playback---------------------------
+var contentString = 
+ '<div style="width:13%;float:left">'+
+ '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
 
 
+ 'Speed,</b>-/km<br><b>Vehicle Name,</b> Plate Number</p>'+
+ '</div>';
+
+var infowindow = new google.maps.InfoWindow({
+    content: contentString
+});
 
 
 
