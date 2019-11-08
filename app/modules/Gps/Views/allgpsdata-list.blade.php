@@ -17,8 +17,10 @@
       </section>
       <div class="clearfix"></div>
       <section class="content" style="width:100%">
-          <div class=col-md-9>          
-            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
+          <div class=col-md-9> 
+          <div class="table-responsive">          
+          <table class="table">         
+            <!-- <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" > -->
               <thead>
                 <tr>
                   <th>Sl.No</th> 
@@ -37,8 +39,10 @@
               </tbody>
             </table>
           </div>
+          </div>
           <div class="col-md-3">
-            <table class="table table-hover table-bordered  table-striped datatable" >
+            <div class="table-responsive">          
+          <table class="table">      
               <tbody id="datas" >
                 <tr><td>Header</td><td>{{ $last_data->header }}</td></tr>
                 <tr><td>Imei</td><td >{{ $last_data->imei }}</td></tr>
@@ -63,6 +67,7 @@
                 <tr><td>Vehicle Mode</td><td>{{ $last_data->vehicle_mode }}</td></tr>
             </tbody>
           </table>
+        </div>
         </div>               
       </div>
     </section>
