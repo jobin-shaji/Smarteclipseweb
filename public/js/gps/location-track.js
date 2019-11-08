@@ -30,13 +30,18 @@ var recentPoppedLocation;
 
 var recent_angle_latlng=null;
 var current_angle_latlng;
+var service;
 
 
 
 
 
-$('document').ready(function(){setTimeout(getMarkers,5000);}); 
-$('document').ready(function(){setTimeout(doWork,5000);});  
+$('document').ready(function(){
+  initMap();
+  setTimeout(getMarkers,5000);
+
+}); 
+$('document').ready(function(){setTimeout(doWork,7000);});  
 
 
 // ---------------------que list--------------------------
@@ -129,7 +134,7 @@ function doWork()
      
      }
 
-    setTimeout(doWork,1000);
+    setTimeout(doWork,7000);
     }
 
 
@@ -150,10 +155,17 @@ function initMap(){
     });  
 
 
-    marker = new google.maps.Marker({});
+    // marker = new google.maps.Marker({});
+    marker = new SlidingMarker({});
+
+    // marker = new google.maps.Marker({});
+
+
     
     map.setOptions({maxZoom:18,minZoom:9});
      getMarkers(map);
+
+  service = new google.maps.places.PlacesService(map);
  }
 
 
@@ -322,6 +334,8 @@ function initMap(){
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
         marker.setPosition(offsetCenter(latlng));
+        marker.setDuration(2000);
+
         if (i != numDeltas) {
             i++;
             setTimeout(moveMarker, delay);
@@ -364,7 +378,7 @@ function offsetCenter(latlng)
 var POI_markers = [];
 var lat=posLat;
 var lng=posLng;
-var service = new google.maps.places.PlacesService(map);
+
 var atm_flag=0;
 var petrol_flag=0;
 var hospital_flag=0;
