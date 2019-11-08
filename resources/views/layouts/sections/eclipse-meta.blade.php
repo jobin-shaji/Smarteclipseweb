@@ -90,7 +90,7 @@
   
   <link rel="stylesheet" href="{{asset('css/daterangepicker.css')}}">
   <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.css')}}">
-   
+    <link rel="stylesheet" href="{{asset('css/dash-popup.css')}}">
 
     
 
