@@ -208,13 +208,30 @@ function initMap(){
                         vehicleColor="#c41900";
 
                     }
-                    if (res.liveData.ign == 1) {
-                        document.getElementById("ignition").innerHTML = "Ignition ON";
-                     }else
-                      {
-                         document.getElementById("ignition").innerHTML = "Ignition OFF";
-                      }
-                    // document.getElementById("user").innerHTML = res.client_name;
+                    if(res.liveData.ign == 1) {
+                      document.getElementById("ignition").innerHTML = "Ignition ON";
+                    }else
+                    {
+                      document.getElementById("ignition").innerHTML = "Ignition OFF";
+                    }
+                    if(res.liveData.power == 1) {
+                      document.getElementById("car_power").innerHTML = "Connected";
+                    }else
+                    {
+                      document.getElementById("car_power").innerHTML = "Disconnected";
+                    }
+                    $device_time=res.liveData.dateTime;
+                    $connection_lost_time=res.liveData.connection_lost_time;
+                    if (res.liveData.signalStrength >= 19 && $device_time >= $connection_lost_time) {
+                      document.getElementById("network_status").innerHTML = "Good";
+                    }else if (res.liveData.signalStrength < 19 && res.liveData.signalStrength >= 13 && $device_time >= $connection_lost_time) {
+                      document.getElementById("network_status").innerHTML = "Average";
+                    }else if (res.liveData.signalStrength <= 12 && $device_time >= $connection_lost_time) {
+                      document.getElementById("network_status").innerHTML = "Poor";
+                    }else{
+                      document.getElementById("network_status").innerHTML = "Connection Lost";
+                    }
+                    
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
                     document.getElementById("car_speed").innerHTML = res.liveData.speed;
                     document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
@@ -230,7 +247,6 @@ function initMap(){
         },
         error: function(err) {
             var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-            toastr.error(message, 'Error');
         }
     });
 
