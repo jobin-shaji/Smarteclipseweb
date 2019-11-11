@@ -639,10 +639,16 @@ class GpsController extends Controller {
            // <a href=".$b_url."/dealers/".Crypt::encrypt($items->id)."/change-password class='btn btn-xs btn-primary'>View</a>
 
              $contains = Str::contains($items, 'BTH');
+             $hlm_contains = Str::contains($items, 'HLM');
+             $lgn_contains = Str::contains($items, 'LGN');
+
              if($contains){
-                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>"; 
-                    
-                  }else{
+                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>";                    
+                  }
+                  else if($hlm_contains || $lgn_contains){
+                    return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataHLMList($items->id)'>HLM/LGN </button>"; 
+                  }
+                    else{
                        return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button>";
                       }
                 
@@ -1325,16 +1331,38 @@ class GpsController extends Controller {
     }
     public function getAllGpsData(Request $request)
     {
+         $forhuman=0;
         if($request->gps){
             $items = GpsData::where('gps_id',$request->gps)->orderBy('created_at', 'DESC')->limit(20)->get();  
             $last_data = GpsData::where('gps_id',$request->gps)->orderBy('created_at', 'DESC')->first();
+            if($last_data)
+            {
+                $forhuman=Carbon::parse($last_data->created_at)->diffForHumans(); 
+            }            
             return response()->json([
                     'last_data' => $last_data,
-                    'items' => $items,               
+                    'items' => $items,  
+                    'last_updated' => $forhuman,               
                     'status' => 'gpsdatavalue'
             ]);
         }   
     }
+
+public function getGpsAllDataHlm(Request $request)
+    {  
+
+        $items = GpsData::find($request->id);       
+        return response()->json([
+                'gpsData' => $items        
+        ]);
+                   
+    }
+
+
+
+
+
+
     public function setOtaInConsole(Request $request)
     {
         $gps_id=$request->gps_id;  
@@ -1357,6 +1385,7 @@ class GpsController extends Controller {
             ]); 
         }
     }
+
 
 
     //validation for gps creation

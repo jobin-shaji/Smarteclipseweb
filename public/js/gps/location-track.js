@@ -10,7 +10,7 @@ function getUrl() {
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
 var numDeltas = 100;
-var delay = 3; //milliseconds
+var delay = 10; //milliseconds
 var i = 0;
 var posLat = parseFloat(start_lat);
 var posLng = parseFloat(start_lng);
@@ -159,7 +159,7 @@ function initMap(){
 
 
     
-    map.setOptions({maxZoom:18,minZoom:9});
+    map.setOptions({maxZoom:15,minZoom:9});
      getMarkers(map);
 
   service = new google.maps.places.PlacesService(map);
