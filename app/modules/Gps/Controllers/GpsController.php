@@ -837,8 +837,15 @@ class GpsController extends Controller {
 
     public function privacyPolicy()
     {
-       
-        return view('Gps::privacy-policy');
+       $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) 
+         {
+          return view('Gps::rayfleet-privacy-policy');
+         }else{
+           return view('Gps::privacy-policy');
+         }
     }
 
     //for gps creation
