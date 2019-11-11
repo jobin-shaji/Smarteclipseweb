@@ -5,7 +5,7 @@
           <div class="col-md-4">
           <div  style ="margin-left: 77px"class="form-group has-feedback">
               <label class="srequired">GPS</label>
-                <select class=" form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='singleGpsData(this.value)'>
+                <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='singleGpsData(this.value)'>
                 <option value="0">All</option>
                 @foreach($gps as $gps)
                 <option value="{{$gps->id}}">{{$gps->imei}}</option>
@@ -19,15 +19,15 @@
       <section class="content" style="width:100%">
           <div class=col-md-9> 
           <div class="table-responsive">          
-          <table style="background-color: black;color: white;">         
-           
+          <table class="table">         
+            <!-- <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" > -->
              
               <tbody id ="gps_table">
                 @foreach($items as $item)                  
                 <tr>           
                   <!-- <td>{{ $loop->iteration }}</td>
                   <td>{{ $item->device_time }}</td>   -->                                                            
-                  <td style="padding:15px;">{{ $item->vlt_data }}</td>  
+                  <td>{{ $item->vlt_data }}</td>  
                 </tr>
                 @endforeach
               </tbody>
