@@ -51,15 +51,15 @@ function alldata(res){
         $("#datas").append("No data available");
       }
       for(var i=0; i < res.items.length; i++){
-        var j=i+1;
-         gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>';  
+        gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>';  
       }
       $("#gps_table").append(gps_table); 
-
-
-      var  update_time = '<tr><td style="padding:15px">Last Updated: '+res.last_updated+'</td></tr>';  
-      
-      $("#last_update_time").append(update_time); 
+      if(res.last_updated!=0)
+      {
+        var  update_time = '<tr><td style="padding:15px">Last Updated: '+res.last_updated+'</td></tr>';       
+        $("#last_update_time").append(update_time); 
+      }
+     
 }
 
 function setOta(gps_id) {
