@@ -576,6 +576,8 @@
 
 <!-- CLIENT ROLE-START -->
 @role('client')
+<input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
+<input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 full-height">

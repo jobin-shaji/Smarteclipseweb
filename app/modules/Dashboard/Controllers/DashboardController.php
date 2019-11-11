@@ -91,7 +91,8 @@ class DashboardController extends Controller
         $single_vehicle =  $this->getSingleVehicle($client_id);
         $expired_documents =  $this->getExpiredDocuments($single_vehicle);
         $expire_documents =  $this->getExpireDocuments($single_vehicle); 
-        return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles]);
+        $client=Client::where('id',$client_id)->first(); 
+        return view('Dashboard::dashboard',['alerts' => $alerts,'expired_documents' => $expired_documents,'expire_documents' => $expire_documents,'vehicles' => $vehicles,'client' => $client]);
     }
     function getAlerts($client_id){
         $user = \Auth::user();;
