@@ -6,6 +6,7 @@
         <div class="wrapper">
           
                 <div class="content-wrapper">
+                      @include('layouts.sections.api-header')
                     @yield('content')
                 </div> 
           
