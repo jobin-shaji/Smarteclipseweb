@@ -61,8 +61,6 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       return null;
   }
 
-
-
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
       $.ajax({
@@ -256,6 +254,9 @@ function initMap(){
                     document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
                     document.getElementById("car_location").innerHTML = res.liveData.place;
                     document.getElementById("user").innerHTML = res.vehicle_name;
+                    $("#km_live_track").html('');
+                    $("#km_live_track").append(res.liveData.speed);
+
 
                     
                     transition(res);
@@ -511,7 +512,8 @@ var contentString =
  '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
 
 
- 'Speed,</b>-/km<br><b>Vehicle Name,</b> Plate Number</p>'+
+ '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
+ '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">0</label> km/h</b></a>'+
  '</div>';
 
 var infowindow = new google.maps.InfoWindow({

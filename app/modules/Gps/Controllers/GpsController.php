@@ -1318,7 +1318,7 @@ class GpsController extends Controller {
     public function getAllGpsData(Request $request)
     {
     
-        if($request->gps){
+        if($request->gps!=0){
         $items = GpsData::where('gps_id',$request->gps)->orderBy('device_time', 'DESC')->limit(20)->get();  
          $last_data = GpsData::where('gps_id',$request->gps)->orderBy('device_time', 'DESC')->first();
         }else{
