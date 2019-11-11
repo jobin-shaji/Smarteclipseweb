@@ -1,7 +1,7 @@
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
-
+    $('.select2').select2();  
 function toast(res){
     // alert(res.status);
     
