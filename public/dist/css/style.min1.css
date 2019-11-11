@@ -10080,6 +10080,10 @@ button.bg-purple:hover {
     text-align:left!important;font-size:16px;
 }
 
+.text-right1 {
+    text-align:left!important;font-size:15px;
+}
+
 .form-group {
     /*margin-bottom: 1rem;*/
     float: left!important;
@@ -17607,7 +17611,7 @@ a,
   color: black;
 }
 .form-control {
-  background-color: transparent;
+  background-color: #ffffff;
   border-top: 0;
   border-right: 0;
   border-left: 0;
