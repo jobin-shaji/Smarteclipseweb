@@ -11,8 +11,8 @@
           <div  style ="margin-left: 77px"class="form-group has-feedback">
               <label class="srequired">GPS</label>
 
-              <!-- <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'> -->
-                <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='singleGpsData(this.value)'>
+              <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
+                
                 <option value="">All</option>
                 @foreach($gps as $gps)
                 <option value="{{$gps->id}}">{{$gps->imei}}</option>
@@ -168,9 +168,9 @@
 </div>
 </section>
 <div class="clearfix"></div>
-<section class="content" style="width:100%">
-<div class=col-md-8>          
-      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable">
+<section class="content" >
+<!-- <div class=col-md-8>           -->
+      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
           <thead>
               <tr>
                 <th>Sl.No</th>
@@ -187,7 +187,7 @@
       </table>
       
        
-    </div>
+    <!-- </div> -->
 </section>
 
 
