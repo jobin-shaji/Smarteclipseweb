@@ -810,7 +810,8 @@ class DashboardController extends Controller
                     'device_time'
                   )
                 ->with('vehicle:gps_id,id,name,register_number')
-                ->where('device_time','<=',$oneMinute_currentDateTime)     
+                ->where('device_time','<=',$oneMinute_currentDateTime) 
+                ->whereIn('id',$gps_id)    
                 ->whereNotNull('lat') 
                 ->whereNotNull('lon')         
                 ->orderBy('id','desc')                 
@@ -831,6 +832,7 @@ class DashboardController extends Controller
                 ->with('vehicle:gps_id,id,name,register_number')
                 ->where('device_time','>=',$oneMinute_currentDateTime)             
                 ->where('mode',$vehicle_mode)
+                ->whereIn('id',$gps_id) 
                 ->whereNotNull('lat') 
                 ->whereNotNull('lon')         
                 ->orderBy('id','desc')                 
