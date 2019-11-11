@@ -85,7 +85,7 @@ Route::get('/id/{id}/pased','GpsController@pasedData')->name('id-pased');
 Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-summery');
 Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
 
-
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
+Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 });

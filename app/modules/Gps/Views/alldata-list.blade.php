@@ -20,9 +20,8 @@
                 <option value="{{$gps->id}}">{{$gps->imei}}</option>
                 @endforeach
               </select>
-              <!-- <button class="btn btn-xs btn-info" onclick="check()"> <i class="fa fa-filter"></i> SET OTA </button>  -->
 
-              <button type="button" class="btn btn-primary btn-info" data-toggle="modal" data-target="#favoritesModal">SET OTA </button>    
+              <!-- <button type="button" class="btn btn-primary btn-info" data-toggle="modal" data-target="#favoritesModal">SET OTA </button>  -->   
           </div> 
 
         </div>

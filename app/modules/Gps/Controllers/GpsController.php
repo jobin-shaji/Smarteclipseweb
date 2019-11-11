@@ -22,6 +22,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
+use App\Modules\Ota\Models\OtaResponse;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -1319,7 +1320,7 @@ class GpsController extends Controller {
 
 
 
-     public function allgpsDataListPage()
+    public function allgpsDataListPage()
     {
         $ota = OtaType::all();
         $gps = Gps::all();
@@ -1356,10 +1357,28 @@ public function getGpsAllDataHlm(Request $request)
 
 
 
-
-
-
-
+    public function setOtaInConsole(Request $request)
+    {
+        $gps_id=$request->gps_id;  
+        $command=$request->command;  
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$command
+        ]); 
+        if($response){
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+    }
 
 
 
