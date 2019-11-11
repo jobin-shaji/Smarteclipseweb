@@ -167,6 +167,33 @@
     </div>
   </div>
 </div>
+</div>
+<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="padding: 25px">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>        
+      </div>
+      <div class="modal-body">       
+      <div class="row">
+       <table border=1 id="allHLMDataTable" class="table table-bordered" >
+        
+      
+       </table> 
+     
+      </div>
+      <div class="modal-footer">
+        <span class="pull-center">
+          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
+            SET OTA
+          </button> -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 </section>
 <div class="clearfix"></div>
 <section class="content" >
