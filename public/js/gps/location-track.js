@@ -32,9 +32,7 @@ var recent_angle_latlng=null;
 var current_angle_latlng;
 var service;
 
-
-
-
+$('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
 $('document').ready(function(){
   initMap();
@@ -42,6 +40,7 @@ $('document').ready(function(){
 
 }); 
 $('document').ready(function(){setTimeout(doWork,1000);});  
+
 
 
 // ---------------------que list--------------------------
@@ -61,8 +60,6 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       else
       return null;
   }
-
-
 
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
@@ -512,7 +509,8 @@ var contentString =
  '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
 
 
- 'Speed,</b>-/km<br><b>Vehicle Name,</b> Plate Number</p>'+
+ '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
+ '<i class="fa fa-tachometer"></i> <b><label id="car_speed">0</label> km/h</b></a>'+
  '</div>';
 
 var infowindow = new google.maps.InfoWindow({
