@@ -126,6 +126,8 @@ function gpsData(res)
             '<tr><td>Signal Strength</td><td>'+res.gpsData.gsm_signal_strength+'</td></tr>'+        
             '<tr><td>ignition</td><td>'+res.gpsData.ignition+'</td></tr>'+
             '<tr><td>main power status</td><td>'+res.gpsData.main_power_status+'</td></tr>'+
+            '<tr><td>Gpx-fix</td><td>'+res.gpsData.gps_fix+'</td></tr>'+
+
             '<tr><td>Vehicle Mode</td><td>'+res.gpsData.vehicle_mode+'</td></tr>'
         ;  
         $("#allDataTable").append(gps); 
