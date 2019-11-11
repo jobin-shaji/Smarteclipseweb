@@ -254,6 +254,9 @@ function initMap(){
                     document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
                     document.getElementById("car_location").innerHTML = res.liveData.place;
                     document.getElementById("user").innerHTML = res.vehicle_name;
+                    $("#km_live_track").html('');
+                    $("#km_live_track").append(res.liveData.speed);
+
 
                     
                     transition(res);
@@ -510,7 +513,7 @@ var contentString =
 
 
  '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
- '<i class="fa fa-tachometer"></i> <b><label id="car_speed">0</label> km/h</b></a>'+
+ '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">0</label> km/h</b></a>'+
  '</div>';
 
 var infowindow = new google.maps.InfoWindow({
