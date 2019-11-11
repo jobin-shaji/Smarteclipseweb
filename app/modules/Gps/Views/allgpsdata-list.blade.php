@@ -21,18 +21,12 @@
           <div class="table-responsive">          
           <table class="table">         
             <!-- <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" > -->
-              <thead>
-                <tr>
-                  <th>Sl.No</th> 
-                  <th>Device Time</th>                            
-                  <th>Data</th> 
-                </tr>
-              </thead>
+             
               <tbody id ="gps_table">
                 @foreach($items as $item)                  
                 <tr>           
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $item->device_time }}</td>                                                              
+                  <!-- <td>{{ $loop->iteration }}</td>
+                  <td>{{ $item->device_time }}</td>   -->                                                            
                   <td>{{ $item->vlt_data }}</td>  
                 </tr>
                 @endforeach

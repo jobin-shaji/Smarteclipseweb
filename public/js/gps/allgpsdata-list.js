@@ -56,9 +56,7 @@ function alldata(res){
       }
         for(var i=0; i < res.items.length; i++){
           var j=i+1;
-           gps_table += '<tr><td>'+j+'</td>'+
-           '<td>'+res.items[i].device_time+'</td>'+
-           '<td>'+res.items[i].vlt_data+'</td></tr>';  
+           gps_table += '<tr><td>'+res.items[i].vlt_data+'</td></tr>';  
         }
         
         $("#gps_table").append(gps_table); 
