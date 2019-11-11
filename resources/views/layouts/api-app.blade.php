@@ -24,8 +24,10 @@
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!-- search option in dropdown -->
-    <script src="{{asset('js/bootstrap-select.js')}}"></script>
-
+    <!-- <script src="{{asset('js/bootstrap-select.js')}}"></script> -->
+     <script src="{{asset('js/alertify.min.js')}}"></script>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!-- datetime picker -->
     <script src="{{asset('js/moment-with-locales.js')}}"></script>
     <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
