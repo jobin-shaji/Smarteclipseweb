@@ -6,7 +6,7 @@
           <div  style ="margin-left: 77px"class="form-group has-feedback">
               <label class="srequired">GPS</label>
                 <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='singleGpsData(this.value)'>
-                <option value="">All</option>
+                <option value="0">All</option>
                 @foreach($gps as $gps)
                 <option value="{{$gps->id}}">{{$gps->imei}}</option>
                 @endforeach
