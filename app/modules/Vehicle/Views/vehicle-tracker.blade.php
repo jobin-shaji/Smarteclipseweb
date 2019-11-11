@@ -81,7 +81,7 @@
               <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label> km/h</b> 
+              <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label> <span id="valid_speed">km/h</span></b> 
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label> %</b>
