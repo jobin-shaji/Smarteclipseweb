@@ -953,7 +953,6 @@ class VehicleController extends Controller {
                     )
                     ->where('device_time', '>=',$last_update_time)
                     ->where('id',$get_vehicle->gps_id)
-                    ->latest('device_time')
                     ->first();
         $minutes=0;
         if($track_data == null){
