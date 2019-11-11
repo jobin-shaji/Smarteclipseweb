@@ -9,8 +9,8 @@ function getUrl() {
  var strokeWeight = document.getElementById('strokeWeight').value;
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
-var numDeltas = 300;
-var delay = 20; //milliseconds
+var numDeltas = 100;
+var delay = 3; //milliseconds
 var i = 0;
 var posLat = parseFloat(start_lat);
 var posLng = parseFloat(start_lng);
@@ -28,11 +28,19 @@ var clickedPointCurrentlatlng;
 var locationQueue=[];
 var recentPoppedLocation;
 
+var recent_angle_latlng=null;
+var current_angle_latlng;
+var service;
 
+$('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
+$('document').ready(function(){
+  initMap();
+  setTimeout(getMarkers,5000);
 
-$('document').ready(function(){setTimeout(getMarkers,1000);}); 
-$('document').ready(function(){setTimeout(doWork,500);});  
+}); 
+$('document').ready(function(){setTimeout(doWork,1000);});  
+
 
 
 // ---------------------que list--------------------------
@@ -52,8 +60,6 @@ $('document').ready(function(){setTimeout(doWork,500);});
       else
       return null;
   }
-
-
 
   function getSnappedPoint(unsnappedWaypoints,angle)
    {
@@ -98,11 +104,12 @@ function transition(result)
 function doWork()
     {
       var current=popFromLocationQueue();
+
       if(current!=null)
        {
         if(recentPoppedLocation==null)
         {  
-
+                 
 
              track(current[0],current[1]);
             // setMarketLocation(current[0],current[1]);
@@ -110,6 +117,8 @@ function doWork()
             // track()           
         }
         else{   
+
+            track(current[0],current[1]);
             
             // drawLine(recentPoppedLocation[0],current[0]);
             // setMarketLocation(current[0],current[1]);
@@ -121,7 +130,8 @@ function doWork()
      else{
      
      }
-    setTimeout(doWork,140);
+
+    setTimeout(doWork,1000);
     }
 
 
@@ -142,10 +152,17 @@ function initMap(){
     });  
 
 
-    marker = new google.maps.Marker({});
+    // marker = new google.maps.Marker({});
+    marker = new SlidingMarker({});
+
+    // marker = new google.maps.Marker({});
+
+
     
     map.setOptions({maxZoom:18,minZoom:9});
      getMarkers(map);
+
+  service = new google.maps.places.PlacesService(map);
  }
 
 
@@ -174,7 +191,7 @@ function initMap(){
         success: function(res) {
 
             if(res.hasOwnProperty('liveData')){
-            // console.log(res.liveData.ign);
+
                     if (res.liveData.vehicleStatus == 'M') {
                         $("#online").show();
                         $("#halt").hide();
@@ -208,40 +225,85 @@ function initMap(){
                         vehicleColor="#c41900";
 
                     }
-                    if (res.liveData.ign == 1) {
-                        document.getElementById("ignition").innerHTML = "Ignition ON";
-                     }else
-                      {
-                         document.getElementById("ignition").innerHTML = "Ignition OFF";
-                      }
-                    // document.getElementById("user").innerHTML = res.client_name;
+                    if(res.liveData.ign == 1) {
+                      document.getElementById("ignition").innerHTML = "Ignition ON";
+                    }else
+                    {
+                      document.getElementById("ignition").innerHTML = "Ignition OFF";
+                    }
+                    if(res.liveData.power == 1) {
+                      document.getElementById("car_power").innerHTML = "Connected";
+                    }else
+                    {
+                      document.getElementById("car_power").innerHTML = "Disconnected";
+                    }
+                    $device_time=res.liveData.dateTime;
+                    $connection_lost_time=res.liveData.connection_lost_time;
+                    if (res.liveData.signalStrength >= 19 && $device_time >= $connection_lost_time) {
+                      document.getElementById("network_status").innerHTML = "Good";
+                    }else if (res.liveData.signalStrength < 19 && res.liveData.signalStrength >= 13 && $device_time >= $connection_lost_time) {
+                      document.getElementById("network_status").innerHTML = "Average";
+                    }else if (res.liveData.signalStrength <= 12 && $device_time >= $connection_lost_time) {
+                      document.getElementById("network_status").innerHTML = "Poor";
+                    }else{
+                      document.getElementById("network_status").innerHTML = "Connection Lost";
+                    }
+                    
                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
                     document.getElementById("car_speed").innerHTML = res.liveData.speed;
                     document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
                     document.getElementById("car_location").innerHTML = res.liveData.place;
                     document.getElementById("user").innerHTML = res.vehicle_name;
+                    $("#km_live_track").html('');
+                    $("#km_live_track").append(res.liveData.speed);
+
 
                     
                     transition(res);
                     // track(map, res);
-                    setTimeout(getMarkers, 1000);
+                    setTimeout(getMarkers, 5000);
             }
 
         },
         error: function(err) {
             var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-            toastr.error(message, 'Error');
         }
     });
 
   }
 
-
+   var SameThreshold = 0.1;
+   var increment_angle=5.0;
+   var stop_angle;
+   var recent_angle_increment_value;
    function track(latlng,angle) {
+        current_angle_latlng=latlng;
 
+        if(recent_angle_latlng== null){
+          angle=parseFloat(angle);
+        }else{
+         
+         
+        if (google.maps.geometry.spherical.computeDistanceBetween(recent_angle_latlng,current_angle_latlng) < SameThreshold){
+           if(recent_angle_increment_value==undefined){
+             recent_angle_increment_value=angle;
+           }
+           // angle=(parseFloat(recent_angle_increment_value) + parseFloat(increment_angle))%360;
+           // recent_angle_increment_value=angle;
+            angle=parseFloat(angle);
+
+         }else{
+          // angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
+            angle=parseFloat(angle);
+          
+         }
+         
+        }
         var lat = parseFloat(latlng.lat());
         var lng = parseFloat(latlng.lng());
-        var angle=parseFloat(angle);
+   
+
+
         var markerLatLng = new google.maps.LatLng(latlng.lat(),latlng.lng());
         i = 0;
         deltaLat = (lat - posLat) / numDeltas;
@@ -262,26 +324,201 @@ function initMap(){
                 };
               marker.setIcon(icon);
               marker.setMap(map);
-
-
+              recent_angle_latlng=current_angle_latlng;
 
     }
 
     function moveMarker() {
-
+        infowindow.open(map, marker);
         posLat += deltaLat;
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
-        marker.setPosition(latlng);
+        marker.setPosition(offsetCenter(latlng));
+        marker.setDuration(10);
+
         if (i != numDeltas) {
             i++;
             setTimeout(moveMarker, delay);
         }
-
-
     }
 
+ // ---------------------center on  a marker--------------------------
+function offsetCenter(latlng) 
+  {
+    var offsetx=9.5;
+    var offsety=0;
+    // offsetx is the distance you want that point to move to the right, in pixels
+    // offsety is the distance you want that point to move upwards, in pixels
+    var scale = Math.pow(2, map.getZoom());
+    var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
+    var worldCoordinateNewCenter = new google.maps.Point(
+        worldCoordinateCenter.x - pixelOffset.x,
+        worldCoordinateCenter.y + pixelOffset.y
+    );
+    var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+    return newCenter;
+   }
+// ---------------------center on  a marker--------------------------
+  // marker.addListener('click', function() {
+  //   alert(1);
+  //   infowindow.open(map, marker);
+  // });
 
+  // var contentString = 'hiiii';
+
+  // var infowindow = new google.maps.InfoWindow({
+  //   content: contentString
+  // });
+// ----------------------------------------------------------------
+
+// -------------------------------------------------------------
+
+
+var POI_markers = [];
+var lat=posLat;
+var lng=posLng;
+
+var atm_flag=0;
+var petrol_flag=0;
+var hospital_flag=0;
+
+
+$('#poi_atm').click(function(){
+    deleteMarkersPOI();
+    if(atm_flag==0){
+        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
+        service.nearbySearch(
+          {location: pyrmont, radius: 1000, type:['atm']},
+           function(results, status, pagination) {
+           if (status !== 'OK') return;
+              createMarkers(results);
+            });
+
+         atm_flag=1;
+         }else{
+           deleteMarkersPOI();
+           atm_flag=0;
+         }
+ 
+
+ });
+
+
+$('#poi_petrol').click(function(){
+        deleteMarkersPOI();
+        if(petrol_flag==0){
+        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
+        service.nearbySearch(
+          {location: pyrmont, radius: 1000, type:['gas_station']},
+           function(results, status, pagination) {
+           if (status !== 'OK') return;
+              createMarkers(results);
+            });
+
+          petrol_flag=1;
+         }else{
+           deleteMarkersPOI();
+           petrol_flag=0;
+         }
+  
+    });
+ $('#poi_hopital').click(function(){
+        deleteMarkersPOI();
+        if(hospital_flag==0){
+          var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
+          service.nearbySearch(
+            {location: pyrmont, radius: 1000, type:['hospital']},
+             function(results, status, pagination) {
+             if (status !== 'OK') return;
+                createMarkers(results);
+              });
+          hospital_flag=1;
+         }else{
+           deleteMarkersPOI();
+           hospital_flag=0;
+        }
+    });
+
+// ---------------find nearest map points-----------------
+ var infowindow = new google.maps.InfoWindow();
+ function createMarkers(places) {
+        deleteMarkersPOI();
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0, place; place = places[i]; i++) {
+          var image = {
+            url: place.icon,
+            size: new google.maps.Size(30, 30),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(10, 20),
+            scaledSize: new google.maps.Size(20, 20)
+          };
+          var marker = new google.maps.Marker({
+            icon: image,
+            title: place.name,
+            position: place.geometry.location,
+            data:place.vicinity
+          });
+          var place_name=place.name;
+
+
+
+          POI_markers.push(marker);
+          bounds.extend(place.geometry.location);
+
+         
+        }
+        map.fitBounds(bounds);
+        setMapOnAllPOI(map); 
+        
+      }
+      function setMapOnAllPOI(map) {
+        for (var i = 0; i < POI_markers.length; i++) {
+          POI_markers[i].setMap(map);
+           google.maps.event.addListener(POI_markers[i], 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent('<i>'+POI_markers[i].title +'</i><br><span style="margin-top: 25px;">'+POI_markers[i].data+'</span>');
+            infowindow.setOptions({maxWidth: 200});
+            infowindow.open(map, POI_markers[i]);
+          }
+          }) (marker, i));
+        }
+      }
+      function clearMarkersPOI() {
+        setMapOnAllPOI(null);
+      }
+      function deleteMarkersPOI() {
+        clearMarkersPOI();
+         POI_markers = [];
+        
+      }
+     
+// ---------------find nearest map points-----------------
+// -------------------playback---------------------------
+
+
+$( "#playback_form" ).submit(function( event ) {
+  var vehicle_id=$('#vehicle_id').val();
+  var from_date=$('#fromDate').val();
+  var to_date=$('#toDate').val();
+  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
+  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
+  event.preventDefault();
+});
+
+// -------------------playback---------------------------
+var contentString = 
+ '<div style="width:13%;float:left">'+
+ '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
+
+
+ '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
+ '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">-</label> km/h</b></a>'+
+ '</div>';
+
+var infowindow = new google.maps.InfoWindow({
+    content: contentString
+});
 
 
 

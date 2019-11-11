@@ -96,4 +96,8 @@ class GpsData extends Model
     {
         return $this->hasOne('App\Modules\Vehicle\Models\DailyKm','gps_id','gps_id');
     }
+    protected $casts = [
+        'lat' => 'float',
+        'lng' => 'float',
+    ];
 }

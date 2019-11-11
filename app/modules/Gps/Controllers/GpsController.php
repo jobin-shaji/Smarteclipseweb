@@ -1304,6 +1304,53 @@ class GpsController extends Controller {
       return $timeFormat;
     }
 
+
+
+     public function allgpsDataListPage()
+    {
+        $ota = OtaType::all();
+        $gps = Gps::all();
+        $items = GpsData::orderBy('device_time', 'DESC')->limit(20)->get(); 
+        $last_data = GpsData::orderBy('device_time', 'DESC')->first();
+        // dd($gps_data);
+        return view('Gps::allgpsdata-list',['gps' => $gps,'ota' => $ota,'items'=>$items,'last_data'=>$last_data]);
+    }
+    public function getAllGpsData(Request $request)
+    {
+    
+        if($request->gps!=0){
+        $items = GpsData::where('gps_id',$request->gps)->orderBy('device_time', 'DESC')->limit(20)->get();  
+         $last_data = GpsData::where('gps_id',$request->gps)->orderBy('device_time', 'DESC')->first();
+        }else{
+         $items = GpsData::orderBy('device_time', 'DESC')->limit(20)->get();  
+          $last_data = GpsData::orderBy('device_time', 'DESC')->first();
+        }    
+// dd($items);
+        return response()->json([
+                'last_data' => $last_data,
+                'items' => $items,               
+                'status' => 'gpsdatavalue'
+            ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //validation for gps creation
     public function gpsCreateRules(){
         $rules = [

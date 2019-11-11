@@ -86,5 +86,6 @@ Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-su
 Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
 
 
-
+Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
+Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
 });

@@ -6,13 +6,14 @@
         <div class="wrapper">
           
                 <div class="content-wrapper">
+                      @include('layouts.sections.api-header')
                     @yield('content')
                 </div> 
           
         </div>
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
-
+    
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{asset('js/jquery-ui.min.js')}}"></script>

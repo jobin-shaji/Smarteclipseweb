@@ -52,9 +52,6 @@ Route::get('/invoice','VehicleController@invoice')->name('invoice');
 
 Route::post('/vehicle-invoice/export','VehicleController@export')->name('vehicle-invoice.export.p');
 
-
-
-
 });
 
 
@@ -75,6 +72,10 @@ Route::post('/vehicle_type/{id}/edit','VehicleController@updateVehicleType')->na
 Route::get('/vehicle-root','VehicleController@vehicleRootList')->name('vehicle-root');
 
 Route::post('/vehicle-root-list','VehicleController@getVehicleRootList')->name('vehicle-root-list');
+
+Route::get('/vehicle-map/{id}/location','MapLocationController@vehicleMapLocation')->name('vehicle.map.location');
+
+Route::post('/vehicle-map/location-track','MapLocationController@vehicleMapLocationTrack')->name('vehicle.map.location.track');
 });
 
 ///////////////////////////////Location track////////////////////////////////////
@@ -118,9 +119,10 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
   Route::post('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
 });
+
 Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
- Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
-
-
+ 	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+ 	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
+	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
 });
