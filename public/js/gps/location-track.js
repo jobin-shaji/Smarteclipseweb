@@ -513,7 +513,7 @@ var contentString =
 
 
  '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
- '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">0</label> km/h</b></a>'+
+ '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">-</label> km/h</b></a>'+
  '</div>';
 
 var infowindow = new google.maps.InfoWindow({
