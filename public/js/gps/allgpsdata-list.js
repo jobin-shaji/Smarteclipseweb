@@ -1,13 +1,22 @@
 $(document).ready(function () {
+  
+    window.setInterval(function(){
+       var gps_id=$('#gps_id').val();
+       singleGpsData(gps_id); 
+
+  }, 5000);
+
 
 });
 
 function singleGpsData(value){
+  console.log(value);
   var url = 'allgpsdata-list';
 
      var data = { 
          gps : value   
      };
+     console
    // window.setInterval(function(){
       apiBackgroundPostData(url,data,'alldata',{alert:false});  
 
@@ -18,6 +27,9 @@ function alldata(res){
    $('#datas').empty();
     $('#gps_table').empty(); 
   var gps_table;  
+  if(res.last_data!=null)
+  {
+
     var gps='<tr><td>Header</td><td>'+res.last_data.header+'</td></tr>'+
             '<tr><td>Imei</td><td >'+res.last_data.imei+'</td></tr>'+ 
             '<tr><td>alert id</td><td>'+res.last_data.alert_id+'</td></tr>'+
@@ -41,6 +53,7 @@ function alldata(res){
             '<tr><td>Vehicle Mode</td><td>'+res.last_data.vehicle_mode+'</td></tr>'
         ;  
         $("#datas").append(gps);
+      }
         for(var i=0; i < res.items.length; i++){
           var j=i+1;
            gps_table += '<tr><td>'+j+'</td>'+
@@ -49,4 +62,5 @@ function alldata(res){
         }
         
         $("#gps_table").append(gps_table); 
+  
 }
