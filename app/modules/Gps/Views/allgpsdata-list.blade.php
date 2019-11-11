@@ -49,10 +49,11 @@
 <div class="table-responsive">
 
 <table style="background-color: black;color: white;">
-
+<div class="loader" id="loader" style="margin:20% 50%"></div>
  <thead id ="last_update_time">
 
 </thead>  
+
 <tbody id ="gps_table">
 
 
