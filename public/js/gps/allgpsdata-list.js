@@ -6,6 +6,10 @@ $(document).ready(function () {
 });
 
 function singleGpsData(value){
+  if(value){
+    $("#set_ota_button").show();
+    $("#set_ota_gps_id").val(value);
+  }
   var url = 'allgpsdata-list';
   var data = { 
      gps : value   
@@ -18,7 +22,6 @@ function alldata(res){
   var gps_table;  
   if(res.last_data!=null)
   {
-
     var gps='<tr><td>Header</td><td>'+res.last_data.header+'</td></tr>'+
             '<tr><td>Imei</td><td >'+res.last_data.imei+'</td></tr>'+ 
             '<tr><td>alert id</td><td>'+res.last_data.alert_id+'</td></tr>'+
@@ -42,11 +45,43 @@ function alldata(res){
             '<tr><td>Vehicle Mode</td><td>'+res.last_data.vehicle_mode+'</td></tr>'
         ;  
         $("#datas").append(gps);
+      }else{
+        $("#datas").append("No data available");
       }
       for(var i=0; i < res.items.length; i++){
         var j=i+1;
          gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>';  
       }
       $("#gps_table").append(gps_table); 
-  
+}
+
+function setOta(gps_id) {
+  if(document.getElementById('command').value == ''){
+    alert('Please enter your command');
+  }
+  else{
+    var command = document.getElementById('command').value;
+    var gps_id = document.getElementById('gps_id').value;
+    var data = {'gps_id':gps_id, 'command':command};
+  }
+    var url = 'setota';
+    var purl = getUrl() + '/' + url;
+    var triangleCoords = [];
+    $.ajax({
+        type: 'POST',
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+          if(res.status==1){
+            toastr.success(res.message);
+          }else{
+            toastr.error(res.message);
+          }
+        }
+    });
+
 }
