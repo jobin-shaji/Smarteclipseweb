@@ -1331,12 +1331,18 @@ class GpsController extends Controller {
     }
     public function getAllGpsData(Request $request)
     {
+         $forhuman=0;
         if($request->gps){
             $items = GpsData::where('gps_id',$request->gps)->orderBy('created_at', 'DESC')->limit(20)->get();  
             $last_data = GpsData::where('gps_id',$request->gps)->orderBy('created_at', 'DESC')->first();
+            if($last_data)
+            {
+                $forhuman=Carbon::parse($last_data->created_at)->diffForHumans(); 
+            }            
             return response()->json([
                     'last_data' => $last_data,
-                    'items' => $items,               
+                    'items' => $items,  
+                    'last_updated' => $forhuman,               
                     'status' => 'gpsdatavalue'
             ]);
         }   
