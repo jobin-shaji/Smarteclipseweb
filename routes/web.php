@@ -16,7 +16,16 @@ Route::get('/', function () {
 });
 
 Route::get('/privacy-policy', function () {
-    return view('privacy-policy');
+
+	$url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) 
+         {
+          return view('rayfleet-privacy-policy');
+         }else{
+           return view('privacy-policy');
+         }
 });
 
 Auth::routes();

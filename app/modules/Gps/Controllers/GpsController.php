@@ -22,6 +22,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
+use App\Modules\Ota\Models\OtaResponse;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -638,10 +639,16 @@ class GpsController extends Controller {
            // <a href=".$b_url."/dealers/".Crypt::encrypt($items->id)."/change-password class='btn btn-xs btn-primary'>View</a>
 
              $contains = Str::contains($items, 'BTH');
+             $hlm_contains = Str::contains($items, 'HLM');
+             $lgn_contains = Str::contains($items, 'LGN');
+
              if($contains){
-                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>"; 
-                    
-                  }else{
+                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>";                    
+                  }
+                  else if($hlm_contains || $lgn_contains){
+                    return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataHLMList($items->id)'>HLM/LGN </button>"; 
+                  }
+                    else{
                        return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button>";
                       }
                 
@@ -837,8 +844,15 @@ class GpsController extends Controller {
 
     public function privacyPolicy()
     {
-       
-        return view('Gps::privacy-policy');
+       $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) 
+         {
+          return view('Gps::rayfleet-privacy-policy');
+         }else{
+           return view('Gps::privacy-policy');
+         }
     }
 
     //for gps creation
@@ -1306,7 +1320,7 @@ class GpsController extends Controller {
 
 
 
-     public function allgpsDataListPage()
+    public function allgpsDataListPage()
     {
         $ota = OtaType::all();
         $gps = Gps::all();
@@ -1328,21 +1342,43 @@ class GpsController extends Controller {
         }   
     }
 
+public function getGpsAllDataHlm(Request $request)
+    {  
+
+        $items = GpsData::find($request->id);       
+        return response()->json([
+                'gpsData' => $items        
+        ]);
+                   
+    }
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+    public function setOtaInConsole(Request $request)
+    {
+        $gps_id=$request->gps_id;  
+        $command=$request->command;  
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$command
+        ]); 
+        if($response){
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+    }
 
 
 
