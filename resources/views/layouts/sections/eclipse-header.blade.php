@@ -401,7 +401,6 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
-                               
                             </div>
                                 <a class="dropdown-item" href="{{url('/alert')}}">VIEW ALL ALERTS</a>
                             </div>
