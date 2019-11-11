@@ -19,15 +19,15 @@
       <section class="content" style="width:100%">
           <div class=col-md-9> 
           <div class="table-responsive">          
-          <table class="table">         
-            <!-- <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" > -->
+          <table style="background-color: black;color: white;">         
+           
              
               <tbody id ="gps_table">
                 @foreach($items as $item)                  
                 <tr>           
                   <!-- <td>{{ $loop->iteration }}</td>
                   <td>{{ $item->device_time }}</td>   -->                                                            
-                  <td>{{ $item->vlt_data }}</td>  
+                  <td style="padding:15px;">{{ $item->vlt_data }}</td>  
                 </tr>
                 @endforeach
               </tbody>

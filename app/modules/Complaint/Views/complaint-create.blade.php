@@ -27,9 +27,10 @@
             <div class="row">
               <div class="col-sm-12">                    
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="card-body_vehicle wizard-content">                    
-                      <div class="form-group has-feedback">
+                  <div > 
+                    <div class="complaint__container">
+                      <div class="container__child complaint__form">
+                        <div class="form-group has-feedback">
                         <label class="srequired">GPS</label>
                         <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
                           <option value="" selected disabled>Select GPS</option>
@@ -67,7 +68,15 @@
                             <strong class="error-text">{{ $errors->first('description') }}</strong>
                           </span>
                         @endif
-                      </div>                                                         
+                      </div>             
+                        <div class="m-t-lg">
+                          <ul class="list-inline">
+                            <li>
+                              <input class="btn btn-primary address_btn btn btn--form" type="submit" value="Register" />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -76,15 +85,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-6 col-md-12">
-          <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
-            <div class="row">
-               <button type="submit" class="btn btn-primary address_btn">Create</button>
-            </div>
-          </div>
-        </div>
-      </div>  
     </form>
   </div>
 </section>
