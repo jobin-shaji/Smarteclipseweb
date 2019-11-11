@@ -19,13 +19,13 @@
           <div class="col-lg-2 col-md-2"> 
             <div class="form-group">                      
               <label> From Date</label>
-              <input type="datetime-local" class="form-control" id="from_date" name="from_date">
+              <input type="text" class="form-control datetimepicker" id="from_date" name="from_date">
             </div>
           </div>
           <div class="col-lg-2 col-md-2"> 
             <div class="form-group">                     
               <label> To Date</label>
-              <input type="datetime-local" class="form-control" id="to_date" name="to_date">
+              <input type="text" class="form-control datetimepicker" id="to_date" name="to_date">
             </div>
           </div>
           <div class="col-lg-2 col-md-2"> 
@@ -45,7 +45,12 @@
 @section('script')
 <script src="{{asset('js/gps/gps-tracker.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=geometry,places&callback=initMap" async defer></script>
-
+<script type="text/javascript">
+   $( ".datetimepicker" ).datetimepicker({ 
+        format: 'YYYY-MM-DD HH:mm:ss',
+        maxDate: new Date() 
+    });
+</script>
 
 @endsection
 
