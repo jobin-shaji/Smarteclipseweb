@@ -12,12 +12,23 @@
           @endforeach
         </select>            
       </div> 
-    </div>           
+
+    </div>    
+    <div class="col-md-4">
+      <div style ="padding-top:15px;" class="form-group has-feedback">
+        <button class="btn btn-md btn-success btn2 form-control" id="set_ota_button" data-toggle="modal" data-target="#setOtaModal" style="display: none;">SET OTA</button>         
+      </div> 
+    </div>         
   </div>
+</section>
+
   <section class="content">
     <div class="col-md-9" style="width:70%"> 
       <div class="table-responsive">          
-        <table style="background-color: black;color: white;">         
+        <table style="background-color: black;color: white;"> 
+          <thead id ="last_update_time">
+
+          </thead>       
           <tbody id ="gps_table">
             
           </tbody>
@@ -33,7 +44,7 @@
       </div>
     </div>   
   </section>            
-</section>
+
 @section('script')
     <script src="{{asset('js/gps/allgpsdata-list.js')}}"></script>
 @endsection
