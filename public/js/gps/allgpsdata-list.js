@@ -19,6 +19,8 @@ function singleGpsData(value){
 function alldata(res){
   $('#datas').empty();
   $('#gps_table').empty(); 
+  $('#last_update_time').empty(); 
+
   var gps_table;  
   if(res.last_data!=null)
   {
@@ -53,6 +55,11 @@ function alldata(res){
          gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>';  
       }
       $("#gps_table").append(gps_table); 
+
+
+      var  update_time = '<tr><td style="padding:15px">Last Updated: '+res.last_updated+'</td></tr>';  
+      
+      $("#last_update_time").append(update_time); 
 }
 
 function setOta(gps_id) {

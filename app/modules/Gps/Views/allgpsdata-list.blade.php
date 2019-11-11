@@ -23,7 +23,10 @@
 <section class="content" style="width:100%">
   <div class=col-md-9> 
     <div class="table-responsive">          
-      <table style="background-color: black;color: white;">         
+      <table style="background-color: black;color: white;">   
+      <thead id ="last_update_time">
+
+      </thead>      
         <tbody id ="gps_table">
           
         </tbody>
