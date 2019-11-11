@@ -48,6 +48,13 @@ class MapLocationController extends Controller {
                     ->where('gps_id',$gps_id)
                     ->whereBetween('device_time', array($from_date, $to_date))
                     ->get();
+        $track_data_with_gpsfix=GpsData::select('latitude as lat',
+          'longitude as lng'
+        )
+        ->where('gps_id',$gps_id)
+        ->where('gps_fix',1)
+        ->whereBetween('device_time', array($from_date, $to_date))
+        ->get();
         return response()->json($track_data); 
     }
    
