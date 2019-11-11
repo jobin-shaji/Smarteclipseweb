@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Gps\Models\GpsModeChange;
+use App\Modules\Alert\Models\Alert;
+use App\Modules\Alert\Models\UserAlerts;
+use App\Modules\Route\Models\RouteDeviation;
+
+
 use App\Modules\Vehicle\Models\DailyKm;
 use Carbon\Carbon;
 
@@ -92,12 +98,21 @@ class TotalKMReportController extends Controller
         return view('Reports::km-report',['vehicles'=>$vehicles]);  
     } 
 
-     public function kmReportList(Request $request)
+    public function kmReportList(Request $request)
     {
+        $sleep=0;
+        $halt=0;
+        $motion=0;
+        $offline=0;
+        $time=0;
+        $initial_time = 0;
+        $previous_time =0;
+        $previous_mode = 0;
+        $vehicle_sleep=0;
         $single_vehicle_id = [];
         $client_id=\Auth::user()->client->id;       
-        $vehicle =$request->data['vehicle'];
-        $report_type =$request->data['report_type'];
+        $vehicle =$request->vehicle;
+        $report_type =$request->report_type;
         if($report_type==1)
         {
             $search_from_date=date('Y-m-d');
@@ -115,30 +130,158 @@ class TotalKMReportController extends Controller
             
         }
         else if($report_type==4)
-        {
-           
+        {           
             $search_from_date=date('Y-m-d',strtotime("-30 days"));
             $search_to_date=date('Y-m-d');
             
-        }      
-        if($vehicle!=0)
-        {
-            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
-            $single_vehicle_ids = $vehicle_details->gps_id;
-        }
-        else
-        {
-            $vehicle_details =Vehicle::where('client_id',$client_id)->withTrashed()->get();            
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+        } 
+        $single_vehicle_id =  $this->VehicleGPs($vehicle);  
+        $km_report =  $this->dailyKmReport($client_id,$vehicle,$search_from_date,$search_to_date,$single_vehicle_id);
+        // dd($km_report);
+        $gps_modes=GpsModeChange::where('device_time','>=',$search_from_date)
+        ->where('device_time','<=',$search_to_date)  
+        ->where('gps_id',$single_vehicle_id)
+        ->orderBy('device_time','asc')
+        ->get();
+        foreach ($gps_modes as $mode) {
+        if($initial_time == 0){
+            $initial_time = $mode->device_time;
+            $previous_time = $mode->device_time;
+            $previous_mode = $mode->mode;
+        }else{
+            if($mode->mode == "S"){
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+                $sleep= $sleep+$time; 
+                if($sleep<0)
+                {
+                    $sleep="0";                   
+                }                
+            }
+            else if($mode->mode == "M"){
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+               $motion= $motion+$time;  
+                if($motion<0)
+               {
+                $motion="0";                
+               }                                
+            }
+            else if($mode->mode == "H"){
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+               $halt= $halt+$time;   
+               // dd($halt) ;
+              if($halt<0)
+              {
+                $halt="0";               
+              }  
+                                    
             }
         }
+        $previous_time = $mode->device_time;
+      }
+
+       $alerts =Alert::select(
+            'id',
+            'alert_type_id', 
+            'device_time',    
+            'gps_id', 
+            'latitude',
+            'longitude', 
+            'status'
+        )
+        ->where('gps_id',$single_vehicle_id)
+        ->whereDate('device_time', '>=', $search_from_date)
+        ->whereDate('device_time', '<=', $search_to_date)
+        ->get();
+        $user_alert = UserAlerts::select(
+            'alert_id'
+        )
+        ->where('client_id',$client_id)
+        ->where('status',1)
+        ->get();
+        $alert_id = [];
+        foreach($user_alert as $user_alert){
+            $alert_id[] = $user_alert->alert_id;
+        }
+
+        $route_deviation =RouteDeviation::select(
+            'id',
+            'vehicle_id', 
+            'deviating_time'
+        )
+        ->where('vehicle_id',$vehicle)       
+        ->where('client_id',$client_id)
+        ->whereDate('deviating_time', '>=', $search_from_date)
+        ->whereDate('deviating_time', '<=', $search_to_date)
+        ->count();
+
+
+        // dd($alerts->whereIn('id',$alert_id));
+        return response()->json([
+            'dailykm' => $km_report, 
+            'sleep' => $this->timeFormate($sleep),  
+            'motion' => $this->timeFormate($motion),   
+            'halt' => $this->timeFormate($halt), 
+            'sudden_acceleration' => $alerts->where('alert_type_id',2)->count(), 
+            'harsh_braking' => $alerts->where('alert_type_id',1)->count(),               
+            'main_battery_disconnect' => $alerts->where('alert_type_id',11)->count(),               
+            'accident_impact' => $alerts->where('alert_type_id',14)->count(),  
+            'zig_zag' => $alerts->where('alert_type_id',3)->count(), 
+            'over_speed' => $alerts->where('alert_type_id',12)->count(),  
+            'user_alert' => $alerts->whereIn('alert_type_id',$alert_id)->count(),
+            'geofence' => $alerts->whereIn('alert_type_id',[18,19,20,21])->count(),
+
+            'route_deviation' => $route_deviation,             
+
+
+
+
+
+            'status' => 'kmReport'           
+        ]);
+
+    //     $response_data = array(
+    //             'status'  => 'success',
+    //             'message' => 'success',
+    //             'code'    =>1,                              
+    //             'polyline' => $playback,
+    //             'markers' => $playbackData,
+                
+    //         );
+    //     }else{
+    //         $response_data = array(
+    //             'status'  => 'failed',
+    //             'message' => 'failed',
+    //             'code'    =>0
+    //         );
+    //     }
+
+    
+    // return response()->json($response_data); 
+
+
+
+        // return DataTables::of($km_report)
+        // ->addIndexColumn()        
+        // ->addColumn('totalkm', function ($km_report) {
+        //   $gps_km=$km_report->km;
+        //   $km=round($gps_km/1000);
+        //     return $km;
+        // })
+        // ->make();
+    }
+    function VehicleGPs($vehicle){       
+        $vehicle_details =Vehicle::withTrashed()->find($vehicle);
+       return  $single_vehicle_id = $vehicle_details->gps_id;
+       
+    }
+
+    function dailyKmReport($client_id,$vehicle,$search_from_date,$search_to_date,$single_vehicle_id){
          $query =DailyKm::select(
             'gps_id', 
             'date',  
             \DB::raw('SUM(km) as km')    
         )
-        ->with('gps.vehicle') 
+        ->with('gps.vehicle')
         ->groupBy('gps_id')   
         ->orderBy('id', 'desc');             
          if($vehicle==0 || $vehicle==null)
@@ -147,22 +290,24 @@ class TotalKMReportController extends Controller
         }
         else
         {
-            $query = $query->where('gps_id',$single_vehicle_ids)
+            $query = $query->where('gps_id',$single_vehicle_id)
             ->groupBy('gps_id');               
         }   
-        if($report_type){            
+        if($search_from_date){            
             $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
         }                     
-        $km_report = $query->get();
-        return DataTables::of($km_report)
-        ->addIndexColumn()        
-        ->addColumn('totalkm', function ($km_report) {
-          $gps_km=$km_report->km;
-          $km=round($gps_km/1000);
-            return $km;
-        })
-        ->make();
+         return $km_report = $query->first();  
     }
+    
+    function timeFormate($second){
+      $hours = floor($second / 3600);
+      $mins = floor($second / 60 % 60);
+      $secs = floor($second % 60);
+      $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+      return $timeFormat;
+    }
+
+
      public function kmExport(Request $request)
     {
        return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');

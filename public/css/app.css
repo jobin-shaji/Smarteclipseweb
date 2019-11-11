@@ -28,6 +28,7 @@ box-shadow: 0px 8px 11px 0px rgba(102,102,102,1)
 
 
 .form-control {
+
  display: block;
  width: 90%;
  height: calc(1em + .7rem + 2px);
@@ -42,7 +43,4 @@ box-shadow: 0px 8px 11px 0px rgba(102,102,102,1)
  border-radius: 0.5rem;
  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-
-
-
 
