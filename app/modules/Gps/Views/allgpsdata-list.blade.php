@@ -21,7 +21,6 @@
     </div>         
   </div>
 </section>
-
   <section class="content">
     <div class="col-md-9" style="width:70%"> 
       <div class="table-responsive">          
