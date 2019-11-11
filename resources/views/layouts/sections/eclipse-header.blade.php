@@ -214,7 +214,7 @@
                                         <a href="{{url('/km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                           <span class="system_info" >KM  Report</span>
+                                           <span class="system_info" >Vehicle  Report</span>
                                            </div>
                                             
                                         </a>
