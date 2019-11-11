@@ -34,7 +34,7 @@
     </div>   
   </section>            
 </section>
-  @section('script')
-      <script src="{{asset('js/gps/allgpsdata-list.js')}}"></script>
-  @endsection
+@section('script')
+    <script src="{{asset('js/gps/allgpsdata-list.js')}}"></script>
+@endsection
 @endsection
