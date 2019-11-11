@@ -73,7 +73,7 @@ Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data')
 
 
 Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps-data-bth');
-
+Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
 
 Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
 

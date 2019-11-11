@@ -638,10 +638,16 @@ class GpsController extends Controller {
            // <a href=".$b_url."/dealers/".Crypt::encrypt($items->id)."/change-password class='btn btn-xs btn-primary'>View</a>
 
              $contains = Str::contains($items, 'BTH');
+             $hlm_contains = Str::contains($items, 'HLM');
+             $lgn_contains = Str::contains($items, 'LGN');
+
              if($contains){
-                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>"; 
-                    
-                  }else{
+                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>";                    
+                  }
+                  else if($hlm_contains || $lgn_contains){
+                    return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataHLMList($items->id)'>HLM/LGN </button>"; 
+                  }
+                    else{
                        return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button>";
                       }
                 
@@ -1335,11 +1341,15 @@ class GpsController extends Controller {
         }   
     }
 
+public function getGpsAllDataHlm(Request $request)
+    {  
 
-
-
-
-
+        $items = GpsData::find($request->id);       
+        return response()->json([
+                'gpsData' => $items        
+        ]);
+                   
+    }
 
 
 
