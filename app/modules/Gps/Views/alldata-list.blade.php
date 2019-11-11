@@ -1,5 +1,7 @@
 @extends('layouts.api-app')
+
 @section('content')
+
 <section class="hilite-content">
       <!-- title row -->
      

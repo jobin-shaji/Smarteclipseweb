@@ -11,8 +11,11 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <!-- Bootstrap 3.3.7 -->
+
+      <link href="{{ url('/') }}/dist/css/style.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
+
   <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('css/ionicons.min.css')}}">
