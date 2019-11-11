@@ -1919,63 +1919,6 @@
                     "role": "Developer"
                 }
             ],
-<<<<<<< HEAD
-=======
-            "description": "A simple API extension for DateTime.",
-            "homepage": "http://carbon.nesbot.com",
-            "keywords": [
-                "date",
-                "datetime",
-                "time"
-            ],
-            "time": "2019-10-14T05:51:36+00:00"
-        },
-        {
-            "name": "nexmo/client",
-            "version": "1.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nexmo/nexmo-php.git",
-                "reference": "182d41a02ebd3e4be147baea45458ccfe2f528c4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/182d41a02ebd3e4be147baea45458ccfe2f528c4",
-                "reference": "182d41a02ebd3e4be147baea45458ccfe2f528c4",
-                "shasum": ""
-            },
-            "require": {
-                "lcobucci/jwt": "^3.2",
-                "php": ">=5.6",
-                "php-http/client-implementation": "^1.0",
-                "php-http/guzzle6-adapter": "^1.0",
-                "zendframework/zend-diactoros": "^1.8.4 || ^2.0"
-            },
-            "require-dev": {
-                "estahn/phpunit-json-assertions": "^1.0.0",
-                "php-http/mock-client": "^0.3.0",
-                "phpunit/phpunit": "^5.7",
-                "squizlabs/php_codesniffer": "^3.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Nexmo\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tim Lytle",
-                    "email": "tim@nexmo.com",
-                    "homepage": "http://twitter.com/tjlytle",
-                    "role": "Developer"
-                }
-            ],
->>>>>>> 50f955b1f46dd656c2a802d462c8573f03a56aec
             "description": "PHP Client for using Nexmo's API.",
             "time": "2019-05-13T20:27:43+00:00"
         },

@@ -14,8 +14,8 @@
       </div> 
     </div>           
   </div>
-  <section class="content" style="width:100%">
-    <div class=col-md-9> 
+  <section class="content">
+    <div class=col-md-9 style="width: 70%!important"> 
       <div class="table-responsive">          
         <table style="background-color: black;color: white;">         
           <tbody id ="gps_table">
