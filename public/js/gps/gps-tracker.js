@@ -9,19 +9,20 @@ function initMap() {
 }
 
 function mapCheck() {
-    if(document.getElementById('from_date').value == ''){
-          alert('please enter from date');
+    if(document.getElementById('gps_id').value == ''){
+          alert('Please select GPS');
+      }else if(document.getElementById('from_date').value == ''){
+          alert('Please enter from date');
       }else if(document.getElementById('to_date').value == ''){
-          alert('please enter to date');
+          alert('Please enter to date');
       }
       else{
-          var client=$('meta[name = "client"]').attr('content');
           var from_date = document.getElementById('from_date').value;
           var to_date = document.getElementById('to_date').value;
           var gps_id = document.getElementById('gps_id').value;
-          var data = {'client':client,'gps_id':gps_id, 'from_date':from_date , 'to_date':to_date};
+          var data = {'gps_id':gps_id, 'from_date':from_date , 'to_date':to_date};
       }
-    var url = 'vehicle-map/location-track';
+    var url = 'gps-map/location-track';
     var purl = getUrl() + '/' + url;
     var triangleCoords = [];
     $.ajax({

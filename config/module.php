@@ -34,6 +34,7 @@ return  [
        'RouteBatch',
        'Warehouse',
        'Employee',
+       'GpsConfig',
     ]
 ]
 

@@ -26,37 +26,37 @@
                 <div class="panel-heading">
                   <div class="cover_div_search">
                     <div class="row">
-                      <div class="col-lg-3 col-md-3"> 
+                       <div class="col-lg-3 col-md-3"> 
                        <div class="form-group">
-                        <label>Vehicle</label>                          
-                          <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                        <label>Vehicle</label>                           
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                             <option value="">Select Vehicle</option>
-                            @foreach ($vehicles as $vehicles)
-                            <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
-                            @endforeach  
-                          </select>
-                        </div>
+                        @foreach ($vehicles as $vehicles)
+                        <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
+                        @endforeach  
+                        </select>
                       </div>
-                      <div class="col-lg-3 col-md-3"> 
+                      </div>
+                       <div class="col-lg-3 col-md-3"> 
                        <div class="form-group">
-                        <label>Status</label>                          
-                          <select class="form-control select2" data-live-search="true" title="Select Status" id="status" name="status">
-                            <option value="">Select Status</option>
-                            <option value="all">All</option>
-                            <option value="valid">Valid</option>
-                            <option value="expiring">Expiring</option>
-                            <option value="expired">Expired</option>
-                          </select>
-                        </div>
+                        <label>Status</label>                           
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Status" id="status" name="status">
+                          <option value="">Select Status</option>
+                        <option value="all">All</option>
+                        <option value="valid">Valid</option>
+                        <option value="expiring">Expiring</option>
+                        <option value="expired">Expired</option>                           
+                        </select>
                       </div>
-                      <div class="col-lg-3 col-md-3 pt-4">
-                        <div class="form-group">          
+                      </div>                         
+                       <div class="col-lg-3 col-md-3 pt-4">
+                       <div class="form-group">          
                           <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"><i class="fa fa-search"></i> </button>
                         </div>
-                      </div>
+                      </div>                        
                     </div>
                   </div>
-                </div>
+                </div> 
                 <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                   <thead>
                     <tr>

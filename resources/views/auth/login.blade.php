@@ -67,8 +67,8 @@ else { ?>
  </div> -->
 
  <div class="form-group row mb-0">
- <div class="col-md-8 offset-md-4">
- <button type="submit" class="btn btn-primary Login-txt" style="margin:50% 0 0">
+ <div class="col-md-8" style="margin:5% 0 0 36%">
+ <button type="submit" class="btn btn-primary Login-txt">
  {{ __('Login') }}
  </button>
 

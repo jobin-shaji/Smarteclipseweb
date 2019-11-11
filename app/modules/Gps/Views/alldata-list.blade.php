@@ -1,5 +1,7 @@
 @extends('layouts.api-app')
+
 @section('content')
+
 <section class="hilite-content">
       <!-- title row -->
      
@@ -11,7 +13,7 @@
           <div  style ="margin-left: 77px"class="form-group has-feedback">
               <label class="srequired">GPS</label>
 
-              <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
+              <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
                 
                 <option value="">All</option>
                 @foreach($gps as $gps)

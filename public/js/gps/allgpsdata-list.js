@@ -1,31 +1,20 @@
 $(document).ready(function () {
-  
-    window.setInterval(function(){
-       var gps_id=$('#gps_id').val();
-       singleGpsData(gps_id); 
-
+  window.setInterval(function(){
+    var gps_id=$('#gps_id').val();
+    singleGpsData(gps_id); 
   }, 5000);
-
-
 });
 
 function singleGpsData(value){
-  console.log(value);
   var url = 'allgpsdata-list';
-
-     var data = { 
-         gps : value   
-     };
-     console
-   // window.setInterval(function(){
-      apiBackgroundPostData(url,data,'alldata',{alert:false});  
-
-  // }, 5000);
-  // console.log(value);
+  var data = { 
+     gps : value   
+  };
+  apiBackgroundPostData(url,data,'alldata',{alert:false});  
 }
 function alldata(res){
-   $('#datas').empty();
-    $('#gps_table').empty(); 
+  $('#datas').empty();
+  $('#gps_table').empty(); 
   var gps_table;  
   if(res.last_data!=null)
   {
@@ -54,13 +43,10 @@ function alldata(res){
         ;  
         $("#datas").append(gps);
       }
-        for(var i=0; i < res.items.length; i++){
-          var j=i+1;
-           gps_table += '<tr><td>'+j+'</td>'+
-           '<td>'+res.items[i].device_time+'</td>'+
-           '<td>'+res.items[i].vlt_data+'</td></tr>';  
-        }
-        
-        $("#gps_table").append(gps_table); 
+      for(var i=0; i < res.items.length; i++){
+        var j=i+1;
+         gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>';  
+      }
+      $("#gps_table").append(gps_table); 
   
 }

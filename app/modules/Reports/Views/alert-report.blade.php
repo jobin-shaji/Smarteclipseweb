@@ -29,7 +29,7 @@ Alert Report
                                 <div class="col-lg-2 col-md-2">
                                   <div class="form-group">    
                                     <label>Vehicle</label>                      
-                                    <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                    <select class="form-control selectpicker" style="width: 100%" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                                     <option value="" selected="selected" disabled="disabled">select</option>
                                     @foreach ($vehicles as $vehicle)                          
                                     <option value="{{$vehicle->id}}"  @if(isset($alertReports) && $vehicle->id==$vehicle_id){{"selected"}} @endif>{{$vehicle->name}}||{{$vehicle->register_number}}</option>
@@ -40,7 +40,7 @@ Alert Report
                                 <div class="col-lg-2 col-md-2">
                                   <div class="form-group">    
                                     <label>Select Alert Type:</label>                 
-                                    <select class="form-control selectpicker" data-live-search="true" title="Select Alert Type" id="alert" name="alert">
+                                    <select class="form-control selectpicker" style="width: 100%" data-live-search="true" title="Select Alert Type" id="alert" name="alert">
                                     <option value="" selected="selected" disabled="disabled">select</option>
                                     @foreach ($Alerts as $alert)
                                     <option value="{{$alert->id}}"   @if(isset($alertReports) && $alert->id==$alert_id){{"selected"}} @endif>{{$alert->description}}</option>
@@ -51,30 +51,32 @@ Alert Report
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                      
                                     <label> From Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif">
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif">
                                   </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                     
                                     <label> To Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($alertReports)) {{$to}} @endif">
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($alertReports)) {{$to}} @endif">
                                   </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-5">  
                                   <div class="form-group">          
-                                    <button type="submit" class="btn btn-sm btn-info btn2 form-control" > <i class="fa fa-search"></i> </button>
+                                    <button type="submit" class="btn btn-sm btn-info btn2 form-control" style="padding: 2% 2% 1% 2%;"> <i class="fa fa-search"></i> </button>
                                   </div>
-                                </div>                     
+                                  <div class="form-group">                                    
+                                    <button class="btn btn-sm btn1 btn-primary" onclick="downloadAlertReport()" style="padding: 1% 1% 1% 1%;margin-top: -55px!important;margin-left: 35px">
+                                    <i class="fa fa-file"></i>Download Excel</button>
+                                  </div>
+                                </div> 
+                                <div class="col-lg-3">  
+                                  
+                                </div>                    
                               </div>
                             </div>
                           </div>
                         </form> 
-                        <div class="col-lg-3 col-md-3 pt-5">  
-                          <div class="form-group">                                     
-                            <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadAlertReport()">
-                            <i class="fa fa-file"></i>Download Excel</button>
-                          </div>
-                        </div>
+                        
                         @if(isset($alertReports))                
                         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                           <thead>
