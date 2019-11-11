@@ -11408,7 +11408,8 @@ ul.list-style-none li a:hover {
     -ms-flex-align: center;
     align-items: center;
     margin: 0px;
-    padding: 0 10px 0 10px
+    padding: 0 3px 0 6px;
+    width: 100%
 }
 
 .topbar .top-navbar .navbar-header .navbar-brand .dark-logo {
@@ -16542,9 +16543,9 @@ h1.text-white i {
     }
 
 
-    span.logo-text {
+    /*span.logo-text {
     margin-left: 3%;
-    }
+    }*/
 
     .nav-item i.fa.fa-home {
     font-size: 24px;
@@ -17257,8 +17258,8 @@ border-radius: 6px 0 6px 6px;
 
 span.cover_bell {
     position: absolute;
-    right: 20px;
-    width: 19px;
+    right: 24px;
+    width: 17px;
     border-radius: 70%;
     background: #ff0000;
     color: #fff;
