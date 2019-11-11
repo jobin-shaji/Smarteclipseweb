@@ -119,9 +119,10 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
   Route::post('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
 });
+
 Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
- Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
-
-
+ 	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+ 	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
+	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
 });
