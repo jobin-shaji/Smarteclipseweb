@@ -20,8 +20,8 @@
 
   <section class="content" >
     <div class="row">
-      <div class="col-lg-12">
-        <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
+      <div class="col-md-6">
+        <table class="table table-hover table-bordered  table-striped">
           <thead>
             <tr>
               <th>IMEI</th>

@@ -5,10 +5,10 @@
     <div class="panel-heading">
       <div class="cover_div_search">
         <div class="row">
-          <div class="col-lg-2 col-md-2"> 
+          <div class="col-lg-3 col-md-3"> 
             <div class="form-group">                      
               <label> GPS</label>
-              <select class="form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required>
+              <select class="form-control select2" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required>
                 <option value="">All</option>
                 @foreach($gps as $gps)
                 <option value="{{$gps->id}}">{{$gps->imei}} || {{$gps->serial_no}}</option>
@@ -16,19 +16,19 @@
               </select>  
             </div>
           </div>
-          <div class="col-lg-2 col-md-2"> 
+          <div class="col-lg-3 col-md-3"> 
             <div class="form-group">                      
               <label> From Date</label>
               <input type="text" class="form-control datetimepicker" id="from_date" name="from_date">
             </div>
           </div>
-          <div class="col-lg-2 col-md-2"> 
+          <div class="col-lg-3 col-md-3"> 
             <div class="form-group">                     
               <label> To Date</label>
               <input type="text" class="form-control datetimepicker" id="to_date" name="to_date">
             </div>
           </div>
-          <div class="col-lg-2 col-md-2"> 
+          <div class="col-lg-3 col-md-3"> 
             <div class="form-group">  
               <label></label>         
               <button class="btn btn-sm btn-info btn2 form-control" onclick="mapCheck()"> Search </button>
