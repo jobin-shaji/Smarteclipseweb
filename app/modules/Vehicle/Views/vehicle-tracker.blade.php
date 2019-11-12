@@ -57,7 +57,7 @@
                       
     <div class="card data_list_cover pull-right" style="width: 16rem;">
       <div class="card-body data_list_body " >
-        <p class="capitalize"><h2 class="card-title" id="user" style="font-size:20px!important"></h2></p>
+        <p class="capitalize"><h2 class="card-title" id="user" style="font-size:20px!important;text-transform: uppercase;"></h2></p>
         <p>
         <b>
         </b></p>
@@ -81,22 +81,22 @@
           </div>
           <div class="col-sm-12 social-buttons">
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-car"></i><label id="vehicle_name"></label>
+              <i class="fa fa-car"></i><label id="vehicle_name" class="mgl"></label>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-key"></i> <b><label id="ignition"></label></b>
+              <i class="fa fa-key"></i> <b><label id="ignition" class="mgl"></label></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer"></i> <b><label id="car_speed"></label> <span id="valid_speed">km/h</span></b> 
+              <i class="fa fa-tachometer"></i> <b><label id="car_speed" class="mgl"></label> <span id="valid_speed">km/h Speed</span></b> 
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-battery-full"></i><b><label id="car_bettary"></label> %</b>
+              <i class="fa fa-battery-full"></i><b><label id="car_bettary" class="mgl"></label> % Battery</b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-plug"></i><b><label id="car_power"></label></b>
+              <i class="fa fa-plug"></i><b class="mgl">Main Power <label id="car_power"></label></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-signal"></i><b><label id="network_status"></label></b>
+              <i class="fa fa-signal"></i><b class="mgl">Network <label id="network_status"></label></b>
             </a> 
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
@@ -111,10 +111,12 @@
               <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b> -->
             </a>                                                      
             <div class="viewmore_location">
+              <div>
               <i class="fa fa-map-marker"></i><b><span id="car_location" style="font-size: .7rem!important"></span></b>
             </div>
+            </div>
             <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
-
+          </div>
             <hr>
             <?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
@@ -153,13 +155,13 @@
         </a>
       </div>
       <div class="poi_item">
-        
+        <a href="#">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()">
-        
+        </a>
       </div>
     </div>
 
-    <div id="map" class="live_track_map" style="width:100%;height:500px;"></div>
+    <div id="map" class="live_track_map" style="width:100%;height:100vh;"></div>
     </div>
   </div>
   </div>
