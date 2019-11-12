@@ -31,6 +31,22 @@ var recentPoppedLocation;
 var recent_angle_latlng=null;
 var current_angle_latlng;
 var service;
+var ac;
+var battery_status;
+var connection_lost_time;
+var dateTime;
+var fuel;
+var fuelquantity;
+var ign;
+var last_seen;
+var latitude;
+var longitude;
+var place;
+var power;
+var signalStrength;
+var speed;
+var vehicleStatus;
+
 
 $('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
@@ -44,12 +60,13 @@ $('document').ready(function(){setTimeout(doWork,1000);});
 
 
 // ---------------------que list--------------------------
- function addToLocationQueue(loc,angle)
+ function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus)
   {
 
 
-   var location_angle=[loc,angle];
+   var location_angle=[loc,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus];
    locationQueue.push(location_angle);
+
   }
  function popFromLocationQueue()
   {
@@ -61,7 +78,7 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       return null;
   }
 
-  function getSnappedPoint(unsnappedWaypoints,angle)
+  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus)
    {
       $.ajax({
        url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
@@ -69,13 +86,13 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       dataType: 'jsonp'
        }).done(function(response) {
       if (response.error) {
-        alert("error" + response.error.message);
+        // alert("error" + response.error.message);
         return;
       }
       $.each(response.snappedPoints, function (i, snap_data) {
       var loc=snap_data.location;
       var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle);
+      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus);
       });
      });
    }
@@ -83,18 +100,35 @@ $('document').ready(function(){setTimeout(doWork,1000);});
 function transition(result)
     {
      angle=result.liveData.angle;
+     ac=result.liveData.ac;
+     battery_status=result.liveData.battery_status;
+     connection_lost_time=result.liveData.connection_lost_time;
+     dateTime=result.liveData.dateTime;
+     fuel=result.liveData.fuel;
+     fuelquantity=result.liveData.fuelquantity;
+     ign=result.liveData.ign;
+     last_seen=result.liveData.last_seen;
+     latitude=result.liveData.latitude;
+     longitude=result.liveData.longitude;
+     place=result.liveData.place;
+     power=result.liveData.power;
+     signalStrength=result.liveData.signalStrength;
+     speed=result.liveData.speed;
+     vehicleStatus=result.liveData.vehicleStatus;
+
+
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
       
 
      if(clickedPointRecent==undefined || clickedPointRecent==null)
      {
-        getSnappedPoint([clickedPointCurrent],angle)
+        getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus)
      }
      else
      { 
       // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
-      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle);       
+      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus);       
      }
      clickedPointRecent = clickedPointCurrent;
      clickedPointRecentlatlng=clickedPointCurrentlatlng;
@@ -110,7 +144,7 @@ function doWork()
         if(recentPoppedLocation==null)
         {  
                  
-
+             updateStatusData(current);
              track(current[0],current[1]);
             // setMarketLocation(current[0],current[1]);
             // drawLine(current[0],current[0]); 
@@ -118,7 +152,9 @@ function doWork()
         }
         else{   
 
+            updateStatusData(current);
             track(current[0],current[1]);
+
             
             // drawLine(recentPoppedLocation[0],current[0]);
             // setMarketLocation(current[0],current[1]);
@@ -136,8 +172,120 @@ function doWork()
 
 
 
+function updateStatusData(current)
+{
+
+  var latlng=current[0];
+  var angle=current[1];
+  var ac=current[2];
+  var battery_status=current[3];
+  var connection_lost_time=current[4];
+  var dateTime=current[5];
+  var fuel=current[6];
+  var fuelquantity=current[7];
+  var ign=current[8];
+  var last_seen=current[9];
+  var latitude=current[10];
+  var longitude=current[11];
+  var place=current[12];
+  var power=current[13];
+  var signalStrength=current[14];
+  var speed=current[15];
+  var vehicleStatus=current[16];
 
 
+
+
+   if (vehicleStatus == 'M' && speed != '0') {
+          $("#online").show();
+          $("#zero_speed_online").hide();
+          $("#halt").hide();
+          $("#offline").hide();
+          $("#sleep").hide();
+          vehicleColor="#84b752";
+      } else if (vehicleStatus == 'M' && speed == '0') {
+          $("#zero_speed_online").show();
+          $("#halt").hide();
+          $("#online").hide();
+          $("#offline").hide();
+          $("#sleep").hide();
+          vehicleColor="#84b752";
+
+      }else if (vehicleStatus == 'H') {
+          $("#halt").show();
+          $("#zero_speed_online").hide();
+          $("#online").hide();
+          $("#offline").hide();
+          $("#sleep").hide();
+          vehicleColor="#69b4b9";
+
+      } else if (vehicleStatus == 'S') {
+          $("#sleep").show();
+          $("#zero_speed_online").hide();
+          $("#halt").hide();
+          $("#online").hide();
+          $("#offline").hide();
+          vehicleColor=" #858585";
+      } else {
+        // if(res.liveData.last_seen >'1 hour ago'){
+          
+        // }
+          if(last_seen){
+           $('#last_seen').text(last_seen);
+          }
+          $("#offline").show();
+          $("#sleep").hide();
+          $("#halt").hide();
+          $("#online").hide();
+          $("#zero_speed_online").hide();
+          vehicleColor="#c41900";
+
+      }
+      if(ign == 1) {
+        document.getElementById("ignition").innerHTML = "Ignition ON";
+      }else
+      {
+        document.getElementById("ignition").innerHTML = "Ignition OFF";
+      }
+      if(power == 1) {
+        document.getElementById("car_power").innerHTML = "Connected";
+      }else
+      {
+        document.getElementById("car_power").innerHTML = "Disconnected";
+      }
+      if(vehicleStatus == 'M' && speed == '0') {
+        document.getElementById("car_speed").innerHTML = "Vehicle Stopped";
+        $('#valid_speed').css('display','none');
+      }else
+      {
+        document.getElementById("car_speed").innerHTML = speed;
+        $('#valid_speed').css('display','inline-block');
+      }
+      $device_time=dateTime;
+      $connection_lost_time=connection_lost_time;
+      if (signalStrength >= 19 && $device_time >= $connection_lost_time) {
+        document.getElementById("network_status").innerHTML = "Good";
+      }else if (signalStrength < 19 && signalStrength >= 13 && $device_time >= $connection_lost_time) {
+        document.getElementById("network_status").innerHTML = "Average";
+      }else if (signalStrength <= 12 && $device_time >= $connection_lost_time) {
+        document.getElementById("network_status").innerHTML = "Poor";
+      }else{
+        document.getElementById("network_status").innerHTML = "Connection Lost";
+      }
+      
+      // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
+      document.getElementById("vehicle_name").innerHTML = "";
+
+      document.getElementById("car_bettary").innerHTML = battery_status;
+      document.getElementById("car_location").innerHTML = place;
+      // document.getElementById("user").innerHTML = res.vehicle_name;
+      document.getElementById("user").innerHTML = "";
+
+      $("#km_live_track").html('');
+      $("#km_live_track").append(speed);
+
+
+}
 
 
 function initMap(){
@@ -191,79 +339,6 @@ function initMap(){
         success: function(res) {
 
             if(res.hasOwnProperty('liveData')){
-
-                    if (res.liveData.vehicleStatus == 'M') {
-                        $("#online").show();
-                        $("#halt").hide();
-                        $("#offline").hide();
-                        $("#sleep").hide();
-                        vehicleColor="#84b752";
-                    } else if (res.liveData.vehicleStatus == 'H') {
-                        $("#halt").show();
-                        $("#online").hide();
-                        $("#offline").hide();
-                        $("#sleep").hide();
-                        vehicleColor="#69b4b9";
-
-                    } else if (res.liveData.vehicleStatus == 'S') {
-                        $("#sleep").show();
-                        $("#halt").hide();
-                        $("#online").hide();
-                        $("#offline").hide();
-                        vehicleColor=" #858585";
-                    } else {
-                      // if(res.liveData.last_seen >'1 hour ago'){
-                        
-                      // }
-                        if(res.liveData.last_seen){
-                            $('#last_seen').text(res.liveData.last_seen);
-                        }
-                        $("#offline").show();
-                        $("#sleep").hide();
-                        $("#halt").hide();
-                        $("#online").hide();
-                        vehicleColor="#c41900";
-
-                    }
-                    if(res.liveData.ign == 1) {
-                      document.getElementById("ignition").innerHTML = "Ignition ON";
-                    }else
-                    {
-                      document.getElementById("ignition").innerHTML = "Ignition OFF";
-                    }
-                    if(res.liveData.power == 1) {
-                      document.getElementById("car_power").innerHTML = "Connected";
-                    }else
-                    {
-                      document.getElementById("car_power").innerHTML = "Disconnected";
-                    }
-                    if(res.liveData.vehicleStatus == 'M' && res.liveData.speed == '0') {
-                      document.getElementById("car_speed").innerHTML = "Vehicle Stopped";
-                      $('#valid_speed').css('display','none');
-                    }else
-                    {
-                      document.getElementById("car_speed").innerHTML = res.liveData.speed;
-                      $('#valid_speed').css('display','inline-block');
-                    }
-                    $device_time=res.liveData.dateTime;
-                    $connection_lost_time=res.liveData.connection_lost_time;
-                    if (res.liveData.signalStrength >= 19 && $device_time >= $connection_lost_time) {
-                      document.getElementById("network_status").innerHTML = "Good";
-                    }else if (res.liveData.signalStrength < 19 && res.liveData.signalStrength >= 13 && $device_time >= $connection_lost_time) {
-                      document.getElementById("network_status").innerHTML = "Average";
-                    }else if (res.liveData.signalStrength <= 12 && $device_time >= $connection_lost_time) {
-                      document.getElementById("network_status").innerHTML = "Poor";
-                    }else{
-                      document.getElementById("network_status").innerHTML = "Connection Lost";
-                    }
-                    
-                    document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-                    document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
-                    document.getElementById("car_location").innerHTML = res.liveData.place;
-                    document.getElementById("user").innerHTML = res.vehicle_name;
-                    $("#km_live_track").html('');
-                    $("#km_live_track").append(res.liveData.speed);
-
 
                     
                     transition(res);
@@ -447,6 +522,8 @@ $('#poi_petrol').click(function(){
         }
     });
 
+ 
+
 // ---------------find nearest map points-----------------
  var infowindow = new google.maps.InfoWindow();
  function createMarkers(places) {
@@ -512,6 +589,15 @@ $( "#playback_form" ).submit(function( event ) {
   window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
   event.preventDefault();
 });
+
+function pbk(){
+  var vehicle_id=$('#vehicle_id').val();
+  var from_date=$('#fromDate').val();
+  var to_date=$('#toDate').val();
+  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
+  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
+  event.preventDefault();
+}
 
 // -------------------playback---------------------------
 var contentString = 

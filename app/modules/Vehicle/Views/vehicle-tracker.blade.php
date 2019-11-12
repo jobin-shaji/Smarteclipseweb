@@ -17,9 +17,12 @@
         </nav>
    -->
 
-  <form id="playback_form">
+
+
+
+  <!-- <form id="playback_form">
     <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
-      <div class="cover_playback" style="width:43%;">
+    <div class="cover_playback" style="width:43%;">
         <div class="row">
           <div class="col-lg-4 col-md-3">
             <div class="form-group">
@@ -40,8 +43,8 @@
           </div>
 
         </div>
-      </div>
-  </form>
+    </div>
+  </form> -->
 
   <div class="col-lg-12 col-sm-12">
     <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
@@ -61,7 +64,10 @@
         <div class="cover_ofline"><b>
           <div class="cover_status" style="margin-left: 40px"> 
             <span id="online" style="display: none;">
-              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Moving
+              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Moving<span id="zero_speed"></span>
+            </span>
+            <span id="zero_speed_online" style="display: none;">
+              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Vehicle stopped
             </span>
             <span id="halt" style="display: none;">
               <i class="fa fa-circle" style="color:#69b4b9;" aria-hidden="true"></i> Halt
@@ -146,6 +152,11 @@
         <img src="{{ url('/') }}/images/hospital.png">
         </a>
       </div>
+      <div class="poi_item">
+        
+          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()">
+        
+      </div>
     </div>
 
     <div id="map" class="live_track_map" style="width:100%;height:500px;"></div>
@@ -156,6 +167,18 @@
 
 @section('script')
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
+<style type="text/css">
+#pbk{
+width:100%;
+height:45px;
+border-radius:10px;
+background-color:#cd853f;
+color:#fff;
+font-family:'Raleway',sans-serif;
+font-size:18px;
+cursor:pointer
+}
+</style>
 <!-- <script src="{{asset('js/odometer.js')}}"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing,geometry,places"></script>
 

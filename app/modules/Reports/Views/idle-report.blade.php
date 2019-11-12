@@ -50,7 +50,7 @@ Halt Report
 
                              <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 form-control" onclick="trackMode()"> <i class="fa fa-search"></i> </button>
+                            <button class="btn btn-sm btn-info btn2 srch" onclick="trackMode()"> <i class="fa fa-search"></i> </button>
                             <!-- <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadIdleReport()">
                               <i class="fa fa-file"></i>Download Excel</button>   -->                      
                             </div>

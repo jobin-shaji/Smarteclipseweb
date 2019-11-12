@@ -280,7 +280,7 @@ class DashboardController extends Controller
     function offlineGpsDataBasedOnDeviceTime($single_gps_id,$oneMinute_currentDateTime){
         $device_time=Gps::select('device_time')->where('id',$single_gps_id)->first();
         if($device_time){
-            if($device_time->device_time <= $oneMinute_currentDateTime){
+            if($device_time->device_time < $oneMinute_currentDateTime){
                 return $single_gps_id;
             }
         }else{
@@ -303,24 +303,19 @@ class DashboardController extends Controller
     function getMoving($single_vehicle,$oneMinut_currentDateTime){
         $user = \Auth::user();   
         if($user->hasRole('client|school')){  
-            $moving_gps_id=$this->onlineGpsDataBasedOnDeviceTime($single_vehicle,$oneMinut_currentDateTime);
             $moving=Gps::where('mode','M')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
-            ->where('id',$moving_gps_id);
+            ->where('device_time','>=',$oneMinut_currentDateTime)
+            ->where('id',$single_vehicle);
             $moving=$moving->count();
         }        
         else
-        {
-            $gps_list=GPS::select('id')->whereNotNull('lat')->whereNotNull('lon')->get();   
-            $moving_gps_id=[];
-            foreach ($gps_list as $single_gps){
-                $moving_gps_id[]=$this->onlineGpsDataBasedOnDeviceTime($single_gps->id,$oneMinut_currentDateTime);
-            } 
+        { 
             $moving=Gps::where('mode','M')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
-            ->whereIn('id',$moving_gps_id);
+            ->where('device_time','>=',$oneMinut_currentDateTime);
             $moving=$moving->count();
         }
         return $moving; 
@@ -328,23 +323,17 @@ class DashboardController extends Controller
     function getOffline($single_vehicle,$oneMinut_currentDateTime){
         $user = \Auth::user();         
         if($user->hasRole('client|school')){  
-            $offline_gps_id=$this->offlineGpsDataBasedOnDeviceTime($single_vehicle,$oneMinut_currentDateTime);
             $offline=Gps::whereNotNull('lat')
             ->whereNotNull('lon')
-            ->where('id',$offline_gps_id);
+            ->where('device_time','<',$oneMinut_currentDateTime)
+            ->where('id',$single_vehicle);
             $offline=$offline->count();
         }        
         else
         {
-            $gps_list=GPS::select('id')->whereNotNull('lat')->whereNotNull('lon')->get();   
-            $offline_gps_id=[];
-            $aa=array();
-            foreach ($gps_list as $single_gps){
-                $offline_gps_id[]=$this->offlineGpsDataBasedOnDeviceTime($single_gps->id,$oneMinut_currentDateTime);
-            } 
             $offline=Gps::whereNotNull('lat')
             ->whereNotNull('lon')
-            ->whereIn('id',$offline_gps_id);
+            ->where('device_time','<',$oneMinut_currentDateTime);
             $offline=$offline->count();
         }
         return $offline; 
@@ -352,24 +341,19 @@ class DashboardController extends Controller
     function getIdle($single_vehicle,$oneMinut_currentDateTime){
         $user = \Auth::user(); 
         if($user->hasRole('client|school')){  
-            $idle_gps_id=$this->onlineGpsDataBasedOnDeviceTime($single_vehicle,$oneMinut_currentDateTime);
             $idle=Gps::where('mode','H')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
-            ->where('id',$idle_gps_id);
+            ->where('device_time','>=',$oneMinut_currentDateTime)
+            ->where('id',$single_vehicle);
             $idle=$idle->count();
         }        
         else
         {
-            $gps_list=GPS::select('id')->whereNotNull('lat')->whereNotNull('lon')->get();   
-            $idle_gps_id=[];
-            foreach ($gps_list as $single_gps){
-                $idle_gps_id[]=$this->onlineGpsDataBasedOnDeviceTime($single_gps->id,$oneMinut_currentDateTime);
-            } 
             $idle=Gps::where('mode','H')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
-            ->whereIn('id',$idle_gps_id);
+            ->where('device_time','>=',$oneMinut_currentDateTime);
             $idle=$idle->count();
         }
         return $idle;
@@ -377,24 +361,19 @@ class DashboardController extends Controller
     function getStop($single_vehicle,$oneMinut_currentDateTime){
         $user = \Auth::user();
         if($user->hasRole('client|school')){  
-            $sleep_gps_id=$this->onlineGpsDataBasedOnDeviceTime($single_vehicle,$oneMinut_currentDateTime);
             $sleep=Gps::where('mode','S')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
-            ->where('id',$sleep_gps_id);
+            ->where('device_time','>=',$oneMinut_currentDateTime)
+            ->where('id',$single_vehicle);
             $sleep=$sleep->count();
         }        
         else
         {
-            $gps_list=GPS::select('id')->whereNotNull('lat')->whereNotNull('lon')->get();   
-            $sleep_gps_id=[];
-            foreach ($gps_list as $single_gps){
-                $sleep_gps_id[]=$this->onlineGpsDataBasedOnDeviceTime($single_gps->id,$oneMinut_currentDateTime);
-            } 
             $sleep=Gps::where('mode','S')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
-            ->whereIn('id',$sleep_gps_id);
+            ->where('device_time','>=',$oneMinut_currentDateTime);
             $sleep=$sleep->count();
         }
         return $sleep;
@@ -509,8 +488,8 @@ class DashboardController extends Controller
         $gps = Gps::find($request->gps_id); 
         $offline_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         $connection_lost_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
-        if($gps->satllite!=null){
-         $satelite=$gps->satllite;   
+        if($gps->no_of_satellites!=null){
+         $satelite=$gps->no_of_satellites;   
         }
         $network_status=$gps->gsm_signal_strength;
         $ignition=$gps->ignition;
@@ -810,7 +789,7 @@ class DashboardController extends Controller
                     'device_time'
                   )
                 ->with('vehicle:gps_id,id,name,register_number')
-                ->where('device_time','<=',$oneMinute_currentDateTime) 
+                ->where('device_time','<',$oneMinute_currentDateTime) 
                 ->whereIn('id',$gps_id)    
                 ->whereNotNull('lat') 
                 ->whereNotNull('lon')         
@@ -854,7 +833,7 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                   )
-                ->where('device_time','<=',$oneMinute_currentDateTime)    
+                ->where('device_time','<',$oneMinute_currentDateTime)    
                 ->whereNotNull('lat') 
                 ->whereNotNull('lon')                       
                 ->get();  
@@ -1169,22 +1148,21 @@ class DashboardController extends Controller
         foreach ($clients_gps as $item) 
         {
             foreach($item->vehicles as $vehicle){
-                $device_time=Gps::select('device_time')->where('id',$vehicle->gps_id)->first();
                 if($vehicle->gps && $vehicle->gps->lat != null){
                     if($vehicle->gps->mode=="M"){
-                        if($device_time->device_time  >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time  >= $date_before_eleven_minutes){
                             $online=$online+1;
                         }else{
                             $offline=$offline+1;
                         }
                     }else if($vehicle->gps->mode=="H"){
-                        if($device_time->device_time  >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time  >= $date_before_eleven_minutes){
                             $halt=$halt+1;
                         }else{
                             $offline=$offline+1;
                         }
                     }else if($vehicle->gps->mode=="S"){
-                        if($device_time->device_time >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time >= $date_before_eleven_minutes){
                             $sleep=$sleep+1;
                         }else{
                             $offline=$offline+1;
