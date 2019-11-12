@@ -84,7 +84,7 @@ class GeofenceController extends Controller {
 	}
 
 
-     public function geofenceListPage()
+    public function geofenceListPage()
     {
         return view('Geofence::geofence-list');
     }
