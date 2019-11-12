@@ -61,11 +61,10 @@ Alert Report
                                   </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-5">  
-                                  <div class="form-group">          
-                                    <button type="submit" class="btn btn-sm btn-info btn2 form-control" style="padding: 2% 2% 1% 2%;"> <i class="fa fa-search"></i> </button>
-                                  </div>
-                                  <div class="form-group">                                    
-                                    <button class="btn btn-sm btn1 btn-primary" onclick="downloadAlertReport()" style="padding: 1% 1% 1% 1%;margin-top: -55px!important;margin-left: 35px">
+                                  <div>          
+                                    <button type="submit" class="btn btn-sm btn-info btn2 srch" style="padding: 2% 2% 1% 2%;"> <i class="fa fa-search"></i> </button>
+                                                                      
+                                    <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadAlertReport()">
                                     <i class="fa fa-file"></i>Download Excel</button>
                                   </div>
                                 </div> 

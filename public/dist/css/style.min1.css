@@ -742,8 +742,7 @@ section.content-header.root_content_header {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -10px;
-    /*margin-left: -10px*/
+    
 }
 
 .no-gutters {
@@ -2210,7 +2209,7 @@ section.content-header.root_content_header {
 
 .form-control {
     display: block;
-    /*width: 100%;*/
+    width: 100%;
     padding: 0.375rem 0.75rem;
     font-size: 0.875rem;
     line-height: 1.5;
@@ -2225,6 +2224,45 @@ section.content-header.root_content_header {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out
 }
+
+.srch{
+    display: block;
+    width: 30%;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #4F5467;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e9ecef;
+    border-radius: 2px;
+    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out
+
+}
+
+
+.dwnld{
+    display: block;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #4F5467;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e9ecef;
+    border-radius: 2px;
+    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out
+
+}
+
 
 @media screen and (prefers-reduced-motion:reduce) {
     .form-control {
@@ -2258,7 +2296,7 @@ section.content-header.root_content_header {
     opacity: 1
 }
 
-.form-control::-ms-input-placeholder {
+.form-control:-ms-input-placeholder {
     color: #6c757d;
     opacity: 1
 }
@@ -16589,7 +16627,7 @@ h1.text-white i {
 div#zero_config_wrapper {
     margin-top: 18px;
     margin-left: -15pxx;
-    margin-left: 27px;
+    margin-left: -10px;
 }
 
 .profile_image {
@@ -17342,14 +17380,14 @@ span.select2-selection.select2-selection--multiple {
 
 .info-box-text {
     text-transform: uppercase; 
-    font-size: 12px; 
+    font-size: 15px; 
     font-weight: bold;
 }
 
 .info-box-number {
     display: block;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     color: #ea7c14;
 }
 
@@ -17610,14 +17648,6 @@ a,
   text-transform: uppercase;
   color: black;
 }
-.form-control {
-  background-color: #ffffff;
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
-  border-radius: 0;
-  &:focus {border-color: #111;}
-}
 .btn--form {
   padding: .5rem 0.5rem;
   font-size: .95rem;
@@ -17639,16 +17669,3 @@ a,
   &:focus,
   &:hover {color: darken(#999, 13%);}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

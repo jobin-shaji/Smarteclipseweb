@@ -23,7 +23,7 @@ Total KM Report
                     <div class="panel-body">
                       <div class="panel-heading">
                         <div class="cover_div_search">
-                        <div class="row">
+                          <div class="row">
                            <div class="col-lg-3 col-md-3"> 
                            <div class="form-group">
                             <label>Vehicle</label>                           
@@ -48,11 +48,13 @@ Total KM Report
                           </div>
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">
-                           <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
-                            <button class="btn btn-sm btn1 btn-primary form-control" id="excel" onclick="downloadTotalKMReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>                        
-                            </div>
+                             <div class="form-group">          
+                              <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                              </div>
+                              <div class="form-group">
+                                <button class="btn btn-sm btn1 btn-primary dwnld" id="excel" onclick="downloadTotalKMReport()">
+                                  <i class="fa fa-file"></i>Download Excel</button>                        
+                              </div>
                           </div>
                         
                         </div>
