@@ -1,8 +1,5 @@
 <?php 
-
-
 namespace App\Modules\Gps\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
@@ -23,7 +20,6 @@ use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
-
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -160,11 +156,6 @@ class GpsController extends Controller {
     {
         $root_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
-        // $gps = Gps::find($request->serial_no); 
-        // // dd($gps);
-        // if($gps == null){
-        //    return view('Gps::404');
-        // }
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);  
 
