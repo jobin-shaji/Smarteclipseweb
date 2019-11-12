@@ -274,12 +274,12 @@ function updateStatusData(current)
       }
       
       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-      document.getElementById("vehicle_name").innerHTML = "";
+     
 
       document.getElementById("car_bettary").innerHTML = battery_status;
       document.getElementById("car_location").innerHTML = place;
       // document.getElementById("user").innerHTML = res.vehicle_name;
-      document.getElementById("user").innerHTML = "";
+     
 
       $("#km_live_track").html('');
       $("#km_live_track").append(speed);
@@ -340,7 +340,9 @@ function initMap(){
 
             if(res.hasOwnProperty('liveData')){
 
-                    
+                    document.getElementById("user").innerHTML = res.vehicle_name;
+                    document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
+
                     transition(res);
                     // track(map, res);
                     setTimeout(getMarkers, 5000);
@@ -589,15 +591,6 @@ $( "#playback_form" ).submit(function( event ) {
   window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
   event.preventDefault();
 });
-
-function pbk(){
-  var vehicle_id=$('#vehicle_id').val();
-  var from_date=$('#fromDate').val();
-  var to_date=$('#toDate').val();
-  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
-  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
-  event.preventDefault();
-}
 
 // -------------------playback---------------------------
 var contentString = 
