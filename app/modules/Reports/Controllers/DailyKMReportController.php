@@ -7,7 +7,6 @@ use App\Modules\Gps\Models\GpsData;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\DailyKm;
-
 use App\Modules\Warehouse\Models\GpsStock;
 use DataTables;
 class DailyKMReportController extends Controller
