@@ -42,4 +42,7 @@ Vehicle Playback
   </div>
 </section>
 @endsection
+@section('script')
+<script src="{{asset('js/gps/location-track.js')}}"></script>
+@endsection
 
