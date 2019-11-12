@@ -592,15 +592,6 @@ $( "#playback_form" ).submit(function( event ) {
   event.preventDefault();
 });
 
-function pbk(){
-  var vehicle_id=$('#vehicle_id').val();
-  var from_date=$('#fromDate').val();
-  var to_date=$('#toDate').val();
-  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
-  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
-  event.preventDefault();
-}
-
 // -------------------playback---------------------------
 var contentString = 
  '<div style="width:13%;float:left">'+
