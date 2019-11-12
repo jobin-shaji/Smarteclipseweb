@@ -1,5 +1,7 @@
-lat=10.014550;
-lng=76.293159;
+// lat=10.014550;
+// lng=76.293159;
+lat=25.288844;
+lng=51.512688;
 function initMap() { 
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
@@ -43,7 +45,7 @@ function mapCheck() {
 function polyline(res){
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
-    center: {lat: 10.069564, lng: 76.301823},
+    center: {lat: 25.288844, lng: 51.512688},
     mapTypeId: 'terrain'
   });
   var flightPlanCoordinates =res.track_data_with_all;
