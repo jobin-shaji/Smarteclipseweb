@@ -72,10 +72,6 @@ Route::post('/vehicle_type/{id}/edit','VehicleController@updateVehicleType')->na
 Route::get('/vehicle-root','VehicleController@vehicleRootList')->name('vehicle-root');
 
 Route::post('/vehicle-root-list','VehicleController@getVehicleRootList')->name('vehicle-root-list');
-
-Route::get('/vehicle-map/{id}/location','MapLocationController@vehicleMapLocation')->name('vehicle.map.location');
-
-Route::post('/vehicle-map/location-track','MapLocationController@vehicleMapLocationTrack')->name('vehicle.map.location.track');
 });
 
 ///////////////////////////////Location track////////////////////////////////////

@@ -1,6 +1,9 @@
 
-var latMap = 20.593683;
-var lngMap = 78.962883;
+ var client_lat = $('#lat').val();
+ var client_lng = $('#lng').val();
+// alert(client_lat);
+var latMap = client_lat;
+var lngMap = client_lng;
 var haightAshbury = {
   lat: latMap,
   lng: lngMap
