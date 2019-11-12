@@ -61,7 +61,10 @@
         <div class="cover_ofline"><b>
           <div class="cover_status" style="margin-left: 40px"> 
             <span id="online" style="display: none;">
-              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Moving
+              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Moving<span id="zero_speed"></span>
+            </span>
+            <span id="zero_speed_online" style="display: none;">
+              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Vehicle stopped
             </span>
             <span id="halt" style="display: none;">
               <i class="fa fa-circle" style="color:#69b4b9;" aria-hidden="true"></i> Halt

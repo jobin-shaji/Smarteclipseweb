@@ -192,14 +192,24 @@ function initMap(){
 
             if(res.hasOwnProperty('liveData')){
 
-                    if (res.liveData.vehicleStatus == 'M') {
+                    if (res.liveData.vehicleStatus == 'M' && res.liveData.speed != '0') {
                         $("#online").show();
+                        $("#zero_speed_online").hide();
                         $("#halt").hide();
                         $("#offline").hide();
                         $("#sleep").hide();
                         vehicleColor="#84b752";
-                    } else if (res.liveData.vehicleStatus == 'H') {
+                    } else if (res.liveData.vehicleStatus == 'M' && res.liveData.speed == '0') {
+                        $("#zero_speed_online").show();
+                        $("#halt").hide();
+                        $("#online").hide();
+                        $("#offline").hide();
+                        $("#sleep").hide();
+                        vehicleColor="#84b752";
+
+                    }else if (res.liveData.vehicleStatus == 'H') {
                         $("#halt").show();
+                        $("#zero_speed_online").hide();
                         $("#online").hide();
                         $("#offline").hide();
                         $("#sleep").hide();
@@ -207,6 +217,7 @@ function initMap(){
 
                     } else if (res.liveData.vehicleStatus == 'S') {
                         $("#sleep").show();
+                        $("#zero_speed_online").hide();
                         $("#halt").hide();
                         $("#online").hide();
                         $("#offline").hide();
@@ -222,6 +233,7 @@ function initMap(){
                         $("#sleep").hide();
                         $("#halt").hide();
                         $("#online").hide();
+                        $("#zero_speed_online").hide();
                         vehicleColor="#c41900";
 
                     }

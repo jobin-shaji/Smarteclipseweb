@@ -1169,22 +1169,21 @@ class DashboardController extends Controller
         foreach ($clients_gps as $item) 
         {
             foreach($item->vehicles as $vehicle){
-                $device_time=Gps::select('device_time')->where('id',$vehicle->gps_id)->first();
                 if($vehicle->gps && $vehicle->gps->lat != null){
                     if($vehicle->gps->mode=="M"){
-                        if($device_time->device_time  >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time  >= $date_before_eleven_minutes){
                             $online=$online+1;
                         }else{
                             $offline=$offline+1;
                         }
                     }else if($vehicle->gps->mode=="H"){
-                        if($device_time->device_time  >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time  >= $date_before_eleven_minutes){
                             $halt=$halt+1;
                         }else{
                             $offline=$offline+1;
                         }
                     }else if($vehicle->gps->mode=="S"){
-                        if($device_time->device_time >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time >= $date_before_eleven_minutes){
                             $sleep=$sleep+1;
                         }else{
                             $offline=$offline+1;
