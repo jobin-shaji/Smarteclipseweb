@@ -163,7 +163,7 @@
       </div>
     </div>
 
-    <div id="map" class="live_track_map" style="width:100%;height:100vh;"></div>
+    <div id="map" class="live_track_map" style="width:100%;height:83vh;"></div>
     </div>
   </div>
   </div>
