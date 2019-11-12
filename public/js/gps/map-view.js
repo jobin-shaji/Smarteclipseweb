@@ -105,7 +105,7 @@ function vehicleTrack(res) {
       '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:' + car_color + ';" aria-hidden="true"></i></span>' + vehicle_status +
       '<div style="color:#000;font-weight:600;margin-top:5px;" ></div>' +
       '<div style="padding-top:5px; padding-left:16px;"><span style="margin-right:5px;">IMEI:</span>' + imei + ' </div>' +
-      '<a href=/gps/' + gps_encrypt_id + '/location/root class="btn btn-xs btn btn-warning" title="Track" style="background-color:#fff;padding-right:40px;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href=/vehicle-map/' + gps_encrypt_id + '/location class="btn btn-xs btn btn-warning" title="Polyline" style="background-color:#fff;"><i class="fa fa-location-arrow" style="color:#000;font-size: 18px;"></i></a>' +
+      '<a href=/gps/' + gps_encrypt_id + '/location/root class="btn btn-xs btn btn-warning" title="Track" style="background-color:#fff;padding-right:40px;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>'+
       '</div>';
 
 
