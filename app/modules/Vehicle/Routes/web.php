@@ -21,7 +21,7 @@ Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateF
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
 
-
+Route::get('/vehicles/{id}/playback-page','VehicleController@playbackPageInTrack')->name('vehicles.playback.page');
 Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
 
 Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
