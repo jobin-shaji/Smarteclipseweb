@@ -509,8 +509,8 @@ class DashboardController extends Controller
         $gps = Gps::find($request->gps_id); 
         $offline_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         $connection_lost_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
-        if($gps->satllite!=null){
-         $satelite=$gps->satllite;   
+        if($gps->no_of_satellites!=null){
+         $satelite=$gps->no_of_satellites;   
         }
         $network_status=$gps->gsm_signal_strength;
         $ignition=$gps->ignition;
