@@ -1,4 +1,5 @@
 $(document).ready(function () {
+   // $('#loader').hide();
   window.setInterval(function(){
     var gps_id=$('#gps_id').val();
     singleGpsData(gps_id); 
@@ -20,7 +21,7 @@ function alldata(res){
   $('#datas').empty();
   $('#gps_table').empty(); 
   $('#last_update_time').empty(); 
-
+  // $('#loader').show();
   var gps_table;  
   if(res.last_data!=null)
   {
@@ -44,18 +45,21 @@ function alldata(res){
             '<tr><td>Signal Strength</td><td>'+res.last_data.gsm_signal_strength+'</td></tr>'+        
             '<tr><td>ignition</td><td>'+res.last_data.ignition+'</td></tr>'+
             '<tr><td>main power status</td><td>'+res.last_data.main_power_status+'</td></tr>'+
-            '<tr><td>Vehicle Mode</td><td>'+res.last_data.vehicle_mode+'</td></tr>'
-        ;  
-        $("#datas").append(gps);
+            '<tr><td>Vehicle Mode</td><td>'+res.last_data.vehicle_mode+'</td></tr>';  
+        $("#datas").append(gps);         
       }else{
+         $('#loader').hide();
         $("#datas").append("No data available");
       }
       for(var i=0; i < res.items.length; i++){
-        gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>';  
+
+        gps_table += '<tr><td style="padding:15px">'+res.items[i].vlt_data+'</td></tr>'; 
+        $('#loader').hide(); 
       }
       $("#gps_table").append(gps_table); 
       if(res.last_updated!=0)
-      {
+      { 
+       
         var  update_time = '<tr><td style="padding:15px">Last Updated: '+res.last_updated+'</td></tr>';       
         $("#last_update_time").append(update_time); 
       }

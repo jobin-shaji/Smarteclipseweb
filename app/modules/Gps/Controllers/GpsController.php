@@ -1021,41 +1021,39 @@ class GpsController extends Controller {
         $connection_lost_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
         $offline="Offline";
         $signal_strength="Connection Lost";
-        $track_data=GpsData::select('latitude as latitude',
-                      'longitude as longitude',
+        $track_data=Gps::select('lat as latitude',
+                      'lon as longitude',
                       'heading as angle',
-                      'vehicle_mode as vehicleStatus',
+                      'mode as vehicleStatus',
                       'imei',
                       'speed',
-                      'battery_percentage',
+                      'battery_status as battery_percentage',
                       'device_time as dateTime',
                       'main_power_status as power',
                       'ignition as ign',
-                      'gps_id',
+                      'id',
                       'gsm_signal_strength as signalStrength'
                       )
                     ->where('device_time', '>=',$oneMinut_currentDateTime)
-                    ->where('gps_id',$request->id)
-                    ->latest('device_time')
+                    ->where('id',$request->id)
                     ->first();
         $minutes=0;
         if($track_data == null){
-            $track_data = GpsData::select('latitude as latitude',
-                              'longitude as longitude',
+            $track_data = Gps::select('lat as latitude',
+                              'lon as longitude',
                               'heading as angle',
                               'speed',
                               'imei',
-                              'battery_percentage',
+                              'battery_status as battery_percentage',
                               'device_time as dateTime',
                               'main_power_status as power',
                               'ignition as ign',
                               'gsm_signal_strength as signalStrength',
-                              'gps_id',
+                              'id',
                               \DB::raw("'$signal_strength' as signalStrength"),
                               \DB::raw("'$offline' as vehicleStatus")
                               )
-                              ->where('gps_id',$request->id)
-                              ->latest('device_time')
+                              ->where('id',$request->id)
                               ->first();
             $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
@@ -1063,22 +1061,6 @@ class GpsController extends Controller {
         if($track_data){
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-            if(floatval($track_data->angle) <= 0)
-            {
-                $h_track_data = GpsData::
-                   select('heading','gps_id','device_time')
-                        ->where('gps_id',$track_data->gps_id)
-                        ->where('heading','!=','00.000')
-                        ->whereNotNull('heading')
-                        ->latest('device_time')
-                        ->first();
-              
-                $angle=$h_track_data->heading; 
-            }
-            else
-            {
-                $angle=$track_data->angle;
-            }
             $reponseData=array(
                         "latitude"=>$snapRoute['lat'],
                         "longitude"=>$snapRoute['lng'],

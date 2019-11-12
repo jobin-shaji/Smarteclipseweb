@@ -28,39 +28,6 @@ use DataTables;
 use Config;
 
 class MapLocationController extends Controller {
-    
-    public function vehicleMapLocation(Request $request)
-    {
-        $decrypted_gps_id = Crypt::decrypt($request->id);
-        $gps=Gps::find($decrypted_gps_id);
-        return view('Vehicle::map-location-tracker',['gps' => $gps]);
-    }
-
-    public function vehicleMapLocationTrack(Request $request)
-    {
-        $client_id=$request->client;
-        $gps_id=$request->gps_id;
-        $from_date=date('Y-m-d H:i:s',strtotime($request->from_date));
-        $to_date=date('Y-m-d H:i:s',strtotime($request->to_date));
-        $track_data_with_all=GpsData::select('latitude as lat',
-                      'longitude as lng'
-                    )
-                    ->where('gps_id',$gps_id)
-                    ->whereBetween('device_time', array($from_date, $to_date))
-                    ->get();
-        $track_data_with_gpsfix=GpsData::select('latitude as lat',
-                      'longitude as lng'
-                    )
-                    ->where('gps_id',$gps_id)
-                    ->where('gps_fix',1)
-                    ->whereBetween('device_time', array($from_date, $to_date))
-                    ->get();
-        $response_data = array(
-                           'track_data_with_all' => $track_data_with_all,
-                           'track_data_with_gpsfix' => $track_data_with_gpsfix
-                        );
-        return response()->json($response_data); 
-    }
 
     public function gpsMapLocation(Request $request)
     {
