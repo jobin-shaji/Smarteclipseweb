@@ -73,7 +73,7 @@
                           </div> -->
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="selectGeofence()">Geofence Schedule </button>
+                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 dwnld" onclick="selectGeofence()">Geofence Schedule </button>
                             </div>
                           </div>
                         </div>

@@ -56,7 +56,7 @@
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 form-control" onclick="selectRoute()">Route Schedule </button>
+                            <button style="margin-top: 19px;" class="btn btn-sm btn-info btn4 dwnld" onclick="selectRoute()">Route Schedule </button>
                             </div>
                           </div>
                         </div>

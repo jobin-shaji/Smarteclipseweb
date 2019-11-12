@@ -49,7 +49,7 @@ Total KM Report
                           </div>                         
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 form-control" onclick="check()"> <i class="fa fa-search"></i> </button>
+                            <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
                             <!-- <button class="btn btn-sm btn1 btn-primary form-control" id="excel" onclick="downloadKMReport()">
                               <i class="fa fa-file"></i>Download Excel</button>   -->                      
                             </div>
@@ -57,114 +57,106 @@ Total KM Report
                         </div>
                       </div>
                     </div>                                 
-                   
-
-
-                    <style type="text/css">
-                      
-                    </style>
-
-
                     <div class="row">
-                      <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Total KM</span><label class="info-box-number" id="total_km"></label>
                           </div>
                         </div>
                       </div> 
-                      <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Alerts</span><label class="info-box-number" id="alerts">
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Geofence</span><label class="info-box-number" id="geofence"></label>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/overspeed.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/overspeed.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Overspeed</span><label class="info-box-number" id="overspeed"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/zigzag-driving.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/zigzag-driving.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Zig Zag Driving</span><label class="info-box-number" id="zig_zag"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/accident-impact.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/accident-impact.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Accident Impact</span><label class="info-box-number" id="accident_impact"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Route Deviation</span><label class="info-box-number" id="route_deviation"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Harsh Braking</span><label class="info-box-number" id="harsh_braking"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sudden-accelaration.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/sudden-accelaration.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Sudden Acceleration</span><label class="info-box-number" id="sudden_acceleration"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text">Main Battery Disconnect</span><label class="info-box-number" id="main_battery_disconnect"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/moving-duration.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/moving-duration.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Moving Duration</span><label class="info-box-number" id="moving"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/halt-duration.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/halt-duration.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Halt Duration</span><label class="info-box-number" id="halt"></label>
                           </div>
                         </div>
                       </div>
-                       <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div>
                         <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="30%" height="30%" class="report_img"/>
+                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
                             <span class="info-box-text" >Sleep Duration</span><label class="info-box-number" id="sleep"></label>
                           </div>
