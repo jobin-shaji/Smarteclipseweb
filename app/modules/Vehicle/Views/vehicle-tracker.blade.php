@@ -144,18 +144,18 @@
       </div>
       <div class="poi_petrol poi_item">
         <a href="#" id="poi_petrol">
-        <img src="{{ url('/') }}/images/pump.png">
+          <img src="{{ url('/') }}/images/pump.png">
        </a>
       </div>
       <div class="poi_hopital poi_item">
         <a href="#" id="poi_hopital">
-        <img src="{{ url('/') }}/images/hospital.png">
+          <img src="{{ url('/') }}/images/hospital.png">
         </a>
       </div>
       <div class="poi_item">
-        
-          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()">
-        
+        <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
+          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
+        </a>
       </div>
     </div>
 
