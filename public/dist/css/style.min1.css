@@ -17669,3 +17669,7 @@ a,
   &:focus,
   &:hover {color: darken(#999, 13%);}
 }
+
+.mgl{
+    margin-left: 5%;
+}
