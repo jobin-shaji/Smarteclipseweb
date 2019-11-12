@@ -86,7 +86,7 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       dataType: 'jsonp'
        }).done(function(response) {
       if (response.error) {
-        alert("error" + response.error.message);
+        // alert("error" + response.error.message);
         return;
       }
       $.each(response.snappedPoints, function (i, snap_data) {
