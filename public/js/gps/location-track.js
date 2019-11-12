@@ -31,6 +31,22 @@ var recentPoppedLocation;
 var recent_angle_latlng=null;
 var current_angle_latlng;
 var service;
+var ac;
+var battery_status;
+var connection_lost_time;
+var dateTime;
+var fuel;
+var fuelquantity;
+var ign;
+var last_seen;
+var latitude;
+var longitude;
+var place;
+var power;
+var signalStrength;
+var speed;
+var vehicleStatus;
+
 
 $('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
@@ -44,11 +60,11 @@ $('document').ready(function(){setTimeout(doWork,1000);});
 
 
 // ---------------------que list--------------------------
- function addToLocationQueue(loc,angle)
+ function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus)
   {
 
 
-   var location_angle=[loc,angle];
+   var location_angle=[loc,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus];
    locationQueue.push(location_angle);
   }
  function popFromLocationQueue()
@@ -61,7 +77,7 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       return null;
   }
 
-  function getSnappedPoint(unsnappedWaypoints,angle)
+  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus)
    {
       $.ajax({
        url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
@@ -75,7 +91,7 @@ $('document').ready(function(){setTimeout(doWork,1000);});
       $.each(response.snappedPoints, function (i, snap_data) {
       var loc=snap_data.location;
       var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle);
+      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus);
       });
      });
    }
@@ -83,18 +99,35 @@ $('document').ready(function(){setTimeout(doWork,1000);});
 function transition(result)
     {
      angle=result.liveData.angle;
+     ac=result.liveData.ac;
+     battery_status=result.liveData.battery_status;
+     connection_lost_time=result.liveData.connection_lost_time;
+     dateTime=result.liveData.dateTime;
+     fuel=result.liveData.fuel;
+     fuelquantity=result.liveData.fuelquantity;
+     ign=result.liveData.ign;
+     last_seen=result.liveData.last_seen;
+     latitude=result.liveData.latitude;
+     longitude=result.liveData.longitude;
+     place=result.liveData.place;
+     power=result.liveData.power;
+     signalStrength=result.liveData.signalStrength;
+     speed=result.liveData.speed;
+     vehicleStatus=result.liveData.vehicleStatus;
+
+
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
       
 
      if(clickedPointRecent==undefined || clickedPointRecent==null)
      {
-        getSnappedPoint([clickedPointCurrent],angle)
+        getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus)
      }
      else
      { 
       // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
-      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle);       
+      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus);       
      }
      clickedPointRecent = clickedPointCurrent;
      clickedPointRecentlatlng=clickedPointCurrentlatlng;
@@ -112,6 +145,7 @@ function doWork()
                  
 
              track(current[0],current[1]);
+             updateStatusData(current);
             // setMarketLocation(current[0],current[1]);
             // drawLine(current[0],current[0]); 
             // track()           
@@ -119,6 +153,8 @@ function doWork()
         else{   
 
             track(current[0],current[1]);
+            updateStatusData(current);
+
             
             // drawLine(recentPoppedLocation[0],current[0]);
             // setMarketLocation(current[0],current[1]);
@@ -136,8 +172,10 @@ function doWork()
 
 
 
+function updateStatusData(current)
+{
 
-
+}
 
 
 function initMap(){
