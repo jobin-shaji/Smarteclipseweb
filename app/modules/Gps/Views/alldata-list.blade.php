@@ -203,6 +203,7 @@
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
+  <div class="col-md-12" style="overflow: scroll">
       <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
           <thead>
               <tr>
@@ -220,7 +221,7 @@
       </table>
       
        
-    <!-- </div> -->
+    </div>
 </section>
 
 
