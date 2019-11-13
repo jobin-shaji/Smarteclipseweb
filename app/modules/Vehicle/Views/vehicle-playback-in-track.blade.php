@@ -1,4 +1,4 @@
-@extends('layouts.gps')
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
