@@ -112,7 +112,8 @@
             </a>                                                      
             <div class="viewmore_location">
               <div>
-              <i class="fa fa-map-marker"></i><b><span id="car_location" style="font-size: .7rem!important"></span></b>
+                <div style="float: left;padding: 10% 5% 8% 3%;"><img src="../../assets/images/marker.png" height="32px" width="24px"> <!-- <i class="fa fa-map-marker"></i> --></div>
+                <div id="car_location" style="font-size: .7rem!important;padding: 73% 8% 4% 19%;"></div>
             </div>
             </div>
             <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
