@@ -598,14 +598,23 @@ class GpsController extends Controller {
     {
         $ota = OtaType::all();
         $gps = Gps::all();
-        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota]);
+        $gps_data = GpsData::select('id','header')->groupBy('header')->get();
+        // dd($header);
+        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
      public function getAllData(Request $request)
     {
-    
-        if($request->gps){
+        if($request->gps && $request->header){
+            
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header);  
+        }
+        else if($request->gps){
          $items = GpsData::where('gps_id',$request->gps);  
-        }else{
+        }
+        else if($request->header){
+            $items = GpsData::where('header',$request->header); 
+        }
+        else{
          $items = GpsData::limit(10000);  
         }
         return DataTables::of($items)
