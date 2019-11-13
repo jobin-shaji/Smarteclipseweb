@@ -34,7 +34,8 @@ class AlertReportController extends Controller
         }
         $AlertType=AlertType::select('id','code','description')
         ->whereIn('id',$alert_id)
-        ->whereNotIn('id',[17,18,23,24])       
+        ->whereNotIn('id',[17,18,23,24,13,11,2,10,12])
+        // ->whereNotIn('id',[17,18,23,24])       
         ->get();
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
