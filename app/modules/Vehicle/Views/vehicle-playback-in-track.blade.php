@@ -34,7 +34,10 @@
                 <div class="content" style="margin-top: 0!important">
                     <table id="tblInputForm">
                         <tr id="trProcessMedium">
-                            <label style="font-weight: 700!important;margin-left: 5%">FROM DATE
+                            <a style="margin-left: 2%">
+                                <img src="../../assets/images/back.png" height="50px" width="50px">
+                            </a>
+                            <label style="font-weight: 700!important;margin-left: 3%">FROM DATE
                             </label>
                             <input type="datetime-local" class="dt"/>
                             <label style="font-weight: 700!important;margin-left: 2%">TO DATE
@@ -54,20 +57,11 @@
                             <button class="btn btn-primary btn-sm bbt" id="btnPlay">Play</button>
                             <button class="btn btn-primary btn-sm bbt" id="btnPause">Pause</button>
                             <button class="btn btn-primary btn-sm bbt" id="btnStop">Stop</button>
-                            
-                        
-                            
-                                
-                               
                             </tr>
-                            <!-- <div class="col-sm-6" style="padding: 2% 5% 0px 9%;">
-                                <input type="datetime-local" class="form-control"/>
-                            </div> -->
                         </table>
                     </table>  
                     <div id="markers" style="width:1360px;height:600px">        
                         <div class="custom-template open">
-                            
                         </div>
                     </div>
                 </div>
@@ -94,8 +88,6 @@
         <script src="{{asset('playback_assets/assets/js/plugin/datatables/datatables.min.js')}}"></script>
         <!-- Bootstrap Notify -->
         <script src="{{asset('playback_assets/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-       
-
         <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js">
         </script>
         <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
