@@ -77,32 +77,28 @@ function checkAll(e) {
         }
         x.style.visibility = "hidden"; //or x.style.display = "block";
     }
- }
-
-
+}
 function check(){
-
-     if(document.getElementById('vehicle').value == ''){
-        alert('please select vehicle');
-    }
-   
-    else{
-        // var alert_id=$('#alert').val();
-        // var client=$('meta[name = "client"]').attr('content');
-        // var from_date = document.getElementById('fromDate').value;
-        // var to_date = document.getElementById('toDate').value;
-        // var vehicle = document.getElementById('vehicle').value;
-        // var data = {'client':client,'vehicle':vehicle,'from_date':from_date ,'to_date':to_date};
-        callBackDataTable();
-       
+    if(document.getElementById('header').value == ''){
+        alert('please select header');
+    }   
+    else{        
+        callBackDataTable();       
     }
 }
-
-
 function callBackDataTable(value){
-     // console.log(value);
+  if(value==null)
+  {
+    gps=document.getElementById('gps_id').value;
+    
+  }
+  else{
+    gps=value;
+  }
+    // console.log(gps);
     var  data = {
-        gps : value    
+        gps : gps,
+        header : document.getElementById('header').value   
     };
     $("#dataTable").DataTable({
         bStateSave: true,
