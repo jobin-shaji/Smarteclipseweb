@@ -218,10 +218,8 @@
                 <th>Action</th>                     
               </tr>
           </thead>
-      </table>
-      
-       
-    </div>
+      </table>       
+  </div>
 </section>
 
 
