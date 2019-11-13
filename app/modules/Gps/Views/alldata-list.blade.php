@@ -25,6 +25,7 @@
           <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
             <option selected="selected" disabled="disabled" value="">Select Header</option>  
             @foreach($gpsDatas as $gpsData)
+             <option value="">All</option> 
             <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
             @endforeach             
           </select>

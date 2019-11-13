@@ -16,7 +16,7 @@ class DailyKm extends Migration
         Schema::create('daily_kms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('gps_id');
-            $table->integer('km');
+            $table->integer('km')->default(0);
             $table->integer('date');
         });
     }
