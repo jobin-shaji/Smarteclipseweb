@@ -80,6 +80,23 @@ function checkAll(e) {
  }
 
 
+function check(){
+
+     if(document.getElementById('vehicle').value == ''){
+        alert('please select vehicle');
+    }
+   
+    else{
+        // var alert_id=$('#alert').val();
+        // var client=$('meta[name = "client"]').attr('content');
+        // var from_date = document.getElementById('fromDate').value;
+        // var to_date = document.getElementById('toDate').value;
+        // var vehicle = document.getElementById('vehicle').value;
+        // var data = {'client':client,'vehicle':vehicle,'from_date':from_date ,'to_date':to_date};
+        callBackDataTable();
+       
+    }
+}
 
 
 function callBackDataTable(value){

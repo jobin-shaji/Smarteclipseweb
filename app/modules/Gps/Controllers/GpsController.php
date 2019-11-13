@@ -598,7 +598,9 @@ class GpsController extends Controller {
     {
         $ota = OtaType::all();
         $gps = Gps::all();
-        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota]);
+        $gps_data = GpsData::select('id','header')->groupBy('header')->get();
+        // dd($header);
+        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
      public function getAllData(Request $request)
     {
