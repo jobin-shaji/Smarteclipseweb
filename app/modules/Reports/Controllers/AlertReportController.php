@@ -34,7 +34,7 @@ class AlertReportController extends Controller
         }
         $AlertType=AlertType::select('id','code','description')
         ->whereIn('id',$alert_id)
-        ->whereNotIn('id',[17,18,23,24,13,11,2,10,12])
+        ->whereNotIn('id',[17,18,23,24,13,10,12])
         // ->whereNotIn('id',[17,18,23,24])       
         ->get();
         $vehicles=Vehicle::select('id','name','register_number','client_id')
@@ -80,7 +80,7 @@ class AlertReportController extends Controller
         ->with('gps.vehicle')
         ->orderBy('id', 'desc')
         ->where('alert_type_id',$alert_id)
-         ->whereNotIn('alert_type_id',[17,18,23,24,13,11,2,10,12]);
+         ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12]);
         // ->whereNotIn('alert_type_id',[17,18,23,24]);
        if($alert_id==0 && $vehicle_id==0)
        {  
@@ -122,7 +122,7 @@ class AlertReportController extends Controller
         }
         $AlertType=AlertType::select('id','code','description')
         ->whereIn('id',$user_alert_id)
-        ->whereNotIn('id',[17,18,23,24,13,11,2,10,12])        
+        ->whereNotIn('id',[17,18,23,24,13,10,12])        
         ->get();
          $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client)
