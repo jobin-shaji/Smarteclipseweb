@@ -93,7 +93,7 @@ class ClientController extends Controller {
                 'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
-                'role' => 4,
+                'role' => 0,
             ]);
             $client = Client::create([            
                 'user_id' => $user->id,
