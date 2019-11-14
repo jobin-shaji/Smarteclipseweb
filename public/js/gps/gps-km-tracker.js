@@ -67,7 +67,7 @@ function mapCheck() {
           // console.log(km);
       var infowindow = new google.maps.InfoWindow({
 
-          content: km.toString()+" km",
+          content: i+1+"-"+km.toString()+" km",
       });
       infowindow.open(map, marker);
       google.maps.event.addListener(marker, 'click', (function(marker) {
