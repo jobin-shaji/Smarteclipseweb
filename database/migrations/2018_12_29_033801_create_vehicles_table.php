@@ -25,8 +25,9 @@ class CreateVehiclesTable extends Migration
             $table->integer('servicer_job_id')->nullable();
             $table->string('engine_number')->nullable();
             $table->string('chassis_number')->nullable();
-            $table->integer('theft_mode')->nullable();
+            $table->integer('theft_mode')->default(0);
             $table->integer('emergency_status');
+            $table->integer('towing')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
