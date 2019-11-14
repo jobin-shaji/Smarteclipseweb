@@ -14,6 +14,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('/gps-km-map')}}">GPS KM</a>
+      </li>
     </ul>
     
   </div>
