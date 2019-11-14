@@ -463,7 +463,14 @@ class DriverController extends Controller {
                 'message' => 'Driver does not exist'
             ]);
         }
-        $driver->delete();
+        $driver_delete=$driver->delete();
+        if($driver_delete){
+            $vehicle = Vehicle::where('driver_id', $driver->id)->first();
+            if ($vehicle != null) {
+                $vehicle->driver_id = null;
+                $vehicle->save();
+            }
+        }
         return response()->json([
             'status' => 1,
             'title' => 'Success',
