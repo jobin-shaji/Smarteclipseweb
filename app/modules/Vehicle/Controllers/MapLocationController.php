@@ -61,9 +61,6 @@ class MapLocationController extends Controller {
                         );
         return response()->json($response_data); 
     }
-   
-
-
 
     public function gpsKmMapLocation(Request $request)
     {

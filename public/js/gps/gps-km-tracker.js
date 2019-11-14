@@ -62,8 +62,12 @@ function mapCheck() {
         position: new google.maps.LatLng(parseFloat(element.lat), parseFloat(element.lng)),
         map: map
       });
+        
+         var km=Math.round(element.km/1000);
+          // console.log(km);
       var infowindow = new google.maps.InfoWindow({
-          content: element.km.toString(),
+
+          content: km.toString()+" km",
       });
       infowindow.open(map, marker);
       google.maps.event.addListener(marker, 'click', (function(marker) {
