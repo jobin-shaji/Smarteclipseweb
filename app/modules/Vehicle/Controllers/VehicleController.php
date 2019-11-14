@@ -74,13 +74,10 @@ class VehicleController extends Controller {
 
                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
-                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
+                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"; 
                     
                 }else{
-                     return "
-                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
+                     return ""; 
                 }
              })
             ->rawColumns(['link', 'action'])
