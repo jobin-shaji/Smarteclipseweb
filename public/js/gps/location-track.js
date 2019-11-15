@@ -272,11 +272,17 @@ function updateStatusData(current)
       }else{
         document.getElementById("network_status").innerHTML = "LOST";
       }
-      
+      if(ign == 1) {
+        document.getElementById("ac").innerHTML = "ON";
+      }else
+      {
+        document.getElementById("ac").innerHTML = "OFF";
+      }
       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
      
 
       document.getElementById("car_bettary").innerHTML = battery_status;
+       document.getElementById("fuel").innerHTML = battery_status;
       document.getElementById("car_location").innerHTML = place;
       // document.getElementById("user").innerHTML = res.vehicle_name;
      
