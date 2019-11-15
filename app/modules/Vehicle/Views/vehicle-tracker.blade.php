@@ -84,19 +84,19 @@
               <i class="fa fa-car"></i><label id="vehicle_name" class="mgl"></label>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-key"></i> <b><label id="ignition" class="mgl"></label></b>
+              <i class="fa fa-key"></i> <b class="mgl">IGNITION <b style="margin-left: 11%">: <label class="mgl" id="ignition"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer"></i> <b><label id="car_speed" class="mgl"></label> <span id="valid_speed">km/h Speed</span></b> 
+              <i class="fa fa-tachometer"></i> <b class="mgl">SPEED <b style="margin-left: 17.5%">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-battery-full"></i><b><label id="car_bettary" class="mgl"></label> % Battery</b>
+              <i class="fa fa-battery-full"></i><b class="mgl">BATTERY <b style="margin-left: 10.7%">: <label class="mgl" id="car_bettary"></label> %</b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-plug"></i><b class="mgl">Main Power <label id="car_power"></label></b>
+              <i class="fa fa-plug"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-signal"></i><b class="mgl">Network <label id="network_status"></label></b>
+              <i class="fa fa-signal"></i><b class="mgl"> NETWORK <b style="margin-left: 8.7%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
@@ -112,7 +112,8 @@
             </a>                                                      
             <div class="viewmore_location">
               <div>
-              <i class="fa fa-map-marker"></i><b><span id="car_location" style="font-size: .7rem!important"></span></b>
+                <div style="float: left;padding: 10% 5% 8% 3%;"><img src="../../assets/images/marker.png" height="32px" width="24px"> <!-- <i class="fa fa-map-marker"></i> --></div>
+                <div id="car_location" style="font-size: .7rem!important;padding: 73% 8% 4% 19%;"></div>
             </div>
             </div>
             <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->

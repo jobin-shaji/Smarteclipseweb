@@ -17,6 +17,8 @@ use App\Modules\Vehicle\Models\Document;
 use App\Modules\Driver\Models\Driver;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Vehicle\Models\KmUpdate;
+
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Servicer\Models\ServicerJob;
@@ -59,5 +61,27 @@ class MapLocationController extends Controller {
                         );
         return response()->json($response_data); 
     }
-   
+
+    public function gpsKmMapLocation(Request $request)
+    {
+        $gps=Gps::all();
+        return view('Vehicle::gps-km-location-tracker',['gps' => $gps]);
+    }
+    public function gpsKmMapLocationTrack(Request $request)
+    {
+        $gps_id=$request->gps_id;
+        $from_date=date('Y-m-d H:i:s',strtotime($request->from_date));
+        $to_date=date('Y-m-d H:i:s',strtotime($request->to_date));
+        $track_km_data=KmUpdate::select('lat',
+          'lng',
+          'km'
+        )
+        ->where('gps_id',$gps_id)
+        ->whereBetween('device_time', array($from_date, $to_date))
+        ->get();
+        $response_data = array(
+           'track_km_data' => $track_km_data
+        );
+        return response()->json($response_data); 
+    }
 }

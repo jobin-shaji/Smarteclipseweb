@@ -1,4 +1,4 @@
-@extends('layouts.gps')
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,31 +31,37 @@
     <body data-background-color="dark">
         <div class="wrapper overlay-sidebar">
             <div class="main-panel">
-                <div class="content">
+                <div class="content" style="margin-top: 0!important">
+                    <table id="tblInputForm">
+                        <tr id="trProcessMedium">
+                            <a style="margin-left: 2%">
+                                <img src="../../assets/images/back.png" height="50px" width="50px">
+                            </a>
+                            <label style="font-weight: 700!important;margin-left: 3%">FROM DATE
+                            </label>
+                            <input type="datetime-local" class="dt"/>
+                            <label style="font-weight: 700!important;margin-left: 2%">TO DATE
+                            </label>
+                            <input type="datetime-local" class="dt"/>
+                            <select class="btn btn-primary btn-sm bbt" id="btnPlay">
+                                <option>Select Speed</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1X
+                                </option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2X
+                                </option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3X
+                                </option> 
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4X
+                                </option> 
+                            </select>
+                            <button class="btn btn-primary btn-sm bbt" id="btnPlay">Play</button>
+                            <button class="btn btn-primary btn-sm bbt" id="btnPause">Pause</button>
+                            <button class="btn btn-primary btn-sm bbt" id="btnStop">Stop</button>
+                            </tr>
+                        </table>
+                    </table>  
                     <div id="markers" style="width:1360px;height:600px">        
                         <div class="custom-template open">
-                            <div class="custom-content">
-                                <div class="switcher">
-                                    <table id="tblInputForm">
-                                        <tr id="trProcessMedium">
-                                            <button class="btn btn-primary btn-sm" id="btnPlay">Play</button>
-                                            <button class="btn btn-primary btn-sm" id="btnPause">Pause</button>
-                                            <button class="btn btn-primary btn-sm" id="btnStop">Stop</button> 
-                                        </tr>
-                                        <table width="700">
-                                            <tr id="trProcessMedium">
-                                                <button class="btn-sm1" id="btnPlay" style="margin-left: 3%!important;width:10%!important;border-radius: 7%!important;font-weight: 700!important;cursor: pointer;">1X</button>
-                                                <button class="btn-sm1 spd-btn" id="btnPause" style="margin-left: 3%!important;width:10%!important;border-radius: 7%!important;font-weight: 700!important;cursor: pointer;">2X</button>
-                                                <button class="btn-sm1 spd-btn" id="btnStop" style="margin-left: 3%!important;width:10%!important;border-radius: 7%!important;font-weight: 700!important;cursor: pointer;">3X</button>
-                                                <button class="btn-sm1 spd-btn" id="btnStop" style="margin-left: 3%!important;width:10%!important;border-radius: 7%!important;font-weight: 700!important;cursor: pointer;">4X</button> 
-                                            </tr>
-                                            <div class="col-sm-6" style="padding: 2% 5% 0px 9%;">
-                                                    <input type="datetime-local" class="form-control"/>
-                                            </div>
-                                        </table>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,8 +88,6 @@
         <script src="{{asset('playback_assets/assets/js/plugin/datatables/datatables.min.js')}}"></script>
         <!-- Bootstrap Notify -->
         <script src="{{asset('playback_assets/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-       
-
         <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js">
         </script>
         <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
@@ -1299,5 +1303,19 @@
 
 
         </script>
+        <style type="text/css">
+            .bbt{
+                font-weight: 700!important;
+                cursor: pointer;
+                color: black;
+            }
+
+            .dt{
+                cursor: pointer;
+                margin-top: 1.8%;
+                margin-left: 1%;
+                margin-bottom: 1%;
+            }
+        </style>
     </body>
 </html>

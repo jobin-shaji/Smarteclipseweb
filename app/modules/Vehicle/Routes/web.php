@@ -121,4 +121,8 @@ Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
  	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
 	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
+
+
+	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
 });

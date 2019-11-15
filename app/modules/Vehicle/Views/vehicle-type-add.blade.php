@@ -53,7 +53,7 @@
                  
                     <div class="form-group has-feedback">
                     <label class="srequired">Weight</label>
-                    <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="{{ old('weight') }}" required> 
+                    <input type="text" class="form-control {{ $errors->has('weight') ? ' has-error' : '' }}" placeholder="Weight" name="weight" value="1.00" required> 
                       @if ($errors->has('weight'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('weight') }}</strong>
@@ -64,7 +64,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scale</label>
-                    <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="{{ old('scale') }}" required> 
+                    <input type="text" class="form-control {{ $errors->has('scale') ? ' has-error' : '' }}" placeholder="Scale" name="scale" value="0.70" required> 
                      @if ($errors->has('scale'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scale') }}</strong>
@@ -75,7 +75,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Opacity</label>
-                    <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="{{ old('opacity') }}" required> 
+                    <input type="text" class="form-control {{ $errors->has('opacity') ? ' has-error' : '' }}" placeholder="Opacity" name="opacity" value="0.50" required> 
                     @if ($errors->has('opacity'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('opacity') }}</strong>
@@ -90,7 +90,7 @@
                 <div class="form-group has-feedback">
                     <label class="srequired">App Online icon</label>
                     <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="online_icon" value="{{ old('online_icon') }}" > 
+                            <input type="file" class="form-control {{ $errors->has('online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="online_icon" value="{{ old('online_icon') }}" required> 
                           </div>
                           @if ($errors->has('online_icon'))
                             <span class="help-block">
@@ -104,7 +104,7 @@
                 <div class="form-group has-feedback">
                     <label class="srequired">App offline icon</label>
                     <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="offline_icon" value="{{ old('offline_icon') }}" > 
+                            <input type="file" class="form-control {{ $errors->has('offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="offline_icon" value="{{ old('offline_icon') }}" required> 
                           </div>
                           @if ($errors->has('offline_icon'))
                             <span class="help-block">
@@ -118,7 +118,7 @@
                 <div class="form-group has-feedback">
                     <label class="srequired">App ideal icon</label>
                     <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('ideal_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="ideal_icon" value="{{ old('ideal_icon') }}" > 
+                            <input type="file" class="form-control {{ $errors->has('ideal_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="ideal_icon" value="{{ old('ideal_icon') }}" required> 
                           </div>
                           @if ($errors->has('ideal_icon'))
                             <span class="help-block">
@@ -132,7 +132,7 @@
                 <div class="form-group has-feedback">
                     <label class="srequired">App sleep icon</label>
                     <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('sleep_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="sleep_icon" value="{{ old('sleep_icon') }}" > 
+                            <input type="file" class="form-control {{ $errors->has('sleep_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="sleep_icon" value="{{ old('sleep_icon') }}" required> 
                           </div>
                           @if ($errors->has('sleep_icon'))
                             <span class="help-block">

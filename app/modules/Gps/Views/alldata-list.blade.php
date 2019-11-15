@@ -23,7 +23,8 @@
         <div  style ="margin-left: 77px"class="form-group has-feedback">
           <label class="srequired">Header</label>
           <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
-            <option selected="selected" disabled="disabled" value="">Select Header</option>  
+            <option selected="selected" disabled="disabled" value="">Select Header</option> 
+            <option value="">All</option>  
             @foreach($gpsDatas as $gpsData)
             <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
             @endforeach             
@@ -202,6 +203,7 @@
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
+  <div class="col-md-12" style="overflow: scroll">
       <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
           <thead>
               <tr>
@@ -216,10 +218,8 @@
                 <th>Action</th>                     
               </tr>
           </thead>
-      </table>
-      
-       
-    <!-- </div> -->
+      </table>       
+  </div>
 </section>
 
 

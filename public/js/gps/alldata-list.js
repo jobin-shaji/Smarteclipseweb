@@ -79,12 +79,12 @@ function checkAll(e) {
     }
 }
 function check(){
-    if(document.getElementById('header').value == ''){
-        alert('please select header');
-    }   
-    else{        
+    // if(document.getElementById('header').value == ''){
+    //     alert('please select header');
+    // }   
+    // else{        
         callBackDataTable();       
-    }
+    // }
 }
 function callBackDataTable(value){
   if(value==null)

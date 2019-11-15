@@ -74,13 +74,10 @@ class VehicleController extends Controller {
 
                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
-                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
+                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"; 
                     
                 }else{
-                     return "
-                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
+                     return ""; 
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -682,10 +679,9 @@ class VehicleController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $online_vehicle->move($destinationPath,$online_uploadedFile);
-        $vehicle_type->online_icon = $online_uploadedFile;
         }
         // online vehicle image
-         // offline vehicle image
+        // offline vehicle image
         $offline_vehicle=$request->offline_icon;
         if($offline_vehicle){
         $getFileExt   = $offline_vehicle->getClientOriginalExtension();
@@ -693,7 +689,6 @@ class VehicleController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $offline_vehicle->move($destinationPath,$offline_uploadedFile);
-        $vehicle_type->offline_icon = $offline_uploadedFile;
         }
         // online vehicle image
          // ideal vehicle image
@@ -704,7 +699,6 @@ class VehicleController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
-        $vehicle_type->ideal_icon = $ideal_uploadedFile;
         }
         // ideal vehicle image
         // sleep vehicle image
@@ -716,7 +710,6 @@ class VehicleController extends Controller {
         $destinationPath = 'documents';
         $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
         // sleep vehicle image
-        $vehicle_type->online_icon =$online_uploadedFile;
         }
         // sleep vehicle image
         $vehicle_type = VehicleType::create([
@@ -1732,7 +1725,11 @@ class VehicleController extends Controller {
             'svg_icon' => 'required|max:20000',
             'weight' => 'required|numeric',
             'scale' => 'required|numeric',
-            'opacity' => 'required|numeric'
+            'opacity' => 'required|numeric',
+            'offline_icon' => 'required',
+            'ideal_icon' => 'required',
+            'sleep_icon' => 'required',
+            'online_icon' => 'required'
         ];
         return  $rules;
     }

@@ -65,7 +65,7 @@ class AlertController extends Controller {
             ->orderBy('id', 'desc')
             ->whereIn('gps_id',$single_vehicle_gps)
             ->whereIn('alert_type_id',$alert_id)
-            ->whereNotIn('alert_type_id',[17,18,23,24])
+            ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
             ->where('status',1) 
             ->paginate(15);
         return view('Alert::alert-list',['alerts'=>$alerts]);
@@ -381,10 +381,24 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client_id)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+           }
         $alert = Alert::select('id','gps_id','alert_type_id')
         ->whereIn('gps_id',$single_vehicle_gps)
-        ->whereNotIn('alert_type_id',[17,18,23])
+        ->whereIn('alert_type_id',$alert_id)
+        ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
         ->where('status',0)
         ->get()
         ->count();

@@ -242,19 +242,19 @@ function updateStatusData(current)
 
       }
       if(ign == 1) {
-        document.getElementById("ignition").innerHTML = "Ignition ON";
+        document.getElementById("ignition").innerHTML = "ON";
       }else
       {
-        document.getElementById("ignition").innerHTML = "Ignition OFF";
+        document.getElementById("ignition").innerHTML = "OFF";
       }
       if(power == 1) {
-        document.getElementById("car_power").innerHTML = "Connected";
+        document.getElementById("car_power").innerHTML = "CONNECTED";
       }else
       {
-        document.getElementById("car_power").innerHTML = "Disconnected";
+        document.getElementById("car_power").innerHTML = "DISCONNECTED";
       }
       if(vehicleStatus == 'M' && speed == '0') {
-        document.getElementById("car_speed").innerHTML = "Vehicle Stopped";
+        document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
         $('#valid_speed').css('display','none');
       }else
       {
@@ -264,13 +264,13 @@ function updateStatusData(current)
       $device_time=dateTime;
       $connection_lost_time=connection_lost_time;
       if (signalStrength >= 19 && $device_time >= $connection_lost_time) {
-        document.getElementById("network_status").innerHTML = "Good";
+        document.getElementById("network_status").innerHTML = "GOOD";
       }else if (signalStrength < 19 && signalStrength >= 13 && $device_time >= $connection_lost_time) {
-        document.getElementById("network_status").innerHTML = "Average";
+        document.getElementById("network_status").innerHTML = "AVERAGE";
       }else if (signalStrength <= 12 && $device_time >= $connection_lost_time) {
-        document.getElementById("network_status").innerHTML = "Poor";
+        document.getElementById("network_status").innerHTML = "POOR";
       }else{
-        document.getElementById("network_status").innerHTML = "Connection Lost";
+        document.getElementById("network_status").innerHTML = "LOST";
       }
       
       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
