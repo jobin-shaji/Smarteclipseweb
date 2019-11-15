@@ -1405,15 +1405,19 @@ public function getGpsAllDataHlm(Request $request)
     public function acStatus(Request $request){
         $first_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '=', date('Y-m-d'))->orderBy('device_time')->first();
         $last_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '=', date('Y-m-d'))->latest('device_time')->first();
-        $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
-                            ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
-                                 , ignition, vehicle_mode,device_time,gps_id,id
-                                 , @statusPre := vehicle_mode
-                            FROM gps_data 
-                               , (SELECT @statusPre:=NULL) AS d
-                            WHERE DATE(device_time) = CURDATE() AND gps_id=3 ORDER BY device_time 
-                          ) AS good
-                        WHERE statusChanged');
+        // $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
+        //                     ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
+        //                          , ignition, vehicle_mode,device_time,gps_id,id
+        //                          , @statusPre := vehicle_mode
+        //                     FROM gps_data 
+        //                        , (SELECT @statusPre:=NULL) AS d
+        //                     WHERE DATE(device_time) = CURDATE() AND gps_id=3 ORDER BY device_time 
+        //                   ) AS good
+        //                 WHERE statusChanged');
+
+
+
+        
     }
 
 
