@@ -127,6 +127,10 @@ class GeofenceController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id);
         $geofence=Geofence::find($decrypted);
+        if($geofence == null)
+        {
+           return view('Geofence::404');
+        }
         return view('Geofence::geofence-details',['id' => $decrypted,'geofence' => $geofence]);
     }
 
@@ -479,6 +483,10 @@ class GeofenceController extends Controller {
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude; 
         $geofence = Geofence::find(decrypt($request->id));  
+        if($geofence == null)
+        {
+           return view('Geofence::404');
+        }
         return view('Geofence::fence-edit',['lat' => $lat,'lng' => $lng,'geofence_id'=>$decrypted,'geofence'=>$geofence]);        
     }
 
