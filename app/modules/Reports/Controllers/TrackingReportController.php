@@ -26,8 +26,9 @@ class TrackingReportController extends Controller
     public function trackReportList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
-        $from = date('Y-m-d', strtotime($request->from_date));
-        $to = date('Y-m-d', strtotime($request->to_date));
+        $from = date('Y-m-d H:i:s', strtotime($request->from_date));
+        $to = date('Y-m-d H:i:s', strtotime($request->to_date));
+      
         $vehicle = $request->vehicle;
         $sleep=0;
         $halt=0;
@@ -56,6 +57,7 @@ class TrackingReportController extends Controller
                              ORDER BY device_time
                           ) AS good
                         WHERE statusChanged');
+       // dd($gps_id);
         $last_log=GpsData::select('id','vehicle_mode','device_time')                    
         ->where('gps_id',$gps_id)
         ->where('device_time','>=',$from)
