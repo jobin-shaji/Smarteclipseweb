@@ -319,9 +319,9 @@ class GeofenceController extends Controller {
             $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
         }
         if($response_string==""){
-            $response_string="CLR GF";
+            $response_string="CLR VGF";
         }else{
-            $response_string="SET GF:".$response_string;
+            $response_string="SET VGF:".$response_string;
         }
         $geofence_response= OtaResponse::create([
                     'gps_id' => $vehicle->gps_id,
