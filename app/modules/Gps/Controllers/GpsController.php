@@ -1367,6 +1367,39 @@ public function getGpsAllDataHlm(Request $request)
             ]); 
         }
     }
+//////////Gps stock creation usig serial number////////////////
+
+
+    public function createStock()
+    {
+        $gps = Gps::select('id', 'imei','serial_no','manufacturing_date')
+        ->whereNull('manufacturing_date')
+        ->get();
+        return view('Gps::gps-stock-create',['devices'=>$gps]);
+    }
+
+        //upload gps details to database table
+    public function saveStock(Request $request)
+    {
+        $root_id=\Auth::user()->id;
+        $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
+        $rules = $this->gpsStockCreateRules();
+        $this->validate($request, $rules); 
+        $gps_id= $request->serial_no;
+        $gps = Gps::find($gps_id);
+        $gps->manufacturing_date = $maufacture;
+        $gps->e_sim_number = $request->e_sim_number;       
+        $gps->save();
+        if($gps){
+           $gps_stock = GpsStock::create([
+                'gps_id'=> $gps->id,
+                'inserted_by' => $root_id
+            ]); 
+        }
+        $request->session()->flash('message', 'New gps created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+    } 
 
 
 
@@ -1386,6 +1419,17 @@ public function getGpsAllDataHlm(Request $request)
         ];
         return  $rules;
     }
+     //validation for gps creation
+    public function gpsStockCreateRules(){
+        $rules = [     
+            'manufacturing_date' => 'required',           
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',          
+        ];
+        return  $rules;
+    }
+
+
+
 
     //validation for gps updation
     public function gpsUpdateRules($gps){
