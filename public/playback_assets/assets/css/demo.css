@@ -3,7 +3,7 @@
 	margin:0 0 0 2%;
 	bottom:25%;
 	transform: translateY(-50%);
-	width:639px;
+	width:96%;
 	height: max-content;
 	display: block;
 	z-index: 1;
@@ -16,6 +16,18 @@
 		-webkit-box-shadow: 6px 16px 56px -15px rgba(64,64,64,1);
 -moz-box-shadow: 6px 16px 56px -15px rgba(64,64,64,1);
 box-shadow: 6px 16px 56px -15px rgba(64,64,64,1);
+}
+
+input#dtStartDate {
+    height: 37px;
+}
+td.contoller {
+    width: 48%;
+}
+
+input#dtEnddate {
+    height: 37px;
+    margin-right: 10px;
 }
 
 .custom-template.open {
