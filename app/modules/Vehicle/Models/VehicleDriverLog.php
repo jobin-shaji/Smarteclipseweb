@@ -12,12 +12,12 @@ class VehicleDriverLog extends Model
 
     // from driver
     public function Fromdriver(){
-        return $this->hasOne('App\Modules\Driver\Models\Driver','id','from_driver_id');
+        return $this->hasOne('App\Modules\Driver\Models\Driver','id','from_driver_id')->withTrashed();
     }
 
     // to driver
     public function Todriver(){
-        return $this->hasOne('App\Modules\Driver\Models\Driver','id','to_driver_id');
+        return $this->hasOne('App\Modules\Driver\Models\Driver','id','to_driver_id')->withTrashed();
     }
 
     // vehicle
