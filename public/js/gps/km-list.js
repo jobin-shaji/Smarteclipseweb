@@ -1,7 +1,4 @@
 $(document).ready(function () { 
-  
-    // var today = new Date();
-    // callBackDataTable();
 });
 
 function check(){
@@ -19,6 +16,8 @@ function check(){
     $('#alerts').empty();
     $('#route_deviation').empty();
     $('#geofence').empty();
+    $('#engine_on_duration').empty();
+    $('#engine_off_duration').empty();
      
     if(document.getElementById('vehicle').value == ''){
         alert('Please Select Vehicle');
@@ -42,7 +41,6 @@ function check(){
 
 function kmReport(res)
 {
-
     var km =res.dailykm.km/1000;
     $('#total_km').text(km);
     $('#speed').text(res.dailykm.gps.speed);
@@ -58,6 +56,8 @@ function kmReport(res)
     $('#alerts').text(res.user_alert);
     $('#route_deviation').text(res.route_deviation);
     $('#geofence').text(res.geofence);
+    $('#engine_on_duration').text(res.engine_on_duration);
+    $('#engine_off_duration').text(res.engine_off_duration);
     // $('#ig_duration').text(res.dailykm.alerts);
 }
 
