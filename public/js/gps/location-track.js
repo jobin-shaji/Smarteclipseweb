@@ -227,9 +227,6 @@ function updateStatusData(current)
           $("#offline").hide();
           vehicleColor=" #858585";
       } else {
-        // if(res.liveData.last_seen >'1 hour ago'){
-          
-        // }
           if(last_seen){
            $('#last_seen').text(last_seen);
           }
@@ -265,32 +262,32 @@ function updateStatusData(current)
       $connection_lost_time=connection_lost_time;
       if (signalStrength >= 19 && $device_time >= $connection_lost_time) {
         document.getElementById("network_status").innerHTML = "GOOD";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.remove("lost_blink");
       }else if (signalStrength < 19 && signalStrength >= 13 && $device_time >= $connection_lost_time) {
         document.getElementById("network_status").innerHTML = "AVERAGE";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.remove("lost_blink");
       }else if (signalStrength <= 12 && $device_time >= $connection_lost_time) {
         document.getElementById("network_status").innerHTML = "POOR";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.remove("lost_blink");
       }else{
         document.getElementById("network_status").innerHTML = "LOST";
-      }
-      if(ign == 1) {
-        document.getElementById("ac").innerHTML = "ON";
-      }else
-      {
-        document.getElementById("ac").innerHTML = "OFF";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.add("lost_blink");
       }
       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
      
 
       document.getElementById("car_bettary").innerHTML = battery_status;
-      document.getElementById("fuel").innerHTML = battery_status;
       document.getElementById("car_location").innerHTML = place;
+      document.getElementById("ac").innerHTML = "UPGRADE VERSION";
+      document.getElementById("fuel").innerHTML = "UPGRADE VERSION";
       // document.getElementById("user").innerHTML = res.vehicle_name;
-     
 
       $("#km_live_track").html('');
       $("#km_live_track").append(speed);
-
-
 }
 
 
