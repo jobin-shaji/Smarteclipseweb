@@ -42,8 +42,8 @@ Total KM Report
                               <option value="" selected="selected" disabled="disabled">Select</option>
                               <option value="1">Today</option>
                               <option value="2">Yesterday</option>
-                              <option value="3">Last 7 days</option>
-                              <option value="4">Last 30 Days</option>                            
+                              <option value="3">This Week</option>
+                              <option value="4">This Month</option>                            
                             </select>
                           </div>
                           </div>                         
@@ -56,126 +56,228 @@ Total KM Report
                           </div>                        
                         </div>
                       </div>
-                    </div> 
-                    <div class="info-box">
-                      <img src="{{ url('/') }}/SVG-Icons/sudden-accelaration.png" width="30%" height="30%"/>
-                      <div class="info-box-content">
-                        <span class="info-box-text" >Sudden Acceleration</span>
-                        <label class="info-box-number" id="sudden_acceleration"></label>
-                      </div>
-                    </div>
-                    <div class="info-box">
-                      <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="30%" height="30%"/>
-                      <div class="info-box-content">
-                        <span class="info-box-text" >Total KM</span>
-                        <label class="info-box-number" id="total_km"></label>
-                      </div>
-                    </div>
-                    <div class="info-box">
-                      <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="30%" height="30%"/>
-                      <div class="info-box-content">
-                        <span class="info-box-text" >Alerts</span>
-                        <label class="info-box-number" id="alerts"></label>
-                      </div>
-                    </div>
-                      <!-- <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Geofence</span><label class="info-box-number" id="geofence"></label>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/overspeed.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Overspeed</span><label class="info-box-number" id="overspeed"></label>
-                          </div>
-                        </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/zigzag-driving.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Zig Zag Driving</span><label class="info-box-number" id="zig_zag"></label>
-                          </div>
-                        </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/accident-impact.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Accident Impact</span><label class="info-box-number" id="accident_impact"></label>
-                          </div>
-                        </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Route Deviation</span><label class="info-box-number" id="route_deviation"></label>
-                          </div>
-                        </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Harsh Braking</span><label class="info-box-number" id="harsh_braking"></label>
-                          </div>
-                        </div>
-                      </div>
+                    </div>  
+                    <div class="col-md-12">                               
+                    <div class="row">
                        
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text">Main Battery Disconnect</span><label class="info-box-number" id="main_battery_disconnect"></label>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sudden-accelaration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Sudden Acceleration</span><label class="info-box-number" id="sudden_acceleration"></label>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/moving-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Moving Duration</span><label class="info-box-number" id="moving"></label>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Geofence entry</span><label class="info-box-number" id="geofence"></label>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/halt-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Halt Duration</span><label class="info-box-number" id="halt"></label>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/moving-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Moving Duration</span><label class="info-box-number" id="moving"></label>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                       <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Sleep Duration</span><label class="info-box-number" id="sleep"></label>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Harsh Braking</span><label class="info-box-number" id="harsh_braking"></label>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div> -->
-                   <!--  <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Engine On Duration</span><label class="info-box-number" id="engine_on_duration"></label>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Geofence exit</span><label class="info-box-number" id="geofence"></label>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Engine Off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/halt-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Halt Duration</span><label class="info-box-number" id="halt"></label>
+                            </div>
                           </div>
                         </div>
-                      </div> -->
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/accident-impact.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Accident Impact</span><label class="info-box-number" id="accident_impact"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Geofence entry overspeed</span><label class="info-box-number" id="geofence"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Sleep Duration</span><label class="info-box-number" id="sleep"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/zigzag-driving.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Zig Zag Driving</span><label class="info-box-number" id="zig_zag"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Geofence exit overspeed</span><label class="info-box-number" id="geofence"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ignition On Duration</span><label class="info-box-number" id="engine_on_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/overspeed.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >max speed</span><label class="info-box-number" id="overspeed"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ignition Off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text">over speed count</span><label class="info-box-number" id="main_battery_disconnect"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ac on Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text">Main Battery Disconnect</span><label class="info-box-number" id="main_battery_disconnect"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ac off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >no of Alerts</span><label class="info-box-number" id="alerts"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ac idle Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <!-- <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Route Deviation</span><label class="info-box-number" id="route_deviation"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >no of stops</span><label class="info-box-number" id="route_deviation"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+                          
+                        </div>
+                        
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Total KM</span><label class="info-box-number" id="total_km"></label>
+                            </div>
+                          </div>
+                        </div> -->
+                         
+                         
+                         
+                       
+                      
+                    </div>
+                  </div>
 
 
 
