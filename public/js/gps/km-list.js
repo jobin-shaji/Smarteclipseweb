@@ -57,7 +57,7 @@ function check(){
 function kmReport(res)
 {
 
-    var km =res.dailykm.km/1000;
+    var km =0;
     $('#total_km').text(km);
     $('#speed').text(res.dailykm.gps.speed);
     $('#sleep').text(res.sleep);
