@@ -282,7 +282,7 @@ function updateStatusData(current)
      
 
       document.getElementById("car_bettary").innerHTML = battery_status;
-       document.getElementById("fuel").innerHTML = battery_status;
+      document.getElementById("fuel").innerHTML = battery_status;
       document.getElementById("car_location").innerHTML = place;
       // document.getElementById("user").innerHTML = res.vehicle_name;
      
