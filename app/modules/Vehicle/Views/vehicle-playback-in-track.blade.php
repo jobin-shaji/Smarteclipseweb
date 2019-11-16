@@ -60,9 +60,8 @@
                             </tr>
                         </table>
                     </table>  
-                    <div id="markers" style="width:1360px;height:600px">        
-                        <div class="custom-template open">
-                        </div>
+                    <div id="markers" style="width:1590px;height:678px">        
+                        
                     </div>
                 </div>
             </div>
