@@ -4,6 +4,28 @@
 <!--  -->
 <!-- ROOT ROLE-START -->
 @role('root')
+ <style>
+    .btn-pop {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;  
+    background-color:#ccc;
+    border: 1px solid transparent;
+    padding: 0 .21rem;
+     line-height: 2;
+     font-size:.75rem!important;
+    border-radius: .25rem;
+    margin:0 .1rem .5rem .1rem;
+    color:#000;
+  }
+  .btn-pop:hover {background:#f7b018;}
+  </style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <section class="content">
