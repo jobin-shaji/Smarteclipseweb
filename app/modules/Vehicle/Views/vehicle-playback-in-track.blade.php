@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>CSS Corp Info</title>
+    <title>Eclipse </title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="assets/img/icon.png" type="image/x-icon" />
     <!-- Fonts and icons -->
@@ -85,17 +85,6 @@
     </style>
 
     <div class="wrapper overlay-sidebar">
-        <div class="main-header">
-
-            <!-- End Logo Header -->
-            <!-- Navbar Header -->
-            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
-                <div class="container-fluid"><span class="text" style="font-size:20px;font-weight:100;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color:white">HERE RME API DEMO</span></div>
-            </nav>
-            <!-- End Navbar -->
-        </div>
-
-
         <div class="main-panel">
                 <div class="content" style="margin-top: 0!important">
                     <table id="tblInputForm">
