@@ -93,4 +93,7 @@ Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->nam
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
 Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
+
+Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
+
 });
