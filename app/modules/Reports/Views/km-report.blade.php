@@ -57,7 +57,7 @@ Total KM Report
                         </div>
                       </div>
                     </div>                                 
-                    <!-- <div class="row">
+                    <div class="row">
                       <div>
                         <div class="info-box">
                           <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="18%" height="80px" class="report_img"/>
@@ -162,38 +162,19 @@ Total KM Report
                           </div>
                         </div>
                       </div>
-
-                    </div> -->
-
-                      <!-- <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Engine On Duration</span><label class="info-box-number" id="engine_on_duration"></label>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Engine Off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
+                    </div>
 
 
 
 
 
-                    <ul class="ecosystem" style="width: 50%">
+                   <!--  <ul class="ecosystem" style="width: 50%">
                       <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/total-KM.svg"  />
                             <span class="system_info" >Total KM : </span><label class="km_label" id="total_km" style="color: #ea7c14"></label>
                           </div>                     
-                      </li>
+                      </li> -->
 
 
                        <!-- <li class="sys_vapor cover_total_km">
@@ -210,12 +191,12 @@ Total KM Report
                       </li> -->
 
 
-                       <li class="sys_vapor cover_total_km">
+                      <!--  <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/alerts.svg"  />
                             <span class="system_info" >Alerts : </span><label class="km_label" id="alerts">
                           </div>                     
-                      </li>
+                      </li> -->
 
 
                       <!--  <li class="sys_vapor cover_total_km">
@@ -232,7 +213,7 @@ Total KM Report
                       </li> -->
 
 
-                       <li class="sys_vapor cover_total_km">
+                       <!-- <li class="sys_vapor cover_total_km">
                           <div class="system_icon">
                             <img src="{{ url('/') }}/SVG-Icons/geofence.svg"  />
                             <span class="system_info" >Geofence :</span><label class="km_label" id="geofence"></label>
@@ -297,7 +278,7 @@ Total KM Report
                             <img src="{{ url('/') }}/SVG-Icons/sleep-duration.svg"  />
                             <span class="system_info" >Sleep Duration :</span><label class="km_label" id="sleep"></label>
                           </div>                     
-                      </li>
+                      </li> -->
 
 
                      <!--  <li class="sys_vapor cover_total_km">
