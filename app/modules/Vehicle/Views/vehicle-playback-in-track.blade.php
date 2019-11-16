@@ -34,7 +34,8 @@
                 <div class="content" style="margin-top: 0!important">
                     <table id="tblInputForm">
                         <tr id="trProcessMedium">
-                            <a href="#" style="margin-left: 2%">
+                            <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
+                            <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}" style="margin-left: 2%">
                                 <img src="../../assets/images/back.png" height="50px" width="50px">
                             </a>
                             <label style="font-weight: 700!important;margin-left: 3%">FROM DATE
