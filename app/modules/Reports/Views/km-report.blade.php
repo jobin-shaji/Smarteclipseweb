@@ -72,7 +72,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >Geofence entry</span><label class="info-box-number" id="geofence"></label>
+                              <span class="info-box-text" >Geofence entry</span><label class="info-box-number" id="geofence_entry"></label>
                             </div>
                           </div>
                         </div>
@@ -96,7 +96,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >Geofence exit</span><label class="info-box-number" id="geofence"></label>
+                              <span class="info-box-text" >Geofence exit</span><label class="info-box-number" id="geofence_exit"></label>
                             </div>
                           </div>
                         </div>
@@ -120,7 +120,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >Geofence entry overspeed</span><label class="info-box-number" id="geofence"></label>
+                              <span class="info-box-text" >Geofence entry overspeed</span><label class="info-box-number" id="geofence_entry_overspeed"></label>
                             </div>
                           </div>
                         </div>
@@ -144,7 +144,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >Geofence exit overspeed</span><label class="info-box-number" id="geofence"></label>
+                              <span class="info-box-text" >Geofence exit overspeed</span><label class="info-box-number" id="geofence_exit_overspeed"></label>
                             </div>
                           </div>
                         </div>
@@ -156,14 +156,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/overspeed.png" width="18%" height="80px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text" >max speed</span><label class="info-box-number" id="overspeed"></label>
-                            </div>
-                          </div>
-                        </div>
+                       
                         <div class="widthh">
                           
                         </div>
@@ -179,7 +172,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text">over speed count</span><label class="info-box-number" id="main_battery_disconnect"></label>
+                              <span class="info-box-text">over speed count</span><label class="info-box-number" id="overspeed_count"></label>
                             </div>
                           </div>
                         </div>
@@ -190,7 +183,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >ac on Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                              <span class="info-box-text" >ac on Duration</span><label class="info-box-number" id="ac_on_duration"></label>
                             </div>
                           </div>
                         </div>
@@ -209,7 +202,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >ac off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                              <span class="info-box-text" >ac off Duration</span><label class="info-box-number" id="ac_off_duration"></label>
                             </div>
                           </div>
                         </div>
@@ -228,7 +221,7 @@ Total KM Report
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
-                              <span class="info-box-text" >ac idle Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                              <span class="info-box-text" >ac idle Duration</span><label class="info-box-number" id="ac_halt_on_duration"></label>
                             </div>
                           </div>
                         </div>
