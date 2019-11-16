@@ -111,10 +111,9 @@ class TotalKMReportController extends Controller
         $client_id=\Auth::user()->client->id;       
         $vehicle =$request->vehicle;
         $report_type =$request->report_type;
-        $single_vehicle_id =  $this->VehicleGPs($vehicle);
-       
+        $single_vehicle_id =  $this->VehicleGPs($vehicle);       
         $engine_status=$this->engineStatus($single_vehicle_id,$report_type);
-        
+        $ac_status=$this->acStatus($single_vehicle_id,$report_type);
         if($report_type==1)
         {
             $search_from_date=date('Y-m-d');
@@ -219,6 +218,9 @@ class TotalKMReportController extends Controller
         return response()->json([
             'engine_on_duration' => $engine_status['engine_on_time'],
             'engine_off_duration' => $engine_status['engine_off_time'],
+            'ac_on_duration' => $ac_status['ac_status_on_time'],
+            'ac_off_duration' => $ac_status['ac_status_off_time'],
+
             'dailykm' => $km_report, 
             'sleep' => $this->timeFormate($sleep),  
             'motion' => $this->timeFormate($motion),   
@@ -402,19 +404,19 @@ class TotalKMReportController extends Controller
         $dates=$this->getDateFromType($report_type);
         $from_date=$dates['from_date'];
         $to_date=$dates['to_date'];
-        $first_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
-        $last_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '>=', $from_date)->whereDate('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
-        $balance_log=DB::select('SELECT id,ignition,device_time FROM
-                            ( SELECT (@statusPre <> ignition) AS statusChanged
-                                 , ignition, device_time,id
-                                 , @statusPre := ignition
+        $first_log=GpsData::select('id','ac_status','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
+        $last_log=GpsData::select('id','ac_status','device_time')->whereDate('device_time', '>=', $from_date)->whereDate('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
+        $balance_log=DB::select('SELECT id,ac,device_time FROM
+                            ( SELECT (@statusPre <> ac_status) AS statusChanged
+                                 , ac_status, device_time,id
+                                 , @statusPre := ac
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
                             WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
-        $engine_on_time=0;
-        $engine_off_time=0;
+        $ac_status_on_time=0;
+        $ac_status_off_time=0;
         if($balance_log)
         {
             $i=0;
@@ -422,39 +424,39 @@ class TotalKMReportController extends Controller
                 if($i==0){
                     $first_device_time=$first_log->device_time;
                     $item_device_time=$item->device_time;
-                    $ignition=$item->ignition;
+                    $ac_status=$item->ac_status;
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==0){
-                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    if($ac_status==0){
+                        $ac_status_on_time=$ac_status_on_time+$diff_in_minutes;
                     }else{
-                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                        $ac_status_off_time=$ac_status_off_time+$diff_in_minutes;
                     }
                 }else{
                     $item_device_time=$item->device_time;
-                    $ignition=$item->ignition;
+                    $ac_status=$item->ac_status;
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==0){
-                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    if($ac_status==0){
+                        $ac_status_on_time=$ac_status_on_time+$diff_in_minutes;
                     }else{
-                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                        $ac_status_off_time=$ac_status_off_time+$diff_in_minutes;
                     }
                 }
                 $last_item_device_time=$item->device_time;
-                $last_ignition=$item->ignition;
+                $last_ac_status=$item->ac_status;
                 $i++;
             }
             $last_device_time=$last_log->device_time;
             $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
             $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
             $diff_in_minutes = $to->diffInSeconds($from);
-            if($last_ignition==0){
-                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            if($last_ac_status==0){
+                $ac_status_off_time=$ac_status_off_time+$diff_in_minutes;
             }else{
-                $engine_on_time=$engine_on_time+$diff_in_minutes;
+                $ac_status_on_time=$ac_status_on_time+$diff_in_minutes;
             }
         }else if($first_log != null && $balance_log==null)
         {
@@ -463,25 +465,25 @@ class TotalKMReportController extends Controller
             $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
             $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
             $diff_in_minutes = $to->diffInSeconds($from);
-            if($first_log->ignition==0){
-                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            if($first_log->ac_status==0){
+                $ac_status_off_time=$ac_status_off_time+$diff_in_minutes;
             }else{
-                $engine_on_time=$engine_on_time+$diff_in_minutes;
+                $ac_status_on_time=$ac_status_on_time+$diff_in_minutes;
             }
         }
-        $engine_on_hours = floor($engine_on_time / 3600);
-        $engine_on_mins = floor($engine_on_time / 60 % 60);
-        $engine_on_secs = floor($engine_on_time % 60); 
-        $engine_off_hours = floor($engine_off_time / 3600);
-        $engine_off_mins = floor($engine_off_time / 60 % 60);
-        $engine_off_secs = floor($engine_off_time % 60); 
-        $engine_on_time = sprintf('%02d:%02d:%02d', $engine_on_hours, $engine_on_mins, $engine_on_secs);
-        $engine_off_time = sprintf('%02d:%02d:%02d', $engine_off_hours, $engine_off_mins, $engine_off_secs);
-        $engine_status = array(
-                "engine_on_time" => $engine_on_time, 
-                "engine_off_time" => $engine_off_time
+        $ac_on_hours = floor($ac_status_on_time / 3600);
+        $ac_on_mins = floor($ac_status_on_time / 60 % 60);
+        $ac_on_secs = floor($ac_status_on_time % 60); 
+        $ac_off_hours = floor($ac_status_off_time / 3600);
+        $ac_off_mins = floor($ac_status_off_time / 60 % 60);
+        $ac_off_secs = floor($ac_status_off_time % 60); 
+        $ac_status_on_time = sprintf('%02d:%02d:%02d', $ac_on_hours, $ac_on_mins, $ac_on_secs);
+        $ac_status_off_time = sprintf('%02d:%02d:%02d', $ac_off_hours, $ac_off_mins, $ac_off_secs);
+        $ac_status = array(
+                "ac_status_on_time" => $ac_status_on_time, 
+                "ac_status_off_time" => $ac_status_off_time
                 );
-        return $engine_status;
+        return $ac_status;
     }
 
 
