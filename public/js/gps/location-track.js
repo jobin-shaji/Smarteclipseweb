@@ -485,7 +485,6 @@ $('#poi_atm').click(function(){
            var image="/images/ATM.svg";
               createMarkers(results,image);
             });
-
          atm_flag=1;
          }else{
            deleteMarkersPOI();
