@@ -543,7 +543,7 @@ $('#poi_petrol').click(function(){
             size: new google.maps.Size(50, 50),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(10, 20),
-            scaledSize: new google.maps.Size(50, 50)
+            scaledSize: new google.maps.Size(30, 30)
           };
           var marker = new google.maps.Marker({
             icon: image,
