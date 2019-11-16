@@ -12,6 +12,7 @@ use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\Route\Models\RouteDeviation;
 use App\Modules\Vehicle\Models\DailyKm;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use DataTables;
 class TotalKMReportController extends Controller
@@ -110,6 +111,21 @@ class TotalKMReportController extends Controller
         $client_id=\Auth::user()->client->id;       
         $vehicle =$request->vehicle;
         $report_type =$request->report_type;
+        $single_vehicle_id =  $this->VehicleGPs($vehicle);
+        if($report_type == 1)
+        {
+            $engine_status=$this->engineStatusToday($single_vehicle_id,$report_type);
+        }else if($report_type == 2)
+        {
+            $engine_status=$this->engineStatusYesterday($single_vehicle_id,$report_type);
+        }else if($report_type == 3)
+        {
+            $engine_status=$this->engineStatusLastSevenDays($single_vehicle_id,$report_type);
+        }else if($report_type == 4)
+        {
+            $engine_status=$this->engineStatusLastThirtyDays($single_vehicle_id,$report_type);
+        }
+
         if($report_type==1)
         {
             $search_from_date=date('Y-m-d');
@@ -131,10 +147,8 @@ class TotalKMReportController extends Controller
             $search_from_date=date('Y-m-d',strtotime("-30 days"));
             $search_to_date=date('Y-m-d');
             
-        } 
-        $single_vehicle_id =  $this->VehicleGPs($vehicle);  
+        }   
         $km_report =  $this->dailyKmReport($client_id,$vehicle,$search_from_date,$search_to_date,$single_vehicle_id);
-        // dd($km_report);
         $gps_modes=GpsModeChange::where('device_time','>=',$search_from_date)
         ->where('device_time','<=',$search_to_date)  
         ->where('gps_id',$single_vehicle_id)
@@ -214,6 +228,8 @@ class TotalKMReportController extends Controller
 
         // dd($alerts->whereIn('id',$alert_id));
         return response()->json([
+            'engine_on_duration' => $engine_status['engine_on_time'],
+            'engine_off_duration' => $engine_status['engine_off_time'],
             'dailykm' => $km_report, 
             'sleep' => $this->timeFormate($sleep),  
             'motion' => $this->timeFormate($motion),   
@@ -226,13 +242,7 @@ class TotalKMReportController extends Controller
             'over_speed' => $alerts->where('alert_type_id',12)->count(),  
             'user_alert' => $alerts->whereIn('alert_type_id',$alert_id)->count(),
             'geofence' => $alerts->whereIn('alert_type_id',[18,19,20,21])->count(),
-
             'route_deviation' => $route_deviation,             
-
-
-
-
-
             'status' => 'kmReport'           
         ]);
 
@@ -305,9 +315,382 @@ class TotalKMReportController extends Controller
     }
 
 
-     public function kmExport(Request $request)
+    public function kmExport(Request $request)
     {
        return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');
-    } 
+    }
+
+    function engineStatusToday($gps_id,$report_type)
+    { 
+        $dates=$this->getDateFromType($report_type);
+        $from_date=$dates['from_date'];
+        $to_date=$dates['to_date'];
+        $first_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
+        $last_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '>=', $from_date)->whereDate('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
+        $balance_log=DB::select('SELECT id,ignition,device_time FROM
+                            ( SELECT (@statusPre <> ignition) AS statusChanged
+                                 , ignition, device_time,id
+                                 , @statusPre := ignition
+                            FROM gps_data
+                               , (SELECT @statusPre:=NULL) AS d
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                          ) AS good
+                        WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+        $engine_on_time=0;
+        $engine_off_time=0;
+        if($balance_log)
+        {
+            $i=0;
+            foreach ($balance_log as $item) {
+                if($i==0){
+                    $first_device_time=$first_log->device_time;
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }else{
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }
+                $last_item_device_time=$item->device_time;
+                $last_ignition=$item->ignition;
+                $i++;
+            }
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($last_ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }else if($first_log != null && $balance_log==null)
+        {
+            $first_device_time=$first_log->device_time;
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($first_log->ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }
+        $engine_on_hours = floor($engine_on_time / 3600);
+        $engine_on_mins = floor($engine_on_time / 60 % 60);
+        $engine_on_secs = floor($engine_on_time % 60); 
+        $engine_off_hours = floor($engine_off_time / 3600);
+        $engine_off_mins = floor($engine_off_time / 60 % 60);
+        $engine_off_secs = floor($engine_off_time % 60); 
+        $engine_on_time = sprintf('%02d:%02d:%02d', $engine_on_hours, $engine_on_mins, $engine_on_secs);
+        $engine_off_time = sprintf('%02d:%02d:%02d', $engine_off_hours, $engine_off_mins, $engine_off_secs);
+        $engine_status = array(
+                "engine_on_time" => $engine_on_time, 
+                "engine_off_time" => $engine_off_time
+                );
+        return $engine_status;
+    }
+
+    function engineStatusYesterday($gps_id,$report_type)
+    { 
+        $dates=$this->getDateFromType($report_type);
+        $from_date=$dates['from_date'];
+        $to_date=$dates['to_date'];
+        $first_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
+        $last_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '>=', $from_date)->whereDate('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
+        $balance_log=DB::select('SELECT id,ignition,device_time FROM
+                            ( SELECT (@statusPre <> ignition) AS statusChanged
+                                 , ignition, device_time,id
+                                 , @statusPre := ignition
+                            FROM gps_data
+                               , (SELECT @statusPre:=NULL) AS d
+                            WHERE device_time >=:from_date AND device_time <=:to_date AND gps_id=:gps_id ORDER BY device_time 
+                          ) AS good
+                        WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+        $engine_on_time=0;
+        $engine_off_time=0;
+        if($balance_log)
+        {
+            $i=0;
+            foreach ($balance_log as $item) {
+                if($i==0){
+                    $first_device_time=$first_log->device_time;
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }else{
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }
+                $last_item_device_time=$item->device_time;
+                $last_ignition=$item->ignition;
+                $i++;
+            }
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($last_ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }else if($first_log != null && $balance_log==null)
+        {
+            $first_device_time=$first_log->device_time;
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($first_log->ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }
+        $engine_on_hours = floor($engine_on_time / 3600);
+        $engine_on_mins = floor($engine_on_time / 60 % 60);
+        $engine_on_secs = floor($engine_on_time % 60); 
+        $engine_off_hours = floor($engine_off_time / 3600);
+        $engine_off_mins = floor($engine_off_time / 60 % 60);
+        $engine_off_secs = floor($engine_off_time % 60); 
+        $engine_on_time = sprintf('%02d:%02d:%02d', $engine_on_hours, $engine_on_mins, $engine_on_secs);
+        $engine_off_time = sprintf('%02d:%02d:%02d', $engine_off_hours, $engine_off_mins, $engine_off_secs);
+        $engine_status = array(
+                "engine_on_time" => $engine_on_time, 
+                "engine_off_time" => $engine_off_time
+                );
+        return $engine_status;
+    }
+
+    public function engineStatusLastSevenDays($gps_id,$report_type)
+    { 
+        $dates=$this->getDateFromType($report_type);
+        $from_date=$dates['from_date'];
+        $to_date=$dates['to_date'];
+        $first_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
+        $last_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
+        $balance_log=DB::select('SELECT id,ignition,device_time FROM
+                            ( SELECT (@statusPre <> ignition) AS statusChanged
+                                 , ignition, device_time,id
+                                 , @statusPre := ignition
+                            FROM gps_data
+                               , (SELECT @statusPre:=NULL) AS d
+                            WHERE device_time >=:from_date AND device_time <=:to_date AND gps_id=:gps_id ORDER BY device_time 
+                          ) AS good
+                        WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+        $engine_on_time=0;
+        $engine_off_time=0;
+        if($balance_log)
+        {
+            $i=0;
+            foreach ($balance_log as $item) {
+                if($i==0){
+                    $first_device_time=$first_log->device_time;
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }else{
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }
+                $last_item_device_time=$item->device_time;
+                $last_ignition=$item->ignition;
+                $i++;
+            }
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($last_ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }else if($first_log != null && $balance_log==null)
+        {
+            $first_device_time=$first_log->device_time;
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($first_log->ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }
+        $engine_on_hours = floor($engine_on_time / 3600);
+        $engine_on_mins = floor($engine_on_time / 60 % 60);
+        $engine_on_secs = floor($engine_on_time % 60); 
+        $engine_off_hours = floor($engine_off_time / 3600);
+        $engine_off_mins = floor($engine_off_time / 60 % 60);
+        $engine_off_secs = floor($engine_off_time % 60); 
+        $engine_on_time = sprintf('%02d:%02d:%02d', $engine_on_hours, $engine_on_mins, $engine_on_secs);
+        $engine_off_time = sprintf('%02d:%02d:%02d', $engine_off_hours, $engine_off_mins, $engine_off_secs);
+        $engine_status = array(
+                "engine_on_time" => $engine_on_time, 
+                "engine_off_time" => $engine_off_time
+                );
+        return $engine_status;
+    }
+
+    public function engineStatusLastThirtyDays($gps_id,$report_type)
+    { 
+        $dates=$this->getDateFromType($report_type);
+        $from_date=$dates['from_date'];
+        $to_date=$dates['to_date'];
+        $first_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
+        $last_log=GpsData::select('id','ignition','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
+        $balance_log=DB::select('SELECT id,ignition,device_time FROM
+                            ( SELECT (@statusPre <> ignition) AS statusChanged
+                                 , ignition, device_time,id
+                                 , @statusPre := ignition
+                            FROM gps_data
+                               , (SELECT @statusPre:=NULL) AS d
+                            WHERE device_time >=:from_date AND device_time <=:to_date AND gps_id=:gps_id ORDER BY device_time 
+                          ) AS good
+                        WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+        $engine_on_time=0;
+        $engine_off_time=0;
+        if($balance_log)
+        {
+            $i=0;
+            foreach ($balance_log as $item) {
+                if($i==0){
+                    $first_device_time=$first_log->device_time;
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }else{
+                    $item_device_time=$item->device_time;
+                    $ignition=$item->ignition;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($ignition==0){
+                        $engine_on_time=$engine_on_time+$diff_in_minutes;
+                    }else{
+                        $engine_off_time=$engine_off_time+$diff_in_minutes;
+                    }
+                }
+                $last_item_device_time=$item->device_time;
+                $last_ignition=$item->ignition;
+                $i++;
+            }
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($last_ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }else if($first_log != null && $balance_log==null)
+        {
+            $first_device_time=$first_log->device_time;
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($first_log->ignition==0){
+                $engine_off_time=$engine_off_time+$diff_in_minutes;
+            }else{
+
+                $engine_on_time=$engine_on_time+$diff_in_minutes;
+            }
+        }
+        $engine_on_hours = floor($engine_on_time / 3600);
+        $engine_on_mins = floor($engine_on_time / 60 % 60);
+        $engine_on_secs = floor($engine_on_time % 60); 
+        $engine_off_hours = floor($engine_off_time / 3600);
+        $engine_off_mins = floor($engine_off_time / 60 % 60);
+        $engine_off_secs = floor($engine_off_time % 60); 
+        $engine_on_time = sprintf('%02d:%02d:%02d', $engine_on_hours, $engine_on_mins, $engine_on_secs);
+        $engine_off_time = sprintf('%02d:%02d:%02d', $engine_off_hours, $engine_off_mins, $engine_off_secs);
+        $engine_status = array(
+                "engine_on_time" => $engine_on_time, 
+                "engine_off_time" => $engine_off_time
+                );
+        return $engine_status;
+    }
+
+    function getDateFromType($report_type) 
+    {
+        if ($report_type == "1") 
+        {
+            $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
+            $to_date = date('Y-m-d H:i:s');
+        } else if ($report_type == "2") {
+            $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
+        } else if ($report_type == "3") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+        } else if ($report_type == "4") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+        }
+        $output_data = ["from_date" => $from_date, 
+                        "to_date" => $to_date
+                       ];
+        return $output_data;
+     }
+
 }
 

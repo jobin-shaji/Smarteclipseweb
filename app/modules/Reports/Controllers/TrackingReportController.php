@@ -26,8 +26,15 @@ class TrackingReportController extends Controller
     public function trackReportList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
-        $from = date('Y-m-d H:i:s', strtotime($request->from_date));
-        $to = date('Y-m-d H:i:s', strtotime($request->to_date));
+        $type = $request->type;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $dateAndTime = $this->getDateFromType($type, $from_date, $to_date);
+        $from = date('Y-m-d H:i:s', strtotime($dateAndTime['fromDate']));
+        $to = date('Y-m-d H:i:s', strtotime($dateAndTime['toDate']));
+
+        // $from = date('Y-m-d H:i:s', strtotime($request->from_date));
+        // $to = date('Y-m-d H:i:s', strtotime($request->to_date));
       
         $vehicle = $request->vehicle;
         $sleep=0;
@@ -130,6 +137,40 @@ class TrackingReportController extends Controller
       $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
       return $timeFormat;
     }
+
+     // ------------------------------------------------------------------
+    function getDateFromType  ($searchType, $from_date, $to_date) 
+     {
+        if ($searchType == "1") 
+          {
+            $fromDate = date('Y-m-d H:i:s', strtotime('today midnight'));
+            $toDate = date('Y-m-d H:i:s');
+            $appDate = date('Y-m-d');
+          } else if ($searchType == "2") {
+            $fromDate = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+            $toDate = date('Y-m-d H:i:s', strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("yesterday midnight"));
+          } else if ($searchType == "3") {
+            $fromDate = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+            $toDate = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
+          } 
+          else if ($searchType == "4") {
+            $fromDate = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
+            $toDate = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-30 day midnight")) . " " . date('Y-m-d');
+          }else if ($searchType == "5") {
+            $fromDate = date('Y-m-d H:i:s', strtotime($from_date));
+            $toDate = date('Y-m-d H:i:s', strtotime($to_date));
+            $appDate = date('Y-m-d H:i:s', strtotime($from_date)) . " " . date('Y-m-d H:i:s', strtotime($to_date));
+          }
+         $outputData = ["fromDate" => $fromDate, 
+                        "toDate" => $toDate, 
+                        "appDate" => $appDate
+                       ];
+        return $outputData;
+     }
+
 
 
 }
