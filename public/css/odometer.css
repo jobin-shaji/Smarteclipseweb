@@ -70,13 +70,20 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 .card-body {
    min-height:0!important;
 }
+/*
+@-webkit-keyframes blink { 50% { border-color: #ff0000 }  }
+.cdcdcdcd{
+  -webkit-animation: blink .5s step-end infinite alternate;
+  border: solid 5px #9e9d9a8c;
+}*/
+
 .card.data_list_cover {
     background: #f2f3f4;
     position: fixed;
     z-index: 1;
     border-radius: 50px;
     margin-top: 5%!important;
-    border: solid 2px #9e9d9a8c;
+    border: solid 5px #9e9d9a8c;
  -webkit-box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
 -moz-box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
 box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
