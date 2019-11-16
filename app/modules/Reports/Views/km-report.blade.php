@@ -150,9 +150,17 @@ Total KM Report
                         </div>
                         <div class="widthh">
                           <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <img src="{{ url('/') }}/SVG-Icons/key.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
                               <span class="info-box-text" >ignition On Duration</span><label class="info-box-number" id="engine_on_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text">over speed count</span><label class="info-box-number" id="main_battery_disconnect"></label>
                             </div>
                           </div>
                         </div>
@@ -165,32 +173,10 @@ Total KM Report
                           </div>
                         </div>
                         <div class="widthh">
-                          
-                        </div>
-                        <div class="widthh">
                           <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <img src="{{ url('/') }}/SVG-Icons/key.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
                               <span class="info-box-text" >ignition Off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="18%" height="80px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text">over speed count</span><label class="info-box-number" id="main_battery_disconnect"></label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="widthh">
-                          
-                        </div>
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text" >ac on Duration</span><label class="info-box-number" id="engine_off_duration"></label>
                             </div>
                           </div>
                         </div>
@@ -203,17 +189,6 @@ Total KM Report
                           </div>
                         </div>
                         <div class="widthh">
-                          
-                        </div>
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text" >ac off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
@@ -222,11 +197,38 @@ Total KM Report
                           </div>
                         </div>
                         <div class="widthh">
-                          
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/ac.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ac on Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="widthh">
+                        </div>
+                        
+                        <div class="widthh">
                         </div>
                         <div class="widthh">
                           <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                            <img src="{{ url('/') }}/SVG-Icons/ac.png" width="18%" height="80px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >ac off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="widthh">
+                          
+                        </div>
+                         <div class="widthh">
+                          
+                        </div>
+                        <div class="widthh">
+
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/ac.png" width="18%" height="80px" class="report_img"/>
                             <div class="info-box-content">
                               <span class="info-box-text" >ac idle Duration</span><label class="info-box-number" id="engine_off_duration"></label>
                             </div>
