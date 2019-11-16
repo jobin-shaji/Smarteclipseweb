@@ -125,4 +125,8 @@ Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
+
+	Route::get('/engine-status-today','MapLocationController@engineStatusToday')->name('engine.status.today');
+	Route::get('/engine-status-yesterday','MapLocationController@engineStatusYesterday')->name('engine.status.yesterday');
+	Route::get('/engine-status-lastsevendays','MapLocationController@engineStatusLastSevenDays')->name('engine.status.lastsevendays');
 });
