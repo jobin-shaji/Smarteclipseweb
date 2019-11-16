@@ -3,48 +3,7 @@
 <section class="content box">
 <div class="page-wrapper_new_map">
 
-<!--   <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Live Track</li>
-         </ol>
-          @if(Session::has('message'))
-            <div class="pad margin no-print">
-               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                  {{ Session::get('message') }}  
-               </div>
-            </div>
-            @endif  
-        </nav>
-   -->
 
-
-
-
-  <!-- <form id="playback_form">
-    <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
-    <div class="cover_playback" style="width:43%;">
-        <div class="row">
-          <div class="col-lg-4 col-md-3">
-            <div class="form-group">
-               <label> From Date</label>
-               <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" autocomplete="off" required>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-3">
-            <div class="form-group">                   
-               <label> To Date</label>
-                <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" autocomplete="off" required>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 pt-2 ">
-            <div class="form-group" style="margin:5% 0 0 15%!important"> 
-               <button type="submit" class="btn btn-sm btn-info form-control btn-play-back" > <span style="color:#000"><i class="fa fa-filter"></i>Playback</span> </button>                               
-            </div>
-          </div>
-
-        </div>
-    </div>
-  </form> -->
 
   <div class="col-lg-12 col-sm-12">
     <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
@@ -54,8 +13,10 @@
     <input type="hidden" name="strokeWeight" id="strokeWeight" value="{{$vehicle_type->strokeWeight}}">
     <input type="hidden" name="lat" id="lat" value="{{$latitude}}">
     <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
-                      
-    <div class="card data_list_cover pull-right" style="width: 16rem;">
+   <!--  <div style="background-color: white"><label style="font-size: 15px;color: red;margin-left: 50%">NETWORK LOST </label></div> -->
+   <style type="text/css"></style>
+    
+    <div class="cdcdcdcd card data_list_cover pull-right" style="width: 16rem">
       <div class="card-body data_list_body " >
         <p class="capitalize"><h2 class="card-title" id="user" style="font-size:20px!important;text-transform: uppercase;"></h2></p>
         <p>
@@ -81,28 +42,28 @@
           </div>
           <div class="col-sm-12 social-buttons">
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-car"></i><label id="vehicle_name" class="mgl"></label>
+              <i class="fa fa-car fapad"></i><label id="vehicle_name" class="mgl"></label>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-key"></i> <b class="mgl">IGNITION <b style="margin-left: 11%">: <label class="mgl" id="ignition"></label></b></b>
+              <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11%">: <label class="mgl" id="ignition"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer"></i> <b class="mgl">SPEED <b style="margin-left: 19%">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
+              <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 19%">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-battery-full"></i><b class="mgl">BATTERY <b style="margin-left: 12.4%">: <label class="mgl" id="car_bettary"></label> %</b></b>
+              <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 12.4%">: <label class="mgl" id="car_bettary"></label> %</b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-plug"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%">: <label class="mgl" id="car_power"></label></b></b>
+              <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-signal"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
+              <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/ac.png" height="30px" width="30px" style="padding: 4% 1% 3% 3%"> <b class="mgl">AC <b style="margin-left: 27%">: <label class="mgl" id="ac"></label></b></b>
+              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%">: <label class="mgl" id="ac"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/fuel.png" height="30px" width="30px" style="padding: 3% 2% 3% 5%"><b class="mgl">FUEL <b style="margin-left: 22.5%">: <label class="mgl" id="fuel"></label> %</b></b>
+              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%">: <label class="mgl" id="fuel"></label> %</b></b>
             </a>
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
@@ -162,10 +123,15 @@
         </a>
       </div>
       <div class="poi_item">
+<<<<<<< HEAD
         <!-- <a href="#">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()"> -->
+        <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}" target="_blank">
+          <img src="{{ url('/') }}/images/playback.png"  width="64px" height="64px">
+=======
         <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
+>>>>>>> f05706ed519ffc5c8bde82d876e8cd7f77c6c0f3
         </a>
       </div>
     </div>
