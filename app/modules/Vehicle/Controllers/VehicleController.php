@@ -519,7 +519,6 @@ class VehicleController extends Controller {
     // vehicle drivers list
     public function vehicleDriverLogList()
     {
-        
        return view('Vehicle::vehicle-driver-log-list'); 
     }
 

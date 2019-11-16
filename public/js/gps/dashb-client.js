@@ -121,12 +121,11 @@ function vehicleTrack(res) {
     '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
     '<h3 class="h3 mb-3 font-weight-normal" style="text-align: left!important;font-size:1.25rem;margin-bottom:0!important;text-transform: uppercase ">'
     + vehicle_name +
-    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
     '<span aria-hidden="true" >&times</span>'+
     '</button></h3>'+
     '<p style="text-align:left!important;margin-bottom: -1rem!important;font-size:.9rem!important"><code>'
     + vehicle_status +
-    '</code><br><img src="assets/images/driver1.svg" width=22 height=22><b>&nbsp;Driver Name:-</b><br><img src="assets/images/vehicle.svg" width=22 height=22><b>&nbsp;Vehicle Number:-</b> '
+    '</code><br><img src="assets/images/vehicle.svg" width=22 height=22><b>&nbsp;Vehicle Number:-</b> '
     + reg +'</p>'+
     '</div>'+
     '<a href="/alert" ><button class="btn-pop type="submit"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+

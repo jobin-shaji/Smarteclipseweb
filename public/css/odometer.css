@@ -70,12 +70,12 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 .card-body {
    min-height:0!important;
 }
-/*
-@-webkit-keyframes blink { 50% { border-color: #ff0000 }  }
-.cdcdcdcd{
+
+@-webkit-keyframes blink { 50% { border-color: #B52203 }  }
+.lost_blink{
   -webkit-animation: blink .5s step-end infinite alternate;
   border: solid 5px #9e9d9a8c;
-}*/
+}
 
 .card.data_list_cover {
     background: #f2f3f4;
