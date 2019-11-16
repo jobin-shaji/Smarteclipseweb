@@ -57,24 +57,21 @@ Total KM Report
                         </div>
                       </div>
                     </div>                                 
-                    <div class="row">
-                      <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Total KM</span><label class="info-box-number" id="total_km"></label>
-                          </div>
-                        </div>
-                      </div> 
-                      <div>
-                        <div class="info-box">
-                          <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="18%" height="80px" class="report_img"/>
-                          <div class="info-box-content">
-                            <span class="info-box-text" >Alerts</span><label class="info-box-number" id="alerts">
-                          </div>
-                        </div>
+                    <div class="info-box">
+                      <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="30%" height="30%"/>
+                      <div class="info-box-content">
+                        <span class="info-box-text" >Total KM</span>
+                        <label class="info-box-number" id="total_km"></label>
                       </div>
-                      <div>
+                    </div>
+                    <div class="info-box">
+                      <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="30%" height="30%"/>
+                      <div class="info-box-content">
+                        <span class="info-box-text" >Alerts</span>
+                        <label class="info-box-number" id="alerts"></label>
+                      </div>
+                    </div>
+                      <!-- <div>
                         <div class="info-box">
                           <img src="{{ url('/') }}/SVG-Icons/geofence.png" width="18%" height="80px" class="report_img"/>
                           <div class="info-box-content">
@@ -162,7 +159,7 @@ Total KM Report
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
 
 

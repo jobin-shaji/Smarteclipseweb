@@ -123,15 +123,10 @@
         </a>
       </div>
       <div class="poi_item">
-<<<<<<< HEAD
-        <!-- <a href="#">
-          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()"> -->
-        <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}" target="_blank">
-          <img src="{{ url('/') }}/images/playback.png"  width="64px" height="64px">
-=======
+
         <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
->>>>>>> f05706ed519ffc5c8bde82d876e8cd7f77c6c0f3
+
         </a>
       </div>
     </div>
