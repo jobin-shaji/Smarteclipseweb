@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Eclipse </title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="assets/img/icon.png" type="image/x-icon" />
+    <link rel="icon" href="{{asset('playback_assets/assets/img/icon.png')}}" type="image/x-icon" />
     <!-- Fonts and icons -->
     <script src="{{asset('playback_assets/assets/js/plugin/webfont/webfont.min.js')}}"></script>
     <script>
@@ -21,7 +21,7 @@
 
     <script src="{{asset('playback_assets/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback_assets/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
     <script src="{{asset('playback_assets/assets/Scripts/moment.min.js')}}"></script>
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
@@ -33,7 +33,7 @@
 </head>
 
 <body data-background-color="dark">
-    <style>
+   <style>
         #cover-spin {
             position: fixed;
             width: 100%;
@@ -85,45 +85,7 @@
     </style>
 
     <div class="wrapper overlay-sidebar">
-        <div class="main-panel">
-                <div class="content" style="margin-top: 0!important">
-                    <table id="tblInputForm">
-                        <input type="text" name="vehicle" id="txtVehicleID">
-                        <tr id="trProcessMedium">
-                            <a href="#" style="margin-left: 2%">
-                                <img src="../../assets/images/back.png" height="50px" width="50px">
-                            </a>
-                            <label style="font-weight: 700!important;margin-left: 3%" id="dtStartDate">FROM DATE
-                            </label>
-                            <input type="datetime-local"  id="dtEnddate" class="dt"/>
-                            <label style="font-weight: 700!important;margin-left: 2%">TO DATE
-                            </label>
-                            <input type="datetime-local" class="dt"/>
-                            <select class="btn btn-primary btn-sm bbt" id="cmbSelect">
-                                <option>Select Speed</option>
-                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1X
-                                </option>
-                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2X
-                                </option>
-                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3X
-                                </option> 
-                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4X
-                                </option> 
-                            </select>
-                            <button class="btn btn-primary btn-sm bbt" id="btnPlay">Play</button>
-                            <button class="btn btn-primary btn-sm bbt" id="btnPause">Pause</button>
-                            <button class="btn btn-primary btn-sm bbt" id="btnStop">Stop</button>
-                            </tr>
-                        </table>
-                    </table>  
-                    <div id="markers" style="width:1360px;height:600px">        
-                        <div class="custom-template open">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+       
 
         <div class="main-panel">
             <div class="content">
@@ -138,61 +100,49 @@
 
         <!-- Custom template | don't include it in your project! -->
         <!--<div class="custom-template" style="top:230px">-->
-        <div class="custom-template" style="top:260px">
-            <div class="title">Route PlayBack</div>
+        <div class="custom-template" style="top:70px">
+           
             <div class="custom-content">
                 <div class="switcher">
                     <table id="tblInputForm">
-                        <tr id="trProcessMedium">
-                            <td>
-                                <label style="font-weight:bold">Process Medium</label>
-                            </td>
-                            <td>
-                                <div class="form-check" id="optprocessMedium">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" value="" id="optServer">
-                                        <span style="font-weight:bold">Server</span>
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" name="optionsRadios" value="" checked="" id="optJson">
-                                        <span>Json</span>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
+                  
                         <tr id="trVehicle">
+                            
                             <td>
-                                <label style="font-weight:bold">Vehicle ID</label>
-                            </td>
-                            <td>
-                                <textarea id="txtVehicleID" style="width:140px;resize:none;height:30px" rows="1">  </textarea>
+                                <input type="hidden" id="txtVehicleID" style="width:140px;resize:none;height:30px" value="{{$vehicle_id}}" rows="1"> 
                             </td>
                         </tr>
                         <tr id="trStartDate">
                             <td><label style="font-weight:bold">Start Date</label></td>
                             <td>
                                 <input type="datetime-local" id="dtStartDate"
-                                       name="meeting-time" value="2018-06-12T10:10:10"
-                                       style="width:210px;resize:none" max="new moment(Date()).format('YYYY-MM-DDThh:mm:01')" required>
+                                       name="meeting-time" value=""
+                                       style="width:210px;resize:none" max="" required>
                             </td>
-                        </tr>
-                        <tr id="trEndDate">
-                            <td><label style="font-weight:bold">End Date</label></td>
+                             <td><label style="font-weight:bold">End Date</label></td>
                             <td>
                                 <input type="datetime-local" id="dtEnddate"
-                                       name="meeting-time" value="2018-06-12T10:10:10"
+                                       name="meeting-time" value=""
                                        style="width:210px;resize:none" required>
                             </td>
+                            <td class="contoller">                           
+                             <button class="btn btn-primary btn-sm" id="btnGetRoute">Search</button>
+
+                             <button class="btn btn-primary btn-sm" id="btnPlay">Play</button>
+                             <button class="btn btn-primary btn-sm" id="btnPause">Pause</button>
+                             <button class="btn btn-primary btn-sm" id="btnReset">Reset</button>
+
+
+                        </td>
+
+
 
                         </tr>
+                       
 
 
-                        <tr id="trSelectFile">
-                            <td><label style="font-weight:bold">Select File</label></td>
-                            <td><input type="file" class="form-control-file" id="exampleFormControlFile1"></td>
-                        </tr>
-                        <tr>
+                      
+                        <tr class="speed_mode">
                             <td><label style="font-weight:bold">Select Speed (km/hr)         </label></td>
                             <td>
                                 <select id="cmbSelect">
@@ -200,30 +150,12 @@
                                     <option value="2">2X</option>
                                     <option value="3">3X</option>
                                     <option value="4">4X</option>
-                                    <!--<option value="5">5X</option>
-                                <option value="6">6X</option>
-                                <option value="7">7X</option>
-                                <option value="8">8X</option>
-                                <option value="9">9X</option>
-                                <option value="10">10X</option>
-                                <option value="30">30X</option>
-                                <option value="100">100X</option>
-                                <option value="300">300X</option>-->
+                                    
                                 </select>
 
                             </td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">Total Distance</td>
-                            <td>
-                                <textarea id="lblKMRouteCalculation" style="width:90px;resize:none" rows="1" readonly disabled>  </textarea> km<!--<span > km </span>-->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold"><u> Display :</u> </td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold;text-align:right">
+
+                             <td style="font-weight:bold;text-align:right">
                                 <!--<label style="font-weight:bold">Display Route</label>-->
                                 <label class="form-check-label">
                                     <input class="form-check-input" id="chkRoute" type="checkbox" value="">
@@ -242,39 +174,20 @@
                             </div>-->
                             </td>
 
-                        </tr>
 
-                        <tr>
-                            <td style="font-weight:bold"><u> Coverage :</u> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label id="lblSpeed" style="font-weight:bold"> Distance(km) </label>
 
-                            </td>
-                            <td>
-                                <label id="lblSpeed"><span style="font-weight:bold">Time(min)</span></label>
-                            </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <textarea id="lblKMValue" style="width:90px;resize:none" rows="1" readonly disabled>  </textarea>
-                            </td>
-                            <td>
-                                <textarea id="lblSpeedValue" style="width:90px;resize:none" rows="1" readonly disabled>  </textarea>
-                            </td>
-                        </tr>
+                   
+
+                    
+                        
                     </table>
 
-                    <button class="btn btn-primary btn-sm" id="btnGetRoute">Route</button>
-                    <button class="btn btn-primary btn-sm" id="btnPlay">Play</button>
-                    <button class="btn btn-primary btn-sm" id="btnPause">Pause</button>
-                    <button class="btn btn-primary btn-sm" id="btnReset">Reset</button>
+                    
+                    
                 </div>
             </div>
-            <div class="custom-toggle">
-                <i class="flaticon-settings"></i>
-            </div>
+            
         </div>
         <!-- End Custom template -->
     </div>
@@ -303,10 +216,10 @@
     <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>-->
 
 
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js')}}"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js')}}"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js')}}"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js')}}"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 
 
 
@@ -368,7 +281,7 @@
 
         var parisMarker = new H.map.Marker({ lat: 48.8567, lng: 2.3508 });
         var objImg = document.createElement('img');
-        objImg.src = 'assets/img/Car.png';
+        objImg.src = "{{asset('playback_assets/assets/img/Car.png')}}";
         var outerElement = document.createElement('div')
         var domIcon = new H.map.DomIcon(outerElement);
         var bearsMarker = new H.map.DomMarker({ lat: 48.8567, lng: 2.3508 }, {
@@ -471,29 +384,15 @@
             //$('#dtEnddate').val(new moment(Date()).format('YYYY-MM-DDThh:mm:ss'))
             document.getElementById("dtStartDate").max = new moment(Date()).format('YYYY-MM-DDThh:mm:01');
             document.getElementById("dtEnddate").max = new moment(Date()).format('YYYY-MM-DDThh:mm:01');
-            $('#optServer').trigger('click');
+          
             $('#chkRoute').attr('disabled', true);
             $('#chkWarning').attr('disabled', true);
 
         });
 
-        $('#optServer').click(function () {
-            $('#trVehicle').show();
-            $('#trStartDate').show();
-            $('#trEndDate').show();
-            $('#trSelectFile').hide();
-            $('#btnGetRoute').show();
-            Reset();
-        });
+     
 
-        $('#optJson').click(function () {
-            $('#trVehicle').hide();
-            $('#trStartDate').hide();
-            $('#trEndDate').hide();
-            $('#trSelectFile').show();
-            $('#btnGetRoute').hide();
-            Reset();
-        });
+     
 
         //$('#chkRoute').click
 
@@ -589,14 +488,10 @@
                 }
 
                 if (data.split(',')[i].indexOf('dateTime') >= 0) {
-                    if ($('[id="optServer"]').is(':checked')) {
+                   
                         stringDatetime = data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[1].split(' ')[0] + 'T' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[1].split(' ')[1] + ':' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[2] + ':' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[3] + 'Z';
-                    }
-                    else {
-                        stringDatetime = data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[1].split(' ')[1] + 'T' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[1].split(' ')[2] + ':' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[2] + ':' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[3];
-                    }
                     
-                    //stringDatetime = data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[1].split(' ')[1] + 'T' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[1].split(' ')[2] + ':' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[2] + ':' + data.split(',')[i].substring(data.split(',')[i].indexOf('dateTime'), data.split(',')[i].length).split(':')[3];
+                    
                     stringDatetime = stringDatetime.replace('"', '').replace('"', '');
                     FlagstrDatetime = true;
                 }
@@ -607,12 +502,9 @@
                 }
 
                 if ((FlagLatitude == true) && (FlagLongitude == true) && (FlagstrDatetime == true) && (FlagstrSpeed == true)) {
-                    if ($('[id="optServer"]').is(':checked')) {
+                   
                         tmpstring = tmpstring + '<trkpt lat=' + strLatitude + ' lon=' + strLongitude + '>'
-                    }
-                    else {
-                        tmpstring = tmpstring + '<trkpt lat=' + strLatitude + ' lon=' + strLongitude + '">'
-                    }
+                    
                     tmpstring = tmpstring + '<name>TP' + i + '</name>';
                     //tmpstring = tmpstring + '<time>2019-08-21T15:23:25Z</time>';
                     tmpstring = tmpstring + '<time>' + stringDatetime + '</time>';
@@ -1587,17 +1479,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             //objContainer.setVisibility(false);
             localStorage.setItem("justOnce", "false");
             map.addObject(objContainerforBlackColr);
-            var optServerChecked = $('[id="optServer"]').is(':checked');
-            var optJsonChecked = $('[id="optJson"]').is(':checked');
-            if (optServerChecked == true) {
-            }
-            else if (optJsonChecked == true) {
-                if ($('#exampleFormControlFile1').get(0).files.length === 0) {
-                    alert("Kindly select the File to simulate the Route");
-                    $("#btnPlay").attr("disabled", false);
-                    return;
-                }
-            }
+           
 
             //debugger;
 
@@ -1735,7 +1617,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                     var RotateDegree;
                     RotateDegree = getDegree(full_geometry_additional[i]['attributes']['lat'], full_geometry_additional[i]['attributes']['lng'], full_geometry_additional[i + 1]['attributes']['lat'], full_geometry_additional[i + 1]['attributes']['lng']);
 
-                    objImg.src = 'assets/img/Car.png';
+                    objImg.src = "{{asset('playback_assets/assets/img/Car.png')}}";
                     el = objImg;
                     var carDirection = RotateDegree;
                     if (el.style.transform.includes("rotate")) {
@@ -1871,13 +1753,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             blPlayCompleted = false;
             clearTimeout(setTimeoutfunction);
            
-            if (blResetServerProcessed == false) {
-                $('#txtVehicleID').val('0');
-                $('#dtStartDate').val(new moment(Date()).format('YYYY-MM-DDThh:mm:ss'));
-                $('#dtEnddate').val(new moment(Date()).format('YYYY-MM-DDThh:mm:ss'))
-                
-
-            }
+       
            // Pausecontinue.ClearTimeOut();
             
             $('#chkRoute').prop("checked", false);
@@ -1910,30 +1786,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
 
            
 
-            //debugger;
             
-            //window.location.reload();
-            
-            //if (!localStorage.justOnce == false) {
-            //    //localStorage.setItem("justOnce", "false");
-            //    localStorage.setItem("justOnce", "true");
-            //    window.location.reload();
-            //}
-
-            //localStorage.setItem("justOnce", "true");
-            //window.onload();
-            //location.reload(true);
-            //if (pageLoad == false) {
-            //    location.reload();
-            //    pageLoad = true;
-            //}
-
-            //location.reload();
-            //full_geometry_additional = []
-            //if (blResetServerProcessed) {
-            //    map.removeObject(objContainerforBlackColr);
-            //}
-            //
         }
 
 
@@ -1941,24 +1794,7 @@ Create matched/unmatched markers that can be used to draw the original/matched t
             window.location.reload();
         }
 
-        //window.onload = function () {
-        //    if (!localStorage.justOnce) {
-        //        localStorage.setItem("justOnce", "true");
-        //        window.location.reload();
-        //    }
-        //}
-
-        //(function windowrefreshonlyonce() {
-        //    if (window.localStorage) {
-        //        if (!localStorage.getItem('firstLoad')) {
-        //            localStorage['firstLoad'] = true;
-        //            window.location.reload();
-        //        }
-        //        else
-        //            localStorage.removeItem('firstLoad');
-        //    }
-        //})();
-
+       
 
 
         $('#btnReset').click(function () {
