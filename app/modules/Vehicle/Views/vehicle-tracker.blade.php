@@ -164,8 +164,6 @@
         </a>
       </div>
       <div class="poi_item">
-        <!-- <a href="#">
-          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()"> -->
         <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
         </a>
