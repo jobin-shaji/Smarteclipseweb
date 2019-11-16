@@ -59,7 +59,7 @@ function kmReport(res)
 
     var km =0;
     $('#total_km').text(km);
-    $('#speed').text(res.dailykm.gps.speed);
+    // $('#speed').text(res.dailykm.gps.speed);
     $('#sleep').text(res.sleep);
     $('#moving').text(res.motion);
     $('#halt').text(res.halt);
