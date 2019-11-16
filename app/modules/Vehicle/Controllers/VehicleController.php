@@ -936,6 +936,7 @@ class VehicleController extends Controller {
                       'heading as angle',
                       'mode as vehicleStatus',
                       'speed',
+                      'fuel_status',
                       'battery_status as battery_percentage',
                       'device_time as dateTime',
                       'main_power_status as power',
@@ -952,6 +953,7 @@ class VehicleController extends Controller {
                               'lon as longitude',
                               'heading as angle',
                               'speed',
+                              'fuel_status',
                               'battery_status as battery_percentage',
                               'device_time as dateTime',
                               'main_power_status as power',
@@ -967,7 +969,15 @@ class VehicleController extends Controller {
         if($track_data){
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-
+            if(\Auth::user()->hasRole('fundamental|pro|superior')){
+                $fuel =$track_data->fuel_status*100/15;
+                $fuel = (int)$fuel;
+                $fuel_status=$fuel."%";
+            }      
+            else
+            {
+                $fuel_status="UPGRADE VERSION";
+            }
            
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
@@ -982,7 +992,7 @@ class VehicleController extends Controller {
                         "signalStrength"=>$track_data->signalStrength,
                         "connection_lost_time"=>$connection_lost_time,
                         "last_seen"=>$minutes,
-                        "fuel"=>"",
+                        "fuel"=>$fuel_status,
                         "ac"=>"",
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
