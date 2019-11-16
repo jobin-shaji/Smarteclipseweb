@@ -314,6 +314,7 @@ class MapLocationController extends Controller {
             if($first_log->ignition==0){
                 $engine_off_time=$engine_off_time+$diff_in_minutes;
             }else{
+
                 $engine_on_time=$engine_on_time+$diff_in_minutes;
             }
         }
@@ -325,5 +326,6 @@ class MapLocationController extends Controller {
         $engine_off_secs = floor($engine_off_time % 60); 
         $engine_on_time = sprintf('%02d:%02d:%02d', $engine_on_hours, $engine_on_mins, $engine_on_secs);
         $engine_off_time = sprintf('%02d:%02d:%02d', $engine_off_hours, $engine_off_mins, $engine_off_secs);
+        dd($engine_off_time);
     }
 }
