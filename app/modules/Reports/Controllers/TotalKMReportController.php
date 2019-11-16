@@ -114,28 +114,9 @@ class TotalKMReportController extends Controller
         $single_vehicle_id =  $this->VehicleGPs($vehicle);       
         $engine_status=$this->engineStatus($single_vehicle_id,$report_type);
         $ac_status=$this->acStatus($single_vehicle_id,$report_type);
-        if($report_type==1)
-        {
-            $search_from_date=date('Y-m-d');
-            $search_to_date=date('Y-m-d');
-        }
-        else if($report_type==2)
-        {
-            $search_from_date=date('Y-m-d',strtotime("-1 days"));
-            $search_to_date=date('Y-m-d',strtotime("-1 days"));
-        }
-        else if($report_type==3)
-        {
-            $search_from_date=date('Y-m-d',strtotime("-7 days"));
-            $search_to_date=date('Y-m-d');
-            
-        }
-        else if($report_type==4)
-        {           
-            $search_from_date=date('Y-m-d',strtotime("-30 days"));
-            $search_to_date=date('Y-m-d');
-            
-        }   
+        $dates=$this->getDateFromType($report_type);
+        $search_from_date=$dates['from_date'];
+        $search_to_date=$dates['to_date'];
         $km_report =  $this->dailyKmReport($client_id,$vehicle,$search_from_date,$search_to_date,$single_vehicle_id);
         $gps_modes=GpsModeChange::where('device_time','>=',$search_from_date)
         ->where('device_time','<=',$search_to_date)  
@@ -171,13 +152,11 @@ class TotalKMReportController extends Controller
               if($halt<0)
               {
                 $halt="0";               
-              }  
-                                    
+              }                                      
             }
         }
         $previous_time = $mode->device_time;
       }
-
        $alerts =Alert::select(
             'id',
             'alert_type_id', 
@@ -406,10 +385,10 @@ class TotalKMReportController extends Controller
         $to_date=$dates['to_date'];
         $first_log=GpsData::select('id','ac_status','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
         $last_log=GpsData::select('id','ac_status','device_time')->whereDate('device_time', '>=', $from_date)->whereDate('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
-        $balance_log=DB::select('SELECT id,ac,device_time FROM
+        $balance_log=DB::select('SELECT id,ac_status,device_time FROM
                             ( SELECT (@statusPre <> ac_status) AS statusChanged
                                  , ac_status, device_time,id
-                                 , @statusPre := ac
+                                 , @statusPre := ac_status
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
                             WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
