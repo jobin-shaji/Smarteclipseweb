@@ -121,8 +121,7 @@ function vehicleTrack(res) {
     '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
     '<h3 class="h3 mb-3 font-weight-normal" style="text-align: left!important;font-size:1.25rem;margin-bottom:0!important;text-transform: uppercase ">'
     + vehicle_name +
-    '<span aria-hidden="true" >&times</span>'+
-    '</button></h3>'+
+   
     '<p style="text-align:left!important;margin-bottom: -1rem!important;font-size:.9rem!important"><code>'
     + vehicle_status +
     '</code><br><img src="assets/images/vehicle.svg" width=22 height=22><b>&nbsp;Vehicle Number:-</b> '
@@ -132,7 +131,7 @@ function vehicleTrack(res) {
     '<a href="/vehicles/' 
     + vehicle_id + 
     '/location"><button class="btn-pop type="submit"><img src="assets/images/live-track.svg" width=13 height=13>Live Track</button></a>'+
-    '<button class="btn-pop type="submit"><img src="assets/images/reply.svg" width=13 height=13>Route Replay</button></div';
+    /*'<button class="btn-pop type="submit"><img src="assets/images/reply.svg" width=13 height=13>Route Replay</button></div'*/;
 
 
     var path = JSONObject[i].vehicle_svg;
