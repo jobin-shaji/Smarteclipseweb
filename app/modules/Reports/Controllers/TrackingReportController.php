@@ -91,7 +91,7 @@ class TrackingReportController extends Controller
           $previus_time = $mode->device_time;
         }      
       if($last_log != null){
-       if($last_log->vehicle_mode == "S"){
+        if($last_log->vehicle_mode == "S"){
             $time = strtotime($last_log->device_time) - strtotime($previus_time);
             $sleep = $sleep+$time;
           }else if($last_log->vehicle_mode == "H"){

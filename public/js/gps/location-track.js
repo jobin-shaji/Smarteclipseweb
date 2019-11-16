@@ -482,7 +482,8 @@ $('#poi_atm').click(function(){
           {location: pyrmont, radius: 1000, type:['atm']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
-              createMarkers(results);
+           var image="/images/ATM.svg";
+              createMarkers(results,image);
             });
 
          atm_flag=1;
@@ -503,7 +504,8 @@ $('#poi_petrol').click(function(){
           {location: pyrmont, radius: 1000, type:['gas_station']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
-              createMarkers(results);
+             var image="/images/petrol-pump.svg";
+              createMarkers(results,image);
             });
 
           petrol_flag=1;
@@ -521,7 +523,8 @@ $('#poi_petrol').click(function(){
             {location: pyrmont, radius: 1000, type:['hospital']},
              function(results, status, pagination) {
              if (status !== 'OK') return;
-                createMarkers(results);
+             var image="/images/hospital.svg";
+                createMarkers(results,image);
               });
           hospital_flag=1;
          }else{
@@ -529,21 +532,18 @@ $('#poi_petrol').click(function(){
            hospital_flag=0;
         }
     });
-
- 
-
 // ---------------find nearest map points-----------------
  var infowindow = new google.maps.InfoWindow();
- function createMarkers(places) {
+ function createMarkers(places,image_icon) {
         deleteMarkersPOI();
         var bounds = new google.maps.LatLngBounds();
         for (var i = 0, place; place = places[i]; i++) {
-          var image = {
-            url: place.icon,
-            size: new google.maps.Size(30, 30),
+           var image = {
+            url: image_icon,
+            size: new google.maps.Size(50, 50),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(10, 20),
-            scaledSize: new google.maps.Size(20, 20)
+            scaledSize: new google.maps.Size(50, 50)
           };
           var marker = new google.maps.Marker({
             icon: image,
