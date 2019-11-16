@@ -17415,31 +17415,25 @@ span.select2-selection.select2-selection--multiple {
 }
 
 .info-box {
-    display: block!important;
-    min-height: 5em;
-    background: #fff;
-    width: 90%;
-
-    box-shadow: 0 10px 20px grey!important;
-    border-radius: 10px!important;
-    margin-bottom: 15px;
+     display: flex;
+     width: 30%;
+     float: left;
 }
 
 .info-box-content {
-    padding: 5px 10px;
-    margin-left: 90px;
+    padding: 0px 10px;
 }
 
 .info-box-text {
     text-transform: uppercase; 
-    font-size: 15px; 
+    font-size: 13px; 
     font-weight: bold;
 }
 
 .info-box-number {
     display: block;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
     color: #ea7c14;
 }
 
