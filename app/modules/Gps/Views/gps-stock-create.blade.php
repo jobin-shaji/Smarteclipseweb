@@ -26,9 +26,9 @@
         <div class="col-md-4">
           <div class="card-body_vehicle wizard-content">   
             <div class="form-group has-feedback">
-              <label class="srequired pdd">Serial No</label>
+              <label class="srequired">Serial No</label>
                         <!-- <input type="text" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="serial_no" id="serial_no" name="serial_no" value="{{ old('serial_no') }}" required >  -->
-              <select class="fcc select2 GpsData" id="serial_no" name="serial_no" data-live-search="true" title="Select Serial number" required>
+              <select class="select2 GpsData" id="serial_no" name="serial_no" data-live-search="true" title="Select Serial number" required>
                 <option value="" selected="selected" disabled="disabled">Select Serial number</option>
                 @foreach($devices as $device)
                   <option value="{{$device->id}}">{{$device->serial_no}}</option>
@@ -41,8 +41,8 @@
               @endif   
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">IMEI</label>
-              <input type="number" class="fc {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" id="imei" name="imei" value="{{ old('imei') }}" required  readonly="readonly"> 
+              <label class="srequired">IMEI</label>
+              <input type="number" class="{{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" id="imei" name="imei" value="{{ old('imei') }}" required  readonly="readonly"> 
               @if ($errors->has('imei'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -50,8 +50,8 @@
               @endif
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">Model Name</label>
-              <input type="text" class="fc {{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" id="model_name" name="model_name" value="{{ old('model_name') }}" required readonly="readonly">   
+              <label class="srequired ">Model Name</label>
+              <input type="text" class="{{ $errors->has('model_name') ? ' has-error' : '' }}" placeholder="Model Name" id="model_name" name="model_name" value="{{ old('model_name') }}" required readonly="readonly">   
               @if ($errors->has('model_name'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('model_name') }}</strong>
@@ -59,8 +59,8 @@
               @endif
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">Manufacturing Date</label>
-              <input type="text" class="manufacturing_date fc {{$errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required readonly="readonly"> 
+              <label class="srequired">Manufacturing Date</label>
+              <input type="text" class="manufacturing_date {{$errors->has('manufacturing_date') ? ' has-error' : '' }}" placeholder="Manufacturing Date" name="manufacturing_date" value="{{ old('manufacturing_date') }}" required> 
               @if ($errors->has('manufacturing_date'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('manufacturing_date') }}</strong>
@@ -68,8 +68,8 @@
               @endif
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">ICC ID</label>
-              <input type="text" class="fc {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" id="icc_id" name="icc_id" value="{{ old('icc_id') }}" required readonly="readonly"> 
+              <label class="srequired">ICC ID</label>
+              <input type="text" class="{{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" id="icc_id" name="icc_id" value="{{ old('icc_id') }}" required readonly="readonly"> 
               @if ($errors->has('icc_id'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('icc_id') }}</strong>
@@ -77,8 +77,8 @@
               @endif
             </div>                        
             <div class="form-group has-feedback">
-              <label class="srequired pdd">E-SIM Number</label>
-              <input type="number" class="fc {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number" required readonly="readonly">
+              <label class="srequired">E-SIM Number</label>
+              <input type="number" class="{{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number" required >
               @if ($errors->has('e_sim_number'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
@@ -86,8 +86,8 @@
               @endif
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">Batch Number</label>
-              <input type="text" class="fc {{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" id="batch_number" name="batch_number" value="{{ old('batch_number') }}" required readonly="readonly"> 
+              <label class="srequired">Batch Number</label>
+              <input type="text" class="{{ $errors->has('brand') ? ' has-error' : '' }}" placeholder="Batch Number" id="batch_number" name="batch_number" value="{{ old('batch_number') }}" required readonly="readonly"> 
               @if ($errors->has('batch_number'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('batch_number') }}</strong>
@@ -95,8 +95,8 @@
               @endif
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">Employee Code</label>
-              <input type="text" class="fc {{ $errors->has('employee_code') ? ' has-error' : '' }}" placeholder="Employee Code" id="employee_code" name="employee_code" value="{{ old('employee_code') }}" required readonly="readonly"> 
+              <label class="srequired">Employee Code</label>
+              <input type="text" class="{{ $errors->has('employee_code') ? ' has-error' : '' }}" placeholder="Employee Code" id="employee_code" name="employee_code" value="{{ old('employee_code') }}" required readonly="readonly"> 
               @if ($errors->has('employee_code'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('employee_code') }}</strong>
@@ -104,8 +104,8 @@
               @endif
             </div>
             <div class="form-group has-feedback">
-              <label class="srequired pdd">IMSI</label>
-              <input type="text" class="fc {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" id="imsi" name="imsi" value="{{ old('imsi') }}" required readonly="readonly"> 
+              <label class="srequired ">IMSI</label>
+              <input type="text" class=" {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" id="imsi" name="imsi" value="{{ old('imsi') }}" required readonly="readonly"> 
               @if ($errors->has('imsi'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('imsi') }}</strong>
@@ -113,8 +113,8 @@
               @endif
             </div>   
             <div class="form-group has-feedback">
-              <label class="srequired pdd">Version</label>
-              <input type="text" class="fc {{ $errors->has('version') ? ' has-error' : '' }}" placeholder="Version" id="version" name="version" value="{{ old('version') }}" required readonly="readonly"> 
+              <label class="srequired ">Version</label>
+              <input type="text" class="{{ $errors->has('version') ? ' has-error' : '' }}" placeholder="Version" id="version" name="version" value="{{ old('version') }}" required readonly="readonly"> 
               @if ($errors->has('version'))
                 <span class="help-block">
                   <strong class="error-text">{{ $errors->first('version') }}</strong>

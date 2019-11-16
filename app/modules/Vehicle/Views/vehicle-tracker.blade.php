@@ -16,7 +16,7 @@
    <!--  <div style="background-color: white"><label style="font-size: 15px;color: red;margin-left: 50%">NETWORK LOST </label></div> -->
    <style type="text/css"></style>
     
-    <div class="cdcdcdcd card data_list_cover pull-right" style="width: 16rem">
+    <div class="card data_list_cover pull-right" style="width: 16rem" id="lost_blink_id">
       <div class="card-body data_list_body " >
         <p class="capitalize"><h2 class="card-title" id="user" style="font-size:20px!important;text-transform: uppercase;"></h2></p>
         <p>
@@ -60,10 +60,10 @@
               <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%">: <label class="mgl" id="ac"></label></b></b>
+              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 10px;">: <label class="mgl" id="ac"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%">: <label class="mgl" id="fuel"></label> %</b></b>
+              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 10px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
