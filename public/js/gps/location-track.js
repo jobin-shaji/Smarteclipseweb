@@ -283,7 +283,7 @@ function updateStatusData(current)
       document.getElementById("car_bettary").innerHTML = battery_status;
       document.getElementById("car_location").innerHTML = place;
       document.getElementById("ac").innerHTML = "UPGRADE VERSION";
-      document.getElementById("fuel").innerHTML = "UPGRADE VERSION";
+      document.getElementById("fuel").innerHTML = fuel;
       // document.getElementById("user").innerHTML = res.vehicle_name;
 
       $("#km_live_track").html('');

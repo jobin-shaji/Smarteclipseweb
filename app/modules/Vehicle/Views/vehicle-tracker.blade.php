@@ -60,10 +60,10 @@
               <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 9px;">: <label class="mgl" id="ac"></label></b></b>
+              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 10px;">: <label class="mgl" id="ac"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 9px;">: <label class="mgl" id="fuel"></label> </b></b>
+              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 10px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
