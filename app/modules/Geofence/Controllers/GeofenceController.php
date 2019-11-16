@@ -158,7 +158,7 @@ class GeofenceController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Geofence deleted successfully'
+            'message' => 'Geofence deactivated successfully'
         ]);
     }
     // restore emplopyee

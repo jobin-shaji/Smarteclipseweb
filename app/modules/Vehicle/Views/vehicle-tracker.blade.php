@@ -3,48 +3,7 @@
 <section class="content box">
 <div class="page-wrapper_new_map">
 
-<!--   <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Live Track</li>
-         </ol>
-          @if(Session::has('message'))
-            <div class="pad margin no-print">
-               <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                  {{ Session::get('message') }}  
-               </div>
-            </div>
-            @endif  
-        </nav>
-   -->
 
-
-
-
-  <!-- <form id="playback_form">
-    <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$Vehicle_id}}">
-    <div class="cover_playback" style="width:43%;">
-        <div class="row">
-          <div class="col-lg-4 col-md-3">
-            <div class="form-group">
-               <label> From Date</label>
-               <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" autocomplete="off" required>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-3">
-            <div class="form-group">                   
-               <label> To Date</label>
-                <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" autocomplete="off" required>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 pt-2 ">
-            <div class="form-group" style="margin:5% 0 0 15%!important"> 
-               <button type="submit" class="btn btn-sm btn-info form-control btn-play-back" > <span style="color:#000"><i class="fa fa-filter"></i>Playback</span> </button>                               
-            </div>
-          </div>
-
-        </div>
-    </div>
-  </form> -->
 
   <div class="col-lg-12 col-sm-12">
     <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
@@ -164,8 +123,15 @@
         </a>
       </div>
       <div class="poi_item">
+<<<<<<< HEAD
+        <!-- <a href="#">
+          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px" onclick="pbk()"> -->
+        <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}" target="_blank">
+          <img src="{{ url('/') }}/images/playback.png"  width="64px" height="64px">
+=======
         <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
+>>>>>>> f05706ed519ffc5c8bde82d876e8cd7f77c6c0f3
         </a>
       </div>
     </div>

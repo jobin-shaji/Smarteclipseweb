@@ -162,6 +162,25 @@ Total KM Report
                           </div>
                         </div>
                       </div>
+
+                    </div> -->
+
+                      <!-- <div>
+                        <div class="info-box">
+                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                          <div class="info-box-content">
+                            <span class="info-box-text" >Engine On Duration</span><label class="info-box-number" id="engine_on_duration"></label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="info-box">
+                          <img src="{{ url('/') }}/SVG-Icons/sleep-duration.png" width="18%" height="80px" class="report_img"/>
+                          <div class="info-box-content">
+                            <span class="info-box-text" >Engine Off Duration</span><label class="info-box-number" id="engine_off_duration"></label>
+                          </div>
+                        </div>
+                      </div>
                     </div> -->
 
 
