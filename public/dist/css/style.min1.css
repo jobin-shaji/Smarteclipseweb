@@ -17414,7 +17414,7 @@ span.select2-selection.select2-selection--multiple {
 
 .info-box {
     display: block!important;
-    min-height: 5em;
+    min-height: 3.75em;
     background: #fff;
     width: 95%;
 
@@ -17423,16 +17423,16 @@ span.select2-selection.select2-selection--multiple {
     margin-bottom: 15px;
 }
 .widthh{
-    width: 30%
+    width: 50%
 }
 
 .info-box-content {
-    margin-left: 35px;
+    margin-left: 23%;
 }
 
 .info-box-text {
     text-transform: uppercase; 
-    font-size: 15px; 
+    font-size: 14px; 
     font-weight: bold;
 }
 
