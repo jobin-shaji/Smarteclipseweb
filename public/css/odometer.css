@@ -71,10 +71,13 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
    min-height:0!important;
 }
 
-@-webkit-keyframes blink { 50% { border-color: #B52203 }  }
+@-webkit-keyframes blink { 50% }
 .lost_blink{
   -webkit-animation: blink .5s step-end infinite alternate;
-  border: solid 5px #9e9d9a8c;
+}
+
+.lost1{
+ color: #f00!important;
 }
 
 .card.data_list_cover {
@@ -83,7 +86,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     z-index: 1;
     border-radius: 50px;
     margin-top: 5%!important;
-    border: solid 5px #9e9d9a8c;
+    border: solid 2px #9e9d9a8c;
  -webkit-box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
 -moz-box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);
 box-shadow: 0px 40px 40px 12px rgba(153,153,153,1);

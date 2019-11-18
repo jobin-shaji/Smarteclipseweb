@@ -16917,11 +16917,9 @@ border: solid 1px #ddd;
 }
 
 a.btn.btn-block.btn-social.btn-bitbucket.track_item {
-    background: #f7af18;
+    background: white;
     color: #000;
     border-radius: 10px;
-}
-a.btn.btn-block.btn-social.btn-bitbucket.track_item {
     text-align: left;
     line-height: 2%;
 }
@@ -17418,7 +17416,7 @@ span.select2-selection.select2-selection--multiple {
     display: block!important;
     min-height: 5em;
     background: #fff;
-    width: 65%;
+    width: 95%;
 
     box-shadow: 0 10px 20px grey!important;
     border-radius: 10px!important;
@@ -17429,7 +17427,7 @@ span.select2-selection.select2-selection--multiple {
 }
 
 .info-box-content {
-    margin-left: 70px;
+    margin-left: 35px;
 }
 
 .info-box-text {

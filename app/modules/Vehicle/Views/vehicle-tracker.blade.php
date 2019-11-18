@@ -42,7 +42,7 @@
           </div>
           <div class="col-sm-12 social-buttons">
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-car fapad"></i><label id="vehicle_name" class="mgl"></label>
+              <img src="../../assets/images/plate.png" width=30px height=25px><label id="vehicle_name" class="mgl"></label>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11%">: <label class="mgl" id="ignition"></label></b></b>
@@ -56,7 +56,7 @@
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="lost1 btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
               <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
@@ -123,10 +123,8 @@
         </a>
       </div>
       <div class="poi_item">
-
-        <a href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
+        <a target="_blank" href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
-
         </a>
       </div>
     </div>
