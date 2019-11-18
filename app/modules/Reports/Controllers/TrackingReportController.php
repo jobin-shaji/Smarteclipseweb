@@ -32,10 +32,6 @@ class TrackingReportController extends Controller
         $dateAndTime = $this->getDateFromType($type, $from_date, $to_date);
         $from = date('Y-m-d H:i:s', strtotime($dateAndTime['fromDate']));
         $to = date('Y-m-d H:i:s', strtotime($dateAndTime['toDate']));
-
-        // $from = date('Y-m-d H:i:s', strtotime($request->from_date));
-        // $to = date('Y-m-d H:i:s', strtotime($request->to_date));
-      
         $vehicle = $request->vehicle;
         $sleep=0;
         $halt=0;
