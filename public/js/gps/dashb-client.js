@@ -117,14 +117,14 @@ function vehicleTrack(res) {
     '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;padding-right:40px;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" title="Alerts" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>' +
     '</div>';*/
 
-     var title = '<div style="width:100%;float:left">'+
+     var title = '<div style="width:100%;float:left;">'+
     '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
     '<h3 class="h3 mb-3 font-weight-normal" style="text-align: left!important;font-size:1.25rem;margin-bottom:0!important;text-transform: uppercase ">'
     + vehicle_name +
    
     '<p style="text-align:left!important;margin-bottom: -1rem!important;font-size:.9rem!important"><code>'
     + vehicle_status +
-    '</code><br><img src="assets/images/vehicle.svg" width=22 height=22><b>&nbsp;Vehicle Number:-</b> '
+    '</code><br><img src="assets/images/plate.png" width=30 height=30><b>&nbsp;Vehicle Number:-</b> '
     + reg +'</p>'+
     '</div>'+
     '<a href="/alert" ><button class="btn-pop type="submit"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
