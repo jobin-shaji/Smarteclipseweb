@@ -42,6 +42,7 @@ class TrackingReportController extends Controller
         $previud_mode = 0;
         $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
         $gps_id=$vehicleGps->gps_id;
+    // dd($from.",".$to.",".$gps_id);
         $first_log=GpsData::select('id','vehicle_mode','device_time')             
        ->where('device_time','>=',$from)
        ->where('device_time','<=',$to) 
