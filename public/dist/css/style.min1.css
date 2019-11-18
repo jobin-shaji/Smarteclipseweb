@@ -17423,7 +17423,7 @@ span.select2-selection.select2-selection--multiple {
     margin-bottom: 15px;
 }
 .widthh{
-    width: 25%
+    width: 30%
 }
 
 .info-box-content {
@@ -17447,6 +17447,7 @@ span.select2-selection.select2-selection--multiple {
     float: left;
     background-color: #f0b101;
     border-radius:7px!important;
+    padding: 0 0 0 1%;
 }
 
 
