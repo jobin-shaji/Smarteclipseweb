@@ -11033,7 +11033,7 @@ html body .font-22 {
 }
 
 html body .font-24 {
-    font-size: 25px;color:#000;float:left;
+    font-size: 24px;color:#000;float:left;
 }
 
 html body .display-5 {
@@ -17350,9 +17350,9 @@ border-radius: 6px 0 6px 6px;
 
 span.cover_bell {
     position: absolute;
-    right: 24px;
-    width: 17px;
-    border-radius: 70%;
+    right: 5px;
+    width: 80%;
+    border-radius: 60%;
     background: #ff0000;
     color: #fff;
     line-height: 25px;
