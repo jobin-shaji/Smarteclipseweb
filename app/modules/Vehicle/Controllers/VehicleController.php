@@ -74,7 +74,10 @@ class VehicleController extends Controller {
 
                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
-                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"; 
+                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"
+
+
+                         ; 
                     
                 }else{
                      return ""; 
@@ -182,6 +185,23 @@ class VehicleController extends Controller {
         }
         // return redirect(route('vehicles.details',$encrypted_vehicle_id));  
     }
+
+    public function odometerUpdate(Request $request)
+    {
+        $vehicle = Vehicle::find($request->id);
+        $encrypted_gps_id = encrypt($request->id);
+        $gps = Gps::find($vehicle->gps_id);
+        if($gps == null){
+           return view('Vehicle::404');
+        }
+        $rules = $this->vehicleOdometerUpdateRules($gps);
+        $this->validate($request, $rules);
+        $gps->km = $request->odometer;
+        $gps->save();        
+        $request->session()->flash('message', 'Vehicle odometer updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicles.details',$encrypted_gps_id));
+     }
     // details page
     public function details(Request $request)
     {
@@ -1699,6 +1719,13 @@ class VehicleController extends Controller {
     {
         $rules = [
             'driver_id' => 'required',
+        ];
+        return  $rules;  
+    }
+    public function vehicleOdometerUpdateRules($gps)
+    {
+        $rules = [
+            'odometer' => 'required',
         ];
         return  $rules;  
     }
