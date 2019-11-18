@@ -90,7 +90,7 @@
         <div class="main-panel">
             <div class="content">
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
-                <div id="markers" style="width:1360px;height:595px"></div>
+                <div id="markers" style="width:100%;height:100vh"></div>
                 <div class="page-inner mt--5">
                 </div>
             </div>
@@ -100,7 +100,7 @@
 
         <!-- Custom template | don't include it in your project! -->
         <!--<div class="custom-template" style="top:230px">-->
-        <div class="custom-template" style="top:70px">
+        <div class="custom-template" style="bottom:5px">
            
             <div class="custom-content">
                 <div class="switcher">
