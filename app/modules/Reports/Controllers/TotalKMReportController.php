@@ -112,164 +112,19 @@ class TotalKMReportController extends Controller
         $vehicle =$request->vehicle;
         $report_type =$request->report_type;
         $single_vehicle_id =  $this->VehicleGPs($vehicle);
-          $dateAndTime = $this->getDateFromType($report_type);
- $from_date = date('Y-m-d H:i:s', strtotime($dateAndTime['from_date']));
+        $dateAndTime = $this->getDateFromType($report_type);
+        $from_date = date('Y-m-d H:i:s', strtotime($dateAndTime['from_date']));
         $to_date = date('Y-m-d H:i:s', strtotime($dateAndTime['to_date']));
-         $fromDate = date('Y-m-d', strtotime($dateAndTime['from_date']));
+        $fromDate = date('Y-m-d', strtotime($dateAndTime['from_date']));
         $toDate = date('Y-m-d', strtotime($dateAndTime['to_date']));
-         // $app_date = $dateAndTime['appDate'];
 
-        // $from_date = $request->from_date;
-        // $to_date = $request->to_date;
-      
-       
+        $gps_id=$single_vehicle_id;
+        $tracking_mode = $this->trackingMode($from_date,$to_date,$gps_id);
         $engine_status=$this->engineStatus($single_vehicle_id,$report_type);
         $ac_status=$this->acStatus($single_vehicle_id,$from_date,$to_date);
-        $halt_status=$this->haltAcStatus($single_vehicle_id,$from_date,$to_date);
-
-        
-       // dd($ac_status);
-
-        if($report_type==1)
-        {
-            $search_from_date=date('Y-m-d');
-            $search_to_date=date('Y-m-d');
-        }
-        else if($report_type==2)
-        {
-            $search_from_date=date('Y-m-d',strtotime("-1 days"));
-            $search_to_date=date('Y-m-d',strtotime("-1 days"));
-        }
-        else if($report_type==3)
-        {
-            $search_from_date=date('Y-m-d',strtotime("-7 days"));
-            $search_to_date=date('Y-m-d');
-            
-        }
-        else if($report_type==4)
-        {           
-            $search_from_date=date('Y-m-d',strtotime("-30 days"));
-            $search_to_date=date('Y-m-d');
-            
-        }   
-        $km_report =  $this->dailyKmReport($client_id,$vehicle,$search_from_date,$search_to_date,$single_vehicle_id);
-      //   $gps_modes=GpsModeChange::where('device_time','>=',$search_from_date)
-      //   ->where('device_time','<=',$search_to_date)  
-      //   ->where('gps_id',$single_vehicle_id)
-      //   ->orderBy('device_time','asc')
-      //   ->get();
-      //   foreach ($gps_modes as $mode) {
-      //   if($initial_time == 0){
-      //       $initial_time = $mode->device_time;
-      //       $previous_time = $mode->device_time;
-      //       $previous_mode = $mode->mode;
-      //   }else{
-      //       if($mode->mode == "S"){
-      //          $time = strtotime($mode->device_time) - strtotime($previous_time);
-      //           $sleep= $sleep+$time; 
-      //           if($sleep<0)
-      //           {
-      //               $sleep="0";                   
-      //           }                
-      //       }
-      //       else if($mode->mode == "M"){
-      //          $time = strtotime($mode->device_time) - strtotime($previous_time);
-      //          $motion= $motion+$time;  
-      //           if($motion<0)
-      //          {
-      //           $motion="0";                
-      //          }                                
-      //       }
-      //       else if($mode->mode == "H"){
-      //          $time = strtotime($mode->device_time) - strtotime($previous_time);
-      //          $halt= $halt+$time;   
-      //          // dd($halt) ;
-      //         if($halt<0)
-      //         {
-      //           $halt="0";               
-      //         }  
-                                    
-      //       }
-      //   }
-      //   $previous_time = $mode->device_time;
-      // }
-
-$gps_id=$single_vehicle_id;
-
-        $first_log=GpsData::select('id','vehicle_mode','device_time')             
-       ->where('device_time','>=',$from_date)
-       ->where('device_time','<=',$to_date) 
-       ->where('gps_id',$gps_id)
-       ->orderBy('device_time')
-       ->first();
-       // dd($fromDate);
-       $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
-                            ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
-                                 , ignition, vehicle_mode,device_time,gps_id,id
-                                 , @statusPre := vehicle_mode
-                            FROM gps_data
-                               , (SELECT @statusPre:=NULL) AS d
-                            WHERE gps_id='.$gps_id.'
-                              AND
-                              device_time between "'.$from_date .'" and "'. $to_date .'"
-                             ORDER BY device_time
-                          ) AS good
-                        WHERE statusChanged');
-       // dd($gps_id);
-        $last_log=GpsData::select('id','vehicle_mode','device_time')                    
-        ->where('gps_id',$gps_id)
-        ->where('device_time','>=',$from_date)
-        ->where('device_time','<=',$to_date) 
-        ->latest('device_time')
-        ->first();
-         if($first_log != null){
-            $initial_time = 1;
-            $initial_time = $first_log->device_time;
-            $previus_time = $first_log->device_time;
-            $previud_mode = $first_log->vehicle_mode;
-          }
-         foreach ($balance_log as $mode) {
-          if($initial_time == 0)
-          {
-              $initial_time = $mode->device_time;
-              $previus_time = $mode->device_time;
-              $previud_mode = $mode->vehicle_mode;
-          }else{
-              if($mode->vehicle_mode == "S"){
-                  $time = strtotime($mode->device_time) - strtotime($previus_time);
-                  $sleep = $sleep+$time;
-              }else if($mode->vehicle_mode == "H"){
-                 $time = strtotime($mode->device_time) - strtotime($previus_time);
-                 $halt = $halt+$time; 
-              }else if($mode->vehicle_mode == "M"){
-                 $time = strtotime($mode->device_time) - strtotime($previus_time);
-                 $moving = $moving+$time; 
-              }
-          }
-          $previus_time = $mode->device_time;
-        }      
-      if($last_log != null){
-        if($last_log->vehicle_mode == "S"){
-            $time = strtotime($last_log->device_time) - strtotime($previus_time);
-            $sleep = $sleep+$time;
-          }else if($last_log->vehicle_mode == "H"){
-             $time = strtotime($last_log->device_time) - strtotime($previus_time);
-             $halt = $halt+$time; 
-          }else if($last_log->vehicle_mode == "M"){
-             $time = strtotime($last_log->device_time) - strtotime($previus_time);
-             $moving = $moving+$time; 
-          }
-       }
-       if($sleep < 0){$sleep =0;}
-       $total_sleep=$this->timeFormate($sleep);
-
-      if($halt< 0){$halt=0;}
-      $total_halt=$this->timeFormate($halt);
-    
-      if($moving< 0){$moving=0;}
-      $total_moving=$this->timeFormate($moving);
-
-       $alerts =Alert::select(
+        $halt_status=$this->haltAcStatus($single_vehicle_id,$from_date,$to_date);      
+        $km_report =  $this->dailyKmReport($client_id,$vehicle,$fromDate,$toDate,$single_vehicle_id);        
+        $alerts =Alert::select(
             'id',
             'alert_type_id', 
             'device_time',    
@@ -279,8 +134,8 @@ $gps_id=$single_vehicle_id;
             'status'
         )
         ->where('gps_id',$single_vehicle_id)
-        ->whereDate('device_time', '>=', $search_from_date)
-        ->whereDate('device_time', '<=', $search_to_date)
+        ->whereDate('device_time', '>=', $fromDate)
+        ->whereDate('device_time', '<=', $toDate)
         ->get();
         $user_alert = UserAlerts::select(
             'alert_id'
@@ -300,8 +155,8 @@ $gps_id=$single_vehicle_id;
         )
         ->where('vehicle_id',$vehicle)       
         ->where('client_id',$client_id)
-        ->whereDate('deviating_time', '>=', $search_from_date)
-        ->whereDate('deviating_time', '<=', $search_to_date)
+        ->whereDate('deviating_time', '>=', $fromDate)
+        ->whereDate('deviating_time', '<=', $toDate)
         ->count();
 
 
@@ -309,16 +164,13 @@ $gps_id=$single_vehicle_id;
         return response()->json([
             'engine_on_duration' => $engine_status['engine_on_time'],
             'engine_off_duration' => $engine_status['engine_off_time'],
-
             'ac_on_duration' => $ac_status['ac_on_time'],
             'ac_off_duration' => $ac_status['ac_off_time'],
             'ac_halt_on_duration' => $halt_status['ac_on_time'],
-
-
             'dailykm' => $km_report, 
-            'sleep' => $total_sleep,  
-            'motion' => $total_moving,   
-            'halt' => $total_halt, 
+            'sleep' => $tracking_mode['total_sleep'],  
+            'motion' => $tracking_mode['total_moving'],   
+            'halt' => $tracking_mode['total_halt'], 
             'sudden_acceleration' => $alerts->where('alert_type_id',2)->count(), 
             'harsh_braking' => $alerts->where('alert_type_id',1)->count(),               
             'main_battery_disconnect' => $alerts->where('alert_type_id',11)->count(),               
@@ -684,6 +536,95 @@ $gps_id=$single_vehicle_id;
                         "to_date" => $to_date
                        ];
         return $output_data;
+     }
+     function trackingMode($from,$to,$gps_id)
+     {
+       $sleep=0;
+        $halt=0;
+        $moving=0;
+        $time=0;
+        $initial_time = 0;
+        $previous_time =0;
+        $previous_mode = 0;
+        $first_log=GpsData::select('id','vehicle_mode','device_time')             
+        ->where('device_time','>=',$from)
+        ->where('device_time','<=',$to) 
+        ->where('gps_id',$gps_id)
+        ->orderBy('device_time')
+        ->first();
+        $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
+                            ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
+                                 , ignition, vehicle_mode,device_time,gps_id,id
+                                 , @statusPre := vehicle_mode
+                            FROM gps_data
+                               , (SELECT @statusPre:=NULL) AS d
+                            WHERE gps_id='.$gps_id.'
+                              AND
+                              device_time between "'.$from .'" and "'. $to .'"
+                             ORDER BY device_time
+                          ) AS good
+                        WHERE statusChanged');
+       // dd($gps_id);
+        $last_log=GpsData::select('id','vehicle_mode','device_time')                    
+        ->where('gps_id',$gps_id)
+        ->where('device_time','>=',$from)
+        ->where('device_time','<=',$to) 
+        ->latest('device_time')
+        ->first();
+         if($first_log != null){
+            $initial_time = 1;
+            $initial_time = $first_log->device_time;
+            $previus_time = $first_log->device_time;
+            $previud_mode = $first_log->vehicle_mode;
+          }
+         foreach ($balance_log as $mode) {
+          if($initial_time == 0)
+          {
+              $initial_time = $mode->device_time;
+              $previus_time = $mode->device_time;
+              $previud_mode = $mode->vehicle_mode;
+          }else{
+              if($mode->vehicle_mode == "S"){
+                  $time = strtotime($mode->device_time) - strtotime($previus_time);
+                  $sleep = $sleep+$time;
+              }else if($mode->vehicle_mode == "H"){
+                 $time = strtotime($mode->device_time) - strtotime($previus_time);
+                 $halt = $halt+$time; 
+              }else if($mode->vehicle_mode == "M"){
+                 $time = strtotime($mode->device_time) - strtotime($previus_time);
+                 $moving = $moving+$time; 
+              }
+          }
+          $previus_time = $mode->device_time;
+        }      
+      if($last_log != null){
+        if($last_log->vehicle_mode == "S"){
+            $time = strtotime($last_log->device_time) - strtotime($previus_time);
+            $sleep = $sleep+$time;
+          }else if($last_log->vehicle_mode == "H"){
+             $time = strtotime($last_log->device_time) - strtotime($previus_time);
+             $halt = $halt+$time; 
+          }else if($last_log->vehicle_mode == "M"){
+             $time = strtotime($last_log->device_time) - strtotime($previus_time);
+             $moving = $moving+$time; 
+          }
+       }
+       if($sleep < 0){$sleep =0;}
+       $total_sleep=$this->timeFormate($sleep);
+
+      if($halt< 0){$halt=0;}
+      $total_halt=$this->timeFormate($halt);
+    
+      if($moving< 0){$moving=0;}
+      $total_moving=$this->timeFormate($moving);
+       $output_data = ["total_moving" => $total_moving, 
+                        "total_halt" => $total_halt,
+                        "total_sleep" => $total_sleep
+
+                       ];
+        return $output_data;
+              
+    
      }
 
 }
