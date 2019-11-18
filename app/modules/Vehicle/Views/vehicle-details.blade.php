@@ -126,11 +126,11 @@
                         <div class="col-lg-12 col-md-12">
                           <div class="form-group has-feedback">
                             <label class="srequired">Odometer(in meter)</label>
-                            <input type="text" class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$vehicle->gps->km}}">
+                            <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$vehicle->gps->km}}">
                           </div>
-                          @if ($errors->has('driver_id'))
+                          @if ($errors->has('odometer'))
                             <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
+                                <strong class="error-text">{{ $errors->first('odometer') }}</strong>
                             </span>
                           @endif
                         </div>
