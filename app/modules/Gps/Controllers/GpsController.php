@@ -1,8 +1,5 @@
 <?php 
-
-
 namespace App\Modules\Gps\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
@@ -23,7 +20,6 @@ use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
-
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -160,11 +156,6 @@ class GpsController extends Controller {
     {
         $root_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
-        // $gps = Gps::find($request->serial_no); 
-        // // dd($gps);
-        // if($gps == null){
-        //    return view('Gps::404');
-        // }
         $rules = $this->gpsCreateRules();
         $this->validate($request, $rules);  
 
@@ -607,14 +598,23 @@ class GpsController extends Controller {
     {
         $ota = OtaType::all();
         $gps = Gps::all();
-        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota]);
+        $gps_data = GpsData::select('id','header')->groupBy('header')->get();
+        // dd($header);
+        return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
      public function getAllData(Request $request)
     {
-    
-        if($request->gps){
+        if($request->gps && $request->header){
+            
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header);  
+        }
+        else if($request->gps){
          $items = GpsData::where('gps_id',$request->gps);  
-        }else{
+        }
+        else if($request->header){
+            $items = GpsData::where('header',$request->header); 
+        }
+        else{
          $items = GpsData::limit(10000);  
         }
         return DataTables::of($items)
@@ -1367,7 +1367,58 @@ public function getGpsAllDataHlm(Request $request)
             ]); 
         }
     }
+//////////Gps stock creation usig serial number////////////////
 
+
+    public function createStock()
+    {
+        $gps = Gps::select('id', 'imei','serial_no','manufacturing_date')
+        ->whereNull('manufacturing_date')
+        ->get();
+        return view('Gps::gps-stock-create',['devices'=>$gps]);
+    }
+
+        //upload gps details to database table
+    public function saveStock(Request $request)
+    {
+        $root_id=\Auth::user()->id;
+        $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
+        $rules = $this->gpsStockCreateRules();
+        $this->validate($request, $rules); 
+        $gps_id= $request->serial_no;
+        $gps = Gps::find($gps_id);
+        $gps->manufacturing_date = $maufacture;
+        $gps->e_sim_number = $request->e_sim_number;       
+        $gps->save();
+        if($gps){
+           $gps_stock = GpsStock::create([
+                'gps_id'=> $gps->id,
+                'inserted_by' => $root_id
+            ]); 
+        }
+        $request->session()->flash('message', 'New gps created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+    } 
+////////////////////////////////////////ac Status////////////////////////////////////
+
+    public function acStatus(Request $request){
+        $first_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '=', date('Y-m-d'))->orderBy('device_time')->first();
+        $last_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '=', date('Y-m-d'))->latest('device_time')->first();
+        // $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
+        //                     ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
+        //                          , ignition, vehicle_mode,device_time,gps_id,id
+        //                          , @statusPre := vehicle_mode
+        //                     FROM gps_data 
+        //                        , (SELECT @statusPre:=NULL) AS d
+        //                     WHERE DATE(device_time) = CURDATE() AND gps_id=3 ORDER BY device_time 
+        //                   ) AS good
+        //                 WHERE statusChanged');
+
+
+
+        
+    }
 
 
     //validation for gps creation
@@ -1386,6 +1437,17 @@ public function getGpsAllDataHlm(Request $request)
         ];
         return  $rules;
     }
+     //validation for gps creation
+    public function gpsStockCreateRules(){
+        $rules = [     
+            'manufacturing_date' => 'required',           
+            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',          
+        ];
+        return  $rules;
+    }
+
+
+
 
     //validation for gps updation
     public function gpsUpdateRules($gps){

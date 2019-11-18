@@ -395,7 +395,7 @@
                         <li class="nav-item dropdown">
                             <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
                                 <span class="bell_value" id="bell_notification_count">0</span>
-                            </span><i class="mdi mdi-bell font-24"></i>
+                            </span><i class="mdi mdi-bell font-24" style="padding: 19% 0 0 0"></i>
                             
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -406,7 +406,7 @@
                             </div>
                         </li>                      
                         <li class="nav-item dropdown">
-                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
+                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" style="padding: 19% 0 0 0"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
@@ -446,9 +446,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            @role('client')      
-                               <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="40"></a>
+                               <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="90" height="80"></a>
                              @endrole
-                             @role('root|dealer|sub_dealer|servicer')
+                             @role('root|dealer|sub_dealer|servicer|school')
                                 <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
                                 @endrole
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">

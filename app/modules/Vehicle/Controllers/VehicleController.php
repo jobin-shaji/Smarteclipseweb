@@ -74,13 +74,10 @@ class VehicleController extends Controller {
 
                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
-                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>
-
-                        <button onclick=deleteVehicle(".$vehicles->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
+                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"; 
                     
                 }else{
-                     return "
-                    <button onclick=activateVehicle(".$vehicles->id.",".$vehicles->gps_id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate </button>"; 
+                     return ""; 
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -522,7 +519,6 @@ class VehicleController extends Controller {
     // vehicle drivers list
     public function vehicleDriverLogList()
     {
-        
        return view('Vehicle::vehicle-driver-log-list'); 
     }
 
@@ -682,10 +678,9 @@ class VehicleController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $online_vehicle->move($destinationPath,$online_uploadedFile);
-        $vehicle_type->online_icon = $online_uploadedFile;
         }
         // online vehicle image
-         // offline vehicle image
+        // offline vehicle image
         $offline_vehicle=$request->offline_icon;
         if($offline_vehicle){
         $getFileExt   = $offline_vehicle->getClientOriginalExtension();
@@ -693,7 +688,6 @@ class VehicleController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $offline_vehicle->move($destinationPath,$offline_uploadedFile);
-        $vehicle_type->offline_icon = $offline_uploadedFile;
         }
         // online vehicle image
          // ideal vehicle image
@@ -704,7 +698,6 @@ class VehicleController extends Controller {
         //Move Uploaded File
         $destinationPath = 'documents';
         $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
-        $vehicle_type->ideal_icon = $ideal_uploadedFile;
         }
         // ideal vehicle image
         // sleep vehicle image
@@ -716,7 +709,6 @@ class VehicleController extends Controller {
         $destinationPath = 'documents';
         $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
         // sleep vehicle image
-        $vehicle_type->online_icon =$online_uploadedFile;
         }
         // sleep vehicle image
         $vehicle_type = VehicleType::create([
@@ -944,6 +936,7 @@ class VehicleController extends Controller {
                       'heading as angle',
                       'mode as vehicleStatus',
                       'speed',
+                      'fuel_status',
                       'battery_status as battery_percentage',
                       'device_time as dateTime',
                       'main_power_status as power',
@@ -960,6 +953,7 @@ class VehicleController extends Controller {
                               'lon as longitude',
                               'heading as angle',
                               'speed',
+                              'fuel_status',
                               'battery_status as battery_percentage',
                               'device_time as dateTime',
                               'main_power_status as power',
@@ -975,7 +969,15 @@ class VehicleController extends Controller {
         if($track_data){
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-
+            if(\Auth::user()->hasRole('fundamental|pro|superior')){
+                $fuel =$track_data->fuel_status*100/15;
+                $fuel = (int)$fuel;
+                $fuel_status=$fuel."%";
+            }      
+            else
+            {
+                $fuel_status="UPGRADE VERSION";
+            }
            
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
@@ -990,7 +992,7 @@ class VehicleController extends Controller {
                         "signalStrength"=>$track_data->signalStrength,
                         "connection_lost_time"=>$connection_lost_time,
                         "last_seen"=>$minutes,
-                        "fuel"=>"",
+                        "fuel"=>$fuel_status,
                         "ac"=>"",
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
@@ -1015,10 +1017,13 @@ class VehicleController extends Controller {
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
-      
-         $decrypted_id = Crypt::decrypt($request->id);  
-          
+        $decrypted_id = Crypt::decrypt($request->id);  
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
+       
+    }
+    public function playbackPageInTrack(Request $request){
+        $decrypted_id = Crypt::decrypt($request->id);  
+        return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id] );
        
     }
     public function playbackHMap(Request $request){
@@ -1729,7 +1734,11 @@ class VehicleController extends Controller {
             'svg_icon' => 'required|max:20000',
             'weight' => 'required|numeric',
             'scale' => 'required|numeric',
-            'opacity' => 'required|numeric'
+            'opacity' => 'required|numeric',
+            'offline_icon' => 'required',
+            'ideal_icon' => 'required',
+            'sleep_icon' => 'required',
+            'online_icon' => 'required'
         ];
         return  $rules;
     }

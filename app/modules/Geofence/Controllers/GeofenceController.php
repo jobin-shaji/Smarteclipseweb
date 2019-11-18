@@ -84,7 +84,7 @@ class GeofenceController extends Controller {
 	}
 
 
-     public function geofenceListPage()
+    public function geofenceListPage()
     {
         return view('Geofence::geofence-list');
     }
@@ -127,6 +127,10 @@ class GeofenceController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id);
         $geofence=Geofence::find($decrypted);
+        if($geofence == null)
+        {
+           return view('Geofence::404');
+        }
         return view('Geofence::geofence-details',['id' => $decrypted,'geofence' => $geofence]);
     }
 
@@ -154,7 +158,7 @@ class GeofenceController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Geofence deleted successfully'
+            'message' => 'Geofence deactivated successfully'
         ]);
     }
     // restore emplopyee
@@ -315,9 +319,9 @@ class GeofenceController extends Controller {
             $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
         }
         if($response_string==""){
-            $response_string="CLR GF";
+            $response_string="CLR VGF";
         }else{
-            $response_string="SET GF:".$response_string;
+            $response_string="SET VGF:".$response_string;
         }
         $geofence_response= OtaResponse::create([
                     'gps_id' => $vehicle->gps_id,
@@ -479,6 +483,10 @@ class GeofenceController extends Controller {
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude; 
         $geofence = Geofence::find(decrypt($request->id));  
+        if($geofence == null)
+        {
+           return view('Geofence::404');
+        }
         return view('Geofence::fence-edit',['lat' => $lat,'lng' => $lng,'geofence_id'=>$decrypted,'geofence'=>$geofence]);        
     }
 

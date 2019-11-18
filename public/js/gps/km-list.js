@@ -1,7 +1,4 @@
 $(document).ready(function () { 
-  
-    // var today = new Date();
-    // callBackDataTable();
 });
 
 function check(){
@@ -14,11 +11,28 @@ function check(){
     $('#harsh_braking').empty();
     $('#main_battery_disconnect').empty();
     $('#accident_impact').empty();
-    $('#overspeed').empty();
+    $('#overspeed_count').empty();
     $('#zig_zag').empty();
     $('#alerts').empty();
     $('#route_deviation').empty();
     $('#geofence').empty();
+    $('#engine_on_duration').empty();
+    $('#engine_off_duration').empty();
+    $('#ac_on_duration').empty();
+    $('#ac_off_duration').empty();
+    $('#ac_halt_on_duration').empty();
+
+
+    $('#geofence_entry').empty();
+    $('#geofence_exit').empty();
+    $('#geofence_entry_overspeed').empty();
+    $('#geofence_exit_overspeed').empty();
+
+
+
+
+
+    
      
     if(document.getElementById('vehicle').value == ''){
         alert('Please Select Vehicle');
@@ -43,9 +57,9 @@ function check(){
 function kmReport(res)
 {
 
-    var km =res.dailykm.km/1000;
+    var km =0;
     $('#total_km').text(km);
-    $('#speed').text(res.dailykm.gps.speed);
+    // $('#speed').text(res.dailykm.gps.speed);
     $('#sleep').text(res.sleep);
     $('#moving').text(res.motion);
     $('#halt').text(res.halt);
@@ -53,11 +67,27 @@ function kmReport(res)
     $('#harsh_braking').text(res.harsh_braking);
     $('#main_battery_disconnect').text(res.main_battery_disconnect);
     $('#accident_impact').text(res.accident_impact);
-    $('#overspeed').text(res.over_speed);
+    $('#overspeed_count').text(res.over_speed);
     $('#zig_zag').text(res.zig_zag);
     $('#alerts').text(res.user_alert);
     $('#route_deviation').text(res.route_deviation);
     $('#geofence').text(res.geofence);
+    $('#engine_on_duration').text(res.engine_on_duration);
+    $('#engine_off_duration').text(res.engine_off_duration);
+      $('#ac_on_duration').text(res.ac_on_duration);
+    $('#ac_off_duration').text(res.ac_off_duration);
+    $('#ac_halt_on_duration').text(res.ac_halt_on_duration);
+
+
+
+    $('#geofence_entry').text(res.geofence_entry);
+    $('#geofence_exit').text(res.geofence_exit);
+    $('#geofence_entry_overspeed').text(res.geofence_entry_overspeed);
+    $('#geofence_exit_overspeed').text(res.geofence_exit_overspeed);
+
+
+
+
     // $('#ig_duration').text(res.dailykm.alerts);
 }
 

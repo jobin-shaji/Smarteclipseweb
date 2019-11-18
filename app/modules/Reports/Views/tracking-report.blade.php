@@ -4,11 +4,7 @@
 @endsection
 @section('content')
 
-    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
-
-    
-
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
@@ -41,7 +37,21 @@
                             </select>
                           </div>
                           </div>
-                          <div class="col-lg-3 col-md-3">   
+                         
+                           <div class="col-lg-3 col-md-3"> 
+                           <div class="form-group">
+                            <label>Report type</label>                           
+                            <select class="form-control selectpicker" data-live-search="true" title="Select report type" id="report" name="report">
+                              <option value="" selected="selected" disabled="disabled">Select</option>
+                              <option value="1">Today</option>
+                              <option value="2">Yesterday</option>
+                              <option value="3">Last 7 days</option>
+                              <option value="4">Last 30 Days</option>   
+                              <!-- <option value="5">Custom Range</option>                           -->
+                            </select>
+                          </div>
+                          </div> 
+                          <!--  <div class="col-lg-3 col-md-3">   
                           <div class="form-group">                   
                             <label> From Date</label>
                             <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
@@ -52,7 +62,7 @@
                             <label> To Date</label>
                             <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
                           </div>
-                          </div>
+                          </div>  -->     
 
                            <div class="col-lg-3 col-md-3 pt-4">
                            <div class="form-group">          

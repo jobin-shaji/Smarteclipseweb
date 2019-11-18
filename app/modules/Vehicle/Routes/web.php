@@ -21,7 +21,7 @@ Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateF
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
 
-
+Route::get('/vehicles/{id}/playback-page','VehicleController@playbackPageInTrack')->name('vehicles.playback.page');
 Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
 
 Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
@@ -121,4 +121,8 @@ Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
  	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
 	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
+
+
+	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
 });

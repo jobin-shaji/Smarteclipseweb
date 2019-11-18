@@ -3,32 +3,37 @@
 @section('content')
 
 <section class="hilite-content">
-      <!-- title row -->
-     
-     <form  method="POST" action="{{route('gps.create.p')}}">
+      <!-- title row -->     
+  <div class="row">
+   
+      <div class="col-md-12">
+        <form  method="POST" action="{{route('gps.create.p')}}">
         {{csrf_field()}}
-      <div class="row">
-
-          <div class="col-md-4">
-          <div  style ="margin-left: 77px"class="form-group has-feedback">
-              <label class="srequired">GPS</label>
-
-              <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
-                
-                <option value="">All</option>
-                @foreach($gps as $gps)
-                <option value="{{$gps->id}}">{{$gps->imei}}</option>
-                @endforeach
-              </select>
-
-              <!-- <button type="button" class="btn btn-primary btn-info" data-toggle="modal" data-target="#favoritesModal">SET OTA </button>  -->   
-          </div> 
-
-        </div>
-      
-            
-        </div>
-    </form>
+        <div  style ="margin-left: 77px"class="form-group has-feedback">
+          <label class="srequired">GPS</label>
+          <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>                
+            <option value="">All</option>
+            @foreach($gps as $gps)
+            <option value="{{$gps->id}}">{{$gps->imei}}</option>
+            @endforeach
+          </select>
+          <!-- <button type="button" class="btn btn-primary btn-info" data-toggle="modal" data-target="#favoritesModal">SET OTA </button>     -->
+        </div>  
+        </form>
+        <div  style ="margin-left: 77px"class="form-group has-feedback">
+          <label class="srequired">Header</label>
+          <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
+            <option selected="selected" disabled="disabled" value="">Select Header</option> 
+            <option value="">All</option>  
+            @foreach($gpsDatas as $gpsData)
+            <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
+            @endforeach             
+          </select>
+          <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+        </div> 
+      </div>
+          
+  </div>
   <div class="modal fade" id="favoritesModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" style="padding: 25px">
@@ -198,6 +203,7 @@
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
+  <div class="col-md-12" style="overflow: scroll">
       <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
           <thead>
               <tr>
@@ -212,10 +218,8 @@
                 <th>Action</th>                     
               </tr>
           </thead>
-      </table>
-      
-       
-    <!-- </div> -->
+      </table>       
+  </div>
 </section>
 
 

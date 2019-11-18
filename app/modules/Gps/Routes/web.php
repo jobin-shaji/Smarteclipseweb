@@ -6,6 +6,11 @@ Route::post('/gps-list','GpsController@getGps')->name('gps-list');
 Route::get('/gps/create','GpsController@create')->name('gps.create');
 Route::post('/gps/create','GpsController@save')->name('gps.create.p');
 
+
+Route::get('/gps/stock','GpsController@createStock')->name('gps.stock');
+Route::post('/gps/stock','GpsController@saveStock')->name('gps.stock.p');
+
+
 Route::get('/gps/{id}/edit','GpsController@edit')->name('gps.edit');
 Route::post('/gps/{id}/edit','GpsController@update')->name('gps.update.p');
 Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
@@ -88,4 +93,7 @@ Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->nam
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
 Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
+
+Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
+
 });

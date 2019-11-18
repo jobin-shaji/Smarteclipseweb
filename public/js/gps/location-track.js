@@ -227,9 +227,6 @@ function updateStatusData(current)
           $("#offline").hide();
           vehicleColor=" #858585";
       } else {
-        // if(res.liveData.last_seen >'1 hour ago'){
-          
-        // }
           if(last_seen){
            $('#last_seen').text(last_seen);
           }
@@ -242,19 +239,19 @@ function updateStatusData(current)
 
       }
       if(ign == 1) {
-        document.getElementById("ignition").innerHTML = "Ignition ON";
+        document.getElementById("ignition").innerHTML = "ON";
       }else
       {
-        document.getElementById("ignition").innerHTML = "Ignition OFF";
+        document.getElementById("ignition").innerHTML = "OFF";
       }
       if(power == 1) {
-        document.getElementById("car_power").innerHTML = "Connected";
+        document.getElementById("car_power").innerHTML = "CONNECTED";
       }else
       {
-        document.getElementById("car_power").innerHTML = "Disconnected";
+        document.getElementById("car_power").innerHTML = "DISCONNECTED";
       }
       if(vehicleStatus == 'M' && speed == '0') {
-        document.getElementById("car_speed").innerHTML = "Vehicle Stopped";
+        document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
         $('#valid_speed').css('display','none');
       }else
       {
@@ -264,27 +261,33 @@ function updateStatusData(current)
       $device_time=dateTime;
       $connection_lost_time=connection_lost_time;
       if (signalStrength >= 19 && $device_time >= $connection_lost_time) {
-        document.getElementById("network_status").innerHTML = "Good";
+        document.getElementById("network_status").innerHTML = "GOOD";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.remove("lost_blink");
       }else if (signalStrength < 19 && signalStrength >= 13 && $device_time >= $connection_lost_time) {
-        document.getElementById("network_status").innerHTML = "Average";
+        document.getElementById("network_status").innerHTML = "AVERAGE";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.remove("lost_blink");
       }else if (signalStrength <= 12 && $device_time >= $connection_lost_time) {
-        document.getElementById("network_status").innerHTML = "Poor";
+        document.getElementById("network_status").innerHTML = "POOR";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.remove("lost_blink");
       }else{
-        document.getElementById("network_status").innerHTML = "Connection Lost";
+        document.getElementById("network_status").innerHTML = "LOST";
+        var element = document.getElementById("lost_blink_id");
+        element.classList.add("lost_blink");
+         $('#network_status').addClass('lost1')
       }
-      
       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-     
-
+    
       document.getElementById("car_bettary").innerHTML = battery_status;
       document.getElementById("car_location").innerHTML = place;
+      document.getElementById("ac").innerHTML = "UPGRADE VERSION";
+      document.getElementById("fuel").innerHTML = fuel;
       // document.getElementById("user").innerHTML = res.vehicle_name;
-     
 
       $("#km_live_track").html('');
       $("#km_live_track").append(speed);
-
-
 }
 
 
@@ -476,9 +479,9 @@ $('#poi_atm').click(function(){
           {location: pyrmont, radius: 1000, type:['atm']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
-              createMarkers(results);
+           var image="/images/ATM.svg";
+              createMarkers(results,image);
             });
-
          atm_flag=1;
          }else{
            deleteMarkersPOI();
@@ -497,7 +500,8 @@ $('#poi_petrol').click(function(){
           {location: pyrmont, radius: 1000, type:['gas_station']},
            function(results, status, pagination) {
            if (status !== 'OK') return;
-              createMarkers(results);
+             var image="/images/petrol-pump.svg";
+              createMarkers(results,image);
             });
 
           petrol_flag=1;
@@ -515,7 +519,8 @@ $('#poi_petrol').click(function(){
             {location: pyrmont, radius: 1000, type:['hospital']},
              function(results, status, pagination) {
              if (status !== 'OK') return;
-                createMarkers(results);
+             var image="/images/hospital.svg";
+                createMarkers(results,image);
               });
           hospital_flag=1;
          }else{
@@ -523,21 +528,18 @@ $('#poi_petrol').click(function(){
            hospital_flag=0;
         }
     });
-
- 
-
 // ---------------find nearest map points-----------------
  var infowindow = new google.maps.InfoWindow();
- function createMarkers(places) {
+ function createMarkers(places,image_icon) {
         deleteMarkersPOI();
         var bounds = new google.maps.LatLngBounds();
         for (var i = 0, place; place = places[i]; i++) {
-          var image = {
-            url: place.icon,
-            size: new google.maps.Size(30, 30),
+           var image = {
+            url: image_icon,
+            size: new google.maps.Size(50, 50),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(10, 20),
-            scaledSize: new google.maps.Size(20, 20)
+            scaledSize: new google.maps.Size(30, 30)
           };
           var marker = new google.maps.Marker({
             icon: image,
@@ -591,15 +593,6 @@ $( "#playback_form" ).submit(function( event ) {
   window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
   event.preventDefault();
 });
-
-function pbk(){
-  var vehicle_id=$('#vehicle_id').val();
-  var from_date=$('#fromDate').val();
-  var to_date=$('#toDate').val();
-  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
-  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
-  event.preventDefault();
-}
 
 // -------------------playback---------------------------
 var contentString = 
