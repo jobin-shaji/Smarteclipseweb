@@ -117,7 +117,6 @@ class TotalKMReportController extends Controller
         $to_date = date('Y-m-d H:i:s', strtotime($dateAndTime['to_date']));
         $fromDate = date('Y-m-d', strtotime($dateAndTime['from_date']));
         $toDate = date('Y-m-d', strtotime($dateAndTime['to_date']));
-
         $gps_id=$single_vehicle_id;
         $tracking_mode = $this->trackingMode($from_date,$to_date,$gps_id);
         $engine_status=$this->engineStatus($single_vehicle_id,$report_type);
@@ -158,8 +157,6 @@ class TotalKMReportController extends Controller
         ->whereDate('deviating_time', '>=', $fromDate)
         ->whereDate('deviating_time', '<=', $toDate)
         ->count();
-
-
         // dd($alerts->whereIn('id',$alert_id));
         return response()->json([
             'engine_on_duration' => $engine_status['engine_on_time'],
@@ -259,7 +256,6 @@ class TotalKMReportController extends Controller
     {
        return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');
     }
-
     function engineStatus($gps_id,$report_type)
     { 
         $dates=$this->getDateFromType($report_type);
@@ -286,6 +282,7 @@ class TotalKMReportController extends Controller
                     $first_device_time=$first_log->device_time;
                     $item_device_time=$item->device_time;
                     $ignition=$item->ignition;
+
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
@@ -350,6 +347,7 @@ class TotalKMReportController extends Controller
 
      function acStatus($gps_id,$from_date,$to_date)
     { 
+      // dd($from_date);
       $first_log=GpsData::select('id','ac_status','device_time')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id',$gps_id)->orderBy('device_time')->first();
       $last_log=GpsData::select('id','ac_status','device_time')->whereDate('device_time', '>=', $from_date)->whereDate('device_time', '<=', $to_date)->where('gps_id',$gps_id)->latest('device_time')->first();
       $balance_log=DB::select('SELECT id,ac_status,device_time FROM
@@ -361,6 +359,7 @@ class TotalKMReportController extends Controller
                           WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
                         ) AS good
                       WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+       // dd($balance_log);
       $ac_on_time=0;
       $ac_off_time=0;
       if($balance_log)
@@ -370,7 +369,7 @@ class TotalKMReportController extends Controller
               if($i==0){
                   $first_device_time=$first_log->device_time;
                   $item_device_time=$item->device_time;
-                  $ac_status=$item->ac_status;
+                  $ac_status=$item->ac_status;                  
                   $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                   $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                   $diff_in_minutes = $to->diffInSeconds($from);
@@ -571,13 +570,13 @@ class TotalKMReportController extends Controller
         ->where('device_time','<=',$to) 
         ->latest('device_time')
         ->first();
-         if($first_log != null){
+        if($first_log != null){
             $initial_time = 1;
             $initial_time = $first_log->device_time;
             $previus_time = $first_log->device_time;
             $previud_mode = $first_log->vehicle_mode;
-          }
-         foreach ($balance_log as $mode) {
+        }
+        foreach ($balance_log as $mode) {
           if($initial_time == 0)
           {
               $initial_time = $mode->device_time;
