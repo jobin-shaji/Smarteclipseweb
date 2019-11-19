@@ -37,6 +37,8 @@ function callBackDataTable(value){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'response', name: 'response', orderable: false},
+            {data: 'sent_at', name: 'sent_at', orderable: false},
+            {data: 'verified_at', name: 'verified_at', orderable: false},
             
         ],
         

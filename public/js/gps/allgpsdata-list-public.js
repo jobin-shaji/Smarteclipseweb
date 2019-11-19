@@ -8,14 +8,14 @@ $(document).ready(function () {
 
 function singleGpsData(value){
   if(value){
-    // $("#set_ota_button").show();
-    // $("#set_ota_gps_id").val(value);
+    $("#set_ota_button").show();
+    $("#set_ota_gps_id").val(value);
   }
-  var url = 'allgpsdata-list';
+  var url = 'allgpsdata-list-public';
   var data = { 
      gps : value   
   };
-  backgroundPostData(url,data,'alldata',{alert:false});  
+  apiBackgroundPostData(url,data,'alldata',{alert:false});  
 }
 function alldata(res){
   console.log(res);
