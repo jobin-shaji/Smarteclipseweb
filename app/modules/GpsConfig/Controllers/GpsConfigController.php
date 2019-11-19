@@ -44,7 +44,20 @@ class GpsConfigController extends Controller {
      
         return response()->json($items); 
     }
-
+    public function gpsConfigListPagePublic()
+    {
+        $gps = Gps::all();
+        return view('GpsConfig::gps-config-list-public',['gps' => $gps]);
+    }
+    public function getAllGpsConfigPublic(Request $request)
+    {
+        if($request->gps_id){
+            $items = Gps::find($request->gps_id);  
+        }else{
+            $items = Gps::all();  
+        }
+        return response()->json($items); 
+    }
 
     
 }

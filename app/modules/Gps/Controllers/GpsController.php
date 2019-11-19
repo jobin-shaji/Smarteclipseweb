@@ -1311,6 +1311,15 @@ class GpsController extends Controller {
         // dd($gps_data);
         return view('Gps::allgpsdata-list',['gps' => $gps,'ota' => $ota]);
     }
+     public function allPublicgpsDataListPage()
+    {
+        $ota = OtaType::all();
+        $gps = Gps::all();
+        // $items = GpsData::orderBy('created_at', 'DESC')->limit(20)->get(); 
+        // $last_data = GpsData::orderBy('created_at', 'DESC')->first();
+        // dd($gps_data);
+        return view('Gps::allgpsdata-list-public',['gps' => $gps,'ota' => $ota]);
+    }
     public function getAllGpsData(Request $request)
     {
          $forhuman=0;
@@ -1329,7 +1338,24 @@ class GpsController extends Controller {
             ]);
         }   
     }
-
+    public function getPublicAllGpsData(Request $request)
+    {
+         $forhuman=0;
+        if($request->gps){
+            $items = GpsData::where('gps_id',$request->gps)->orderBy('created_at', 'DESC')->limit(20)->get();  
+            $last_data = GpsData::where('gps_id',$request->gps)->orderBy('created_at', 'DESC')->first();
+            if($last_data)
+            {
+                $forhuman=Carbon::parse($last_data->created_at)->diffForHumans(); 
+            }            
+            return response()->json([
+                    'last_data' => $last_data,
+                    'items' => $items,  
+                    'last_updated' => $forhuman,               
+                    'status' => 'gpsdatavalue'
+            ]);
+        }   
+    }
 public function getGpsAllDataHlm(Request $request)
     {  
 

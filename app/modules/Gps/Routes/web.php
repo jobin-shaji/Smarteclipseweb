@@ -79,7 +79,6 @@ Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-su
 Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
-Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
 Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
 Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');
@@ -93,5 +92,9 @@ Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 Route::get('/gps-data','GpsController@allpublicgpsListPage')->name('gps-data');
 Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
+Route::get('/all-gps-data-public','GpsController@allPublicgpsDataListPage')->name('all-gps-data-public');
+Route::post('/allgpsdata-list-public','GpsController@getPublicAllGpsData')->name('allgpsdata-list-public');
+Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
+
 
 });
