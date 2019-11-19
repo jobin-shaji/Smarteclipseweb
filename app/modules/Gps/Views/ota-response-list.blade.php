@@ -17,7 +17,6 @@
             <option value="{{$gps->id}}">{{$gps->imei}}</option>
             @endforeach
           </select>
-          <!-- <button type="button" class="btn btn-primary btn-info" data-toggle="modal" data-target="#favoritesModal">SET OTA </button>     -->
         </div>  
         </form>
       </div>
@@ -29,19 +28,12 @@
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
-  <div class="col-md-12" style="overflow: scroll">
-      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
+  <div  class="col-md-10" style="overflow: scroll;">
+      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:90%">
           <thead>
               <tr>
-                <th>Sl.No</th>
-                <th>IMEI</th>
-                <th>Size</th>
-                <th>Device Date</th>
-                <th>Device Time</th>
-                <th>Server Date</th>
-                <th>Server Time</th>
-                <th>Data</th> 
-                <th>Action</th>                     
+                <th>Sl.No</th>                
+                <th>Response</th>                     
               </tr>
           </thead>
       </table>       

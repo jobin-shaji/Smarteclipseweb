@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Eclipse </title>
+    <title>
+
+        <?php
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+            Rayfleet
+        <?php }else{ ?>
+            Eclipse
+        <?php } ?> 
+
+</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback_assets/assets/img/icon.png')}}" type="image/x-icon" />
     <!-- Fonts and icons -->
@@ -310,16 +322,32 @@
 
         var map = new H.Map(mapContainer, maptypes.normal.map);
         //var map = new H.Map(mapContainer, maptypes.normal.map, { center: new H.geo.Point(52.11, 0.68), zoom: 5 });
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (location) {
-                //debugger;
-                currrentlat = location.coords.latitude;
-                currentlan = location.coords.longitude;
-                map.setCenter({ lat: location.coords.latitude, lng: location.coords.longitude });
-                map.setZoom(14);
-            });
-        }
-        map.setCenter({ lat: 10.055860, lng: 76.354247 });
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(function (location) {
+        //         //debugger;
+        //         currrentlat = location.coords.latitude;
+        //         currentlan = location.coords.longitude;
+        //         map.setCenter({ lat: location.coords.latitude, lng: location.coords.longitude });
+        //         map.setZoom(14);
+        //     });
+        // }
+
+         <?php
+                $url=url()->current();
+                $rayfleet_key="rayfleet";
+                $eclipse_key="eclipse";
+                if (strpos($url, $rayfleet_key) == true) {  ?>
+                    map.setCenter({ lat: 25.254377, lng: 51.514872 });
+                <?php }else{ ?>
+                  map.setCenter({ lat: 10.055860, lng: 76.354247 });
+                <?php } 
+            ?> 
+
+
+
+       
+
+
         map.setZoom(14);
         //End of Change Log : REQ_ID-05112019_01 : Load Map position based on GeoLocation
 
@@ -1369,10 +1397,27 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                 "toDateTime": $('#dtEnddate').val()
             }
 
+
+            var url="";
+
+            <?php
+                $url=url()->current();
+                $rayfleet_key="rayfleet";
+                $eclipse_key="eclipse";
+                if (strpos($url, $rayfleet_key) == true) {  ?>
+                    url='http://app.rayfleet.com/api/v1/vehicle_playback';
+                <?php }else{ ?>
+                    url='http://app.smarteclipse.com/api/v1/vehicle_playback';
+                   
+
+                <?php } 
+            ?> 
+
+
             //debugger;
             $.ajax({
                 type: "POST",                
-                url: 'http://app.smarteclipse.com/api/v1/vehicle_playback',                
+                url: url,                
                 data: Objdata,
                 async: false,
                 //dataType: "json",
