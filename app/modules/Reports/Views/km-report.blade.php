@@ -42,8 +42,8 @@ Total KM Report
                                 <option value="" selected="selected" disabled="disabled">Select</option>
                                 <option value="1">Today</option>
                                 <option value="2">Yesterday</option>
-                                <option value="3">This Week</option>
-                                <option value="4">This Month</option>                            
+                                <option value="3">Last 7 days</option>
+                                <option value="4">Last 30 days</option>                            
                               </select>
                             </div>
                           </div>                         
