@@ -73,7 +73,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                   
-                    @role('root|dealer|sub_dealer|servicer|school')
+                    @role('root|dealer|sub_dealer|servicer|school|operations')
 
                     @role('root')
                         @include('layouts.sections.root-header')
@@ -89,6 +89,9 @@
                     @endrole 
                     @role('school')
                         @include('layouts.sections.school-header')
+                    @endrole
+                      @role('operations')
+                        @include('layouts.sections.operation-header')
                     @endrole
 
                    @endrole
@@ -443,7 +446,7 @@
                            @role('client')      
                                <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="90" height="80"></a>
                              @endrole
-                             @role('root|dealer|sub_dealer|servicer|school')
+                             @role('root|dealer|sub_dealer|servicer|school|operations')
                                 <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
                                 @endrole
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">

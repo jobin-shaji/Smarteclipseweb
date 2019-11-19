@@ -39,6 +39,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // dd(\Auth::user()->roles());
         if(\Auth::user()->hasRole('root')){
             return view('Dashboard::dashboard');  
         }
@@ -56,6 +57,9 @@ class DashboardController extends Controller
         }
         else if(\Auth::user()->hasRole('client')){
             return $this->clientDashboardIndex();            
+        }
+        else{
+            return view('Dashboard::dashboard');  
         }        
     }
     function schoolIndex(){

@@ -15,9 +15,10 @@ function singleGpsData(value){
   var data = { 
      gps : value   
   };
-  apiBackgroundPostData(url,data,'alldata',{alert:false});  
+  backgroundPostData(url,data,'alldata',{alert:false});  
 }
 function alldata(res){
+  console.log(res);
   $('#datas').empty();
   $('#gps_table').empty(); 
   $('#last_update_time').empty(); 
