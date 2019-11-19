@@ -224,91 +224,13 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="row">
-                  <div class="col-lg-2 col-xs-6 new_arrival_dashboard_grid dash_grid">
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="gps_new_arrival_dealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>GPS New Arrivals</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-tablet"></i>
-                      </div>
-                      <a href="/gps-dealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-xs-6 gps_dashboard_grid dash_grid">
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="total_gps_dealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>GPS In Stock</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-tablet"></i>
-                      </div>
-                      <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-xs-6 transferred_gps_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="transferred_gps_dealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>Transferred GPS</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-tablet"></i>
-                      </div>
-                      <a href="/gps-transfers-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
+                 
                   <!-- ./col -->
-                  <div class="col-lg-2 col-xs-6 sub_dealer_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-yellow bxs">
-                      <div class="inner">
-                        <h3 id="dealer_subdealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>Active Subdealers</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-user"></i>
-                      </div>
-                      <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-xs-6 client_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="dealer_client">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>Active Clients</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-user"></i>
-                      </div>
-                      <a href="/dealer-client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
+               
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
-              </div>
-              <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
