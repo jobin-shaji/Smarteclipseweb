@@ -274,7 +274,7 @@ function updateStatusData(current)
         document.getElementById("network_status").innerHTML = "POOR";
         var element = document.getElementById("lost_blink_id");
         element.classList.remove("lost_blink");
-         $('#network_status').removeClass('lost1');
+         $('#lost_blink_id1').removeClass('lost1');
       }else{
         document.getElementById("network_status").innerHTML = "LOST";
         var element = document.getElementById("lost_blink_id");

@@ -56,7 +56,7 @@
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
-            <a class="lost1 btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
+            <a class=" btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
               <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
