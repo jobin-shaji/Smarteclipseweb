@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="{{url('/gps-data')}}">All GPS </a>
+            <a class="nav-link" href="{{url('/operation-gps-data')}}">All GPS </a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" href="{{url('/all-gps-data')}}">CONSOLE</a>

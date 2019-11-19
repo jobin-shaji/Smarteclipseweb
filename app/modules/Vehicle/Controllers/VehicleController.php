@@ -4,6 +4,7 @@ namespace App\Modules\Vehicle\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
+use App\Modules\User\Models\User;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Ota\Models\OtaResponse;
@@ -19,15 +20,19 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
+use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Servicer\Models\ServicerJob;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use App\Http\Traits\VehicleDataProcessorTrait;
 use Carbon\Carbon;
 use PDF;
 use DataTables;
 use Config;
 
-class VehicleController extends Controller {
+class VehicleController extends Controller 
+{
+    use VehicleDataProcessorTrait;
     
     // show list page
     public function vehicleList()
@@ -1863,13 +1868,137 @@ class VehicleController extends Controller {
         return $userData;
 
     }
+///////////////////API-start////////////////////////////////////////
+    public function vehicleStatics(Request $request) 
+    {
+        $user_id = $request->userid;
+        $user = User::where('id', $user_id)->first();
+        if ($user == null) 
+         {
+            $data = array('status' => 'failed', 
+                          'message' => 'user does not exist', 
+                          'code' => 0
+                         );
+            return response()->json($data);
+         }
+        $client = Client::where('user_id', $user_id)->first();
+        $type = $request->type;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($type, $from_date, $to_date);
+        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+        $app_date = $date_and_time['appDate'];
+        $user_vehicle = Vehicle::where('client_id', $client->id)
+                                 ->whereNull('deleted_at')
+                                 ->orderBy('id', 'desc')
+                                 ->get();
+        $statics = array();
+        if (sizeof($user_vehicle) != 0) {
+            foreach ($user_vehicle as $vehicleData) {
+                $vehicle_profile= $this->vehicleProfile($vehicleData->id,$date_and_time,$client->id);
+                $get_vehicle = Vehicle::find($vehicleData->id);
+                $get_driver = Driver::find($vehicleData->driver_id);
+                if($get_driver){
+                 $driver_points=$get_driver->points;
+                }else{
+                 $driver_points=""; 
+                }
+                $gps_data=GpsData::where('gps_id',$get_vehicle->gps->id)
+                                   ->where('device_time','>=', $from_date)
+                                   ->where('device_time','<=', $to_date)
+                                   ->get();
+                               
+                $maximum_speed=$gps_data->max('speed');   
+                if($type==2)
+                {
+                  // for get single date km
+                  $to_date=$from_date;
+                }
+
+                $total_km = DailyKm::where('gps_id',$get_vehicle->gps->id)
+                                     ->whereDate('date','>=',$from_date)
+                                     ->whereDate('date','<=',$to_date)
+                                     ->sum('km');                   
+                $statics[] = array("vehicle_number" => $get_vehicle->register_number, 
+                                   "vehicle_id" => $get_vehicle->id, 
+                                   "total_distance" => 0, 
+                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
+                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
+                                   "total_number_of_stops" =>0, 
+                                   "ac_on_time_idle" => 0, 
+                                   "ac_on_time_running" =>0, 
+                                   "driver_behaviour" => $driver_points, 
+                                   "total_km" => $total_km, 
+                                   "max_speed" => $maximum_speed ?$maximum_speed:"", 
+                                   "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
+                                   "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
+                                   "overspeed_violation_count" => $vehicle_profile['over_speed'],
+                                   "zig_zag_violation_count" => $vehicle_profile['zig_zag'],
+                                   "accident_impact_alert_count" => $vehicle_profile['accident_impact'],
+                                   "route_deviation_count" => $vehicle_profile['route_deviation'],
+                                   "harsh_braking_count" => $vehicle_profile['harsh_braking'],
+                                   "sudden_acceleration_count" => $vehicle_profile['sudden_acceleration'],
+                                   "main_battey_disconnect_count" => $vehicle_profile['main_battery_disconnect'],
 
 
-    // servicer vehicle create 
+                                   "total_moving_time" => $vehicle_profile['motion'], 
+                                   "total_idle_time" => $vehicle_profile['halt'],
+                                   "total_sleep_time" => $vehicle_profile['sleep'],
+                                   "total_offline_time" => 0, 
 
-       // vehicle create rules
- 
-/////////////// snap root for live data///////////////////////////////////
+
+                                   "total_alerts" => $vehicle_profile['user_alert'],
+                                   "vehicle_type" => $get_vehicle->vehicleType->name, 
+                                   "vehicle_online" => $get_vehicle->vehicleType->online_icon, 
+                                   "vehicle_offline" => $get_vehicle->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $get_vehicle->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $get_vehicle->vehicleType->sleep_icon
+                                  );
+            }
+            $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'vehicle_value' => $statics,
+                                   'search_date'=>$app_date
+                                  );
+            } else {
+            $response_data = array('status' => 'failed', 
+                                   'message' => 'failed', 
+                                   'code' => 0
+                                  );
+            }
+        return response()->json($response_data);
+    }
+
+    function getDateFromType($searchType, $from_date, $to_date) 
+    {
+        if ($searchType == "1") 
+        {
+            $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
+            $to_date = date('Y-m-d H:i:s');
+            $appDate = date('Y-m-d');
+        } else if ($searchType == "2") {
+            $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("yesterday midnight"));
+        } else if ($searchType == "3") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
+        } else if ($searchType == "4") {
+            $from_date = date('Y-m-d H:i:s', strtotime($from_date));
+            $to_date = date('Y-m-d H:i:s', strtotime($to_date));
+            $appDate = date('Y-m-d H:i:s', strtotime($from_date)) . " " . date('Y-m-d H:i:s', strtotime($to_date));
+        }
+        $outputData = ["from_date" => $from_date, 
+                        "to_date" => $to_date, 
+                        "appDate" => $appDate
+                       ];
+        return $outputData;
+     }
+///////////////////API-end////////////////////////////////////////
+
 
    
 }

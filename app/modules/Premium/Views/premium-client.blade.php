@@ -32,14 +32,14 @@
           <li><i class="far fa-map"></i>Point of interest</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-        <?php
+      <!--   <?php
         $url=url()->current();
         if (strpos($url, "rayfleet") == true) {  ?>
-          <li style="height:24px"><i class="fa fa-qar" aria-hidden="true"></i>Price: After 1 year QAR 85 </li> 
+          <li style="height:24px"><i class="fa fa-qar" aria-hidden="true"></i> </li> 
         <?php } 
         else { ?>
           <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>Price: After 1 year 1700+Tax </li> 
-        <?php } ?> 
+        <?php } ?>  -->
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -102,13 +102,13 @@
         $eclipse_key="eclipse";
         $encryption_id=encrypt(2);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 120)(1 year)<br>(1 year)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 2400+Tax)<br>(1 year)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 2400+Tax)<br>(1 year)</a></button>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
       <?php } ?> 
 
       <div class="card-body">
@@ -179,13 +179,13 @@
       <?php
         $encryption_id=encrypt(3);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 155)<br>(1 year)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 3100+Tax)<br>(1 year)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 3100+Tax)<br>(1 year)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
       <?php } ?> 
       
       <div class="card-body">
@@ -261,13 +261,13 @@
       <?php
         $encryption_id=encrypt(4);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (QAR 25000)<br>(1 year)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 5 lakh+tax)<br>(1 year)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now (INR 5 lakh+tax)<br>(1 year)</a></button>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
       <?php } ?> 
       
       <div class="card-body">
