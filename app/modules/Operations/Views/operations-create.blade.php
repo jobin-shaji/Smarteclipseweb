@@ -26,7 +26,7 @@
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            <form  method="POST" action="{{route('dealer.create.p')}}">
+            <form  method="POST" action="{{route('operations.create.p')}}">
             {{csrf_field()}}
               <div class="row">
                 <div class="col-md-6">

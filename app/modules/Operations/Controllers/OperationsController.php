@@ -2,65 +2,15 @@
 namespace App\Modules\Operations\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modules\Dealer\Models\Dealer;
+use App\Modules\Operations\Models\Operations;
 use App\Modules\User\Models\User;
-use App\Modules\Depot\Models\DepotUser;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
-class DealerController extends Controller {
-    //Display employee details 
-    public function dealerListPage()
-    {
-        return view('Dealer::dealer-list');
-    }
-    //returns employees as json 
-    public function getDealers()
-    {
-        $dealers = Dealer::select(
-            'id', 
-            'user_id',                      
-            'name',                   
-            'address',                                        
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile,deleted_at')
-        ->get();
-        return DataTables::of($dealers)
-        ->addIndexColumn()
-        ->addColumn('working_status', function ($dealers) {
-            if($dealers->user->deleted_at == null){ 
-            return "
-                <b style='color:#008000';>Enabled</b>
-                <button onclick=disableDealers(".$dealers->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
-            ";
-            }else{ 
-            return "
-                <b style='color:#FF0000';>Disabled</b>
-                <button onclick=enableDealer(".$dealers->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
-            ";
-            }
-        })
-        ->addColumn('action', function ($dealers) {
-             $b_url = \URL::to('/');
-            if($dealers->user->deleted_at == null){ 
-            return "
-            <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-            <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <a href=".$b_url."/dealers/".Crypt::encrypt($dealers->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-           
-            ";
-            }else{ 
-            return "";
-            }
-        })
-        ->rawColumns(['link', 'action','working_status'])
-        ->make();
-    }
-    //dealer creation page
+class OperationsController extends Controller {
+    
     public function create()
     {
-       return view('Dealer::dealer-create');
+       return view('Operations::operations-create');
     }
     //upload dealer details to database table
     public function save(Request $request)
@@ -77,18 +27,19 @@ class DealerController extends Controller {
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
-            $dealer = Dealer::create([
+            $operations = Operations::create([
                 'user_id' => $user->id,
                 'root_id'=>$root_id,
                 'name' => $request->name,            
                 'address' => $request->address,
             ]);
-            User::where('username', $request->username)->first()->assignRole('dealer');
+            User::where('username', $request->username)->first()->assignRole('operations');
+            
         }
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New dealer created successfully!'); 
+        $request->session()->flash('message', 'New operations created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('dealers')); 
+        return redirect(route('operations')); 
     }
     //Dealer details view
     public function details(Request $request)
