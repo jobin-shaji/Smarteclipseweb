@@ -1996,7 +1996,93 @@ class VehicleController extends Controller
                         "appDate" => $appDate
                        ];
         return $outputData;
-     }
+    }
+
+    public function getTravelSummary(Request $request) {
+        $user_id = $request->userid;
+        $user = User::where('id', $user_id)->first();
+        if ($user == null) 
+        {
+            $data = array('status' => 'failed', 
+                          'message' => 'user does not exist', 
+                          'code' => 0
+                         );
+            return response()->json($data);
+        }
+        $client = Client::where('user_id', $user_id)->first();
+        $type = $request->type;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($type, $from_date, $to_date);
+        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+
+        $user = User::find($user_id);
+        $user_vehicle = Vehicle::where('client_id', $client->id)
+                                ->whereNull('deleted_at')
+                                ->orderBy('id', 'desc')
+                                ->get();
+        $travel_data = array();
+        if (sizeof($user_vehicle) != 0) {
+            foreach ($user_vehicle as $data) {
+                $get_vehicle = Vehicle::find($data->id);
+                $vehicle_profile= $this->vehicleProfile($data->id,$date_and_time,$client->id);
+                $gps_data = GpsData::where('gps_id', $get_vehicle->gps_id)
+                                     ->where('device_time', '>=', $from_date)
+                                     ->where('device_time', '<=', $to_date)
+                                     ->limit(1000)
+                                     ->get();
+                $avg_speed = $gps_data->avg('speed');
+                $max_speed = $gps_data->MAX('speed');
+                // km dummy
+                if($type==2)
+                {
+                  // for get single date km
+                    $to_date=$from_date;
+                }
+
+                $total_km = DailyKm::where('gps_id',$get_vehicle->gps->id)
+                                     ->whereDate('date','>=',$from_date)
+                                     ->whereDate('date','<=',$to_date)
+                                     ->sum('km');
+                // km dummy
+
+                $travel_duration = array("idle" =>$vehicle_profile['halt'], 
+                                      "running" => $vehicle_profile['motion'],
+                                      "stop" => $vehicle_profile['sleep'], 
+                                      "inactive" => 0
+                                     );
+                $travel_speed = array("speed" =>0, 
+                                      "total_km" => $total_km,
+                                      "avg_speed" => number_format($avg_speed, 2), 
+                                      "max_speed" => $max_speed ?$max_speed:""
+                                     );
+                $travel_data[] = array("travel_duration" => $travel_duration, 
+                                       "travel_speed" => $travel_speed, 
+                                       "total_alerts" => $vehicle_profile['user_alert'], 
+                                       "vehicleId" => $get_vehicle->id, 
+                                       "user_name" => $user->username, 
+                                       "vehicle_number" => $get_vehicle->register_number, 
+                                       "vehicle_type" => $get_vehicle->vehicleType->name, 
+                                       "vehicle_online" => $get_vehicle->vehicleType->online_icon, 
+                                       "vehicle_offline" => $get_vehicle->vehicleType->offline_icon, 
+                                       "vehicle_ideal" => $get_vehicle->vehicleType->ideal_icon, 
+                                       "vehicle_sleep" => $get_vehicle->vehicleType->sleep_icon
+                                      );
+            }
+            $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'user_name' => $user->username, 
+                                   'travel_summary' => $travel_data,
+                                   'from_date'=>$from_date,
+                                   'to_date'=>$to_date
+                                  );
+        } else {
+            $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
+        }
+        return response()->json($response_data);
+    }
 ///////////////////API-end////////////////////////////////////////
 
 
