@@ -33,7 +33,9 @@
           <thead>
               <tr>
                 <th>Sl.No</th>                
-                <th>Response</th>                     
+                <th>Response</th>  
+                <th>Sent at</th> 
+                <th>Verified at</th>                      
               </tr>
           </thead>
       </table>       

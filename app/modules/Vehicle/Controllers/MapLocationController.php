@@ -84,4 +84,53 @@ class MapLocationController extends Controller {
         );
         return response()->json($response_data); 
     }
+
+
+
+
+
+    public function gpsMapLocationPublic(Request $request)
+    {
+        $gps=Gps::all();
+        return view('Vehicle::gps-location-tracker-public',['gps' => $gps]);
+    }
+
+    public function gpsMapLocationTrackPublic(Request $request)
+    {
+        $gps_id=$request->gps_id;
+        $from_date=date('Y-m-d H:i:s',strtotime($request->from_date));
+        $to_date=date('Y-m-d H:i:s',strtotime($request->to_date));
+        $track_data_with_all=GpsData::select('latitude as lat',
+                      'longitude as lng'
+                    )
+                    ->where('gps_id',$gps_id)
+                    ->whereBetween('device_time', array($from_date, $to_date))
+                    ->get();
+        $track_data_with_gpsfix=GpsData::select('latitude as lat',
+                      'longitude as lng'
+                    )
+                    ->where('gps_id',$gps_id)
+                    ->where('gps_fix',1)
+                    ->whereBetween('device_time', array($from_date, $to_date))
+                    ->get();
+        $response_data = array(
+                           'track_data_with_all' => $track_data_with_all,
+                           'track_data_with_gpsfix' => $track_data_with_gpsfix
+                        );
+        return response()->json($response_data); 
+    }
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
 }
