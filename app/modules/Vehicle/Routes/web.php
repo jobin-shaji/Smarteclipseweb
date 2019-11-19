@@ -128,3 +128,9 @@ Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
 });
+
+///API-START//
+Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+	Route::post('/vehicle_statitics','VehicleController@vehicleStatics');
+});
+///API-END//
