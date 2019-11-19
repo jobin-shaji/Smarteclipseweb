@@ -18,9 +18,12 @@
    
   ?>
     <?php 
-     $client = Auth::user()->client;
 
+     $client = Auth::user()->client;
+     // $client = Auth::user()->client;
+     
      $user = Auth::user();
+     // dd($user);
      $root=$user->root;    
      $dealer=$user->dealer;
      $sub_dealer=$user->subDealer;

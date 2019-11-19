@@ -42,6 +42,7 @@
                 <li><a class="dropdown-item" href="{{url('/dealers')}}">LIST DEALERS</a></li>
                 </ul>
             </li>
+
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SUB DEALERS</a>
                 <ul class="dropdown-menu">
@@ -63,6 +64,13 @@
                 <li><a class="dropdown-item" href="{{url('/assign-servicer')}}">CREATE JOB</a></li>
                 <li><a class="dropdown-item" href="{{url('/assign-servicer-list')}}">LIST JOBS</a></li>
                 <li><a class="dropdown-item" href="{{url('/servicer-job-history-list')}}">JOBS HISTORY</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >OPERATIONS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/operations/create')}}">ADD OPERATION</a></li>
+                <li><a class="dropdown-item" href="{{url('/operations')}}">LIST OPERATION</a></li>
                 </ul>
             </li>
         </ul>

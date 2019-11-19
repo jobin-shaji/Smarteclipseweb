@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
         $permission_sub_dealer = Permission::create(['name' => 'manage clients']);
         $permission_client = Permission::create(['name' => 'client']);
         // $permission_servicer = Permission::create(['name' => 'servicer']);
+        $permission_operations = Permission::create(['name' => 'manage operations']);
         
 
 
@@ -46,6 +47,10 @@ class UsersTableSeeder extends Seeder
         $proUserRole = Role::create(['name' => 'pro']);
         $schoolUserRole = Role::create(['name' => 'school']);
         $schoolPremiumUserRole = Role::create(['name' => 'school_premium']);
+
+
+        $operationsUserRole = Role::create(['name' => 'operations']);
+        $operationsUserRole->givePermissionTo($permission_operations);
         
 
         $user =  DB::table('users')->insert([
@@ -84,6 +89,7 @@ class UsersTableSeeder extends Seeder
         User::where('username','dealer')->first()->assignRole('dealer');	
 
 
+       
         $user = DB::table('users')->insert([
             'username' => 'sub_dealer',
             'mobile' => 123453,
@@ -116,6 +122,23 @@ class UsersTableSeeder extends Seeder
             'user_id'=>4,
             'sub_dealer_id' => 1
         ]);
+         $user = DB::table('users')->insert([
+            'username' => 'operations',
+            'mobile' => 123453,
+            'email' => 'phpdeveloper05@vehiclest.in',
+            'password' => bcrypt('123456'),
+            'status' => 1
+        ]);
+
+        DB::table('operations')->insert([
+            'address' => 'vst',
+            'name' => 'operations',
+            'user_id'=>5,
+            'root_id' => 1
+        ]);
+
+        User::where('username','operations')->first()->assignRole('operations');  
+
   
         User::where('username','client')->first()->assignRole('client'); 
 
