@@ -174,17 +174,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
-                                  
-                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
-                            </div>
-                        </li>
+                        
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS 
@@ -321,8 +311,7 @@
                                             
                                         </a>
                                     </li>
-
-                                     <li class="sys_vapor cover_idle_report">
+                                    <li class="sys_vapor cover_idle_report">
                                         <a href="{{url('/idle-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/idle-report.png"  />
@@ -350,18 +339,24 @@
                                             
                                         </a>
                                     </li>
-                                    
-                                    
-                                     
-                                   </ul>
-                                   
-
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                             
+                                <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
+                                  
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
                             </div>
                         </li>
                         
                         @if(!\Auth::user()->hasRole(['pro']))
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> GO PREMIUM    
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> UPGRADE    
                             </a>
                         </li>
                         @endif
@@ -395,7 +390,7 @@
                         <li class="nav-item dropdown">
                             <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
                                 <span class="bell_value" id="bell_notification_count">0</span>
-                            </span><i class="mdi mdi-bell font-24" style="padding: 19% 0 0 0"></i>
+                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i>
                             
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
