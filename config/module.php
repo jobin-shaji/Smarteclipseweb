@@ -35,6 +35,8 @@ return  [
        'Warehouse',
        'Employee',
        'GpsConfig',
+       'Operations',
+
     ]
 ]
 
