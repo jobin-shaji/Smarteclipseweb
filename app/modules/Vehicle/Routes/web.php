@@ -144,5 +144,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 ///API-START//
 Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 	Route::post('/vehicle_statitics','VehicleController@vehicleStatics');
+	Route::post('/travel_summary','VehicleController@getTravelSummary');
+
 });
 ///API-END//

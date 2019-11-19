@@ -21,7 +21,7 @@
   <section class="content" >
     <div class="row">
       <div class="col-md-6">
-        <table class="table table-hover table-bordered  table-striped">
+        <table class="table table-hover table-bordered  table-striped" style="width: 0!important;margin-left: 30%;border: solid 2px black!important;margin-top: 5%">
           <thead>
             <tr>
               <th>IMEI</th>
@@ -141,5 +141,10 @@
 
 @section('script')
     <script src="{{asset('js/gps/gps-config-list.js')}}"></script>
+    <style type="text/css">
+      th{
+        border: solid 2px black!important;
+      }
+    </style>
 @endsection
 @endsection

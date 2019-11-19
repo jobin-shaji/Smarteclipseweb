@@ -28,12 +28,14 @@ trait VehicleDataProcessorTrait{
                 ->where('device_time', '>=', $from_date)
                 ->where('device_time', '<=', $to_date)
                 ->where('gps_id',$gps_id)
+                ->whereIn('vehicle_mode',['H','S','M'])
                 ->orderBy('device_time')
                 ->first();
         $last_log=GpsData::select('id','ignition','device_time')
                 ->where('device_time', '>=', $from_date)
                 ->where('device_time', '<=', $to_date)
                 ->where('gps_id',$gps_id)
+                ->whereIn('vehicle_mode',['H','S','M'])
                 ->latest('device_time')
                 ->first();
         $balance_log=DB::select('SELECT id,ignition,device_time FROM
@@ -42,7 +44,7 @@ trait VehicleDataProcessorTrait{
                                  , @statusPre := ignition
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
         $engine_on_time=0;
@@ -117,6 +119,7 @@ trait VehicleDataProcessorTrait{
                 ->where('device_time','>=',$from_date)
                 ->where('device_time','<=',$to_date) 
                 ->where('gps_id',$gps_id)
+                ->whereIn('vehicle_mode',['H','S','M'])
                 ->orderBy('device_time')
                 ->first();
         $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
@@ -125,11 +128,12 @@ trait VehicleDataProcessorTrait{
                                  , @statusPre := vehicle_mode
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
         $last_log=GpsData::select('id','vehicle_mode','device_time')                 
                 ->where('gps_id',$gps_id)
+                ->whereIn('vehicle_mode',['H','S','M'])
                 ->where('device_time','>=',$from_date)
                 ->where('device_time','<=',$to_date) 
                 ->latest('device_time')
@@ -248,12 +252,14 @@ trait VehicleDataProcessorTrait{
                 ->where('device_time', '>=', $from_date)
                 ->where('device_time', '<=', $to_date)
                 ->where('gps_id',$gps_id)
+                ->whereIn('vehicle_mode',['H','S','M'])
                 ->orderBy('device_time')
                 ->first();
         $last_log=GpsData::select('id','ac_status','device_time')
                 ->where('device_time', '>=', $from_date)
                 ->where('device_time', '<=', $to_date)
                 ->where('gps_id',$gps_id)
+                ->whereIn('vehicle_mode',['H','S','M'])
                 ->latest('device_time')
                 ->first();
         $balance_log=DB::select('SELECT id,ac_status,device_time FROM
@@ -262,7 +268,7 @@ trait VehicleDataProcessorTrait{
                                , @statusPre := ac_status
                           FROM gps_data
                              , (SELECT @statusPre:=NULL) AS d
-                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
                         ) AS good
                       WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
        

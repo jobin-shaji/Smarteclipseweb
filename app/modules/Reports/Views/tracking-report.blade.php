@@ -79,22 +79,18 @@
                         <thead>
                             <tr>
                               <th>Sl.No</th>
-                              <!-- <th>Vehicle</th>
-                              <th>Register Number</th> -->
-                              <th>Run</th>
-                              <th>Sleep</th>
-                              <th>Halt</th>                              
+                              <th>Moving</th>
+                              <th>Halt</th>
+                              <th>Sleep</th>                              
                                       
                             </tr>
                         </thead>
                          <tbody>
                             <tr>
-
-                             <td id="sl"></td>
-                             <td id="motion"></td>
-                            <td id="sleep"></td>
-                             <td id="halt"></td>
-                            
+                              <td id="sl"></td>
+                              <td id="motion"></td>
+                              <td id="halt"></td>
+                              <td id="sleep"></td>
                             </tr>
                         </tbody>
                     </table>
