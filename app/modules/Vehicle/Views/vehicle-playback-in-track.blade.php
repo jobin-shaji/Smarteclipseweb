@@ -1392,11 +1392,16 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                     url='http://app.rayfleet.com/api/v1/vehicle_playback';
                 <?php }else{ ?>
                     url='http://app.smarteclipse.com/api/v1/vehicle_playback';
-                <?php } ?> 
+                   
+
+                <?php } 
+            ?> 
+
 
             //debugger;
             $.ajax({
-                ,                
+                type: "POST",                
+                url: url,                
                 data: Objdata,
                 async: false,
                 //dataType: "json",
