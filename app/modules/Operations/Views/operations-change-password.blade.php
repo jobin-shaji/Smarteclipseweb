@@ -27,9 +27,9 @@
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-md-6 col-lg-6">
-            <form  method="POST" action="{{route('dealer.update-password.p',$dealer->user_id)}}">
+            <form  method="POST" action="{{route('operations.update-password.p',$operations->user_id)}}">
             {{csrf_field()}}
-            <input type="hidden" name="id" value="{{$dealer->user_id}}"> 
+            <input type="hidden" name="id" value="{{$operations->user_id}}"> 
               <div class="row">
                 <div class="col-md-6 col-md-6">
                   <div class="form-group has-feedback">
