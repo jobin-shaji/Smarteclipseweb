@@ -91,6 +91,10 @@
               <th id="ure"></th>
             </tr>
              <tr>
+              <th>URF</th>
+              <th id="urf"></th>
+            </tr>
+             <tr>
               <th>URH</th>
               <th id="urh"></th>
             </tr>
@@ -226,7 +230,7 @@
             </tr>
             <tr>
               <th>FPD</th>
-              <th id="fdp"></th>
+              <th id="fpd"></th>
             </tr>
             <tr>
               <th>TDU</th>
