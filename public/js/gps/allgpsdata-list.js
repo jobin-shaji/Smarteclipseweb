@@ -15,7 +15,7 @@ function singleGpsData(value){
   var data = { 
      gps : value   
   };
-  apiBackgroundPostData(url,data,'alldata',{alert:false});  
+  backgroundPostData(url,data,'alldata',{alert:false});  
 }
 function alldata(res){
   $('#datas').empty();

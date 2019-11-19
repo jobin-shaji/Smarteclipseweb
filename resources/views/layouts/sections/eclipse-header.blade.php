@@ -73,7 +73,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                   
-                    @role('root|dealer|sub_dealer|servicer|school')
+                    @role('root|dealer|sub_dealer|servicer|school|operations')
 
                     @role('root')
                         @include('layouts.sections.root-header')
@@ -89,6 +89,9 @@
                     @endrole 
                     @role('school')
                         @include('layouts.sections.school-header')
+                    @endrole
+                      @role('operations')
+                        @include('layouts.sections.operation-header')
                     @endrole
 
                    @endrole

@@ -1,4 +1,4 @@
-@extends('layouts.api-app')
+@extends('layouts.eclipse')
 @section('content')
 <section class="content box">
   <div class="page-wrapper_new_map">
