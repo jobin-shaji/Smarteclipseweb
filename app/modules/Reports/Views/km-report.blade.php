@@ -48,10 +48,12 @@ Total KM Report
                             </div>
                           </div>                         
                           <div class="col-lg-3 col-md-3 pt-4">
+                            
                             <div class="form-group">          
-                              <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> 
+                              <button class="btn btn-sm btn-info btn2 srch" onclick="check()">
                                 <i class="fa fa-search"></i> 
                               </button>
+
                               <!-- <button class="btn btn-sm btn1 btn-primary form-control" id="excel" onclick="downloadKMReport()">
                               <i class="fa fa-file"></i>Download Excel</button>   -->                      
                             </div>
@@ -115,6 +117,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/moving-duration.png" width="10%" height="60px" class="report_img"/>
@@ -142,6 +145,13 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+
+<!-- ------------------------------------ LOADER STARTS----------------------------------- -->
+                          <!-- <div class="loader-wrapper" id="loader-1">
+                            <div id="loader"></div>
+                          </div>  -->
+<!-- ------------------------------------ LOADER ENDS----------------------------------- -->
+
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/key.png" width="10%" height="60px" class="report_img"/>
@@ -443,6 +453,7 @@ Total KM Report
 
 </section>
 @section('script')
+  <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
     <script src="{{asset('js/gps/km-list.js')}}"></script>
 @endsection
 @endsection
