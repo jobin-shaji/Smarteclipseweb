@@ -1,4 +1,4 @@
-@extends('layouts.api-app')
+@extends('layouts.eclipse')
 @section('content')
 <section class="hilite-content">
   <form  method="POST" action="#">
