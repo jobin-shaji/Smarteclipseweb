@@ -41,59 +41,139 @@ class OperationsController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('operations')); 
     }
+////////////////////////////operations list////////////////////////
+
+     //Display employee details 
+    public function operationsListPage()
+    {
+        return view('Operations::operations-list');
+    }
+    //returns employees as json 
+    public function getOperations()
+    {
+        $operations = Operations::select(
+            'id', 
+            'user_id',                      
+            'name',                   
+            'address',                                        
+            'deleted_at'
+        )
+        ->withTrashed()
+        ->with('user:id,email,mobile,deleted_at')
+        ->get();
+        return DataTables::of($operations)
+        ->addIndexColumn()
+        ->addColumn('working_status', function ($operations) {
+            if($operations->user->deleted_at == null){ 
+            return "
+                <b style='color:#008000';>Enabled</b>
+                <button onclick=disableOperations(".$operations->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+            ";
+            }else{ 
+            return "
+                <b style='color:#FF0000';>Disabled</b>
+                <button onclick=enableOperations(".$operations->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
+            ";
+            }
+        })
+        ->addColumn('action', function ($operations) {
+             $b_url = \URL::to('/');
+            if($operations->user->deleted_at == null){ 
+            return "
+            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
+            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+           
+            ";
+            }else{ 
+            return "";
+            }
+        })
+        ->rawColumns(['link', 'action','working_status'])
+        ->make();
+    }
+    //dealer creation page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //Dealer details view
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $dealer = Dealer::where('user_id', $decrypted)->first();
+        $operations = Operations::where('user_id', $decrypted)->first();
         $user=User::find($decrypted);   
         
-        if($dealer == null){
-            return view('Dealer::404');
+        if($operations == null){
+            return view('Operations::404');
         }
-        return view('Dealer::dealer-details',['dealer' => $dealer,'user' => $user]);
+        return view('Operations::operations-details',['operations' => $operations,'user' => $user]);
     }
+
     //for edit page of Dealers
     public function edit(Request $request)
     {
+        // dd(1);
         $decrypted = Crypt::decrypt($request->id); 
-        $dealers = Dealer::where('user_id', $decrypted)->first();
+        $operations = Operations::where('user_id', $decrypted)->first();
         $user=User::find($decrypted);
-
-        if($dealers == null){
-            return view('Dealer::404');
+// dd($user);
+        if($operations == null){
+            return view('Operations::404');
         }
-        return view('Dealer::dealer-edit',['dealers' => $dealers,'user' => $user]);
+        return view('Operations::operations-edit',['operations' => $operations,'user' => $user]);
     }
     //update dealers details
     public function update(Request $request)
     {  
         $user = User::find($request->id);
-        $dealer = Dealer::where('user_id', $request->id)->first();
-        if($dealer == null){
-           return view('Dealer::404');
+        $operations = Operations::where('user_id', $request->id)->first();
+
+        if($operations == null){
+           return view('Operations::404');
         } 
-        $rules = $this->dealersUpdatesRules($user);
+        $rules = $this->operationsUpdatesRules($user);
         $this->validate($request, $rules);   
-        $dealer->name = $request->name;
-        $dealer->save();
+        $operations->name = $request->name;
+        $operations->save();
         $user->mobile = $request->phone_number;
         $user->save();
         $did = encrypt($user->id);
-        $request->session()->flash('message', 'Dealer details updated successfully!');
+        $request->session()->flash('message', 'Operations details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('dealers.edit',$did));  
+        return redirect(route('operations.edit',$did));  
     }
     //for edit page of employee password
     public function changePassword(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $dealer = Dealer::where('user_id', $decrypted)->first();
+        $operations = Operations::where('user_id', $decrypted)->first();
         // $dealer = Dealer::find($decrypted);
-        if($dealer == null){
-           return view('Dealer::404');
+        if($operations == null){
+           return view('Operations::404');
         }
-        return view('Dealer::dealer-change-password',['dealer' => $dealer]);
+        return view('Operations::operations-change-password',['operations' => $operations]);
     }
     //update password
     public function updatePassword(Request $request)
@@ -110,47 +190,47 @@ class OperationsController extends Controller {
         $subdealer->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
-        return  redirect(route('dealers.change-password',$did));
+        return  redirect(route('operations.change-password',$did));
     }
 
     //delete dealer details from table
-    public function disableDealer(Request $request)
+    public function disableOperations(Request $request)
     {
-        $dealer_user = User::find($request->id);
-        $dealer = Dealer::select('id')->where('user_id',$dealer_user->id)->first();
-        if($dealer_user == null){
+        $operations_user = User::find($request->id);
+        $operations = Operations::select('id')->where('user_id',$operations_user->id)->first();
+        if($operations_user == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Operations does not exist'
             ]);
         }
-        $dealer_user->delete();
-        $dealer->delete();
+        $operations_user->delete();
+        $operations->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer disabled successfully'
+            'message' => 'Operations disabled successfully'
         ]);
     }
     // restore emplopyee
     public function enableDealer(Request $request)
     {
-        $dealer_user = User::withTrashed()->find($request->id);
-        $dealer = Dealer::withTrashed()->select('id')->where('user_id',$dealer_user->id)->first();
-        if($dealer_user==null){
+        $operations_user = User::withTrashed()->find($request->id);
+        $operations = Operations::withTrashed()->select('id')->where('user_id',$operations_user->id)->first();
+        if($operations_user==null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Operations does not exist'
             ]);
         }
-        $dealer_user->restore();
-        $dealer->restore();
+        $operations_user->restore();
+        $operations->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer enabled successfully'
+            'message' => 'Opertaions enabled successfully'
         ]);
     }
    
@@ -260,7 +340,7 @@ class OperationsController extends Controller {
         return  $rules;
     }
     //validation for employee updation
-    public function dealersUpdatesRules($user)
+    public function operationsUpdatesRules($user)
     {
         $rules = [
             'name' => 'required',

@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  View Dealer
+  View Operations
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@
 <div class="page-wrapper-root1">
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Dealer</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Operators</li>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -21,7 +21,7 @@
   </nav>
  
   <div class="container-fluid">
-    <div class="card-body"><h4>Dealer List</h4>
+    <div class="card-body"><h4>Operators List</h4>
       <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
@@ -53,5 +53,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/dealer-list.js')}}"></script>
+    <script src="{{asset('js/gps/operations-list.js')}}"></script>
   @endsection

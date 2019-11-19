@@ -1,17 +1,18 @@
 <?php 
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Operations\Controllers' ] , function() {
 // //for dealers
-// Route::get('/dealers','DealerController@dealerListPage')->name('dealers');
-// Route::post('/dealer-list','DealerController@getDealers')->name('dealer-list');
+Route::get('/operations','OperationsController@operationsListPage')->name('operations');
+Route::post('/operations-list','OperationsController@getOperations')->name('operations-list');
 Route::get('/operations/create','OperationsController@create')->name('operations.create');
 Route::post('/operations/create','OperationsController@save')->name('operations.create.p');
-// Route::get('/dealers/{id}/edit','DealerController@edit')->name('dealers.edit');
-// Route::post('/dealers/{id}/edit','DealerController@update')->name('dealers.update.p'); 
-// Route::get('/dealers/{id}/details','DealerController@details')->name('dealers.details');
-// Route::post('/dealer/delete','DealerController@deleteDealer')->name('dealer.delete');
-// Route::post('/dealer/activate','DealerController@activateDealer')->name('dealer.activate');
-// Route::post('/dealer/disable','DealerController@disableDealer')->name('dealer.disable');
-// Route::post('/dealer/enable','DealerController@enableDealer')->name('dealer.enable');
+
+Route::get('/operations/{id}/edit','OperationsController@edit')->name('operations.edit');
+Route::post('/operations/{id}/edit','OperationsController@update')->name('operations.update.p'); 
+Route::get('/operations/{id}/details','OperationsController@details')->name('operations.details');
+Route::post('/operations/delete','OperationsController@deleteDealer')->name('operations.delete');
+Route::post('/operations/activate','OperationsController@activateDealer')->name('dealer.activate');
+Route::post('/operations/disable','OperationsController@disableOperations')->name('operations.disable');
+Route::post('/operations/enable','OperationsController@enableDealer')->name('operations.enable');
 });
 
 // Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
@@ -20,10 +21,10 @@ Route::post('/operations/create','OperationsController@save')->name('operations.
 // 	Route::post('/dealers/{id}/profile/edit','DealerController@updateDealerProfile')->name('dealers.profile.update.p'); 
 // });
 
-// Route::group(['middleware' => ['web','auth','role:root|dealer'] , 'namespace' => 'App\Modules\Dealer\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:root|operations'] , 'namespace' => 'App\Modules\Operations\Controllers' ] , function() {
 
-// Route::get('/dealers/{id}/change-password','DealerController@changePassword')->name('dealers.change-password');
-// Route::post('/dealer/{id}/update-password','DealerController@updatePassword')->name('dealer.update-password.p'); 
+Route::get('/operations/{id}/change-password','OperationsController@changePassword')->name('operations.change-password');
+Route::post('/operations/{id}/update-password','OperationsController@updatePassword')->name('operations.update-password.p'); 
 
-// });
+});
 
