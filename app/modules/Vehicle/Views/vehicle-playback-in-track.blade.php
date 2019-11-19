@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Eclipse </title>
+    <title>
+
+        <?php
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+            Rayfleet
+        <?php }else{ ?>
+            Eclipse
+        <?php } ?> 
+
+</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback_assets/assets/img/icon.png')}}" type="image/x-icon" />
     <!-- Fonts and icons -->
@@ -1369,10 +1381,22 @@ Create matched/unmatched markers that can be used to draw the original/matched t
                 "toDateTime": $('#dtEnddate').val()
             }
 
+
+            var url="";
+
+            <?php
+                $url=url()->current();
+                $rayfleet_key="rayfleet";
+                $eclipse_key="eclipse";
+                if (strpos($url, $rayfleet_key) == true) {  ?>
+                    url='http://app.rayfleet.com/api/v1/vehicle_playback';
+                <?php }else{ ?>
+                    url='http://app.smarteclipse.com/api/v1/vehicle_playback';
+                <?php } ?> 
+
             //debugger;
             $.ajax({
-                type: "POST",                
-                url: 'http://app.smarteclipse.com/api/v1/vehicle_playback',                
+                ,                
                 data: Objdata,
                 async: false,
                 //dataType: "json",
