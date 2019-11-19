@@ -606,16 +606,16 @@ class GpsController extends Controller {
     {
         if($request->gps && $request->header){
             
-         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header);  
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->limit(500);  
         }
         else if($request->gps){
-         $items = GpsData::where('gps_id',$request->gps);  
+         $items = GpsData::where('gps_id',$request->gps)->limit(500);  
         }
         else if($request->header){
-            $items = GpsData::where('header',$request->header); 
+            $items = GpsData::where('header',$request->header)->limit(500); 
         }
         else{
-         $items = GpsData::limit(10000);  
+         $items = GpsData::limit(500);  
         }
         return DataTables::of($items)
         ->addIndexColumn()
@@ -666,7 +666,7 @@ class GpsController extends Controller {
         return view('Gps::vltdata-list');
     }
 
-     public function getVltData(Request $request)
+    public function getVltData(Request $request)
     {
     
       
@@ -1400,25 +1400,119 @@ public function getGpsAllDataHlm(Request $request)
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('gps.details',Crypt::encrypt($gps->id)));
     } 
-////////////////////////////////////////ac Status////////////////////////////////////
-
-    public function acStatus(Request $request){
-        $first_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '=', date('Y-m-d'))->orderBy('device_time')->first();
-        $last_log=GpsData::select('id','ignition','device_time')->whereDate('device_time', '=', date('Y-m-d'))->latest('device_time')->first();
-        // $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
-        //                     ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
-        //                          , ignition, vehicle_mode,device_time,gps_id,id
-        //                          , @statusPre := vehicle_mode
-        //                     FROM gps_data 
-        //                        , (SELECT @statusPre:=NULL) AS d
-        //                     WHERE DATE(device_time) = CURDATE() AND gps_id=3 ORDER BY device_time 
-        //                   ) AS good
-        //                 WHERE statusChanged');
 
 
-
+      public function otaResponseListPage()
+    {
+       
+        $gps = Gps::all();
         
+        return view('Gps::ota-response-list',['gps' => $gps]);
     }
+     public function getOtaResponseAllData(Request $request)
+    {
+        if($request->gps){
+         $items = OtaResponse::where('gps_id',$request->gps)->limit(500);  
+        }
+        
+        return DataTables::of($items)
+        ->addIndexColumn()
+         
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function allpublicgpsListPage()
+    {
+        $ota = OtaType::all();
+        $gps = Gps::all();
+        $gps_data = GpsData::select('id','header')->groupBy('header')->get();
+        // dd($header);
+        return view('Gps::public-alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
+    }
+     public function getPublicAllData(Request $request)
+    {
+        if($request->gps && $request->header){
+            
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->limit(500);  
+        }
+        else if($request->gps){
+         $items = GpsData::where('gps_id',$request->gps)->limit(500);  
+        }
+        else if($request->header){
+            $items = GpsData::where('header',$request->header)->limit(500); 
+        }
+        else{
+         $items = GpsData::limit(500);  
+        }
+        return DataTables::of($items)
+        ->addIndexColumn()
+         ->addColumn('count', function ($items) {
+                $count=0;
+                $count=strlen($items->vlt_data);
+                return $count;
+             })
+         ->addColumn('forhuman', function ($items) {
+                $forhuman=0;
+                $forhuman=Carbon::parse($items->device_time)->diffForHumans();
+                return $forhuman;
+             })
+         ->addColumn('servertime', function ($items) {
+                $servertime=0;
+                 $servertime=Carbon::parse($items->created_at)->diffForHumans();
+                return $servertime;
+             })
+         ->addColumn('action', function ($items) {
+             $b_url = \URL::to('/');
+           // <a href=".$b_url."/dealers/".Crypt::encrypt($items->id)."/change-password class='btn btn-xs btn-primary'>View</a>
+
+             $contains = Str::contains($items, 'BTH');
+             $hlm_contains = Str::contains($items, 'HLM');
+             $lgn_contains = Str::contains($items, 'LGN');
+
+             if($contains){
+                     return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataBTHList($items->id)'>Batch Log </button>";                    
+                  }
+                  else if($hlm_contains || $lgn_contains){
+                    return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdataHLMList($items->id)'>HLM/LGN </button>"; 
+                  }
+                    else{
+                       return "<button type='button' class='btn btn-primary btn-info' data-toggle='modal'  onclick='getdata($items->id)'>View </button>";
+                      }
+                
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     //validation for gps creation

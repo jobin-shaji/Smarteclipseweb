@@ -1,38 +1,50 @@
-@extends('layouts.api-app')
+@extends('layouts.eclipse')
 
 @section('content')
 
 <section class="hilite-content">
       <!-- title row -->     
   <div class="row">
-   
-      <div class="col-md-12">
-        <form  method="POST" action="{{route('gps.create.p')}}">
-        {{csrf_field()}}
-        <div  style ="margin-left: 77px"class="form-group has-feedback">
-          <label class="srequired">GPS</label>
-          <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>                
-            <option value="">All</option>
-            @foreach($gps as $gps)
-            <option value="{{$gps->id}}">{{$gps->imei}}</option>
-            @endforeach
-          </select>
-          <!-- <button type="button" class="btn btn-primary btn-info" data-toggle="modal" data-target="#favoritesModal">SET OTA </button>     -->
-        </div>  
-        </form>
-        <div  style ="margin-left: 77px"class="form-group has-feedback">
-          <label class="srequired">Header</label>
-          <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
-            <option selected="selected" disabled="disabled" value="">Select Header</option> 
-            <option value="">All</option>  
-            @foreach($gpsDatas as $gpsData)
-            <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
-            @endforeach             
-          </select>
-          <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
-        </div> 
+    <div class="panel-body" style="width: 100%;min-height: 10%">
+      <div class="panel-heading">
+        <div class="cover_div_search">
+          <form  method="POST" action="{{route('gps.create.p')}}">
+            {{csrf_field()}}
+            <div class="row">
+             <div class="col-lg-3 col-md-3"> 
+              <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
+                <label>GPS</label>                           
+                <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>        
+                  <option value="">All</option>
+                  @foreach($gps as $gps)
+                    <option value="{{$gps->id}}">{{$gps->imei}}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3"> 
+              <div class="form-group" style="margin-left: 30%;margin-top: 2%;">
+                <label>Header</label>                           
+                <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
+                  <option selected="selected" disabled="disabled" value="">Select Header</option> 
+                  <option value="">All</option>  
+                  @foreach($gpsDatas as $gpsData)
+                  <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
+                  @endforeach             
+                </select>
+              </div>
+            </div>                         
+            <div class="col-lg-3 col-md-3 pt-4">
+              <div class="form-group">          
+                <button class="btn btn-sm btn-info btn2 srch" onclick="check()" style="margin-left: 40%">
+                  <i class="fa fa-search"></i> 
+                </button>                    
+              </div>
+            </div>
+          </form>
+        </div>                        
       </div>
-          
+    </div>      
   </div>
   <div class="modal fade" id="favoritesModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
   <div class="modal-dialog modal-lg" role="document">

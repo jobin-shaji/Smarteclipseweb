@@ -105,6 +105,8 @@ Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehic
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
+
 
 
 	});
@@ -119,6 +121,10 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
 Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+ 	
+});
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
  	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
 	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
 
@@ -126,3 +132,9 @@ Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
 });
+
+///API-START//
+Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+	Route::post('/vehicle_statitics','VehicleController@vehicleStatics');
+});
+///API-END//
