@@ -64,45 +64,34 @@ Route::get('/operation-gps-data','GpsController@allgpsListPage')->name('operatio
 Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 
 Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
-
 Route::get('/test','GpsController@testKm')->name('testkm');
-
 Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
-
 Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
-
 
 Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps-data-bth');
 Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
-
 Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
-
 Route::get('/bth-data','GpsController@allBthData')->name('bth-data');
 Route::post('/allbthdata-list','GpsController@getAllBthData')->name('allbthdata-list');
 Route::get('/id/{id}/pased','GpsController@pasedData')->name('id-pased');
-
 // Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-summery');
 Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
-
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
 Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
-
 Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
-
 Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
 Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');
+Route::get('/gps-report','GpsController@gpsReport')->name('gps-report');
+Route::post('/gps-report-list','GpsController@gpsReportList')->name('gps-report-list');
 
 });
 
 
-
-
-
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
-
 Route::get('/gps-data','GpsController@allpublicgpsListPage')->name('gps-data');
 Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
+Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
 
 });

@@ -1421,25 +1421,6 @@ public function getGpsAllDataHlm(Request $request)
         ->rawColumns(['link', 'action'])
         ->make();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function allpublicgpsListPage()
     {
         $ota = OtaType::all();
@@ -1504,7 +1485,30 @@ public function getGpsAllDataHlm(Request $request)
         ->make();
     }
 
-
+    public function gpsReport()
+    {
+        return view('Gps::gps-report');  
+    }  
+     public function gpsReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =Gps::select(
+            'serial_no',
+            'icc_id',
+            'imsi','imei','manufacturing_date','e_sim_number','batch_number','model_name','version','status','device_time','employee_code','created_at'
+        );
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+      $gps = $query->get();
+      // dd($gps);             
+        return DataTables::of($gps)
+        ->addIndexColumn()
+        ->make();
+    } 
 
 
 
