@@ -91,8 +91,8 @@ Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 
 Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
 
-// Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
-// Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');
+Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
+Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');
 
 });
 

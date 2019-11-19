@@ -1402,25 +1402,25 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
-    //   public function otaResponseListPage()
-    // {
+      public function otaResponseListPage()
+    {
        
-    //     $gps = Gps::all();
+        $gps = Gps::all();
         
-    //     return view('Gps::ota-response-list',['gps' => $gps]);
-    // }
-    //  public function getOtaResponseAllData(Request $request)
-    // {
-    //     if($request->gps){
-    //      $items = OtaResponse::where('gps_id',$request->gps)->limit(500);  
-    //     }
+        return view('Gps::ota-response-list',['gps' => $gps]);
+    }
+     public function getOtaResponseAllData(Request $request)
+    {
+        if($request->gps){
+         $items = OtaResponse::where('gps_id',$request->gps)->limit(500);  
+        }
         
-    //     return DataTables::of($items)
-    //     ->addIndexColumn()
+        return DataTables::of($items)
+        ->addIndexColumn()
          
-    //     ->rawColumns(['link', 'action'])
-    //     ->make();
-    // }
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
 
 
 
