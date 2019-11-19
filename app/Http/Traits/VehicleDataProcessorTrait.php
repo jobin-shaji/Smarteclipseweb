@@ -42,7 +42,7 @@ trait VehicleDataProcessorTrait{
                                  , @statusPre := ignition
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
         $engine_on_time=0;
@@ -70,7 +70,7 @@ trait VehicleDataProcessorTrait{
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==1){
+                    if($ignition==0){
                         $engine_on_time=$engine_on_time+$diff_in_minutes;
                     }else{
                         $engine_off_time=$engine_off_time+$diff_in_minutes;
@@ -111,16 +111,9 @@ trait VehicleDataProcessorTrait{
         return $engine_status;
     }
 
-	public function trackingMode($gps_id,$from_date,$to_date)
+    public function trackingMode($gps_id,$from_date,$to_date)
     {
-        $sleep=0;
-        $halt=0;
-        $moving=0;
-        $time=0;
-        $initial_time = 0;
-        $previous_time =0;
-        $previous_mode = 0;
-        $first_log=GpsData::select('id','vehicle_mode','device_time')             
+    	$first_log=GpsData::select('id','vehicle_mode','device_time')             
                 ->where('device_time','>=',$from_date)
                 ->where('device_time','<=',$to_date) 
                 ->where('gps_id',$gps_id)
@@ -132,7 +125,7 @@ trait VehicleDataProcessorTrait{
                                  , @statusPre := vehicle_mode
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
         $last_log=GpsData::select('id','vehicle_mode','device_time')                 
@@ -141,57 +134,110 @@ trait VehicleDataProcessorTrait{
                 ->where('device_time','<=',$to_date) 
                 ->latest('device_time')
                 ->first();
-        if($first_log != null){
-            $initial_time = 1;
-            $initial_time = $first_log->device_time;
-            $previus_time = $first_log->device_time;
-            $previud_mode = $first_log->vehicle_mode;
-        }
-        if($balance_log){
-            foreach ($balance_log as $mode) {
-                if($initial_time == 0)
-                {
-                      $initial_time = $mode->device_time;
-                      $previus_time = $mode->device_time;
-                      $previud_mode = $mode->vehicle_mode;
-                }else{
-                    if($mode->vehicle_mode == "S"){
-                        $time = strtotime($mode->device_time) - strtotime($previus_time);
-                        $sleep = $sleep+$time;
-                    }else if($mode->vehicle_mode == "H"){
-                        $time = strtotime($mode->device_time) - strtotime($previus_time);
-                        $halt = $halt+$time; 
-                    }else if($mode->vehicle_mode == "M"){
-                        $time = strtotime($mode->device_time) - strtotime($previus_time);
-                        $moving = $moving+$time; 
+        $motion_time=0;
+        $halt_time=0;
+        $sleep_time=0;
+        if($balance_log)
+        {
+            $i=0;
+            foreach ($balance_log as $item) {
+                if($i==0){
+                    $first_device_time=$first_log->device_time;
+                    $first_vehicle_mode=$first_log->vehicle_mode;
+                    $item_device_time=$item->device_time;
+                    $item_vehicle_mode=$item->vehicle_mode;
+
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($item_vehicle_mode== "M"){
+                    	if($first_vehicle_mode == "S"){
+                    		$sleep_time=$sleep_time+$diff_in_minutes;
+                    	}else if($first_vehicle_mode == "H"){
+                    		$halt_time=$halt_time+$diff_in_minutes;
+                    	}
+                        
+                    }else if($item_vehicle_mode== "S"){
+                    	if($first_vehicle_mode == "M"){
+                    		$motion_time=$motion_time+$diff_in_minutes;
+                    	}else if($first_vehicle_mode == "H"){
+                    		$halt_time=$halt_time+$diff_in_minutes;
+                    	}
+                    }else if($item_vehicle_mode== "H"){
+                    	if($first_vehicle_mode == "M"){
+                    		$motion_time=$motion_time+$diff_in_minutes;
+                    	}else if($first_vehicle_mode == "S"){
+                    		$sleep_time=$sleep_time+$diff_in_minutes;
+                    	}
                     }
-              }
-              $previus_time = $mode->device_time;
-            } 
-        }     
-        if($last_log != null){
-            if($last_log->vehicle_mode == "S"){
-                $time = strtotime($last_log->device_time) - strtotime($previus_time);
-                $sleep = $sleep+$time;
-            }else if($last_log->vehicle_mode == "H"){
-                $time = strtotime($last_log->device_time) - strtotime($previus_time);
-                $halt = $halt+$time; 
-            }else if($last_log->vehicle_mode == "M"){
-                $time = strtotime($last_log->device_time) - strtotime($previus_time);
-                $moving = $moving+$time; 
+                }else{
+                    $item_device_time=$item->device_time;
+                    $item_vehicle_mode=$item->vehicle_mode;
+                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+                    $diff_in_minutes = $to->diffInSeconds($from);
+                    if($item_vehicle_mode== "M"){
+                    	if($last_item_vehicle_mode == "S"){
+                    		$sleep_time=$sleep_time+$diff_in_minutes;
+                    	}else if($last_item_vehicle_mode == "H"){
+                    		$halt_time=$halt_time+$diff_in_minutes;
+                    	}
+                        
+                    }else if($item_vehicle_mode== "S"){
+                    	if($last_item_vehicle_mode == "M"){
+                    		$motion_time=$motion_time+$diff_in_minutes;
+                    	}else if($last_item_vehicle_mode == "H"){
+                    		$halt_time=$halt_time+$diff_in_minutes;
+                    	}
+                    }else if($item_vehicle_mode== "H"){
+                    	if($last_item_vehicle_mode == "M"){
+                    		$motion_time=$motion_time+$diff_in_minutes;
+                    	}else if($last_item_vehicle_mode == "S"){
+                    		$sleep_time=$sleep_time+$diff_in_minutes;
+                    	}
+                    }
+                }
+                $last_item_device_time=$item->device_time;
+                $last_item_vehicle_mode=$item->vehicle_mode;
+                $i++;
+            }
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($last_item_vehicle_mode== "M"){
+                $motion_time=$motion_time+$diff_in_minutes;	          
+            }else if($item_vehicle_mode== "S"){
+            	$sleep_time=$sleep_time+$diff_in_minutes;
+            }else if($item_vehicle_mode== "H"){
+            	$halt_time=$halt_time+$diff_in_minutes;
+            }
+        }else if($first_log != null && $balance_log==null)
+        {
+            $first_device_time=$first_log->device_time;
+            $last_device_time=$last_log->device_time;
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+            $diff_in_minutes = $to->diffInSeconds($from);
+            if($first_log->vehicle_mode== "M"){
+                $motion_time=$motion_time+$diff_in_minutes;	    
+            }else if($first_log->vehicle_mode== "S"){
+            	$sleep_time=$sleep_time+$diff_in_minutes;
+            }else if($first_log->vehicle_mode== "H"){
+            	$halt_time=$halt_time+$diff_in_minutes;
             }
         }
-        if($sleep < 0){$sleep =0;}
-        $total_sleep=$this->timeFormate($sleep);
+        if($sleep_time < 0){$sleep_time =0;}
+        $sleep_time=$this->timeFormate($sleep_time);
 
-        if($halt< 0){$halt=0;}
-        $total_halt=$this->timeFormate($halt);
+        if($halt_time< 0){$halt_time=0;}
+        $halt_time=$this->timeFormate($halt_time);
     
-        if($moving< 0){$moving=0;}
-        $total_moving=$this->timeFormate($moving);
-        $output_data = ["total_moving" => $total_moving, 
-                        "total_halt" => $total_halt,
-                        "total_sleep" => $total_sleep
+        if($motion_time< 0){$motion_time=0;}
+        $motion_time=$this->timeFormate($motion_time);
+        $output_data = ["total_moving" => $motion_time, 
+                        "total_halt" => $halt_time,
+                        "total_sleep" => $sleep_time
                        ];
         return $output_data;
     }
@@ -216,7 +262,7 @@ trait VehicleDataProcessorTrait{
                                , @statusPre := ac_status
                           FROM gps_data
                              , (SELECT @statusPre:=NULL) AS d
-                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id ORDER BY device_time 
+                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
                         ) AS good
                       WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
        
@@ -233,7 +279,7 @@ trait VehicleDataProcessorTrait{
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ac_status==1){
+                    if($ac_status==0){
                         $ac_on_time=$ac_on_time+$diff_in_minutes;
                     }else{
                         $ac_off_time=$ac_off_time+$diff_in_minutes;
@@ -244,7 +290,7 @@ trait VehicleDataProcessorTrait{
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ac_status==1){
+                    if($ac_status==0){
                         $ac_on_time=$ac_on_time+$diff_in_minutes;
                     }else{
                         $ac_off_time=$ac_off_time+$diff_in_minutes;
@@ -323,7 +369,7 @@ trait VehicleDataProcessorTrait{
                  	$from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                   	$to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                   	$diff_in_minutes = $to->diffInSeconds($from);
-                  	if($ac_status==1){
+                  	if($ac_status==0){
                       $ac_on_time=$ac_on_time+$diff_in_minutes;
                   	}else{
                       $ac_off_time=$ac_off_time+$diff_in_minutes;
@@ -334,7 +380,7 @@ trait VehicleDataProcessorTrait{
                   	$from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
                   	$to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                   	$diff_in_minutes = $to->diffInSeconds($from);
-                  	if($ac_status==1){
+                  	if($ac_status==0){
                       	$ac_on_time=$ac_on_time+$diff_in_minutes;
                   	}else{
                       	$ac_off_time=$ac_off_time+$diff_in_minutes;

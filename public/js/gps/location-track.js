@@ -10,7 +10,7 @@ function getUrl() {
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
 var numDeltas = 100;
-var delay = 10; //milliseconds
+var delay = 5; //milliseconds
 var i = 0;
 var posLat = parseFloat(start_lat);
 var posLng = parseFloat(start_lng);
@@ -264,19 +264,22 @@ function updateStatusData(current)
         document.getElementById("network_status").innerHTML = "GOOD";
         var element = document.getElementById("lost_blink_id");
         element.classList.remove("lost_blink");
+         $('#network_status').removeClass('lost1');
       }else if (signalStrength < 19 && signalStrength >= 13 && $device_time >= $connection_lost_time) {
         document.getElementById("network_status").innerHTML = "AVERAGE";
         var element = document.getElementById("lost_blink_id");
         element.classList.remove("lost_blink");
+         $('#network_status').removeClass('lost1');
       }else if (signalStrength <= 12 && $device_time >= $connection_lost_time) {
         document.getElementById("network_status").innerHTML = "POOR";
         var element = document.getElementById("lost_blink_id");
         element.classList.remove("lost_blink");
+         $('#lost_blink_id1').removeClass('lost1');
       }else{
         document.getElementById("network_status").innerHTML = "LOST";
         var element = document.getElementById("lost_blink_id");
         element.classList.add("lost_blink");
-         $('#network_status').addClass('lost1')
+         $('#network_status').addClass('lost1');
       }
       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
     
