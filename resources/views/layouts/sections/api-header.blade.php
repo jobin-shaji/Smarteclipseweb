@@ -5,18 +5,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{url('/gps-data')}}">All GPS </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/all-gps-data')}}">CONSOLE</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/gps-km-map')}}">GPS KM</a>
-      </li>
+      
     </ul>
     
   </div>

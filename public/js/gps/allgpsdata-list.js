@@ -18,6 +18,7 @@ function singleGpsData(value){
   backgroundPostData(url,data,'alldata',{alert:false});  
 }
 function alldata(res){
+  console.log(res);
   $('#datas').empty();
   $('#gps_table').empty(); 
   $('#last_update_time').empty(); 
