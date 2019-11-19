@@ -147,9 +147,9 @@ Total KM Report
                         </div>
 
 <!-- ------------------------------------ LOADER STARTS----------------------------------- -->
-                          <!-- <div class="loader-wrapper" id="loader-1">
+                          <div class="loader-wrapper" id="loader-1">
                             <div id="loader"></div>
-                          </div>  -->
+                          </div> 
 <!-- ------------------------------------ LOADER ENDS----------------------------------- -->
 
                         <div class="widthh">

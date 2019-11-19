@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('content')
-<section class="hilite-content">
+<section class="hilite-content" style="min-height: 500px">
   <form  method="POST" action="#">
   {{csrf_field()}}
     <div class="row">
@@ -19,18 +19,442 @@
   </form>
   <section class="content" >
     <div class="row">
-      <div class="col-md-6">   
-        <table class="table table-hover table-bordered  table-striped" id="data_table">
+      <div class="col-md-12">   
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>PU</label>
+          </span>
+          <span id="pu" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>MO</label>
+          </span>
+          <span id="mo" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>EO</label>
+          </span>
+          <span id="eo" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>ED</label>
+          </span>
+          <span id="ed" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>ST</label>
+          </span>
+          <span id="st" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>HT</label>
+          </span>
+          <span id="ht" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>SL</label>
+          </span>
+          <span id="sl" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>HBT</label>
+          </span>
+          <span id="hbt" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>HAT</label>
+          </span>
+          <span id="hat" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>RTT</label>
+          </span>
+          <span id="rtt" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>LBT</label>
+          </span>
+          <span id="lbt" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>TA</label>
+          </span>
+          <span id="ta" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>VN</label>
+          </span>
+          <span id="vn" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>UR</label>
+          </span>
+          <span id="ur" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>URT</label>
+          </span>
+          <span id="urt" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>URS</label>
+          </span>
+          <span id="urs" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>URE</label>
+          </span>
+          <span id="ure" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>URH</label>
+          </span>
+          <span id="urh" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>VID</label>
+          </span>
+          <span id="vid" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FV</label>
+          </span>
+          <span id="fv" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>DSL</label>
+          </span>
+          <span id="dsl" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>M1</label>
+          </span>
+          <span id="m1" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>M2</label>
+          </span>
+          <span id="m2" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>OM</label>
+          </span>
+          <span id="om" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>OU</label>
+          </span>
+          <span id="ou" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>PUV</label>
+          </span>
+          <span id="puv" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>APN</label>
+          </span>
+          <span id="apn" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>PWD</label>
+          </span>
+          <span id="pwd" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>RS</label>
+          </span>
+          <span id="rs" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>EST</label>
+          </span>
+          <span id="est" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FTP</label>
+          </span>
+          <span id="ftp" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FIP</label>
+          </span>
+          <span id="fip" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>TM</label>
+          </span>
+          <span id="tm" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>TEM</label>
+          </span>
+          <span id="tem" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>DIN</label>
+          </span>
+          <span id="din" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>BTP</label>
+          </span>
+          <span id="btp" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FUE</label>
+          </span>
+          <span id="fue" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>SPD</label>
+          </span>
+          <span id="spd" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey;border: groove 2px grey">
+          <span>
+            <label>IGN</label>
+          </span>
+          <span id="ign" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FLC</label>
+          </span>
+          <span id="flc" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>IMO</label>
+          </span>
+          <span id="imo" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FMT</label>
+          </span>
+          <span id="fmt" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>NOD</label>
+          </span>
+          <span id="nod" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>GP1</label>
+          </span>
+          <span id="gp1" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>GP2</label>
+          </span>
+          <span id="gp2" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>DL1</label>
+          </span>
+          <span id="dl1" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>DL2</label>
+          </span>
+          <span id="dl2" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>GPS</label>
+          </span>
+          <span id="gps" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>AOF</label>
+          </span>
+          <span id="aof" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FUS</label>
+          </span>
+          <span id="fus" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>FPD</label>
+          </span>
+          <span id="fpd" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>TDU</label>
+          </span>
+          <span id="tdu" style="margin-left: 2%">
+            
+          </span>
+        </div>
+        <div style="float: left;padding: 2% 2% 2% 2%;border: groove 2px grey">
+          <span>
+            <label>CDC</label>
+          </span>
+          <span id="cdc" style="margin-left: 2%">
+            
+          </span>
+        </div>
+
+
+        
+       <!--  <table class="table table-hover table-bordered  table-striped" id="data_table" style="width: 0!important">
           <thead>
             <tr>
               <th>PU</th>
               <th id="pu"></th>
-            </tr>
-            <tr>
               <th>MO</th>
               <th id="mo"></th>
-            </tr>
-             <tr>
+           
               <th>EO</th>
               <th id="eo"></th>
             </tr>
@@ -237,7 +661,7 @@
               <th id="cdc"></th>
             </tr>
           </thead>
-        </table>
+        </table> -->
       </div>
     </div>
   </section>

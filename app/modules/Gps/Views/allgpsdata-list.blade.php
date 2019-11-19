@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="hilite-content">
+<section class="hilite-content" style="min-height: 200px">
 
 <div class="row">
 
@@ -30,7 +30,7 @@
 
 <div class="col-md-4">
 
-<div style ="padding-top:15px;" class="form-group has-feedback">
+<div style ="width: 15%;margin-left: 12%;margin-top: 5%" >
 
 <button class="btn btn-md btn-success btn2 form-control" id="set_ota_button" data-toggle="modal" data-target="#setOtaModal" style="display: none;">SET OTA</button>
 
@@ -48,7 +48,7 @@
 
 <div class="table-responsive">
 
-<table style="background-color: black;color: white;">
+<table style="background-color: black;color: white;float: left">
  <thead id ="last_update_time">
 
 </thead>  
@@ -65,11 +65,11 @@
 
 </div>
 
-<div class="col-md-3">
-
+<!-- <div class="col-md-3">
+ -->
 <div class="table-responsive">
 
-<table class="table">
+<table class="table" style="width: 0px!important">
 
 <tbody id="datas" >
 
@@ -79,8 +79,8 @@
 
 </div>
 
-</div>
-
+<!-- </div>
+ -->
 </section>
 
 <div class="modal fade" id="setOtaModal" tabindex="-1" role="dialog" aria-labelledby="setOtaModalLabel" style="display: none;">
