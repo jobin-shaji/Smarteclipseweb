@@ -28,11 +28,11 @@ function getallData(value) {
           document.getElementById("rtt").innerHTML = res.RTT;
           document.getElementById("lbt").innerHTML = res.LBT;
           document.getElementById("ta").innerHTML = res.TA;
-          document.getElementById("VN").innerHTML = res.VN;
+          document.getElementById("vn").innerHTML = res.VN;
           document.getElementById("ur").innerHTML = res.UR;
-          document.getElementById("fuel_status").innerHTML = res.URT;
-          document.getElementById("speed").innerHTML = res.URS;
-          document.getElementById("url").innerHTML = res.URE;
+          document.getElementById("urt").innerHTML = res.URT;
+          document.getElementById("urs").innerHTML = res.URS;
+          document.getElementById("ure").innerHTML = res.URE;
           document.getElementById("urf").innerHTML = res.URF;
           document.getElementById("urh").innerHTML = res.URH;
           document.getElementById("vid").innerHTML = res.VID;
