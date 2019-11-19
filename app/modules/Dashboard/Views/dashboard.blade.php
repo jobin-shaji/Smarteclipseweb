@@ -215,7 +215,7 @@
 <!-- DEALER ROLE-END -->
 <!-- DEALER ROLE-START -->
 @role('operations')
-<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper page-wrapper-root page-wrapper_new" style="min-height: 634px!important">
   <div class="page-wrapper-root1">
     <div class="container-fluid">
       <div class="card-body">
@@ -224,89 +224,38 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="row">
-                  <div class="col-lg-2 col-xs-6 new_arrival_dashboard_grid dash_grid">
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="gps_new_arrival_dealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>GPS New Arrivals</p>
+                 
+                  <!-- <div class="panel-body" style="width: 100%;min-height: 10%;margin-top: 15%;margin-left: 10%">
+                    <form  method="POST" action="#">
+                      <div class="col-lg-3 col-md-3"> 
+                        <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
+                          <label>GPS</label>                           
+                          <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>        
+                            <option value="">All</option>
+                            <option value="">GPS</option>
+                          </select>
+                        </div>
                       </div>
-                      <div class="icon">
-                        <i class="fa fa-tablet"></i>
+                      <div class="col-lg-3 col-md-3"> 
+                        <div class="form-group" style="margin-left: 30%;margin-top: 2%;">
+                          <label>DEVICE</label>                           
+                          <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>      
+                            <option selected="selected" disabled="disabled" value="">Select VEHICLE</option> 
+                            <option value="">All</option>  
+                            <option value="">vehicle</option>
+                          </select>
+                        </div>
+                      </div>                         
+                      <div class="col-lg-3 col-md-3 pt-4">
+                        <div class="form-group">          
+                          <button class="btn btn-sm btn-info btn2 srch" style="margin-left: 40%">
+                            <i class="fa fa-search"></i> 
+                          </button>                    
+                        </div>
                       </div>
-                      <a href="/gps-dealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-xs-6 gps_dashboard_grid dash_grid">
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="total_gps_dealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>GPS In Stock</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-tablet"></i>
-                      </div>
-                      <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-xs-6 transferred_gps_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="transferred_gps_dealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>Transferred GPS</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-tablet"></i>
-                      </div>
-                      <a href="/gps-transfers-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-lg-2 col-xs-6 sub_dealer_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-yellow bxs">
-                      <div class="inner">
-                        <h3 id="dealer_subdealer">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>Active Subdealers</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-user"></i>
-                      </div>
-                      <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-xs-6 client_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-green bxs">
-                      <div class="inner">
-                        <h3 id="dealer_client">
-                          <div class="loader"></div>
-                        </h3>
-                        <p>Active Clients</p>
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-user"></i>
-                      </div>
-                      <a href="/dealer-client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
+                    </form>
+                  </div> -->      
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
-              </div>
-              <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
               </div>
             </div>
           </div>
