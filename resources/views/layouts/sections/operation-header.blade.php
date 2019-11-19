@@ -22,4 +22,10 @@
         <li class="nav-item dropdown">
             <a class="nav-link" href="{{url('/gps-km-map')}}">GPS KM</a>
         </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="{{url('/all-gps-config')}}">SINGLE GPS CONFIGURATION</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="{{url('/ota-response')}}">OTA RESPONSE</a>
+        </li>
     </ul>

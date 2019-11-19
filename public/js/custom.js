@@ -378,6 +378,11 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='gpsDataHlm'){
                          gpsDataHlm(res);
                 }
+                else if(callBack=='allGpsConfiguredata')
+                {
+                    allGpsConfiguredata(res);
+                }
+
             }
         },
         error: function (err) {

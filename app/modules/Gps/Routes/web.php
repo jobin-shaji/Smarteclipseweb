@@ -60,7 +60,7 @@ Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('
 
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
-Route::get('/gps-data','GpsController@allgpsListPage')->name('gps-data');
+Route::get('/operation-gps-data','GpsController@allgpsListPage')->name('operation-gps-data');
 Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 
 Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
@@ -90,5 +90,19 @@ Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-
 Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 
 Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
+
+// Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
+// Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');
+
+});
+
+
+
+
+
+Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/gps-data','GpsController@allpublicgpsListPage')->name('gps-data');
+Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 
 });
