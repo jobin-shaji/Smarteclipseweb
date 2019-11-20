@@ -1885,11 +1885,11 @@ class VehicleController extends Controller
         $i=0;
         foreach ($vehicles  as $vehicle) {
             $i++;
-            if($i == 2){
-                dd($vehicle->id);
-            }
-            
             $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
+
+            if($i == 2){
+                dd($vehicle_profiles);
+            }
         }
 
         return response()->json($vehicle_profiles);
