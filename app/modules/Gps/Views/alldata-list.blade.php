@@ -22,7 +22,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-lg-3 col-md-3"> 
+           <!--  <div class="col-lg-3 col-md-3"> 
               <div class="form-group" style="margin-left: 30%;margin-top: 2%;">
                 <label>Header</label>                           
                 <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
@@ -33,7 +33,7 @@
                   @endforeach             
                 </select>
               </div>
-            </div>                         
+            </div>    -->                      
         <!--     <div class="col-lg-3 col-md-3 pt-4">
               <div class="form-group">          
                 <button class="btn btn-sm btn-info btn2 srch" onclick="check()" style="margin-left: 40%">
@@ -227,7 +227,7 @@
                 <th>Server Date</th>
                 <th>Server Time</th>
                 <th>Data</th> 
-                <th>Action</th>                     
+                <!-- <th>Action</th>                      -->
               </tr>
           </thead>
       </table>       
@@ -236,6 +236,6 @@
 
 
 @section('script')
-    <script src="{{asset('js/gps/alldata-list.js')}}"></script>
+    <script src="{{asset('js/gps/operators-alldata-list.js')}}"></script>
 @endsection
 @endsection
