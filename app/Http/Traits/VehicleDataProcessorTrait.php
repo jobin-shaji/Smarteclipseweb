@@ -513,7 +513,6 @@ trait VehicleDataProcessorTrait{
             'ac_on_duration' => $ac_status['ac_on_time'],
             'ac_off_duration' => $ac_status['ac_off_time'],
             'ac_halt_on_duration' => $halt_status['ac_on_time'],
-            'dailykm' => $km_report, 
             'sleep' => $tracking_mode['total_sleep'],  
             'motion' => $tracking_mode['total_moving'],   
             'halt' => $tracking_mode['total_halt'], 
@@ -528,7 +527,8 @@ trait VehicleDataProcessorTrait{
             'geofence_exit' => $alerts->where('alert_type_id',6)->count(),
             'geofence_entry_overspeed' => $alerts->where('alert_type_id',15)->count(),
             'geofence_exit_overspeed' => $alerts->where('alert_type_id',16)->count(),
-            'route_deviation' => $route_deviation,             
+            'route_deviation' => $route_deviation,    
+            'dailykm' => $km_report,          
             'status' => 'kmReport'           
         );
 
