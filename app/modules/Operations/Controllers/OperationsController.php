@@ -156,8 +156,10 @@ class OperationsController extends Controller {
         $rules = $this->operationsUpdatesRules($user);
         $this->validate($request, $rules);   
         $operations->name = $request->name;
+        $operations->address = $request->address;       
         $operations->save();
         $user->mobile = $request->phone_number;
+        $user->email = $request->email;
         $user->save();
         $did = encrypt($user->id);
         $request->session()->flash('message', 'Operations details updated successfully!');

@@ -31,9 +31,9 @@
                     <div class="complaint__container">
                       <div class="container__child complaint__form">
                         <div class="form-group has-feedback">
-                        <label class="srequired">GPS</label>
+                        <label class="srequired">IMEI</label>
                         <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
-                          <option value="" selected disabled>Select GPS</option>
+                          <option value="" selected disabled>Select IMEI</option>
                           @foreach($devices as $gps)
                           <option value="{{$gps->gps->id}}">{{$gps->gps->imei}}</option>
                           @endforeach
