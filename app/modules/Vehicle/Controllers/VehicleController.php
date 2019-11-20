@@ -1889,22 +1889,22 @@ class VehicleController extends Controller
         $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
         $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
         $app_date = $date_and_time['appDate'];
-        $user_vehicle = Vehicle::where('client_id', $client->id)
+        $vehicle_details = Vehicle::where('client_id', $client->id)
                                  ->whereNull('deleted_at')
                                  ->orderBy('id', 'desc')
                                  ->get();
         $statics = array();
-        if (sizeof($user_vehicle) != 0) {
-            foreach ($user_vehicle as $vehicleData) {
-                $vehicle_profile= $this->vehicleProfile($vehicleData->id,$date_and_time,$client->id);
-                $get_vehicle = Vehicle::find($vehicleData->id);
-                $get_driver = Driver::find($vehicleData->driver_id);
+        if (sizeof($vehicle_details) != 0) {
+            foreach ($vehicle_details as $vehicle_data) {
+                $single_vehicle_details = Vehicle::find($vehicle_data->id);
+                $vehicle_profile= $this->vehicleProfile($single_vehicle_details->id,$date_and_time,$client->id);
+                $get_driver = Driver::find($single_vehicle_details->driver_id);
                 if($get_driver){
                  $driver_points=$get_driver->points;
                 }else{
                  $driver_points=""; 
                 }
-                $gps_data=GpsData::where('gps_id',$get_vehicle->gps->id)
+                $gps_data=GpsData::where('gps_id',$single_vehicle_details->gps->id)
                                    ->where('device_time','>=', $from_date)
                                    ->where('device_time','<=', $to_date)
                                    ->get();
@@ -1916,12 +1916,12 @@ class VehicleController extends Controller
                   $to_date=$from_date;
                 }
 
-                $total_km = DailyKm::where('gps_id',$get_vehicle->gps->id)
+                $total_km = DailyKm::where('gps_id',$single_vehicle_details->gps->id)
                                      ->whereDate('date','>=',$from_date)
                                      ->whereDate('date','<=',$to_date)
                                      ->sum('km');                   
-                $statics[] = array("vehicle_number" => $get_vehicle->register_number, 
-                                   "vehicle_id" => $get_vehicle->id, 
+                $statics[] = array("vehicle_number" => $single_vehicle_details->register_number, 
+                                   "vehicle_id" => $single_vehicle_details->id, 
                                    "total_distance" => 0, 
                                    "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
                                    "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
@@ -1949,11 +1949,11 @@ class VehicleController extends Controller
 
 
                                    "total_alerts" => $vehicle_profile['user_alert'],
-                                   "vehicle_type" => $get_vehicle->vehicleType->name, 
-                                   "vehicle_online" => $get_vehicle->vehicleType->online_icon, 
-                                   "vehicle_offline" => $get_vehicle->vehicleType->offline_icon, 
-                                   "vehicle_ideal" => $get_vehicle->vehicleType->ideal_icon, 
-                                   "vehicle_sleep" => $get_vehicle->vehicleType->sleep_icon
+                                   "vehicle_type" => $single_vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $single_vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $single_vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $single_vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $single_vehicle_details->vehicleType->sleep_icon
                                   );
             }
             $response_data = array('status' => 'success', 
@@ -1962,12 +1962,12 @@ class VehicleController extends Controller
                                    'vehicle_value' => $statics,
                                    'search_date'=>$app_date
                                   );
-            } else {
+        } else {
             $response_data = array('status' => 'failed', 
                                    'message' => 'failed', 
                                    'code' => 0
                                   );
-            }
+        }
         return response()->json($response_data);
     }
 
