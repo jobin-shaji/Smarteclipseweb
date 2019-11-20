@@ -1995,7 +1995,6 @@ class VehicleController extends Controller
         $app_date = $date_and_time['appDate'];
         $vehicle_details = Vehicle::where('id', $vehicle_id)
                                  ->whereNull('deleted_at')
-                                 ->orderBy('id', 'desc')
                                  ->first();
         $statics = array();
         if($vehicle_details){
@@ -2073,32 +2072,84 @@ class VehicleController extends Controller
         return response()->json($response_data);
     }
 
-    // function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
-    // {
-    //     if ($searchType == "1") 
-    //     {
-    //         $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
-    //         $to_date = date('Y-m-d H:i:s');
-    //         $appDate = date('Y-m-d');
-    //     } else if ($searchType == "2") {
-    //         $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
-    //         $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
-    //         $appDate = date('Y-m-d', strtotime("yesterday midnight"));
-    //     } else if ($searchType == "3") {
-    //         $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
-    //         $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-    //         $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
-    //     } else if ($searchType == "4") {
-    //         $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
-    //         $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
-    //         $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
-    //     }
-    //     $output_data = ["from_date" => $from_date, 
-    //                     "to_date" => $to_date, 
-    //                     "appDate" => $appDate
-    //                    ];
-    //     return $output_data;
-    // }
+    public function getVehicleTravelSummary(Request $request) {
+        $user_id = $request->user_id;
+        $vehicle_id = $request->vehicle_id;
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $user = User::where('id', $user_id)->first();
+        if ($user == null) 
+        {
+            $data = array('status' => 'failed', 
+                          'message' => 'user does not exist', 
+                          'code' => 0
+                         );
+            return response()->json($data);
+        }
+        $client = Client::where('user_id', $user_id)->first();
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+
+        $vehicle_details = Vehicle::where('id', $vehicle_id)
+                                 ->whereNull('deleted_at')
+                                 ->first();
+        $travel_data = array();
+        if($vehicle_details){
+            $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client->id);
+            $gps_data=GpsData::where('gps_id',$vehicle_details->gps->id)
+                               ->where('device_time','>=', $from_date)
+                               ->where('device_time','<=', $to_date)
+                               ->get();
+            $avg_speed = $gps_data->avg('speed');
+            $max_speed = $gps_data->max('speed');
+            // km dummy
+            if($type==2)
+            {
+              // for get single date km
+                $to_date=$from_date;
+            }
+
+            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
+                                 ->whereDate('date','>=',$from_date)
+                                 ->whereDate('date','<=',$to_date)
+                                 ->sum('km');
+            $travel_duration = array("idle" =>$vehicle_profile['halt'], 
+                                  "running" => $vehicle_profile['motion'],
+                                  "stop" => $vehicle_profile['sleep'], 
+                                  "inactive" => 0
+                                 );
+            $travel_speed = array("speed" =>0, 
+                                  "total_km" => $total_km,
+                                  "avg_speed" => number_format($avg_speed, 2), 
+                                  "max_speed" => $max_speed ?$max_speed:""
+                                 );
+            $travel_data[] = array("travel_duration" => $travel_duration, 
+                                   "travel_speed" => $travel_speed, 
+                                   "total_alerts" => $vehicle_profile['user_alert'], 
+                                   "vehicleId" => $vehicle_details->id, 
+                                   "user_name" => $user->username, 
+                                   "vehicle_number" => $vehicle_details->register_number, 
+                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
+                                  );
+            $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'user_name' => $user->username, 
+                                   'travel_summary' => $travel_data,
+                                   'from_date'=>$from_date,
+                                   'to_date'=>$to_date
+                                  );
+        }else {
+            $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
+        }
+        return response()->json($response_data);
+    }
 
     public function getTravelSummary(Request $request) {
         $user_id = $request->userid;
