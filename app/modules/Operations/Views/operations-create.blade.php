@@ -3,8 +3,6 @@
     Create Dealer
 @endsection
 @section('content')
-
-
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
    <nav aria-label="breadcrumb">
@@ -19,9 +17,6 @@
         </div>
         @endif 
   </nav>
-
-  
-            
   <div class="card-body">
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">

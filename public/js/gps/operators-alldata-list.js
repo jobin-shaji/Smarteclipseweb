@@ -97,8 +97,7 @@ function callBackDataTable(value){
   }
     // console.log(gps);
     var  data = {
-        gps : gps,
-        header : document.getElementById('header').value   
+        gps : gps  
     };
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -108,7 +107,7 @@ function callBackDataTable(value){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'alldata-list',
+            url: 'operators-alldata-list',
             type: 'POST',
             data: data,
             headers: {
