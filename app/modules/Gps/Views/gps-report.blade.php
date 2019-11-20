@@ -28,13 +28,13 @@ Gps Report
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                    
                             <label> From Date</label>
-                            <input type="text" class="datepickerFreebies form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                    
                             <label> To Date</label>
-                            <input type="text" class="datepickerFreebies form-control" id="toDate" name="toDate" onkeydown="return false">
+                            <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3 pt-4">
