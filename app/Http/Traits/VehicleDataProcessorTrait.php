@@ -231,13 +231,8 @@ trait VehicleDataProcessorTrait{
             	$halt_time=$halt_time+$diff_in_minutes;
             }
         }
-        if($sleep_time < 0){$sleep_time =0;}
         $sleep_time=$this->timeFormate($sleep_time);
-
-        if($halt_time< 0){$halt_time=0;}
         $halt_time=$this->timeFormate($halt_time);
-    
-        if($motion_time< 0){$motion_time=0;}
         $motion_time=$this->timeFormate($motion_time);
         $output_data = ["total_moving" => $motion_time, 
                         "total_halt" => $halt_time,
