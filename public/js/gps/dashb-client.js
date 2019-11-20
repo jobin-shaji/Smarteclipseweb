@@ -130,9 +130,10 @@ function vehicleTrack(res) {
     '<a href="/alert" ><button class="btn-pop type="submit"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
     '<a href="/vehicles/' 
     + vehicle_id + 
-    '/location"><button class="btn-pop type="submit"><img src="assets/images/live-track.svg" width=13 height=13>Live Track</button></a>';
-    /*'<button class="btn-pop type="submit"><img src="assets/images/reply.svg" width=13 height=13>Route Replay</button></div';
-*/
+    '/location"><button class="btn-pop type="submit"><img src="assets/images/live-track.svg" width=13 height=13>Live Track</button></a>'+
+    '<a href="/vehicles/'+ vehicle_id +'/playback-page">'+
+    '<button class="btn-pop type="submit"><img src="assets/images/reply.svg" width=13 height=13>Route Replay</button></div></a>';
+
 
     var path = JSONObject[i].vehicle_svg;
     var scale = JSONObject[i].vehicle_scale;

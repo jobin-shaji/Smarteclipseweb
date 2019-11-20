@@ -67,6 +67,8 @@ Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
 Route::get('/test','GpsController@testKm')->name('testkm');
 Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
 Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
+Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps-data-bth');
+Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
 
 Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
 Route::get('/bth-data','GpsController@allBthData')->name('bth-data');
