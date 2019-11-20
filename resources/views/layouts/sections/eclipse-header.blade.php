@@ -391,11 +391,23 @@
 
                         @role('client')
                         <li class="nav-item dropdown">
-                            <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
-                                <span class="bell_value" id="bell_notification_count">0</span>
-                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i>
-                            
-                            </a>
+                            <!-- <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell"> -->
+                               <!--  <span class="bell_value" id="bell_notification_count">0</span>
+                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i> -->
+                            <span class="notification-box">
+                                <span class="notification-count">
+                                   <a class="dropdown-item" href="{{url('/alert')}}" id="bell_notification_count">0</a>
+                                </span>
+                                <div class="notification-bell">
+                                  <!-- <span class="bell-top"></span>
+                                  <span class="bell-middle"></span>
+                                  <span class="bell-bottom"></span>
+                                  <span class="bell-rad"></span> -->
+                                  <!-- <i class='fas fa-car'></i> -->
+                                  <img src="../../assets/images/arc.png" width="50" height="20">
+                                </div>
+                                
+                            </span>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
@@ -404,7 +416,7 @@
                             </div>
                         </li>                      
                         <li class="nav-item dropdown">
-                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" style="padding: 19% 0 0 0"></i>
+                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" style="padding: 72% 0 0 0"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
@@ -444,7 +456,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            @role('client')      
-                               <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="70" height="60"></a>
+                               <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="70" height="60"style="margin-top: 8%;"></a>
                              @endrole
                              @role('root|dealer|sub_dealer|servicer|school|operations')
                                 <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
@@ -585,3 +597,98 @@ Contact for Assistance +91 9544313131</div>
 
 </div>   
     </div>
+<style type="text/css">
+  .notification-box {
+  position: fixed;
+  z-index: 99;
+  top: 29px;
+  right: 133px;
+  width: 100px;
+  height: 50px;
+}
+.notification-bell {
+  animation: bell 1s 1s both infinite;
+}
+/*.notification-bell * {
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0px 0px 15px #fff;
+}*/
+/*.bell-top {
+  width: 4px;
+  height: 6px;
+  border-radius: 3px 3px 0 0;
+}
+.bell-middle {
+  width: 19px;
+  height: 18px;
+  border-radius: 12.5px 12.5px 0 0;
+}
+.bell-bottom {
+  position: relative;
+  z-index: 0;
+  width: 32px;
+  height: 2px;
+}
+.bell-bottom::before,
+.bell-bottom::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+}
+.bell-bottom::before {
+  left: 1px;
+  border-bottom: 4px solid #fff;
+  border-right: 0 solid transparent;
+  border-left: 4px solid transparent;
+}
+.bell-bottom::after {
+  right: 1px;
+  border-bottom: 4px solid #fff;
+  border-right: 4px solid transparent;
+  border-left: 0 solid transparent;
+}
+.bell-rad {
+  width: 8px;
+  height: 4px;
+  margin-top: 2px;
+  border-radius: 0 0 4px 4px;
+  animation: rad 1s 2s both infinite;
+}*/
+.notification-count {
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+  right: 28px;
+  width: 40px;
+  line-height: 10px;
+  font-size: 15px;
+  border-radius: 50%;
+  background-color: #ff4927;
+  color: white;
+  animation: zoom 2s 2s both infinite;
+}
+@keyframes bell {
+  0% { transform: rotate(0); }
+  10% { transform: rotate(30deg); }
+  20% { transform: rotate(0); }
+  80% { transform: rotate(0); }
+  90% { transform: rotate(-30deg); }
+  100% { transform: rotate(0); }
+}
+@keyframes rad {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(6px); }
+  20% { transform: translateX(0); }
+  80% { transform: translateX(0); }
+  90% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+@keyframes zoom {
+  0% { opacity: 0; transform: scale(0); }
+  10% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; }
+  51% { opacity: 0; }
+  100% { opacity: 0; }
+}
+</style>
