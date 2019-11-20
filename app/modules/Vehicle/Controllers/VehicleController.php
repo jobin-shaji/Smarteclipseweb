@@ -1883,9 +1883,9 @@ class VehicleController extends Controller
          }
         $client = Client::where('user_id', $user_id)->first();
         $type = $request->type;
-        $from_date = $request->from_date;
-        $to_date = $request->to_date;
-        $date_and_time = $this->getDateFromType($type, $from_date, $to_date);
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
         $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
         $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
         $app_date = $date_and_time['appDate'];
@@ -1971,7 +1971,7 @@ class VehicleController extends Controller
         return response()->json($response_data);
     }
 
-    function getDateFromType($searchType, $from_date, $to_date) 
+    function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
     {
         if ($searchType == "1") 
         {
@@ -1987,9 +1987,9 @@ class VehicleController extends Controller
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
             $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
         } else if ($searchType == "4") {
-            $from_date = date('Y-m-d H:i:s', strtotime($from_date));
-            $to_date = date('Y-m-d H:i:s', strtotime($to_date));
-            $appDate = date('Y-m-d H:i:s', strtotime($from_date)) . " " . date('Y-m-d H:i:s', strtotime($to_date));
+            $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+            $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+            $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
         }
         $outputData = ["from_date" => $from_date, 
                         "to_date" => $to_date, 
@@ -2011,9 +2011,9 @@ class VehicleController extends Controller
         }
         $client = Client::where('user_id', $user_id)->first();
         $type = $request->type;
-        $from_date = $request->from_date;
-        $to_date = $request->to_date;
-        $date_and_time = $this->getDateFromType($type, $from_date, $to_date);
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
         $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
         $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
 
