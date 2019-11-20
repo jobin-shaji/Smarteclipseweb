@@ -77,7 +77,7 @@
       </div>
       <div class="form-group">
         <label class="srequired" style="padding: 1% 3% 1% 2%;">E-SIM Number</label>
-        <input type="number" class="{{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number" required >
+        <input type="number" class="{{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" id="e_sim_number" name="e_sim_number"  >
         @if ($errors->has('e_sim_number'))
           <span class="help-block">
             <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
