@@ -1883,10 +1883,12 @@ class VehicleController extends Controller
                                  ->get();
         $vehicle_profiles = array();
         foreach ($vehicles  as $vehicle) {
-            $vehicle_profile = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
-            $vehicle_profiles[]=$vehicle_profile;
+            $vehicle_ids[] = $vehicle->id;
         }
-
+        foreach ($vehicle_ids as $vehicle_id) {
+            $vehicle_profiles[] = $this->vehicleProfile($vehicle_id,$date_and_time,$client->id);
+        }
+        
         return response()->json($vehicle_profiles);
 
 
