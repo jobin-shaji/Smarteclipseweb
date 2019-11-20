@@ -232,12 +232,27 @@
                         <h3 id="gps">
                           <div class="loader"></div>
                         </h3>
-                        <p>Verified Gps </p>
+                        <p>Instock Gps </p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>
                       </div>
-                      <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                   <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_today">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Today's Gps</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
                  
