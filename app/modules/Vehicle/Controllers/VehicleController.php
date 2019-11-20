@@ -1882,6 +1882,7 @@ class VehicleController extends Controller
                                  ->orderBy('id', 'desc')
                                  ->get();
         $vehicle_profiles = array();
+        dd($vehicles);
         foreach ($vehicles  as $vehicle) {
             $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
         }
@@ -1889,6 +1890,20 @@ class VehicleController extends Controller
         return response()->json($vehicle_profiles);
 
 
+    }
+
+    
+    public function singleVehicleStatics(Request $request) 
+    {
+        $vehicle_id = $request->vehicle_id;
+        $client_id = $request->client_id;
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+    
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        return response()->json($vehicle_profile);
     }
 
     public function vehicleStatics(Request $request) 
@@ -1991,19 +2006,6 @@ class VehicleController extends Controller
                                   );
         }
         return response()->json($response_data);
-    }
-
-    public function singleVehicleStatics(Request $request) 
-    {
-        $vehicle_id = $request->vehicle_id;
-        $client_id = $request->client_id;
-        $type = $request->type;
-        $custom_from_date = $request->from_date;
-        $custom_to_date = $request->to_date;
-    
-        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
-        $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
-        return response()->json($vehicle_profile);
     }
 
     // function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
