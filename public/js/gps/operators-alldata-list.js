@@ -97,8 +97,7 @@ function callBackDataTable(value){
   }
     // console.log(gps);
     var  data = {
-        gps : gps,
-        header : document.getElementById('header').value   
+        gps : gps  
     };
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -108,7 +107,7 @@ function callBackDataTable(value){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'alldata-list',
+            url: 'operators-alldata-list',
             type: 'POST',
             data: data,
             headers: {
@@ -129,8 +128,7 @@ function callBackDataTable(value){
             {data: 'created_at', name: 'created_at'},
             {data: 'servertime', name: 'servertime',orderable: false, searchable: false},
             {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false},
-           {data: 'action', name: 'action',orderable: false, searchable: false
-          },
+           // {data: 'action', name: 'action',orderable: false, searchable: false},
         ],
         
         aLengthMenu: [[25, 50, 100,1000, -1], [25, 50, 100,1000, 'All']]

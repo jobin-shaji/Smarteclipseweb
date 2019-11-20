@@ -604,16 +604,10 @@ class GpsController extends Controller {
     }
      public function getAllData(Request $request)
     {
-        if($request->gps && $request->header){
-            
-         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->limit(500);  
-        }
-        else if($request->gps){
+        if($request->gps){
          $items = GpsData::where('gps_id',$request->gps)->limit(500);  
         }
-        else if($request->header){
-            $items = GpsData::where('header',$request->header)->limit(500); 
-        }
+       
         else{
          $items = GpsData::limit(500);  
         }
@@ -1409,22 +1403,38 @@ public function getGpsAllDataHlm(Request $request)
     {
         $root_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
+        // dd($request->serial_no);
+        // $gps = Gps::where('id',$request->serial_no)->first();
+        // if($gps == null){
+        //    return view('Gps::404');
+        // }
         $rules = $this->gpsStockCreateRules();
         $this->validate($request, $rules); 
         $gps_id= $request->serial_no;
         $gps = Gps::find($gps_id);
-        $gps->manufacturing_date = $maufacture;
-        $gps->e_sim_number = $request->e_sim_number;       
-        $gps->save();
-        if($gps){
-           $gps_stock = GpsStock::create([
-                'gps_id'=> $gps->id,
-                'inserted_by' => $root_id
-            ]); 
-        }
-        $request->session()->flash('message', 'New gps created successfully!'); 
+         $gps_stock = GpsStock::where('gps_id',$gps_id);
+        if($gps_stock==null)
+        {
+            $gps->manufacturing_date = $maufacture;
+            $gps->e_sim_number = $request->e_sim_number;       
+            $gps->save();
+            if($gps){
+               $gps_stock = GpsStock::create([
+                    'gps_id'=> $gps->id,
+                    'inserted_by' => $root_id
+                ]); 
+            }
+            $request->session()->flash('message', 'New gps created successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+             return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+        } 
+        else{
+            $request->session()->flash('message', 'Already added to stock!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+         return redirect(route('gps.stock'));
+        }          
+        
+       
     } 
 
 
@@ -1599,7 +1609,8 @@ public function getGpsAllDataHlm(Request $request)
     public function gpsStockCreateRules(){
         $rules = [     
             'manufacturing_date' => 'required',           
-            'e_sim_number' => 'required|string|unique:gps|min:11|max:11',          
+            // 'e_sim_number' => 'required|string|unique:gps|min:11|max:11',  
+            'serial_no' => 'required|unique:gps,serial_no,',        
         ];
         return  $rules;
     }

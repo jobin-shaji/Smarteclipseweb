@@ -1033,6 +1033,7 @@ function documents(){
     backgroundPostData(url,data,'notification',{alert:false});           
 }
 function notification(res){
+    if(res){
     $("#notification").empty();
    var expired_documents;
 
@@ -1080,7 +1081,8 @@ function notification(res){
                                        
         '</div></div>';  
          $("#expire_notification").append(expire_documents);   
-      }              
+      }   
+    }           
 }
 
 function clientAlerts(){ 
@@ -1092,15 +1094,18 @@ function clientAlerts(){
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
-    $("#alert_notification").empty();
-    length=res.alert.length;
+    if(res)
+    {
+        $("#alert_notification").empty();
+        length=res.alert.length;
 
-    for (var i = 0; i < length; i++) {
-     description=res.alert[i].alert_type.description;
+        for (var i = 0; i < length; i++) {
+         description=res.alert[i].alert_type.description;
 
-        var alert='<a class="dropdown-item" >'+description+'</a>';  
-        $("#alert_notification").append(alert);       
-    }   
+            var alert='<a class="dropdown-item" >'+description+'</a>';  
+            $("#alert_notification").append(alert);       
+        }  
+ }
 }
 
 function downloadLabel(id){
