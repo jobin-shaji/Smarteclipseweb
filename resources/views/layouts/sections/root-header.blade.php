@@ -69,8 +69,8 @@
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >OPERATIONS</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/operations/create')}}">ADD OPERATION</a></li>
-                <li><a class="dropdown-item" href="{{url('/operations')}}">LIST OPERATION</a></li>
+                <li><a class="dropdown-item" href="{{url('/operations/create')}}">ADD USER (OPERATION)</a></li>
+                <li><a class="dropdown-item" href="{{url('/operations')}}">LIST USER (OPERATION)</a></li>
                 </ul>
             </li>
         </ul>

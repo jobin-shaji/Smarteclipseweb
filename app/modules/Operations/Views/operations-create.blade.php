@@ -9,7 +9,7 @@
 <div class="page-wrapper-root1">
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Dealer</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Operation Manager</li>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
