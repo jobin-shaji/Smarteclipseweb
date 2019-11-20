@@ -1882,8 +1882,13 @@ class VehicleController extends Controller
                                  ->orderBy('id', 'desc')
                                  ->get();
         $vehicle_profiles = array();
-        dd($date_and_time);
+        $i=0;
         foreach ($vehicles  as $vehicle) {
+            $i++;
+            if($i == 2){
+                dd($vehicle->id);
+            }
+            
             $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
         }
 
