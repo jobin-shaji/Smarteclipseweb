@@ -35,7 +35,7 @@
                     font-weight: 200;
                     height: 100vh;
                     margin: 0;
-                    background-image: url({{asset('assets/images/rayfleet_home.jpg')}});
+                    background-image: url({{asset('assets/images/rayfleet_home-min.jpg')}});
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: cover;

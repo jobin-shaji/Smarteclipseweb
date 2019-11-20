@@ -3,8 +3,6 @@
 <section class="content box">
 <div class="page-wrapper_new_map">
 
-
-
   <div class="col-lg-12 col-sm-12">
     <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
     <input type="hidden" name="svg_con" id="svg_con" value="{{$vehicle_type->svg_icon}}">
@@ -60,10 +58,10 @@
               <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 10px;">: <label class="mgl" id="ac"></label></b></b>
+              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 11px;">: <label class="mgl" id="ac"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 14px;">: <label class="mgl" id="fuel"></label> </b></b>
+              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
