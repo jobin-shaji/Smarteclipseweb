@@ -1869,6 +1869,29 @@ class VehicleController extends Controller
 
     }
 ///////////////////API-start////////////////////////////////////////
+
+    public function allVehicleProfile(Request $request){
+        $user_id = $request->user_id;
+        $client = Client::where('user_id', $user_id)->first();
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $vehicles = Vehicle::where('client_id', $client->id)
+                                 ->whereNull('deleted_at')
+                                 ->orderBy('id', 'desc')
+                                 ->get();
+        $vehicle_profiles = array();
+        foreach ($vehicles  as $vehicle) {
+            $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
+        }
+
+        dd($vehicle_profiles);
+
+
+    }
+
+
     public function vehicleStatics(Request $request) 
     {
         $user_id = $request->userid;
@@ -1889,22 +1912,22 @@ class VehicleController extends Controller
         $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
         $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
         $app_date = $date_and_time['appDate'];
-        $user_vehicle = Vehicle::where('client_id', $client->id)
+        $vehicle_details = Vehicle::where('client_id', $client->id)
                                  ->whereNull('deleted_at')
                                  ->orderBy('id', 'desc')
                                  ->get();
         $statics = array();
-        if (sizeof($user_vehicle) != 0) {
-            foreach ($user_vehicle as $vehicleData) {
-                $vehicle_profile= $this->vehicleProfile($vehicleData->id,$date_and_time,$client->id);
-                $get_vehicle = Vehicle::find($vehicleData->id);
-                $get_driver = Driver::find($vehicleData->driver_id);
+        if (sizeof($vehicle_details) != 0) {
+            foreach ($vehicle_details as $vehicle_data) {
+                $single_vehicle_details = Vehicle::find($vehicle_data->id);
+                $vehicle_profile= $this->vehicleProfile($single_vehicle_details->id,$date_and_time,$client->id);
+                $get_driver = Driver::find($single_vehicle_details->driver_id);
                 if($get_driver){
                  $driver_points=$get_driver->points;
                 }else{
                  $driver_points=""; 
                 }
-                $gps_data=GpsData::where('gps_id',$get_vehicle->gps->id)
+                $gps_data=GpsData::where('gps_id',$single_vehicle_details->gps->id)
                                    ->where('device_time','>=', $from_date)
                                    ->where('device_time','<=', $to_date)
                                    ->get();
@@ -1916,12 +1939,12 @@ class VehicleController extends Controller
                   $to_date=$from_date;
                 }
 
-                $total_km = DailyKm::where('gps_id',$get_vehicle->gps->id)
+                $total_km = DailyKm::where('gps_id',$single_vehicle_details->gps->id)
                                      ->whereDate('date','>=',$from_date)
                                      ->whereDate('date','<=',$to_date)
                                      ->sum('km');                   
-                $statics[] = array("vehicle_number" => $get_vehicle->register_number, 
-                                   "vehicle_id" => $get_vehicle->id, 
+                $statics[] = array("vehicle_number" => $single_vehicle_details->register_number, 
+                                   "vehicle_id" => $single_vehicle_details->id, 
                                    "total_distance" => 0, 
                                    "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
                                    "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
@@ -1949,11 +1972,11 @@ class VehicleController extends Controller
 
 
                                    "total_alerts" => $vehicle_profile['user_alert'],
-                                   "vehicle_type" => $get_vehicle->vehicleType->name, 
-                                   "vehicle_online" => $get_vehicle->vehicleType->online_icon, 
-                                   "vehicle_offline" => $get_vehicle->vehicleType->offline_icon, 
-                                   "vehicle_ideal" => $get_vehicle->vehicleType->ideal_icon, 
-                                   "vehicle_sleep" => $get_vehicle->vehicleType->sleep_icon
+                                   "vehicle_type" => $single_vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $single_vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $single_vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $single_vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $single_vehicle_details->vehicleType->sleep_icon
                                   );
             }
             $response_data = array('status' => 'success', 
@@ -1962,7 +1985,109 @@ class VehicleController extends Controller
                                    'vehicle_value' => $statics,
                                    'search_date'=>$app_date
                                   );
-            } else {
+        } else {
+            $response_data = array('status' => 'failed', 
+                                   'message' => 'failed', 
+                                   'code' => 0
+                                  );
+        }
+        return response()->json($response_data);
+    }
+
+    public function singleVehicleStatics(Request $request) 
+    {
+        $user_id = $request->user_id;
+        $vehicle_id = $request->vehicle_id;
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $user = User::where('id', $user_id)->first();
+        if ($user == null) 
+        {
+            $data = array('status' => 'failed', 
+                          'message' => 'user does not exist', 
+                          'code' => 0
+                         );
+            return response()->json($data);
+        }
+        $client = Client::where('user_id', $user_id)->first();
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+        $app_date = $date_and_time['appDate'];
+        $vehicle_details = Vehicle::where('id', $vehicle_id)
+                                 ->whereNull('deleted_at')
+                                 ->orderBy('id', 'desc')
+                                 ->first();
+        $statics = array();
+        if($vehicle_details){
+            $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client->id);
+            $get_driver = Driver::find($vehicle_details->driver_id);
+            if($get_driver){
+                $driver_points=$get_driver->points;
+            }else{
+                $driver_points=""; 
+            }
+            $gps_data=GpsData::where('gps_id',$vehicle_details->gps->id)
+                               ->where('device_time','>=', $from_date)
+                               ->where('device_time','<=', $to_date)
+                               ->get();
+                           
+            $maximum_speed=$gps_data->max('speed');   
+            if($type==2)
+            {
+              // for get single date km
+              $to_date=$from_date;
+            }
+
+            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
+                                 ->whereDate('date','>=',$from_date)
+                                 ->whereDate('date','<=',$to_date)
+                                 ->sum('km'); 
+            $statics = array("vehicle_number" => $vehicle_details->register_number, 
+                                   "vehicle_id" => $vehicle_details->id, 
+                                   "total_distance" => 0, 
+                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
+                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
+                                   "total_number_of_stops" =>0, 
+                                   "ac_on_time_idle" => 0, 
+                                   "ac_on_time_running" =>0, 
+                                   "driver_behaviour" => $driver_points, 
+                                   "total_km" => $total_km, 
+                                   "max_speed" => $maximum_speed ?$maximum_speed:"", 
+                                   "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
+                                   "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
+                                   "overspeed_violation_count" => $vehicle_profile['over_speed'],
+                                   "zig_zag_violation_count" => $vehicle_profile['zig_zag'],
+                                   "accident_impact_alert_count" => $vehicle_profile['accident_impact'],
+                                   "route_deviation_count" => $vehicle_profile['route_deviation'],
+                                   "harsh_braking_count" => $vehicle_profile['harsh_braking'],
+                                   "sudden_acceleration_count" => $vehicle_profile['sudden_acceleration'],
+                                   "main_battey_disconnect_count" => $vehicle_profile['main_battery_disconnect'],
+
+
+                                   "total_moving_time" => $vehicle_profile['motion'], 
+                                   "total_idle_time" => $vehicle_profile['halt'],
+                                   "total_sleep_time" => $vehicle_profile['sleep'],
+                                   "total_offline_time" => 0, 
+
+
+                                   "total_alerts" => $vehicle_profile['user_alert'],
+                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
+                                  );
+                $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'vehicle_value' => $statics,
+                                   'search_date'=>$app_date
+                                  );
+        }
+                
+             else {
             $response_data = array('status' => 'failed', 
                                    'message' => 'failed', 
                                    'code' => 0

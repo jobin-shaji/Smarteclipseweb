@@ -506,8 +506,8 @@ trait VehicleDataProcessorTrait{
         ->whereDate('deviating_time', '>=', $from_date)
         ->whereDate('deviating_time', '<=', $to_date)
         ->count();
-
-        return array(
+        $vehicle_profile = array();
+        $vehicle_profile = array(
             'engine_on_duration' => $engine_status['engine_on_time'],
             'engine_off_duration' => $engine_status['engine_off_time'],
             'ac_on_duration' => $ac_status['ac_on_time'],
@@ -531,6 +531,8 @@ trait VehicleDataProcessorTrait{
             'route_deviation' => $route_deviation,             
             'status' => 'kmReport'           
         );
+
+        return $vehicle_profile;
 
     }
 
