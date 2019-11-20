@@ -420,6 +420,36 @@ trait VehicleDataProcessorTrait{
       	return $ac_halt_status;
     }
 
+    function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
+    {
+        if ($searchType == "1") 
+        {
+            $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
+            $to_date = date('Y-m-d H:i:s');
+            $appDate = date('Y-m-d');
+        } else if ($searchType == "2") {
+            $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("yesterday midnight"));
+        } else if ($searchType == "3") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
+        } else if ($searchType == "4") {
+            $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+            $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+            $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
+        }else if ($report_type == "5") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+        }
+        $output_data = ["from_date" => $from_date, 
+                        "to_date" => $to_date, 
+                        "appDate" => $appDate
+                       ];
+        return $output_data;
+    }
+
     public function vehicleProfile($vehicle_id,$date_and_time,$client_id)
     {
     	$sleep=0;
@@ -439,7 +469,7 @@ trait VehicleDataProcessorTrait{
         $to_date = date('Y-m-d', strtotime($date_and_time['to_date']));
         $tracking_mode = $this->trackingMode($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
-        $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date);
+        $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);      
         $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
         $alerts =Alert::select(

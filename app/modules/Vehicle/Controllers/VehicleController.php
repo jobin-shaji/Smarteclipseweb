@@ -1971,32 +1971,32 @@ class VehicleController extends Controller
         return response()->json($response_data);
     }
 
-    function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
-    {
-        if ($searchType == "1") 
-        {
-            $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
-            $to_date = date('Y-m-d H:i:s');
-            $appDate = date('Y-m-d');
-        } else if ($searchType == "2") {
-            $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
-            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("yesterday midnight"));
-        } else if ($searchType == "3") {
-            $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
-        } else if ($searchType == "4") {
-            $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
-            $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
-            $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
-        }
-        $outputData = ["from_date" => $from_date, 
-                        "to_date" => $to_date, 
-                        "appDate" => $appDate
-                       ];
-        return $outputData;
-    }
+    // function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
+    // {
+    //     if ($searchType == "1") 
+    //     {
+    //         $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
+    //         $to_date = date('Y-m-d H:i:s');
+    //         $appDate = date('Y-m-d');
+    //     } else if ($searchType == "2") {
+    //         $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+    //         $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
+    //         $appDate = date('Y-m-d', strtotime("yesterday midnight"));
+    //     } else if ($searchType == "3") {
+    //         $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+    //         $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+    //         $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
+    //     } else if ($searchType == "4") {
+    //         $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+    //         $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+    //         $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
+    //     }
+    //     $output_data = ["from_date" => $from_date, 
+    //                     "to_date" => $to_date, 
+    //                     "appDate" => $appDate
+    //                    ];
+    //     return $output_data;
+    // }
 
     public function getTravelSummary(Request $request) {
         $user_id = $request->userid;
