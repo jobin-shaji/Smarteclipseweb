@@ -1882,7 +1882,7 @@ class VehicleController extends Controller
                                  ->orderBy('id', 'desc')
                                  ->get();
         $vehicle_profiles = array();
-        dd($vehicles);
+        dd($date_and_time);
         foreach ($vehicles  as $vehicle) {
             $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
         }
@@ -1892,7 +1892,7 @@ class VehicleController extends Controller
 
     }
 
-    
+
     public function singleVehicleStatics(Request $request) 
     {
         $vehicle_id = $request->vehicle_id;
