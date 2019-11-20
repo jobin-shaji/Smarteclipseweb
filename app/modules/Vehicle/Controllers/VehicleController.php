@@ -1869,6 +1869,29 @@ class VehicleController extends Controller
 
     }
 ///////////////////API-start////////////////////////////////////////
+
+    public function allVehicleProfile(Request $request){
+        $user_id = $request->user_id;
+        $client = Client::where('user_id', $user_id)->first();
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $vehicles = Vehicle::where('client_id', $client->id)
+                                 ->whereNull('deleted_at')
+                                 ->orderBy('id', 'desc')
+                                 ->get();
+        $vehicle_profiles = array();
+        foreach ($vehicles  as $vehicle) {
+            $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
+        }
+
+        dd($vehicle_profiles);
+
+
+    }
+
+
     public function vehicleStatics(Request $request) 
     {
         $user_id = $request->userid;
