@@ -439,7 +439,7 @@ trait VehicleDataProcessorTrait{
             $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
             $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
             $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
-        }else if ($report_type == "5") {
+        }else if ($searchType == "5") {
             $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
         }
