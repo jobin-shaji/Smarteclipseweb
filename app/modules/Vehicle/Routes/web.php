@@ -146,6 +146,7 @@ Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controlle
 	Route::post('/vehicle_statitics','VehicleController@vehicleStatics');
 	Route::post('/travel_summary','VehicleController@getTravelSummary');
 	Route::post('/single_vehicle_statitics','VehicleController@singleVehicleStatics');
+	Route::post('/all_vehicle_profile','VehicleController@allVehicleProfile');
 
 });
 ///API-END//
