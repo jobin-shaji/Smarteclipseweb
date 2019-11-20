@@ -206,6 +206,7 @@ class DashboardController extends Controller
             return response()->json([
                 // 'gps' => Gps::where('user_id',$user->id)->count(),
                 'gps' => Gps::whereNotNull('manufacturing_date')->count(),
+                'gps_today' => Gps::WhereDate('created_at',date("Y-m-d"))->count(),
 
                 'status' => 'dbcount'           
             ]);

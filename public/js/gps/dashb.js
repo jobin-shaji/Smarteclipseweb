@@ -41,7 +41,7 @@ function dbcount(res){
       
       $('#pending_jobs').text(res.pending_jobs);
       $('#completed_jobs').text(res.completed_jobs); 
-      $('#operation_gps').text(res.gps); 
+      $('#gps_today').text(res.gps_today); 
          
 }
 
