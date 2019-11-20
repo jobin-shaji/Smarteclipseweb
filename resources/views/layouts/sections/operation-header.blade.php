@@ -35,6 +35,18 @@
             <a class="nav-link" href="{{url('/ota-response')}}">OTA RESPONSE</a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="{{url('/gps-report')}}">GPS REPORT</a>
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS REPORT
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="nav-link" href="{{url('/gps-report')}}">GPS REPORT</a>
+                <a class="dropdown-item"href="{{url('/combined-gps-report')}}">COMBINED GPS REPORT</a>
+                
+            </div>
         </li>
+
+
+      <!--   <li class="nav-item dropdown">
+            <a class="nav-link" href="{{url('/gps-report')}}">GPS REPORT</a>
+        </li> -->
     </ul>
