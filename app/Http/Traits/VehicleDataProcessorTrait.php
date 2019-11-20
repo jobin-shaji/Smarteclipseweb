@@ -471,7 +471,8 @@ trait VehicleDataProcessorTrait{
         $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);      
-        $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
+        //$km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);  
+        $km_report=0;     
         $alerts =Alert::select(
 	            'id',
 	            'alert_type_id', 
@@ -513,7 +514,6 @@ trait VehicleDataProcessorTrait{
             'ac_on_duration' => $ac_status['ac_on_time'],
             'ac_off_duration' => $ac_status['ac_off_time'],
             'ac_halt_on_duration' => $halt_status['ac_on_time'],
-            'dailykm' => $km_report, 
             'sleep' => $tracking_mode['total_sleep'],  
             'motion' => $tracking_mode['total_moving'],   
             'halt' => $tracking_mode['total_halt'], 
@@ -528,7 +528,8 @@ trait VehicleDataProcessorTrait{
             'geofence_exit' => $alerts->where('alert_type_id',6)->count(),
             'geofence_entry_overspeed' => $alerts->where('alert_type_id',15)->count(),
             'geofence_exit_overspeed' => $alerts->where('alert_type_id',16)->count(),
-            'route_deviation' => $route_deviation,             
+            'route_deviation' => $route_deviation,    
+            'dailykm' => $km_report,          
             'status' => 'kmReport'           
         );
 
