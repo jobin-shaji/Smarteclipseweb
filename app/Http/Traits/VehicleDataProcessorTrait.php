@@ -128,7 +128,7 @@ trait VehicleDataProcessorTrait{
                                  , @statusPre := vehicle_mode
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("H", "S", "M") ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
         $last_log=GpsData::select('id','vehicle_mode','device_time')                 
@@ -452,15 +452,6 @@ trait VehicleDataProcessorTrait{
 
     public function vehicleProfile($vehicle_id,$date_and_time,$client_id)
     {
-    	$sleep=0;
-        $halt=0;
-        $moving=0;
-        $offline=0;
-        $time=0;
-        $initial_time = 0;
-        $previous_time =0;
-        $previous_mode = 0;
-        $vehicle_sleep=0;
         $single_vehicle_gps_id = [];     
         $single_vehicle_gps_id =  $this->vehicleGps($vehicle_id);
         $from_date_time = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
@@ -471,8 +462,7 @@ trait VehicleDataProcessorTrait{
         $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);      
-        //$km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);  
-        $km_report=0;     
+        $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
         $alerts =Alert::select(
 	            'id',
 	            'alert_type_id', 
