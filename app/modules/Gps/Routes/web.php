@@ -61,7 +61,7 @@ Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 Route::get('/operation-gps-data','GpsController@allgpsListPage')->name('operation-gps-data');
-Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
+Route::post('/operators-alldata-list','GpsController@getAllData')->name('operators-alldata-list');
 
 Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
 Route::get('/test','GpsController@testKm')->name('testkm');
