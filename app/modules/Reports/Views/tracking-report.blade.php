@@ -46,7 +46,7 @@
                               <option value="1">Today</option>
                               <option value="2">Yesterday</option>
                               <option value="3">Last 7 days</option>
-                              <option value="4">Last 30 Days</option>   
+                              <option value="5">Last 30 Days</option>   
                               <!-- <option value="5">Custom Range</option>                           -->
                             </select>
                           </div>
