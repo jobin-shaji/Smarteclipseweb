@@ -227,7 +227,7 @@
                 <th>Server Date</th>
                 <th>Server Time</th>
                 <th>Data</th> 
-                <th>Action</th>                     
+                <!-- <th>Action</th>                      -->
               </tr>
           </thead>
       </table>       
