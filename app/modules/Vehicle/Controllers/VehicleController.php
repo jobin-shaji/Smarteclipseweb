@@ -1886,7 +1886,7 @@ class VehicleController extends Controller
             $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
         }
 
-        dd($vehicle_profiles);
+        return response()->json($vehicle_profiles);
 
 
     }
