@@ -128,7 +128,7 @@ trait VehicleDataProcessorTrait{
                                  , @statusPre := vehicle_mode
                             FROM gps_data
                                , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
+                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("H", "S", "M") ORDER BY device_time 
                           ) AS good
                         WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
         $last_log=GpsData::select('id','vehicle_mode','device_time')                 
