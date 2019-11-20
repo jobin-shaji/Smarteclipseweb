@@ -50,6 +50,10 @@
                     </span>
                   @endif
                   </div>
+                    <div class="form-group has-feedback">
+                    <label>Address</label>
+                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$operations->address}}" >
+                  </div>
                 
                 <div class="form-group has-feedback">
                   <label class="srequired">Mobile No.</label>
@@ -61,6 +65,10 @@
                   </span>
                 @endif
                 </div>
+                <div class="form-group has-feedback">
+                    <label>Email</label>
+                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
+                  </div> 
                
 
               </div>
