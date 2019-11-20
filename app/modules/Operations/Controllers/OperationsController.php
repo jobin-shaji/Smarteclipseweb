@@ -274,48 +274,48 @@ class OperationsController extends Controller {
 ////////////////////////Dealer Profile-start/////////////////
 
     //Dealer profile view
-    public function dealerProfile()
+    public function operationsProfile()
     {
-        $dealer_id = \Auth::user()->dealer->id;
-        $dealer_user_id = \Auth::user()->id;
-        $dealer = Dealer::withTrashed()->where('id', $dealer_id)->first();
-        $user=User::find($dealer_user_id); 
-        if($dealer == null)
+        $operations_id = \Auth::user()->operations->id;
+        $operations_user_id = \Auth::user()->id;
+        $operations = Operations::withTrashed()->where('id', $operations_id)->first();
+        $user=User::find($operations_user_id); 
+        if($operations == null)
         {
-           return view('Dealer::404');
+           return view('Operations::404');
         }
-        return view('Dealer::dealer-profile',['dealer' => $dealer,'user' => $user]);
+        return view('Operations::operations-profile',['operations' => $operations,'user' => $user]);
     }
 
-    //for edit page of Dealer profile
-    public function editDealerProfile()
+    //for edit page of operations profile
+    public function editOperationsProfile()
     {
-        $dealer_id=\Auth::user()->dealer->id;
-        $dealer = Dealer::where('id', $dealer_id)->first();
-        if($dealer == null){
-            return view('Dealer::404');
+        $operations_id=\Auth::user()->operations->id;
+        $operation = Operations::where('id', $operations_id)->first();
+        if($operation == null){
+            return view('Operations::404');
         }
-        return view('Dealer::dealer-profile-edit',['dealer' => $dealer]);
+        return view('Operations::operations-profile-edit',['operation' => $operation]);
     }
     //update dealer profile details
-    public function updateDealerProfile(Request $request)
+    public function updateOperationsProfile(Request $request)
     {  
-        $dealer = Dealer::find($request->id);
-        $user = User::where('id', $dealer->user_id)->first();
-        if($dealer == null){
-           return view('Dealer::404');
+        $operation = Operations::find($request->id);
+        $user = User::where('id', $operation->user_id)->first();
+        if($operation == null){
+           return view('Operation::404');
         } 
-        $rules = $this->dealerProfileUpdatesRules($user);
+        $rules = $this->operationProfileUpdatesRules($user);
         $this->validate($request, $rules);   
-        $dealer->name = $request->name;
-        $dealer->address = $request->address;
-        $dealer->save();
+        $operation->name = $request->name;
+        $operation->address = $request->address;
+        $operation->save();
         $user->mobile = $request->mobile;
         $user->email = $request->email;
         $user->save();
         $request->session()->flash('message', 'Your details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('dealer.profile'));  
+        return redirect(route('operations.profile'));  
     }
 
 ////////////////////////Dealer Profile-end////////////////
@@ -348,7 +348,7 @@ class OperationsController extends Controller {
         ];
         return  $rules;
     }
-    public function dealerProfileUpdatesRules($user){
+    public function operationProfileUpdatesRules($user){
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
