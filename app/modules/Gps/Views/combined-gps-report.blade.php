@@ -52,7 +52,7 @@ Combined Gps Report
                              <th>Sl.No</th>
                          
                               <th>Created Date</th>
-                              <th>Date</th>       
+                              <th>Count</th>       
                             </tr>
                         </thead>
                     </table>
