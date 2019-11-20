@@ -247,7 +247,7 @@
                         <h3 id="gps_today">
                           <div class="loader"></div>
                         </h3>
-                        <p>Today's Gps</p>
+                        <p>Today Manufactured</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>
