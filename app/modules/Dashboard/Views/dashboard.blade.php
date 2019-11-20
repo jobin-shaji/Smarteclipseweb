@@ -224,37 +224,24 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="row">
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Verified Gps </p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
                  
-                  <!-- <div class="panel-body" style="width: 100%;min-height: 10%;margin-top: 15%;margin-left: 10%">
-                    <form  method="POST" action="#">
-                      <div class="col-lg-3 col-md-3"> 
-                        <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
-                          <label>GPS</label>                           
-                          <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>        
-                            <option value="">All</option>
-                            <option value="">GPS</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-3"> 
-                        <div class="form-group" style="margin-left: 30%;margin-top: 2%;">
-                          <label>DEVICE</label>                           
-                          <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>      
-                            <option selected="selected" disabled="disabled" value="">Select VEHICLE</option> 
-                            <option value="">All</option>  
-                            <option value="">vehicle</option>
-                          </select>
-                        </div>
-                      </div>                         
-                      <div class="col-lg-3 col-md-3 pt-4">
-                        <div class="form-group">          
-                          <button class="btn btn-sm btn-info btn2 srch" style="margin-left: 40%">
-                            <i class="fa fa-search"></i> 
-                          </button>                    
-                        </div>
-                      </div>
-                    </form>
-                  </div> -->      
+                
                 </div>
               </div>
             </div>

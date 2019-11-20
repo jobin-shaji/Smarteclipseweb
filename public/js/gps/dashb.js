@@ -40,7 +40,9 @@ function dbcount(res){
       $('#offline').text(res.offline);  
       
       $('#pending_jobs').text(res.pending_jobs);
-      $('#completed_jobs').text(res.completed_jobs);    
+      $('#completed_jobs').text(res.completed_jobs); 
+      $('#operation_gps').text(res.gps); 
+         
 }
 
 //updated all aaaaa

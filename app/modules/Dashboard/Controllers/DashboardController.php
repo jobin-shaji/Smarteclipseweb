@@ -202,7 +202,14 @@ class DashboardController extends Controller
                 'offline' => $offline,
                 'status' => 'dbcount'           
             ]);
-        }           
+        }else if($user->hasRole('operations')){
+            return response()->json([
+                // 'gps' => Gps::where('user_id',$user->id)->count(),
+                'gps' => Gps::whereNotNull('manufacturing_date')->count(),
+
+                'status' => 'dbcount'           
+            ]);
+        }            
     }
     function rootDashboardView()
     {
