@@ -471,7 +471,8 @@ trait VehicleDataProcessorTrait{
         $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);      
-        $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
+        //$km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);  
+        $km_report=0;     
         $alerts =Alert::select(
 	            'id',
 	            'alert_type_id', 
