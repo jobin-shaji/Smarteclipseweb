@@ -85,6 +85,9 @@ Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('o
 Route::get('/gps-report','GpsController@gpsReport')->name('gps-report');
 Route::post('/gps-report-list','GpsController@gpsReportList')->name('gps-report-list');
 
+Route::get('/combined-gps-report','GpsController@combinedGpsReport')->name('combined-gps-report');
+Route::post('/combined-gps-report-list','GpsController@combinedGpsReportList')->name('combined-gps-report-list');
+
 });
 
 
