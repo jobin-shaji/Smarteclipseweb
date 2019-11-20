@@ -1888,7 +1888,7 @@ class VehicleController extends Controller
             $vehicle_profiles[] = $this->vehicleProfile($vehicle->id,$date_and_time,$client->id);
 
             if($i == 2){
-                dd($vehicle_profiles);
+                dd($date_and_time);
             }
         }
 
