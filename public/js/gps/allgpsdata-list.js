@@ -8,8 +8,8 @@ $(document).ready(function () {
 
 function singleGpsData(value){
   if(value){
-    $("#set_ota_button").show();
-    $("#set_ota_gps_id").val(value);
+    // $("#set_ota_button").show();
+    // $("#set_ota_gps_id").val(value);
   }
   var url = 'allgpsdata-list';
   var data = { 

@@ -121,6 +121,14 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
 Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+
+
+ 	Route::get('/gps-map-public','MapLocationController@gpsMapLocationPublic')->name('gps.map.public');
+	Route::post('/gps-map/location-track-public','MapLocationController@gpsMapLocationTrackPublic')->name('gps.map.location.track.public');
+
+
+	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
  	
 });
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
