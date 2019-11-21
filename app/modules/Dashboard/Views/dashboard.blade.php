@@ -229,10 +229,40 @@
                     <!-- small box -->
                     <div class="small-box bg-yellow bxs">
                       <div class="inner">
+                        <h3 id="gps_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Devices Instock  </p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-8 transferred_gps_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
                         <h3 id="gps">
                           <div class="loader"></div>
                         </h3>
-                        <p>Instock Gps </p>
+                        <p>Total Devices</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                     
+                    </div>
+                  </div>
+                </div>
+                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="pending_gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p> To be added to stock </p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>
