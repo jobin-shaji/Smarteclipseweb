@@ -8,7 +8,7 @@ class OtaResponse extends Model
 {
     // ota response  fillable data
 	protected $fillable = [
-        'gps_id', 'response'
+        'gps_id', 'response','operations_id'
     ];
 
 }

@@ -79,6 +79,8 @@ Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-su
 Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
+Route::post('/operations-setota','GpsController@operationsSetOtaInConsole')->name('operations-setota');
+
 Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
 Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
 Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');
@@ -87,6 +89,9 @@ Route::post('/gps-report-list','GpsController@gpsReportList')->name('gps-report-
 
 Route::get('/combined-gps-report','GpsController@combinedGpsReport')->name('combined-gps-report');
 Route::post('/combined-gps-report-list','GpsController@combinedGpsReportList')->name('combined-gps-report-list');
+
+Route::get('/ota-updates','GpsController@otaUpdatesListPage')->name('ota-updates');
+Route::post('/ota-updates-list','GpsController@getOtaUpdatesAllData')->name('ota-updates-list');
 
 });
 

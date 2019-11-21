@@ -30,7 +30,7 @@ Total KM Report
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="0">All</option>
                               @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
+                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                               @endforeach  
                             </select>
                           </div>
@@ -48,10 +48,10 @@ Total KM Report
                           </div>
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">
-                             <div class="form-group">          
-                              <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                             <div style="float: left">          
+                              <button class="btn btn-sm btn-info btn2 srch" style="width: 80%" onclick="check()"> <i class="fa fa-search"></i> </button>
                               </div>
-                              <div class="form-group">
+                              <div style="float: left">
                                 <button class="btn btn-sm btn1 btn-primary dwnld" id="excel" onclick="downloadTotalKMReport()">
                                   <i class="fa fa-file"></i>Download Excel</button>                        
                               </div>
