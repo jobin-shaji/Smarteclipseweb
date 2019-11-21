@@ -93,6 +93,13 @@ Route::post('/combined-gps-report-list','GpsController@combinedGpsReportList')->
 Route::get('/ota-updates','GpsController@otaUpdatesListPage')->name('ota-updates');
 Route::post('/ota-updates-list','GpsController@getOtaUpdatesAllData')->name('ota-updates-list');
 
+
+Route::get('/stock-report','GpsController@gpsReport')->name('stock-report');
+Route::post('/stock-report-list','GpsController@gpsReportList')->name('stock-report-list');
+
+Route::get('/combined-stock-report','GpsController@combinedGpsReport')->name('combined-stock-report');
+Route::post('/combined-stock-report-list','GpsController@combinedGpsReportList')->name('combined-stock-report-list');
+
 });
 
 
