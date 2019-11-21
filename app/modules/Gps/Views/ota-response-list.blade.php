@@ -1,45 +1,59 @@
 @extends('layouts.eclipse')
-
+@section('title')
+OTA Response
+@endsection
 @section('content')
 
-<section class="hilite-content" style="min-height: 200px">
-      <!-- title row -->     
+<div class="page-wrapper_new">
+  <div class="page-breadcrumb">
     <div class="row">
-      <div class="panel-body" style="width: 100%;min-height: 10%;margin-top: 5%;margin-left: 10%">
-        <form  method="POST" action="#">
-          <div class="col-lg-3 col-md-3"> 
-            <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
-              <label>GPS</label>                           
-              <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>                
-                <option value="">All</option>
-                @foreach($gps as $gps)
-                  <option value="{{$gps->id}}">{{$gps->imei}}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-        </form>
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">OTA Response</h4>
       </div>
     </div>
-  
-
-</section>
-<div class="clearfix"></div>
-<section class="content" >
-<!-- <div class=col-md-8>           -->
-  <div  class="col-md-10" style="overflow: scroll">
-      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:50%">
-          <thead>
-              <tr>
-                <th>Sl.No</th>                
-                <th>Response</th>  
-                <th>Sent at</th> 
-                <th>Verified at</th>                      
-              </tr>
-          </thead>
-      </table>       
   </div>
-</section>
+  <div class="container-fluid">
+    <div class="card-body">
+      <div >
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="col-md-12 col-md-offset-1">
+                <div class="panel panel-default">
+                  <div >
+                    <div class="panel-body">
+                      <select class="select2 form-control" style="width: 200px!important" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>                
+                        <option value="">All</option>
+                        @foreach($gps as $gps)
+                          <option value="{{$gps->id}}">{{$gps->imei}}</option>
+                        @endforeach
+                      </select>             
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;margin-top: 3%" id="dataTable">
+                        <thead>
+                           <tr>
+                            <th>Sl.No</th>                
+                            <th>Response</th>  
+                            <th>Sent at</th> 
+                            <th>Verified at</th>                      
+                          </tr>
+                        </thead>
+                    </table>
+                </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 @section('script')
