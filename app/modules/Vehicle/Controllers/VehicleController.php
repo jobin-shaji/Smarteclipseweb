@@ -2231,7 +2231,9 @@ class VehicleController extends Controller
                                    'from_date'=>$from_date,
                                    'to_date'=>$to_date
                                   );
-        } else {
+        } 
+        else 
+        {
             $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
         }
         return response()->json($response_data);
