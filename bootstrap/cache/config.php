@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'RAYFLEET',
+    'name' => 'SMART ECLIPSE',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -176,7 +176,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/home/php_vst/projects/gps-web/storage/framework/cache/data',
+        'path' => '/var/www/html/gps-/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -206,7 +206,7 @@
         'connection' => 'cache',
       ),
     ),
-    'prefix' => 'rayfleet_cache',
+    'prefix' => 'smart_eclipse_cache',
   ),
   'cors' => 
   array (
@@ -399,7 +399,9 @@
   'eclipse' => 
   array (
     'offline_time' => '-360 minutes',
-    'connection_lost_time' => '-11 minutes',
+    'connection_lost_time_motion' => '-10 minutes',
+    'connection_lost_time_halt' => '-15 minutes',
+    'connection_lost_time_sleep' => '-20 minutes',
   ),
   'excel' => 
   array (
@@ -469,12 +471,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/home/php_vst/projects/gps-web/storage/app',
+        'root' => '/var/www/html/gps-/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/home/php_vst/projects/gps-web/storage/app/public',
+        'root' => '/var/www/html/gps-/storage/app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -519,13 +521,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/home/php_vst/projects/gps-web/storage/logs/laravel.log',
+        'path' => '/var/www/html/gps-/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/home/php_vst/projects/gps-web/storage/logs/laravel.log',
+        'path' => '/var/www/html/gps-/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -588,7 +590,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/home/php_vst/projects/gps-web/resources/views/vendor/mail',
+        0 => '/var/www/html/gps-/resources/views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -744,7 +746,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/home/php_vst/projects/gps-web/storage/framework/sessions',
+    'files' => '/var/www/html/gps-/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -753,7 +755,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'rayfleet_session',
+    'cookie' => 'smart_eclipse_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
@@ -770,9 +772,9 @@
   array (
     'paths' => 
     array (
-      0 => '/home/php_vst/projects/gps-web/resources/views',
+      0 => '/var/www/html/gps-/resources/views',
     ),
-    'compiled' => '/home/php_vst/projects/gps-web/storage/framework/views',
+    'compiled' => '/var/www/html/gps-/storage/framework/views',
   ),
   'vst' => 
   array (
@@ -784,10 +786,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => '/home/php_vst/projects/gps-web/storage/fonts/',
-      'font_cache' => '/home/php_vst/projects/gps-web/storage/fonts/',
+      'font_dir' => '/var/www/html/gps-/storage/fonts/',
+      'font_cache' => '/var/www/html/gps-/storage/fonts/',
       'temp_dir' => '/tmp',
-      'chroot' => '/home/php_vst/projects/gps-web',
+      'chroot' => '/var/www/html/gps-',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -812,8 +814,8 @@
     'web_dark_theme' => false,
     'collect_data_always' => false,
     'storage' => 'files',
-    'storage_files_path' => '/home/php_vst/projects/gps-web/storage/clockwork',
-    'storage_sql_database' => '/home/php_vst/projects/gps-web/storage/clockwork.sqlite',
+    'storage_files_path' => '/var/www/html/gps-/storage/clockwork',
+    'storage_sql_database' => '/var/www/html/gps-/storage/clockwork.sqlite',
     'storage_sql_table' => 'clockwork',
     'storage_expiration' => 10080,
     'authentication' => false,
