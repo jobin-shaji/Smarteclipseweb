@@ -35,7 +35,7 @@
               <i class="fa fa-circle" style="color:#858585;" aria-hidden="true"></i> Sleep
             </span>
             <span id="offline" style="display: none;font-size: 13px;">
-              <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Last seen <span id="last_seen"></span>
+              <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Offline: Last seen <span id="last_seen"></span>
             </span>
             <span id="connection_lost" style="display: none;font-size: 13px;">
               Connection lost: <span id="connection_lost_last_seen"></span>

@@ -1014,7 +1014,9 @@ class GpsController extends Controller {
     {
         $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
-        $connection_lost_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
+        $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
+        $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
+        $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
         $offline="Offline";
         $signal_strength="Connection Lost";
         $track_data=Gps::select('lat as latitude',
@@ -1022,7 +1024,9 @@ class GpsController extends Controller {
                       'heading as angle',
                       'mode as vehicleStatus',
                       'imei',
+                      'ac_status',
                       'speed',
+                      'fuel_status',
                       'battery_status as battery_percentage',
                       'device_time as dateTime',
                       'main_power_status as power',
@@ -1038,7 +1042,9 @@ class GpsController extends Controller {
             $track_data = Gps::select('lat as latitude',
                               'lon as longitude',
                               'heading as angle',
+                              'ac_status',
                               'speed',
+                              'fuel_status',
                               'imei',
                               'battery_status as battery_percentage',
                               'device_time as dateTime',
@@ -1055,8 +1061,18 @@ class GpsController extends Controller {
         }
 
         if($track_data){
+            $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+            $fuel =$track_data->fuel_status*100/15;
+            $fuel = (int)$fuel;
+            $fuel_status=$fuel."%";
+            $ac_status =$track_data->ac_status;
+            if($ac_status == 1){
+                $ac_status="ON";
+            }else{
+                $ac_status="OFF";
+            }
             $reponseData=array(
                         "latitude"=>$snapRoute['lat'],
                         "longitude"=>$snapRoute['lng'],
@@ -1069,10 +1085,13 @@ class GpsController extends Controller {
                         "ign"=>$track_data->ign,
                         "battery_status"=>round($track_data->battery_percentage),
                         "signalStrength"=>$track_data->signalStrength,
-                        "connection_lost_time"=>$connection_lost_time,
+                        "connection_lost_time_motion"=>$connection_lost_time_motion,
+                        "connection_lost_time_halt"=>$connection_lost_time_halt,
+                        "connection_lost_time_sleep"=>$connection_lost_time_sleep,
                         "last_seen"=>$minutes,
-                        "fuel"=>"",
-                        "ac"=>"",
+                        "connection_lost_time_minutes"=>$connection_lost_time_minutes,
+                        "fuel"=>$fuel_status,
+                        "ac"=>$ac_status,
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
                       );
