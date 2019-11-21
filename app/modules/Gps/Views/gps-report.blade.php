@@ -54,7 +54,8 @@ Gps Report
                               <th> Serial No</th>
                               <th>E-sim Number</th>
                               <th>Manufacturing Date</th>
-                              <th>Date</th>       
+                              
+                              <th>Created on</th>       
                             </tr>
                         </thead>
                     </table>

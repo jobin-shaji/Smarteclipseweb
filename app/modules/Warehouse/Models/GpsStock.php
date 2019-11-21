@@ -38,5 +38,9 @@ class GpsStock extends Model
     {
         return $this->hasone('App\Modules\Client\Models\Client','id','client_id');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\Modules\User\Models\User','inserted_by');
+    }
 
 }
