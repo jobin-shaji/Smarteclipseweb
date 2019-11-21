@@ -89,6 +89,7 @@ function vehicleTrack(res) {
     var vehicle_name = JSONObject[i].vehicle_name;
     var loc = new google.maps.LatLng(lat, lng);
     var mode = JSONObject[i].mode;
+    var encrypt_gps_id = JSONObject[i].encrypt_gps_id;
     var color = "";
     var vehicle_status = "";
     if (mode == 'M') {
@@ -127,11 +128,13 @@ function vehicleTrack(res) {
     '</code><br><img src="assets/images/plate.png" width=30 height=30><b>&nbsp;Vehicle Number:-</b> '
     + reg +'</p>'+
     '</div>'+
-    '<a href="/alert" ><button class="btn-pop type="submit" style="margin-right:2%;margin-left:3%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
+
+    
+    '<a href="/vehicle/'+ encrypt_gps_id +'/alert" ><button class="btn-pop type="submit" style="margin-right:2%;margin-left:3%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
     '<a href="/vehicles/' 
     + vehicle_id + 
-    '/location"><button class="btn-pop type="submit" style="margin-right:2%;background-color:#f0b100;border-radius:5px"><img src="assets/images/live-track.svg" width=13 height=13>Track</button></a>'+
-    '<a href="/vehicles/'+ vehicle_id +'/playback-page">'+
+    '/location"><button class="btn-pop type="submit" style="margin-right:1%;background-color:#f0b100;border-radius:5px"><img src="assets/images/live-track.svg" width=13 height=13>Track</button></a>'+
+    '<a href="/vehicles/'+ vehicle_id +'/playback-page" target="blank">'+
     '<button class="btn-pop type="submit" style="background-color:#f0b100;border-radius:5px"><img src="assets/images/reply.svg" width=13 height=13>Replay</button></div></a>';
 
 

@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'SMART ECLIPSE',
+    'name' => 'RAYFLEET',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -206,7 +206,7 @@
         'connection' => 'cache',
       ),
     ),
-    'prefix' => 'smart_eclipse_cache',
+    'prefix' => 'rayfleet_cache',
   ),
   'cors' => 
   array (
@@ -755,7 +755,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'smart_eclipse_session',
+    'cookie' => 'rayfleet_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
