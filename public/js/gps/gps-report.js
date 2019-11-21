@@ -35,10 +35,11 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
-            {data: 'imei', name: 'imei', orderable: false},                   
-            {data: 'serial_no', name: 'serial_no', searchable: false},
-            {data: 'e_sim_number', name: 'e_sim_number', orderable: false},
-            {data: 'manufacturing_date', name: 'manufacturing_date', orderable: false},
+            {data: 'imei', name: 'imei',  orderable: true, searchable: false},                   
+            {data: 'serial_no', name: 'serial_no',  orderable: true, searchable: false},
+            {data: 'e_sim_number', name: 'e_sim_number',  orderable: true, searchable: false},
+            {data: 'manufacturing_date', name: 'manufacturing_date', orderable: true, searchable: false},
+            
              {data: 'created_at', name: 'created_at', orderable: false, searchable: false}
            
         ],
