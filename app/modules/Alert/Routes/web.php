@@ -24,6 +24,8 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 	Route::get('/alert-demo','AlertController@alertsDemo')->name('alert.demo');
 	Route::post('/alert-demo-list','AlertController@alertsDemoList')->name('alert-demo-list');
+	Route::get('/vehicle/{id}/alert','AlertController@vehicleAlerts')->name('vehicle.alert');
+	
 
 	   // Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
 	  
