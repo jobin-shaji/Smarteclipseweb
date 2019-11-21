@@ -44,7 +44,7 @@ function dbcount(res){
       $('#gps_today').text(res.gps_today); 
       $('#gps_stock').text(res.gps_stock); 
       $('#gps').text(res.gps); 
-      
+      $('#gps_add_to_stock').text(res.gps_add_to_stock); 
       $('#pending_gps').text(res.gps_to_verify); 
       
          
