@@ -2021,7 +2021,7 @@ class VehicleController extends Controller
                                  ->whereDate('date','>=',$from_date)
                                  ->whereDate('date','<=',$to_date)
                                  ->sum('km'); 
-            $statics = array("vehicle_number" => $vehicle_details->register_number, 
+            $statics[] = array("vehicle_number" => $vehicle_details->register_number, 
                                    "vehicle_id" => $vehicle_details->id, 
                                    "total_distance" => strval($total_km), 
                                    "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
