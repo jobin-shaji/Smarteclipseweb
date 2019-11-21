@@ -519,7 +519,7 @@ trait VehicleDataProcessorTrait{
             'geofence_entry_overspeed' => $alerts->where('alert_type_id',15)->count(),
             'geofence_exit_overspeed' => $alerts->where('alert_type_id',16)->count(),
             'route_deviation' => $route_deviation,    
-            'dailykm' => $km_report,          
+            'dailykm' => strval($km_report),          
             'status' => 'kmReport'           
         );
 
