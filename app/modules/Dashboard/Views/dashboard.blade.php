@@ -255,6 +255,7 @@
                     </div>
                   </div>
                 </div>
+
                   <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-yellow bxs">
@@ -270,6 +271,25 @@
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
+                  <br/>
+                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="">
+                          <div class="loader"></div>
+                        </h3>
+                        
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+
+
+
                    <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-green bxs">
