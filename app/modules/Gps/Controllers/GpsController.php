@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
+use App\Modules\Ota\Models\OtaUpdates;
+
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -1343,35 +1345,60 @@ class GpsController extends Controller {
                 $forhuman=Carbon::parse($last_data->created_at)->diffForHumans(); 
             }            
             return response()->json([
-                    'last_data' => $last_data,
-                    'items' => $items,  
-                    'last_updated' => $forhuman,               
-                    'status' => 'gpsdatavalue'
+                'last_data' => $last_data,
+                'items' => $items,  
+                'last_updated' => $forhuman,               
+                'status' => 'gpsdatavalue'
             ]);
         }   
     }
-public function getGpsAllDataHlm(Request $request)
+    public function getGpsAllDataHlm(Request $request)
     {  
-
         $items = GpsData::find($request->id);       
         return response()->json([
                 'gpsData' => $items        
         ]);
-                   
     }
-
-
-
-
-
 
     public function setOtaInConsole(Request $request)
     {
         $gps_id=$request->gps_id;  
-        $command=$request->command;  
+        $command=$request->command;        
+        // dd($response);
         $response = OtaResponse::create([
             'gps_id'=>$gps_id,
             'response'=>$command
+        ]); 
+        if($response){
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+    }
+
+
+    //////////////////////////
+
+    public function operationsSetOtaInConsole(Request $request)
+    {
+        $gps_id=$request->gps_id; 
+        $operations_id=\Auth::user()->operations->id; 
+        $command=$request->command;
+        $ota=$request->ota;  
+        $ota_response=$ota.$command;
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$ota_response,
+            'operations_id'=>$operations_id 
+
         ]); 
         if($response){
             return response()->json([
@@ -1438,7 +1465,7 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
-      public function otaResponseListPage()
+    public function otaResponseListPage()
     {
        
         $gps = Gps::all();
@@ -1578,7 +1605,24 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
-
+    public function otaUpdatesListPage()
+    {
+       
+        $gps = Gps::all();
+        
+        return view('Gps::ota-updates-list',['gps' => $gps]);
+    }
+    public function getOtaUpdatesAllData(Request $request)
+    {
+        if($request->gps){
+         $items = OtaUpdates::where('gps_id',$request->gps)->limit(500);  
+        }
+        
+        return DataTables::of($items)
+        ->addIndexColumn()     
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
 
 
 

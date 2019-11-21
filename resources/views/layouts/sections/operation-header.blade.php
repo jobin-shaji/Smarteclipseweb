@@ -32,7 +32,14 @@
         </li>
        
         <li class="nav-item dropdown">
-            <a class="nav-link" href="{{url('/ota-response')}}">OTA RESPONSE</a>
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> OTA
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="nav-link" href="{{url('/ota-response')}}">OTA RESPONSE</a>
+                <a class="dropdown-item"href="{{url('/ota-update')}}">OTA UPDATES</a>
+                
+            </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS REPORT
