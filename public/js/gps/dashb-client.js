@@ -129,7 +129,7 @@ function vehicleTrack(res) {
     + reg +'</p>'+
     '</div>'+
 
-    '<a href="/alert" ><button class="btn-pop type="submit" style="margin-right:1%;margin-left:2%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
+    
     '<a href="/vehicle/'+ encrypt_gps_id +'/alert" ><button class="btn-pop type="submit" style="margin-right:2%;margin-left:3%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
     '<a href="/vehicles/' 
     + vehicle_id + 
