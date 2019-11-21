@@ -204,9 +204,13 @@ class DashboardController extends Controller
             ]);
         }else if($user->hasRole('operations')){
             return response()->json([
-                // 'gps' => Gps::where('user_id',$user->id)->count(),
-                'gps' => Gps::whereNotNull('manufacturing_date')->count(),
+                'gps' => Gps::all()->count(),
+                'gps_stock' => GpsStock::all()->count(),
+                'gps_to_verify' => Gps::all()->count()-GpsStock::all()->count(),
+
                 'gps_today' => Gps::WhereDate('created_at',date("Y-m-d"))->count(),
+                'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
+
 
                 'status' => 'dbcount'           
             ]);
