@@ -388,12 +388,13 @@
                                 <input type="hidden" id="header_decrypt_vehicle_id">
                                 <a class="dropdown-item"><button onclick="verifyHeaderEmergency()">Verify</button></a>
                             </div>
-
+                        </li>
                         @role('client')
                         <li class="nav-item dropdown">
                             <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
                                 <span class="bell_value" id="bell_notification_count">0</span>
                             </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i>
+                            </a>
                             <!-- <span class="notification-box">
                                 <span class="notification-count">
                                    <a class="dropdown-item" href="{{url('/alert')}}" id="bell_notification_count" title="Alerts">1000</a>
@@ -603,7 +604,6 @@
                             </ul>
 <div style="padding:3% 6%;;font-weight:600;font-size:20px;color:#fb9a18;border-top: 1px solid #e9ecef">
 Contact for Assistance +91 9544313131</div>
-
 </div>   
     </div>
 <style type="text/css">
