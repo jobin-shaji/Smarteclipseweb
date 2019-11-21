@@ -5,9 +5,9 @@
           if (strpos($url, $rayfleet_key) == true) {  ?>
 				 
 				      <footer class="footer"> 
-				      	<b>RAYFLEET</b> &nbsp;Version 0.1
-				        <div class="footer-bottom" style="width: 30%!important">
-				         Developed by&nbsp;<a href="http://www.tecnositafgulf.qa" target="blank">Gulf Business Development Group</a>
+				      	 Developed by&nbsp;&nbsp;<a href="http://www.tecnositafgulf.qa" target="blank">Gulf Business Development Group</a>
+				        <div class="footer-bottom" >
+				        RAYFLEET &nbsp;Version 0.1
 				        </div>
 				      </footer>
 				   
@@ -33,10 +33,12 @@
 
 <style type="text/css">
 	.footer{
-  padding: 0px 4%;
+  padding: 5px 4%;
     width: 100%;
-    background: #afa9a9;
+    background: #fbfbfb;
     color: #444242;
+    text-transform: uppercase;
+    font-size: 13px;
 }
 
 .footer-bottom{
@@ -44,5 +46,7 @@
   float: right;
   /*margin-left: 10%;*/
   color: #444242;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 </style>

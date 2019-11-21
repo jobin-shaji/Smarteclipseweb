@@ -128,9 +128,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
-                            <ul class="dropdown-menu multi-level">
+                            <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
+                                    <a href="{{url('/vehicle')}}" class="dropdown-item">VEHICLE</a>
                                     <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
                                     <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
