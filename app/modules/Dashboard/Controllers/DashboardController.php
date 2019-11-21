@@ -499,7 +499,9 @@ class DashboardController extends Controller
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
         $offline_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
-        $connection_lost_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
+        $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
+        $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
+        $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
         if($gps->no_of_satellites!=null){
          $satelite=$gps->no_of_satellites;   
         }
@@ -532,22 +534,23 @@ class DashboardController extends Controller
         }
         $battery_status=(int)$gps->battery_status;
 
-        if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_difference)
-        {
-            $net_status="Good";
-        }
-        else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_difference))
-        {
-            $net_status="Average";
-        }
-        else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_difference))
-        {
-            $net_status="Poor";
-        }else{
-            $net_status="Connection Lost";
-        }
         if($mode=="M")
         {
+            if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_motion)
+            {
+                $net_status="Good";
+            }
+            else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_motion))
+            {
+                $net_status="Average";
+            }
+            else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_motion))
+            {
+                $net_status="Poor";
+            }else{
+                $net_status="Connection Lost";
+            }
+
             if($gps->device_time >= $offline_time_difference){
                 $vehcile_mode="Moving";
             }else{
@@ -556,6 +559,21 @@ class DashboardController extends Controller
         }
         else if($mode=="H")
         {
+            if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_halt)
+            {
+                $net_status="Good";
+            }
+            else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_halt))
+            {
+                $net_status="Average";
+            }
+            else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_halt))
+            {
+                $net_status="Poor";
+            }else{
+                $net_status="Connection Lost";
+            }
+
             if($gps->device_time >= $offline_time_difference){
                 $vehcile_mode="Halt";
             }else{
@@ -564,6 +582,21 @@ class DashboardController extends Controller
         }
         else if($mode=="S")
         {
+            if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_sleep)
+            {
+                $net_status="Good";
+            }
+            else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_sleep))
+            {
+                $net_status="Average";
+            }
+            else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_sleep))
+            {
+                $net_status="Poor";
+            }else{
+                $net_status="Connection Lost";
+            }
+
             if($gps->device_time >= $offline_time_difference){
                 $vehcile_mode="Sleep";
             }else{
@@ -572,6 +605,7 @@ class DashboardController extends Controller
         }
         else 
         {
+            $net_status="Connection Lost";
             $vehcile_mode="Offline";
         }
         if($ignition == 1){
