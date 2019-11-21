@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'SMART ECLIPSE',
+    'name' => 'RAYFLEET',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -176,7 +176,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/var/www/html/gps-/storage/framework/cache/data',
+        'path' => '/home/php_vst/projects/gps-web/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -206,7 +206,7 @@
         'connection' => 'cache',
       ),
     ),
-    'prefix' => 'smart_eclipse_cache',
+    'prefix' => 'rayfleet_cache',
   ),
   'cors' => 
   array (
@@ -471,12 +471,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/var/www/html/gps-/storage/app',
+        'root' => '/home/php_vst/projects/gps-web/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/var/www/html/gps-/storage/app/public',
+        'root' => '/home/php_vst/projects/gps-web/storage/app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -521,13 +521,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/var/www/html/gps-/storage/logs/laravel.log',
+        'path' => '/home/php_vst/projects/gps-web/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/var/www/html/gps-/storage/logs/laravel.log',
+        'path' => '/home/php_vst/projects/gps-web/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -590,7 +590,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/var/www/html/gps-/resources/views/vendor/mail',
+        0 => '/home/php_vst/projects/gps-web/resources/views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -746,7 +746,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/var/www/html/gps-/storage/framework/sessions',
+    'files' => '/home/php_vst/projects/gps-web/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -755,7 +755,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'smart_eclipse_session',
+    'cookie' => 'rayfleet_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
@@ -772,9 +772,9 @@
   array (
     'paths' => 
     array (
-      0 => '/var/www/html/gps-/resources/views',
+      0 => '/home/php_vst/projects/gps-web/resources/views',
     ),
-    'compiled' => '/var/www/html/gps-/storage/framework/views',
+    'compiled' => '/home/php_vst/projects/gps-web/storage/framework/views',
   ),
   'vst' => 
   array (
@@ -786,10 +786,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => '/var/www/html/gps-/storage/fonts/',
-      'font_cache' => '/var/www/html/gps-/storage/fonts/',
+      'font_dir' => '/home/php_vst/projects/gps-web/storage/fonts/',
+      'font_cache' => '/home/php_vst/projects/gps-web/storage/fonts/',
       'temp_dir' => '/tmp',
-      'chroot' => '/var/www/html/gps-',
+      'chroot' => '/home/php_vst/projects/gps-web',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -814,8 +814,8 @@
     'web_dark_theme' => false,
     'collect_data_always' => false,
     'storage' => 'files',
-    'storage_files_path' => '/var/www/html/gps-/storage/clockwork',
-    'storage_sql_database' => '/var/www/html/gps-/storage/clockwork.sqlite',
+    'storage_files_path' => '/home/php_vst/projects/gps-web/storage/clockwork',
+    'storage_sql_database' => '/home/php_vst/projects/gps-web/storage/clockwork.sqlite',
     'storage_sql_table' => 'clockwork',
     'storage_expiration' => 10080,
     'authentication' => false,
