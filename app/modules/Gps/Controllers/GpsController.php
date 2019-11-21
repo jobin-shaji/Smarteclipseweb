@@ -1447,7 +1447,7 @@ class GpsController extends Controller {
         //upload gps details to database table
     public function saveStock(Request $request)
     {
-        $root_id=\Auth::user()->id;
+        $user_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
         // dd($request->serial_no);
         // $gps = Gps::where('id',$request->serial_no)->first();
@@ -1458,7 +1458,7 @@ class GpsController extends Controller {
         $this->validate($request, $rules); 
         $gps_id= $request->serial_no;
         $gps = Gps::find($gps_id);
-         $gps_stock = GpsStock::where('gps_id',$gps_id);
+        $gps_stock = GpsStock::where('gps_id',$gps_id)->first();       
         if($gps_stock==null)
         {
             $gps->manufacturing_date = $maufacture;
@@ -1467,14 +1467,17 @@ class GpsController extends Controller {
             if($gps){
                $gps_stock = GpsStock::create([
                     'gps_id'=> $gps->id,
-                    'inserted_by' => $root_id
+                    'inserted_by' => $user_id
                 ]); 
             }
             $request->session()->flash('message', 'New gps created successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
-             return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+             // return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+            return redirect(route('gps.stock'));
         } 
         else{
+
+
             $request->session()->flash('message', 'Already added to stock!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
          return redirect(route('gps.stock'));
