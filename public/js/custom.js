@@ -183,7 +183,7 @@ function toast(res){
 
     }
     else if(res.status == 0) {
-      
+      toastr.error( res.message, res.title);
     }
     else if(res.status == 'dbcount'){
         dbcount(res);
