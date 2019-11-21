@@ -1438,7 +1438,7 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
-      public function otaResponseListPage()
+    public function otaResponseListPage()
     {
        
         $gps = Gps::all();
@@ -1578,7 +1578,25 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
-
+    public function otaUpdatesListPage()
+    {
+       
+        $gps = Gps::all();
+        
+        return view('Gps::ota-updates-list',['gps' => $gps]);
+    }
+    public function getOtaUpdatesAllData(Request $request)
+    {
+        if($request->gps){
+         $items = OtaResponse::where('gps_id',$request->gps)->limit(500);  
+        }
+        
+        return DataTables::of($items)
+        ->addIndexColumn()
+         
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
 
 
 
