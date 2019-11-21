@@ -209,6 +209,8 @@ class DashboardController extends Controller
                 'gps_to_verify' => Gps::all()->count()-GpsStock::all()->count(),
 
                 'gps_today' => Gps::WhereDate('created_at',date("Y-m-d"))->count(),
+                'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
+
 
                 'status' => 'dbcount'           
             ]);

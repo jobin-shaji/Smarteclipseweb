@@ -225,7 +225,7 @@
               <div class="col-sm-12">
                 <div class="row">
                   <!-- ./col -->
-                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                  <div class="col-lg-6 col-xs-6 sub_dealer_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-yellow bxs">
                       <div class="inner">
@@ -247,7 +247,7 @@
                         <h3 id="gps">
                           <div class="loader"></div>
                         </h3>
-                        <p>Total Devices</p>
+                        <p>Total devices tested</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>
@@ -277,7 +277,7 @@
                         <h3 id="gps_today">
                           <div class="loader"></div>
                         </h3>
-                        <p>Today Manufactured</p>
+                        <p>Devices tested today</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>
@@ -286,6 +286,21 @@
                     </div>
                   </div>
                  
+                  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_add_to_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>devices added to stock today</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
                 
                 </div>
               </div>
