@@ -2023,14 +2023,14 @@ class VehicleController extends Controller
                                  ->sum('km'); 
             $statics = array("vehicle_number" => $vehicle_details->register_number, 
                                    "vehicle_id" => $vehicle_details->id, 
-                                   "total_distance" => 0, 
+                                   "total_distance" => strval($total_km), 
                                    "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
                                    "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
                                    "total_number_of_stops" =>0, 
-                                   "ac_on_time_idle" => 0, 
-                                   "ac_on_time_running" =>0, 
-                                   "driver_behaviour" => $driver_points, 
-                                   "total_km" => $total_km, 
+                                   "ac_on_time_idle" => $vehicle_profile['ac_halt_on_duration'], 
+                                   "ac_on_time_running" =>$vehicle_profile['ac_on_duration'], 
+                                   "driver_behaviour" => strval($driver_points), 
+                                   "total_km" => strval($total_km), 
                                    "max_speed" => $maximum_speed ?$maximum_speed:"", 
                                    "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
                                    "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
@@ -2121,7 +2121,7 @@ class VehicleController extends Controller
                                   "inactive" => 0
                                  );
             $travel_speed = array("speed" =>0, 
-                                  "total_km" => $total_km,
+                                  "total_km" => strval($total_km),
                                   "avg_speed" => number_format($avg_speed, 2), 
                                   "max_speed" => $max_speed ?$max_speed:""
                                  );

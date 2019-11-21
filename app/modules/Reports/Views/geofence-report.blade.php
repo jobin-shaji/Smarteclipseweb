@@ -31,7 +31,7 @@ Geofence Report
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="0">All</option>
                               @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
+                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                               @endforeach  
                             </select>
                           </div>
