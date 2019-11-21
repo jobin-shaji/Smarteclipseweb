@@ -21,27 +21,23 @@
         </form>
       </div>
     </div>
-  
-
 </section>
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
-  <div  class="col-md-10" style="overflow: scroll">
-      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:50%">
+  <div  class="col-md-12">
+      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
           <thead>
               <tr>
                 <th>Sl.No</th>                
                 <th>Updates</th>  
-                <th>Sent at</th> 
-                <th>Verified at</th>                      
+                <th>Value</th> 
+                <th>Device Time</th>                      
               </tr>
           </thead>
       </table>       
   </div>
 </section>
-
-
 @section('script')
     <script src="{{asset('js/gps/ota-updates-list.js')}}"></script>
 @endsection

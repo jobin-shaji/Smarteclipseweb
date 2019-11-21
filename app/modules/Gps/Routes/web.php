@@ -79,6 +79,8 @@ Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-su
 Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
 Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
 Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
+Route::post('/operations-setota','GpsController@operationsSetOtaInConsole')->name('operations-setota');
+
 Route::get('/ac-status','GpsController@acStatus')->name('ac-status');
 Route::get('/ota-response','GpsController@otaResponseListPage')->name('ota-response');
 Route::post('/ota-response-list','GpsController@getOtaResponseAllData')->name('ota-response-list');

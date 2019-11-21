@@ -26,7 +26,7 @@ function callBackDataTable(value){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'ota-response-list',
+            url: 'ota-updates-list',
             type: 'POST',
             data: data,
             headers: {
@@ -36,9 +36,9 @@ function callBackDataTable(value){
          },             
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'response', name: 'response', orderable: false},
-            {data: 'sent_at', name: 'sent_at', orderable: false},
-            {data: 'verified_at', name: 'verified_at', orderable: false},
+            {data: 'header', name: 'header', orderable: false},
+            {data: 'value', name: 'value', orderable: false},
+            {data: 'device_time', name: 'device_time', orderable: false},
             
         ],
         

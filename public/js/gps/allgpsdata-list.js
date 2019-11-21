@@ -8,8 +8,9 @@ $(document).ready(function () {
 
 function singleGpsData(value){
   if(value){
-    // $("#set_ota_button").show();
-    // $("#set_ota_gps_id").val(value);
+    
+    $("#set_ota_button").show();
+    $("#set_ota_gps_id").val(value);
   }
   var url = 'allgpsdata-list';
   var data = { 
@@ -68,15 +69,20 @@ function alldata(res){
 }
 
 function setOta(gps_id) {
+
   if(document.getElementById('command').value == ''){
+    alert('Please enter your values');
+  }
+  if(document.getElementById('ota').value == ''){
     alert('Please enter your command');
   }
   else{
     var command = document.getElementById('command').value;
     var gps_id = document.getElementById('gps_id').value;
-    var data = {'gps_id':gps_id, 'command':command};
+     var ota = document.getElementById('ota').value;
+    var data = {'gps_id':gps_id, 'command':command, 'ota':ota};
   }
-    var url = 'setota';
+    var url = 'operations-setota';
     var purl = getUrl() + '/' + url;
     var triangleCoords = [];
     $.ajax({
