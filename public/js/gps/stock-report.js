@@ -39,6 +39,7 @@ function callBackDataTable(){
             {data: 'gps.serial_no', name: 'gps.serial_no', searchable: false},
             {data: 'gps.e_sim_number', name: 'gps.e_sim_number', orderable: false},
             {data: 'gps.manufacturing_date', name: 'gps.manufacturing_date', orderable: false},
+            {data: 'user.username', name: 'user.username', orderable: false},
              {data: 'created_at', name: 'created_at', orderable: false, searchable: false}
            
         ],
