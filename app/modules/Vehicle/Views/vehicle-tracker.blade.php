@@ -37,25 +37,28 @@
             <span id="offline" style="display: none;font-size: 13px;">
               <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Last seen <span id="last_seen"></span>
             </span>
+            <span id="connection_lost" style="display: none;font-size: 13px;">
+              Connection lost: <span id="connection_lost_last_seen"></span>
+            </span>
           </div>
           <div class="col-sm-12 social-buttons">
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <img src="../../assets/images/plate.png" width=30px height=25px><label id="vehicle_name" class="mgl"></label>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11%">: <label class="mgl" id="ignition"></label></b></b>
+              <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11%;font-size: 11px;">: <label class="mgl" id="ignition"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 19%">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
+              <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 19%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 12.4%">: <label class="mgl" id="car_bettary"></label> %</b></b>
+              <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 12.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%">: <label class="mgl" id="car_power"></label></b></b>
+              <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%;font-size: 11px;">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
             <a class=" btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
-              <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%">: <label class="mgl" id="network_status"></label></b></b>
+              <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%;font-size: 11px;">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 11px;">: <label class="mgl" id="ac"></label></b></b>
