@@ -1650,6 +1650,65 @@ class GpsController extends Controller {
 
 
 
+    public function stockReport()
+    {
+        return view('Gps::stock-report');  
+    }  
+     public function stockReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =GpsStock::select(
+             'gps_id','inserted_by','created_at'
+        )
+        ->with('gps:id,manufacturing_date,imei,e_sim_number,serial_no');
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+        $stock = $query->get();
+        return DataTables::of($stock)
+        ->addIndexColumn()
+        
+        ->make();
+    } 
+
+
+
+
+    public function combinedStockReport()
+    {
+        return view('Gps::combined-stock-report');  
+    }  
+     public function combinedReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =GpsStock::select(
+            'gps_id',
+           \DB::raw('count(date_format(created_at, "Y-m-d")) as count'), 
+            \DB::raw('DATE(created_at) as date')
+        )
+        ->groupBy('date');
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+      $stock = $query->get();
+    return DataTables::of($stock)
+    ->addIndexColumn()
+    ->make();
+    } 
+
+
+
+
+
+
+
+
 
 
     //validation for gps creation
