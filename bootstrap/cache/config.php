@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'RAYFLEET',
+    'name' => 'SMART ECLIPSE',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -206,7 +206,7 @@
         'connection' => 'cache',
       ),
     ),
-    'prefix' => 'rayfleet_cache',
+    'prefix' => 'smart_eclipse_cache',
   ),
   'cors' => 
   array (
@@ -399,9 +399,9 @@
   'eclipse' => 
   array (
     'offline_time' => '-360 minutes',
-    'connection_lost_time_motion' => '-10 minutes',
-    'connection_lost_time_halt' => '-15 minutes',
-    'connection_lost_time_sleep' => '-20 minutes',
+    'connection_lost_time_motion' => '-3 minutes',
+    'connection_lost_time_halt' => '-11 minutes',
+    'connection_lost_time_sleep' => '-11 minutes',
   ),
   'excel' => 
   array (
@@ -755,7 +755,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'rayfleet_session',
+    'cookie' => 'smart_eclipse_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
