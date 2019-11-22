@@ -50,7 +50,7 @@ Combined Stock Report
                         <thead>
                             <tr>
                              <th>Sl.No</th>                        
-                              <th>Created Date</th>
+                              <th>Manufactured Date</th>
                               <th>Gps Count</th>       
                             </tr>
                         </thead>

@@ -57,7 +57,7 @@ Gps Report
                               <th>IMSI</th>
                               <th>Manufacturing Date</th>
                               
-                              <th>Created on</th>       
+                              <!-- <th>Created on</th>        -->
                             </tr>
                         </thead>
                     </table>
