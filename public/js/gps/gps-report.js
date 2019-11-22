@@ -42,7 +42,7 @@ function callBackDataTable(){
             {data: 'imsi', name: 'imsi',  orderable: true, searchable: false},
             {data: 'manufacturing_date', name: 'manufacturing_date', orderable: true, searchable: false},
             
-             {data: 'created_at', name: 'created_at', orderable: false, searchable: false}
+             // {data: 'created_at', name: 'created_at', orderable: false, searchable: false}
            
         ],
         

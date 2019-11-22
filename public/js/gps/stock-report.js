@@ -35,14 +35,14 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
-            {data: 'gps.imei', name: 'gps.imei', orderable: false},                   
-            {data: 'gps.serial_no', name: 'gps.serial_no', searchable: false},
-            {data: 'gps.e_sim_number', name: 'gps.e_sim_number', orderable: false},
-            {data: 'gps.icc_id', name: 'gps.icc_id',  orderable: true, searchable: false},
-            {data: 'gps.imsi', name: 'gps.imsi',  orderable: true, searchable: false},
-            {data: 'gps.manufacturing_date', name: 'gps.manufacturing_date', orderable: false},
-            {data: 'user.username', name: 'user.username', orderable: false},
-             {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
+            {data: 'imei', name: 'imei'},                   
+            {data: 'serial_no', name: 'serial_no'},
+            {data: 'e_sim_number', name: 'e_sim_number', orderable: false, searchable: false},
+            {data: 'icc_id', name: 'icc_id',  orderable: true},
+            {data: 'imsi', name: 'imsi',  orderable: true},
+            {data: 'manufacturing_date', name: 'manufacturing_date', orderable: false, searchable: false},
+            {data: 'gps_stock.user.username', name: 'gps_stock.user.username', orderable: false, searchable: false},
+             // {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
            
         ],
         

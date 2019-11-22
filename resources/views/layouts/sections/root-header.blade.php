@@ -11,9 +11,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a>
+            <!-- <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a> -->
             <!-- <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> -->
-            <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>  
+            <!-- <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>   -->
             <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LOG</a> 

@@ -49,4 +49,8 @@ class Gps extends Model
      public function employee(){
         return $this->hasOne('App\Modules\Employee\Models\Employee','id','employee_code')->withTrashed();
     }
+      public function gpsStock()
+    {
+        return $this->hasOne('App\Modules\Warehouse\Models\GpsStock','gps_id','id');
+    }
 }
