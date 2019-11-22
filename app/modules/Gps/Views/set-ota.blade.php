@@ -21,7 +21,8 @@
         @endif  
     </nav>
     <form  method="POST" action="{{route('setota.operations')}}">
-      {{csrf_field()}}     
+      {{csrf_field()}}  
+
       <div class="row" style="margin-left: 40%;width: 100%;height: 100%">
         <div class="col-md-4">
           <div class="card-body_vehicle wizard-content">   
@@ -40,16 +41,19 @@
                 </span>
               @endif               
             </div>
+
+
             <div class="form-group has-feedback">
                <div class="row">
-              <label class="srequired">OTA values</label>
+
+              <!-- <label class="srequired">OTA values</label>
               
               <textarea id="command" name="command" value=""></textarea>
                @if ($errors->has('command'))
                 <span class="help-block">
                     <strong class="error-text">{{ $errors->first('command') }}</strong>
                 </span>
-              @endif               
+              @endif        -->        
             </div>
           </div>
 
@@ -69,6 +73,56 @@
         
           
           </div>
+          <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <thead>
+                <tr>
+                  <th>Sl.No</th>
+                  <td><textarea></textarea></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sl.No</th>
+                  <td></td>
+                </tr>
+
+                  
+              </thead>
+            </table>
         </div>
       </div>
     </form>

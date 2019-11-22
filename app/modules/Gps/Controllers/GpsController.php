@@ -1732,7 +1732,8 @@ class GpsController extends Controller {
 
     public function operationsSetOtaListPage()
     {      
-        $gps = Gps::all();        
+        $gps = Gps::all();
+                
         return view('Gps::set-ota',['devices' => $gps]);
     }
     public function setOtaInConsoleOperations(Request $request)
