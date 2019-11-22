@@ -38,6 +38,8 @@ function callBackDataTable(){
             {data: 'imei', name: 'imei',  orderable: true, searchable: false},                   
             {data: 'serial_no', name: 'serial_no',  orderable: true, searchable: false},
             {data: 'e_sim_number', name: 'e_sim_number',  orderable: true, searchable: false},
+            {data: 'icc_id', name: 'icc_id',  orderable: true, searchable: false},
+            {data: 'imsi', name: 'imsi',  orderable: true, searchable: false},
             {data: 'manufacturing_date', name: 'manufacturing_date', orderable: true, searchable: false},
             
              {data: 'created_at', name: 'created_at', orderable: false, searchable: false}
