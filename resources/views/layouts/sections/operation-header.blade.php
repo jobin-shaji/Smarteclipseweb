@@ -25,18 +25,13 @@
             </div>
         </li>
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-         
-            <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a>
-            
-        </div>
-    </li>
-   
-
-       
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>         
+            <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a>            
+            </div>
+        </li>      
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> OTA
             </a>
@@ -48,6 +43,16 @@
                 
             </div>
         </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VLT DATA
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="{{url('/vltdata')}}">VLTDATA </a>
+               
+            </div>
+        </li>
+
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS STOCK REPORT
