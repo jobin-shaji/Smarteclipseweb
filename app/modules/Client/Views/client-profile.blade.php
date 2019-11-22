@@ -20,7 +20,7 @@
 
   <div class="row">
     <div class="col-lg-12 col-md-12">
-      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
+      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4" style="width: 56%!important">  <div class="row">
         <div class="col-sm-12">
           <h2 class="page-header">
             <i class="fa fa-user"></i> 
@@ -68,7 +68,7 @@
   @if(\Auth::user()->hasRole('superior|pro'))
   
   <div class="col-lg-6 col-md-12">
-    <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image">  
+    <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image" style="width: 14%!important">  
       <div class="row">
         <div class="col-sm-12">
           <h2 class="page-header">
