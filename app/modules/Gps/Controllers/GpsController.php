@@ -1726,21 +1726,21 @@ class GpsController extends Controller {
             'operations_id'=>$operations_id
         ]); 
         if($response){
-            $request->session()->flash('message', 'Command send successfully'); 
-        $request->session()->flash('alert-class', 'alert-success');
-            // return response()->json([
-            //     'status' => 1,
-            //     'title' => 'Success',
-            //     'message' => 'Command send successfully'
-            // ]);
+        //     $request->session()->flash('message', 'Command send successfully'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
         }else{
-            $request->session()->flash('message', 'Try again'); 
-        $request->session()->flash('alert-class', 'alert-success');
-           // return response()->json([
-           //      'status' => 0,
-           //      'title' => 'Error',
-           //      'message' => 'Try again!!'
-           //  ]); 
+        //     $request->session()->flash('message', 'Try again'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
         }
 
          return redirect(route('set.ota.operations'));

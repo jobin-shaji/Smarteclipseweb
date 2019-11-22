@@ -30,9 +30,18 @@
 
 <div class="col-md-4">
 
-<div style ="width: 15%;margin-left: 12%;margin-top: 5%" >
+<div style ="width: 17%;margin-left: 12%;margin-top: 5%" >
 
-<button class="btn btn-md btn-success btn2 form-control" id="set_ota_button" data-toggle="modal" data-target="#setOtaModal" style="display: none;">SET OTA</button>
+<button class="btn btn-md btn-success btn2 form-control" id="set_ota_button" data-toggle="modal" data-target="#setOtaModal" style="display: none;">SET OTA 1</button>
+
+</div>
+
+</div>
+<div class="col-md-4">
+
+<div style ="width: 17%;margin-left: 12%;margin-top: 5%" >
+
+<button class="btn btn-md btn-success btn2 form-control" id="set_ota_button2" data-toggle="modal" data-target="#setOtaModal2" style="display: none;">SET OTA 2</button>
 
 </div>
 
@@ -185,6 +194,68 @@
 <span class="pull-center">
 
 <button type="button" class="btn btn-success btn-md btn-block" onclick="setOta(document.getElementById('set_ota_gps_id').value)">
+
+POST
+
+</button>
+
+</span>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+<div class="modal fade" id="setOtaModal2" tabindex="-1" role="dialog" aria-labelledby="setOtaModalLabel" style="display: none;">
+
+<div class="modal-dialog modal-lg" role="document">
+
+<div class="modal-content" style="padding: 25px">
+
+<div class="modal-header">
+
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+<span aria-hidden="true">&times;</span></button>
+
+</div>
+
+<form method="POST" id="form1">
+
+{{csrf_field()}}
+
+<div class="modal-body">
+
+<div class="row">
+
+<div class="col-md-12">
+
+<input type="hidden" name="set_ota_gps_id" id="set_ota_gps_id" value="">
+<div class="form-group row" style="float:none!important">
+<label for="fname" class="col-sm-3 text-right control-label col-form-label">Command:</label>
+<div class="form-group has-feedback">
+
+<textarea class="form-control" name="ota_command" id="ota_command" rows=7></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<span class="pull-center">
+
+<button type="button" class="btn btn-success btn-md btn-block" onclick="operationSetOta(document.getElementById('set_ota_gps_id').value)">
 
 POST
 
