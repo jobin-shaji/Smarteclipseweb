@@ -97,7 +97,8 @@ function callBackDataTable(value){
   }
     // console.log(gps);
     var  data = {
-        gps : gps  
+        gps : gps,
+        header:document.getElementById('header').value == ''  
     };
     $("#dataTable").DataTable({
         bStateSave: true,

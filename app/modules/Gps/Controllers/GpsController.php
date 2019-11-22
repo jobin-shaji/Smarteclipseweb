@@ -604,7 +604,7 @@ class GpsController extends Controller {
         // dd($header);
         return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
-     public function getAllData(Request $request)
+    public function getAllData(Request $request)
     {
         if($request->gps){
          $items = GpsData::where('gps_id',$request->gps)->limit(500);  
