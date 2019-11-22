@@ -1609,7 +1609,7 @@ class GpsController extends Controller {
         if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+                $query = $query->whereDate('manufacturing_date', '>=', $search_from_date)->whereDate('manufacturing_date', '<=', $search_to_date);
             }
       $gps = $query->get();
       // dd($gps);             

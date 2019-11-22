@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="{{url('/operation-gps-data')}}">All GPS </a>
+           
         </li>
 
         <li class="nav-item dropdown">
@@ -48,7 +48,8 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
-                 <a class="dropdown-item" href="{{url('/vltdata')}}">VLTDATA </a>
+                 <a class="dropdown-item" href="{{url('/vltdata')}}">UNPROCESSED DATA</a>
+                  <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
                
             </div>
         </li>
@@ -75,7 +76,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{url('/gps-report')}}">GPS TESTED REPORT</a>
-                <a class="dropdown-item"href="{{url('/combined-gps-report')}}">COMBINED GPS TESTED REPORT</a>
+                <!-- <a class="dropdown-item"href="{{url('/combined-gps-report')}}">COMBINED GPS TESTED REPORT</a> -->
                 
             </div>
         </li>

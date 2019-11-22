@@ -28,10 +28,8 @@ function callBackDataTable(){
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
-        },
-       
+        },      
         fnDrawCallback: function (oSettings, json) {
-
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
