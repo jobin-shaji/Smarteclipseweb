@@ -42,6 +42,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="{{url('/set-ota-operations')}}">SET SOTA </a>
                 <a class="dropdown-item" href="{{url('/ota-response')}}">OTA RESPONSE</a>
                 <a class="dropdown-item"href="{{url('/ota-update')}}">OTA UPDATES</a>
                 

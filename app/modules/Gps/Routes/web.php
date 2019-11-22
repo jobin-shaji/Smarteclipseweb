@@ -101,6 +101,9 @@ Route::post('/gps/stock','GpsController@saveStock')->name('gps.stock.p');
 
 Route::post('/gps-create-root-dropdown','GpsController@getGpsDetailsFromRoot')->name('gps-create-root-dropdown');
 
+Route::get('/set-ota-operations','GpsController@operationsSetOtaListPage')->name('set.ota.operations');
+Route::post('/setota-operations','GpsController@setOtaInConsoleOperations')->name('setota.operations');
+
 });
 
 

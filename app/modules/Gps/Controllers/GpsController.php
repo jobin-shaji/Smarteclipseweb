@@ -1707,6 +1707,45 @@ class GpsController extends Controller {
     ->make();
     } 
 
+    public function operationsSetOtaListPage()
+    {      
+        $gps = Gps::all();        
+        return view('Gps::set-ota',['devices' => $gps]);
+    }
+    public function setOtaInConsoleOperations(Request $request)
+    {
+        $gps_id=$request->gps_id;  
+        $command=$request->command; 
+        $operations_id=\Auth::user()->operations->id;        
+        // dd($response);
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$command,
+            'operations_id'=>$operations_id
+        ]); 
+        if($response){
+            $request->session()->flash('message', 'Command send successfully'); 
+        $request->session()->flash('alert-class', 'alert-success');
+            // return response()->json([
+            //     'status' => 1,
+            //     'title' => 'Success',
+            //     'message' => 'Command send successfully'
+            // ]);
+        }else{
+            $request->session()->flash('message', 'Try again'); 
+        $request->session()->flash('alert-class', 'alert-success');
+           // return response()->json([
+           //      'status' => 0,
+           //      'title' => 'Error',
+           //      'message' => 'Try again!!'
+           //  ]); 
+        }
+
+         return redirect(route('set.ota.operations'));
+
+
+    }
+
 
 
 
