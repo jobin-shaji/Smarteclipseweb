@@ -658,15 +658,30 @@ class GpsController extends Controller {
     public function vltdataListPage()
     {
         // $ota = OtaType::all();
-        // $gps = Gps::all();
-        return view('Gps::vltdata-list');
+        $gps = Gps::all();
+         // $gps = Gps::all();
+        $gps_data = GpsData::select('id','header')->groupBy('header')->get();
+        return view('Gps::vltdata-list',['gps' => $gps,'gpsDatas' => $gps_data]);
     }
 
     public function getVltData(Request $request)
     {
     
-      
-         $items = VltData::all();                
+        if($request->gps && $request->header){
+            
+         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->limit(500);  
+        }
+        else if($request->gps){
+         $items = VltData::where('imei',$request->gps)->limit(500);  
+        }
+        else if($request->header){
+            $items = VltData::where('header',$request->header)->limit(500); 
+        }
+        else{
+         $items = VltData::limit(500);  
+        }
+
+         // $items = VltData::all();                
         return DataTables::of($items)
         ->addIndexColumn()        
          ->addColumn('forhuman', function ($items) {
@@ -674,13 +689,13 @@ class GpsController extends Controller {
                 $forhuman=Carbon::parse($items->created_at)->diffForHumans();;
                 return $forhuman;
              })
-         ->addColumn('action', function ($items) {
-               $b_url = \URL::to('/');
-            return "
-           <a href=".$b_url."/id/".Crypt::encrypt($items->id)."/pased class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Details</a>
-             ";  
-             })
-         ->rawColumns(['link', 'action'])
+         // ->addColumn('action', function ($items) {
+         //       $b_url = \URL::to('/');
+         //    return "
+         //   <a href=".$b_url."/id/".Crypt::encrypt($items->id)."/pased class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Details</a>
+         //     ";  
+         //     })
+         // ->rawColumns(['link', 'action'])
         
         ->make();
     }
@@ -893,13 +908,13 @@ class GpsController extends Controller {
     {     
         $decrypted_id = Crypt::decrypt($request->id);
         $vltdata = VltData::find($decrypted_id); 
-        $vltdata = $vltdata->vltdata;
+        $vlt_data = $vltdata->vltdata;
 
-        $imei=substr($vltdata, 3, 15);
-        $count=substr($vltdata, 18, 3);
-        $alert_id=substr($vltdata, 21, 2);
-        $packet_status=substr($vltdata, 23, 1);
-        $gps_fix=substr($vltdata, 24, 1);
+        $imei=substr($vlt_data, 3, 15);
+        $count=substr($vlt_data, 18, 3);
+        $alert_id=substr($vlt_data, 21, 2);
+        $packet_status=substr($vlt_data, 23, 1);
+        $gps_fix=substr($vlt_data, 24, 1);
         $date = substr($vlt_data,25,6);
         $time = substr($vlt_data,31,6);
         $latitude = substr($vlt_data,37,10);
@@ -1714,6 +1729,8 @@ class GpsController extends Controller {
     }
     public function setOtaInConsoleOperations(Request $request)
     {
+         $rules = $this->otaCreateRules();
+        $this->validate($request, $rules); 
         $gps_id=$request->gps_id;  
         $command=$request->command; 
         $operations_id=\Auth::user()->operations->id;        
@@ -1724,21 +1741,21 @@ class GpsController extends Controller {
             'operations_id'=>$operations_id
         ]); 
         if($response){
-            $request->session()->flash('message', 'Command send successfully'); 
-        $request->session()->flash('alert-class', 'alert-success');
-            // return response()->json([
-            //     'status' => 1,
-            //     'title' => 'Success',
-            //     'message' => 'Command send successfully'
-            // ]);
+        //     $request->session()->flash('message', 'Command send successfully'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
         }else{
-            $request->session()->flash('message', 'Try again'); 
-        $request->session()->flash('alert-class', 'alert-success');
-           // return response()->json([
-           //      'status' => 0,
-           //      'title' => 'Error',
-           //      'message' => 'Try again!!'
-           //  ]); 
+        //     $request->session()->flash('message', 'Try again'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
         }
 
          return redirect(route('set.ota.operations'));
@@ -1781,6 +1798,15 @@ class GpsController extends Controller {
         return  $rules;
     }
 
+ //validation for gps creation
+    public function otaCreateRules(){
+        $rules = [     
+            'command' => 'required',           
+            // 'e_sim_number' => 'required|string|unique:gps|min:11|max:11',  
+            'gps_id' => 'required',        
+        ];
+        return  $rules;
+    }
 
 
 

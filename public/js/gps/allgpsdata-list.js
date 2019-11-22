@@ -10,6 +10,7 @@ function singleGpsData(value){
   if(value){
     
     $("#set_ota_button").show();
+    $("#set_ota_button2").show();
     $("#set_ota_gps_id").val(value);
   }
   var url = 'allgpsdata-list';
@@ -103,3 +104,37 @@ function setOta(gps_id) {
     });
 
 }
+
+function operationSetOta(gps_id) {
+// alert(document.getElementById('ota_command').value);
+  if(document.getElementById('ota_command').value == ''){
+    alert('Please enter your values');
+  }
+  
+  else{
+    var command = document.getElementById('ota_command').value;
+    var gps_id = document.getElementById('gps_id').value;
+     var data = {'gps_id':gps_id, 'command':command};
+  }
+    var url = 'setota-operations';
+    var purl = getUrl() + '/' + url;
+    var triangleCoords = [];
+    $.ajax({
+        type: 'POST',
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+          if(res.status==1){
+            toastr.success(res.message);
+          }else{
+            toastr.error(res.message);
+          }
+        }
+    });
+
+}
+
