@@ -12,7 +12,22 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+
+          $url=url()->current();
+          $rayfleet_key="rayfleet";
+          $eclipse_key="eclipse";
+          if (strpos($url, $rayfleet_key) == true) { 
+              return view('welcome');
+        } 
+          else if (strpos($url, $eclipse_key) == true) { 
+               return view('welcome1');
+           }else { 
+               return view('welcome1');
+           }
+  
+
+
 });
 
 Route::get('/privacy-policy', function () {
