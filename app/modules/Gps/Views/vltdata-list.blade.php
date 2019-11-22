@@ -44,8 +44,9 @@
       <!-- title row -->
 </section>
 <div class="clearfix"></div>
-<section class="content">          
-      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+<section class="content" >  
+    <div class="col-md-6" style="overflow: scroll">        
+      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;font-size: 13.5px!important" id="dataTable">
           <thead>
               <tr>
                 <th>Sl.No</th>
