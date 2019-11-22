@@ -104,18 +104,20 @@ Route::post('/gps-create-root-dropdown','GpsController@getGpsDetailsFromRoot')->
 Route::get('/set-ota-operations','GpsController@operationsSetOtaListPage')->name('set.ota.operations');
 Route::post('/setota-operations','GpsController@setOtaInConsoleOperations')->name('setota.operations');
 
+
 });
 
 
 Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 Route::get('/gps-data','GpsController@allpublicgpsListPage')->name('gps-data');
-Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
+// Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
 Route::get('/all-gps-data-public','GpsController@allPublicgpsDataListPage')->name('all-gps-data-public');
 Route::post('/allgpsdata-list-public','GpsController@getPublicAllGpsData')->name('allgpsdata-list-public');
 Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps-data-bth');
 Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
+Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 
 Route::get('/gps-config/update','GpsController@updateGpsConfig')->name('gps.config.update');
 
