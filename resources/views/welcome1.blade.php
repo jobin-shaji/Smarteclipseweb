@@ -191,7 +191,7 @@
 				 
 					 <div class="col-md-12 col-sm-12 col-xs-12">
 				   
-									<div style="border-left: 6px solid #55d930; padding-left: 30px;">
+									<div >
                                         <h3 style="color: #fcd200;font-size:28px;font-weight:600">
 										<!-- <span><img src="https://www.pinclipart.com/picdir/middle/420-4205333_animated-gif-alert-icon-clipart.png"/></span> -->
 										ALERTS</h3>
@@ -629,7 +629,7 @@
                 <div class="col-md-6 text-left iq-ptb-80 green-bg">
                 <div class="iq-app-info">
                     <h2 class="heading-left iq-font-white white iq-tw-6 "> APP SCREENS </h2>
-                    <div class="lead iq-mb-20" style="color:#fff">This application is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management. The Main Features of Real Time Vehicle Tracking and Emergency(SOS) Alerts</div>
+                    <div class="lead iq-mb-20" style="color:#fff">This application is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management.</div>
                    
  <div class="lead iq-mb-20" style="color:#fff">The Main Features are  Real Time Vehicle Tracking and Emergency(SOS) Alerts</div>
                    				   <h4 class="iq-mt-5 iq-font-white iq-tw-3 iq-mb-15">AVAILABLE APPLICATION</h4>
