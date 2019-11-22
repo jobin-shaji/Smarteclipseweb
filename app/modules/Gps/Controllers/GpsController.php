@@ -1714,6 +1714,8 @@ class GpsController extends Controller {
     }
     public function setOtaInConsoleOperations(Request $request)
     {
+         $rules = $this->otaCreateRules();
+        $this->validate($request, $rules); 
         $gps_id=$request->gps_id;  
         $command=$request->command; 
         $operations_id=\Auth::user()->operations->id;        
@@ -1781,6 +1783,15 @@ class GpsController extends Controller {
         return  $rules;
     }
 
+ //validation for gps creation
+    public function otaCreateRules(){
+        $rules = [     
+            'command' => 'required',           
+            // 'e_sim_number' => 'required|string|unique:gps|min:11|max:11',  
+            'gps_id' => 'required',        
+        ];
+        return  $rules;
+    }
 
 
 
