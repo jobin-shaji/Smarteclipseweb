@@ -1902,6 +1902,8 @@ class VehicleController extends Controller
                          );
             return response()->json($data);
          }
+
+
         $client = Client::where('user_id', $user_id)->first();
         $type = $request->type;
         $custom_from_date = $request->from_date;
@@ -1921,10 +1923,23 @@ class VehicleController extends Controller
                 $vehicle_profile= $this->vehicleProfile($single_vehicle_details->id,$date_and_time,$client->id);
                 $get_driver = Driver::find($single_vehicle_details->driver_id);
                 if($get_driver){
-                 $driver_points=$get_driver->points;
-                }else{
-                 $driver_points=""; 
-                }
+                     $driver_points_score=$get_driver->points;
+                    
+                     if($driver_points_score > 90){
+                        $driver_points="Excellent";
+                     }elseif($driver_points_score > 50 && $driver_points_score < 90 ){
+                        $driver_points="Good";
+                     }elseif($driver_points_score > 0 && $driver_points_score < 50){
+                        $driver_points="Average";
+                     }else{
+                        $driver_points="Bad";
+                     }
+
+                 }else{
+                  $driver_points=""; 
+                 }
+
+
                 $gps_data=GpsData::where('gps_id',$single_vehicle_details->gps->id)
                                    ->where('device_time','>=', $from_date)
                                    ->where('device_time','<=', $to_date)
@@ -2020,11 +2035,26 @@ class VehicleController extends Controller
         if($vehicle_details){
             $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client->id);
             $get_driver = Driver::find($vehicle_details->driver_id);
+            
             if($get_driver){
-                $driver_points=$get_driver->points;
-            }else{
-                $driver_points=""; 
-            }
+             $driver_points_score=$get_driver->points;
+            
+             if($driver_points_score > 90){
+                $driver_points="Excellent";
+             }elseif($driver_points_score > 50 && $driver_points_score < 90 ){
+                $driver_points="Good";
+             }elseif($driver_points_score > 0 && $driver_points_score < 50){
+                $driver_points="Average";
+             }else{
+                $driver_points="Bad";
+             }
+
+         }else{
+          $driver_points=""; 
+         }
+
+
+
             $gps_data=GpsData::where('gps_id',$vehicle_details->gps->id)
                                ->where('device_time','>=', $from_date)
                                ->where('device_time','<=', $to_date)
