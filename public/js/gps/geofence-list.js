@@ -40,7 +40,7 @@ function callBackDataTable(){
     });
 }
 function delGeofence(geofence){
-    if(confirm('Are you sure to deactivate this?')){
+    if(confirm('Due to deactivation all the assigned geofence list will be cleared. Do you want to continue ?')){
         var url = 'geofence/delete';
         var data = {
             uid : geofence

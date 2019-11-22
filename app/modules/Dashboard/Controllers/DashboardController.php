@@ -204,9 +204,13 @@ class DashboardController extends Controller
             ]);
         }else if($user->hasRole('operations')){
             return response()->json([
-                // 'gps' => Gps::where('user_id',$user->id)->count(),
-                'gps' => Gps::whereNotNull('manufacturing_date')->count(),
+                'gps' => Gps::all()->count(),
+                'gps_stock' => GpsStock::all()->count(),
+                'gps_to_verify' => Gps::all()->count()-GpsStock::all()->count(),
+
                 'gps_today' => Gps::WhereDate('created_at',date("Y-m-d"))->count(),
+                'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
+
 
                 'status' => 'dbcount'           
             ]);
@@ -499,7 +503,9 @@ class DashboardController extends Controller
         $satelite=0;
         $gps = Gps::find($request->gps_id); 
         $offline_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
-        $connection_lost_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
+        $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
+        $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
+        $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
         if($gps->no_of_satellites!=null){
          $satelite=$gps->no_of_satellites;   
         }
@@ -532,22 +538,23 @@ class DashboardController extends Controller
         }
         $battery_status=(int)$gps->battery_status;
 
-        if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_difference)
-        {
-            $net_status="Good";
-        }
-        else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_difference))
-        {
-            $net_status="Average";
-        }
-        else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_difference))
-        {
-            $net_status="Poor";
-        }else{
-            $net_status="Connection Lost";
-        }
         if($mode=="M")
         {
+            if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_motion)
+            {
+                $net_status="Good";
+            }
+            else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_motion))
+            {
+                $net_status="Average";
+            }
+            else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_motion))
+            {
+                $net_status="Poor";
+            }else{
+                $net_status="Connection Lost";
+            }
+
             if($gps->device_time >= $offline_time_difference){
                 $vehcile_mode="Moving";
             }else{
@@ -556,6 +563,21 @@ class DashboardController extends Controller
         }
         else if($mode=="H")
         {
+            if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_halt)
+            {
+                $net_status="Good";
+            }
+            else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_halt))
+            {
+                $net_status="Average";
+            }
+            else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_halt))
+            {
+                $net_status="Poor";
+            }else{
+                $net_status="Connection Lost";
+            }
+
             if($gps->device_time >= $offline_time_difference){
                 $vehcile_mode="Halt";
             }else{
@@ -564,6 +586,21 @@ class DashboardController extends Controller
         }
         else if($mode=="S")
         {
+            if($network_status>=19 &&  $gps->device_time >= $connection_lost_time_sleep)
+            {
+                $net_status="Good";
+            }
+            else if(($network_status<19 && $network_status>=13 &&  $gps->device_time >= $connection_lost_time_sleep))
+            {
+                $net_status="Average";
+            }
+            else if(($network_status<=12 && $gps->device_time >= $connection_lost_time_sleep))
+            {
+                $net_status="Poor";
+            }else{
+                $net_status="Connection Lost";
+            }
+
             if($gps->device_time >= $offline_time_difference){
                 $vehcile_mode="Sleep";
             }else{
@@ -572,6 +609,7 @@ class DashboardController extends Controller
         }
         else 
         {
+            $net_status="Connection Lost";
             $vehcile_mode="Offline";
         }
         if($ignition == 1){
@@ -695,6 +733,7 @@ class DashboardController extends Controller
                         }
                     }
                     $vehicle_id=Crypt::encrypt($vehicle->id);
+                    $encrypt_gps_id=Crypt::encrypt($vehicle->gps->id);
                     $vehicleTrackData[]=array(
                                         "id"=>$vehicle->gps->id,
                                         "lat"=>$vehicle->gps->lat,
@@ -704,6 +743,7 @@ class DashboardController extends Controller
                                         "imei"=>$vehicle->gps->imei,
                                         "mode"=>$mode,
                                         "vehicle_id"=> $vehicle_id,
+                                        "encrypt_gps_id"=> $encrypt_gps_id,
                                         "vehicle_name"=>$vehicle->name,
                                         "register_number"=>$vehicle->register_number,
                                         "vehicle_svg"=>$vehicle->vehicleType->svg_icon,

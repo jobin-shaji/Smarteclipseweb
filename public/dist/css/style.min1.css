@@ -5647,6 +5647,7 @@ input[type=submit].btn-block {
     flex-wrap: wrap;
     padding: 0.75rem 1rem;
     margin-bottom: 1.5rem;
+    width: 100.7%;
     list-style: none;
     background-color: #eeeeee;
     border-radius: 2px
@@ -16689,8 +16690,7 @@ h1.text-white i {
 
 div#zero_config_wrapper {
     margin-top: 18px;
-    margin-left: -15pxx;
-    margin-left: -10px;
+
 }
 
 .profile_image {
@@ -17233,8 +17233,8 @@ border-radius: 6px 0 6px 6px;
 }
 
 .dropdown-submenu>.dropdown-menu {
-    top: 0;
-    left: 100%;
+    top: 100%;
+    left: 30%;
     margin-top: -6px;
     margin-left: -1px;
     -webkit-border-radius: 0 6px 6px 6px;

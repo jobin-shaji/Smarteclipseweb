@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
+use App\Modules\Ota\Models\OtaUpdates;
+
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -656,15 +658,30 @@ class GpsController extends Controller {
     public function vltdataListPage()
     {
         // $ota = OtaType::all();
-        // $gps = Gps::all();
-        return view('Gps::vltdata-list');
+        $gps = Gps::all();
+         // $gps = Gps::all();
+        $gps_data = GpsData::select('id','header')->groupBy('header')->get();
+        return view('Gps::vltdata-list',['gps' => $gps,'gpsDatas' => $gps_data]);
     }
 
     public function getVltData(Request $request)
     {
     
-      
-         $items = VltData::all();                
+        if($request->gps && $request->header){
+            
+         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->limit(500);  
+        }
+        else if($request->gps){
+         $items = VltData::where('imei',$request->gps)->limit(500);  
+        }
+        else if($request->header){
+            $items = VltData::where('header',$request->header)->limit(500); 
+        }
+        else{
+         $items = VltData::limit(500);  
+        }
+
+         // $items = VltData::all();                
         return DataTables::of($items)
         ->addIndexColumn()        
          ->addColumn('forhuman', function ($items) {
@@ -672,13 +689,13 @@ class GpsController extends Controller {
                 $forhuman=Carbon::parse($items->created_at)->diffForHumans();;
                 return $forhuman;
              })
-         ->addColumn('action', function ($items) {
-               $b_url = \URL::to('/');
-            return "
-           <a href=".$b_url."/id/".Crypt::encrypt($items->id)."/pased class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Details</a>
-             ";  
-             })
-         ->rawColumns(['link', 'action'])
+         // ->addColumn('action', function ($items) {
+         //       $b_url = \URL::to('/');
+         //    return "
+         //   <a href=".$b_url."/id/".Crypt::encrypt($items->id)."/pased class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Details</a>
+         //     ";  
+         //     })
+         // ->rawColumns(['link', 'action'])
         
         ->make();
     }
@@ -891,13 +908,13 @@ class GpsController extends Controller {
     {     
         $decrypted_id = Crypt::decrypt($request->id);
         $vltdata = VltData::find($decrypted_id); 
-        $vltdata = $vltdata->vltdata;
+        $vlt_data = $vltdata->vltdata;
 
-        $imei=substr($vltdata, 3, 15);
-        $count=substr($vltdata, 18, 3);
-        $alert_id=substr($vltdata, 21, 2);
-        $packet_status=substr($vltdata, 23, 1);
-        $gps_fix=substr($vltdata, 24, 1);
+        $imei=substr($vlt_data, 3, 15);
+        $count=substr($vlt_data, 18, 3);
+        $alert_id=substr($vlt_data, 21, 2);
+        $packet_status=substr($vlt_data, 23, 1);
+        $gps_fix=substr($vlt_data, 24, 1);
         $date = substr($vlt_data,25,6);
         $time = substr($vlt_data,31,6);
         $latitude = substr($vlt_data,37,10);
@@ -1012,7 +1029,9 @@ class GpsController extends Controller {
     {
         $currentDateTime=Date('Y-m-d H:i:s');
         $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
-        $connection_lost_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
+        $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
+        $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
+        $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
         $offline="Offline";
         $signal_strength="Connection Lost";
         $track_data=Gps::select('lat as latitude',
@@ -1020,7 +1039,9 @@ class GpsController extends Controller {
                       'heading as angle',
                       'mode as vehicleStatus',
                       'imei',
+                      'ac_status',
                       'speed',
+                      'fuel_status',
                       'battery_status as battery_percentage',
                       'device_time as dateTime',
                       'main_power_status as power',
@@ -1036,7 +1057,9 @@ class GpsController extends Controller {
             $track_data = Gps::select('lat as latitude',
                               'lon as longitude',
                               'heading as angle',
+                              'ac_status',
                               'speed',
+                              'fuel_status',
                               'imei',
                               'battery_status as battery_percentage',
                               'device_time as dateTime',
@@ -1053,8 +1076,18 @@ class GpsController extends Controller {
         }
 
         if($track_data){
+            $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
+            $fuel =$track_data->fuel_status*100/15;
+            $fuel = (int)$fuel;
+            $fuel_status=$fuel."%";
+            $ac_status =$track_data->ac_status;
+            if($ac_status == 1){
+                $ac_status="ON";
+            }else{
+                $ac_status="OFF";
+            }
             $reponseData=array(
                         "latitude"=>$snapRoute['lat'],
                         "longitude"=>$snapRoute['lng'],
@@ -1067,10 +1100,13 @@ class GpsController extends Controller {
                         "ign"=>$track_data->ign,
                         "battery_status"=>round($track_data->battery_percentage),
                         "signalStrength"=>$track_data->signalStrength,
-                        "connection_lost_time"=>$connection_lost_time,
+                        "connection_lost_time_motion"=>$connection_lost_time_motion,
+                        "connection_lost_time_halt"=>$connection_lost_time_halt,
+                        "connection_lost_time_sleep"=>$connection_lost_time_sleep,
                         "last_seen"=>$minutes,
-                        "fuel"=>"",
-                        "ac"=>"",
+                        "connection_lost_time_minutes"=>$connection_lost_time_minutes,
+                        "fuel"=>$fuel_status,
+                        "ac"=>$ac_status,
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
                       );
@@ -1343,35 +1379,60 @@ class GpsController extends Controller {
                 $forhuman=Carbon::parse($last_data->created_at)->diffForHumans(); 
             }            
             return response()->json([
-                    'last_data' => $last_data,
-                    'items' => $items,  
-                    'last_updated' => $forhuman,               
-                    'status' => 'gpsdatavalue'
+                'last_data' => $last_data,
+                'items' => $items,  
+                'last_updated' => $forhuman,               
+                'status' => 'gpsdatavalue'
             ]);
         }   
     }
-public function getGpsAllDataHlm(Request $request)
+    public function getGpsAllDataHlm(Request $request)
     {  
-
         $items = GpsData::find($request->id);       
         return response()->json([
                 'gpsData' => $items        
         ]);
-                   
     }
-
-
-
-
-
 
     public function setOtaInConsole(Request $request)
     {
         $gps_id=$request->gps_id;  
-        $command=$request->command;  
+        $command=$request->command;        
+        // dd($response);
         $response = OtaResponse::create([
             'gps_id'=>$gps_id,
             'response'=>$command
+        ]); 
+        if($response){
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+    }
+
+
+    //////////////////////////
+
+    public function operationsSetOtaInConsole(Request $request)
+    {
+        $gps_id=$request->gps_id; 
+        $operations_id=\Auth::user()->operations->id; 
+        $command=$request->command;
+        $ota=$request->ota;  
+        $ota_response=$ota.$command;
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$ota_response,
+            'operations_id'=>$operations_id 
+
         ]); 
         if($response){
             return response()->json([
@@ -1401,7 +1462,7 @@ public function getGpsAllDataHlm(Request $request)
         //upload gps details to database table
     public function saveStock(Request $request)
     {
-        $root_id=\Auth::user()->id;
+        $user_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
         // dd($request->serial_no);
         // $gps = Gps::where('id',$request->serial_no)->first();
@@ -1412,7 +1473,7 @@ public function getGpsAllDataHlm(Request $request)
         $this->validate($request, $rules); 
         $gps_id= $request->serial_no;
         $gps = Gps::find($gps_id);
-         $gps_stock = GpsStock::where('gps_id',$gps_id);
+        $gps_stock = GpsStock::where('gps_id',$gps_id)->first();       
         if($gps_stock==null)
         {
             $gps->manufacturing_date = $maufacture;
@@ -1421,14 +1482,17 @@ public function getGpsAllDataHlm(Request $request)
             if($gps){
                $gps_stock = GpsStock::create([
                     'gps_id'=> $gps->id,
-                    'inserted_by' => $root_id
+                    'inserted_by' => $user_id
                 ]); 
             }
             $request->session()->flash('message', 'New gps created successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
-             return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+             // return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+            return redirect(route('gps.stock'));
         } 
         else{
+
+
             $request->session()->flash('message', 'Already added to stock!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
          return redirect(route('gps.stock'));
@@ -1438,7 +1502,7 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
-      public function otaResponseListPage()
+    public function otaResponseListPage()
     {
        
         $gps = Gps::all();
@@ -1578,7 +1642,126 @@ public function getGpsAllDataHlm(Request $request)
     } 
 
 
+    public function otaUpdatesListPage()
+    {
+       
+        $gps = Gps::all();
+        
+        return view('Gps::ota-updates-list',['gps' => $gps]);
+    }
+    public function getOtaUpdatesAllData(Request $request)
+    {
+        if($request->gps){
+         $items = OtaUpdates::where('gps_id',$request->gps)->limit(500);  
+        }
+        
+        return DataTables::of($items)
+        ->addIndexColumn()     
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
 
+
+
+
+
+
+
+
+    public function stockReport()
+    {
+        return view('Gps::stock-report');  
+    }  
+     public function stockReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =GpsStock::select(
+             'gps_id','inserted_by','created_at'
+        )
+        ->with('gps:id,manufacturing_date,imei,e_sim_number,serial_no')
+        ->with('user:id,username');
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+        $stock = $query->get();
+        // dd($stock);
+        return DataTables::of($stock)
+        ->addIndexColumn()
+        
+        ->make();
+    } 
+
+
+
+
+    public function combinedStockReport()
+    {
+        return view('Gps::combined-stock-report');  
+    }  
+     public function combinedReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =GpsStock::select(
+            'gps_id',
+           \DB::raw('count(date_format(created_at, "Y-m-d")) as count'), 
+            \DB::raw('DATE(created_at) as date')
+        )
+        ->groupBy('date');
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+      $stock = $query->get();
+    return DataTables::of($stock)
+    ->addIndexColumn()
+    ->make();
+    } 
+
+    public function operationsSetOtaListPage()
+    {      
+        $gps = Gps::all();        
+        return view('Gps::set-ota',['devices' => $gps]);
+    }
+    public function setOtaInConsoleOperations(Request $request)
+    {
+         $rules = $this->otaCreateRules();
+        $this->validate($request, $rules); 
+        $gps_id=$request->gps_id;  
+        $command=$request->command; 
+        $operations_id=\Auth::user()->operations->id;        
+        // dd($response);
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$command,
+            'operations_id'=>$operations_id
+        ]); 
+        if($response){
+        //     $request->session()->flash('message', 'Command send successfully'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+        //     $request->session()->flash('message', 'Try again'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+
+         return redirect(route('set.ota.operations'));
+
+
+    }
 
 
 
@@ -1615,6 +1798,15 @@ public function getGpsAllDataHlm(Request $request)
         return  $rules;
     }
 
+ //validation for gps creation
+    public function otaCreateRules(){
+        $rules = [     
+            'command' => 'required',           
+            // 'e_sim_number' => 'required|string|unique:gps|min:11|max:11',  
+            'gps_id' => 'required',        
+        ];
+        return  $rules;
+    }
 
 
 

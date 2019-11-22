@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-Gps Report
+Stock Report
 @endsection
 @section('content')
 <div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title"> Gps Report</h4>
+        <h4 class="page-title"> Stock Report</h4>
       </div>
     </div>
   </div>
@@ -51,10 +51,10 @@ Gps Report
                             <tr>
                              <th>Sl.No</th>
                               <th>IMEI</th>
-                              <th> Serial No</th>
+                              <th>Serial No</th>
                               <th>E-sim Number</th>
                               <th>Manufacturing Date</th>
-                              
+                              <th> Created by</th>
                               <th>Created on</th>       
                             </tr>
                         </thead>
@@ -74,7 +74,7 @@ Gps Report
 </div>
 
 @section('script')
-    <script src="{{asset('js/gps/gps-report.js')}}"></script>
+    <script src="{{asset('js/gps/stock-report.js')}}"></script>
 @endsection
 @endsection
 

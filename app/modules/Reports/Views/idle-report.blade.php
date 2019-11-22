@@ -61,7 +61,7 @@ Halt Report
                       <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
                         <thead>
                             <tr>
-                              <th>Sl.No</th>
+                              <th>SL.No</th>
                               <th>Vehicle</th>
                               <th>Register Number</th>                         
                               <th>Halt</th>                                                               

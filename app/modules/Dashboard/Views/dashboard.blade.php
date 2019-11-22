@@ -225,21 +225,54 @@
               <div class="col-sm-12">
                 <div class="row">
                   <!-- ./col -->
-                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                  <div class="col-lg-6 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="gps_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Devices Instock  </p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-8 transferred_gps_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-yellow bxs">
                       <div class="inner">
                         <h3 id="gps">
                           <div class="loader"></div>
                         </h3>
-                        <p>Instock Gps </p>
+                        <p>Total devices tested</p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="pending_gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p> To be added to stock </p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
+                  
+                  <span style="margin-left: 2%"></span>
+
                    <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-green bxs">
@@ -247,15 +280,30 @@
                         <h3 id="gps_today">
                           <div class="loader"></div>
                         </h3>
-                        <p>Today Manufactured</p>
+                        <p>Devices tested today</p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
                  
+                  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_add_to_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p style="width: 70%">devices added to stock today</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
                 
                 </div>
               </div>
@@ -402,11 +450,11 @@
     <div class="pageContainer" style="overflow: scroll">
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
-          <div class="st-panel">
+          <div class="st-panel" style="overflow: scroll!important;">
             <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
-            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
+            <div class="st-panel-contents" id="vehicle_card_cover">
               @foreach ($vehicles as $vehicle) 
 
                 <div class="border-card">
@@ -660,14 +708,14 @@
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
     <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
-    <div class="pageContainer" style="overflow: scroll">
+    <div class="pageContainer">
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
           <div class="st-panel">
             <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
-            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
+            <div class="st-panel-contents" id="vehicle_card_cover">
               @foreach ($vehicles as $vehicle)       
                 <div class="border-card">
                   <div class="card-type-icon with-border">

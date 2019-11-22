@@ -22,25 +22,6 @@
                 </select>
               </div>
             </div>
-           <!--  <div class="col-lg-3 col-md-3"> 
-              <div class="form-group" style="margin-left: 30%;margin-top: 2%;">
-                <label>Header</label>                           
-                <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
-                  <option selected="selected" disabled="disabled" value="">Select Header</option> 
-                  <option value="">All</option>  
-                  @foreach($gpsDatas as $gpsData)
-                  <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
-                  @endforeach             
-                </select>
-              </div>
-            </div>    -->                      
-        <!--     <div class="col-lg-3 col-md-3 pt-4">
-              <div class="form-group">          
-                <button class="btn btn-sm btn-info btn2 srch" onclick="check()" style="margin-left: 40%">
-                  <i class="fa fa-search"></i> 
-                </button>                    
-              </div>
-            </div> -->
           </form>
         </div>                        
       </div>
@@ -215,8 +196,8 @@
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
-  <div class="col-md-12" style="overflow: scroll">
-      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%">
+  <div class="col-md-6" style="overflow: scroll">
+      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:70%;font-size: 13.5px!important">
           <thead>
               <tr>
                 <th>Sl.No</th>
@@ -226,8 +207,7 @@
                 <th>Device Time</th>
                 <th>Server Date</th>
                 <th>Server Time</th>
-                <th>Data</th> 
-                <!-- <th>Action</th>                      -->
+                <th >Data</th> 
               </tr>
           </thead>
       </table>       

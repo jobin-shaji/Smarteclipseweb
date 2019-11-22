@@ -414,6 +414,82 @@ class AlertController extends Controller {
         }  
     }
 
+    public function vehicleAlerts(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;  
+          
+       $gps_id = Crypt::decrypt($request->id); 
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client_id)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+        }   
+        $alerts = Alert::select(
+                'id',
+                'alert_type_id',
+                'device_time',
+                'gps_id',
+                'latitude',
+                'longitude',
+                'status',
+                'created_at',
+                'device_time'
+            )
+            ->with('alertType:id,code,description')
+            ->with('gps.vehicle')
+            ->with('gps:id,imei')
+            ->orderBy('id', 'desc')
+            ->where('gps_id',$gps_id)
+            ->whereIn('alert_type_id',$alert_id)
+            ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+            ->where('status',1) 
+            ->paginate(15);
+        return view('Alert::alert-list',['alerts'=>$alerts]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      //alert create rules 
     public function alert_rules(){

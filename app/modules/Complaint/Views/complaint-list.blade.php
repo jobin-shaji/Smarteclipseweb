@@ -28,7 +28,8 @@
                     <th>Sl.No</th>
                     <th>Ticket Code</th>   
                     <th>IMEI</th>                              
-                    <th>Complaint</th>                            
+                    <th>Complaint Category</th>                      
+                    <th>Complaint Type</th>                         
                     <th>Description</th>
                     <th>Date</th>
                     @role('sub_dealer|root')

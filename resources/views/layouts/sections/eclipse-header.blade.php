@@ -102,7 +102,7 @@
                        </li>                       
                        <!--  <li class="nav-item search-box"> 
                         </li> -->
-                         <li class="nav-item"> 
+                         <li class="nav-item" style="padding: 1.5% 0"> 
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
@@ -125,7 +125,7 @@
                             </div>
                         </li> -->
 
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
                             <ul class="dropdown-menu multi-level">
@@ -154,7 +154,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE
                             </a>
                             <ul class="dropdown-menu multi-level">
@@ -179,7 +179,7 @@
 
                         
 
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -188,7 +188,7 @@
                                 <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>                               
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -345,7 +345,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">

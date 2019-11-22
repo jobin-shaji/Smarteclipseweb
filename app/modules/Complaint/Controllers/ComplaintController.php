@@ -146,7 +146,7 @@ class ComplaintController extends Controller {
             ->with('ticket:id,code')
             ->with('client:id,name,sub_dealer_id')
             ->with('servicer:id,name')
-            ->with('complaintType:id,name')
+            ->with('complaintType:id,name,complaint_category')
             ->where('status','!=', 2);
             if(\Auth::user()->hasRole('client'))
             {
@@ -189,10 +189,20 @@ class ComplaintController extends Controller {
                     }
                     else
                     {
-                        return $complaints->servicer->name;
+                        return $complaints->complaintType->name;
                     }                    
                 }
                 
+            })
+            ->addColumn('complaint_category', function ($complaints) { 
+                 if($complaints->complaintType->complaint_category==0) 
+                 {
+                    return "Hardware";
+                 }else if($complaints->complaintType->complaint_category==1) 
+                 {
+                    return "Software";
+                    
+                 }               
             })
             ->rawColumns(['link', 'action'])
             ->make();
