@@ -1776,8 +1776,6 @@ class GpsController extends Controller {
         }
 
          return redirect(route('set.ota.operations'));
-
-
     }
 
     //validation for gps creation
@@ -1816,8 +1814,6 @@ class GpsController extends Controller {
         return  $rules;
     }
 
-
-
     //validation for gps updation
     public function gpsUpdateRules($gps){
         $rules = [
@@ -1834,7 +1830,5 @@ class GpsController extends Controller {
         ];
         return  $rules;
     } 
-
-
 
 }
