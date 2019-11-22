@@ -607,10 +607,17 @@ class GpsController extends Controller {
     }
     public function getAllData(Request $request)
     {
-        if($request->gps){
+
+        if($request->gps && $request->header){
+            
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->limit(500);  
+        }
+        else if($request->gps){
          $items = GpsData::where('gps_id',$request->gps)->limit(500);  
         }
-       
+        else if($request->header){
+            $items = GpsData::where('header',$request->header)->limit(500); 
+        }
         else{
          $items = GpsData::limit(500);  
         }

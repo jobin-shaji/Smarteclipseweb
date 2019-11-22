@@ -8,8 +8,7 @@
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
         <div class="cover_div_search">
-          <form  method="POST" action="{{route('gps.create.p')}}">
-            {{csrf_field()}}
+         
             <div class="row">
              <div class="col-lg-3 col-md-3"> 
               <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
@@ -22,8 +21,23 @@
                 </select>
               </div>
             </div>
-          </form>
-          
+         
+           <div class="col-lg-3 col-md-3"> 
+           <div  style ="margin-left: 77px"class="form-group has-feedback">
+          <label class="srequired">Header</label>
+          <select class="select2 form-control" id="header" name="header"  data-live-search="true" title="Select header" required>               
+            <option selected="selected" disabled="disabled" value="">Select Header</option> 
+            <option value="">All</option>  
+            @foreach($gpsDatas as $gpsData)
+            <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
+            @endforeach             
+          </select>
+        </div> 
+      </div>
+        <div class="col-lg-3 col-md-3"> 
+           <div  style ="margin-left: 77px"class="form-group has-feedback">        
+          <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+      </div>
         </div>                        
       </div>
     </div>      
@@ -208,7 +222,8 @@
                 <th>Device Time</th>
                 <th>Server Date</th>
                 <th>Server Time</th>
-                <th >Data</th> 
+                <th >Data</th>
+                 <th >Action</th> 
               </tr>
           </thead>
       </table>       

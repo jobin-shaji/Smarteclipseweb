@@ -1279,7 +1279,7 @@ function getdata(id){
     var data = {
        id:id 
     };   
-    apiBackgroundPostData(url,data,'gpsData',{alert:false});           
+    backgroundPostData(url,data,'gpsData',{alert:false});           
   }
 
 function gpsData(res)
@@ -1321,7 +1321,7 @@ function gpsData(res)
     var data = {
        id:id 
     };   
-    apiBackgroundPostData(url,data,'gpsDataBth',{alert:false});           
+    backgroundPostData(url,data,'gpsDataBth',{alert:false});           
   }
 
 
@@ -1342,7 +1342,7 @@ function getdataHLMList(id){
     var data = {
        id:id 
     };   
-    apiBackgroundPostData(url,data,'gpsDataHlm',{alert:false});           
+    backgroundPostData(url,data,'gpsDataHlm',{alert:false});           
   }
 
 
