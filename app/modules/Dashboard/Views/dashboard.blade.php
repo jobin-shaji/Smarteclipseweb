@@ -247,7 +247,7 @@
                         <h3 id="gps">
                           <div class="loader"></div>
                         </h3>
-                        <p>Total devices tested</p>
+                        <p>Total Devices Tested</p>
                       </div>
                       <div class="icon">
                         <img src="../../assets/images/gps104.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
@@ -262,7 +262,7 @@
                         <h3 id="pending_gps">
                           <div class="loader"></div>
                         </h3>
-                        <p> To be added to stock </p>
+                        <p> To be Added to Stock </p>
                       </div>
                       <div class="icon">
                         <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
@@ -280,7 +280,7 @@
                         <h3 id="gps_today">
                           <div class="loader"></div>
                         </h3>
-                        <p style="width: 45%">Devices tested today</p>
+                        <p style="width: 45%">Devices Tested Today</p>
                       </div>
                       <div class="icon">
                         <img src="../../assets/images/gps101.png" height="50%" width="30%" style="float: right;margin-top: 10%">
@@ -296,7 +296,7 @@
                         <h3 id="gps_add_to_stock">
                           <div class="loader"></div>
                         </h3>
-                        <p style="width: 70%">devices added to stock today</p>
+                        <p style="width: 70%">Devices Added to Stock Today</p>
                       </div>
                       <div class="icon">
                         <img src="../../assets/images/gps105.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
