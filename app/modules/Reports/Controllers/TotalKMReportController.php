@@ -113,28 +113,6 @@ class TotalKMReportController extends Controller
         return response()->json($vehicle_profile);
     }
 
-    // public function getDateFromType($report_type) 
-    // {
-    //     if ($report_type == "1") 
-    //     {
-    //         $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
-    //         $to_date = date('Y-m-d H:i:s');
-    //     } else if ($report_type == "2") {
-    //         $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
-    //         $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
-    //     } else if ($report_type == "3") {
-    //         $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
-    //         $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-    //     } else if ($report_type == "4") {
-    //         $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
-    //         $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-    //     }
-    //     $output_data = ["from_date" => $from_date, 
-    //                     "to_date" => $to_date
-    //                    ];
-    //     return $output_data;
-    // }
-
     public function kmExport(Request $request)
     {
        return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');

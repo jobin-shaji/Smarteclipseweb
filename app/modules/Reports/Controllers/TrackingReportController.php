@@ -61,7 +61,7 @@ class TrackingReportController extends Controller
         } else if ($report_type == "3") {
             $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-        } else if ($report_type == "4") {
+        } else if ($report_type == "5") {
             $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
         }
