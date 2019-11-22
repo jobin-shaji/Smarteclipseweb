@@ -199,7 +199,7 @@ class WarehouseController extends Controller {
     //get scanned gps and check gps status
     public function getScannedGps(Request $request)
     {
-        $device_imei=$request->imei;
+        $device_serial_no=$request->serial_no;
         $user = \Auth::user();
         $user_stock_devices=[];
         if($user->hasRole('root'))
@@ -218,9 +218,9 @@ class WarehouseController extends Controller {
         foreach($stock_devices as $device){
             $user_stock_devices[] = $device->gps_id;
         }
-        $device = Gps::select('id','imei', 'serial_no','batch_number','employee_code')
+        $device = Gps::select('id', 'serial_no','batch_number','employee_code')
                         ->whereIn('id',$user_stock_devices)
-                        ->where('imei',$device_imei)
+                        ->where('serial_no',$device_serial_no)
                         ->first();
         if($device==null){
             return response()->json(array(

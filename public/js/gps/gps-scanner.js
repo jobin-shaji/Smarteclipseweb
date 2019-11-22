@@ -14,9 +14,9 @@ Instascan.Camera.getCameras().then(function (cameras) {
 }).catch(function (e) {
 });
 scanner.addListener('scan', function (content) {
-  var scanned_imei = content.slice(35, 50);
-  var imei = scanned_imei.replace(' ');
-  var data = { imei : imei };
+  var scanned_serial_no = content.slice(12, 31);
+  var serial_no = scanned_serial_no.replace(' ');
+  var data = { serial_no : serial_no };
   $.ajax({
       type:'POST',
       url: purl,
@@ -34,7 +34,6 @@ scanner.addListener('scan', function (content) {
                 items.push(res.gps_id);
                 var gps_imei_id=res.gps_id;
                 var gps_serial_no=res.gps_serial_no;
-                var gps_imei=res.gps_imei;
                 var gps_batch_number=res.gps_batch_number;
                 var gps_employee_code=res.gps_employee_code;
                 $("#gps_id").val(items); 
