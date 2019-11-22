@@ -628,59 +628,14 @@ Contact for Assistance +91 9544313131</div>
 .notification-bell {
   /*animation: bell 1s 1s both infinite;*/
 }
-/*.notification-bell * {
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0px 0px 15px #fff;
-}*/
-/*.bell-top {
-  width: 4px;
-  height: 6px;
-  border-radius: 3px 3px 0 0;
-}
-.bell-middle {
-  width: 19px;
-  height: 18px;
-  border-radius: 12.5px 12.5px 0 0;
-}
-.bell-bottom {
-  position: relative;
-  z-index: 0;
-  width: 32px;
-  height: 2px;
-}
-.bell-bottom::before,
-.bell-bottom::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-}
-.bell-bottom::before {
-  left: 1px;
-  border-bottom: 4px solid #fff;
-  border-right: 0 solid transparent;
-  border-left: 4px solid transparent;
-}
-.bell-bottom::after {
-  right: 1px;
-  border-bottom: 4px solid #fff;
-  border-right: 4px solid transparent;
-  border-left: 0 solid transparent;
-}
-.bell-rad {
-  width: 8px;
-  height: 4px;
-  margin-top: 2px;
-  border-radius: 0 0 4px 4px;
-  animation: rad 1s 2s both infinite;
-}*/
+
 .notification-count {
   position: absolute;
   text-align: center;
   z-index: 1;
   right: 3px;
-  width: 37px;
-  line-height: 29px;
+  width: 40px;
+  line-height: 20px;
   font-size: 15px;
   border-radius: 50%;
   background-color: #ff4927;
@@ -695,21 +650,14 @@ Contact for Assistance +91 9544313131</div>
   90% { transform: rotate(-30deg); }
   100% { transform: rotate(0); }
 }
-/*@keyframes rad {
-  0% { transform: translateX(0); }
-  10% { transform: translateX(6px); }
-  20% { transform: translateX(0); }
-  80% { transform: translateX(0); }
-  90% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
-}*/
-@keyframes zoom {
+
+/*@keyframes zoom {
   0% { opacity: 0; transform: scale(0); }
   10% { opacity: 1; transform: scale(1); }
   50% { opacity: 1; }
   51% { opacity: 0; }
   100% { opacity: 0; }
-}
+}*/
 #2:hover{
     background-color: red!important
 }
