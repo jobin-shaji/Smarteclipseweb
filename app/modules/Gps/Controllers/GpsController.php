@@ -1687,7 +1687,7 @@ class GpsController extends Controller {
         $query =GpsStock::select(
              'gps_id','inserted_by','created_at'
         )
-        ->with('gps:id,manufacturing_date,imei,e_sim_number,serial_no')
+        ->with('gps:id,manufacturing_date,imei,e_sim_number,serial_no,icc_id,imsi')
         ->with('user:id,username');
         if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
@@ -1733,7 +1733,7 @@ class GpsController extends Controller {
     public function operationsSetOtaListPage()
     {      
         $gps = Gps::all();
-                
+
         return view('Gps::set-ota',['devices' => $gps]);
     }
     public function setOtaInConsoleOperations(Request $request)

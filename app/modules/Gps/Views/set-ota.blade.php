@@ -252,5 +252,4 @@
 </section>
 
 <div class="clearfix"></div>
-
 @endsection
