@@ -1447,7 +1447,7 @@ class GpsController extends Controller {
         //upload gps details to database table
     public function saveStock(Request $request)
     {
-        $root_id=\Auth::user()->id;
+        $user_id=\Auth::user()->id;
         $maufacture= date("Y-m-d", strtotime($request->manufacturing_date));
         // dd($request->serial_no);
         // $gps = Gps::where('id',$request->serial_no)->first();
@@ -1458,7 +1458,7 @@ class GpsController extends Controller {
         $this->validate($request, $rules); 
         $gps_id= $request->serial_no;
         $gps = Gps::find($gps_id);
-         $gps_stock = GpsStock::where('gps_id',$gps_id);
+        $gps_stock = GpsStock::where('gps_id',$gps_id)->first();       
         if($gps_stock==null)
         {
             $gps->manufacturing_date = $maufacture;
@@ -1467,14 +1467,17 @@ class GpsController extends Controller {
             if($gps){
                $gps_stock = GpsStock::create([
                     'gps_id'=> $gps->id,
-                    'inserted_by' => $root_id
+                    'inserted_by' => $user_id
                 ]); 
             }
             $request->session()->flash('message', 'New gps created successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
-             return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+             // return redirect(route('gps.details',Crypt::encrypt($gps->id)));
+            return redirect(route('gps.stock'));
         } 
         else{
+
+
             $request->session()->flash('message', 'Already added to stock!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
          return redirect(route('gps.stock'));
@@ -1641,6 +1644,106 @@ class GpsController extends Controller {
         ->addIndexColumn()     
         ->rawColumns(['link', 'action'])
         ->make();
+    }
+
+
+
+
+
+
+
+
+    public function stockReport()
+    {
+        return view('Gps::stock-report');  
+    }  
+     public function stockReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =GpsStock::select(
+             'gps_id','inserted_by','created_at'
+        )
+        ->with('gps:id,manufacturing_date,imei,e_sim_number,serial_no')
+        ->with('user:id,username');
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+        $stock = $query->get();
+        // dd($stock);
+        return DataTables::of($stock)
+        ->addIndexColumn()
+        
+        ->make();
+    } 
+
+
+
+
+    public function combinedStockReport()
+    {
+        return view('Gps::combined-stock-report');  
+    }  
+     public function combinedReportList(Request $request)
+    {
+        $from = $request->data['from_date'];
+        $to = $request->data['to_date'];
+        $query =GpsStock::select(
+            'gps_id',
+           \DB::raw('count(date_format(created_at, "Y-m-d")) as count'), 
+            \DB::raw('DATE(created_at) as date')
+        )
+        ->groupBy('date');
+        if($from){
+                $search_from_date=date("Y-m-d", strtotime($from));
+                $search_to_date=date("Y-m-d", strtotime($to));
+                $query = $query->whereDate('created_at', '>=', $search_from_date)->whereDate('created_at', '<=', $search_to_date);
+            }
+      $stock = $query->get();
+    return DataTables::of($stock)
+    ->addIndexColumn()
+    ->make();
+    } 
+
+    public function operationsSetOtaListPage()
+    {      
+        $gps = Gps::all();        
+        return view('Gps::set-ota',['devices' => $gps]);
+    }
+    public function setOtaInConsoleOperations(Request $request)
+    {
+        $gps_id=$request->gps_id;  
+        $command=$request->command; 
+        $operations_id=\Auth::user()->operations->id;        
+        // dd($response);
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$command,
+            'operations_id'=>$operations_id
+        ]); 
+        if($response){
+            $request->session()->flash('message', 'Command send successfully'); 
+        $request->session()->flash('alert-class', 'alert-success');
+            // return response()->json([
+            //     'status' => 1,
+            //     'title' => 'Success',
+            //     'message' => 'Command send successfully'
+            // ]);
+        }else{
+            $request->session()->flash('message', 'Try again'); 
+        $request->session()->flash('alert-class', 'alert-success');
+           // return response()->json([
+           //      'status' => 0,
+           //      'title' => 'Error',
+           //      'message' => 'Try again!!'
+           //  ]); 
+        }
+
+         return redirect(route('set.ota.operations'));
+
+
     }
 
 

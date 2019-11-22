@@ -235,7 +235,7 @@
                         <p>Devices Instock  </p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
@@ -250,8 +250,7 @@
                         <p>Total devices tested</p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
-                     
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
                     </div>
                   </div>
                 </div>
@@ -266,29 +265,13 @@
                         <p> To be added to stock </p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
-                  <br/>
-                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
-                    <!-- small box -->
-                    <div class="small-box bg-yellow bxs">
-                      <div class="inner">
-                        <h3 id="">
-                          <div class="loader"></div>
-                        </h3>
-                        
-                      </div>
-                      <div class="icon">
-                        <i class="fa fa-user"></i>
-                      </div>
-                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
-                    </div>
-                  </div>
-
-
+                  
+                  <span style="margin-left: 2%"></span>
 
                    <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
                     <!-- small box -->
@@ -300,7 +283,7 @@
                         <p>Devices tested today</p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
@@ -313,10 +296,10 @@
                         <h3 id="gps_add_to_stock">
                           <div class="loader"></div>
                         </h3>
-                        <p>devices added to stock today</p>
+                        <p style="width: 70%">devices added to stock today</p>
                       </div>
                       <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>

@@ -20,7 +20,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-report-list',
+            url: 'combined-stock-report-list',
             type: 'POST',
             data: {
                 'data': data
@@ -35,12 +35,8 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
-            {data: 'imei', name: 'imei',  orderable: true, searchable: false},                   
-            {data: 'serial_no', name: 'serial_no',  orderable: true, searchable: false},
-            {data: 'e_sim_number', name: 'e_sim_number',  orderable: true, searchable: false},
-            {data: 'manufacturing_date', name: 'manufacturing_date', orderable: true, searchable: false},
-            
-             {data: 'created_at', name: 'created_at', orderable: false, searchable: false}
+            {data: 'date', name: 'date', orderable: false},
+            {data: 'count', name: 'count', orderable: false, searchable: false}
            
         ],
         

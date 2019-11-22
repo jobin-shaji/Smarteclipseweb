@@ -5,8 +5,6 @@ Route::get('/gps','GpsController@gpsListPage')->name('gps');
 Route::post('/gps-list','GpsController@getGps')->name('gps-list');
 Route::get('/gps/create','GpsController@create')->name('gps.create');
 Route::post('/gps/create','GpsController@save')->name('gps.create.p');
-Route::get('/gps/stock','GpsController@createStock')->name('gps.stock');
-Route::post('/gps/stock','GpsController@saveStock')->name('gps.stock.p');
 Route::get('/gps/{id}/edit','GpsController@edit')->name('gps.edit');
 Route::post('/gps/{id}/edit','GpsController@update')->name('gps.update.p');
 Route::post('/gps/delete','GpsController@deleteGps')->name('gps.delete');
@@ -20,7 +18,6 @@ Route::post('/gps/location-track/root','GpsController@rootlocationTrack')->name(
 
 Route::get('/gps_playback','GpsController@playbackPage')->name('gps_playback');
 Route::get('/gps_playback_data','GpsController@playbackPageData')->name('gps_playback_data');
-Route::post('/gps-create-root-dropdown','GpsController@getGpsDetailsFromRoot')->name('gps-create-root-dropdown');
 
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
@@ -92,6 +89,20 @@ Route::post('/combined-gps-report-list','GpsController@combinedGpsReportList')->
 
 Route::get('/ota-updates','GpsController@otaUpdatesListPage')->name('ota-updates');
 Route::post('/ota-updates-list','GpsController@getOtaUpdatesAllData')->name('ota-updates-list');
+
+
+Route::get('/stock-report','GpsController@stockReport')->name('stock-report');
+Route::post('/stock-report-list','GpsController@stockReportList')->name('stock-report-list');
+
+Route::get('/combined-stock-report','GpsController@combinedStockReport')->name('combined-stock-report');
+Route::post('/combined-stock-report-list','GpsController@combinedReportList')->name('combined-stock-report-list');
+Route::get('/gps/stock','GpsController@createStock')->name('gps.stock');
+Route::post('/gps/stock','GpsController@saveStock')->name('gps.stock.p');
+
+Route::post('/gps-create-root-dropdown','GpsController@getGpsDetailsFromRoot')->name('gps-create-root-dropdown');
+
+Route::get('/set-ota-operations','GpsController@operationsSetOtaListPage')->name('set.ota.operations');
+Route::post('/setota-operations','GpsController@setOtaInConsoleOperations')->name('setota.operations');
 
 });
 
