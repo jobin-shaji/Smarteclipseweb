@@ -24,7 +24,7 @@
     <form  method="POST" action="{{route('gps.stock.p')}}">
       {{csrf_field()}}
       <div class="form-group">
-        <label class="srequired" style="padding: 0 10.7% 0 2%;">Serial No</label>
+        <label class="srequired" style="padding: 0 9.3% 0 2%;">Serial No</label>
         <select class="select2 GpsData" id="serial_no" name="serial_no" data-live-search="true" title="Select Serial number" required>
           <option value="" selected="selected" disabled="disabled">Select Serial number</option>
           @foreach($devices as $device)
