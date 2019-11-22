@@ -19,7 +19,6 @@
                 <a class="dropdown-item" href="{{url('/all-gps-config')}}">SINGLE GPS CONFIGURATION</a>
                 <a class="dropdown-item"href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
                 <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
-                <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
                 <a class="dropdown-item" href="{{url('/gps-km-map')}}">GPS KM</a>
                 <a class="dropdown-item" href="{{url('/all-gps-data')}}">CONSOLE</a>
             </div>
