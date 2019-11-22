@@ -117,5 +117,6 @@ Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps-data-bth');
 Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
 
+Route::get('/gps-config/update','GpsController@updateGpsConfig')->name('gps.config.update');
 
 });

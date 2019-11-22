@@ -2,12 +2,23 @@ $(document).ready(function () {
     callBackDataTable();
 });
 
-
-function callBackDataTable(){
+function check(){       
+        callBackDataTable();       
+}
+function callBackDataTable(value){
     
-    // var  data = {
-    //     gps : value    
-    // }; 
+    if(value==null)
+    {
+        gps=document.getElementById('gps_id').value;        
+    }
+    else{
+        gps=value;
+    }
+    // console.log(gps);
+    var  data = {
+        gps : gps,
+        header : document.getElementById('header').value   
+    };
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -18,7 +29,7 @@ function callBackDataTable(){
         ajax: {
             url: 'vltdata-list',
             type: 'POST',
-            // data: data,
+            data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
@@ -30,7 +41,7 @@ function callBackDataTable(){
             {data: 'vltdata', name: 'vltdata', orderable: false, searchable: true},
             {data: 'created_at', name: 'created_at' ,orderable: true, searchable: false},
             {data: 'forhuman', name: 'forhuman' ,orderable: false, searchable: false},
-            {data: 'action', name: 'action' ,orderable: false, searchable: false},
+            // {data: 'action', name: 'action' ,orderable: false, searchable: false},
         ],
         
         aLengthMenu: [[25, 50, 100, 1000, -1], [25, 50, 100, 1000, 'All']]
