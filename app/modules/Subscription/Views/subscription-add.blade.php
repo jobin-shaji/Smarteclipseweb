@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="form-group has-feedback">
-                      <label class="srequired">Amount</label>
+                      <label class="srequired">Amount (Without tax)</label>
                       <input type="text" class="form-control {{ $errors->has('amount') ? ' has-error' : '' }}" placeholder="Amount" name="amount" value="{{ old('amount') }}"> 
                       @if ($errors->has('amount'))
                         <span class="help-block">

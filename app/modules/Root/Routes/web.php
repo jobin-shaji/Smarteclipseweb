@@ -4,9 +4,12 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::get('/states','RootController@statesListPage')->name('states');
 	Route::post('/states-list','RootController@getStates')->name('states-list');
 
-    Route::get('/state/{id}/details','RootController@stateDetails')->name('state.details');
+  Route::get('/state/{id}/details','RootController@stateDetails')->name('state.details');
 
-    Route::post('/state/{id}/user-create','RootController@createUser')->name('root.user.create');
+  Route::post('/state/{id}/user-create','RootController@createUser')->name('root.user.create');
+
+  Route::get('/root/{id}/change-password','RootController@changeRootPassword')->name('root.change.password');
+  Route::post('/root/{id}/update-password','RootController@updateRootPassword')->name('root.update.password.p');
 
 
   });

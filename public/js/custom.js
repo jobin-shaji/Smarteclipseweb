@@ -1,44 +1,67 @@
+$(function () {
 
 
- $(function () {
-    
+    const timeout = 9000000;  // 900000 ms = 15 minutes
 
-    $('.select2').select2();
+    var idleTimer = null;
+    $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
+        clearTimeout(idleTimer);
 
-           
-            $('#fromDate,#toDate').datetimepicker({
-                useCurrent: false,
-                minDate: moment()
-            });
-            $('#fromDate').datetimepicker().on('dp.change', function (e) {
-                var startdate=$(this).data('fromdate');
-                var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
-                $('#toDate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
+        idleTimer = setTimeout(function () {
+            document.getElementById('logout-form').submit();
+        }, timeout);
+    });
+    $("body").trigger("mousemove");
 
-            $('#toDate').datetimepicker().on('dp.change', function (e) {
-                
-                var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
-                $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
-            $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
-                var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
-                $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
+    ///////
 
-            $('#assignToDate').datetimepicker().on('dp.change', function (e) {
-                
-                var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
-                $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
-                $(this).data("DateTimePicker").hide();
-            });
+    var d = new Date();
+    var free_months=d.setMonth(d.getMonth() - 3);
+
+    $('.select2').select2();           
+        $('#fromDate,#toDate').datetimepicker({
+            useCurrent: false,
+            minDate: moment()
+            // minDate: new Date(currentYear, currentMonth-3, currentDate),
+            // maxDate: new Date(currentYear, currentMonth+3, currentDate)
+        });
+        $('#fromDate').datetimepicker().on('dp.change', function (e) {
+            var startdate=$(this).data('fromdate');
+            var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
+
+            incrementDay.add(1, 'days');
+
+            $('#toDate').data('DateTimePicker').minDate(incrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+        $('#toDate').datetimepicker().on('dp.change', function (e) {
+            
+            var decrementDay = moment(new Date(e.date));
+            decrementDay.subtract(0, 'days');
+            $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+
+        
+
+
+
+
+
+        $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
+            var incrementDay = moment(new Date(e.date));
+            incrementDay.add(1, 'days');
+            $('#assignToDate').data('DateTimePicker').minDate(incrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
+
+        $('#assignToDate').datetimepicker().on('dp.change', function (e) {
+            
+            var decrementDay = moment(new Date(e.date));
+            decrementDay.subtract(1, 'days');
+            $('#assignfromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
+        });
 
 
             $('#playback_fromDate').datetimepicker().on('dp.change', function (e) {
@@ -83,18 +106,46 @@
 
 // dateTimepicker
 
+var d = new Date();
+free_date=d.setMonth(d.getMonth() - 1);
+
+fundamental_date=d.setMonth(d.getMonth() - 2);
+superior_date=d.setMonth(d.getMonth() - 4);
+pro_date=d.setMonth(d.getMonth() - 6);
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
-        // maxDate: new Date() 
+        maxDate: new Date() 
     });
 
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        // maxDate: new Date() 
+        maxDate: new Date() 
  });
+$( ".datepickerFreebies" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:free_date
+ });
+$( ".datepickerFundamental" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:fundamental_date
+ });
+$( ".datepickerSuperior" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:superior_date
+ });
+$( ".datepickerPro" ).datetimepicker({ 
+        format: 'DD-MM-YYYY',
+        maxDate: new Date(),
+        minDate:pro_date
+ });
+
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        minDate: new Date()
+        // minDate: new Date()
+        minDate: moment().millisecond(0).second(0).minute(0).hour(0)    
          
  });
 $( ".date_expiry_edit" ).datetimepicker({ 
@@ -102,15 +153,23 @@ $( ".date_expiry_edit" ).datetimepicker({
     minDate: moment().millisecond(0).second(0).minute(0).hour(0)     
     // minDate: moment().subtract(1,'d')
  });
+
  $( ".manufacturing_date" ).datetimepicker({ 
-    format: 'DD-MM-YYYY',       
-    maxDate: new Date()
+    format: 'DD-MM-YYYY',
+    minDate: '2019-01-01',       
+    // maxDate: new Date(),
+    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
+    // useCurrent: false
+   
  });
-
- $(function() {
-  $('.selectpicker').selectpicker();
-});
-
+ $( ".manufacturing_date_edit" ).datetimepicker({ 
+    format: 'DD-MM-YYYY',
+    minDate: '2019-01-01',       
+    // maxDate: new Date(),
+    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
+    // useCurrent: false
+   
+ });
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
@@ -121,11 +180,10 @@ function toast(res){
     
    if(res.status == 1){
         toastr.success( res.message, res.title);
-        console.log( res.message, res.title);
+
     }
     else if(res.status == 0) {
-        console.log('Error', res.message);
-        toastr.error(res.message, 'Error');
+      toastr.error( res.message, res.title);
     }
     else if(res.status == 'dbcount'){
         dbcount(res);
@@ -146,10 +204,7 @@ function toast(res){
 
         notification(res);
     } 
-    else if(res.status == 'alertNotification'){
-
-        alertNotification(res);
-    } 
+    
      else if(res.status == 'mobile_already'){
 
         driverMobileExisted(res);
@@ -161,6 +216,12 @@ function toast(res){
     else if(res.status=='vehicleModeCount')
     {
         vehicleModeCount(res);
+    }
+     else if(res.status == 'school geofence'){
+        window.location.href='/client/profile';
+    } 
+    else if(res.status == 'edit geofence'){
+        window.location.href='/geofence';
     }
                 
 }
@@ -198,6 +259,8 @@ function backgroundPostData(url, data, callBack, options) {
                     selectVehicleTrack(res);
                 }else if(callBack =='driverScore'){
                     driverScore(res);
+                }else if(callBack =='driverScoreAlerts'){
+                    driverScoreAlerts(res);
                 }else if(callBack == 'emergencyAlert'){
                     emergencyAlert(res);
                 }else if(callBack == 'getPlaceName'){
@@ -251,10 +314,6 @@ function backgroundPostData(url, data, callBack, options) {
 
                     AssignClientRole(res);
                 }
-                else if(callBack =='removeClientRole'){
-
-                    removeClientRole(res);
-                }
                 else if(callBack =='rootSubdealer'){
 
                     rootSubdealer(res);
@@ -276,16 +335,58 @@ function backgroundPostData(url, data, callBack, options) {
                          playBackData(res);
                 }
 
+                else if(callBack== 'alertNotification'){
+                    alertNotification(res);
+                } 
+                else if(callBack== 'downloadData'){
+                    downloadData(res);
+                } 
+                else if(callBack== 'modecount'){
+                    modecount(res);
+                } 
+                else if(callBack=='vehicleTrackReport')
+                {
+                   vehicleTrackReport(res) 
+                }
+                else if(callBack=='vehicleIdleReport')
+                {
+                   vehicleIdleReport(res) 
+                }
+                else if(callBack=='vehicleParkingReport')
+                {
+                   vehicleParkingReport(res) 
+                }
+                else if(callBack=='alertsReport')
+                {
+                   alertsReport(res) 
+                }
+                else if(callBack=='TotalKM')
+                {
+                   TotalKM(res) 
+                }
+                else if(callBack=='kmReport')
+                {
+                    kmReport(res);
+                }
+                else if(callBack=='gpsData'){
+                         gpsData(res);
+                }else if(callBack=='gpsDataBth'){
+                         gpsDataBth(res);
+                }else if(callBack=='alldata'){
+                         alldata(res);
+                }
+                else if(callBack=='gpsDataHlm'){
+                         gpsDataHlm(res);
+                }
+                else if(callBack=='allGpsConfiguredata')
+                {
+                    allGpsConfiguredata(res);
+                }
 
-
-
-
-               
             }
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
         }
     });
 
@@ -296,23 +397,23 @@ function emergencyAlert(res){
         var latitude=res.alerts[0].latitude;
         var longitude=res.alerts[0].longitude;
         getPlaceNameFromLatLng(latitude,longitude);
-        var vehicle_id=res.alerts[0].vehicle.id;
+        var vehicle_id=res.alerts[0].gps.vehicle.id;
         if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
             $("#header-emergency").show();
             document.getElementById("header_em_id").value = res.alerts[0].id;
             document.getElementById("header_alert_vehicle_id").value = res.vehicle;
-            document.getElementById("header_decrypt_vehicle_id").value = res.alerts[0].vehicle.id;
-            $('#header_emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
-            $('#header_emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
+            $('#header_emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
+            $('#header_emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
             $('#header_emergency_vehicle_time').text(res.alerts[0].device_time);
         }else{
             var modal = document.getElementById('emergency');
             modal.style.display = "block";
             document.getElementById("em_id").value = res.alerts[0].id;
             document.getElementById("alert_vehicle_id").value = res.vehicle;
-            document.getElementById("decrypt_vehicle_id").value = res.alerts[0].vehicle.id;
-            $('#emergency_vehicle_driver').text(res.alerts[0].vehicle.driver.name);
-            $('#emergency_vehicle_number').text(res.alerts[0].vehicle.register_number);
+            document.getElementById("decrypt_vehicle_id").value = vehicle_id;
+            $('#emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
+            $('#emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
             $('#emergency_vehicle_time').text(res.alerts[0].device_time);
         }
        
@@ -385,7 +486,7 @@ function verifyAlertResponse(res){
 function downloadFile(url,data){
 
     var purl = getUrl() + '/'+url ;
-
+// console.log(data);
     $.ajax({
             cache: false,
             type: 'POST',
@@ -418,15 +519,16 @@ function downloadFile(url,data){
                     } else {
                         var URL = window.URL || window.webkitURL;
                         var downloadUrl = URL.createObjectURL(blob);
-
+                        
                         if (filename) { 
                             // use HTML5 a[download] attribute to specify filename
                             var a = document.createElement("a");
-
+                            // console.log(typeof a.download);
                             // safari doesn't support this yet
                             if (typeof a.download === 'undefined') {
                                 // window.location = downloadUrl;
                             } else {
+                                // console.log(blob);
                                 a.href = downloadUrl;
                                 a.download = filename;
                                 document.body.appendChild(a);
@@ -475,7 +577,6 @@ function getPolygonData(url, data, callBack, options) {
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
         }
     });
 
@@ -499,7 +600,7 @@ function downloadAlertReport(){
        var alert=alerts;
        var vehicle=vehicles;
      }
-     // console.log(alert);
+     // console.log(alerts);
     var fromDate=$('#fromDate').val();
     var toDate=$('#toDate').val();
     if(fromDate){
@@ -677,12 +778,29 @@ function downloadOverSpeedReport(){
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
         downloadFile(url,data);
+         // backgroundPostData(url,data,'downloadData',{alert:false});
+         
+         
+        // 
     }else{
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
     }
+}
+function downloadData(res)
+{
+    console.log(res.data);
+    // if(res.length!=0)
+    // {
+    //     downloadFile(url,data);
+    // }
+    // else
+    // {
+    //     alert("No records");
+    // }
+    
 }
 
 
@@ -770,6 +888,34 @@ function downloadMainBatteryDisconnectReport(){
 }
 
 
+// function downloadTotalKMReport(){    
+//     var url = 'total-km-report/export';
+//     var  vehicles=$('#vehicle').val();   
+//     if(vehicles==null)
+//     {
+//        var vehicle=0;
+//     }
+//     else
+//     {
+//        var vehicle=vehicles;
+//     }
+//     // console.log(alert);
+//     var fromDate=$('#fromDate').val();
+//     var toDate=$('#toDate').val();
+//     if(fromDate){
+//         var data = {
+//         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+//         };
+//         console.log(url);
+//         downloadFile(url,data);
+//     }else{
+//         var data = {
+//             id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+//         };
+//         downloadFile(url,data);
+//     }
+// }
+
 function downloadTotalKMReport(){    
     var url = 'total-km-report/export';
     var  vehicles=$('#vehicle').val();   
@@ -788,14 +934,20 @@ function downloadTotalKMReport(){
         var data = {
         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
         };
+        
+       
         downloadFile(url,data);
     }else{
+        
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+            id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
     }
 }
+
+
+
 
 function downloadDailyKMReport(){    
     var url = 'daily-km-report/export';
@@ -881,6 +1033,7 @@ function documents(){
     backgroundPostData(url,data,'notification',{alert:false});           
 }
 function notification(res){
+    if(res){
     $("#notification").empty();
    var expired_documents;
 
@@ -928,28 +1081,31 @@ function notification(res){
                                        
         '</div></div>';  
          $("#expire_notification").append(expire_documents);   
-      }              
+      }   
+    }           
 }
 
-function alerts(){  
+function clientAlerts(){ 
+  var flag;
     var url = 'alert-notification';
-    var data = {};   
+    var data = {
+        flag:1
+    };   
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
+    if(res)
+    {
+        $("#alert_notification").empty();
+        length=res.alert.length;
 
-    console.log(res);
-    $("#alert_notification").empty();
-   // var expired_documents;
+        for (var i = 0; i < length; i++) {
+         description=res.alert[i].alert_type.description;
 
-    length=res.alert.length;
-    for (var i = 0; i < length; i++) {
-     description=res.alert[i].alert_type.description;
-    
-        var alert='<a class="dropdown-item" >'+description+'</a>';  
-        $("#alert_notification").append(alert);       
-    }  
-  
+            var alert='<a class="dropdown-item" >'+description+'</a>';  
+            $("#alert_notification").append(alert);       
+        }  
+ }
 }
 
 function downloadLabel(id){
@@ -987,7 +1143,7 @@ function clientGps(res)
     length=res.devices.length;
    // console.log(res.devices[0].imei);
  for (var i = 0; i < length; i++) {
-         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].imei+'</option>';  
+         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
          $("#gps").append(gps);   
      }    
 }
@@ -1029,21 +1185,6 @@ function downloadInvoice(){
 function vehicleInvoice(res){    
   // alert(res);
 }
-function removeRole(client_user_id,role){
-    var url = 'client/role/delete';
-    var data = {
-        client_user_id : client_user_id,
-        client_role : role
-    };
-    backgroundPostData(url,data,'removeClientRole',{alert:true});  
-}
-function removeClientRole(res)
-{
-    location.reload();
-    // $('#client_roles').text(res.vehicles);
-}
-
-
 
 $(".cover_track_data").hover(function () {
     $(this).find('.track_status').toggleClass("track_status_hover");
@@ -1086,26 +1227,147 @@ function rootSubdealer(res)
 
 // ---------------check notification-----------------------------------
     setInterval(function() {
+       
         var url = 'notification_alert_count';
-        var data = { 
-        };
+        var data = {};
         backgroundPostData(url,data,'notificationCount',{alert:false});
     }, 8000);//hai
 
     $( document ).ready(function() {
+        var flag;
         var url = 'notification_alert_count';
-        var data = { 
-        };
+        var data = {};
         backgroundPostData(url,data,'notificationCount',{alert:false});
       });
 // ---------------check notification-----------------------------------
 
     function notificationCount(res){
+        
         if(res.status=="success"){
             var count_notification=res.notification_count;
-            $("#bell_notification_count").text(count_notification);
-
+            
+                $("#bell_notification_count").text(count_notification);
+                      
         }
     }
+
+/////////////////////////Km Report/////////////////////////
+function downloadKMReport(){    
+    var url = 'km-report/export';
+    var  vehicle=$('#vehicle').val(); 
+    var  report_type=$('#report').val();   
+    if(vehicle==null)
+    {
+       alert("Please select Vehicle")
+    }
+    else if(report_type==null)
+    {
+      alert("Please select Report Type")
+    }
+    else
+    {
+      
+        var data = {
+    id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'report_type':report_type
+    };      
+    downloadFile(url,data);
+    }   
+   
+}
+function getdata(id){  
+    var url = 'get-gps-data';
+    var data = {
+       id:id 
+    };   
+    apiBackgroundPostData(url,data,'gpsData',{alert:false});           
+  }
+
+function gpsData(res)
+{
+    $("#allDataTable tr").remove(); 
+    var gps=' <tr><td>Header</td><td>'+res.gpsData.header+'</td></tr>'+
+            '<tr><td>Imei</td><td >'+res.gpsData.imei+'</td></tr>'+ 
+            '<tr><td>alert id</td><td>'+res.gpsData.alert_id+'</td></tr>'+
+            '<tr><td>Packet Status</td><td>'+res.gpsData.packet_status+'</td></tr>'+
+            '<tr><td>Device Date</td><td>'+res.gpsData.device_time+'</td></tr>'+
+            '<tr><td>Latitude</td><td>'+res.gpsData.latitude+'</td></tr>'+
+            '<tr><td>Latitude Direction</td><td>'+res.gpsData.lat_dir+'</td></tr>'+
+            '<tr><td>Longitude</td><td>'+res.gpsData.longitude+'</td></tr>'+
+            '<tr><td>Longitude Direction</td><td>'+res.gpsData.lon_dir+'</td></tr>'+
+            '<tr><td>Mcc </td><td>'+res.gpsData.mcc+'</td></tr>'+
+            '<tr><td>Mnc </td><td>'+res.gpsData.mnc+'</td></tr>'+
+            '<tr><td>Lac </td><td>'+res.gpsData.lac+'</td></tr>'+
+            '<tr><td>Cell Id </td><td>'+res.gpsData.cell_id+'</td></tr>'+
+            '<tr><td>Heading</td><td>'+res.gpsData.heading+'</td></tr>'+
+            '<tr><td>speed</td><td>'+res.gpsData.speed+'</td></tr>'+
+            '<tr><td>No of Satelites</td><td>'+res.gpsData.no_of_satelites+'</td></tr>'+
+            '<tr><td>Hdop</td><td>'+res.gpsData.hdop+'</td></tr>'+
+            '<tr><td>Signal Strength</td><td>'+res.gpsData.gsm_signal_strength+'</td></tr>'+        
+            '<tr><td>ignition</td><td>'+res.gpsData.ignition+'</td></tr>'+
+            '<tr><td>main power status</td><td>'+res.gpsData.main_power_status+'</td></tr>'+
+            '<tr><td>Gpx-fix</td><td>'+res.gpsData.gps_fix+'</td></tr>'+
+
+            '<tr><td>Vehicle Mode</td><td>'+res.gpsData.vehicle_mode+'</td></tr>'
+        ;  
+        $("#allDataTable").append(gps); 
+    // console.log(res);
+    $('#gpsDataModal').modal('show');
+}
+
+
+ function getdataBTHList(id){ 
+
+    var url = 'get-gps-data-bth';
+    var data = {
+       id:id 
+    };   
+    apiBackgroundPostData(url,data,'gpsDataBth',{alert:false});           
+  }
+
+
+function gpsDataBth(res)
+{
+
+    $("#allDataTable tr").remove(); 
+    var gps=res.gpsData;  
+
+        $("#allDataTable").append(gps); 
+    // console.log(res);
+    $('#gpsDataModal').modal('show');
+}
+
+function getdataHLMList(id){ 
+
+    var url = 'get-gps-data-hlm';
+    var data = {
+       id:id 
+    };   
+    apiBackgroundPostData(url,data,'gpsDataHlm',{alert:false});           
+  }
+
+
+  function gpsDataHlm(res)
+{
+console.log(res.gpsData.header);
+    $("#allHLMDataTable tr").remove(); 
+    var gps=' <tr><td>Header</td><td>'+res.gpsData.header+'</td></tr>'+
+            '<tr><td>Imei</td><td >'+res.gpsData.imei+'</td></tr>'+ 
+            '<tr><td>Vendor Id</td><td>'+res.gpsData.vendor_id+'</td></tr>'+
+            '<tr><td>Firmware Version</td><td>'+res.gpsData.firmware_version+'</td></tr>'+
+            '<tr><td>Device Date</td><td>'+res.gpsData.device_time+'</td></tr>'+
+            '<tr><td>Update ignition rate on</td><td>'+res.gpsData.update_rate_ignition_on+'</td></tr>'+
+            '<tr><td> Update ignition rate off</td><td>'+res.gpsData.update_rate_ignition_off+'</td></tr>'+
+            '<tr><td>Battery percentage</td><td>'+res.gpsData.battery_percentage+'</td></tr>'+
+            '<tr><td> Low battery Threshold value</td><td>'+res.gpsData.low_battery_threshold_value+'</td></tr>'+
+            '<tr><td>Memory Percentage </td><td>'+res.gpsData.memory_percentage+'</td></tr>'+
+            '<tr><td>Digital IO Status Mode</td><td>'+res.gpsData.digital_io_status+'</td></tr>'+
+            '<tr><td>Analog IO Status Mode</td><td>'+res.gpsData.analog_io_status+'</td></tr>'+
+            '<tr><td>Date</td><td>'+res.gpsData.date+'</td></tr>'+
+            '<tr><td>Time</td><td>'+res.gpsData.time+'</td></tr>';  
+        $("#allHLMDataTable").append(gps); 
+    // console.log(res);
+    $('#gpsHLMDataModal').modal('show');
+}
+
 
    

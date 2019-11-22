@@ -48,19 +48,23 @@ function callBackDataTable(){
 }
 
 function deleteSubscription(id){
-    var url = 'subscription/delete';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this?')){
+        var url = 'subscription/delete';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 
 function activateSubscription(id){
-    var url = 'subscription/activate';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this?')){
+        var url = 'subscription/activate';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

@@ -36,7 +36,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
@@ -46,19 +46,23 @@ function callBackDataTable(){
  }
 
  function deleteRoute(route){
-    var url = 'route/delete';
-    var data = {
-        id : route
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this?')){
+        var url = 'route/delete';
+        var data = {
+            id : route
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
  function activateRoute(route){
-    var url = 'route/activate';
-    var data = {
-         id : route
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this?')){
+        var url = 'route/activate';
+        var data = {
+             id : route
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

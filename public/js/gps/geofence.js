@@ -41,7 +41,8 @@ function initMap(){
   //     // console.log(res);
   //         latMap = res.latitude;
   //         lngMap = res.longitude;
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'),
+   {
     center: {lat: latMap, lng: lngMap},//qatar-25.354826 , 51.183884 kerala- 9.931233 , 76.267303
     zoom: 12
   });
@@ -52,13 +53,14 @@ function initMap(){
   var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
   var drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.POLYGON,
+     
     // drawingMode: google.maps.drawing.OverlayType,
 
 
     drawingControl: true,
     drawingControlOptions: {
       position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [ 'polygon']
+      drawingModes: [ 'polygon'],
     },
 
     markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
@@ -86,16 +88,18 @@ function initMap(){
     {
       addArrays(polygon);
       drawingManager.setDrawingMode(null);
-      //   drawingManager.setOptions({
-      //   drawingControl: false
-      // });
+        drawingManager.setOptions({
+        drawingControl: false
+      });
+      alert("If you want to redraw,click on refresh button");
     }
   });
 
 
   google.maps.event.addDomListener(savebutton, 'click', function() {
     var name= document.getElementById('name').value;
-    if(name !== "")
+    var polygon_length=allPolly.length;
+    if(name !== "" && polygon_length >0)
     {
       var url = 'save/fence';
       var data = {
@@ -103,7 +107,10 @@ function initMap(){
       name : name
     };
     backgroundPostData(url,data,'none',{alert:true});  
-    // console.log(allPolly);
+    }
+    else if(polygon_length ==0)
+    {
+      alert("Please draw the Geofence");
     }
     else
     {
@@ -139,12 +146,13 @@ function clearSelection() {
 function setSelection(shape) {
   clearSelection();
   selectedShape = shape;
-  shape.setEditable(true);
+  shape.setEditable(false);
 }
 
 function removeLineSegment() {
-  allPolly =[];
-  deleteSelectedShape();
+  // allPolly =[];
+  // deleteSelectedShape();
+  window.location.reload();
 }
 
 function addArrays(polygon) {
@@ -162,6 +170,7 @@ function addArrays(polygon) {
   allPolly.push(poly);
 }
 function locationSearch(){
+
   place_name=$('#search_place').val();
   var geocoder =  new google.maps.Geocoder();
   geocoder.geocode( { 'address':place_name}, function(results, status) {
@@ -169,6 +178,7 @@ function locationSearch(){
       var lat=results[0].geometry.location.lat();
       var lng=results[0].geometry.location.lng();
       map.panTo(new google.maps.LatLng(lat,lng));
+      map.setOptions({Zoom: 17});
     } else {
       alert("Something got wrong " + status);
     }

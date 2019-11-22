@@ -19,7 +19,7 @@
  
  <div class="container-fluid">
     <div class="card-body">
-      <div class="table-responsive">
+      <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
@@ -34,7 +34,6 @@
                       <th>Client</th>
                       <th>Gps</th>
                       <th>Job Type</th>
-                      <!-- <th >User</th> -->
                       <th>Description</th>
                       <th>Job Date</th>
                       

@@ -31,7 +31,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'code', name: 'code' },            
             {data: 'description', name: 'description',searchable: false},
             {data: 'driver_point', name: 'driver_point',searchable: false},
@@ -42,17 +42,21 @@ function callBackDataTable(){
     });
 }
 function delAlertType(alert_type){
-    var url = 'alert-type/delete';
-    var data = {
-        uid : alert_type
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this alert type?')){
+        var url = 'alert-type/delete';
+        var data = {
+            uid : alert_type
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 function activateAlertType(alert_type){
-    var url = 'alert-type/activate';
-    var data = {
-        id : alert_type
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this alert type?')){
+        var url = 'alert-type/activate';
+        var data = {
+            id : alert_type
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 

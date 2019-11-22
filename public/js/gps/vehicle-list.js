@@ -37,12 +37,12 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name'},
-            {data: 'register_number', name: 'register_number'},
-            {data: 'gps.imei', name: 'gps.imei'},
-            {data: 'driver', name: 'driver'},
-            {data: 'vehicle_type.name', name: 'vehicle_type.name'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'name', name: 'name',orderable: false},
+            {data: 'register_number', name: 'register_number',orderable: false},
+            {data: 'gps.serial_no', name: 'gps.serial_no',orderable: false},
+            {data: 'driver', name: 'driver',orderable: false},
+            {data: 'vehicle_type.name', name: 'vehicle_type.name',orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
@@ -51,20 +51,24 @@ function callBackDataTable(){
  }
 
  function deleteVehicle(vehicle){
-    var url = 'vehicle/delete';
-    var data = {
-        vid : vehicle
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure  to deactivate this vehicle?')){
+        var url = 'vehicle/delete';
+        var data = {
+            vid : vehicle
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
  function activateVehicle(vehicle,gps_id){
-    var url = 'vehicle/activate';
-    var data = {
-         id : vehicle,
-         gps_id : gps_id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure  to activate this vehicle?')){
+        var url = 'vehicle/activate';
+        var data = {
+             id : vehicle,
+             gps_id : gps_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

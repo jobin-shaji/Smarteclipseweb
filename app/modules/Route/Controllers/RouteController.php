@@ -31,39 +31,53 @@ class RouteController extends Controller {
         $client_id=\Auth::user()->client->id;
         $route = Route::select(
                     'id',
-                    'name',
-                    'deleted_at'
-                    )
-            ->withTrashed()
-            ->where('client_id',$client_id)
-            ->get();
+                    'name'
+        )
+        ->where('client_id',$client_id)
+        ->get();
         return DataTables::of($route)
-            ->addIndexColumn()
-            ->addColumn('action', function ($route) {
-                $b_url = \URL::to('/'); 
-                if($route->deleted_at == null){
-                    return "
-                     <a href=".$b_url."/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
-
-                    <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>"; 
-                }else{
-                     return "
-                    <a href=".$b_url."/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
-                    <button onclick=activateRoute(".$route->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
-                }
-             })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        ->addIndexColumn()
+        ->addColumn('action', function ($route) {
+            $b_url = \URL::to('/'); 
+            
+                return "
+                 <a href=".$b_url."/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>                
+                <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Delete</button>";             
+         })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
 
     // create a new route
-    public function createRoute()
+    public function createRoute(Request $request)
     {
         $client_id=\Auth::user()->client->id;
         $driver_location=Client::select('latitude','longitude')
                 ->where('id',$client_id)
                 ->first();
-        return view('Route::route-add',['driver_location' => $driver_location]);
+        $Route = Route::select(
+            'id', 
+            'client_id'                                  
+        )  
+        ->where('client_id',$client_id)        
+        ->count(); 
+        if($Route<1){
+
+           return view('Route::route-add',['driver_location' => $driver_location]);
+        }else if($request->user()->hasRole('fundamental')&& $Route<3) {
+           return view('Route::route-add',['driver_location' => $driver_location]);
+        }
+        else if($request->user()->hasRole('superior')&& $Route<6) {
+           return view('Route::route-add',['driver_location' => $driver_location]);
+        }
+        else if($request->user()->hasRole('pro')&& $Route<10) {
+            return view('Route::route-add',['driver_location' => $driver_location]);
+        }else{           
+            $request->session()->flash('message', 'Please upgrade your current plan for adding more Route'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('route'));           
+        }
+      
     }
 
     // // save route
@@ -217,6 +231,7 @@ class RouteController extends Controller {
        ->with('vehicle:id,name,register_number')
         ->where('client_id',$client_id)
         ->get();
+        // dd($route);
         return DataTables::of($route)
             ->addIndexColumn() 
             ->addColumn('action', function ($route) { 
@@ -472,7 +487,7 @@ class RouteController extends Controller {
     public function routeCreateRules()
     {
         $rules = [
-            'name' => 'required|unique:routes'
+            'name' => 'required'
         ];
         return  $rules;
     }

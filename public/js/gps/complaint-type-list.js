@@ -46,18 +46,22 @@ function callBackDataTable(){
 }
 
 function delComplaintType(id){
-    var url = 'complaint-type/delete';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this?')){
+        var url = 'complaint-type/delete';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateComplaintType(id){
-    var url = 'complaint-type/activate';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this?')){
+        var url = 'complaint-type/activate';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

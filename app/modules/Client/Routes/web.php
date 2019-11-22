@@ -5,8 +5,8 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/client/disable','ClientController@disableClient')->name('client.disable');
 	Route::post('/client/enable','ClientController@enableClient')->name('client.enable');
 	Route::get('/client/{id}/subscription','ClientController@subscription')->name('client.subscription');
+	Route::get('client/{user_id}/{role_id}/subscription-delete','ClientController@clientSubscriptionDelete')->name('client.subscription.delete');
 	Route::post('/client-role-create/{id}','ClientController@addUserRole')->name('client.role.create.p');
-	Route::post('/client/role/delete','ClientController@deleteClientRole')->name('client.role.delete');
 
 	Route::get('/root/client/create','ClientController@clientCreate')->name('root.client.create');
 	Route::post('/select/subdealer','ClientController@selectSubdealer')->name('client.role.delete');
@@ -50,6 +50,10 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::post('/client/{id}/profile','ClientController@saveUserLogo')->name('client.profile.p'); 
 	Route::get('/client/{id}/change-password','ClientController@changePassword')->name('client.change-password');
 	Route::post('/client/{id}/update-password','ClientController@updatePassword')->name('client.update-password.p'); 
+
+	Route::get('/client/profile/edit','ClientController@userProfileEdit')->name('client.profile.edit');
+	Route::post('/client/profile/{id}/edit','ClientController@profileUpdate')->name('client.profile.update.p');
+	
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {

@@ -48,19 +48,23 @@ function callBackDataTable(){
 }
 
 function deleteTrafficRule(id){
-    var url = 'traffic-rule/delete';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this?')){
+        var url = 'traffic-rule/delete';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 function activateTrafficRule(id){
-    var url = 'traffic-rule/activate';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this?')){
+        var url = 'traffic-rule/activate';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});
+    }  
 }
 
 

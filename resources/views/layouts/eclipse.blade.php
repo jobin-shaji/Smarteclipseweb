@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html dir="ltr" lang="en">
 
     @include('layouts.sections.eclipse-meta')
@@ -34,20 +35,18 @@
          @include('layouts.sections.eclipse-footer')
  </div> -->
      <script src="{{ url('/') }}/assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
+    
     <script src="{{ url('/') }}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="{{ url('/') }}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="{{ url('/') }}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
     <script src="{{ url('/') }}/assets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
+    
     <script src="{{ url('/') }}/dist/js/waves.js"></script>
-    <!--Menu sidebar -->
+    
     <script src="{{ url('/') }}/dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
+    
     <script src="{{ url('/') }}/dist/js/custom.min.js"></script>
-    <!--This page JavaScript -->
-    <!-- <script src="dist/js/pages/dashboards/dashboard1.js"></script> -->
-    <!-- Charts js Files -->
+    
     <script src="{{ url('/') }}/assets/libs/flot/excanvas.js"></script>
     <script src="{{ url('/') }}/assets/libs/flot/jquery.flot.js"></script>
     <script src="{{ url('/') }}/assets/libs/flot/jquery.flot.pie.js"></script>
@@ -63,9 +62,8 @@
 
     <!-- datetime picker -->
     <script src="{{asset('js/moment-with-locales.js')}}"></script>
-    <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="{{asset('js/custom.js')}}"></script>
+
      <script src="{{asset('js/alertify.min.js')}}"></script>
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -80,6 +78,7 @@
     </script>
        <!--  -->
     
+    <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
     
     <!-- datetime picker -->
     {!! Toastr::render() !!}
@@ -91,7 +90,7 @@
         toastr.options.escapeHtml = true;
         toastr.options.newestOnTop = false;
     </script>
-
+    <script src="{{asset('js/custom.js')}}"></script>
     </body>
 
 

@@ -10,6 +10,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -64,8 +65,11 @@ class ComplaintController extends Controller {
     //upload complaints to database table
     public function saveComplaintType(Request $request)
     {
+        $custom_messages = [
+        'name.required' => 'Please mention the reason'
+        ];
         $rules = $this->complaint_type_create_rules();
-        $this->validate($request, $rules);
+        $this->validate($request, $rules, $custom_messages);
         $complaint_type = ComplaintType::create([
             'name' => $request->name,
             'complaint_category' => $request->complaint_category
@@ -142,7 +146,7 @@ class ComplaintController extends Controller {
             ->with('ticket:id,code')
             ->with('client:id,name,sub_dealer_id')
             ->with('servicer:id,name')
-            ->with('complaintType:id,name')
+            ->with('complaintType:id,name,complaint_category')
             ->where('status','!=', 2);
             if(\Auth::user()->hasRole('client'))
             {
@@ -185,10 +189,20 @@ class ComplaintController extends Controller {
                     }
                     else
                     {
-                        return $complaints->servicer->name;
+                        return $complaints->complaintType->name;
                     }                    
                 }
                 
+            })
+            ->addColumn('complaint_category', function ($complaints) { 
+                 if($complaints->complaintType->complaint_category==0) 
+                 {
+                    return "Hardware";
+                 }else if($complaints->complaintType->complaint_category==1) 
+                 {
+                    return "Software";
+                    
+                 }               
             })
             ->rawColumns(['link', 'action'])
             ->make();
@@ -199,10 +213,7 @@ class ComplaintController extends Controller {
     public function create()
     {
         $client_id=\Auth::user()->client->id;
-        $client_user_id=\Auth::user()->id;
-        $devices=Gps::select('id','imei')
-                ->where('user_id',$client_user_id)
-                ->get();
+        $devices=GpsStock::with('gps')->where('client_id',$client_id)->get();
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
         return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type]);
@@ -389,7 +400,7 @@ class ComplaintController extends Controller {
         ->addColumn('action', function ($complaints) {                
             $b_url = \URL::to('/');
             return "
-            <a href=".$b_url."/assign-complaint/".Crypt::encrypt($complaints->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";           
+            <a href=".$b_url."/assign-complaint/".Crypt::encrypt($complaints->id)."/details class='btn btn-xs btn-info'>Complaint completion</a>";           
         })           
         ->addColumn('assigned_by', function ($complaints) { 
             return $complaints->assignedBy->username;

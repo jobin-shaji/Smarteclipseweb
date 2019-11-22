@@ -64,7 +64,7 @@ function initMap(res) {
    function locs(locationName)
    {
      var infowindow = new google.maps.InfoWindow();
-     google.maps.event.addListener(marker, 'click', function() {
+     google.maps.event.addListener(marker, 'mouseover', function() {
         infowindow.setContent(title);
         infowindow.open(map, this);
     });

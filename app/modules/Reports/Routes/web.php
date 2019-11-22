@@ -10,7 +10,9 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	// alert report 
 	Route::get('/alert-report','AlertReportController@alertReport')->name('alert-report');
-	Route::post('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
+	Route::get('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
+	// Route::post('/alert-report-list-demo','AlertReportController@alertReportListDemo')->name('alert-report-list-demo');
+
 	Route::get('/alert/report/{id}/mapview','AlertReportController@location')->name('alert.report.mapview');
 	Route::post('/alert/report/show','AlertReportController@alertmap')->name('alert.report.show');
 		Route::post('/alert-report/export','AlertReportController@export')->name('alert.report.export');
@@ -39,6 +41,13 @@ Route::post('/sudden-acceleration-report/export','SuddenAccelerationReportContro
 	Route::get('/total-km-report','TotalKMReportController@totalKMReport')->name('total-km-report');
 Route::post('/totalkm-report-list','TotalKMReportController@totalKMReportList')->name('totalkm-report-list');
 Route::post('/total-km-report/export','TotalKMReportController@export')->name('total.km.report.export');
+
+
+// km repor
+	Route::get('/km-report','TotalKMReportController@kmReport')->name('km-report');
+Route::post('/km-report-list','TotalKMReportController@kmReportList')->name('km-report-list');
+Route::post('/km-report/export','TotalKMReportController@kmExport')->name('km.report.export');
+
 
 	
 //Daily KM report
@@ -83,6 +92,13 @@ Route::get('/offline-report','OfflineReportController@accidentImpactAlertReport'
 Route::get('/mainbattery-disconnect-report','MainBatteryDisconnectReportController@mainBatteryDisconnectReport')->name('mainbattery-disconnect-report');
 Route::post('/mainbattery-disconnect-report-list','MainBatteryDisconnectReportController@mainBatteryDisconnectReportList')->name('mainbattery-disconnect-report-list');
 Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectReportController@export')->name('main.battery.disconnect.report.export');
+
+
+// test mode change
+  Route::get('/mode-changes','TrackingReportController@modeTime')->name('mode-changes');
+
+// test mode change
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
@@ -94,7 +110,7 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 Route::group(['middleware' => ['web','auth','role:school'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
 
-	Route::get('/pickup-dropoff-report-based-on-student','PickupDropoffReportController@pickupReportBasedOnStudent')->name('pickup-dropoff-report-based-on-student');
+	Route::get('/pickup-dropoff-report-based-on-student','PickupDropoffReportController@pickupReportBasedOnStudent')->name('pickup.dropoff.report.based.on.student');
 	// Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
 
 	//missed-student-report

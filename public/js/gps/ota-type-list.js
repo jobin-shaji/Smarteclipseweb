@@ -48,19 +48,23 @@ function callBackDataTable(){
  }
 
  function deleteOtaType(id){
-    var url = 'ota-type/delete';
-    var data = {
-        id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this?')){
+        var url = 'ota-type/delete';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
  function activateOtaType(id){
-    var url = 'ota-type/activate';
-    var data = {
-         id : id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this?')){
+        var url = 'ota-type/activate';
+        var data = {
+             id : id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

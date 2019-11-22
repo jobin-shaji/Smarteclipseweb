@@ -5,7 +5,7 @@
         <th>Vehicle</th>
         <th>Register Number</th>
         <th>Run</th>
-        <th>Idle</th>
+        <th>Halt</th>
         <th>Sleep</th>
         <th>AC ON</th>
         <th>AC OFF</th>
@@ -17,7 +17,7 @@
         @foreach($trackReportExport as $trackReportExport) 
         <?php 
             $M_mode=$trackReportExport->sleep->where('vehicle_mode','M')->count();
-            $motion= gmdate("H:i:s",$M_mode); 
+            $motion= gmdate("H:i:s",$v_mode); 
             $v_mode=$trackReportExport->sleep->where('vehicle_mode','S')->count(); 
             $sleep= gmdate("H:i:s",$v_mode);
             $H_mode=$trackReportExport->sleep->where('vehicle_mode','H')->count();
@@ -32,8 +32,8 @@
 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $trackReportExport->vehicle->name }}</td>           
-            <td>{{ $trackReportExport->vehicle->register_number }}</td>
+            <td>{{ $trackReportExport->gps->vehicle->name }}</td>           
+            <td>{{ $trackReportExport->gps->vehicle->register_number }}</td>
             <td>{{ $motion }}</td>            
             <td>{{ $halt }}</td>
              <td>{{ $sleep }}</td> 

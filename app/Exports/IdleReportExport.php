@@ -12,10 +12,23 @@ class IdleReportExport implements FromView
 	protected $idleReportExport;
 	public function __construct($client,$vehicle,$from,$to)
     {   
+        $single_vehicle_id = [];
+        if($vehicle!=0)
+        {
+            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
+            $single_vehicle_ids = $vehicle_details->gps_id;
+        }
+        else
+        {
+            $vehicle_details =Vehicle::withTrashed()->where('client_id',$client)->get(); 
+            
+            foreach($vehicle_details as $vehicle_detail){
+                $single_vehicle_id[] = $vehicle_detail->gps_id; 
+
+            }
+        }
         $query =GpsData::select(
-            'client_id',
             'gps_id',
-            'vehicle_id',
             'header',
             'vendor_id',
             'firmware_version',
@@ -60,27 +73,21 @@ class IdleReportExport implements FromView
             'digital_output_status',
             'frame_number',
             'checksum',
-            'key1',
-            'value1',
-            'key2',
-            'value2',
-            'key3',
-            'value3',
+            
             'gf_id',
             'device_time',
             \DB::raw('sum(distance) as distance')
         )
-        ->with('vehicle:id,name,register_number');     
+        ->with('gps.vehicle');     
         if($vehicle==0 || $vehicle==null )
        {         
-            $query = $query->where('client_id',$client)
+            $query = $query->whereIn('gps_id',$single_vehicle_id)
             ->groupBy('date');
        }
        else
        {
-        $query = $query->where('client_id',$client)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('date'); 
+        $query = $query->where('gps_id',$single_vehicle_ids)
+           ->groupBy('date'); 
        }
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);

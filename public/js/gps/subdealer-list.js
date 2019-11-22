@@ -30,12 +30,11 @@ function callBackDataTable(){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
             {data: 'name', name: 'name' },            
-            {data: 'address', name: 'address',searchable: false},           
-             {data: 'user.mobile', name: 'user.mobile'},
-           {data: 'user.email', name: 'user.email',searchable: false},         
+            {data: 'address', name: 'address',orderable: false},           
+            {data: 'user.mobile', name: 'user.mobile', orderable: false},
+            {data: 'user.email', name: 'user.email',orderable: false},         
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
         ],
@@ -44,17 +43,21 @@ function callBackDataTable(){
     });
 }
 function delSubDealers(dealer){
-    var url = 'sub-dealer/delete';
-    var data = {
-        uid : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this user?')){
+        var url = 'sub-dealer/delete';
+        var data = {
+            uid : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateSubDealer(dealer){
-    var url = 'sub-dealer/activate';
-    var data = {
-        id : dealer
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this user?')){
+        var url = 'sub-dealer/activate';
+        var data = {
+            id : dealer
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 

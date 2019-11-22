@@ -77,15 +77,28 @@ function checkAll(e) {
         }
         x.style.visibility = "hidden"; //or x.style.display = "block";
     }
- }
-
-
-
-
+}
+function check(){
+    // if(document.getElementById('header').value == ''){
+    //     alert('please select header');
+    // }   
+    // else{        
+        callBackDataTable();       
+    // }
+}
 function callBackDataTable(value){
-     // console.log(value);
+  if(value==null)
+  {
+    gps=document.getElementById('gps_id').value;
+    
+  }
+  else{
+    gps=value;
+  }
+    // console.log(gps);
     var  data = {
-        gps : value    
+        gps : gps,
+        header : document.getElementById('header').value   
     };
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -108,15 +121,14 @@ function callBackDataTable(value){
         // },
 
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'imei', name: 'imei', orderable: false},
             {data: 'count', name: 'count',orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time'},
             {data: 'forhuman', name: 'forhuman',orderable: false, searchable: false},
-             {data: 'created_at', name: 'created_at'},
+            {data: 'created_at', name: 'created_at'},
             {data: 'servertime', name: 'servertime',orderable: false, searchable: false},
-            {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false
-          },
+            {data: 'vlt_data', name: 'vlt_data',orderable: false, searchable: false},
            {data: 'action', name: 'action',orderable: false, searchable: false
           },
         ],

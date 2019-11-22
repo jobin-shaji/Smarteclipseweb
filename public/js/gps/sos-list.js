@@ -36,11 +36,11 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'imei', name: 'imei'},
-            {data: 'manufacturing_date', name: 'manufacturing_date'},
-            {data: 'brand', name: 'brand'},
-            {data: 'model_name', name: 'model_name'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'imei', name: 'imei', orderable: false},
+            {data: 'model_name', name: 'model_name', orderable: false},
+            {data: 'manufacturing_date', name: 'manufacturing_date', orderable: false},
+            {data: 'brand', name: 'brand', orderable: false},
             {data: 'version', name: 'version'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
@@ -50,19 +50,23 @@ function callBackDataTable(){
 }
 
 function delSos(sos){
-    var url = 'sos/delete';
-    var data = {
-        uid : sos
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this sos?')){
+        var url = 'sos/delete';
+        var data = {
+            uid : sos
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 function activateSos(sos){
-    var url = 'sos/activate';
-    var data = {
-        id : sos
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this device?')){
+        var url = 'sos/activate';
+        var data = {
+            id : sos
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

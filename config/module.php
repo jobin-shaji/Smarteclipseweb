@@ -32,7 +32,11 @@ return  [
        'SchoolClass',
        'ClassDivision',
        'RouteBatch',
-       'Warehouse'
+       'Warehouse',
+       'Employee',
+       'GpsConfig',
+       'Operations',
+
     ]
 ]
 

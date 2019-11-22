@@ -18,17 +18,18 @@
   </nav>
   <div class="container-fluid">
     <div class="card-body">
-      <div class="table-responsive">
+      <div class="table-responsive ">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important" id="dataTable">
                 <thead>
                   <tr>
                     <th>Sl.No</th>
                     <th>Ticket Code</th>   
                     <th>IMEI</th>                              
-                    <th>Complaint</th>                            
+                    <th>Complaint Category</th>                      
+                    <th>Complaint Type</th>                         
                     <th>Description</th>
                     <th>Date</th>
                     @role('sub_dealer|root')

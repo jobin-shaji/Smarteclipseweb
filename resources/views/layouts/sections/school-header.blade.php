@@ -57,6 +57,14 @@
             </li>
 
             <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >BUS STOPS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/bus-stop/create')}}">ADD BUS STOP</a></li>
+                <li><a class="dropdown-item" href="{{url('/bus-stop')}}">LIST BUS STOPS</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >ROUTE BATCH</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{url('/route-batch/create')}}">ADD ROUTE BATCH</a></li>
@@ -137,7 +145,7 @@
 
     @if(!\Auth::user()->hasRole(['pro']))
     <li class="nav-item dropdown" >
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> GO PREMIUM    
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium-school')}}"> GO PREMIUM    
         </a>
     </li>
     @endif

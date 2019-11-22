@@ -2,11 +2,10 @@
 <div id="emergency" class="modal_for_dash" style="color: red">      
   <div class="modal-content">
     <div class="modal-header">
-      <div class="container">  
         <div class="container" style="text-align: center;">
            <h3 style="font-weight: bold;">Emergency Alert</h3>
         </div>
-      </div>
+        <button onclick="verifyEmergency()" style="text-align: right;"><i class="fa fa-close"></i></button>
     </div>
     <div class="modal-body" style="text-align: center;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/1200px-Achtung.svg.png" height="120" width="145"> <br>

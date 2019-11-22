@@ -19,7 +19,7 @@
       @endif  
     </nav>         
     <div class="container-fluid">                    
-      <div class="card-body">
+      <div class="card-body"><h4>End User Details</h4>
         <div class="table-responsive">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
             <div class="row">
@@ -27,7 +27,6 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <h2 class="page-header">
-                      <i class="fa fa-user"></i> 
                     </h2>
                   </div>
                 </div>

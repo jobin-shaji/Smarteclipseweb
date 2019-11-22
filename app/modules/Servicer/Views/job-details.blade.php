@@ -81,8 +81,8 @@
                          <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">GPS</label>
                          <div class="form-group has-feedback">
-                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="gps_id" name="gps_id">
-                              <option value="{{$servicer_job->gps->id}}">{{$servicer_job->gps->imei}}</option>
+                           <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="gps_id" name="gps_id" required>
+                              <option value="{{$servicer_job->gps->id}}">{{$servicer_job->gps->serial_no}}</option>
                             </select>                           
                          </div>
                          @if ($errors->has('gps_id'))
@@ -94,7 +94,7 @@
                       <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">Driver</label>
                          <div class="form-group has-feedback">
-                           <select class="form-control select2" data-live-search="true" title="Select Servicer" id="driver" name="driver">
+                           <select class="form-control select2" data-live-search="true" title="Select Servicer" id="driver" name="driver" required>
                                <option value="">Select</option>
                                   @foreach ($drivers as $driver)
                                   <option value="{{$driver->id}}">{{$driver->name}}</option>
@@ -107,6 +107,8 @@
                          <strong class="error-text">{{ $errors->first('driver') }}</strong>
                          </span>
                          @endif
+
+
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Driver </button>
                       </div>               
                         <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
@@ -114,7 +116,7 @@
                         <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle Name</label>
                          <div class="form-group has-feedback">
-                            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" > 
+                            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" required> 
                          </div>
                          @if ($errors->has('name'))
                          <span class="help-block">
@@ -125,7 +127,7 @@
                         <div class="form-group row" style="float:none!important">
                           <label for="fname" class="col-md-6 text-right control-label col-form-label">Register Number</label>
                           <div class="form-group has-feedback">
-                            <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" id="register_number" >
+                            <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" id="register_number" required>
                          </div>
                          @if ($errors->has('register_number'))
                          <span class="help-block">
@@ -136,7 +138,7 @@
                         <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
                            <div class="form-group has-feedback">
-                              <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" value="{{ old('engine_number') }}" id="engine_number" >
+                              <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" value="{{ old('engine_number') }}" id="engine_number" required>
                            </div>
                            @if ($errors->has('engine_number'))
                            <span class="help-block">
@@ -147,7 +149,7 @@
                         <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
                            <div class="form-group has-feedback">
-                              <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" value="{{ old('chassis_number') }}" id="chassis_number" >
+                              <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" value="{{ old('chassis_number') }}" id="chassis_number" required>
                            </div>
                            @if ($errors->has('chassis_number'))
                            <span class="help-block">
@@ -159,7 +161,7 @@
                        <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">RC Book</label>
                            <div class="form-group has-feedback">
-                              <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" id="path" value="{{ old('path') }}" > 
+                              <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" id="path" value="{{ old('path') }}" required> 
                               </div>
                               @if ($errors->has('path'))
                                 <span class="help-block">
@@ -170,7 +172,7 @@
                         <div class="form-group row" style="float:none!important">
                           <label for="fname" class="col-md-6 text-right control-label col-form-label">Installation Photo</label>
                            <div class="form-group has-feedback">
-                              <input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" > 
+                              <input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" required> 
                               </div>
                               @if ($errors->has('installation_photo'))
                                 <span class="help-block">
@@ -183,7 +185,7 @@
                           <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">Activation Photo</label>
                            <div class="form-group has-feedback">
-                              <input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" > 
+                              <input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" required> 
                               </div>
                               @if ($errors->has('activation_photo'))
                                 <span class="help-block">
@@ -194,7 +196,7 @@
                           <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Photo</label>
                            <div class="form-group has-feedback">
-                              <input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" > 
+                              <input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" required> 
                               </div>
                               @if ($errors->has('vehicle_photo'))
                                 <span class="help-block">
@@ -219,7 +221,7 @@
                          @endif
                       </div>
                      
-                      <div class="form-group row" style="float:none!important">
+                    <!--   <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Job Complete Date</label>
                       <div class="form-group has-feedback">
                         <input type="text" class=" date_expiry form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value=" " required >
@@ -230,7 +232,7 @@
                       <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
                       </span>
                       @endif
-                    </div>
+                    </div> -->
                       <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
                       <div class="form-group has-feedback">
@@ -246,7 +248,7 @@
                     </div>
                    <div class="row">
                       <div class="col-md-3 ">
-                        <button type="submit" class="btn btn-primary btn-md form-btn ">Create</button>
+                        <button type="submit" class="btn btn-primary btn-md form-btn ">Job completion</button>
                       </div>
                     </div>
                   </div>                
@@ -256,7 +258,7 @@
             </div>
           </form>
            <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" >
     
       <!-- Modal content-->
       <div class="modal-content">
@@ -264,8 +266,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title"></h4>
         </div>
-        <div class="modal-body">
-
+        <div class="modal-body" >
           <form  method="POST" id="form1">
       {{csrf_field()}}
       <div class="row">
@@ -290,7 +291,7 @@
                                <div class="form-group row" style="float:none!important">
                                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
                                  <div class="form-group has-feedback">
-                                     <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" id="mobile" value="{{ old('mobile') }}" > 
+                                     <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" id="mobile" value="{{ old('mobile') }}" > 
                                   </div>
                                   @if ($errors->has('mobile'))
                                     <span class="help-block">

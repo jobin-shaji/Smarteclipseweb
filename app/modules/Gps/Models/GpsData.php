@@ -63,7 +63,8 @@ class GpsData extends Model
     	'value2',
     	'key3',
     	'value3',
-    	'gf_id'
+    	'gf_id',
+        'device_time'
     ];
 
     // dealer
@@ -77,7 +78,7 @@ class GpsData extends Model
     }
     public function vehicle()
     {
-        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
+        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
     }
     public function alert()
     {
@@ -91,4 +92,12 @@ class GpsData extends Model
     {
         return $this->belongsToMany('App\Modules\Gps\Models\GpsData', 'vehicle_gps',  'vehicle_id' ,'gps_id')->withPivot('id');
     } 
+    public function dailyKm()
+    {
+        return $this->hasOne('App\Modules\Vehicle\Models\DailyKm','gps_id','gps_id');
+    }
+    protected $casts = [
+        'lat' => 'float',
+        'lng' => 'float',
+    ];
 }

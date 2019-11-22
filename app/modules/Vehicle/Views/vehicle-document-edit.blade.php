@@ -63,14 +63,16 @@
                         <p>No image found</p>
                         @endif
                       </div>
-                    </div>
-                  </div>
-                  @if ($errors->has('path'))
+                       @if ($errors->has('path'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('path') }}</strong>
                     </span>
                   @endif
+                    </div>
                   </div>
+                 
+                  </div>
+
                   </div>
                   <div class="row">
                     <!-- /.col -->

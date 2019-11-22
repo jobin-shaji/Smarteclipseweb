@@ -24,7 +24,7 @@ class Vehicle extends Model
 
     // driver
     public function driver(){
-        return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id');
+        return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id')->withTrashed();
     }
 
     // client
@@ -39,7 +39,5 @@ class Vehicle extends Model
     public function gps(){
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
-    
-
 
 }

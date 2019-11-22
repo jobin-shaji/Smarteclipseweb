@@ -26,10 +26,10 @@
         @foreach($driver_points as $points)
          <div class="col-lg-6 col-md-12">              
             <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  @if($points->alert_type_id ==1) 
-          <div class="form-group row" style="float:none!important">
-             <label for="fname" class="col-sm-3 text-right control-label col-form-label">{{$points->alertType->description}}</label>
+          <div class="form-group row" >
+             <label for="fname" class="col-sm-3 text-right1 control-label col-form-label">{{$points->alertType->description}}</label>
              <div class="form-group has-feedback">                             
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Harsh Braking" name="harsh_braking" value="{{$points->driver_point}}" > 
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Harsh Braking" name="harsh_braking" value="{{$points->driver_point}}" style="background-color: #dadada!important;"> 
              </div>
              @if ($errors->has('harsh_braking'))
              <span class="help-block">
@@ -39,10 +39,10 @@
           </div>   
            @endif   
             @if($points->alert_type_id ==12)                         
-           <div class="form-group row" style="float:none!important">           
-             <label for="fname" class="col-sm-3 text-right control-label col-form-label">{{$points->alertType->description}}</label>
+           <div class="form-group row" >           
+             <label for="fname" class="col-sm-3 text-right1 control-label col-form-label">{{$points->alertType->description}}</label>
              <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('over_speed') ? ' has-error' : '' }}" placeholder="Over Speed" name="over_speed" value="{{$points->driver_point}}" >
+                <input type="text" class="form-control {{ $errors->has('over_speed') ? ' has-error' : '' }}" placeholder="Over Speed" name="over_speed" value="{{$points->driver_point}}" style="background-color: #dadada!important;">
              </div>
              @if ($errors->has('over_speed'))
              <span class="help-block">
@@ -52,11 +52,11 @@
           </div>
           @endif 
           @if($points->alert_type_id ==13)                         
-           <div class="form-group row" style="float:none!important">
+           <div class="form-group row">
             
-             <label for="fname" class="col-sm-3 text-right control-label col-form-label">{{$points->alertType->description}}</label>
+             <label for="fname" class="col-sm-3 text-right1 control-label col-form-label">{{$points->alertType->description}}</label>
              <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('tilt') ? ' has-error' : '' }}" placeholder="Tilt" name="tilt" value="{{$points->driver_point}}" >
+                <input type="text" class="form-control {{ $errors->has('tilt') ? ' has-error' : '' }}" placeholder="Tilt" name="tilt" value="{{$points->driver_point}}" style="background-color: #dadada!important;">
              </div>
              @if ($errors->has('tilt'))
              <span class="help-block">
@@ -66,10 +66,10 @@
           </div>
           @endif 
            @if($points->alert_type_id ==14)                         
-           <div class="form-group row" style="float:none!important">            
-             <label for="fname" class="col-sm-3 text-right control-label col-form-label">{{$points->alertType->description}}</label>
+           <div class="form-group row">            
+             <label for="fname" class="col-sm-3 text-right1 control-label col-form-label">{{$points->alertType->description}}</label>
              <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('impact') ? ' has-error' : '' }}" placeholder="Impact" name="impact" value="{{$points->driver_point}}" >
+                <input type="text" class="form-control {{ $errors->has('impact') ? ' has-error' : '' }}" placeholder="Impact" name="impact" value="{{$points->driver_point}}" style="background-color: #dadada!important;">
              </div>
              @if ($errors->has('impact'))
              <span class="help-block">
@@ -79,11 +79,11 @@
           </div>
           @endif 
           @if($points->alert_type_id ==15)                         
-           <div class="form-group row" style="float:none!important">
+           <div class="form-group row">
             
-             <label for="fname" class="col-sm-4 text-right control-label col-form-label">{{$points->alertType->description}}</label>
+             <label for="fname" class="col-sm-4 text-right1 control-label col-form-label">{{$points->alertType->description}}</label>
              <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('over_speed_gf_entry') ? ' has-error' : '' }}" placeholder="Over Speed Geofence Entry" name="over_speed_gf_entry" value="{{$points->driver_point}}" >
+                <input type="text" class="form-control {{ $errors->has('over_speed_gf_entry') ? ' has-error' : '' }}" placeholder="Over Speed Geofence Entry" name="over_speed_gf_entry" value="{{$points->driver_point}}" style="background-color: #dadada!important;">
              </div>
              @if ($errors->has('over_speed_gf_entry'))
              <span class="help-block">
@@ -93,10 +93,10 @@
           </div>
           @endif 
           @if($points->alert_type_id ==16)                         
-           <div class="form-group row" style="float:none!important">            
-             <label for="fname" class="col-sm-4 text-right control-label col-form-label">{{$points->alertType->description}}</label>
+           <div class="form-group row">            
+             <label for="fname" class="col-sm-4 text-right1 control-label col-form-label">{{$points->alertType->description}}</label>
              <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('over_speed_gf_exit') ? ' has-error' : '' }}"  name="over_speed_gf_exit" value="{{$points->driver_point}}" >
+                <input type="text" class="form-control {{ $errors->has('over_speed_gf_exit') ? ' has-error' : '' }}"  name="over_speed_gf_exit" value="{{$points->driver_point}}" style="background-color: #dadada!important;">
              </div>
              @if ($errors->has('over_speed_gf_exit'))
              <span class="help-block">
@@ -126,7 +126,7 @@
 
      <div class="col-lg-12 col-md-12">
             <div class="custom_fom_group">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary" style="margin-left: 47%!important;">Submit</button>
             </div>
          </div>
 </div>

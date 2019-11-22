@@ -22,7 +22,7 @@ class VehicleRoute extends Model
 	 return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id')->withTrashed();
 	}
 	 public function vehicleRoute(){
-	 return $this->hasOne('App\Modules\Route\Models\Route','id','route_id')->withTrashed();
+	 return $this->hasOne('App\Modules\Route\Models\Route','id','route_id');
 	}
 
     

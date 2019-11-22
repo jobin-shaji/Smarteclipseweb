@@ -44,17 +44,21 @@ function callBackDataTable(){
     });
 }
 function delClient(client){
-    var url = 'client/delete';
-    var data = {
-        uid : client
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this user?')){
+        var url = 'client/delete';
+        var data = {
+            uid : client
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateClient(client){
-    var url = 'client/activate';
-    var data = {
-        id : client
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this user?')){
+        var url = 'client/activate';
+        var data = {
+            id : client
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 

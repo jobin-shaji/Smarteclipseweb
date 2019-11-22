@@ -47,6 +47,7 @@ function getUrl() {
 // ------------------featch data from date time----------
 
     function playback() {
+      
     $(function() {
 
         // var baseurl = '/vehicles/location-playback';
@@ -88,7 +89,7 @@ function getUrl() {
             },
             error: function(err) {
                 var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-                toastr.error(message, 'Error');
+                console.log(message);
             }
         });       
     }); 

@@ -45,6 +45,10 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <!-- //////////PLAYBACK DATETIMEPICKER-START ////////////-->
+
+    <!-- /////////PLAYBACK DATETIMEPICKER-END ////////////-->
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
       <!-- datetime picker -->
@@ -58,13 +62,13 @@
         toastr.options.newestOnTop = false;
     </script>
 </head>
-<body>
-    <div id="app">
+<body  style="background-image: url({{ url('/') }}/assets/images/login-min.jpg);height: 100vh;background-repeat: no-repeat;background-position: center;background-size: cover;">
+    <div id="app" >
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+              <!--   <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'GPS') }}
-                </a>
+                </a> -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -80,7 +84,19 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <span class="logo-lg"><b><img src="{{asset('images/logo.png')}}" height="40px"></b></span>
+                                <?php
+                                $url=url()->current();
+                                $rayfleet_key="rayfleet";
+                                $eclipse_key="eclipse";
+                                if (strpos($url, $rayfleet_key) == true) {  ?>
+                                    <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.jpg" height="40px"></b></span>
+                                <?php } 
+                                else if (strpos($url, $eclipse_key) == true) { ?>
+                                    <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.png" height="40px"></b></span> 
+                                <?php }
+                                else { ?>
+                                    <span class="logo-lg"><b><img src="{{ url('/') }}/assets/images/logo-s.png" height="40px"></b></span> 
+                                <?php } ?> 
                             </li>
                         @else
                             <li class="nav-item dropdown">

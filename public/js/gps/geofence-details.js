@@ -11,7 +11,7 @@ var labelIndex = 0;
 
 function initMap(res) {   
           map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
+          zoom: 17,
           center:{lat: latMap, lng: lngMap},
           mapTypeId: 'terrain',
 
@@ -54,15 +54,12 @@ function initMap(res) {
                     fillOpacity: 0.35
                   });
                   bermudaTriangle.setMap(map);
-                  
-                   document.getElementById("geofence_name").innerHTML = res.geofence.name;
-                   document.getElementById("user").innerHTML = res.geofence.user.username;
-                  document.getElementById("created_date").innerHTML = res.geofence.date;
+                
                    // locs(res.geofence);
             },
             error: function (err) {
                 var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-                toastr.error(message, 'Error');
+                console.log(message);
             }
         });
 

@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Warehouse\Models\GpsStock;
 class MainBatteryDisconnectReportExport implements FromView
 {
 	protected $mainBatteryDisconnectReportExport;
@@ -16,20 +17,22 @@ class MainBatteryDisconnectReportExport implements FromView
             'id',
             'alert_type_id', 
             'device_time',    
-            'vehicle_id',
             'gps_id',
-            'client_id',  
             'latitude',
             'longitude', 
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number');
+        ->with('gps.vehicle');
         if($vehicle==0 || $vehicle==null)
         {
-            $query = $query->where('client_id',$client)
-            ->where('alert_type_id',11);
-            // ->where('status',1);
+            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }
+            $query = $query->whereIn('gps_id',$gps_list)
+                            ->where('alert_type_id',11);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
@@ -38,10 +41,8 @@ class MainBatteryDisconnectReportExport implements FromView
         }
         else
         {
-            $query = $query->where('client_id',$client)
-            ->where('alert_type_id',11)
-            ->where('vehicle_id',$vehicle);
-            // ->where('status',1);
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
+            $query = $query->where('alert_type_id',11)->where('gps_id',$vehicle->gps_id);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));

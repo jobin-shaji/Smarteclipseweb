@@ -156,7 +156,7 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Document Type</th>
-                                  <th>Expiry Date</th>
+                                  <!-- <th>Expiry Date</th> -->
                                   <th>Action</th>
                                 </tr>
                               </thead>
@@ -165,7 +165,7 @@
                                   <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$doc->documentType->name}}</td>
-                                    <td>{{$doc->expiry_date}}</td>
+                                    <!-- <td>{{$doc->expiry_date}}</td> -->
                                     @if($doc->expiry_date)
                                       <td>
                                         <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>

@@ -22,7 +22,7 @@
         </div> -->
       </div>
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Freebies</h4>
+        <h4 class="my-0 font-weight-normal">Freebies </h4>
       </div>
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
@@ -32,7 +32,14 @@
           <li><i class="far fa-map"></i>Point of interest</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
-          <li style="height:24px"></li> 
+      <!--   <?php
+        $url=url()->current();
+        if (strpos($url, "rayfleet") == true) {  ?>
+          <li style="height:24px"><i class="fa fa-qar" aria-hidden="true"></i> </li> 
+        <?php } 
+        else { ?>
+          <li style="height:24px"><i class="fa fa-inr" aria-hidden="true"></i>Price: After 1 year 1700+Tax </li> 
+        <?php } ?>  -->
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
           <li style="height:24px"></li> 
@@ -50,30 +57,30 @@
         <div class="collapse" id="collapseExample">
           <div class="card card-body" style="margin:0!important">
           <ul class="list-unstyled mt-3 mb-4">
-                   <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
-                  <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
-                  <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
-                  <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
-                   <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
-                   <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
-                   <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
-                  </ul>
+            <li><img src="{{url('/')}}/assets/images/braking.png" style="margin:0 2% 0 0">Harsh Braking Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
+            <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
+            <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+            <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
+            <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
+            <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/button.png" style="margin:0 2% 0 0">Emergency button wiredisconnect/wirecut Alert</li>
+            <li><img src="{{url('/')}}/assets/images/disconnect.png" style="margin:0 2% 0 0">Disconnect from main battery Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/overspeed.png" style="margin:0 2% 0 0">Over speed Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/tilt.png" style="margin:0 2% 0 0">Tilt Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/impact.png" style="margin:0 2% 0 0">Impact Alert</li>
+            <li><img src="{{url('/')}}/assets/images/geo-entry.png" style="margin:0 2% 0 0">Overspeed+ GF Entry Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/geo-exit.png" style="margin:0 2% 0 0">Overspeed + GF Exit Alert</li>
+            <li><img src="{{url('/')}}/assets/images/location.png" style="margin:0 2% 0 0">Location Update Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/location-update.png" style="margin:0 2% 0 0">Location Update (history) Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/ignition-on.png" style="margin:0 2% 0 0">Alert – Ignition ON Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/ignition-off.png" style="margin:0 2% 0 0">Alert – Ignition OFF Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
+            <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
+          </ul>
           </div>
         </div>
         <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Try Now</button> -->
@@ -89,7 +96,21 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Fundamental</h4>
       </div>
-     <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan=fundamental">Pay Now</a></button>
+      <?php
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        $encryption_id=encrypt(2);
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+        <?php }
+        else { ?>
+          <button type="button" class="btn"> <a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+      <?php } ?> 
+
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
@@ -100,7 +121,8 @@
           <li><i class="far fa-file-alt"></i>Invoice</li>
           <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2%">Towing alert</li>
           <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
-          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform</li>
+          <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
+          <li><img src="{{url('/')}}/assets/images/aggregation.png" style="margin:0 2%">Aggregation platform *</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
           <li><img src="{{url('/')}}/assets/images/sms.png" style="margin:0 2%">Emergency alerts as SMS</li>
           <li style="height:30px"></li> 
@@ -154,7 +176,18 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Superior</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=superior">Pay Now</a></button>
+      <?php
+        $encryption_id=encrypt(3);
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+        <?php }
+        else { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+      <?php } ?> 
+      
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
@@ -162,13 +195,14 @@
            <li><i class="far fa-caret-square-left"></i>Route playback history(4 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(4 Geofences)</li>
           <li><img src="{{url('/')}}/assets/images/logo.png" style="margin:0 2%">Client Logo</li>
-          <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
+          
           <li><img src="{{url('/')}}/assets/images/immobilizer.png" style="margin:0 2%">Immobilizer</li>
-          <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)</li>
-          <li><img src="{{url('/')}}/assets/images/traffic.png" style="margin:0 2%">Traffic offence</li>
+          <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)*</li>
+          <li><img src="{{url('/')}}/assets/images/traffic.png" style="margin:0 2%">Traffic offence*</li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Theft Mode</li>
+          <li><img src="{{url('/')}}/assets/images/api.png" style="margin:0 2%">AC ON/OFF</li>
           <li style="height:0"></li> 
         </ul>
         <p>
@@ -224,7 +258,18 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">PRO (White label)</h4>
       </div>
-      <button type="button" class="btn"><a href="{{url('/')}}/payments?plan=pro">Pay Now</a></button>
+      <?php
+        $encryption_id=encrypt(4);
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+        <?php }
+        else { ?>
+          <button type="button" class="btn"><a href="{{url('/')}}/payments?plan={{$encryption_id}}">Pay Now </a></button>
+      <?php } ?> 
+      
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">

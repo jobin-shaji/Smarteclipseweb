@@ -15,6 +15,8 @@ use App\Modules\TrafficRules\Models\City;
 use DB;
 use App\Modules\Client\Models\Voucher;
 use App\Modules\Client\Models\ClientTransaction;
+use App\Modules\Subscription\Models\Plan;
+use App\Modules\Subscription\Models\Subscription;
 use DataTables;
 class ClientController extends Controller {
    
@@ -69,19 +71,34 @@ class ClientController extends Controller {
         
         if($request->user()->hasRole('sub_dealer'))
         {
-            $rules = $this->user_create_rules();
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rafleet_user_create_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) {
+                 $rules = $this->user_create_rules();
+            }
+            else
+            {
+               $rules = $this->user_create_rules();
+            }
+           
             $this->validate($request, $rules);
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
+                'role' => 0,
             ]);
             $client = Client::create([            
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
-                'name' => $request->name,            
+                'name' => strtoupper($request->name),            
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
@@ -131,7 +148,7 @@ class ClientController extends Controller {
         'name',                   
         'address',                                       
         'deleted_at'
-    )
+        )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
         ->where('sub_dealer_id',$subdealer)
@@ -140,7 +157,7 @@ class ClientController extends Controller {
         ->addIndexColumn()
         ->addColumn('action', function ($client) {
              $b_url = \URL::to('/');
-        if($client->user->deleted_at == null){ 
+        if($client->user->deleted_at == null && $client->deleted_at == null){ 
             return "
             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
              <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
@@ -193,14 +210,25 @@ class ClientController extends Controller {
         if($client == null){
            return view('Client::404');
         } 
-        $rules = $this->clientUpdateRules($client);
+        $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rayfleetClientUpdateRules($client);
+            }
+            else
+            {
+               $rules = $this->clientUpdateRules($client);
+            }
+           
+       
         $this->validate($request, $rules);       
         $client->name = $request->name;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
         if($placeLatLng==null){
             $request->session()->flash('message', 'Enter correct location'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
-            return redirect(route('client.create'));        
+            return redirect(route('client.edit',encrypt($client->user_id)));        
         }
 
         $location_lat=$placeLatLng['latitude'];
@@ -209,14 +237,14 @@ class ClientController extends Controller {
         $client->longitude=$location_lng;
         $client->save();
         $user = User::find($request->id);
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile_number;
         $user->save();
         $did = encrypt($user->id);
         // $subdealer->phone_number = $request->phone_number;       
         // $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'Client details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('client.edit',$did));  
+        return redirect(route('client.details',$did));  
     }
 
     //validation for employee updation
@@ -224,11 +252,22 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:10|max:10'
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
             
         ];
         return  $rules;
     }
+
+    public function rayfleetClientUpdateRules($subdealer)
+    {
+        $rules = [
+            'name' => 'required',
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
+            
+        ];
+        return  $rules;
+    }
+    
 
     //for edit page of subdealer password
     public function changePassword(Request $request)
@@ -290,15 +329,24 @@ class ClientController extends Controller {
     }
 
     public function paymentsView(Request $request){
-        $plan = $request->plan;
-        $amount = 5000;
+        $decrypted_plan_id = $request->plan;
+        $plan_id=decrypt($decrypted_plan_id);
+        $plan=Plan::find($plan_id);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        if (strpos($url, $rayfleet_key) == true) { 
+            $subscription=Subscription::where('plan_id',$plan_id)->where('country_id',178)->first();
+        }else{
+            $subscription=Subscription::where('plan_id',$plan_id)->where('country_id',101)->first();
+        }
+        $amount = $subscription->amount;
         $voucher = Voucher::create([
                     'reference_id' => time().rand(1000,5000),
                     'client_id' => $request->user()->client->id,
-                    'amount' => 5000,
-                    'subscription' => $plan
+                    'amount' => $amount,
+                    'subscription' => $plan->name
                    ]);       
-        return view('Client::payment',['plan' => $plan, 'amount' => $amount, 'reference_Id' => $voucher->reference_id]);
+        return view('Client::payment',['plan' => $plan->name, 'amount' => $amount, 'reference_Id' => $voucher->reference_id]);
     }
 
     public function paymentReview(Request $request){
@@ -397,22 +445,19 @@ class ClientController extends Controller {
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
         ->with('user:id,email,mobile,deleted_at')
-        ->where('deleted_at',NULL)
         ->get();
         return DataTables::of($client)
         ->addIndexColumn()  
         ->addColumn('working_status', function ($client) {
             $b_url = \URL::to('/');
-            if($client->user->deleted_at == null){ 
+            if($client->user->deleted_at == null && $client->deleted_at == null){ 
             return "
                 <b style='color:#008000';>Enabled</b>
                 <button onclick=disableEndUser(".$client->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
-                
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
 
-                 <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
-
-                  <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-             <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
               
             ";
             }else{ 
@@ -429,14 +474,16 @@ class ClientController extends Controller {
     //delete client details from table
     public function disableClient(Request $request)
     {
-        $client = User::find($request->id);
-        if($client == null){
+        $client_user = User::find($request->id);
+        $client = Client::where('user_id',$request->id)->first();
+        if($client_user == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Client does not exist'
             ]);
         }
+        $client_user->delete();
         $client->delete();
         return response()->json([
             'status' => 1,
@@ -448,14 +495,16 @@ class ClientController extends Controller {
     // restore emplopyee
     public function enableClient(Request $request)
     {
-        $client = User::withTrashed()->find($request->id);
-        if($client==null){
+        $client_user = User::withTrashed()->find($request->id);
+        $client = Client::withTrashed()->where('user_id',$request->id)->first();
+        if($client_user==null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Client does not exist'
             ]);
         }
+        $client_user->restore();
         $client->restore();
         return response()->json([
             'status' => 1,
@@ -507,8 +556,7 @@ class ClientController extends Controller {
         $client_user_id=Crypt::decrypt($request->id);
         $user = User::find(Crypt::decrypt($request->id));  
         $roles = $user->roles;
-        // dd($roles);
-        return view('Client::client-subscription',compact('roles'),['client_user_id'=>$request->id]);
+        return view('Client::client-subscription',compact('roles'),['client_user_id'=>$request->id,'user'=>$user]);
     }
 
     public function addUserRole(Request $request)
@@ -517,26 +565,44 @@ class ClientController extends Controller {
         $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
         $user = User::find($client_user_id); 
-        $roles = $user->roles;
-        if($request->role_name!==null)
+        if($request->client_role==6)
+        {
+            $user->role = 1;
+            $user->save();
+        }
+        else if($request->client_role==7)
+        {
+            $user->role = 2;
+            $user->save();
+        }
+        else if($request->client_role==8)
+        {
+            $user->role = 3;
+            $user->save();
+        }
+        $roles = $user->roles;             
+        if($request->role_name!=null)
         {
             $user->removeRole($request->role_name);
         }
-        $user->assignRole($request->client_role);
+        $user->assignRole($request->client_role);        
         $roles = $user->roles;
         return redirect(route('client.subscription',$request->id));
 
     }
 
-    //delete client role s from table
-    public function deleteClientRole(Request $request)
+    //delete client roles from table
+    public function clientSubscriptionDelete(Request $request)
     {
-        $client_user_id=$request->client_user_id;
-        $user = User::find($client_user_id); 
-        $encrypt=Crypt::encrypt($client_user_id);         
-        $user->removeRole($request->client_role);
+        $decrypted_user_id = Crypt::decrypt($request->user_id); 
+        $decrypted_role_id = Crypt::decrypt($request->role_id); 
+        $user = User::find($decrypted_user_id); 
+        $user->role = 0;
+        $user->save();        
+        $user->removeRole($decrypted_role_id);
+
         $roles = $user->roles;      
-        return redirect(route('client.subscription',$encrypt));
+        return redirect(route('client.subscription',$request->user_id));
         
     }
 
@@ -552,6 +618,7 @@ class ClientController extends Controller {
             ]);
         }
         $client->user->delete();
+        $client->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -572,7 +639,7 @@ class ClientController extends Controller {
         }
 
         $client->user->restore();
-
+        $client->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -580,7 +647,7 @@ class ClientController extends Controller {
         ]);
     }
 
-//////////////////////////////////////User Profile/////////////////////////////////////
+//////////////////////////////User Profile////////////////////////
 
     //user profile view
     public function userProfile()
@@ -625,7 +692,63 @@ class ClientController extends Controller {
         return redirect(route('client.profile'));   
     }
 
-//////////////////////////////////////User Change Password//////////////////////////////
+    public function userProfileEdit()
+    {
+        $client_id = \Auth::user()->client->id;
+        $client_user_id = \Auth::user()->id;
+        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $user=User::find($client_user_id); 
+
+        // $client=\Auth::user()->client;
+        $lat=(float)$client->latitude;
+        $lng=(float)$client->longitude;       
+        // return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
+        if($client == null)
+        {
+           return view('Client::404');
+        }
+
+        return view('Client::client-profile-edit',['client' => $client,'user' => $user,'lat' => $lat,'lng' => $lng]);
+    }
+
+     //update dealers details
+    public function profileUpdate(Request $request)
+    {
+        $client = Client::where('user_id', $request->id)->first();
+        if($client == null){
+           return view('Client::404');
+        } 
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetClientProfileUpdateRules($client);
+        }
+        else if (strpos($url, $eclipse_key) == true) { 
+            $rules = $this->clientProfileUpdateRules($client);
+        }
+        else
+        {
+           $rules = $this->clientProfileUpdateRules($client);
+        }
+        
+        $this->validate($request, $rules);       
+        $client->name = $request->name;
+        $client->address = $request->address;
+        $client->save();
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->email = $request->email;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
+        $request->session()->flash('message', 'Client details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('client.profile'));  
+    }
+
+///////////////////////////User Change Password////////////////////
 
     //user change password view
     public function userPasswordChange()
@@ -719,7 +842,20 @@ class ClientController extends Controller {
     {      
         if($request->user()->hasRole('root'))
         {
-            $rules = $this->root_user_create_rules();
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rayfleetRootUserCreate_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) { 
+                $rules = $this->root_user_create_rules();
+            }
+            else
+            {
+               $rules = $this->root_user_create_rules();
+            }
+           
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
             $placeLatLng=$this->getPlaceLatLng($request->search_place);
@@ -775,7 +911,7 @@ class ClientController extends Controller {
         return redirect(route('client'));        
     }
 
-////////////////////////////////////Update client role-start//////////////////////////
+/////////////////////////Update client role-start//////////
 
     public static function updateClientRole($new_role)
     {
@@ -868,12 +1004,31 @@ class ClientController extends Controller {
             'state_id' => 'required',
             'city_id' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|max:10|unique:users',
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
     }
+
+     public function rafleet_user_create_rules()
+        {
+            $rules = [
+                'name' => 'required',
+                'address' => 'required',
+                'client_category' => 'required',
+                'country_id' => 'required',
+                'state_id' => 'required',
+                'city_id' => 'required',
+                'username' => 'required|unique:users',
+                'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ];
+            return  $rules;
+        }
+    
+    
     ###############################################################################
 
     // root create client validation
@@ -894,6 +1049,25 @@ class ClientController extends Controller {
         ];
         return  $rules;
     }
+    public function rayfleetRootUserCreate_rules()
+    {
+        $rules = [
+            'sub_dealer' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'client_category' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
+            'username' => 'required|unique:users',
+            'mobile' => 'required|string||min:11|max:11unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+
+    
 
 #####################################################################################
     function getPlaceLatLng($address)
@@ -915,6 +1089,30 @@ class ClientController extends Controller {
             return null;
         }
     }
-
+    public function clientProfileUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
+            'email' => 'required|string|unique:users,email,'.$client->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    public function rayfleetClientProfileUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$client->user_id,
+            'email' => 'required|string|unique:users,email,'.$client->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    
   #####################################################
 }

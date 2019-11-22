@@ -18,7 +18,7 @@
       </div>
       @endif 
     </nav>
-    <div class="card-body">
+    <div class="card-body"><h4>Update Alert Type</h4>
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  
           <div class="row">

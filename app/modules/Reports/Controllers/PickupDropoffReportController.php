@@ -15,6 +15,9 @@ class PickupDropoffReportController extends Controller {
         ->get();
         return view('Reports::pickup-dropoff-report-based-on-student',['students'=>$students]);
     }  
+
+
+    
     public function pickupReportBasedOnBus()
     {
     	$client_id=\Auth::user()->client->id;

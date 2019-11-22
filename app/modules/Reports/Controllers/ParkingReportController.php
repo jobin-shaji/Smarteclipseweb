@@ -9,6 +9,8 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Gps\Models\GpsModeChange;
+
 use DataTables;
 class ParkingReportController extends Controller
 {
@@ -17,6 +19,7 @@ class ParkingReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::parking-report',['vehicles'=>$vehicles]);  
     } 
@@ -26,91 +29,55 @@ class ParkingReportController extends Controller
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
-        $query =GpsData::select(
-            'client_id',
-            'gps_id',
-            'vehicle_id',
-            'header',
-            'vendor_id',
-            'firmware_version',
-            'imei',
-            'update_rate_ignition_on',
-            'update_rate_ignition_off',
-            'battery_percentage',
-            'low_battery_threshold_value',
-            'memory_percentage',
-            'digital_io_status',
-            'analog_io_status',
-            'activation_key',
-            'latitude',
-            'lat_dir',
-            'longitude',
-            'lon_dir',
-            'date',
-            'time',
-            'speed',
-            'alert_id',
-            'packet_status',
-            'gps_fix',
-            'mcc',
-            'mnc',
-            'lac',
-            'cell_id',
-            'heading',
-            'no_of_satelites',
-            'hdop',
-            'gsm_signal_strength',
-            'ignition',
-            'main_power_status',
-            'vehicle_mode',
-            'altitude',
-            'pdop',
-            'nw_op_name',
-            'nmr',
-            'main_input_voltage',
-            'internal_battery_voltage',
-            'tamper_alert',
-            'digital_input_status',
-            'digital_output_status',
-            'frame_number',
-            'checksum',
-            
-            'gf_id',
-            'device_time',
-            \DB::raw('sum(distance) as distance')
-        )
-        ->with('vehicle:id,name,register_number')
-        ->where('vehicle_mode','S');
-            
-        if($vehicle==0 || $vehicle==null )
-       {         
-            $query = $query->where('client_id',$client_id)
-            ->groupBy('date');
-       }
-       else
-       {
-        $query = $query->where('client_id',$client_id)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('date'); 
-       }
-        if($from){
-            $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        $sleep=0;
+        $time=0;
+        $initial_time = 0;
+        $previous_time =0;
+        $previous_mode = 0;
+        $vehicle_sleep=0;
+        $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
+        $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
+           ->where('device_time','<=',$request->to_date)  
+           ->where('gps_id',$vehicleGps->gps_id)
+           ->orderBy('device_time','asc')
+           ->get();
+         // dd($gps_modes);
+        foreach ($gps_modes as $mode) {
+        if($initial_time == 0){
+            $initial_time = $mode->device_time;
+            $previous_time = $mode->device_time;
+            $previous_mode = $mode->mode;
+        }else{           
+             if($mode->mode == "S"){
+               $time = strtotime($mode->device_time) - strtotime($previous_time);
+               $sleep= $sleep+$time;   
+               // dd($halt) ;
+               if($sleep<0)
+               {
+                $sleep="0";               
+               }                                      
+            }
         }
-        $track_report = $query->get();     
-        return DataTables::of($track_report)
-        ->addIndexColumn()         
-        ->addColumn('sleep', function ($track_report) {  
-            $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
-            $sleep= gmdate("H:i:s",$v_mode);                   
-            return $sleep;
-        })        
-        ->make();
+        $previous_time = $mode->device_time;
+      }
+     
+      return response()->json([           
+            'vehicle_name' => $vehicleGps->name,  
+            'register_number' => $vehicleGps->register_number,   
+            'sleep' => $this->timeFormate($sleep),          
+            'status' => 'parking_report'           
+        ]);           
     }
     public function export(Request $request)
     {
        return Excel::download(new ParkingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Parking-report.xlsx');
+    }
+    function timeFormate($second){
+      $hours = floor($second / 3600);
+      $mins = floor($second / 60 % 60);
+      $secs = floor($second % 60);
+      $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+      return $timeFormat;
     }
    
 }

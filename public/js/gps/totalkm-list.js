@@ -1,4 +1,5 @@
 $(document).ready(function () { 
+    // document.getElementById('excel').style.visibility = 'hidden';
    var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -57,12 +58,12 @@ function callBackDataTable(){
             }
         },       
         fnDrawCallback: function (oSettings, json) {
-        },
+        },      
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'vehicle.name', name: 'vehicle.name'},
-            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'km', name: 'km'},
+            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
+            {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false},
+            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
+            {data: 'totalkm', name: 'totalkm', orderable: false},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });

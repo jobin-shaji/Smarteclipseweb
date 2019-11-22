@@ -32,7 +32,7 @@
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group has-feedback">
                         <label class="srequired">Serial No</label>
-                        <input type="number" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ $gps->serial_no}}"> 
+                        <input type="text" class="form-control {{ $errors->has('serial_no') ? ' has-error' : '' }}" placeholder="Serial No" name="serial_no" value="{{ $gps->serial_no}}" min="0"> 
                           @if ($errors->has('serial_no'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('serial_no') }}</strong>
@@ -42,7 +42,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">IMEI</label>
-                        <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}"> 
+                        <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}" min="0"> 
                           @if ($errors->has('imei'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -62,7 +62,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">ICC ID</label>
-                        <input type="number" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ $gps->icc_id}}"> 
+                        <input type="text" class="form-control {{ $errors->has('icc_id') ? ' has-error' : '' }}" placeholder="ICC ID" name="icc_id" value="{{ $gps->icc_id}}" min="0"> 
                           @if ($errors->has('icc_id'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('icc_id') }}</strong>
@@ -72,7 +72,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">IMSI</label>
-                        <input type="number" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ $gps->imsi}}"> 
+                        <input type="text" class="form-control {{ $errors->has('imsi') ? ' has-error' : '' }}" placeholder="IMSI" name="imsi" value="{{ $gps->imsi}}" min="0"> 
                           @if ($errors->has('imsi'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('imsi') }}</strong>
@@ -95,7 +95,7 @@
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group has-feedback">
                         <label class="srequired">E-SIM Number</label>
-                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}"> 
+                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}" min="0"> 
                          @if ($errors->has('e_sim_number'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>

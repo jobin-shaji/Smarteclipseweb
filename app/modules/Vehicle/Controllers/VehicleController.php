@@ -952,7 +952,13 @@ class VehicleController extends Controller
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
         $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
+<<<<<<< HEAD
         $connection_lost_time = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time').""));
+=======
+        $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
+        $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
+        $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
         $offline="Offline";
         $signal_strength="Connection Lost";
     
@@ -960,6 +966,7 @@ class VehicleController extends Controller
                       'lon as longitude',
                       'heading as angle',
                       'mode as vehicleStatus',
+                      'ac_status',
                       'speed',
                       'fuel_status',
                       'battery_status as battery_percentage',
@@ -978,6 +985,10 @@ class VehicleController extends Controller
                               'lon as longitude',
                               'heading as angle',
                               'speed',
+<<<<<<< HEAD
+=======
+                              'ac_status',
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
                               'fuel_status',
                               'battery_status as battery_percentage',
                               'device_time as dateTime',
@@ -992,6 +1003,10 @@ class VehicleController extends Controller
         }
  
         if($track_data){
+<<<<<<< HEAD
+=======
+            $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('fundamental|pro|superior')){
@@ -1003,7 +1018,23 @@ class VehicleController extends Controller
             {
                 $fuel_status="UPGRADE VERSION";
             }
+<<<<<<< HEAD
            
+=======
+            if(\Auth::user()->hasRole('pro|superior')){
+                $ac_status =$track_data->ac_status;
+                if($ac_status == 1){
+                    $ac_status="ON";
+                }else{
+                    $ac_status="OFF";
+                }
+            }      
+            else
+            {
+                $ac_status="UPGRADE VERSION";
+            }
+
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
                         "longitude"=>floatval($snapRoute['lng']),
@@ -1015,10 +1046,20 @@ class VehicleController extends Controller
                         "ign"=>$track_data->ign,
                         "battery_status"=>round($track_data->battery_percentage),
                         "signalStrength"=>$track_data->signalStrength,
+<<<<<<< HEAD
                         "connection_lost_time"=>$connection_lost_time,
                         "last_seen"=>$minutes,
                         "fuel"=>$fuel_status,
                         "ac"=>"",
+=======
+                        "connection_lost_time_motion"=>$connection_lost_time_motion,
+                        "connection_lost_time_halt"=>$connection_lost_time_halt,
+                        "connection_lost_time_sleep"=>$connection_lost_time_sleep,
+                        "last_seen"=>$minutes,
+                        "connection_lost_time_minutes"=>$connection_lost_time_minutes,
+                        "fuel"=>$fuel_status,
+                        "ac"=>$ac_status,
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
                         "place"=>$plcaeName,
                         "fuelquantity"=>""
                       );
@@ -1882,6 +1923,11 @@ class VehicleController extends Controller
                          );
             return response()->json($data);
          }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
         $client = Client::where('user_id', $user_id)->first();
         $type = $request->type;
         $custom_from_date = $request->from_date;
@@ -1901,10 +1947,30 @@ class VehicleController extends Controller
                 $vehicle_profile= $this->vehicleProfile($single_vehicle_details->id,$date_and_time,$client->id);
                 $get_driver = Driver::find($single_vehicle_details->driver_id);
                 if($get_driver){
+<<<<<<< HEAD
                  $driver_points=$get_driver->points;
                 }else{
                  $driver_points=""; 
                 }
+=======
+                     $driver_points_score=$get_driver->points;
+                    
+                     if($driver_points_score > 90){
+                        $driver_points="Excellent";
+                     }elseif($driver_points_score > 50 && $driver_points_score < 90 ){
+                        $driver_points="Good";
+                     }elseif($driver_points_score > 0 && $driver_points_score < 50){
+                        $driver_points="Average";
+                     }else{
+                        $driver_points="Bad";
+                     }
+
+                 }else{
+                  $driver_points=""; 
+                 }
+
+
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
                 $gps_data=GpsData::where('gps_id',$single_vehicle_details->gps->id)
                                    ->where('device_time','>=', $from_date)
                                    ->where('device_time','<=', $to_date)
@@ -1916,6 +1982,7 @@ class VehicleController extends Controller
                   // for get single date km
                   $to_date=$from_date;
                 }
+<<<<<<< HEAD
 
                 $total_km = DailyKm::where('gps_id',$single_vehicle_details->gps->id)
                                      ->whereDate('date','>=',$from_date)
@@ -2151,6 +2218,258 @@ class VehicleController extends Controller
         return response()->json($response_data);
     }
 
+=======
+
+                $total_km = DailyKm::where('gps_id',$single_vehicle_details->gps->id)
+                                     ->whereDate('date','>=',$from_date)
+                                     ->whereDate('date','<=',$to_date)
+                                     ->sum('km');                   
+                $statics[] = array("vehicle_number" => $single_vehicle_details->register_number, 
+                                   "vehicle_id" => $single_vehicle_details->id, 
+                                   "total_distance" => 0, 
+                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
+                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
+                                   "total_number_of_stops" =>0, 
+                                   "ac_on_time_idle" => 0, 
+                                   "ac_on_time_running" =>0, 
+                                   "driver_behaviour" => $driver_points, 
+                                   "total_km" => $total_km, 
+                                   "max_speed" => $maximum_speed ?$maximum_speed:"", 
+                                   "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
+                                   "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
+                                   "overspeed_violation_count" => $vehicle_profile['over_speed'],
+                                   "zig_zag_violation_count" => $vehicle_profile['zig_zag'],
+                                   "accident_impact_alert_count" => $vehicle_profile['accident_impact'],
+                                   "route_deviation_count" => $vehicle_profile['route_deviation'],
+                                   "harsh_braking_count" => $vehicle_profile['harsh_braking'],
+                                   "sudden_acceleration_count" => $vehicle_profile['sudden_acceleration'],
+                                   "main_battey_disconnect_count" => $vehicle_profile['main_battery_disconnect'],
+
+
+                                   "total_moving_time" => $vehicle_profile['motion'], 
+                                   "total_idle_time" => $vehicle_profile['halt'],
+                                   "total_sleep_time" => $vehicle_profile['sleep'],
+                                   "total_offline_time" => 0, 
+
+
+                                   "total_alerts" => $vehicle_profile['user_alert'],
+                                   "vehicle_type" => $single_vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $single_vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $single_vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $single_vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $single_vehicle_details->vehicleType->sleep_icon
+                                  );
+            }
+            $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'vehicle_value' => $statics,
+                                   'search_date'=>$app_date
+                                  );
+        } else {
+            $response_data = array('status' => 'failed', 
+                                   'message' => 'failed', 
+                                   'code' => 0
+                                  );
+        }
+        return response()->json($response_data);
+    }
+
+    public function singleVehicleReport(Request $request) 
+    {
+        $user_id = $request->user_id;
+        $vehicle_id = $request->vehicle_id;
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $user = User::where('id', $user_id)->first();
+        if ($user == null) 
+        {
+            $data = array('status' => 'failed', 
+                          'message' => 'user does not exist', 
+                          'code' => 0
+                         );
+            return response()->json($data);
+        }
+        $client = Client::where('user_id', $user_id)->first();
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+        $app_date = $date_and_time['appDate'];
+        $vehicle_details = Vehicle::where('id', $vehicle_id)
+                                 ->whereNull('deleted_at')
+                                 ->first();
+        $statics = array();
+        if($vehicle_details){
+            $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client->id);
+            $get_driver = Driver::find($vehicle_details->driver_id);
+            
+            if($get_driver){
+             $driver_points_score=$get_driver->points;
+            
+             if($driver_points_score > 90){
+                $driver_points="Excellent";
+             }elseif($driver_points_score > 50 && $driver_points_score < 90 ){
+                $driver_points="Good";
+             }elseif($driver_points_score > 0 && $driver_points_score < 50){
+                $driver_points="Average";
+             }else{
+                $driver_points="Bad";
+             }
+
+         }else{
+          $driver_points=""; 
+         }
+
+
+
+            $gps_data=GpsData::where('gps_id',$vehicle_details->gps->id)
+                               ->where('device_time','>=', $from_date)
+                               ->where('device_time','<=', $to_date)
+                               ->get();
+                           
+            $maximum_speed=$gps_data->max('speed');   
+            if($type==2)
+            {
+              // for get single date km
+              $to_date=$from_date;
+            }
+
+            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
+                                 ->whereDate('date','>=',$from_date)
+                                 ->whereDate('date','<=',$to_date)
+                                 ->sum('km'); 
+            $statics[] = array("vehicle_number" => $vehicle_details->register_number, 
+                                   "vehicle_id" => $vehicle_details->id, 
+                                   "total_distance" => strval($total_km), 
+                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
+                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
+                                   "total_number_of_stops" =>0, 
+                                   "ac_on_time_idle" => $vehicle_profile['ac_halt_on_duration'], 
+                                   "ac_on_time_running" =>$vehicle_profile['ac_on_duration'], 
+                                   "driver_behaviour" => strval($driver_points), 
+                                   "total_km" => strval($total_km), 
+                                   "max_speed" => $maximum_speed ?$maximum_speed:"", 
+                                   "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
+                                   "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
+                                   "overspeed_violation_count" => $vehicle_profile['over_speed'],
+                                   "zig_zag_violation_count" => $vehicle_profile['zig_zag'],
+                                   "accident_impact_alert_count" => $vehicle_profile['accident_impact'],
+                                   "route_deviation_count" => $vehicle_profile['route_deviation'],
+                                   "harsh_braking_count" => $vehicle_profile['harsh_braking'],
+                                   "sudden_acceleration_count" => $vehicle_profile['sudden_acceleration'],
+                                   "main_battey_disconnect_count" => $vehicle_profile['main_battery_disconnect'],
+
+
+                                   "total_moving_time" => $vehicle_profile['motion'], 
+                                   "total_idle_time" => $vehicle_profile['halt'],
+                                   "total_sleep_time" => $vehicle_profile['sleep'],
+                                   "total_offline_time" => 0, 
+
+
+                                   "total_alerts" => $vehicle_profile['user_alert'],
+                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
+                                  );
+                $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'vehicle_value' => $statics,
+                                   'search_date'=>$app_date
+                                  );
+        }        
+        else {
+            $response_data = array('status' => 'failed', 
+                                   'message' => 'failed', 
+                                   'code' => 0
+                                  );
+        }
+        return response()->json($response_data);
+    }
+
+    public function getVehicleTravelSummary(Request $request) {
+        $user_id = $request->user_id;
+        $vehicle_id = $request->vehicle_id;
+        $type = $request->type;
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $user = User::where('id', $user_id)->first();
+        if ($user == null) 
+        {
+            $data = array('status' => 'failed', 
+                          'message' => 'user does not exist', 
+                          'code' => 0
+                         );
+            return response()->json($data);
+        }
+        $client = Client::where('user_id', $user_id)->first();
+        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
+        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+
+        $vehicle_details = Vehicle::where('id', $vehicle_id)
+                                 ->whereNull('deleted_at')
+                                 ->first();
+        $travel_data = array();
+        if($vehicle_details){
+            $vehicle_profile= $this->vehicleProfile($vehicle_id,$date_and_time,$client->id);
+            $gps_data=GpsData::where('gps_id',$vehicle_details->gps->id)
+                               ->where('device_time','>=', $from_date)
+                               ->where('device_time','<=', $to_date)
+                               ->get();
+            $avg_speed = $gps_data->avg('speed');
+            $max_speed = $gps_data->max('speed');
+            // km dummy
+            if($type==2)
+            {
+              // for get single date km
+                $to_date=$from_date;
+            }
+
+            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
+                                 ->whereDate('date','>=',$from_date)
+                                 ->whereDate('date','<=',$to_date)
+                                 ->sum('km');
+            $travel_duration = array("idle" =>$vehicle_profile['halt'], 
+                                  "running" => $vehicle_profile['motion'],
+                                  "stop" => $vehicle_profile['sleep'], 
+                                  "inactive" => 0
+                                 );
+            $travel_speed = array("speed" =>0, 
+                                  "total_km" => strval($total_km),
+                                  "avg_speed" => number_format($avg_speed, 2), 
+                                  "max_speed" => $max_speed ?$max_speed:""
+                                 );
+            $travel_data[] = array("travel_duration" => $travel_duration, 
+                                   "travel_speed" => $travel_speed, 
+                                   "total_alerts" => $vehicle_profile['user_alert'], 
+                                   "vehicleId" => $vehicle_details->id, 
+                                   "user_name" => $user->username, 
+                                   "vehicle_number" => $vehicle_details->register_number, 
+                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
+                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
+                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
+                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
+                                  );
+            $response_data = array('status' => 'success', 
+                                   'message' => 'success', 
+                                   'code' => 1, 
+                                   'user_name' => $user->username, 
+                                   'travel_summary' => $travel_data,
+                                   'from_date'=>$from_date,
+                                   'to_date'=>$to_date
+                                  );
+        }else {
+            $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
+        }
+        return response()->json($response_data);
+    }
+
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
     public function getTravelSummary(Request $request) {
         $user_id = $request->userid;
         $user = User::where('id', $user_id)->first();
@@ -2231,7 +2550,13 @@ class VehicleController extends Controller
                                    'from_date'=>$from_date,
                                    'to_date'=>$to_date
                                   );
+<<<<<<< HEAD
         } else {
+=======
+        } 
+        else 
+        {
+>>>>>>> 3f7006bde6b86cd961d4c013a5783e8280f5b793
             $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
         }
         return response()->json($response_data);

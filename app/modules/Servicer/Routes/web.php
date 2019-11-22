@@ -63,6 +63,24 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history-list');
 	Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
+
+
+	Route::get('/servicer/profile','ServicerController@servicerProfile')->name('servicer.profile');
+	Route::get('/servicer/{id}/change-password','ServicerController@changePassword')->name('servicer.change-password');
+	Route::post('/servicer/{id}/update-password','ServicerController@updatePassword')->name('servicer.update-password.p'); 
+	Route::get('/servicer-profile-edit','ServicerController@servicerProfileEdit')->name('servicer.profile.edit');
+	Route::post('/servicer/profile/{id}/edit','ServicerController@profileUpdate')->name('servicer.profile.update.p');
+	
+
+
+
+
+
+
+
+
+
+
 });
 Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 	Route::get('/job-history/{id}/details','ServicerController@jobHistoryDetails')->name('job.history.details');

@@ -21,7 +21,7 @@ Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateF
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
 
-
+Route::get('/vehicles/{id}/playback-page','VehicleController@playbackPageInTrack')->name('vehicles.playback.page');
 Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
 
 Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
@@ -51,9 +51,6 @@ Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->
 Route::get('/invoice','VehicleController@invoice')->name('invoice');
 
 Route::post('/vehicle-invoice/export','VehicleController@export')->name('vehicle-invoice.export.p');
-
-
-
 
 });
 
@@ -108,13 +105,48 @@ Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehic
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
+
 
 
 	});
 
-Route::group(['middleware' => ['web','auth','role:servicer|client|school|root|dealer|subdealer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
   // new playback
   Route::get('/vehicle_playback','VehicleController@playbackPage')->name('vehicle_playback');
-  Route::get('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
+  Route::post('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
 });
+
+Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+ 	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+
+
+ 	Route::get('/gps-map-public','MapLocationController@gpsMapLocationPublic')->name('gps.map.public');
+	Route::post('/gps-map/location-track-public','MapLocationController@gpsMapLocationTrackPublic')->name('gps.map.location.track.public');
+
+
+	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
+ 	
+});
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+ 	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
+	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
+
+
+	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
+});
+
+///API-START//
+Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+	Route::post('/vehicle_statitics','VehicleController@vehicleStatics');
+	Route::post('/travel_summary','VehicleController@getTravelSummary');
+	Route::post('/vehicle_report','VehicleController@singleVehicleReport');
+	Route::post('/vehicle_travel_summary','VehicleController@getVehicleTravelSummary');
+
+});
+///API-END//

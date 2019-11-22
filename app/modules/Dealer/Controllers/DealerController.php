@@ -106,8 +106,8 @@ class DealerController extends Controller {
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
-            $dealers = Dealer::where('user_id', $decrypted)->first();
-            $user=User::find($decrypted);
+        $dealers = Dealer::where('user_id', $decrypted)->first();
+        $user=User::find($decrypted);
 
         if($dealers == null){
             return view('Dealer::404');
@@ -117,16 +117,15 @@ class DealerController extends Controller {
     //update dealers details
     public function update(Request $request)
     {  
-        
-       $dealer = Dealer::where('user_id', $request->id)->first();
+        $user = User::find($request->id);
+        $dealer = Dealer::where('user_id', $request->id)->first();
         if($dealer == null){
            return view('Dealer::404');
         } 
-          $rules = $this->dealersUpdatesRules($dealer);
+        $rules = $this->dealersUpdatesRules($user);
         $this->validate($request, $rules);   
         $dealer->name = $request->name;
         $dealer->save();
-        $user = User::find($request->id);
         $user->mobile = $request->phone_number;
         $user->save();
         $did = encrypt($user->id);
@@ -154,11 +153,11 @@ class DealerController extends Controller {
         }
         $did=encrypt($subdealer->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($subdealer);
+        $rules=$this->updatePasswordRule();
         $this->validate($request,$rules);
         $subdealer->password=bcrypt($request->password);
         $subdealer->save();
-        $request->session()->flash('message','Dealer Password updated successfully');
+        $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('dealers.change-password',$did));
     }
@@ -241,7 +240,7 @@ class DealerController extends Controller {
         ]);
     }
 
-//////////////////////////////////////Dealer Profile-start///////////////////////////////
+////////////////////////Dealer Profile-start/////////////////
 
     //Dealer profile view
     public function dealerProfile()
@@ -257,9 +256,40 @@ class DealerController extends Controller {
         return view('Dealer::dealer-profile',['dealer' => $dealer,'user' => $user]);
     }
 
-//////////////////////////////////////Dealer Profile-end///////////////////////////////
+    //for edit page of Dealer profile
+    public function editDealerProfile()
+    {
+        $dealer_id=\Auth::user()->dealer->id;
+        $dealer = Dealer::where('id', $dealer_id)->first();
+        if($dealer == null){
+            return view('Dealer::404');
+        }
+        return view('Dealer::dealer-profile-edit',['dealer' => $dealer]);
+    }
+    //update dealer profile details
+    public function updateDealerProfile(Request $request)
+    {  
+        $dealer = Dealer::find($request->id);
+        $user = User::where('id', $dealer->user_id)->first();
+        if($dealer == null){
+           return view('Dealer::404');
+        } 
+        $rules = $this->dealerProfileUpdatesRules($user);
+        $this->validate($request, $rules);   
+        $dealer->name = $request->name;
+        $dealer->address = $request->address;
+        $dealer->save();
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+        $user->save();
+        $request->session()->flash('message', 'Your details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('dealer.profile'));  
+    }
 
-     public function updateDepotUserRuleChangePassword()
+////////////////////////Dealer Profile-end////////////////
+
+     public function updatePasswordRule()
     {
         $rules=[
             'password' => 'required|string|min:6|confirmed'
@@ -272,20 +302,30 @@ class DealerController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'phone_number' => 'required|numeric|min:10',
+            'phone_number' => 'required|numeric|min:10|max:10',
             'username' => 'nullable|string|max:20|unique:dealers',
             'password' => 'nullable|string|min:6|confirmed',
         ];
         return  $rules;
     }
     //validation for employee updation
-    public function dealersUpdatesRules($dealer)
+    public function dealersUpdatesRules($user)
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:10'       
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
         ];
         return  $rules;
+    }
+    public function dealerProfileUpdatesRules($user){
+        $rules = [
+            'name' => 'required',       
+            'address' => 'required',       
+            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+        ];
+        return  $rules;
+
     }
     public function passwordUpdateRules()
     {

@@ -10,7 +10,7 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-page-heading">Driver List</li>
+        <li class="breadcrumb-page-heading"><b>Driver List</b></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Driver List</li>
        </ol>  
        @if(Session::has('message'))
@@ -26,7 +26,7 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="card-body">
-      <div class="table-responsive">
+      <div class="table-responsive ">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">

@@ -56,16 +56,16 @@ function rootGpsUser(res){
         data:[res.dealer,res.sub_dealer,res.client],
 
         backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(75, 192, 192, 0.2)'
+                'rgba( 109, 193, 241, 1)',
+                'rgba( 246, 156, 53, 1)',
+                'rgba( 241, 62, 38 , 1)'
 
                 
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(75, 192, 192, 1)'
+                'rgba(109, 193, 241, 2)',
+                'rgba(246, 156, 53, 2)',
+                'rgba(241, 62, 38, 2)'
                
             ],
         borderWidth: 1

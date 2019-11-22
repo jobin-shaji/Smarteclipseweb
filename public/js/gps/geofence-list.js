@@ -31,27 +31,31 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name' },            
-            {data: 'clients.name', name: 'clients.name',searchable: false},           
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'name', name: 'name' , orderable: false,searchable: false},            
+            {data: 'clients.name', name: 'clients.name',searchable: false, orderable: false},           
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
 function delGeofence(geofence){
-    var url = 'geofence/delete';
-    var data = {
-        uid : geofence
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Due to deactivation all the assigned geofence list will be cleared. Do you want to continue ?')){
+        var url = 'geofence/delete';
+        var data = {
+            uid : geofence
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+    } 
 }
 function activateGeofence(geofence){
-    var url = 'geofence/activate';
-    var data = {
-        id : geofence
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this?')){
+        var url = 'geofence/activate';
+        var data = {
+            id : geofence
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
  function mapsView(geofence_id){
          

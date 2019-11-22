@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','mobile', 'password','username','status','state_id'
+        'name', 'email','mobile', 'password','username','status','state_id','role'
     ];
 
     /**
@@ -61,5 +61,13 @@ class User extends Authenticatable
     public function dealercount()
     {
         return $this->hasMany('App\Modules\Dealer\Models\Dealer','root_id','id');
+    } 
+    public function geofence()
+    {
+        return $this->hasone('App\Modules\Geofence\Models\Geofence','user_id','id');
+    }
+     public function operations()
+    {
+        return $this->hasone('App\Modules\Operations\Models\Operations','user_id','id');
     } 
 }

@@ -12,15 +12,40 @@
                                                <!--End Logo icon -->
                          <!-- Logo text -->
                    <span class="logo-text">
-                        @role('client')
+                        @role('client|school')
                             @if(\Auth::user()->client->logo)
                               <img class="light-logo"  src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
-                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />
+                                <?php
+                                $url=url()->current();
+                                $rayfleet_key="rayfleet";
+                                $eclipse_key="eclipse";
+                                if (strpos($url, $rayfleet_key) == true) {  ?>
+                                    <img src="{{ url('/') }}/assets/images/logo-s.jpg" alt="homepage" class="light-logo" /> 
+                                <?php } 
+                                else if (strpos($url, $eclipse_key) == true) { ?>
+                                    <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" /> 
+                                <?php }
+                                else { ?>
+                                    <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />  
+                                <?php } ?>  
                             @endif
                         @endrole
-                        @role('root|dealer|sub_dealer|servicer|school')
-                            <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />    
+
+                        @role('root|dealer|sub_dealer|servicer')
+                            <?php
+                            $url=url()->current();
+                            $rayfleet_key="rayfleet";
+                            $eclipse_key="eclipse";
+                            if (strpos($url, $rayfleet_key) == true) {  ?>
+                                <img src="{{ url('/') }}/assets/images/logo-s.jpg" alt="homepage" class="light-logo" /> 
+                            <?php } 
+                            else if (strpos($url, $eclipse_key) == true) { ?>
+                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" /> 
+                            <?php }
+                            else { ?>
+                                <img src="{{ url('/') }}/assets/images/logo-s.png" alt="homepage" class="light-logo" />  
+                            <?php } ?>  
                         @endrole                      
                         </span>
                         <!-- Logo icon -->
@@ -48,7 +73,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                   
-                    @role('root|dealer|sub_dealer|servicer|school')
+                    @role('root|dealer|sub_dealer|servicer|school|operations')
 
                     @role('root')
                         @include('layouts.sections.root-header')
@@ -65,6 +90,9 @@
                     @role('school')
                         @include('layouts.sections.school-header')
                     @endrole
+                      @role('operations')
+                        @include('layouts.sections.operation-header')
+                    @endrole
 
                    @endrole
 
@@ -74,7 +102,7 @@
                        </li>                       
                        <!--  <li class="nav-item search-box"> 
                         </li> -->
-                         <li class="nav-item"> 
+                         <li class="nav-item" style="padding: 1.5% 0"> 
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
@@ -97,7 +125,7 @@
                             </div>
                         </li> -->
 
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
                             </a>
                             <ul class="dropdown-menu multi-level">
@@ -108,7 +136,7 @@
                                     <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
                                     <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
                                      @role('fundamental|superior|pro')
-                                    <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li>
+                                    <!-- <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
                                      @endrole
                                     </ul>
                                 </li>
@@ -126,41 +154,32 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE 
+                        <li class="nav-item dropdown-submenu">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/fence')}}"> ADD GEOFENCE <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/geofence')}}"> LIST GEOFENCE<span></span></a>  
-                                 <a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}"> ASSIGN GEOFENCE <span></span></a>                             
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE 
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/route/create')}}"> ADD ROUTE <span></span></a>                               
-                                <a class="dropdown-item" href="{{url('/route')}}"> LIST ROUTE<span></span></a>  
-
-                                 <a class="dropdown-item" href="{{url('/assign/route-vehicle')}}"> ASSIGN ROUTE <span></span></a>                               
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
-                            </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                             
-                                <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
-                                  
-                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
-                            </div>
+                            <ul class="dropdown-menu multi-level">
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >GEOFENCE</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/fence')}}">ADD GEOFENCE</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/geofence')}}">LIST GEOFENCES</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}">ASSIGN GEOFENCE</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">ROUTE</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/assign/route-vehicle')}}">ASSIGN ROUTE</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
 
-                        <li class="nav-item dropdown">
+                        
+
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -169,20 +188,31 @@
                                 <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>                               
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS 
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                     <ul class="ecosystem">
-                                    <li class="sys_vapor cover_dailyreport">
-                                        <a href="{{url('/daily-km-report')}}">
+                                    <li class="sys_vapor cover_total_km">
+                                        <a href="{{url('/total-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                               <span class="system_info">Daily Report </span></div>
-                                           
+                                           <span class="system_info" >Total KM  Report</span>
+                                           </div>
+                                            
                                         </a>
                                     </li>
+                                     <li class="sys_vapor cover_total_km">
+                                        <a href="{{url('/km-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                           <span class="system_info" >Vehicle  Report</span>
+                                           </div>
+                                            
+                                        </a>
+                                    </li>
+
 
                                     <li class="sys_vapor cover_geofence">
                                         <a href="{{url('/geofence-report')}}">
@@ -194,17 +224,17 @@
                                         </a>
                                     </li>
 
-                                    <li class="sys_vapor cover_alertreport">
-                                        <a href="{{url('/alert-report')}}">
+                                    <li class="sys_vapor cover_over_speed">
+                                        <a href="{{url('/over-speed-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
-                                           <span class="system_info" >Alert Report </span>    
+                                               <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
+                                           <span class="system_info" >Over Speed  Report</span>
                                            </div>
-                                          
+                                            
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_tracking_report">
+                                    <li class="sys_vapor cover_tracking_report">
                                         <a href="{{url('/tracking-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/tracking-report.png"  />
@@ -246,23 +276,22 @@
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_total_km">
-                                        <a href="{{url('/total-km-report')}}">
+                                    <li class="sys_vapor cover_dailyreport">
+                                        <a href="{{url('/daily-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                           <span class="system_info" >Total KM  Report</span>
-                                           </div>
-                                            
+                                               <span class="system_info">Daily Report </span></div>
+                                           
                                         </a>
                                     </li>
 
-                                     <li class="sys_vapor cover_over_speed">
-                                        <a href="{{url('/over-speed-report')}}">
+                                    <li class="sys_vapor cover_alertreport">
+                                        <a href="{{url('/alert-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
-                                           <span class="system_info" >Over Speed  Report</span>
+                                               <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
+                                           <span class="system_info" >Alert Report </span>
                                            </div>
-                                            
+                                          
                                         </a>
                                     </li>
 
@@ -285,12 +314,11 @@
                                             
                                         </a>
                                     </li>
-
-                                     <li class="sys_vapor cover_idle_report">
+                                    <li class="sys_vapor cover_idle_report">
                                         <a href="{{url('/idle-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/idle-report.png"  />
-                                            <span class="system_info" >Idle Report</span>
+                                            <span class="system_info" >Halt Report</span>
                                            </div>
                                            
                                         </a>
@@ -314,16 +342,24 @@
                                             
                                         </a>
                                     </li>
-                                     
-                                   </ul>
-                                   
-
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown-submenu">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
+                            </a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                             
+                                <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
+                                  
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
                             </div>
                         </li>
                         
                         @if(!\Auth::user()->hasRole(['pro']))
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> GO PREMIUM    
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> UPGRADE    
                             </a>
                         </li>
                         @endif
@@ -352,26 +388,48 @@
                                 <input type="hidden" id="header_decrypt_vehicle_id">
                                 <a class="dropdown-item"><button onclick="verifyHeaderEmergency()">Verify</button></a>
                             </div>
-
+                        </li>
                         @role('client')
                         <li class="nav-item dropdown">
-                            <a onclick="alerts()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="cover_bell">
+                            <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                            <span class="notification-box">
+                                <span class="notification-count">0</span>
+                                <div>
+                                    <i class="mdi mdi-bell font-24" ></i>
+                                </div>
+                            </span>
+
+
+<!-- style="padding: 18% 0 0 56%" -->
+                            <!-- <span class="cover_bell">
                                 <span class="bell_value" id="bell_notification_count">0</span>
-                            </span><i class="mdi mdi-bell font-24"></i>
-                            
+                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i> -->
                             </a>
+                            <!-- <span class="notification-box">
+                                <span class="notification-count">
+                                   <a class="dropdown-item" href="{{url('/alert')}}" id="bell_notification_count" title="Alerts">1000</a>
+                                </span>
+                                <div class="notification-bell">
+                                  <span class="bell-top"></span>
+                                  <span class="bell-middle"></span>
+                                  <span class="bell-bottom"></span>
+                                  <span class="bell-rad"></span>
+                                  <i class='fas fa-car'></i>
+                                  <img src="../../assets/images/arc.png" width="50" height="20">
+                                </div>
+                                
+                            </span> -->
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
-                               
                             </div>
                                 <a class="dropdown-item" href="{{url('/alert')}}">VIEW ALL ALERTS</a>
-
-                                                            </div>
+                            </div>
                         </li>                      
                         <li class="nav-item dropdown">
-                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box"></i>
+                            <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>
                             </a>
+
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul class="list-style-none">
 
@@ -400,6 +458,7 @@
                                 </ul>
                             </div>
                         </li> 
+                       <!--  <label>View Documents</label> -->
                         @endrole
                         <li class="nav-item dropdown">
                             @role('client')
@@ -408,30 +467,66 @@
                         </li>
                        
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           @role('client')      
+                               <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="70" height="60"></a>
+                             @endrole
+                             @role('root|dealer|sub_dealer|servicer|school|operations')
+                                <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31"></a>
+                                @endrole
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                 <div class="dropdown-divider">
                                 </div>
-                                @role('client|school')
+                                @role('client')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
 
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
+                                @role('school')
+                                    <a class="dropdown-item" href="{{url('/client/profile')}}">
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    @if(empty(\Auth::user()->geofence))  
+                                    <a class="dropdown-item" href="{{url('/school/'.Crypt::encrypt(\Auth::user()->id).'/fence')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i> GEOFENCE</a>
+                                    @endif                                        
+                                      
+                                    <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                                @endrole
                                 @role('root')
                                     <a style="margin-left: 15px;">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('dealer')
                                     <a class="dropdown-item" href="{{url('/dealer/profile')}}">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    <a class="dropdown-item" href="{{url('/dealers/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('sub_dealer')
                                     <a class="dropdown-item" href="{{url('/sub-dealer/profile')}}">
-                                            <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                    <a class="dropdown-item" href="{{url('/sub-dealers/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
-                                
+                                @role('servicer')
+                                    <a class="dropdown-item" href="{{url('/servicer/profile')}}">
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{url('/servicer/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                                @endrole
+                                  @role('operations')
+                                    <a class="dropdown-item" href="{{url('/operations/profile')}}">
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{url('/operations/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                        <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                                @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
                                 
@@ -519,6 +614,103 @@
                             </ul>
 <div style="padding:3% 6%;;font-weight:600;font-size:20px;color:#fb9a18;border-top: 1px solid #e9ecef">
 Contact for Assistance +91 9544313131</div>
-
 </div>   
     </div>
+<style type="text/css">
+  .notification-box {
+  /*position: relative;*/
+  z-index: 99;
+  top: 29px;
+  right: 133px;
+  width: 100px;
+  height: 50px;
+}
+.notification-bell {
+  /*animation: bell 1s 1s both infinite;*/
+}
+/*.notification-bell * {
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0px 0px 15px #fff;
+}*/
+/*.bell-top {
+  width: 4px;
+  height: 6px;
+  border-radius: 3px 3px 0 0;
+}
+.bell-middle {
+  width: 19px;
+  height: 18px;
+  border-radius: 12.5px 12.5px 0 0;
+}
+.bell-bottom {
+  position: relative;
+  z-index: 0;
+  width: 32px;
+  height: 2px;
+}
+.bell-bottom::before,
+.bell-bottom::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+}
+.bell-bottom::before {
+  left: 1px;
+  border-bottom: 4px solid #fff;
+  border-right: 0 solid transparent;
+  border-left: 4px solid transparent;
+}
+.bell-bottom::after {
+  right: 1px;
+  border-bottom: 4px solid #fff;
+  border-right: 4px solid transparent;
+  border-left: 0 solid transparent;
+}
+.bell-rad {
+  width: 8px;
+  height: 4px;
+  margin-top: 2px;
+  border-radius: 0 0 4px 4px;
+  animation: rad 1s 2s both infinite;
+}*/
+.notification-count {
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+  right: 3px;
+  width: 37px;
+  line-height: 29px;
+  font-size: 15px;
+  border-radius: 50%;
+  background-color: #ff4927;
+/*  color: white;
+*/  animation: zoom 2s 2s both infinite;
+}
+@keyframes bell {
+  0% { transform: rotate(0); }
+  10% { transform: rotate(30deg); }
+  20% { transform: rotate(0); }
+  80% { transform: rotate(0); }
+  90% { transform: rotate(-30deg); }
+  100% { transform: rotate(0); }
+}
+/*@keyframes rad {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(6px); }
+  20% { transform: translateX(0); }
+  80% { transform: translateX(0); }
+  90% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}*/
+@keyframes zoom {
+  0% { opacity: 0; transform: scale(0); }
+  10% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; }
+  51% { opacity: 0; }
+  100% { opacity: 0; }
+}
+#2:hover{
+    background-color: red!important
+}
+</style>

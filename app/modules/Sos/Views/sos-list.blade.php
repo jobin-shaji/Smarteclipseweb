@@ -12,7 +12,7 @@
   
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/In Stock</li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/In stock</li>
     @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -25,7 +25,7 @@
 
 
   <div class="container-fluid">
-    <div class="card-body">
+    <div class="card-body"><h4>SOS Instock</h4>
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
@@ -36,9 +36,9 @@
                   <tr>
                       <th>Sl.No</th>
                       <th>Serial NO</th>
+                      <th>Model Name</th>
                       <th>Manufacturing Date</th>
                       <th>Brand</th>
-                      <th>Model Name</th>
                       <th>Version</th>
                       <th>Action</th>
                   </tr>

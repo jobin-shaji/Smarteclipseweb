@@ -82,19 +82,15 @@ class ServicerController extends Controller {
     public function update(Request $request)
     {
         $servicer = Servicer::find($request->id);
+        $user = User::find($servicer->user->id);
         if($servicer == null){
            return view('User::404');
         }
-
-        $rules = $this->servicerUpdateRules($servicer->user);
+        $rules = $this->servicerUpdateRules($user);
         $this->validate($request,$rules);
-
-  
         $servicer->name = $request->name;
         $servicer->address = $request->address;
         $servicer->save();
-
-        $user = User::find($servicer->user->id);
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->save();
@@ -116,11 +112,12 @@ class ServicerController extends Controller {
                 'message' => 'Servicer does not exist'
             ]);
         }
+        $servicer->user->delete();
         $servicer->delete(); 
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Servicer deleted successfully'
+            'message' => 'Servicer deactivated successfully'
         ]);
     }
 
@@ -144,6 +141,7 @@ class ServicerController extends Controller {
                 'message' => 'Servicer does not exist'
              ]);
         }
+        $servicer->user->restore();
         $servicer->restore();
         return response()->json([
             'status' => 1,
@@ -182,7 +180,6 @@ class ServicerController extends Controller {
                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>"; 
                 }else{
                      return "
-                    <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
                     <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
 
                 }
@@ -212,15 +209,15 @@ class ServicerController extends Controller {
         $job_date=date("Y-m-d", strtotime($request->job_date));
         
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        // $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
-        if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('sub-dealer.assign.servicer'));        
-        }
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['logitude'];        
+        // if($placeLatLng==null){
+        //       $request->session()->flash('message', 'Enter correct location'); 
+        //       $request->session()->flash('alert-class', 'alert-danger'); 
+        //       return redirect(route('sub-dealer.assign.servicer'));        
+        // }
+        // $location_lat=$placeLatLng['latitude'];
+        // $location_lng=$placeLatLng['logitude'];        
         $user_id=\Auth::user()->id;
         $servicer = ServicerJob::create([
             'servicer_id' => $request->servicer,
@@ -232,8 +229,9 @@ class ServicerController extends Controller {
             'gps_id' => $request->gps, 
             'job_date' => $job_date,                
             'status' => 0,
-            'latitude'=>$location_lat,
-            'longitude'=>$location_lng              
+            'location'=>$request->search_place
+            // 'latitude'=>$location_lat,
+            // 'longitude'=>$location_lng              
         ]); 
         // $gps = Gps::find($request->gps);
         // $gps->user_id = null;        
@@ -271,7 +269,7 @@ class ServicerController extends Controller {
         )
         ->where('user_id',$user_id)
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -314,17 +312,17 @@ class ServicerController extends Controller {
         $job_date=date("Y-m-d", strtotime($request->job_date));        
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
 
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        // $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
-        if($placeLatLng==null){
-              $request->session()->flash('message', 'Enter correct location'); 
-              $request->session()->flash('alert-class', 'alert-danger'); 
-              return redirect(route('sub-dealer.assign.servicer'));        
-        }
+        // if($placeLatLng==null){
+        //       $request->session()->flash('message', 'Enter correct location'); 
+        //       $request->session()->flash('alert-class', 'alert-danger'); 
+        //       return redirect(route('sub-dealer.assign.servicer'));        
+        // }
 
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['logitude'];
-        
+        // $location_lat=$placeLatLng['latitude'];
+        // $location_lng=$placeLatLng['logitude'];
+        $location=$request->search_place;
 
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
@@ -337,11 +335,13 @@ class ServicerController extends Controller {
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
                 'status' => 0, 
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng           
+                'location'=>$location 
+                // 'latitude'=>$location_lat,
+                // 'longitude'=>$location_lng           
             ]); 
             $request->session()->flash('message', 'Assign  servicer successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
+            
             return redirect(route('sub-dealer.assign.servicer'));  
     }
     public function subDealerAssignServicerList()
@@ -351,7 +351,6 @@ class ServicerController extends Controller {
     public function getSubDealerAssignServicerList()
     {
         $user_id=\Auth::user()->id;
-
         $servicer_job = ServicerJob::select(
             'id', 
             'servicer_id',
@@ -368,8 +367,9 @@ class ServicerController extends Controller {
         )
         ->where('user_id',$user_id)
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
+        ->whereNull('job_complete_date')
         ->with('servicer:id,name')
         ->get();       
         return DataTables::of($servicer_job)
@@ -407,14 +407,13 @@ class ServicerController extends Controller {
             'gps_id',
             'job_complete_date', 
             \DB::raw('Date(job_date) as job_date'),                 
-            'created_at',
-            'latitude',
-            'longitude',
+            'created_at',           
+            'location',
             'status'
         )
         ->where('servicer_id',$user_id)
         ->whereNull('job_complete_date')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
@@ -431,31 +430,31 @@ class ServicerController extends Controller {
                 return "Service" ; 
             }                       
          }) 
-        ->addColumn('location', function ($servicer_job) {                    
-            $latitude= $servicer_job->latitude;
-            $longitude=$servicer_job->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                    $location=$address;
-                    return $location;                                 
-                }        
-            }
-            else
-            {
-                return "No Address";
-            }
-         })
+        // ->addColumn('location', function ($servicer_job) {                    
+        //     $latitude= $servicer_job->latitude;
+        //     $longitude=$servicer_job->longitude;          
+        //     if(!empty($latitude) && !empty($longitude)){
+        //         //Send request and receive json data by address
+        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+        //         $output = json_decode($geocodeFromLatLong);         
+        //         $status = $output->status;
+        //         //Get address from json data
+        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        //         //Return address of the given latitude and longitude
+        //         if(!empty($address)){
+        //             $location=$address;
+        //             return $location;                                 
+        //         }        
+        //     }
+        //     else
+        //     {
+        //         return "No Address";
+        //     }
+        //  })
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";
           
         })
         ->rawColumns(['link', 'action'])
@@ -482,7 +481,7 @@ class ServicerController extends Controller {
         )
         ->withTrashed()
         ->where('id', $decrypted)
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->first();
         $client_id=$servicer_job->client_id;
@@ -513,144 +512,113 @@ class ServicerController extends Controller {
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
         $this->validate($request,$rules);      
-        $job_completed_date=date("Y-m-d", strtotime($request->job_completed_date)); 
+        // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
+        $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
-        $servicer_job->comment = $request->comment;
-         $servicer_job->status = 1;
-        $servicer_job->save();
-        $name= $request->name;         
-        $register_number = $request->register_number;
-        $vehicle_type_id = $request->vehicle_type_id;
-        $gps_id = $request->gps_id;
-        $client_id = $request->client_id;
-        $servicer_job_id = $request->servicer_job_id;
-        $engine_number = $request->engine_number;
-        $chassis_number = $request->chassis_number;
         $driver_id=$request->driver;
         // $path = $request->path;
-        $vehicle_create= Vehicle::create([
-            'name' => $name,
-            'register_number' => $register_number,
-            'vehicle_type_id' => $vehicle_type_id,
-            'gps_id' => $gps_id,
-            'client_id' => $client_id,
-            'servicer_job_id' =>$servicer_job->id,
-            'engine_number' => $engine_number,
-            'chassis_number' => $chassis_number,
-            'driver_id' => $driver_id,
-            'status' => 1
-        ]);
-        $this->validate($request, $rules, $custom_messages);
-        $file=$request->path;
-        $installation_photo=$request->installation_photo;
-        $activation_photo=$request->activation_photo;
-        $vehicle_photo=$request->vehicle_photo;
-       
-        $getFileExt   = $file->getClientOriginalExtension();
-        $uploadedFile =   time().'.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents';
-        $file->move($destinationPath,$uploadedFile);
-
-        $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
-        $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
-        $installation_photo->move($destinationPath,$uploadedInstallationFile);
-
-        $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
-        $uploadedActivationFile =   time().'.'.$getActivationFileExt;
-        $activation_photo->move($destinationPath,$uploadedActivationFile);
-
-        $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
-        $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
-        $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
-
-
-        $documents = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 1,
-            'expiry_date' => null,
-            'path' => $uploadedFile,
-        ]);
-        $installation_documents = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 6,
-            'expiry_date' => null,
-            'path' => $uploadedInstallationFile,
-        ]);
-        $activation_documents = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 7,
-            'expiry_date' => null,
-            'path' => $uploadedActivationFile,
-        ]);
-        $vehicle_photo = Document::create([
-            'vehicle_id' => $vehicle_create->id,
-            'document_type_id' => 8,
-            'expiry_date' => null,
-            'path' => $uploadedVehicleFile,
-        ]);
-        $service_job_id=Crypt::encrypt($servicer_job->id);
-        $request->session()->flash('message', 'job  completed successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('job.list'));  
-        // return redirect(route('job-complete.certificate',$service_job_id));  
-    }
-    // save vehicle
-    public function servicerSaveVehicle(Request $request)
-    {
-
-        // $client_id=\Auth::user()->servicer->id;
-       // $client_id= $request->client;         
-        $name= $request->name;         
-        $register_number = $request->register_number;
-        $vehicle_type_id = $request->vehicle_type_id;
-        $gps_id = $request->gps_id;
-        $client_id = $request->client_id;
-        $servicer_job_id = $request->servicer_job_id;
-
-        $engine_number = $request->engine_number;
-        $chassis_number = $request->chassis_number;
-        $path = $request->path;
-        
-        if($gps_id!=null)
+        $driver = Driver::find($driver_id);
+        if($driver)
         {
+            
+       
+            $servicer_job->comment = $request->comment;
+            $servicer_job->status = 1;
+            $servicer_job->save();
+            if($servicer_job)
+            {        
+            $name= $request->name;         
+            $register_number = $request->register_number;
+            $vehicle_type_id = $request->vehicle_type_id;
+            $gps_id = $request->gps_id;
+            $client_id = $request->client_id;
+            $servicer_job_id = $request->servicer_job_id;
+            $engine_number = $request->engine_number;
+            $chassis_number = $request->chassis_number;
+
+
+
             $vehicle_create= Vehicle::create([
                 'name' => $name,
                 'register_number' => $register_number,
                 'vehicle_type_id' => $vehicle_type_id,
                 'gps_id' => $gps_id,
                 'client_id' => $client_id,
-                'servicer_job_id' => $servicer_job_id,
+                'servicer_job_id' =>$servicer_job->id,
                 'engine_number' => $engine_number,
                 'chassis_number' => $chassis_number,
+                'driver_id' => $driver_id,
                 'status' => 1
             ]);
-            // $vehicle_id=$vehicle_create->id;
-            
-        }         
-          $vehicle = Vehicle::select(
-            'name',
-            'register_number',
-            'vehicle_type_id',
-            'gps_id',
-            'client_id',
-            'servicer_job_id',
-            'engine_number',
-            'chassis_number'               
-        )
-        ->with('gps:id,name,imei')
-       // ->with('vehicle:id,name,register_number')
-        ->where('servicer_job_id',$servicer_job_id)
-        ->get();
-        return DataTables::of($vehicle)
-            ->addIndexColumn() 
-            
-            ->rawColumns(['link'])         
-            ->make();
- 
-        
+            // $this->validate($request, $rules, $custom_messages);
+            $file=$request->path;
+            $installation_photo=$request->installation_photo;
+            $activation_photo=$request->activation_photo;
+            $vehicle_photo=$request->vehicle_photo;
+           
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'documents';
+            $file->move($destinationPath,$uploadedFile);
+
+            $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
+            $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
+            $installation_photo->move($destinationPath,$uploadedInstallationFile);
+
+            $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
+            $uploadedActivationFile =   time().'.'.$getActivationFileExt;
+            $activation_photo->move($destinationPath,$uploadedActivationFile);
+
+            $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
+            $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
+            $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
+
+
+            $documents = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 1,
+                'expiry_date' => null,
+                'path' => $uploadedFile,
+            ]);
+            $installation_documents = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 6,
+                'expiry_date' => null,
+                'path' => $uploadedInstallationFile,
+            ]);
+            $activation_documents = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 7,
+                'expiry_date' => null,
+                'path' => $uploadedActivationFile,
+            ]);
+            $vehicle_photo = Document::create([
+                'vehicle_id' => $vehicle_create->id,
+                'document_type_id' => 8,
+                'expiry_date' => null,
+                'path' => $uploadedVehicleFile,
+            ]);
+            // dd($servicer_job->id);
+            // $service_job_id=Crypt::encrypt($servicer_job->id);
+            $request->session()->flash('message', 'Job  completed successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+        }
     }
+    else
+    {
+        $request->session()->flash('message', 'Driver doesnot exist!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+       return view('Servicer::404');
+    }
+
+        // return redirect(route('job.list'));  
+        // return redirect(route('job-complete.certificate',$service_job_id));  
+    }
+    // save vehicle
+   
      public function jobCompleteCertificate(Request $request)
     {
 
@@ -704,14 +672,13 @@ class ServicerController extends Controller {
              \DB::raw('Date(job_date) as job_date'),                 
             'created_at',
             'status',
-            'latitude',
-            'longitude',
+            'location',
             'gps_id'
         )
         ->where('servicer_id',$user_id)
         ->whereNotNull('job_complete_date')
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -728,27 +695,27 @@ class ServicerController extends Controller {
             }
                        
          })
-         ->addColumn('location', function ($servicer_job) {                    
-            $latitude= $servicer_job->latitude;
-            $longitude=$servicer_job->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                    $location=$address;
-                    return $location;                                 
-                }        
-            }
-            else
-            {
-                return "No Address";
-            }
-         }) 
+         // ->addColumn('location', function ($servicer_job) {                    
+         //    $latitude= $servicer_job->latitude;
+         //    $longitude=$servicer_job->longitude;          
+         //    if(!empty($latitude) && !empty($longitude)){
+         //        //Send request and receive json data by address
+         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+         //        $output = json_decode($geocodeFromLatLong);         
+         //        $status = $output->status;
+         //        //Get address from json data
+         //        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+         //        //Return address of the given latitude and longitude
+         //        if(!empty($address)){
+         //            $location=$address;
+         //            return $location;                                 
+         //        }        
+         //    }
+         //    else
+         //    {
+         //        return "No Address";
+         //    }
+         // }) 
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
                 return "
@@ -763,16 +730,21 @@ class ServicerController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id); 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+
         $client_id=$servicer_job->client_id;
+       
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
             'register_number',
-            'name'
+            'name',
+            'servicer_job_id',
+            'client_id'
         )
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
+        
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -840,7 +812,6 @@ class ServicerController extends Controller {
     {
         $user = $request->user();
         $client_id=$request->client_id;
-
         $client = Client::find($client_id);
         $gps_stocks = GpsStock::select(
             'gps_id',
@@ -852,9 +823,10 @@ class ServicerController extends Controller {
         $stock_gps_id = [];
         foreach($gps_stocks as $stock_gps){
             $stock_gps_id[] = $stock_gps->gps_id;
-        }
-
-        $vehicle_device = Vehicle::select(
+        }       
+        if($stock_gps_id)
+        {        
+            $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
             'register_number',
@@ -880,7 +852,7 @@ class ServicerController extends Controller {
             $servicer_gps[] = $servicer_job->gps_id;
         }     
         // dd($servicer_gps);
-        $devices=Gps::select('id','imei')
+        $devices=Gps::select('id','imei','serial_no')
         ->whereIn('id',$stock_gps_id)
         ->whereNotIn('id',$single_gps)
         ->whereNotIn('id',$servicer_gps)
@@ -901,6 +873,15 @@ class ServicerController extends Controller {
                 'code'    =>0
             );
         }
+    }
+    else
+    {
+         $response_data = array(
+                'status'  => 'failed',
+                'message' => 'failed',
+                'code'    =>0
+            );
+    }
         return response()->json($response_data); 
         // }
     }
@@ -931,7 +912,7 @@ class ServicerController extends Controller {
         ->where('user_id',$user_id)
         ->whereNotNull('job_complete_date')
         ->with('user:id,username')
-        ->with('gps:id,imei')
+        ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -958,7 +939,148 @@ class ServicerController extends Controller {
         ->make();
     }
 
-    
+     public function servicerProfile()
+    {
+        $servicer_id = \Auth::user()->servicer->id;
+        $servicer_user_id = \Auth::user()->id;
+        $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
+        $user=User::find($servicer_user_id); 
+        if($servicer == null)
+        {
+           return view('Servicer::404');
+        }
+        return view('Servicer::servicer-profile',['servicer' => $servicer,'user' => $user]);
+    }
+
+
+
+     //for edit page of employee password
+    public function changePassword(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $servicer = Servicer::where('user_id', $decrypted)->first();
+        // $dealer = Dealer::find($decrypted);
+        if($servicer == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::servicer-change-password',['servicer' => $servicer]);
+    }
+    //update password
+    public function updatePassword(Request $request)
+    {
+        $servicer=User::find($request->id);
+        if($servicer== null){
+            return view('SubDealer::404');
+        }
+        $did=encrypt($servicer->id);
+        // dd($request->password);
+        $rules=$this->updatePasswordRule();
+        $this->validate($request,$rules);
+        $servicer->password=bcrypt($request->password);
+        $servicer->save();
+        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('servicer.change-password',$did));
+    }
+
+    public function servicerProfileEdit()
+    {
+        $servicer_id = \Auth::user()->servicer->id;
+        $servicer_user_id = \Auth::user()->id;
+        $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
+        $user=User::find($servicer_user_id); 
+
+       
+        if($servicer == null)
+        {
+           return view('Servicer::404');
+        }
+
+        return view('Servicer::servicer-profile-edit',['servicer' => $servicer,'user' => $user]);
+    }
+     //update dealers details
+    public function profileUpdate(Request $request)
+    {
+        $servicer = Servicer::where('user_id', $request->id)->first();
+        if($servicer == null){
+           return view('Client::404');
+        } 
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetservicerProfileUpdateRules($servicer);
+        }
+        else if (strpos($url, $eclipse_key) == true) { 
+            $rules = $this->servicerProfileUpdateRules($servicer);
+        }
+        else
+        {
+           $rules = $this->servicerProfileUpdateRules($servicer);
+        }
+        
+        $this->validate($request, $rules);       
+        $servicer->name = $request->name;
+        $servicer->address = $request->address;
+        $servicer->save();
+        $user = User::find($request->id);
+        $user->mobile = $request->phone_number;
+        $user->email = $request->email;
+        $user->save();
+        $did = encrypt($user->id);
+        // $subdealer->phone_number = $request->phone_number;       
+        // $did = encrypt($subdealer->id);
+        $request->session()->flash('message', 'Service engineer details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('servicer.profile'));  
+    }
+    public function servicerProfileUpdateRules($servicer)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$servicer->user_id,
+            'email' => 'required|string|unique:users,email,'.$servicer->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    public function rayfleetservicerProfileUpdateRules($servicer)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$servicer->user_id,
+            'email' => 'required|string|unique:users,email,'.$servicer->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+    public function clientProfileUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',            
+            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
+            'email' => 'required|string|unique:users,email,'.$client->user_id
+           
+            
+        ];
+        return  $rules;
+    }
+
+
+
+
+    public function updatePasswordRule()
+    {
+        $rules=[
+            'password' => 'required|string|min:6|confirmed'
+        ];
+        return $rules;
+    }
     public function servicerCreateRules()
     {
         $rules = [
@@ -967,7 +1089,7 @@ class ServicerController extends Controller {
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
-            'mobile' => 'required|string|min:10|max:10'  
+            'mobile' => 'required|string|min:10|max:10|unique:users'  
            
         ];
         return  $rules;
@@ -981,7 +1103,8 @@ class ServicerController extends Controller {
             'job_type' => 'required',
             'description' => 'required',
             'gps' => 'required',
-            'job_date' => 'required'            
+            'job_date' => 'required',
+            'search_place'=>'required'            
         ];
         return  $rules;
     }
@@ -991,9 +1114,8 @@ class ServicerController extends Controller {
         $rules = [
             'name' => 'required',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'address' => 'required',
-           'mobile' => 'required|string|min:10'
-            
         ];
         return  $rules;
     }
@@ -1012,9 +1134,9 @@ class ServicerController extends Controller {
      public function servicercompleteJobRules()
     {
         $rules = [          
-            'job_completed_date' => 'required',
+            // 'job_completed_date' => 'required',
             'name' => 'required',
-            'register_number' => 'required',
+            'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
             'gps_id' => 'required',
             'client_id' => 'required',
@@ -1022,10 +1144,10 @@ class ServicerController extends Controller {
             'engine_number' => 'required',
             'chassis_number' => 'required',
             'name' => 'required',
-            'path' => 'required',
-            'installation_photo' => 'required',
-            'activation_photo' => 'required',
-            'vehicle_photo' => 'required',
+            'path' => 'required|mimes:jpeg,png|max:4096',
+            'installation_photo' => 'required|mimes:jpeg,png|max:4096',
+            'activation_photo' => 'required|mimes:jpeg,png|max:4096',
+            'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
             'comment' => 'required',
             'driver'=>'required'
 

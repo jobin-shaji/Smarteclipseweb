@@ -12,7 +12,9 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a>
+            <!-- <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> -->
             <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>  
+            <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LOG</a> 
         </div>
@@ -40,6 +42,7 @@
                 <li><a class="dropdown-item" href="{{url('/dealers')}}">LIST DEALERS</a></li>
                 </ul>
             </li>
+
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SUB DEALERS</a>
                 <ul class="dropdown-menu">
@@ -63,6 +66,13 @@
                 <li><a class="dropdown-item" href="{{url('/servicer-job-history-list')}}">JOBS HISTORY</a></li>
                 </ul>
             </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >OPERATIONS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/operations/create')}}">ADD USER (OPERATION)</a></li>
+                <li><a class="dropdown-item" href="{{url('/operations')}}">LIST USER (OPERATION)</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
     <li class="nav-item dropdown">
@@ -77,13 +87,13 @@
                 <li><a class="dropdown-item" href="{{url('/vehicle-types')}}">VEHICLE CATEGORIES</a></li>
                 </ul>
             </li>
-            <li class="dropdown-submenu">
+            <!-- <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUBSCRIPTION</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{url('/subscription/create')}}">ADD SUBSCRIPTION</a></li>
                 <li><a class="dropdown-item" href="{{url('/subscription')}}">LIST SUBSCRIPTION</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >TRAFFIC RULES</a>
                 <ul class="dropdown-menu">
@@ -114,6 +124,15 @@
         </ul>
     </li>
     <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> EMPLOYEES
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/employee/create')}}">ADD EMPLOYEE<span></span></a> 
+            <a class="dropdown-item" href="{{url('/employee')}}">LIST EMPLOYEES<span></span></a> 
+        </div>
+    </li>  
+    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -134,5 +153,17 @@
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
         </div> -->
-    </li>         
+    </li> 
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/subscription/create')}}">ADD WARRANTY AND PLANS </a>
+            <a class="dropdown-item" href="{{url('/subscription')}}">LIST WARRANTY AND PLANS </a>
+          
+        </div>
+    </li> 
+  
 </ul>

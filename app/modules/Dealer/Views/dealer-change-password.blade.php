@@ -26,12 +26,12 @@
   <div class="card-body">
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
-          <div class="col-sm-12">
+          <div class="col-md-6 col-lg-6">
             <form  method="POST" action="{{route('dealer.update-password.p',$dealer->user_id)}}">
             {{csrf_field()}}
             <input type="hidden" name="id" value="{{$dealer->user_id}}"> 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">New Password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
@@ -50,15 +50,13 @@
 
               </div>
             </div>
-
-              
-              <div class="row">
-                <!-- /.col -->
-                <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
-                </div>
-                <!-- /.col -->
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-md-2 ">
+                <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
               </div>
+              <!-- /.col -->
+            </div>
             </form>
           </div>
         </div>

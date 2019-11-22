@@ -1,7 +1,7 @@
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
-
+    $('.select2').select2();  
 function toast(res){
     // alert(res.status);
     
@@ -42,12 +42,19 @@ function apiBackgroundPostData(url, data, callBack, options) {
                          gpsData(res);
                 }else if(callBack=='gpsDataBth'){
                          gpsDataBth(res);
+                }else if(callBack=='alldata'){
+                         alldata(res);
                 }
+                else if(callBack=='gpsDataHlm'){
+                         gpsDataHlm(res);
+                }
+
+
            }
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
+            console.log(message);
         }
     });
 
@@ -83,13 +90,12 @@ function getPolygonData(url, data, callBack, options) {
         },
         error: function (err) {
             var message = (err.responseJSON)?err.responseJSON.message:err.responseText;
-            toastr.error(message, 'Error');
+            console.log(message);
         }
     });
 
 }
-    function getdata(id){ 
- 
+function getdata(id){  
     var url = 'get-gps-data';
     var data = {
        id:id 
@@ -120,6 +126,8 @@ function gpsData(res)
             '<tr><td>Signal Strength</td><td>'+res.gpsData.gsm_signal_strength+'</td></tr>'+        
             '<tr><td>ignition</td><td>'+res.gpsData.ignition+'</td></tr>'+
             '<tr><td>main power status</td><td>'+res.gpsData.main_power_status+'</td></tr>'+
+            '<tr><td>Gpx-fix</td><td>'+res.gpsData.gps_fix+'</td></tr>'+
+
             '<tr><td>Vehicle Mode</td><td>'+res.gpsData.vehicle_mode+'</td></tr>'
         ;  
         $("#allDataTable").append(gps); 
@@ -138,7 +146,7 @@ function gpsData(res)
   }
 
 
-  function gpsDataBth(res)
+function gpsDataBth(res)
 {
 
     $("#allDataTable tr").remove(); 
@@ -147,5 +155,38 @@ function gpsData(res)
         $("#allDataTable").append(gps); 
     // console.log(res);
     $('#gpsDataModal').modal('show');
+}
+
+function getdataHLMList(id){ 
+
+    var url = 'get-gps-data-hlm';
+    var data = {
+       id:id 
+    };   
+    apiBackgroundPostData(url,data,'gpsDataHlm',{alert:false});           
+  }
+
+
+  function gpsDataHlm(res)
+{
+console.log(res.gpsData.header);
+    $("#allHLMDataTable tr").remove(); 
+    var gps=' <tr><td>Header</td><td>'+res.gpsData.header+'</td></tr>'+
+            '<tr><td>Imei</td><td >'+res.gpsData.imei+'</td></tr>'+ 
+            '<tr><td>Vendor Id</td><td>'+res.gpsData.vendor_id+'</td></tr>'+
+            '<tr><td>Firmware Version</td><td>'+res.gpsData.firmware_version+'</td></tr>'+
+            '<tr><td>Device Date</td><td>'+res.gpsData.device_time+'</td></tr>'+
+            '<tr><td>Update ignition rate on</td><td>'+res.gpsData.update_rate_ignition_on+'</td></tr>'+
+            '<tr><td> Update ignition rate off</td><td>'+res.gpsData.update_rate_ignition_off+'</td></tr>'+
+            '<tr><td>Battery percentage</td><td>'+res.gpsData.battery_percentage+'</td></tr>'+
+            '<tr><td> Low battery Threshold value</td><td>'+res.gpsData.low_battery_threshold_value+'</td></tr>'+
+            '<tr><td>Memory Percentage </td><td>'+res.gpsData.memory_percentage+'</td></tr>'+
+            '<tr><td>Digital IO Status Mode</td><td>'+res.gpsData.digital_io_status+'</td></tr>'+
+            '<tr><td>Analog IO Status Mode</td><td>'+res.gpsData.analog_io_status+'</td></tr>'+
+            '<tr><td>Date</td><td>'+res.gpsData.date+'</td></tr>'+
+            '<tr><td>Time</td><td>'+res.gpsData.time+'</td></tr>';  
+        $("#allHLMDataTable").append(gps); 
+    // console.log(res);
+    $('#gpsHLMDataModal').modal('show');
 }
 

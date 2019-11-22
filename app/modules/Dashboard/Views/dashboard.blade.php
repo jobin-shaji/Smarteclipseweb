@@ -1,7 +1,31 @@
 @extends('layouts.eclipse')
 @section('content')
+
+<!--  -->
 <!-- ROOT ROLE-START -->
 @role('root')
+ <style>
+    .btn-pop {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;  
+    background-color:#ccc;
+    border: 1px solid transparent;
+    padding: 0 .21rem;
+     line-height: 2;
+     font-size:.75rem!important;
+    border-radius: .25rem;
+    margin:0 .1rem .5rem .1rem;
+    color:#000;
+  }
+  .btn-pop:hover {background:#f7b018;}
+  </style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <section class="content">
@@ -13,7 +37,7 @@
               <h3 id="gps">
                 <div class="loader"></div>
               </h3>
-              <p>Gps In Stock</p>
+              <p>GPS In Stock</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -29,7 +53,7 @@
               <h3 id="dealer">
                 <div class="loader"></div>
               </h3>
-              <p>Dealers</p>
+              <p>Active Dealers</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -45,10 +69,10 @@
               <h3 id="sub_dealer">
                 <div class="loader"></div>
               </h3>
-              <p>Sub Dealers</p>
+              <p>Active Subdealers</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <i class="fa fa-user"></i>
             </div>
             <a href="/sub-dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -61,10 +85,10 @@
               <h3 id="client">
                 <div class="loader"></div>
               </h3>
-              <p>Clients</p>
+              <p>Active Clients</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <i class="fa fa-user"></i>
             </div>
             <a href="/client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -95,13 +119,27 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="row">
-                  <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+                  <div class="col-lg-2 col-xs-6 new_arrival_dashboard_grid dash_grid">
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_new_arrival_dealer">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>GPS New Arrivals</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-tablet"></i>
+                      </div>
+                      <a href="/gps-dealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-xs-6 gps_dashboard_grid dash_grid">
                     <div class="small-box bg-green bxs">
                       <div class="inner">
                         <h3 id="total_gps_dealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>Total GPS</p>
+                        <p>GPS In Stock</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
@@ -109,7 +147,7 @@
                       <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+                  <div class="col-lg-2 col-xs-6 transferred_gps_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-green bxs">
                       <div class="inner">
@@ -121,23 +159,38 @@
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
                       </div>
-                      <a href="/gps-transfers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                      <a href="/gps-transfers-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
                   <!-- ./col -->
-                  <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+                  <div class="col-lg-2 col-xs-6 sub_dealer_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-yellow bxs">
                       <div class="inner">
                         <h3 id="dealer_subdealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>Sub Dealers</p>
+                        <p>Active Subdealers</p>
                       </div>
                       <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fa fa-user"></i>
                       </div>
                       <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-xs-6 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="dealer_client">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Active Clients</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      <a href="/dealer-client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
                 </div>
@@ -160,12 +213,128 @@
 <!-- ./col -->       
 @endrole
 <!-- DEALER ROLE-END -->
+<!-- DEALER ROLE-START -->
+@role('operations')
+<div class="page-wrapper page-wrapper-root page-wrapper_new" style="min-height: 634px!important">
+  <div class="page-wrapper-root1">
+    <div class="container-fluid">
+      <div class="card-body">
+        <div class="table-responsive">
+          <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <!-- ./col -->
+                  <div class="col-lg-6 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="gps_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Devices Instock  </p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-8 transferred_gps_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Total devices tested</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
+                    </div>
+                  </div>
+                </div>
 
+                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="pending_gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p> To be added to stock </p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                  
+                  <span style="margin-left: 2%"></span>
+
+                   <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_today">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Devices tested today</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                 
+                  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_add_to_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p style="width: 70%">devices added to stock today</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
+                      </div>
+                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./col -->       
+@endrole
 <!-- SUB DEALER ROLE-START -->
 @role('sub_dealer')
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <div class="row">
+      <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_new_arrival_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS New Arrivals</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-subdealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
       <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
       <!-- small box -->
         <div class="small-box bg-green bxs">
@@ -181,7 +350,7 @@
           <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-green bxs">
           <div class="inner">
@@ -193,18 +362,18 @@
           <div class="icon">
             <i class="fa fa-tablet"></i>
           </div>
-          <a href="/gps-transfers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/gps-transfers-subdealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-blue bxs">
           <div class="inner">
             <h3 id="subdealer_client">
               <div class="loader"></div>
             </h3>
-            <p>Client</p>
+            <p>Active Clients</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>
@@ -235,7 +404,7 @@
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <h3 id="gps">
+              <h3 id="pending_jobs">
                 <div class="loader"></div>
               </h3>
               <p>NEW JOBS</p>
@@ -249,7 +418,7 @@
         <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
           <div class="small-box bg-yellow bxs">
             <div class="inner">
-              <h3 id="dealer">
+              <h3 id="completed_jobs">
                 <div class="loader"></div>
               </h3>
               <p>COMPLETED JOBS</p>
@@ -281,11 +450,11 @@
     <div class="pageContainer" style="overflow: scroll">
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
-          <div class="st-panel">
+          <div class="st-panel" style="overflow: scroll!important;">
             <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
-            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
+            <div class="st-panel-contents" id="vehicle_card_cover">
               @foreach ($vehicles as $vehicle) 
 
                 <div class="border-card">
@@ -307,12 +476,7 @@
                       <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                     </div>
                     <div class="min-gap"></div>
-                    <div class="label-group">
-                      <p class="title">
-                        <span><i class="fas fa-tachometer-alt"></i></span>
-                      </p>
-                      <p class="caption">80</p>
-                    </div>
+                   
                   </div>
                 </div>
               @endforeach  
@@ -383,7 +547,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color:#129a00!important">
+              <h1 class="text-white" style="color:#84b752!important">
               <!-- <img src="assets/images/moving.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -399,14 +563,14 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color: #0077ae!important">
+              <h1 class="text-white" style="color: #69b4b9!important">
                <!--  <img src="assets/images/idling.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
                 <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">IDLE</h5> -->
+                <!-- <h5 class="text-white">Halt</h5> -->
               </span>
             </div>
           </div>
@@ -415,7 +579,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color: #999!important">
+              <h1 class="text-white" style="color: #858585!important">
                 <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -431,7 +595,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color:#fc4343!important">
+              <h1 class="text-white" style="color:#c41900!important">
                 <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -451,7 +615,8 @@
                box-shadow: 1px 1px 21px 1px #ccc">
             <div class="col-6 m-t-15">
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
-                <img src="assets/images/network-status.png">
+                <img src="assets/images/network-status.png" id="network_online">
+                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
                 <medium id="network_status" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -479,7 +644,11 @@
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/vehicle-status.png">
+                <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                 <medium id="mode" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -494,15 +663,15 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <img src="assets/images/ignition-dashboard.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
@@ -531,20 +700,22 @@
 
 <!-- CLIENT ROLE-START -->
 @role('client')
+<input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
+<input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 full-height">
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
     <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
-    <div class="pageContainer" style="overflow: scroll">
+    <div class="pageContainer">
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
           <div class="st-panel">
             <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
-            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow:auto;">
+            <div class="st-panel-contents" id="vehicle_card_cover">
               @foreach ($vehicles as $vehicle)       
                 <div class="border-card">
                   <div class="card-type-icon with-border">
@@ -565,12 +736,7 @@
                       <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                     </div>
                     <div class="min-gap"></div>
-                    <div class="label-group">
-                      <p class="title">
-                        <span><i class="fas fa-tachometer-alt"></i></span>
-                      </p>
-                      <p class="caption">80</p>
-                    </div>
+                   
                   </div>
                 </div>
               @endforeach  
@@ -638,10 +804,11 @@
     <div class="dashboard-main-Right cover_vehicle_track_list">
       <div class="iconsbg1234">
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
-          <div class="card card-hover">
+          <!-- <div class="card card-hover"> -->
+             <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color:#129a00!important">
+              <h1 class="text-white" style="color:#84b752!important">
               <!-- <img src="assets/images/moving.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -657,14 +824,14 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color: #0077ae!important">
+              <h1 class="text-white" style="color: #69b4b9!important">
                <!--  <img src="assets/images/idling.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
                 <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">IDLE</h5> -->
+                <!-- <h5 class="text-white">Halt</h5> -->
               </span>
             </div>
           </div>
@@ -673,7 +840,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color: #999!important">
+              <h1 class="text-white" style="color: #858585!important">
                 <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -689,7 +856,7 @@
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
-              <h1 class="text-white" style="color:#fc4343!important">
+              <h1 class="text-white" style="color:#c41900!important">
                 <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
@@ -709,7 +876,8 @@
                box-shadow: 1px 1px 21px 1px #ccc">
             <div class="col-6 m-t-15">
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
-                <img src="assets/images/network-status.png">
+                <img src="assets/images/network-status.png" id="network_online">
+                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
                 <medium id="network_status" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -737,7 +905,11 @@
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/vehicle-status.png">
+                <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                 <medium id="mode" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -752,15 +924,15 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                <img src="assets/images/towing-dash.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Towing</h4>
-                <medium class="font-light">
+                <img src="assets/images/ignition-dashboard.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
@@ -783,6 +955,7 @@
 </div>
 </section>
 @section('script')
+
 <script src="{{asset('js/gps/mdb.js')}}"></script>
 <script src="{{asset('js/gps/dashb.js')}}"></script>
 @role('client')

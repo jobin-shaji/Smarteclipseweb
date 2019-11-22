@@ -49,7 +49,7 @@ class UserAlertController extends Controller {
                 }                
             }
         }                      
-        $request->session()->flash('message', 'Alert Manager successfully updated!');
+        $request->session()->flash('message', 'Alert manager successfully updated!');
         $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('alert.manager'));
     }

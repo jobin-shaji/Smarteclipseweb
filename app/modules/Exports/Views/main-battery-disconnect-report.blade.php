@@ -24,7 +24,7 @@
         ?> 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $mainBatteryDisconnectReportExport->vehicle->register_number }}</td>           
+            <td>{{ $mainBatteryDisconnectReportExport->gps->vehicle->register_number }}</td>           
             <td>{{ $mainBatteryDisconnectReportExport->alertType->description }}</td>
             <td>{{ $address }}</td>
             <td>{{ $mainBatteryDisconnectReportExport->device_time }}</td>         

@@ -10,7 +10,11 @@ class Alert extends Model
 		'alert_type_id','device_time','vehicle_id','gps_id','client_id','latitude','longitude','status'
 	];
 	public function vehicle(){
-	 return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id')->withTrashed();
+	 return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
+	}
+
+	public function clientAlertPoint(){
+	 	return $this->hasOne('App\Modules\Client\Models\ClientAlertPoint','alert_type_id','alert_type_id')->where('client_id',\Auth::user()->client->id);
 	}
 
 	public function gps(){
@@ -24,5 +28,7 @@ class Alert extends Model
 	public function alertType(){
 	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_type_id');
 	}
+
+	
 
 }

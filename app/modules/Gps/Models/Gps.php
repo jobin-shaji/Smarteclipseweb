@@ -44,6 +44,9 @@ class Gps extends Model
 
     // vehicle gps
     public function vehicle(){
-        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id');
+        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id')->withTrashed();
+    }
+     public function employee(){
+        return $this->hasOne('App\Modules\Employee\Models\Employee','id','employee_code')->withTrashed();
     }
 }

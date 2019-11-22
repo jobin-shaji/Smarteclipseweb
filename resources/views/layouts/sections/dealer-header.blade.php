@@ -26,8 +26,8 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/sos-new')}}"> NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/sos-dealer')}}"> LIST SOS</a>  
-                                <a class="dropdown-item" href="{{url('/sos-transfer-dealer/create')}}"> SOS TRANSFER</a>
+                                <a class="dropdown-item" href="{{url('/sos-dealer')}}"> SOS LIST</a>  
+                                <a class="dropdown-item" href="{{url('/sos-transfer-dealer/create')}}">TRANSFER SOS</a>
                                 <a class="dropdown-item" href="{{url('/sos-transfers')}}"> SOS TRANSFER LIST</a>                           
                             </div>
                         </li>
@@ -39,7 +39,7 @@
                                 <div class="dropdown-divider"></div>
                               
                                  <a class="dropdown-item" href="{{url('/sub-dealer/create')}}">ADD SUB DEALER<span></span></a>
-                                   <a class="dropdown-item" href="{{url('/subdealers')}}">LIST SUB DEALER<span></span></a>
+                                   <a class="dropdown-item" href="{{url('/subdealers')}}">LIST SUB DEALERS<span></span></a>
                             </div>
                         </li>
                            <li class="nav-item dropdown">

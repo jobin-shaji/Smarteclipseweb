@@ -1,12 +1,11 @@
 <?php
 namespace App\Modules\Reports\Controllers;
 use App\Exports\GeofenceReportExport;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
 class GeofenceReportController extends Controller
@@ -16,44 +15,52 @@ class GeofenceReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::geofence-report',['vehicles'=>$vehicles]);  
     }  
     public function geofenceReportList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
-       
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
       
         if($vehicle==0 || $vehicle==null)
         {
-            
+            $gps_stocks=GpsStock::where('client_id',$client_id)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }
+            // dd($gps_list);
             $query =GpsData::select(
                 'id',
-                'vehicle_id', 
+                'gps_id',
                 'alert_id',    
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number')
+            ->with('gps.vehicle')
             ->with('alert:id,code,description')
+            ->whereIn('gps_id',$gps_list)
             ->whereIn('alert_id',[18,19,20,21])
-            ->where('client_id',$client_id);
+            ->orderBy('id', 'desc')
+            ->limit(1000);
         }
         else
         {
+            $vehicle=Vehicle::withTrashed()->find($vehicle); 
             $query =GpsData::select(
-                'id',
-                'vehicle_id', 
+                'id', 
                 'alert_id',    
                 'device_time'
             )
-            ->with('vehicle:id,name,register_number')
+            ->with('gps.vehicle')
             ->with('alert:id,code,description')
             ->whereIn('alert_id',[18,19,20,21])
-            ->where('client_id',$client_id)
-            ->where('vehicle_id',$vehicle);
+            ->where('gps_id',$vehicle->gps_id)
+            ->orderBy('id', 'desc')
+            ->limit(1000);
         }       
         if($from){
             // $query = $query->whereBetween('device_time',[$from,$to]);

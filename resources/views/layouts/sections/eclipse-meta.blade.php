@@ -18,9 +18,12 @@
    
   ?>
     <?php 
-     $client = Auth::user()->client;
 
+     $client = Auth::user()->client;
+     // $client = Auth::user()->client;
+     
      $user = Auth::user();
+     // dd($user);
      $root=$user->root;    
      $dealer=$user->dealer;
      $sub_dealer=$user->subDealer;
@@ -62,20 +65,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon"  sizes="16x16" href="{{ url('/') }}/assets/images/favicon.ico">
-    <title>GPS-Admin</title>
+    
+    <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+      if (strpos($url, $rayfleet_key) == true) {  ?>
+          <title>RAYFLEET</title> 
+      <?php } 
+      else if (strpos($url, $eclipse_key) == true) { ?>
+          <title>SMART ECLIPSE</title>
+      <?php }
+      else { ?>
+          <title>SMART ECLIPSE</title> 
+    <?php } ?>  
+    
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
-    <!-- Custom CSS -->
+
+    
     <link href="{{ url('/') }}/dist/css/style.min1.css" rel="stylesheet">
 
     
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
-
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{asset('css/bootstrap-datepicker.min.css')}}">
+  
+  <link rel="stylesheet" href="{{asset('css/daterangepicker.css')}}">
+  <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('css/dash-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+    
 
 
 

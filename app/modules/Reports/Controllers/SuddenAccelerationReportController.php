@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -16,6 +17,7 @@ class SuddenAccelerationReportController extends Controller
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::sudden-acceleration-report',['vehicles'=>$vehicles]);  
     }  
@@ -30,20 +32,25 @@ class SuddenAccelerationReportController extends Controller
             'id',
             'alert_type_id', 
             'device_time',    
-            'vehicle_id',
-            'gps_id',
-            'client_id',  
+            'gps_id', 
             'latitude',
             'longitude', 
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number');        
+        ->with('gps.vehicle')
+        ->orderBy('id', 'desc')        
+        ->limit(1000);        
         if($vehicle==0 || $vehicle==null)
         {
-            $query = $query->where('client_id',$client)
-            ->where('alert_type_id',2);
-            // ->where('status',1);
+            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_list=[];
+            foreach ($gps_stocks as $gps) {
+                $gps_list[]=$gps->gps_id;
+            }
+            $query = $query->whereIn('gps_id',$gps_list)
+                ->where('alert_type_id',2);
+            // dd($gps_list);
             if($from){
                $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
@@ -52,9 +59,8 @@ class SuddenAccelerationReportController extends Controller
         }
         else
         {
-             $query = $query->where('client_id',$client)
-            ->where('alert_type_id',2)
-            ->where('vehicle_id',$vehicle);
+            $vehicle=Vehicle::withTrashed()->find($vehicle);
+            $query = $query->where('alert_type_id',2)->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
             if($from){
                $search_from_date=date("Y-m-d", strtotime($from));
@@ -63,26 +69,10 @@ class SuddenAccelerationReportController extends Controller
             }
         }
         $suddenacceleration = $query->get();   
-
+        // dd($suddenacceleration);
         return DataTables::of($suddenacceleration)
         ->addIndexColumn()
-        ->addColumn('location', function ($suddenacceleration) {
-             $latitude= $suddenacceleration->latitude;
-             $longitude=$suddenacceleration->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                     $location=$address;
-                return $location;                   
-                }            
-            }
-        })
+        
          ->addColumn('action', function ($suddenacceleration) {    
          $b_url = \URL::to('/');          
             return "

@@ -35,13 +35,13 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'gps.imei', name: 'gps.imei'},
-            {data: 'gps.version', name: 'gps.version'},
-            {data: 'gps.batch_number', name: 'gps.batch_number'},
-            {data: 'gps.employee_code', name: 'gps.employee_code'},
-            {data: 'gps.model_name', name: 'gps.model_name'},
-            {data: 'client', name: 'client'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'gps.imei', name: 'gps.imei', orderable: false},
+            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
+            {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
+            {data: 'gps.employee_code', name: 'gps.employee_code', orderable: false},
+            {data: 'gps.model_name', name: 'gps.model_name', orderable: false},
+            {data: 'client', name: 'client', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},  
         ],
         
@@ -50,18 +50,22 @@ function callBackDataTable(){
 }
 
 function deactivateGpsStatus(gps_id){
-    var url = 'gps-status/deactivate';
-    var data = {
-        id : gps_id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this device?')){
+        var url = 'gps-status/deactivate';
+        var data = {
+            id : gps_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateGpsStatus(gps_id){
-    var url = 'gps-status/activate';
-    var data = {
-        id : gps_id
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this device?')){
+        var url = 'gps-status/activate';
+        var data = {
+            id : gps_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
 

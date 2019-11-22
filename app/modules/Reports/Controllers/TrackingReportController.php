@@ -5,133 +5,72 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Gps\Models\GpsModeChange;
+use App\Http\Traits\VehicleDataProcessorTrait;
+use DB;
+use Carbon\Carbon;
 
 use DataTables;
 class TrackingReportController extends Controller
 {
+  use VehicleDataProcessorTrait;
+
     public function trackingReport()
     {
         $client_id=\Auth::user()->client->id;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
+        ->withTrashed()
         ->get();
         return view('Reports::tracking-report',['vehicles'=>$vehicles]);  
     }  
     public function trackReportList(Request $request)
     {
-        $client_id=\Auth::user()->client->id;;
-        $from = $request->from_date;
-        $to = $request->to_date;
-        $vehicle = $request->vehicle;
-        $query =GpsData::select(
-            'client_id',
-            'gps_id',
-            'vehicle_id',
-            'header',
-            'vendor_id',
-            'firmware_version',
-            'imei',
-            'update_rate_ignition_on',
-            'update_rate_ignition_off',
-            'battery_percentage',
-            'low_battery_threshold_value',
-            'memory_percentage',
-            'digital_io_status',
-            'analog_io_status',
-            'activation_key',
-            'latitude',
-            'lat_dir',
-            'longitude',
-            'lon_dir',
-            'date',
-            'time',
-            'speed',
-            'alert_id',
-            'packet_status',
-            'gps_fix',
-            'mcc',
-            'mnc',
-            'lac',
-            'cell_id',
-            'heading',
-            'no_of_satelites',
-            'hdop',
-            'gsm_signal_strength',
-            'ignition',
-            'main_power_status',
-            'vehicle_mode',
-            'altitude',
-            'pdop',
-            'nw_op_name',
-            'nmr',
-            'main_input_voltage',
-            'internal_battery_voltage',
-            'tamper_alert',
-            'digital_input_status',
-            'digital_output_status',
-            'frame_number',
-            'checksum',
-            'gf_id',
-            'device_time',
-            \DB::raw('sum(distance) as distance')
-        )
-        ->with('vehicle:id,name,register_number');     
-        if($vehicle==0)
-       {         
-            $query = $query->where('client_id',$client_id)
-            ->groupBy('date');
-       }
-       else
-       {
-        $query = $query->where('client_id',$client_id)
-            ->where('vehicle_id',$vehicle)
-            ->groupBy('date'); 
-       }
-               
-        if($from){
-            $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-        }
-        $track_report = $query->get();     
-        return DataTables::of($track_report)
-        ->addIndexColumn()
-         ->addColumn('motion', function ($track_report) {                    
-            $M_mode=$track_report->sleep->where('vehicle_mode','M')->count();
-           $motion= gmdate("H:i:s",$M_mode);          
-            
-            return $motion;           
-        })
-        ->addColumn('sleep', function ($track_report) {  
-            $v_mode=$track_report->sleep->where('vehicle_mode','S')->count(); 
-             $sleep= gmdate("H:i:s",$v_mode);         
-          
-            return $sleep;
-        })
-         ->addColumn('halt', function ($track_report) {  
-            $H_mode=$track_report->sleep->where('vehicle_mode','H')->count();
-            $halt= gmdate("H:i:s",$H_mode);           
-           
-            return $halt;
-        })
-         ->addColumn('ac_on', function ($track_report) {                    
-            $ac_on=0;
-            return $ac_on;
-        })
-        ->addColumn('ac_off', function ($track_report) {                    
-            $ac_off=0;
-            return $ac_off;
-        })
-        ->addColumn('km', function ($track_report) {                    
-            $km='-';
-            return $km;
-        })
-        ->make();
+        $vehicle_id =$request->vehicle;
+        $report_type =$request->type;
+        $client_id=\Auth::user()->client->id;  
+        $custom_from_date = $request->from_date;
+        $custom_to_date = $request->to_date;
+        $date_and_time = $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
+        $vehicle_profile = $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        return response()->json([           
+            'sleep' => $vehicle_profile['sleep'],  
+            'motion' => $vehicle_profile['motion'],   
+            'halt' => $vehicle_profile['halt'],          
+            'status' => 'track_report'           
+        ]);           
     }
+    
     public function export(Request $request)
     {
         // dd($request->fromDate);    
         return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
     }
+
+    public function getDateFromType($report_type) 
+    {
+        if ($report_type == "1") 
+        {
+            $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
+            $to_date = date('Y-m-d H:i:s');
+        } else if ($report_type == "2") {
+            $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
+        } else if ($report_type == "3") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+        } else if ($report_type == "4") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+        }
+        $output_data = ["from_date" => $from_date, 
+                        "to_date" => $to_date
+                       ];
+        return $output_data;
+    }
+
+
+
 }

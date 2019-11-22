@@ -4,7 +4,7 @@
 <div class="page-wrapper page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS LIST</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS List</li>
         
       </ol>
        @if(Session::has('message'))
@@ -17,29 +17,25 @@
     </nav>
  
     <div class="container-fluid">
-    <div class="card-body">
+    <div class="card-body"><h4>SOS List</h4>
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
-                              <div class="col-md-10 col-md-offset-1">
+                              <div class="col-md-11 col-md-offset-1">
                                   <div class="panel panel-default">
-                                      <div class="panel-heading">SOS LIST
-                                          <a href="{{route('sos.create')}}">
-                                          </a>
-                                      </div>
                                       <div class="table-responsive">
                                       <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="width:100%">
+                                          <table class="table table-bordered  table-striped " style="width:100%;">
                                             <thead>
                                               <tr>
                                                 <th>Sl.No</th>
                                                 <th>Serial NO</th>
+                                                <th>Model Name</th>
                                                 <th>Version</th>
                                                 <th>Brand</th>
-                                                <th>Model Name</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -47,9 +43,9 @@
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$device->imei}}</td>
+                                                <td>{{$device->model_name}}</td>
                                                 <td>{{$device->version}}</td>
                                                 <td>{{$device->brand}}</td>
-                                                <td>{{$device->model_name}}</td>
                                               </tr>
                                               @endforeach
                                             </tbody>

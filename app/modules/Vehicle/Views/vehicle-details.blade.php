@@ -59,7 +59,7 @@
 
                             <div class="form-group has-feedback">
                               <label class="srequired">GPS</label>
-                              <input type="text" class="form-control" value="{{$vehicle->gps->imei}}" disabled> 
+                              <input type="text" class="form-control" value="{{$vehicle->gps->serial_no}}" disabled> 
                               <span class="glyphicon glyphicon-home form-control-feedback"></span>
                             </div>
                           </div> 
@@ -98,6 +98,39 @@
                           @if ($errors->has('driver_id'))
                             <span class="help-block">
                                 <strong class="error-text">{{ $errors->first('driver_id') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-10 col-md-12">
+                          <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
+                        </div>
+                      </div>
+                    </form>
+                  </section>
+                  <section class="hilite-content">
+                  <!-- title row -->
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-xs-12">
+                        <h3 class="page-header">
+                          <i class="fa fa-user"> Odometer Update</i> 
+                        </h3>
+                        
+                      </div>
+                    </div>
+
+                    <form  method="POST" action="{{route('vehicles.odometer.update.p',$vehicle->id)}}">
+                    {{csrf_field()}}
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                          <div class="form-group has-feedback">
+                            <label class="srequired">Odometer(in meter)</label>
+                            <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$vehicle->gps->km}}">
+                          </div>
+                          @if ($errors->has('odometer'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('odometer') }}</strong>
                             </span>
                           @endif
                         </div>
@@ -199,7 +232,7 @@
                             <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                               <thead>
                                 <tr>
-                                  <th>#</th>
+                                  <th>SL No.</th>
                                   <th>Document Type</th>
                                   <th>Expiry Date</th>
                                   <th>Action</th>

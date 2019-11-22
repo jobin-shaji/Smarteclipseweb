@@ -43,17 +43,21 @@ function callBackDataTable(){
     });
 }
 function delDriver(driver){
-    var url = 'driver/delete';
-    var data = {
-        uid : driver
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to deactivate this driver?')){
+        var url = 'driver/delete';
+        var data = {
+            uid : driver
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 function activateDriver(driver){
-    var url = 'driver/activate';
-    var data = {
-        id : driver
-    };
-    backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    if(confirm('Are you sure to activate this driver?')){
+        var url = 'driver/activate';
+        var data = {
+            id : driver
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
 }
 
