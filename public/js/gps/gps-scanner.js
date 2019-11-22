@@ -14,7 +14,8 @@ Instascan.Camera.getCameras().then(function (cameras) {
 }).catch(function (e) {
 });
 scanner.addListener('scan', function (content) {
-  var serial_no=content;
+  var scanned_serial_no = content.slice(12, 31);
+  var serial_no = scanned_serial_no.replace(' ');
   var data = { serial_no : serial_no };
   $.ajax({
       type:'POST',
