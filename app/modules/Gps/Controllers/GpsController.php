@@ -21,6 +21,7 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Ota\Models\OtaUpdates;
+use App\Modules\Gps\Models\GpsConfiguration;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -1763,14 +1764,20 @@ class GpsController extends Controller {
 
     }
 
-
-
-
-
-
-
-
-
+    //update gps config
+    public function updateGpsConfig(Request $request)
+    {
+        $gps_id=5;
+        $command="PU:23,MO:11,EO:10,ED:04,URE:05,SPD:08,CDC:01";
+        $gps_config = GpsConfiguration::where('gps_id',$gps_id)->first();
+        $command_array = explode(',', $command);
+        foreach ($command_array as $single_command) {
+            $single_command_array = explode(':', $single_command);
+            $key=strval($single_command_array[0]);
+            $gps_config->$key=$single_command_array[1];
+            $gps_config->save();
+        }
+    }
 
     //validation for gps creation
     public function gpsCreateRules(){
