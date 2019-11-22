@@ -235,7 +235,7 @@
                         <p>Devices Instock  </p>
                       </div>
                       <div class="icon">
-                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                        <img src="../../assets/images/gps103.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
@@ -250,7 +250,7 @@
                         <p>Total devices tested</p>
                       </div>
                       <div class="icon">
-                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
+                        <img src="../../assets/images/gps104.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
                     </div>
                   </div>
                 </div>
@@ -280,10 +280,10 @@
                         <h3 id="gps_today">
                           <div class="loader"></div>
                         </h3>
-                        <p>Devices tested today</p>
+                        <p style="width: 45%">Devices tested today</p>
                       </div>
                       <div class="icon">
-                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                        <img src="../../assets/images/gps101.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
@@ -299,7 +299,7 @@
                         <p style="width: 70%">devices added to stock today</p>
                       </div>
                       <div class="icon">
-                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
+                        <img src="../../assets/images/gps105.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
                       </div>
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>

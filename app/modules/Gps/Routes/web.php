@@ -119,5 +119,6 @@ Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps
 Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
 Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 
+Route::get('/gps-config/update','GpsController@updateGpsConfig')->name('gps.config.update');
 
 });
