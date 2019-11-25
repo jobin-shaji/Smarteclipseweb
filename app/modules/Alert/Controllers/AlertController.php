@@ -348,7 +348,7 @@ class AlertController extends Controller {
         ->with('client:id,name')
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
-        ->whereNotIn('alert_type_id',[17,18,23,24])
+        ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
         ->where('status',0)
         ->orderBy('id','DESC')
         ->limit(4)
@@ -398,7 +398,7 @@ class AlertController extends Controller {
         $alert = Alert::select('id','gps_id','alert_type_id')
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
-        ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+        ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
         ->where('status',0)
         ->get()
         ->count();
