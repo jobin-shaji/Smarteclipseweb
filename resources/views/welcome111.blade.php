@@ -78,12 +78,12 @@
     <div class="container">
 
       <div class="logo">
-                <a href="#"><img src="smart/assets/img/logos.png" alt=""/></a>
+                <a href="index.html"><img src="smart/assets/img/logos.png" alt="" /></a>
             </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">HOME</a></li>
+          <li class="menu-active"><a href="#">HOME</a></li>
           <li><a href="#about">ABOUT</a></li>
           <li><a href="#products">PRODUCTS</a></li>
           <li><a href="#authorizedservice">AUTHORIZED SERVICE CENTER</a></li>
@@ -170,8 +170,7 @@
                      
                     </div>
 					</div>
-                    <div class="lead iq-tw-4 iq-mb-20">Vehicle Tracking Unit (VTU) is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management. 
-	  User-friendly cum Next Level intelligent computing Web and Mobile Applications for real-time tracking & MIS Reports.</div>
+                    <div class="lead iq-tw-4 iq-mb-20">Vehicle Tracking Unit (VTU) is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management. It helps in real-time tracking & MIS Reports by using artificial intelligence(AI) technology</div>
                    
                 </div>
             </div>
@@ -191,7 +190,7 @@
 				 
 					 <div class="col-md-12 col-sm-12 col-xs-12">
 				   
-									<div >
+									<div>
                                         <h3 style="color: #fcd200;font-size:28px;font-weight:600">
 										<!-- <span><img src="https://www.pinclipart.com/picdir/middle/420-4205333_animated-gif-alert-icon-clipart.png"/></span> -->
 										ALERTS</h3>
@@ -417,12 +416,12 @@
                                     </div>
                                     <div class="timeline-body">
                                     <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;All-time Live Tracking</h6>
-								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Tracking onDemand</h6>
+								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Tracking on Demand</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Tracking by Time Interval</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Engine Immobilizer</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;6 Axis Accelero-Gyrometer</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Fuel Level Sense</h6>
-								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Ignition ON/OFF Statusand Alerts</h6>
+								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Ignition ON/OFF Status and Alerts</h6>
 
 								   </div>
 								   <div class="timeline-body">
@@ -465,7 +464,7 @@
 								   
 								   <div class="timeline-body">
                                         <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Intelligent Transportation</h6>
-										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Anti Hijack and Vehicle Security System</h6>
+										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Anti-Hijack and Vehicle Security System</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Tracking for Law Enforcement</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Agriculture Fleet Management</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Mobility Advertisement</h6>
@@ -486,9 +485,9 @@
 										color: #fcd200;display: block;">.</span>-->
                                     </div>
                                     <div class="timeline-body">
-                                        <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Corporate Transport Solutions</h6>
+                                        <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Corporate Transport Solution</h6>
 								   <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;School Bus Management</h6>
-								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Public Transformation Solution</h6>
+								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Public Transportation Solution</h6>
 								<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Aggregation Platform</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Usage Based Insurance</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Fleet Management Solution</h6>
@@ -499,8 +498,8 @@
                            
                             <li class="timeline-inverted">
                                 <div class="timeline-image">
-                                    <h4>Be Part
-                                        <br>Of Our
+                                    <h4 style="color:#000">Be a Part
+                                        <br>Of  Our
                                         <br>Story!</h4>
                                 </div>
                             </li>
@@ -513,66 +512,85 @@
 <!----------------------------------------------------------------->
 
 <!----------------------------------------------------------------->
- <section class="our-services" id="authorizedservice">
+ <section class="our-history" style="background-image: url('smart/images/banner/blog-contactcenter_banner.jpg'); background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+  display: block;
+  position: relative;">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>AUTHORIZED SERVICE CENTER / SERVICES</h2>
-                        <div class="our-services--element">
-                            <h4>Real Time Tracking</h4>
-                            <p>Always track your vehicle on your mobile or pc.Our software is perfect for tracking personal vehicles as well as fleet.</p>
-                            <div class="our-services--element__image">
-							<img src="smart/assets/img/icon1.png"/> 
-							
-							</div>
-                        </div>
-                        <div class="our-services--element">
-                            <h4>Immobilizer</h4>
-                            <p>Immobilizer feature allows to stop vehicle movement by sending a text message to device. Thus we can prevent theft of vehicles.</p>
-                            <div class="our-services--element__image">
-							 <img src="smart/assets/img/icon2.png"/> 
-							
-							</div>
-                        </div>
-                        
-						<div class="our-services--element">
-                            <h4>SOS/Panic alert</h4>
-                            <p>SOS buttons are major part of GPS tracking device. It will be installed in all vehicles. Once pressed, device will send alert message to control room as well as registered mobile number of vehicle owner.</p>
-                            <div class="our-services--element__image">
-							 <img src="smart/assets/img/icon4.png"/> 
-							
-							</div>
-                        </div>
-						<div class="our-services--element">
-                            <h4>GPS Tracking</h4>
-                            <p>GPS tracking unit is a navigation device normally carried by a moving vehicle or person that uses the Global Positioning System (GPS) to track the device's movements and determine its location.</p>
-                            <div class="our-services--element__image">
-							 <img src="smart/assets/img/icon3.png"/> 
-							
-							</div>
-                        </div>
+			 <div class="row">
+                    <div class="col-lg-12">
+                        <h2 style="margin:12px 22px -30px 3px;color:#55d93073;text-align:center;font-size: 30px;
+    font-weight: 700;">AUTHORIZED SERVICE CENTER</h2>
+							<span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;
+										color: #fcd200;display: block;">.</span>
+                     
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">CENTRAL I TRACK </h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;PATHANAMTHITTA</h3>
+						
+                        <p style="color: #bfeab3;">ZION PURAM,MALLAPALLY WEST P.O,MALLAPALLY,PATHANAMTHITTA</p>
+                       
+                    </div>
+                    <div class="col-md-4">
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MAAZ CARS PRIVATE LTD</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ALAPPUZHA</h3>
+						
+                      <p style="color: #bfeab3;">ZION TOWER,MC ROAD,KALLISHERY P.O,CHENGANNUR</p>
+                    </div>
+					 <div class="col-md-4">
+                         <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">CENTRAL I TRACK </h4>
+						 	<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
+					
+                      <p style="color: #bfeab3;">CENTRAL ITRACK ,ST.RITAS ROAD,NEAR GOLD SOUCK,VYTILLA,KOCHI</p>
+                    </div>
+                   
+                </div>
+				<div class="row">
+                    <div class="col-md-4">
+                        <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">VIJAYAJYOTHI ENTERPRICES </h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;PALAKKAD</h3>
+					
+                        <p style="color: #bfeab3;">1st FLOOR,MADHAVA ARCADE,YAKKARA ROAD,NEAR PALAT HOSPITAL,PALAKKAD-678001</p>
+                       
+                    </div>
+                    <div class="col-md-4">
+                      <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">COLOUR LAND  </h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KOZHIKODE</h3>
+					
+                        <p style="color: #bfeab3;">GROUND FLOOR,KP.18-507D,VELLAYIKOTT COMPLEX, KARANTHUR-WAYANAD ROAD,KARANTHUR, KOZHIKODE, KERALA - 673571</p>
+                       
+                    </div>
+					 <div class="col-md-4">
+                      <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">JAIN DEVICES</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;WAYANAD</h3>
+					
+                        <p style="color: #bfeab3;">JAYAKUMARI ESTATE,MADAKKIMALA,KALPETTA,WAYANAD</p>
+                       
+                    </div>
+                   
+                </div>
+				<div class="row">
+                    <div class="col-md-4">
+                       
+                    </div>
+                    <div class="col-md-4" style="boder-color:red">
+                      <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">TECTIV  </h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KASARAGOD</h3>
+					
+                        <p style="color: #bfeab3;">NETWORKING AND SECURITY SYSTEMS DOOR N0:15/486N CENTER POINT BUILDING NEAR RTO OFFICE VELLARIKUNDU (PO) PIN :671533 KASARAGOD GST :32BKEPG4607C1ZV </p>
+                       
+                    </div>
+					 <div class="col-md-4">
+                     
+                    </div>
+                   
+                </div>
             </div>
-            <div class="our-services--slider">
-                <div>
-                    <img src="smart/assets/img/service/real-time-tracking1.jpg" alt="" />
-                </div>
-                <div>
-                    <img src="smart/assets/img/service/engine-cut1.jpg" alt=""/>
-                </div>
-                <div>
-                    <img src="smart/assets/img/service/gps-tracking1.jpg" alt="" />
-                </div>
-				  <div>
-                    <img src="smart/assets/img/service/sos-panic1.jpg" alt="" />
-                </div>
-            </div>
-            <div class="our-services--dots"></div>
-			  
         </section>
-<!----------------------------------------------------------------->
-
 <!------------------------------------------------------------------->
         <section class="statistics">
             <div class="container">
@@ -585,7 +603,7 @@
                 </div>
                 <div class="statistics--item">
                     <div class="statistics--item__image">
-					<img src="smart/assets/img/towns.png" style="width:70%"/>
+					<img src="smart/assets/img/Towns.png" style="width:70%"/>
 					</div>
                     <h3 class="second counter23" data-count="600"></h3>
                     <h5>Towns Covered</h5>
@@ -621,21 +639,87 @@
 		<!---------------------------------------------------------------------------------------------------------->
 		
 		
+		<style>
+
+.item-1, 
+.item-2, 
+.item-3,
+.item-4 {
+	position: absolute;
+  display: block;
+	top:12em;
+  
+  width: 60%;
+  
+	animation-duration:16s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+}
+
+.item-1{
+	animation-name: anim-1;
+}
+
+.item-2{
+	animation-name: anim-2;
+}
+
+.item-3{
+	animation-name: anim-3;
+}
+
+.item-4{
+	animation-name: anim-4;
+}
+
+@keyframes anim-1 {
+	0%, 8.3% { left: -100%; opacity: 0; }
+  8.3%,25% { left: 25%; opacity: 1; }
+  33.33%, 100% { left: 110%; opacity: 0; }
+}
+
+@keyframes anim-2 {
+	0%, 33.33% { left: -100%; opacity: 0; }
+  41.63%, 58.29% { left: 25%; opacity: 1; }
+  66.66%, 100% { left: 110%; opacity: 0; }
+}
+
+@keyframes anim-3 {
+	0%, 66.66% { left: -100%; opacity: 0; }
+  74.96%, 91.62% { left: 25%; opacity: 1; }
+  100% { left: 110%; opacity: 0; }
+}
+
+@keyframes anim-4 {
+	0%, 99.99% { left: -100%; opacity: 0; }
+  108.29%,124.95% { left: 25%; opacity: 1; }
+  133.32%, 100% { left: 110%; opacity: 0; }
+}
+
+</style>
     <!-- App Screenshots -->
 
     <section id="Screen" class="iq-app iq-bg iq-bg-fixed iq-font-white" style="background: url(smart/images/banner/bg.jpg);" >
         <div class="container-fluid">
             <div class="row row-eq-height">
-                <div class="col-md-6 text-left iq-ptb-80 green-bg">
+                <div class="col-md-6 text-left iq-ptb-50  green-bg">
                 <div class="iq-app-info">
                     <h2 class="heading-left iq-font-white white iq-tw-6 "> APP SCREENS </h2>
-                    <div class="lead iq-mb-20" style="color:#fff">This application is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management.</div>
-                   
- <div class="lead iq-mb-20" style="color:#fff">The Main Features are  Real Time Vehicle Tracking and Emergency(SOS) Alerts</div>
-                   				   <h4 class="iq-mt-5 iq-font-white iq-tw-3 iq-mb-15">AVAILABLE APPLICATION</h4>
+                    <div class="lead iq-mb-20" style="color:#fff">
+					  <div class="row">
+				<p class="item-1"><u>LOGIN PAGE</u><br>Allows authorized users to access the app based on the package they have purchased, also provides forgot password authentication and security features there by making the app more secure.</p>
+
+<p class="item-2"><u>HOME PAGE</u><br>Alert notification, live vehicle tracking status of the registered vehicle under that particular user, also the current location using the GPS feature. With each vehicle distinct features such as location,odometer reading,daily running kilometer,current speed of that vehicle and also the status of that vehicle at hat particular instant.</p> 
+
+<p class="item-3"><u>TRIP REPORT</u><br>Users are able to view the vehicle report as per the prioritization and are able to get daily,weekly and customized report of his vehicle along with the featires such as moving,halt,sleep,ignition status,harsh braking count,driver behaviour etc...</p> 
+
+<p class="item-4"><u>ALERT MANAGER</u><br>Manages the alerts as per the users preference by making active/inactive along with the push notification. Notifications can also be customized with vibrate mode enabled.</p> 
+					</div>
+					</div>
+                   				  
                     <!-- <p class="">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, Lorem Ipsum is simply dummy text of the printing and typesetting indus</p> -->
-                  <div class="row">
-							
+                  <div class="row" style="margin-top:80%;">
+							 <h4 class="iq-mt-5 iq-font-white iq-tw-3 iq-mb-15">DOWNLOAD APPLICATION</h4>
 						  <div class="partners--item"  style="width: 35%;">
 								<div class="partners--item__image">
 								<img src="smart/assets/img/play_store.png" alt=""  >
@@ -654,8 +738,6 @@
                         <div class="owl-carousel popup-gallery" data-autoplay="true" data-loop="true" data-nav="false" data-dots="false" data-items="3" data-items-laptop="2" data-items-tab="2" data-items-mobile="1" data-items-mobile-sm="1" data-margin="15">
                             <div class="item"><img class="img-responsive" src="smart/images/screenshots/01.jpg" alt="#"></div>
                             <div class="item"><img class="img-responsive" src="smart/images/screenshots/02.jpg" alt="#"></div>
-                            <div class="item"><img class="img-responsive" src="smart/images/screenshots/03.jpg" alt="#"></div>
-                            <div class="item"><img class="img-responsive" src="smart/images/screenshots/04.jpg" alt="#"></div>
                             <div class="item"><img class="img-responsive" src="smart/images/screenshots/05.jpg" alt="#"></div>
                             <div class="item"><img class="img-responsive" src="smart/images/screenshots/06.jpg" alt="#"></div>
                     </div>
@@ -664,6 +746,7 @@
         </div>
       </div>
     </section>
+	
 		<!------------------------------------------------------------------------------------------------------------>
   <section class="partners" id="contacts">
             <div class="container">
@@ -708,7 +791,7 @@
 							   <div class="clearfix"></div>
 							    <div class="row">
 							
-						   <h5 class="blink blink-two">AVAILABLE APPLICATION</h5>
+						   <h5 class="blink blink-two">DOWNLOAD APPLICATION</h5>
 						   <style>
       .blink {
       animation: blinker 0.6s linear infinite;
