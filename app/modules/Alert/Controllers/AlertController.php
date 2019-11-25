@@ -62,11 +62,11 @@ class AlertController extends Controller {
             ->with('alertType:id,code,description')
             ->with('gps.vehicle')
             ->with('gps:id,imei')
-            ->orderBy('id', 'desc')
             ->whereIn('gps_id',$single_vehicle_gps)
             ->whereIn('alert_type_id',$alert_id)
-            ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+            ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
             ->where('status',1) 
+            ->orderBy('device_time', 'DESC')
             ->paginate(15);
         return view('Alert::alert-list',['alerts'=>$alerts]);
 	}
