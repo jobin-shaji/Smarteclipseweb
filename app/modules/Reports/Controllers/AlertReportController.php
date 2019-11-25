@@ -78,7 +78,8 @@ class AlertReportController extends Controller
         )
         ->with('alertType:id,description')
         ->with('gps.vehicle')
-        ->orderBy('id', 'desc')
+        // ->orderBy('id', 'desc')
+        ->orderBy('device_time', 'DESC')
         ->where('alert_type_id',$alert_id)
          ->whereNotIn('alert_type_id',[17,18,23,24,13,10]);
         // ->whereNotIn('alert_type_id',[17,18,23,24]);
