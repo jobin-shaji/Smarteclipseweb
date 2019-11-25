@@ -35,7 +35,8 @@ class OfflineReportController extends Controller
         ->with('alertType:id,description')
         ->with('vehicle:id,name,register_number')
         ->where('client_id',$client)
-        ->where('alert_type_id',1);
+        ->where('alert_type_id',1)
+        ->orderBy('device_time', 'DESC');
         // ->where('status',1);
            
         if($from){

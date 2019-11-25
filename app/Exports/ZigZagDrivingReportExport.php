@@ -37,7 +37,8 @@ class ZigZagDrivingReportExport implements FromView
             'status'
         )
         ->with('alertType:id,description')
-        ->with('gps.vehicle');
+        ->with('gps.vehicle')
+        ->orderBy('device_time', 'DESC');
         if($vehicle==0 || $vehicle==null)
         {
             $query = $query->whereIn('gps_id',$single_vehicle_id)

@@ -44,7 +44,8 @@ class GeofenceReportController extends Controller
             ->with('alert:id,code,description')
             ->whereIn('gps_id',$gps_list)
             ->whereIn('alert_id',[18,19,20,21])
-            ->orderBy('id', 'desc')
+            ->orderBy('device_time', 'DESC')
+            // ->orderBy('id', 'desc')
             ->limit(1000);
         }
         else

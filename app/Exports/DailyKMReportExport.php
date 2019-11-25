@@ -13,7 +13,7 @@ use App\Modules\Vehicle\Models\DailyKm;
 class DailyKMReportExport implements FromView
 {
 	protected $dailykmReportExport;
-	public function __construct($client,$vehicle,$from,$to)
+	public function __construct($client,$vehicle_id,$from,$to)
     {  
         $search_from_date=date("Y-m-d", strtotime($from));
         $search_to_date=date("Y-m-d", strtotime($to));
