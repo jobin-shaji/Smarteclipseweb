@@ -68,6 +68,7 @@ function modecount(res) {
 
 
 function vehicleTrack(res) {
+  console.log(res);
   if(res.status!="failed"){
     var JSONObject = res.user_data;
     var marker, i;

@@ -63,7 +63,7 @@ Over Speed Report
                              <th>SL.No</th>
                               <th>Vehicle</th>
                               <th>Alert Type</th>
-                              <th>Location</th>
+                              <!-- <th>Location</th> -->
                               <th>DateTime</th>
                               <th>Action</th>       
                             </tr>

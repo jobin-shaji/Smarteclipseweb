@@ -46,7 +46,7 @@ function callBackDataTable(data=null){
             {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
                    
             {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
-            {data: 'location', name: 'location', orderable: false},
+            // {data: 'location', name: 'location', orderable: false},
             {data: 'device_time', name: 'device_time', orderable: false},
              {data: 'action', name: 'action', orderable: false, searchable: false}
            

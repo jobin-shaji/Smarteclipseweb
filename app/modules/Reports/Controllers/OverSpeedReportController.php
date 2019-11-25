@@ -44,23 +44,23 @@ class OverSpeedReportController extends Controller
         $overspeed =  $this->overSpeedAlerts($single_vehicle_id,$client,$vehicle,$from,$to);        
         return DataTables::of($overspeed)
         ->addIndexColumn()
-        ->addColumn('location', function ($overspeed) {
-            $latitude= $overspeed->latitude;
-            $longitude=$overspeed->longitude;          
-            if(!empty($latitude) && !empty($longitude)){
-                //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
-                $output = json_decode($geocodeFromLatLong);         
-                $status = $output->status;
-                //Get address from json data
-                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-                //Return address of the given latitude and longitude
-                if(!empty($address)){
-                    $location=$address;
-                    return $location;                
-                }        
-            }
-        })
+        // ->addColumn('location', function ($overspeed) {
+        //     $latitude= $overspeed->latitude;
+        //     $longitude=$overspeed->longitude;          
+        //     if(!empty($latitude) && !empty($longitude)){
+        //         //Send request and receive json data by address
+        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+        //         $output = json_decode($geocodeFromLatLong);         
+        //         $status = $output->status;
+        //         //Get address from json data
+        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        //         //Return address of the given latitude and longitude
+        //         if(!empty($address)){
+        //             $location=$address;
+        //             return $location;                
+        //         }        
+        //     }
+        // })
         ->addColumn('action', function ($overspeed) { 
         $b_url = \URL::to('/');             
             return "
