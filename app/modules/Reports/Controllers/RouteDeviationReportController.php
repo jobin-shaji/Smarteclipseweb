@@ -39,7 +39,8 @@ class RouteDeviationReportController extends Controller
             ->with('vehicle:id,name,register_number')
             ->with('route:id,name')       
             ->where('client_id',$client_id)
-            ->orderBy('id', 'desc')
+            // ->orderBy('id', 'desc')
+            ->orderBy('device_time', 'DESC')
             ->limit(1000);
         }
         else

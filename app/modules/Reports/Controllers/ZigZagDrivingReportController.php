@@ -52,6 +52,7 @@ class ZigZagDrivingReportController extends Controller
         )
         ->with('alertType:id,description')
         ->with('gps.vehicle')
+        ->orderBy('device_time', 'DESC')
         ->limit(1000);
         if($vehicle==0 || $vehicle==null)
         {
