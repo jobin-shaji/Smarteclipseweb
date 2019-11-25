@@ -24,7 +24,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                    <th>Sl.No</th>
+                    <th>SL.No</th>
                     <th>Serial NO</th>
                     <th>Version</th>
                     <th>Brand</th>
