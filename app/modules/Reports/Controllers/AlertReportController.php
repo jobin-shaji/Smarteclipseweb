@@ -80,7 +80,7 @@ class AlertReportController extends Controller
         ->with('gps.vehicle')
         ->orderBy('id', 'desc')
         ->where('alert_type_id',$alert_id)
-         ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12]);
+         ->whereNotIn('alert_type_id',[17,18,23,24,13,10]);
         // ->whereNotIn('alert_type_id',[17,18,23,24]);
        if($alert_id==0 && $vehicle_id==0)
        {  
@@ -109,7 +109,8 @@ class AlertReportController extends Controller
           $search_to_date=date("Y-m-d", strtotime($to));
           $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $alert = $query->paginate(15); 
+        $alert = $query->paginate(15);
+
         $user_alert = UserAlerts::select(
             'alert_id'
         )

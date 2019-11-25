@@ -161,7 +161,7 @@
 @section('script')
 
 <script src="{{asset('js/gps/gps-location-track.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&libraries=places&callback=initMap" async defer></script>
 @endsection
 
 @endsection
