@@ -176,7 +176,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/home/ashil/laravel/gps-web/storage/framework/cache/data',
+        'path' => '/home/php_vst/projects/gps-web/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -239,16 +239,16 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'ashil',
+        'database' => 'eclipse',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => '192.168.14.101',
+        'host' => '192.168.14.124',
         'port' => '3306',
-        'database' => 'ashil',
+        'database' => 'eclipse',
         'username' => 'etm',
         'password' => '123456',
         'unix_socket' => '',
@@ -262,9 +262,9 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => '192.168.14.101',
+        'host' => '192.168.14.124',
         'port' => '3306',
-        'database' => 'ashil',
+        'database' => 'eclipse',
         'username' => 'etm',
         'password' => '123456',
         'charset' => 'utf8',
@@ -276,9 +276,9 @@
       'sqlsrv' => 
       array (
         'driver' => 'sqlsrv',
-        'host' => '192.168.14.101',
+        'host' => '192.168.14.124',
         'port' => '3306',
-        'database' => 'ashil',
+        'database' => 'eclipse',
         'username' => 'etm',
         'password' => '123456',
         'charset' => 'utf8',
@@ -399,7 +399,9 @@
   'eclipse' => 
   array (
     'offline_time' => '-360 minutes',
-    'connection_lost_time' => '-11 minutes',
+    'connection_lost_time_motion' => '-3 minutes',
+    'connection_lost_time_halt' => '-11 minutes',
+    'connection_lost_time_sleep' => '-11 minutes',
   ),
   'excel' => 
   array (
@@ -469,12 +471,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/home/ashil/laravel/gps-web/storage/app',
+        'root' => '/home/php_vst/projects/gps-web/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/home/ashil/laravel/gps-web/storage/app/public',
+        'root' => '/home/php_vst/projects/gps-web/storage/app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -519,13 +521,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/home/ashil/laravel/gps-web/storage/logs/laravel.log',
+        'path' => '/home/php_vst/projects/gps-web/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/home/ashil/laravel/gps-web/storage/logs/laravel.log',
+        'path' => '/home/php_vst/projects/gps-web/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -588,7 +590,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/home/ashil/laravel/gps-web/resources/views/vendor/mail',
+        0 => '/home/php_vst/projects/gps-web/resources/views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -630,6 +632,7 @@
       30 => 'Warehouse',
       31 => 'Employee',
       32 => 'GpsConfig',
+      33 => 'Operations',
     ),
   ),
   'permission' => 
@@ -743,7 +746,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/home/ashil/laravel/gps-web/storage/framework/sessions',
+    'files' => '/home/php_vst/projects/gps-web/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -769,9 +772,9 @@
   array (
     'paths' => 
     array (
-      0 => '/home/ashil/laravel/gps-web/resources/views',
+      0 => '/home/php_vst/projects/gps-web/resources/views',
     ),
-    'compiled' => '/home/ashil/laravel/gps-web/storage/framework/views',
+    'compiled' => '/home/php_vst/projects/gps-web/storage/framework/views',
   ),
   'vst' => 
   array (
@@ -783,10 +786,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => '/home/ashil/laravel/gps-web/storage/fonts/',
-      'font_cache' => '/home/ashil/laravel/gps-web/storage/fonts/',
+      'font_dir' => '/home/php_vst/projects/gps-web/storage/fonts/',
+      'font_cache' => '/home/php_vst/projects/gps-web/storage/fonts/',
       'temp_dir' => '/tmp',
-      'chroot' => '/home/ashil/laravel/gps-web',
+      'chroot' => '/home/php_vst/projects/gps-web',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -811,8 +814,8 @@
     'web_dark_theme' => false,
     'collect_data_always' => false,
     'storage' => 'files',
-    'storage_files_path' => '/home/ashil/laravel/gps-web/storage/clockwork',
-    'storage_sql_database' => '/home/ashil/laravel/gps-web/storage/clockwork.sqlite',
+    'storage_files_path' => '/home/php_vst/projects/gps-web/storage/clockwork',
+    'storage_sql_database' => '/home/php_vst/projects/gps-web/storage/clockwork.sqlite',
     'storage_sql_table' => 'clockwork',
     'storage_expiration' => 10080,
     'authentication' => false,

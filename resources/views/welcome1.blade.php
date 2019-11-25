@@ -512,7 +512,7 @@
 <!----------------------------------------------------------------->
 
 <!----------------------------------------------------------------->
- <section class="our-history" style="background-image: url('smart/images/banner/service-center123.jpg'); background-position: center;
+ <section class="our-history" style="background-image: url('smart/images/banner/blog-contactcenter_banner.jpg'); background-position: center;
   background-attachment: fixed;
   overflow: hidden;
   display: block;
@@ -639,27 +639,83 @@
 		<!---------------------------------------------------------------------------------------------------------->
 		
 		
+		
     <!-- App Screenshots -->
 
     <section id="Screen" class="iq-app iq-bg iq-bg-fixed iq-font-white" style="background: url(smart/images/banner/bg.jpg);" >
         <div class="container-fluid">
             <div class="row row-eq-height">
-                <div class="col-md-6 text-left iq-ptb-80 green-bg">
+                <div class="col-md-6 text-left iq-ptb-50  green-bg">
                 <div class="iq-app-info">
                     <h2 class="heading-left iq-font-white white iq-tw-6 "> APP SCREENS </h2>
                     <div class="lead iq-mb-20" style="color:#fff">
-				
-                            <p>Real Time Tracking forAlways track your vehicle on your mobile or PC.Tracking software is perfect for tracking personal vehicles as well as fleet.</p>
-                  
-                            <p>Immobilizer feature allows to stop vehicle movement by sending a text message to device. There prevent theft of vehicles.</p>
-                        
-                            <p>GPS tracking unit is a navigation device normally carried by a moving vehicle or person that uses the Global Positioning System (GPS) to track the device's movements and determine its location.</p>
-                                
+					  <div class="row">
+					  
+							<div class="mySlides">
+ 
+							<p>LOGIN PAGE
+								ALLOWS AUTHORIZED USERS TO ACCESS THE APP BASED ON THE PACKAGE THEY HAVE PURCHASED, ALSO PROVIDES FORGOT PASSWORD AUTHENTICATION AND SECURITY FEATURES THERE BY MAKING THE APP MORE SECURE.</p>
+							</div>
+							<div class="mySlides">
+							<p>HOME PAGE
+								ALERT NOTIFICATION, LIVE VEHICLE TRACKING STATUS OF THE REGISTERED VEHICLE UNDER THAT PARTICULAR USER, ALSO THE CURRENT LOCATION USING THE GPS FEATURE. WITH EACH VEHICLE DISTINCT FEATURES SUCH AS LOCATION,ODOMETER READING,DAILY RUNNING KILOMETER,CURRENT SPEED OF THAT VEHICLE AND ALSO THE STATUS OF THAT VEHICLE AT HAT PARTICULAR INSTANT.</p>
+							</div>
+
+							<div class="mySlides">
+
+							<p>3 text</p>
+							</div>
+							<div class="mySlides">
+							<p>4 text</p>
+							</div>
+							<div class="mySlides">
+
+							<p>5 text</p>
+							</div>
+							<div class="mySlides">
+							<p>6 text</p>
+							</div>
+
+					    </div>
+						<br/>
+
+<div style="text-align:center">
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+   <span class="dot"></span> 
+  <span class="dot"></span> 
+</div>
+<!--------------------------------------------------------------------------------------------->
+<script>
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 5550); // Change image every 2 seconds
+}
+</script>
+
+<!---------------------------------------------------------------------------------------------->
 					</div>
-                   				   <h4 class="iq-mt-5 iq-font-white iq-tw-3 iq-mb-15">DOWNLOAD APPLICATION</h4>
+                   				  
                     <!-- <p class="">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, Lorem Ipsum is simply dummy text of the printing and typesetting indus</p> -->
                   <div class="row">
-							
+							 <h4 class="iq-mt-5 iq-font-white iq-tw-3 iq-mb-15">DOWNLOAD APPLICATION</h4>
 						  <div class="partners--item"  style="width: 35%;">
 								<div class="partners--item__image">
 								<img src="smart/assets/img/play_store.png" alt=""  >
@@ -688,6 +744,7 @@
         </div>
       </div>
     </section>
+	
 		<!------------------------------------------------------------------------------------------------------------>
   <section class="partners" id="contacts">
             <div class="container">

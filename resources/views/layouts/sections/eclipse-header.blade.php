@@ -102,7 +102,7 @@
                        </li>                       
                        <!--  <li class="nav-item search-box"> 
                         </li> -->
-                         <li class="nav-item" style="padding: 1.5% 0"> 
+                         <li class="nav-item"> 
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
