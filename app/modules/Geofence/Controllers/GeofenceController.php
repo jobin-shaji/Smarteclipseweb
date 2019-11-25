@@ -18,7 +18,7 @@ use DataTables;
 class GeofenceController extends Controller {
 
     //Display all etms
-	public function create(Request $request)
+    public function create(Request $request)
     {
         $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
@@ -42,13 +42,18 @@ class GeofenceController extends Controller {
         }
         else if($request->user()->hasRole('pro')&& $geofence<10) {
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
+        }
+        else if($request->user()->hasRole('pro')&& $geofence==10) {
+            $request->session()->flash('message', 'exceed the limit'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return view('Geofence::geofence-list');
         }else{
             $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return view('Geofence::geofence-list');
         }
-	}
-	public function saveFence(Request $request)
+    }
+    public function saveFence(Request $request)
     {
         if($request->polygons==null){
             return response()->json([
@@ -81,7 +86,7 @@ class GeofenceController extends Controller {
                 'message' => 'Geofence added successfully'
             ]);
         }
-	}
+    }
 
 
     public function geofenceListPage()

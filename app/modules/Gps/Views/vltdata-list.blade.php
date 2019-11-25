@@ -1,27 +1,22 @@
 @extends('layouts.eclipse')
-
 @section('content')
 <section class="hilite-content">
-   <div class="row">
-   
-      <div class="col-md-12">
-        
-        <div class="panel-heading">
-        <div class="cover_div_search">
-         
-            <div class="row">
-             <div class="col-lg-3 col-md-3"> 
+  <div class="row">   
+    <div class="col-md-12">        
+      <div class="panel-heading">
+        <div class="cover_div_search">         
+          <div class="row">
+            <div class="col-lg-3 col-md-3"> 
               <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
                 <label>GPS</label>                           
-                <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>        
+                <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>  
                   <option value="">All</option>                 
                   @foreach($gps as $gps)
                   <option value="{{$gps->imei}}">{{$gps->imei}}</option>
                   @endforeach
                 </select>
               </div>
-            </div>
-         
+            </div>         
            <div class="col-lg-3 col-md-3"> 
            <div  style ="margin-left: 77px"class="form-group has-feedback">
           <label class="srequired">Header</label>
