@@ -42,7 +42,13 @@ class GeofenceController extends Controller {
         }
         else if($request->user()->hasRole('pro')&& $geofence<10) {
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
-        }else{
+        }
+        else if($request->user()->hasRole('pro')&& $geofence==10) {
+            $request->session()->flash('message', 'exceed the limit'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return view('Geofence::geofence-list');
+        }
+        else{
             $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return view('Geofence::geofence-list');
