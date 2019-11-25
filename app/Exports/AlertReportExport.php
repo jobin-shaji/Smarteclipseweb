@@ -34,7 +34,8 @@ class AlertReportExport implements FromView
             )
             ->with('alertType:id,description')
             ->with('gps.vehicle')
-            ->orderBy('id', 'desc')
+            // ->orderBy('id', 'desc')
+            ->orderBy('device_time', 'DESC')
             ->limit(1000);
           
        if($alert_id==0 && $vehicle_id==0)
