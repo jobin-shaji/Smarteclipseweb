@@ -41,9 +41,6 @@ Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert'
 
 
 
-
-
-
 //////////////////////////////////Route in vehicle//////////////////////////////
 
 Route::post('/vehicle-route/save_route','VehicleController@saveVehicleRoute')->name('vehicle-route.create.p');
