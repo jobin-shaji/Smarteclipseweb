@@ -24,7 +24,8 @@ class HarshBrakingReportExport implements FromView
             'status'
         )
         ->with('alertType:id,description')
-        ->with('gps.vehicle');
+        ->with('gps.vehicle')
+        ->orderBy('device_time', 'DESC');
         if($vehicle==0 || $vehicle==null)
         {
             $gps_stocks=GpsStock::where('client_id',$client)->get();

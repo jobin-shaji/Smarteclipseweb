@@ -23,6 +23,7 @@ class SuddenAccelerationReportExport implements FromView
             'status'
         )
         ->with('alertType:id,description')
+        ->orderBy('device_time', 'DESC')
         ->with('gps.vehicle');
        if($vehicle==0 || $vehicle==null)
         {
