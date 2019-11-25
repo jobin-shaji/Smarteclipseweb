@@ -31,7 +31,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	  
 
 });
-Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer|operations'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
  Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
  });
 
