@@ -47,7 +47,7 @@
                 <table id="client_roles" class="table table-hover table-bordered  table-striped datatable" style="width:50%" id="dataTable">
                   <thead>
                     <tr>
-                      <th>Sl.No</th>                              
+                      <th>SL.No</th>                              
                       <th>Role Type</th>  
                       <th>Action</th>                      
                     </tr>
