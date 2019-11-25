@@ -59,7 +59,7 @@
 </section>
 @section('script')
     <script src="{{asset('js/gps/alert-track.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap"
          async defer></script>
     @endsection
  @endsection
