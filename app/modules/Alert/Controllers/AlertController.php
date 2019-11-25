@@ -456,7 +456,123 @@ class AlertController extends Controller {
         return view('Alert::alert-list',['alerts'=>$alerts]);
     }
 
-
+    public function gpsAlerts()
+    {
+        $client_id=\Auth::user()->client->id;   
+        $client=Client::find($client_id);
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
+             $single_vehicle_gps[] = $VehicleGps->gps_id;
+        }
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client_id)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+        }   
+        $alerts = Alert::select(
+                'id',
+                'alert_type_id',
+                'device_time',
+                'gps_id',
+                'latitude',
+                'longitude',
+                'status',
+                'created_at',
+                'device_time'
+            )
+            ->with('alertType:id,code,description')
+            ->with('gps.vehicle')
+            ->with('gps:id,imei')
+            ->orderBy('id', 'desc')
+            ->whereIn('gps_id',$single_vehicle_gps)
+            ->whereIn('alert_type_id',$alert_id)
+            ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+            ->where('status',1) 
+            ->paginate(15);
+        return view('Alert::gps-alert-list',['alerts'=>$alerts,'client'=>$client]);
+    }
+     public function location(Request $request){
+        $decrypted_id = Crypt::decrypt($request->id);
+        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $alert_icon  =  AlertType:: select(['description',
+            'path'])->where('id',$get_alerts->alert_type_id)->first(); 
+        $get_vehicle=Vehicle::select(['id','register_number',
+            'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
+        return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );      
+    }
+    public function gpsAlertList(Request $request)
+    {
+        $user = $request->user();
+        $client_id=\Auth::user()->client->id;   
+        $VehicleGpss=Vehicle::select(
+            'id',
+            'gps_id',
+            'client_id'
+        )
+        ->where('client_id',$client_id)
+        ->get();      
+        $single_vehicle_gps = [];
+        foreach($VehicleGpss as $VehicleGps){
+            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
+             $single_vehicle_gps[] = $VehicleGps->gps_id;
+        }
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client_id)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+        }   
+        $alerts = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'gps_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at',
+            'device_time'
+        )
+        ->with('alertType:id,code,description')
+        ->with('gps.vehicle')
+        ->with('gps:id,imei')
+        ->orderBy('id', 'desc')
+        ->whereIn('gps_id',$single_vehicle_gps)
+        ->whereIn('alert_type_id',$alert_id)
+        ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+        ->where('status',1) 
+        ->paginate(15);
+        return response()->json([
+            'alerts' => $alerts,
+            'status' => 'gpsAlert'           
+        ]);
+                  
+    }
 
 
 
