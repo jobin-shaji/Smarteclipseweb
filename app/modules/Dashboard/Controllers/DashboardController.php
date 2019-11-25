@@ -1238,6 +1238,7 @@ class DashboardController extends Controller
         $vehicleTrackData=array();
         foreach ($vehiles_details as $vehicle_data) {
             $vehicle_ecrypt_id=Crypt::encrypt($vehicle_data->vehicle->id);
+            $gps_ecrypt_id=Crypt::encrypt($vehicle_data->id);
             $single_vehicle=Vehicle::find($vehicle_data->vehicle->id);
             $single_vehicle_type= $single_vehicle->vehicleType;
             $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
@@ -1258,6 +1259,7 @@ class DashboardController extends Controller
                 "imei"=>$vehicle_data->imei,
                 "mode"=>$modes,
                 "vehicle_id"=>$vehicle_ecrypt_id,
+                'encrypt_gps_id'=>$gps_ecrypt_id,
                 "vehicle_name"=>$vehicle_data->vehicle->name,
                 "register_number"=>$vehicle_data->vehicle->register_number,
                 "vehicle_svg"=>$single_vehicle_type->svg_icon,

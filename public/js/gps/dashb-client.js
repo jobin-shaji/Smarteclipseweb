@@ -288,7 +288,7 @@ function moving(vehicle_mode) {
 }
 
 function selectVehicleModeTrack(res) {
- // console.log(res);
+ console.log(res);
  deleteMarkers();
  flag = 0;
  vehicleTrack(res);
