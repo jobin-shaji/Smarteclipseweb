@@ -25,7 +25,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important" id="dataTable">
                 <thead>
                   <tr>
-                    <th>Sl.No</th>
+                    <th>SL.No</th>
                     <th>Ticket Code</th>   
                     <th>IMEI</th>                              
                     <th>Complaint Category</th>                      

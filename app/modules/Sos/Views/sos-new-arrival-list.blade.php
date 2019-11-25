@@ -25,7 +25,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;" id="dataTable">
                 <thead>
                   <tr>
-                    <th>Sl.No</th>
+                    <th>SL.No</th>
                     <th>From </th>
                     <th>Transferred On</th>
                     <th>Count</th>

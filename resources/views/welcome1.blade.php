@@ -603,7 +603,7 @@
                 </div>
                 <div class="statistics--item">
                     <div class="statistics--item__image">
-					<img src="smart/assets/img/Towns.png" style="width:70%"/>
+					<img src="smart/assets/img/towns.png" style="width:70%"/>
 					</div>
                     <h3 class="second counter23" data-count="600"></h3>
                     <h5>Towns Covered</h5>
@@ -653,27 +653,31 @@
 					  
 							<div class="mySlides">
  
-							<p>LOGIN PAGE
+							<p><u>LOGIN PAGE</u><br>
 								ALLOWS AUTHORIZED USERS TO ACCESS THE APP BASED ON THE PACKAGE THEY HAVE PURCHASED, ALSO PROVIDES FORGOT PASSWORD AUTHENTICATION AND SECURITY FEATURES THERE BY MAKING THE APP MORE SECURE.</p>
 							</div>
 							<div class="mySlides">
-							<p>HOME PAGE
+							<p><u>HOME PAGE</u><br>
 								ALERT NOTIFICATION, LIVE VEHICLE TRACKING STATUS OF THE REGISTERED VEHICLE UNDER THAT PARTICULAR USER, ALSO THE CURRENT LOCATION USING THE GPS FEATURE. WITH EACH VEHICLE DISTINCT FEATURES SUCH AS LOCATION,ODOMETER READING,DAILY RUNNING KILOMETER,CURRENT SPEED OF THAT VEHICLE AND ALSO THE STATUS OF THAT VEHICLE AT HAT PARTICULAR INSTANT.</p>
 							</div>
 
 							<div class="mySlides">
 
-							<p>3 text</p>
+							<p><u>HELP AND SUPPORT</u><br>
+								PERSONALIZED FEATURE FOR EXTENDING THE SERVICES OF EACH VALUABLE USERS TO REGISTER THEIR COMPLAINT BY CATEGORIZING BOTH HARDWARE AND SOFTWARE ALONG WITH THE CUSTOMIZED OPTION UNDER THAT CATEGORY THERE BY KNOWING THE ISSUE IN DETAIL FOR EARLY ACCESSING OF THE SERVICES.</p>
 							</div>
 							<div class="mySlides">
-							<p>4 text</p>
+							<p><u>ALERT SUMMARY</u><br>
+								USERS ARE ABLE TO IDENTIFY WHICH TYPE OF ALERTS IS COMING.CURRENT LOCATION ALONG WITH DATE AND TIME ALSO THE VEHICLE NAME</p>
 							</div>
 							<div class="mySlides">
 
-							<p>5 text</p>
+							<p><u>TRIP REPORT</u><br>
+								USERS ARE ABLE TO VIEW THE VEHICLE REPORT AS PER THE PRIORITIZATION AND ARE ABLE TO GET DAILY,WEEKLY AND CUSTOMIZED REPORT OF HIS VEHICLE ALONG WITH THE FEATIRES SUCH AS MOVING,HALT,SLEEP,IGNITION STATUS,HARSH BRAKING COUNT,DRIVER BEHAVIOUR ETC...</p>
 							</div>
 							<div class="mySlides">
-							<p>6 text</p>
+							<p><u>ALERT MANAGER</u><br>
+								MANAGES THE ALERTS AS PER THE USERS PREFERENCE BY MAKING ACTIVE/INACTIVE ALONG WITH THE PUSH NOTIFICATION. NOTIFICATIONS CAN ALSO BE CUSTOMIZED WITH VIBRATE MODE ENABLED.</p>
 							</div>
 
 					    </div>
