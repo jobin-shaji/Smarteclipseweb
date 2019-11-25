@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
 use App\Modules\User\Models\User;
+use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Ota\Models\OtaResponse;
@@ -17,6 +18,7 @@ use App\Modules\Ota\Models\GpsOta;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Driver\Models\Driver;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
@@ -539,6 +541,40 @@ class VehicleController extends Controller
             'title' => 'Error',
             'message' => 'gps already asigned'
         ]);
+    }
+
+    //continuous alert
+    public function continuousAlerts(Request $request)
+    {
+        $vehicle_id=$request->vehicle_id;
+        $client_id=\Auth::user()->client->id;
+        $last_alert_time = date('Y-m-d H:i:s',strtotime("-10 minutes"));
+        $vehicle=Vehicle::find($vehicle_id);
+        $alerts = Alert::select(
+            'id',
+            'alert_type_id',
+            'gps_id',
+            'device_time'
+        )
+        ->with('alertType')
+        ->where('gps_id',$vehicle->gps_id)
+        ->where('device_time','>=',$last_alert_time)
+        ->whereIn('alert_type_id',[10,13])
+        ->where('status',0)
+        ->get();
+
+        if(sizeof($alerts) == 0){
+            $response=[
+                'status' => 'failed'
+            ];
+        }else{
+            $alert=$alerts[0]->alertType->description;
+            $response = [
+                'status' => 'success',
+                'alert' => $alert
+            ];
+        }
+        return response()->json($response); 
     }
 
     // vehicle drivers list

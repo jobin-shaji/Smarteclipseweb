@@ -61,7 +61,7 @@ trait VehicleDataProcessorTrait{
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==1){
+                    if($ignition==0){
                         $engine_on_time=$engine_on_time+$diff_in_minutes;
                     }else{
                         $engine_off_time=$engine_off_time+$diff_in_minutes;
