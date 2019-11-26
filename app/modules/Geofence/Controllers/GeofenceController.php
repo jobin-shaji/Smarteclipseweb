@@ -32,12 +32,12 @@ class GeofenceController extends Controller {
         ->withTrashed()     
         ->where('user_id',$request->user()->id)        
         ->count(); 
-        if($geofence<1){
+        if($geofence<2){
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
-        }else if($request->user()->hasRole('fundamental')&& $geofence<3) {
+        }else if($request->user()->hasRole('fundamental')&& $geofence<4) {
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
         }
-        else if($request->user()->hasRole('superior')&& $geofence<6) {
+        else if($request->user()->hasRole('superior')&& $geofence<8) {
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
         }
         else if($request->user()->hasRole('pro')&& $geofence<10) {

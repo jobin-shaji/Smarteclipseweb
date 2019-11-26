@@ -505,7 +505,8 @@ class AlertController extends Controller {
             ->whereIn('alert_type_id',$alert_id)
             ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
             ->where('status',1) 
-            ->paginate(15);
+            ->get();
+            // dd($alerts);
         return view('Alert::gps-alert-list',['alerts'=>$alerts,'client'=>$client]);
     }
      public function location(Request $request){
@@ -566,17 +567,32 @@ class AlertController extends Controller {
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
         ->where('status',1) 
-        ->paginate(15);
+        ->get();
+        // dd($alerts);
         return response()->json([
             'alerts' => $alerts,
             'status' => 'gpsAlert'           
         ]);
                   
     }
+     public function alertLocation(Request $request){
+        $decrypted_id = $request->id;
+        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $alert_icon  =  AlertType:: select(['description',
+            'path'])->where('id',$get_alerts->alert_type_id)->first(); 
+        $get_vehicle=Vehicle::select(['id','register_number',
+            'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
 
 
 
-
+        return response()->json([
+            'alert_id' => $decrypted_id,
+            'alertmap' => $get_alerts,
+            'alert_icon' => $alert_icon,
+            'get_vehicle' => $get_vehicle,
+            'status' => 'gpsAlertTracker'           
+        ]);   
+    }
 
 
 
