@@ -37,9 +37,6 @@ class DurationReportController extends Controller
         $vehicle_id =$request->vehicle;
         $date =$request->date;
         $client_id=\Auth::user()->client->id;  
-        
-        $tracking_mode = $this->trackingMode($vehicle_id,$date_and_time,$client_id);
-        return response()->json($vehicle_profile);
     }
 
 }

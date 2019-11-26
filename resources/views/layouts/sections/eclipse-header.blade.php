@@ -135,7 +135,7 @@
                                     <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
                                     <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
                                     <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
-                                     @role('fundamental|superior|pro')
+                                    @role('fundamental|superior|pro')
                                     <!-- <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
                                      @endrole
                                     </ul>
@@ -147,8 +147,8 @@
                                     <li><a class="dropdown-item" href="{{url('/drivers')}}">LIST DRIVERS</a></li>
                                     @role('fundamental|superior|pro')
                                     <li><a class="dropdown-item" href="{{url('/drivers-score-page')}}">DRIVER SCORE</a></li>
-                                    @endrole
                                     <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
+                                    @endrole
                                     </ul>
                                 </li>
                             </ul>
@@ -166,6 +166,7 @@
                                     <li><a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}">ASSIGN GEOFENCE</a></li>
                                     </ul>
                                 </li>
+                                @role('fundamental|superior|pro')
                                 <li class="dropdown-submenu">
                                     <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">ROUTE</a>
                                     <ul class="dropdown-menu">
@@ -174,6 +175,7 @@
                                     <li><a class="dropdown-item" href="{{url('/assign/route-vehicle')}}">ASSIGN ROUTE</a></li>
                                     </ul>
                                 </li>
+                                @endrole
                             </ul>
                         </li>
 
@@ -244,16 +246,16 @@
                                         </a>
                                     </li>
 
-
+                                    @role('fundamental|superior|pro')
                                     <li class="sys_vapor cover_deviation_report">
                                         <a href="{{url('/route-deviation-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/route-deviation-report.png"  />
                                               <span class="system_info" >Route Deviation Report</span>  
                                            </div>
-                                            
                                         </a>
                                     </li>
+                                    @endrole
 
                                     <li class="sys_vapor cover_harsh_bracking">
                                         <a href="{{url('/harsh-braking-report')}}">
@@ -348,7 +350,7 @@
                                         <a href="{{url('/duration-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/main-battery-disconnect-report.png"  />
-                                             <span class="system_info" >Duration Report</span>  
+                                             <span class="system_info" >Vehicle Mode Duration Report</span>  
                                            </div>
                                             
                                         </a>
@@ -359,11 +361,11 @@
                         <li class="nav-item dropdown-submenu">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                             
+                            @role('fundamental|superior|pro')
                                 <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
-                                  
+                            @endrole
                                 <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
                             </div>
                         </li>
