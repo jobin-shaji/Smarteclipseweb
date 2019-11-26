@@ -17510,6 +17510,13 @@ li.sys_vapor.cover_total_km img {
     width: 20%;
     border-radius: 4px;
 }
+
+li.sys_vapor.cover_vehicle_report img {
+    background: #0dc7d0;
+    width: 20%;
+    border-radius: 4px;
+}
+
 li.sys_vapor.cover_over_speed img {
     background: #96215b;
     width: 20%;

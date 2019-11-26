@@ -512,7 +512,7 @@
 <!----------------------------------------------------------------->
 
 <!----------------------------------------------------------------->
- <section class="our-history" style="background-image: url('smart/images/banner/blog-contactcenter_banner.jpg'); background-position: center;
+ <section class="our-history" style="background-image: url('smart/images/banner/service-center123.jpg'); background-position: center;
   background-attachment: fixed;
   overflow: hidden;
   display: block;
