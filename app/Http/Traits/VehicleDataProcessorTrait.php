@@ -511,7 +511,7 @@ trait VehicleDataProcessorTrait{
             'engine_off_duration' => $engine_status['engine_off_time'],
             'ac_on_duration' => $ac_status['ac_on_time'],
             'ac_off_duration' => $ac_status['ac_off_time'],
-            'ac_halt_on_duration' => $halt_status['ac_on_time'],
+            'ac_halt_on_duration' => "00:00:00",
             'sleep' => $tracking_mode['total_sleep'],  
             'motion' => $tracking_mode['total_moving'],   
             'halt' => $tracking_mode['total_halt'], 
