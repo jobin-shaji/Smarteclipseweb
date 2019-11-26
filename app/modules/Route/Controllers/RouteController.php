@@ -61,18 +61,24 @@ class RouteController extends Controller {
         )  
         ->where('client_id',$client_id)        
         ->count(); 
-        if($Route<1){
+        if($Route<2){
 
            return view('Route::route-add',['driver_location' => $driver_location]);
-        }else if($request->user()->hasRole('fundamental')&& $Route<3) {
+        }else if($request->user()->hasRole('fundamental')&& $Route<4) {
            return view('Route::route-add',['driver_location' => $driver_location]);
         }
-        else if($request->user()->hasRole('superior')&& $Route<6) {
+        else if($request->user()->hasRole('superior')&& $Route<8) {
            return view('Route::route-add',['driver_location' => $driver_location]);
         }
         else if($request->user()->hasRole('pro')&& $Route<10) {
             return view('Route::route-add',['driver_location' => $driver_location]);
-        }else{           
+        }
+        else if($request->user()->hasRole('pro')&& $Route==10) {
+            $request->session()->flash('message', 'exceed the limit'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('route'));  
+        }
+        else{           
             $request->session()->flash('message', 'Please upgrade your current plan for adding more Route'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('route'));           
