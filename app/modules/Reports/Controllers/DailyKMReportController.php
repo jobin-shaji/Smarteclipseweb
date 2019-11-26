@@ -24,9 +24,9 @@ class DailyKMReportController extends Controller
     {
         $client_id=\Auth::user()->client->id;
         $from = $request->data['from_date'];
-        $to = $request->data['to_date'];
+        // $to = $request->data['to_date'];
         $search_from_date=date("Y-m-d", strtotime($from));
-        $search_to_date=date("Y-m-d", strtotime($to));
+        // $search_to_date=date("Y-m-d", strtotime($to));
         // dd($from);
         $vehicle_id = $request->data['vehicle'];  
         $query =DailyKm::select(
@@ -50,7 +50,7 @@ class DailyKMReportController extends Controller
             $query = $query->where('gps_id',$vehicle->gps_id);            
         }  
         if($from){            
-            $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
+            $query = $query->whereDate('date', $search_from_date);
         }                     
         $dailykm_report = $query->get(); 
         // dd($dailykm_report);    
@@ -65,7 +65,7 @@ class DailyKMReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Daily-km-report.xlsx');
+       return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate), 'Daily-km-report.xlsx');
     }
    
 }

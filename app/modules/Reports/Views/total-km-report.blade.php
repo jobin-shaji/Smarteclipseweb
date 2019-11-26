@@ -35,18 +35,18 @@ Total KM Report
                             </select>
                           </div>
                           </div>
-                          <div class="col-lg-3 col-md-3"> 
+                        <!--   <div class="col-lg-3 col-md-3"> 
                            <div class="form-group">                    
                             <label> From Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
                           </div>
-                        </div>
-                          <div class="col-lg-3 col-md-3">  
+                        </div> -->
+                      <!--     <div class="col-lg-3 col-md-3">  
                            <div class="form-group">                   
                             <label> To Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
-                          </div>
+                          </div> -->
                            <div class="col-lg-3 col-md-3 pt-4">
                              <div style="float: left">          
                               <button class="btn btn-sm btn-info btn2 srch" style="width: 80%" onclick="check()"> <i class="fa fa-search"></i> </button>

@@ -42,12 +42,12 @@
                     </div>
                     <div class="col-md-7">
                         <div class="card-body">
+                          <p></p>
                             <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
                             <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>
                             <p class="card-text"><b>Shipped : </b> {{$gps_transfer->dispatched_on}} </p>
-                            <h5 class="card-title">Shipping To,</h5>
-                            <p class="card-text">{{$role_details->name}}</p>
-                            <p class="card-text">{{$role_details->address}}</p>
+                            <h5 class="card-title" style="text-align: inherit!important">Shipping To,</h5>
+                            <p class="card-text">{{$role_details->name}} <br>{{$role_details->address}}</p>
                             <p class="card-text"><b>Mobile Number : </b> {{$user_details->mobile}} </p>
                         </div>
                     </div>

@@ -16,8 +16,8 @@
        ?>
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $totalkmReport->gps->vehicle->name }}</td>           
-            <td>{{ $totalkmReport->gps->vehicle->register_number }}</td>            
+            <td>{{ $totalkmReport->vehicle->name }}</td>           
+            <td>{{ $totalkmReport->vehicle->register_number }}</td>            
             <td>{{ $km }}</td>         
         </tr>
         @endforeach

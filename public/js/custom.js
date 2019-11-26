@@ -938,22 +938,22 @@ function downloadTotalKMReport(){
        var vehicle=vehicles;
     }
     // console.log(alert);
-    var fromDate=$('#fromDate').val();
-    var toDate=$('#toDate').val();
-    if(fromDate){
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
-        };
+    // var fromDate=$('#fromDate').val();
+    // var toDate=$('#toDate').val();
+    // if(fromDate){
+    //     var data = {
+    //     id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+    //     };
         
        
-        downloadFile(url,data);
-    }else{
+    //     downloadFile(url,data);
+    // }else{
         
         var data = {
             id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
         };
         downloadFile(url,data);
-    }
+    // }
 }
 
 
@@ -966,10 +966,10 @@ function downloadDailyKMReport(){
    
     // console.log(alert);
     var fromDate=$('#fromDate').val();
-    var toDate=$('#toDate').val();
+    // var toDate=$('#toDate').val();
     if(fromDate){
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate
         };
         downloadFile(url,data);
     }else{

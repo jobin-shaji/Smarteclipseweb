@@ -606,7 +606,6 @@ class AlertController extends Controller {
 
 
 
-
      //alert create rules 
     public function alert_rules(){
         $rules = [

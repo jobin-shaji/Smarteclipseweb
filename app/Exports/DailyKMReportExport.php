@@ -13,10 +13,10 @@ use App\Modules\Vehicle\Models\DailyKm;
 class DailyKMReportExport implements FromView
 {
 	protected $dailykmReportExport;
-	public function __construct($client,$vehicle_id,$from,$to)
+	public function __construct($client,$vehicle_id,$from)
     {  
         $search_from_date=date("Y-m-d", strtotime($from));
-        $search_to_date=date("Y-m-d", strtotime($to));
+        // $search_to_date=date("Y-m-d", strtotime($to));
         // dd($from);
         $query =DailyKm::select(
             'gps_id', 
@@ -39,7 +39,7 @@ class DailyKMReportExport implements FromView
             $query = $query->where('gps_id',$vehicle->gps_id);            
         }  
         if($from){            
-            $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
+            $query = $query->whereDate('date', $search_from_date);
         }                     
         $this->dailykmReportExport = $query->get();          
     }

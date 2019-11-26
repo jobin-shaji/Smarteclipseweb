@@ -8,8 +8,8 @@ $(document).ready(function () {
 });
 function  gpsAlert(res) 
 {
-	console.log(res.alerts.data);
-	for(var i=0;i<res.alerts.data.length-10;i++){
+	// console.log(res.alerts.data);
+	for(var i=0;i<10;i++){
 		var j=i+1;
 	    $('.inner').prepend('<tr>'+
 	    '<td>'+j+'</td>'+
