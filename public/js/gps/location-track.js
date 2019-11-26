@@ -590,7 +590,7 @@ function initMap(){
     }
 
     function moveMarker() {
-        infowindow.open(map, marker);
+        // infowindow.open(map, marker);
         posLat += deltaLat;
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
