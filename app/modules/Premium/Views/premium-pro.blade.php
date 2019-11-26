@@ -48,6 +48,9 @@
            <li style="height:24px"></li> 
           <li style="height:33px"></li> 
         </ul>
+        <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
         <p>
           <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
            Alert Reports (1 month history)
@@ -80,7 +83,7 @@
                    <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
                    <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
                    <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
-                   
+
                   </ul>
           </div>
         </div>

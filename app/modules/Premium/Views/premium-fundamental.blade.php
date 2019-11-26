@@ -139,6 +139,7 @@
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
           <li><b>Everything in Superior +</b></li>
+          <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%">Route Deviation[10 routes]</li>
           <li><i class="far fa-caret-square-left"></i>Route playback history(6 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(10 Geofences)</li>
           <li><i class="fas fa-list"></i>Whitelist</li>
