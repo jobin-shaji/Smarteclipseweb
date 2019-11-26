@@ -49,6 +49,10 @@
            <li style="height:24px"></li> 
           <li style="height:33px"></li> 
         </ul>
+
+        <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
         <p>
           <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
            Alert Reports (1 month history)
@@ -130,6 +134,9 @@
           <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li>
           <li style="height:30px"></li> 
         </ul>
+        <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹1700 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
         <p>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
    Alert Reports (2 months history)
@@ -216,6 +223,10 @@
           <li><img src="{{url('/')}}/assets/images/ac.png" height="15px" width="15px" style="margin:0 2%">AC Status</li>
           <li style="height:0"></li> 
         </ul>
+        <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹2300 + Tax</h6>
+        <h6><b>Immobilizer:</b>  ₹500 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
    Alert Reports (4 months history)
