@@ -7,8 +7,8 @@ $(document).ready(function () {
     today = dd + '-' + mm + '-' + yyyy;
     var  data = {
          vehicle : vehicle,
-          from_date : today,
-          to_date : today
+          from_date : today
+          // to_date : today
     };     
     // var today = new Date();
     callBackDataTable(data);
@@ -30,11 +30,11 @@ function check(){
 function callBackDataTable(){
     var vehicle =document.getElementById('vehicle').value;
     var from_date =document.getElementById('fromDate').value;
-    var to_date = document.getElementById('toDate').value;
+    // var to_date = document.getElementById('toDate').value;
     var  data = {
             vehicle : vehicle,
-            from_date : from_date,
-            to_date : to_date
+            from_date : from_date
+            // to_date : to_date
         }; 
 
     $("#dataTable").DataTable({

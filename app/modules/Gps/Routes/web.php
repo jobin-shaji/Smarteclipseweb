@@ -104,6 +104,10 @@ Route::post('/gps-create-root-dropdown','GpsController@getGpsDetailsFromRoot')->
 Route::get('/set-ota-operations','GpsController@operationsSetOtaListPage')->name('set.ota.operations');
 Route::post('/setota-operations','GpsController@setOtaInConsoleOperations')->name('setota.operations');
 
+Route::post('/select-ota-params','GpsController@selectOtaParamByGps')->name('select-ota-params');
+
+
+
 
 });
 

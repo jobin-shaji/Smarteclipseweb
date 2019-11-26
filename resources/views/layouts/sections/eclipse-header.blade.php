@@ -198,16 +198,16 @@
                                         <a href="{{url('/total-km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                           <span class="system_info" >Total KM  Report</span>
+                                           <span class="system_info" >Total KM Report</span>
                                            </div>
                                             
                                         </a>
                                     </li>
-                                     <li class="sys_vapor cover_total_km">
+                                     <li class="sys_vapor cover_vehicle_report">
                                         <a href="{{url('/km-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                           <span class="system_info" >Vehicle  Report</span>
+                                           <span class="system_info" >Vehicle Report</span>
                                            </div>
                                             
                                         </a>
@@ -228,7 +228,7 @@
                                         <a href="{{url('/over-speed-report')}}">
                                             <div class="system_icon">
                                                <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
-                                           <span class="system_info" >Over Speed  Report</span>
+                                           <span class="system_info" >Over Speed Report</span>
                                            </div>
                                             
                                         </a>
@@ -265,6 +265,17 @@
                                             
                                         </a>
                                     </li>
+                                    <li>
+                                        
+                                    </li>
+                                    <li class="sys_vapor cover_dailyreport">
+                                        <a href="{{url('/daily-km-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                               <span class="system_info">Daily KM Report </span></div>
+                                           
+                                        </a>
+                                    </li>
 
                                      <li class="sys_vapor sudden_acceleration">
                                         <a href="{{url('/sudden-acceleration-report')}}">
@@ -273,15 +284,6 @@
                                             <span class="system_info" >Sudden Acceleration</span>
                                            </div>
                                             
-                                        </a>
-                                    </li>
-
-                                    <li class="sys_vapor cover_dailyreport">
-                                        <a href="{{url('/daily-km-report')}}">
-                                            <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
-                                               <span class="system_info">Daily Report </span></div>
-                                           
                                         </a>
                                     </li>
 

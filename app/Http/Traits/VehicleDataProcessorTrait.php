@@ -462,21 +462,21 @@ trait VehicleDataProcessorTrait{
         $tracking_mode = $this->trackingMode($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
-        $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);      
+        $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
         $alerts =Alert::select(
-	            'id',
-	            'alert_type_id', 
-	            'device_time',    
-	            'gps_id', 
-	            'latitude',
-	            'longitude', 
-	            'status'
-	        )
-	        ->where('gps_id',$single_vehicle_gps_id)
-	        ->whereDate('device_time', '>=', $from_date)
-	        ->whereDate('device_time', '<=', $to_date)
-	        ->get();
+            'id',
+            'alert_type_id', 
+            'device_time',    
+            'gps_id', 
+            'latitude',
+            'longitude', 
+            'status'
+        )
+        ->where('gps_id',$single_vehicle_gps_id)
+        ->whereDate('device_time', '>=', $from_date)
+        ->whereDate('device_time', '<=', $to_date)
+        ->get();
         $user_alert = UserAlerts::select(
             'alert_id'
         )
@@ -487,7 +487,6 @@ trait VehicleDataProcessorTrait{
         foreach($user_alert as $user_alert){
             $alert_id[] = $user_alert->alert_id;
         }
-
         $route_deviation =RouteDeviation::select(
             'id',
             'vehicle_id', 
