@@ -309,6 +309,7 @@
           <li><img src="{{url('/')}}/assets/images/support.png" style="margin:0 2%">Privileged support</li>
           <li style="height:30px"></li> 
         </ul>
+        <h6><b>Data charge:</b>  ₹500000 + Tax</h6>
         <p>
   <a  data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
    Alert Report (6 months history)
