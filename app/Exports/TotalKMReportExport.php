@@ -1,16 +1,12 @@
 <?php
-
 namespace App\Exports;
-
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\Gps;
-
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\DailyKm;
-
 class TotalKMReportExport implements FromView
 {
 	protected $totalkmReportExport;
@@ -23,9 +19,9 @@ class TotalKMReportExport implements FromView
         }
         else
         {
-            $vehicle_details =Vehicle::where('client_id',$client)->withTrashed()->get();            foreach($vehicle_details as $vehicle_detail){
+            $vehicle_details =Vehicle::where('client_id',$client)->withTrashed()->get();
+            foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
-
             }
         }
         $query =Gps::select(
