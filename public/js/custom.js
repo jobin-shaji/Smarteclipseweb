@@ -382,6 +382,10 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     allGpsConfiguredata(res);
                 }
+                else if(callBack=='setOtaParams')
+                {
+                    setOtaParams(res);
+                }
 
             }
         },
