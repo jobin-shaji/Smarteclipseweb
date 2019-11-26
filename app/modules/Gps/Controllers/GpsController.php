@@ -1738,6 +1738,28 @@ class GpsController extends Controller {
     ->make();
     } 
 
+    public function selectOtaParamByGps(Request $request){
+        $gps_id=$request->gps_id;
+        $ota_data=GpsConfiguration::where('gps_id',$gps_id)->first();
+        if($ota_data){
+          return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'ota'=>$ota_data,
+                'message' => 'success'
+         ]);
+        }else{
+        //     $request->session()->flash('message', 'Try again'); 
+        // $request->session()->flash('alert-class', 'alert-success');
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+         return redirect(route('set.ota.operations'));
+    }
+
     public function operationsSetOtaListPage()
     {      
         $gps = Gps::all();
