@@ -1,18 +1,18 @@
 $(document).ready(function () { 
     // document.getElementById('excel').style.visibility = 'hidden';
-   var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+//    var today = new Date();
+//     var dd = String(today.getDate()).padStart(2, '0');
+//     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+//     var yyyy = today.getFullYear();
 
-today = dd + '-' + mm + '-' + yyyy;
-    var  data = {
-          from_date : today,
-          to_date : today
-    }; 
+// today = dd + '-' + mm + '-' + yyyy;
+//     var  data = {
+//           from_date : today,
+//           to_date : today
+//     }; 
     
     // var today = new Date();
-    callBackDataTable(data);
+    callBackDataTable();
 });
 
 function check(){
@@ -33,12 +33,12 @@ function check(){
 }
 function callBackDataTable(){
     var vehicle =document.getElementById('vehicle').value;
-    var from_date =document.getElementById('fromDate').value;
-    var to_date = document.getElementById('toDate').value;
+    // var from_date =document.getElementById('fromDate').value;
+    // var to_date = document.getElementById('toDate').value;
     var  data = {
         vehicle : vehicle,
-        from_date : from_date,
-        to_date : to_date
+        // from_date : from_date,
+        // to_date : to_date
     }; 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -61,8 +61,8 @@ function callBackDataTable(){
         },      
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
-            {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
+            {data: 'vehicle.name', name: 'vehicle.name', orderable: false},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number', orderable: false},
             {data: 'totalkm', name: 'totalkm', orderable: false},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
