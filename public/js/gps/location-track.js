@@ -471,7 +471,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 18,
+        zoom: 17,
         mapTypeId: 'roadmap'
 
     });  
@@ -484,7 +484,7 @@ function initMap(){
 
 
     
-    map.setOptions({maxZoom:15,minZoom:9});
+    map.setOptions({maxZoom:19,minZoom:9});
      getMarkers(map);
 
   service = new google.maps.places.PlacesService(map);
@@ -590,7 +590,7 @@ function initMap(){
     }
 
     function moveMarker() {
-        infowindow.open(map, marker);
+        // infowindow.open(map, marker);
         posLat += deltaLat;
         posLng += deltaLng;
         var latlng = new google.maps.LatLng(posLat, posLng);
@@ -606,7 +606,7 @@ function initMap(){
  // ---------------------center on  a marker--------------------------
 function offsetCenter(latlng) 
   {
-    var offsetx=9.5;
+    var offsetx=0;
     var offsety=0;
     // offsetx is the distance you want that point to move to the right, in pixels
     // offsety is the distance you want that point to move upwards, in pixels
