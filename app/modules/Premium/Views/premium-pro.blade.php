@@ -30,8 +30,8 @@
           <li><i class="fas fa-mobile-alt"></i>Mobile application</li>
           <li><i class="far fa-caret-square-left"></i>Route playback history(1 Month)</li> 
           <li><i class="far fa-map"></i>Point of interest</li>
-          <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%"></i>Route deviation</li> 
-          <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(1 Geofence)</li> 
+          <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(2 Geofence)</li> 
+          <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li> 
           <?php
         $url=url()->current();
         if (strpos($url, "rayfleet") == true) {  ?>
@@ -80,6 +80,7 @@
                    <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
                    <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
                    <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
+                   
                   </ul>
           </div>
         </div>

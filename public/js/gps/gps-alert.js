@@ -20,9 +20,22 @@ $(document).ready(function () {
 });
 function  gpsAlert(res) 
 {
+
 	console.log(res.alerts.length);
 	for(var i=0,n=Math.min(res.alerts.length,10); i<n;i++){
 	    $('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+
+	// console.log(res.alerts.data);
+	for(var i=0;i<10;i++){
+		var j=i+1;
+	    $('.inner').prepend('<tr>'+
+	    '<th>'+j+'</th>'+
+    	'<td>'+res.alerts.data[i].alert_type.description+'</td>'+
+    	'<td>'+res.alerts.data[i].gps.vehicle.name+'</td>'+
+    	'<td>'+res.alerts.data[i].gps.vehicle.register_number+'</td>'+
+    	'<td>'+res.alerts.data[i].device_time+'</td>'+
+    	'</tr>');
+
 	}
 	$("#alert").scrollTop($("#alert")[0].scrollHeight);
 	var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();

@@ -38,7 +38,7 @@ Route::post('/sudden-acceleration-report-list','SuddenAccelerationReportControll
 Route::post('/sudden-acceleration-report/export','SuddenAccelerationReportController@export')->name('sudden.acceleration.report.export');
 
 //total km report
-	Route::get('/total-km-report','TotalKMReportController@totalKMReport')->name('total-km-report');
+Route::get('/total-km-report','TotalKMReportController@totalKMReport')->name('total-km-report');
 Route::post('/totalkm-report-list','TotalKMReportController@totalKMReportList')->name('totalkm-report-list');
 Route::post('/total-km-report/export','TotalKMReportController@export')->name('total.km.report.export');
 
@@ -99,6 +99,9 @@ Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectRepor
 
 // test mode change
 
+  	//duration report
+	Route::get('/duration-report','DurationReportController@durationReport')->name('total-km-report');
+	Route::post('/duration-report-list','DurationReportController@durationReportList')->name('duration-report-list');
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
