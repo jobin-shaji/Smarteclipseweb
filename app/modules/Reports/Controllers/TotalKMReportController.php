@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Gps\Models\Gps;
+
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Alert\Models\Alert;
@@ -36,11 +38,11 @@ class TotalKMReportController extends Controller
     {
         $single_vehicle_id = [];
         $client_id=\Auth::user()->client->id;
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date'];
+        // $from = $request->data['from_date'];
+        // $to = $request->data['to_date'];
         $vehicle =$request->data['vehicle'];
-        $search_from_date=date("Y-m-d", strtotime($from));
-        $search_to_date=date("Y-m-d", strtotime($to));
+        // $search_from_date=date("Y-m-d", strtotime($from));
+        // $search_to_date=date("Y-m-d", strtotime($to));
         if($vehicle!=0)
         {
             $vehicle_details =Vehicle::withTrashed()->find($vehicle);
@@ -53,27 +55,23 @@ class TotalKMReportController extends Controller
 
             }
         }
-         $query =DailyKm::select(
-            'gps_id', 
-            'date',  
-            \DB::raw('SUM(km) as km')    
-           // 'km'
+         $query =Gps::select(
+            'id', 
+             'km'
         )
-        ->with('gps.vehicle') 
-        ->groupBy('gps_id')   
+        ->with('vehicle') 
         ->orderBy('id', 'desc');             
          if($vehicle==0 || $vehicle==null)
         {        
-            $query = $query->whereIn('gps_id',$single_vehicle_id);           
+            $query = $query->whereIn('id',$single_vehicle_id);           
         }
         else
         {
-            $query = $query->where('gps_id',$single_vehicle_ids)
-            ->groupBy('gps_id');               
+            $query = $query->where('id',$single_vehicle_ids);               
         }   
-        if($from){            
-            $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
-        }                     
+        // if($from){            
+        //     $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
+        // }                     
         $totalkm_report = $query->get();
         return DataTables::of($totalkm_report)
         ->addIndexColumn()        
@@ -86,7 +84,7 @@ class TotalKMReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new TotalKMReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Total-km-report.xlsx');
+       return Excel::download(new TotalKMReportExport($request->id,$request->vehicle), 'Total-km-report.xlsx');
     } 
 
 
