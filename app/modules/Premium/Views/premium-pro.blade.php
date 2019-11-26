@@ -80,6 +80,7 @@
                    <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
                    <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
                    <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
+                   
                   </ul>
           </div>
         </div>
