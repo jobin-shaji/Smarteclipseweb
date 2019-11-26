@@ -319,7 +319,11 @@ trait VehicleDataProcessorTrait{
             $diff_in_minutes = $to->diffInSeconds($from);
             if($first_log->ac_status==0){
                 $ac_off_time=$ac_off_time+$diff_in_minutes;
-            }else{
+            }else if($first_log->ac_status==1){
+                $ac_on_time=$ac_on_time+$diff_in_minutes;
+            }else if($first_log->ac_status==null && $last_log->ac_status==0 ){
+                $ac_off_time=$ac_off_time+$diff_in_minutes;
+            }else if($first_log->ac_status==null && $last_log->ac_status==1){
                 $ac_on_time=$ac_on_time+$diff_in_minutes;
             }
         }
@@ -354,7 +358,7 @@ trait VehicleDataProcessorTrait{
                                , @statusPre := ac_status
                           FROM gps_data
                              , (SELECT @statusPre:=NULL) AS d
-                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode="H" ORDER BY device_time 
+                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode="H" AND ac_status IS NOT NULL ORDER BY device_time 
                         ) AS good
                       WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
       	$ac_on_time=0;
@@ -408,10 +412,14 @@ trait VehicleDataProcessorTrait{
           	$to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
           	$diff_in_minutes = $to->diffInSeconds($from);
           	if($first_log->ac_status==0){
-              	$ac_off_time=$ac_off_time+$diff_in_minutes;
-          	}else{
-            	$ac_on_time=$ac_on_time+$diff_in_minutes;
-          	}
+                $ac_off_time=$ac_off_time+$diff_in_minutes;
+            }else if($first_log->ac_status==1){
+                $ac_on_time=$ac_on_time+$diff_in_minutes;
+            }else if($first_log->ac_status==null && $last_log->ac_status==0 ){
+                $ac_off_time=$ac_off_time+$diff_in_minutes;
+            }else if($first_log->ac_status==null && $last_log->ac_status==1){
+                $ac_on_time=$ac_on_time+$diff_in_minutes;
+            }
       	}
       	$ac_on_time = $this->timeFormate($ac_on_time);
       	$ac_halt_status = array(
