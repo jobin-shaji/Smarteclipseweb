@@ -39,7 +39,8 @@ class HarshBrakingReportController extends Controller
         )
         ->with('alertType:id,description')
         ->with('gps.vehicle')
-        ->orderBy('id', 'desc')
+        // ->orderBy('id', 'desc')
+        ->orderBy('device_time', 'DESC')
         ->limit(1000);
         // if($vehicle==null)
         // {

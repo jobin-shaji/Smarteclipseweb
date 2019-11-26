@@ -61,8 +61,8 @@
             <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
             <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
             <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li> 
-            <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li> 
-            <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+            <li><img src="{{ url('/') }}/SVG-Icons/geofence-entry.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Entry Alert</li> 
+            <li><img src="{{ url('/') }}/SVG-Icons/geofence-exit.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Exit Alert</li>
             <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li> 
             <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
             <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li> 
@@ -140,8 +140,8 @@
           <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
           <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
           <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li>
-          <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li>
-          <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+          <li><img src="{{ url('/') }}/SVG-Icons/geofence-entry.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Entry Alert</li>
+          <li><img src="{{ url('/') }}/SVG-Icons/geofence-exit.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Exit Alert</li>
           <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li>
           <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
           <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li>
@@ -218,8 +218,8 @@
           <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
           <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
           <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li>
-          <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li>
-          <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+          <li><img src="{{ url('/') }}/SVG-Icons/geofence-entry.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Entry Alert</li>
+          <li><img src="{{ url('/') }}/SVG-Icons/geofence-exit.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Exit Alert</li>
           <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li>
           <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
           <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li>
@@ -298,8 +298,8 @@
           <li><img src="{{url('/')}}/assets/images/accelaration.png" style="margin:0 2% 0 0">Harsh Acceleration Alert</li>
           <li><img src="{{url('/')}}/assets/images/turning.png" style="margin:0 2% 0 0">Rash Turning Alert</li>
           <li><img src="{{url('/')}}/assets/images/box-open.png" style="margin:0 2% 0 0">GPS Box Opened Alert</li>
-          <li><img src="{{url('/')}}/assets/images/geofence-entry.png" style="margin:0 2% 0 0">Geofence Entry Alert</li>
-          <li><img src="{{url('/')}}/assets/images/geofence-exit.png" style="margin:0 2% 0 0">Geofence Exit Alert</li>
+          <li><img src="{{ url('/') }}/SVG-Icons/geofence-entry.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Entry Alert</li>
+          <li><img src="{{ url('/') }}/SVG-Icons/geofence-exit.png" style="margin:0 2% 0 0" height="20px" width="20px">Geofence Exit Alert</li>
           <li><img src="{{url('/')}}/assets/images/connect-battery.png" style="margin:0 2% 0 0">Vehicle Battery Reconnect/ Connect back to main battery Alert</li>
           <li><i class="fas fa-battery-quarter"></i>Low battery Alert</li>
           <li><img src="{{url('/')}}/assets/images/low-battery.png" style="margin:0 2% 0 0">Low battery removed Alert</li>

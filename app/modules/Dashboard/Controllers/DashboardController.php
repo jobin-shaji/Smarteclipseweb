@@ -208,8 +208,8 @@ class DashboardController extends Controller
                 'gps_stock' => GpsStock::all()->count(),
                 'gps_to_verify' => Gps::all()->count()-GpsStock::all()->count(),
 
-                'gps_today' => Gps::WhereDate('created_at',date("Y-m-d"))->count(),
-                'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
+                'gps_today' => Gps::WhereDate('manufacturing_date',date("Y-m-d"))->count(),
+                // 'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
 
 
                 'status' => 'dbcount'           
@@ -476,7 +476,7 @@ class DashboardController extends Controller
     }
     function getAddress($latitude,$longitude){
          //Send request and receive json data by address
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
         $output = json_decode($geocodeFromLatLong);         
         $status = $output->status;
         //Get address from json data
@@ -1238,6 +1238,7 @@ class DashboardController extends Controller
         $vehicleTrackData=array();
         foreach ($vehiles_details as $vehicle_data) {
             $vehicle_ecrypt_id=Crypt::encrypt($vehicle_data->vehicle->id);
+            $gps_ecrypt_id=Crypt::encrypt($vehicle_data->id);
             $single_vehicle=Vehicle::find($vehicle_data->vehicle->id);
             $single_vehicle_type= $single_vehicle->vehicleType;
             $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
@@ -1258,6 +1259,7 @@ class DashboardController extends Controller
                 "imei"=>$vehicle_data->imei,
                 "mode"=>$modes,
                 "vehicle_id"=>$vehicle_ecrypt_id,
+                'encrypt_gps_id'=>$gps_ecrypt_id,
                 "vehicle_name"=>$vehicle_data->vehicle->name,
                 "register_number"=>$vehicle_data->vehicle->register_number,
                 "vehicle_svg"=>$single_vehicle_type->svg_icon,

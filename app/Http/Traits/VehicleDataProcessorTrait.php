@@ -61,7 +61,7 @@ trait VehicleDataProcessorTrait{
                     $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
                     $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
                     $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==1){
+                    if($ignition==0){
                         $engine_on_time=$engine_on_time+$diff_in_minutes;
                     }else{
                         $engine_off_time=$engine_off_time+$diff_in_minutes;
@@ -442,6 +442,7 @@ trait VehicleDataProcessorTrait{
         }else if ($searchType == "5") {
             $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-30 day midnight")) . " " . date('Y-m-d');
         }
         $output_data = ["from_date" => $from_date, 
                         "to_date" => $to_date, 

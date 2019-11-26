@@ -28,10 +28,20 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	
 
 	   // Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
-	  
+	 Route::get('/gps-alert','AlertController@gpsAlerts')->name('gps-alert');
+	Route::post('/gps-alert-list','AlertController@gpsAlertList')->name('gps.alert.list');
+
+
+
+Route::get('/alert/{id}/mapview','AlertController@location')->name('alert.mapview');
+	// Route::post('/alert/report/show','AlertReportController@alertmap')->name('alert.report.show');
+
+
+
+
 
 });
-Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer|operations'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
  Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
  });
 

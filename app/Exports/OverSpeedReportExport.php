@@ -35,7 +35,8 @@ class OverSpeedReportExport implements FromView
             'status'
         )
         ->with('alertType:id,description')
-        ->with('vehicle:id,name,register_number');
+        ->with('vehicle:id,name,register_number')
+        ->orderBy('device_time', 'DESC');
         if($vehicle==0 || $vehicle==null)
         {
             $query = $query->whereIn('gps_id',$single_vehicle_id)

@@ -120,27 +120,27 @@ pro_date=d.setMonth(d.getMonth() - 6);
     $( ".datepicker" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         maxDate: new Date() 
- });
-$( ".datepickerFreebies" ).datetimepicker({ 
+     });
+    $( ".datepickerFreebies" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         maxDate: new Date(),
         minDate:free_date
- });
-$( ".datepickerFundamental" ).datetimepicker({ 
+     });
+    $( ".datepickerFundamental" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         maxDate: new Date(),
         minDate:fundamental_date
- });
-$( ".datepickerSuperior" ).datetimepicker({ 
+     });
+    $( ".datepickerSuperior" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         maxDate: new Date(),
         minDate:superior_date
- });
-$( ".datepickerPro" ).datetimepicker({ 
+     });
+    $( ".datepickerPro" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
         maxDate: new Date(),
         minDate:pro_date
- });
+    });
 
     $( ".date_expiry" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
@@ -382,9 +382,15 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     allGpsConfiguredata(res);
                 }
+
                 else if(callBack=='setOtaParams')
                 {
                     setOtaParams(res);
+                }   
+                else if(callBack=='gpsAlert')
+                {
+                    gpsAlert(res);
+
                 }
 
             }

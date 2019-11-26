@@ -37,7 +37,8 @@ class MainBatteryDisconnectReportController extends Controller
             'status'
         )
         ->with('alertType:id,description')
-        ->with('gps.vehicle');
+        ->with('gps.vehicle')
+        ->orderBy('device_time', 'DESC');
         if($vehicle==0 || $vehicle==null)
         {
             $gps_stocks=GpsStock::where('client_id',$client)->get();
@@ -71,7 +72,7 @@ class MainBatteryDisconnectReportController extends Controller
             $longitude=$mainbatterydisconnect->longitude;          
             if(!empty($latitude) && !empty($longitude)){
                 //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
                 $output = json_decode($geocodeFromLatLong);         
                 $status = $output->status;
                 //Get address from json data

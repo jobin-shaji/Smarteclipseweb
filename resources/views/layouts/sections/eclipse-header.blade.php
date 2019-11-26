@@ -102,7 +102,7 @@
                        </li>                       
                        <!--  <li class="nav-item search-box"> 
                         </li> -->
-                         <li class="nav-item" style="padding: 1.5% 0"> 
+                         <li class="nav-item"> 
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
@@ -393,7 +393,7 @@
                         <li class="nav-item dropdown">
                             <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                             <span class="notification-box">
-                                <span class="notification-count">0</span>
+                                <span class="notification-count" id="bell_notification_count">0</span>
                                 <div>
                                     <i class="mdi mdi-bell font-24" ></i>
                                 </div>
@@ -401,24 +401,24 @@
 
 
 <!-- style="padding: 18% 0 0 56%" -->
-                            <!-- <span class="cover_bell">
-                                <span class="bell_value" id="bell_notification_count">0</span>
-                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i> -->
+                        <!--     <span class="cover_bell">
+                                <span class="bell_value" >0</span>
+                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i>
                             </a>
-                            <!-- <span class="notification-box">
-                                <span class="notification-count">
+                            <span class="notification-box"> -->
+                                <!-- <span class="notification-count">
                                    <a class="dropdown-item" href="{{url('/alert')}}" id="bell_notification_count" title="Alerts">1000</a>
-                                </span>
-                                <div class="notification-bell">
+                                </span> -->
+                                <!-- <div class="notification-bell">
                                   <span class="bell-top"></span>
                                   <span class="bell-middle"></span>
                                   <span class="bell-bottom"></span>
                                   <span class="bell-rad"></span>
                                   <i class='fas fa-car'></i>
                                   <img src="../../assets/images/arc.png" width="50" height="20">
-                                </div>
+                                </div> -->
                                 
-                            </span> -->
+                            <!-- </span> -->
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">

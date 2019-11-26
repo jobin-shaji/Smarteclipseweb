@@ -7,6 +7,7 @@ function getUrl() {
  var vehicle_scale = document.getElementById('vehicle_scale').value;
  var opacity = document.getElementById('opacity').value;
  var strokeWeight = document.getElementById('strokeWeight').value;
+ var track_vehicle_id = document.getElementById('vehicle_id_data').value;
 
 var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
 var numDeltas = 100;
@@ -56,9 +57,37 @@ $('document').ready(function(){setTimeout(getMarkers,5000);});
 $('document').ready(function(){
   initMap();
   setTimeout(getMarkers,5000);
+  // setInterval(function() {
+  //       var url = 'continuous-alert';
+  //       var data = { 
+  //         vehicle_id:track_vehicle_id
+  //       };
+  //       backgroundPostData(url,data,'continuousAlert',{alert:false});
+  // }, 8000);
 
 }); 
 $('document').ready(function(){setTimeout(doWork,1000);});  
+
+// function continuousAlert(res){
+//   console.log(res);
+//     if(res.status == 'success'){
+//         var alert=res.alerts[0].latitude;
+//         var longitude=res.alerts[0].longitude;
+//         getPlaceNameFromLatLng(latitude,longitude);
+//         var vehicle_id=res.alerts[0].gps.vehicle.id;
+        
+//         var modal = document.getElementById('track_alert');
+//         modal.style.display = "block";
+//         document.getElementById("em_id").value = res.alerts[0].id;
+//         document.getElementById("alert_vehicle_id").value = res.vehicle;
+//         document.getElementById("decrypt_vehicle_id").value = vehicle_id;
+//         $('#emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
+//         $('#emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
+//         $('#emergency_vehicle_time').text(res.alerts[0].device_time);
+        
+       
+//     }
+// }
 
 
 
@@ -442,7 +471,7 @@ function initMap(){
             lat: parseFloat(start_lat),
             lng: parseFloat(start_lng)
         },
-        zoom: 18,
+        zoom: 17,
         mapTypeId: 'roadmap'
 
     });  
@@ -455,7 +484,7 @@ function initMap(){
 
 
     
-    map.setOptions({maxZoom:15,minZoom:9});
+    map.setOptions({maxZoom:19,minZoom:9});
      getMarkers(map);
 
   service = new google.maps.places.PlacesService(map);
@@ -577,7 +606,7 @@ function initMap(){
  // ---------------------center on  a marker--------------------------
 function offsetCenter(latlng) 
   {
-    var offsetx=9.5;
+    var offsetx=0;
     var offsety=0;
     // offsetx is the distance you want that point to move to the right, in pixels
     // offsety is the distance you want that point to move upwards, in pixels

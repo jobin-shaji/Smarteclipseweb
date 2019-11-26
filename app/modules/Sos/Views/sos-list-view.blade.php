@@ -31,7 +31,7 @@
                                           <table class="table table-bordered  table-striped " style="width:100%;">
                                             <thead>
                                               <tr>
-                                                <th>Sl.No</th>
+                                                <th>SL.No</th>
                                                 <th>Serial NO</th>
                                                 <th>Model Name</th>
                                                 <th>Version</th>

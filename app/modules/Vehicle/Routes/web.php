@@ -34,8 +34,9 @@ Route::get('/all-vehicle-docs','VehicleController@allVehicleDocList')->name('all
 
 Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->name('all-vehicle-docs-list');
 
+Route::post('/continuous-alert','VehicleController@continuousAlerts')->name('continuous.alerts');
 
-
+Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert')->name('continuous-alert.verify');
 
 
 

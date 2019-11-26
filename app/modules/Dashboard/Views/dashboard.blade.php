@@ -271,7 +271,7 @@
                     </div>
                   </div>
                   
-                  <span style="margin-left: 2%"></span>
+              
 
                    <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
                     <!-- small box -->
@@ -280,7 +280,7 @@
                         <h3 id="gps_today">
                           <div class="loader"></div>
                         </h3>
-                        <p style="width: 45%">Devices Tested Today</p>
+                        <p style="width: 45%">Devices Manufactured Today</p>
                       </div>
                       <div class="icon">
                         <img src="../../assets/images/gps101.png" height="50%" width="30%" style="float: right;margin-top: 10%">
@@ -289,8 +289,8 @@
                     </div>
                   </div>
                  
-                  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
-                    <!-- small box -->
+                 <!--  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                   
                     <div class="small-box bg-green bxs">
                       <div class="inner">
                         <h3 id="gps_add_to_stock">
@@ -301,9 +301,9 @@
                       <div class="icon">
                         <img src="../../assets/images/gps105.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
                       </div>
-                     <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    
                     </div>
-                  </div>
+                  </div> -->
                 
                 </div>
               </div>
@@ -715,7 +715,7 @@
             <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
-            <div class="st-panel-contents" id="vehicle_card_cover">
+            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important">
               @foreach ($vehicles as $vehicle)       
                 <div class="border-card">
                   <div class="card-type-icon with-border">

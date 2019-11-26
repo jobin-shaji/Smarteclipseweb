@@ -62,9 +62,9 @@
         toastr.options.newestOnTop = false;
     </script>
 </head>
-<body  style="background-image: url({{ url('/') }}/assets/images/loginbg1.jpg);height: 100%;background-repeat: no-repeat;background-position: center;background-size: cover;">
+<body  style="background-image: url({{ url('/') }}/assets/images/loginbg3.jpg);height: 50%;background-repeat: no-repeat;background-position: center;background-size: cover;">
     <div id="app" >
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
               <!--   <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'GPS') }}

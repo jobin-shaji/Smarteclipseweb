@@ -29,7 +29,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                    <th>Sl.No</th>
+                    <th>SL.No</th>
                     <th>Job Code</th>
                     <th>Client</th>                      
                     <th>Job Type</th>

@@ -39,7 +39,8 @@ class RouteDeviationReportController extends Controller
             ->with('vehicle:id,name,register_number')
             ->with('route:id,name')       
             ->where('client_id',$client_id)
-            ->orderBy('id', 'desc')
+            // ->orderBy('id', 'desc')
+            ->orderBy('device_time', 'DESC')
             ->limit(1000);
         }
         else
@@ -76,7 +77,7 @@ class RouteDeviationReportController extends Controller
          $longitude=$route_deviation->longitude;          
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
             $output = json_decode($geocodeFromLatLong);         
             $status = $output->status;
             //Get address from json data

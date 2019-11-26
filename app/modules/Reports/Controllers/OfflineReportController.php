@@ -35,7 +35,8 @@ class OfflineReportController extends Controller
         ->with('alertType:id,description')
         ->with('vehicle:id,name,register_number')
         ->where('client_id',$client)
-        ->where('alert_type_id',1);
+        ->where('alert_type_id',1)
+        ->orderBy('device_time', 'DESC');
         // ->where('status',1);
            
         if($from){
@@ -52,7 +53,7 @@ class OfflineReportController extends Controller
          $longitude=$alert->longitude;          
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap'); 
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
             $output = json_decode($geocodeFromLatLong);         
             $status = $output->status;
             //Get address from json data
