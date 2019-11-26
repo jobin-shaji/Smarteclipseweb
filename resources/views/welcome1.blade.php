@@ -512,7 +512,7 @@
 <!----------------------------------------------------------------->
 
 <!----------------------------------------------------------------->
- <section class="our-history" style="background-image: url('smart/images/banner/blog-contactcenter_banner.jpg'); background-position: center;
+ <section class="our-history" style="background-image: url('smart/images/banner/service-center123.jpg'); background-position: center;
   background-attachment: fixed;
   overflow: hidden;
   display: block;
@@ -653,30 +653,30 @@
 					  
 							<div class="mySlides">
  
-							<p><u>LOGIN PAGE</u><br>
+							<p><u><i><b>LOGIN PAGE</b></i></u><br><br>
 								ALLOWS AUTHORIZED USERS TO ACCESS THE APP BASED ON THE PACKAGE THEY HAVE PURCHASED, ALSO PROVIDES FORGOT PASSWORD AUTHENTICATION AND SECURITY FEATURES THERE BY MAKING THE APP MORE SECURE.</p>
 							</div>
 							<div class="mySlides">
-							<p><u>HOME PAGE</u><br>
+							<p><u><i><b>HOME PAGE</b></i></u><br><br>
 								ALERT NOTIFICATION, LIVE VEHICLE TRACKING STATUS OF THE REGISTERED VEHICLE UNDER THAT PARTICULAR USER, ALSO THE CURRENT LOCATION USING THE GPS FEATURE. WITH EACH VEHICLE DISTINCT FEATURES SUCH AS LOCATION,ODOMETER READING,DAILY RUNNING KILOMETER,CURRENT SPEED OF THAT VEHICLE AND ALSO THE STATUS OF THAT VEHICLE AT HAT PARTICULAR INSTANT.</p>
 							</div>
 
 							<div class="mySlides">
 
-							<p><u>HELP AND SUPPORT</u><br>
+							<p><u><i><b>HELP AND SUPPORT</b></i></u><br><br>
 								PERSONALIZED FEATURE FOR EXTENDING THE SERVICES OF EACH VALUABLE USERS TO REGISTER THEIR COMPLAINT BY CATEGORIZING BOTH HARDWARE AND SOFTWARE ALONG WITH THE CUSTOMIZED OPTION UNDER THAT CATEGORY THERE BY KNOWING THE ISSUE IN DETAIL FOR EARLY ACCESSING OF THE SERVICES.</p>
 							</div>
 							<div class="mySlides">
-							<p><u>ALERT SUMMARY</u><br>
+							<p><u><i><b>ALERT SUMMARY</b></i></u><br><br>
 								USERS ARE ABLE TO IDENTIFY WHICH TYPE OF ALERTS IS COMING.CURRENT LOCATION ALONG WITH DATE AND TIME ALSO THE VEHICLE NAME</p>
 							</div>
 							<div class="mySlides">
 
-							<p><u>TRIP REPORT</u><br>
+							<p><u><i><b>TRIP REPORT</b></i></u><br><br>
 								USERS ARE ABLE TO VIEW THE VEHICLE REPORT AS PER THE PRIORITIZATION AND ARE ABLE TO GET DAILY,WEEKLY AND CUSTOMIZED REPORT OF HIS VEHICLE ALONG WITH THE FEATIRES SUCH AS MOVING,HALT,SLEEP,IGNITION STATUS,HARSH BRAKING COUNT,DRIVER BEHAVIOUR ETC...</p>
 							</div>
 							<div class="mySlides">
-							<p><u>ALERT MANAGER</u><br>
+							<p><u><i><b>ALERT MANAGER</b></i></u><br><br>
 								MANAGES THE ALERTS AS PER THE USERS PREFERENCE BY MAKING ACTIVE/INACTIVE ALONG WITH THE PUSH NOTIFICATION. NOTIFICATIONS CAN ALSO BE CUSTOMIZED WITH VIBRATE MODE ENABLED.</p>
 							</div>
 
@@ -688,7 +688,7 @@
   <span class="dot"></span> 
   <span class="dot"></span> 
   <span class="dot"></span> 
-   <span class="dot"></span> 
+  <span class="dot"></span> 
   <span class="dot"></span> 
 </div>
 <!--------------------------------------------------------------------------------------------->

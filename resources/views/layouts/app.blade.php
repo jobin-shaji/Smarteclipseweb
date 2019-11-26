@@ -62,7 +62,7 @@
         toastr.options.newestOnTop = false;
     </script>
 </head>
-<body  style="background-image: url({{ url('/') }}/assets/images/loginbg3.jpg);height: 50%;background-repeat: no-repeat;background-position: center;background-size: cover;">
+<body  style="background-image: url({{ url('/') }}/assets/images/loginbg456.jpg);height: 50%;background-repeat: no-repeat;background-position: center;background-size: cover;">
     <div id="app" >
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
