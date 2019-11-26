@@ -12,7 +12,7 @@ function  gpsAlert(res)
 	for(var i=0;i<10;i++){
 		var j=i+1;
 	    $('.inner').prepend('<tr>'+
-	    '<td>'+j+'</td>'+
+	    '<th>'+j+'</th>'+
     	'<td>'+res.alerts.data[i].alert_type.description+'</td>'+
     	'<td>'+res.alerts.data[i].gps.vehicle.name+'</td>'+
     	'<td>'+res.alerts.data[i].gps.vehicle.register_number+'</td>'+
