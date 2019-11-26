@@ -392,6 +392,13 @@ function backgroundPostData(url, data, callBack, options) {
                     gpsAlert(res);
 
                 }
+                else if(callBack=='gpsAlertTracker')
+                {
+                    gpsAlertTracker(res);
+
+                }
+
+                
 
             }
         },
