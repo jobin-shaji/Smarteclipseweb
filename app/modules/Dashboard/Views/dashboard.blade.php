@@ -870,7 +870,7 @@
         </div>
       </div>
       <div class="iconsbg12345">
-        <div class="row">
+        <div class="row" style="padding: 0 12% 0 0">
           <div class="card card-hover" style="width:100%;-webkit-box-shadow: 1px 1px 2px 3px #ccc;
                -moz-box-shadow: 1px 1px 2px 3px #ccc;
                box-shadow: 1px 1px 21px 1px #ccc">
