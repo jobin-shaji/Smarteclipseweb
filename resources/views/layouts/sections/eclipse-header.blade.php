@@ -344,6 +344,15 @@
                                             
                                         </a>
                                     </li>
+                                    <!-- <li class="sys_vapor cover_dailyreport">
+                                        <a href="{{url('/duration-report')}}">
+                                            <div class="system_icon">
+                                               <img src="{{ url('/') }}/Report-icons/main-battery-disconnect-report.png"  />
+                                             <span class="system_info" >Duration Report</span>  
+                                           </div>
+                                            
+                                        </a>
+                                    </li> -->
                                 </ul>
                             </div>
                         </li>

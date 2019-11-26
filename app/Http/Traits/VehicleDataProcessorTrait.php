@@ -263,7 +263,7 @@ trait VehicleDataProcessorTrait{
                                , @statusPre := ac_status
                           FROM gps_data
                              , (SELECT @statusPre:=NULL) AS d
-                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
+                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") AND ac_status IS NOT NULL ORDER BY device_time 
                         ) AS good
                       WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
        
