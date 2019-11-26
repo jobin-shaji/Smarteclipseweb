@@ -40,7 +40,7 @@ class RouteDeviationReportController extends Controller
             ->with('route:id,name')       
             ->where('client_id',$client_id)
             // ->orderBy('id', 'desc')
-            ->orderBy('device_time', 'DESC')
+            ->orderBy('deviating_time', 'DESC')
             ->limit(1000);
         }
         else
