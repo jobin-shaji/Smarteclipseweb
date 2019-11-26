@@ -37,7 +37,7 @@
                   </div>
                   <div class="form-group has-feedback">
                     <label class="srequired">Amount</label>
-                    <input type="text" class="form-control" placeholder="Amount" name="amount" value="" readonly="true">   
+                    <input type="text" class="form-control" placeholder="Amount" name="amount" value="{{$amount}}" readonly="true">   
                   </div>
                 </div>
               </div>
