@@ -13,6 +13,10 @@ Route::post('/operations/delete','OperationsController@deleteDealer')->name('ope
 Route::post('/operations/activate','OperationsController@activateDealer')->name('dealer.activate');
 Route::post('/operations/disable','OperationsController@disableOperations')->name('operations.disable');
 Route::post('/operations/enable','OperationsController@enableDealer')->name('operations.enable');
+
+
+
+
 });
 
 
@@ -24,5 +28,9 @@ Route::post('/operations/{id}/update-password','OperationsController@updatePassw
 Route::get('/operations/profile','OperationsController@operationsProfile')->name('operations.profile');
 	Route::get('/operations/profile-edit','OperationsController@editOperationsProfile')->name('operations.profile.edit');
 	Route::post('/operations/{id}/profile/edit','OperationsController@updateOperationsProfile')->name('operations.profile.update.p'); 
+
+
+	Route::get('/vehicle-models-create','OperationsController@vehicleModelsCreate')->name('vehicle.models.create');
+Route::post('/vehicle-models-create','OperationsController@vehicleModelsSave')->name('vehicle.models.create.p');
 });
 

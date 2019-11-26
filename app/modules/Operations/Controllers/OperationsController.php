@@ -3,6 +3,8 @@ namespace App\Modules\Operations\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Operations\Models\Operations;
+use App\Modules\Operations\Models\VehicleModels;
+
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -320,6 +322,43 @@ class OperationsController extends Controller {
         return redirect(route('operations.profile'));  
     }
 
+
+     public function vehicleModelsCreate()
+    {
+       return view('Operations::vehicle-models-create');
+    }
+    //upload dealer details to database table
+    public function vehicleModelsSave(Request $request)
+    {
+        // \Auth::user()->root->first()->id
+        $root_id=\Auth::user()->id;
+        if($request->user()->hasRole('operations')){
+            $rules = $this->vehicle_model_create_rules();
+            $this->validate($request, $rules);
+            $vehicle_models = VehicleModels::create([
+                'vehicle_model' => $request->name,
+                'fuel_min' => $request->fuel_min,
+                'fuel_max' => $request->fuel_max,
+            ]);                       
+        }
+        
+        $request->session()->flash('message', 'New vehicle models created successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle.models.create')); 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////Dealer Profile-end////////////////
 
      public function updatePasswordRule()
@@ -330,14 +369,13 @@ class OperationsController extends Controller {
         return $rules;
     }
     //validation for employee creation
-    public function dealerCreateRules()
+    public function vehicle_model_create_rules()
     {
         $rules = [
             'name' => 'required',       
-            'address' => 'required',       
-            'phone_number' => 'required|numeric|min:10|max:10',
-            'username' => 'nullable|string|max:20|unique:dealers',
-            'password' => 'nullable|string|min:6|confirmed',
+            'fuel_min' => 'required',       
+            'fuel_max' => 'required',
+           
         ];
         return  $rules;
     }

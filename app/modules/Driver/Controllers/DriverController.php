@@ -96,9 +96,10 @@ class DriverController extends Controller {
         ->addColumn('action', function ($driver) {
              $b_url = \URL::to('/');
         if($driver->deleted_at == null){ 
+             // <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
             return "
             <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit </a>
-             <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
+            
             <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
         }else{                   
             return "
