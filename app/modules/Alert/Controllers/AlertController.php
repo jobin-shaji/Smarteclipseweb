@@ -520,6 +520,9 @@ class AlertController extends Controller {
     }
     public function gpsAlertList(Request $request)
     {
+        $offset=$request->offset;
+        $limit=$request->limit;
+        // dd($limit);
         $user = $request->user();
         $client_id=\Auth::user()->client->id;   
         $VehicleGpss=Vehicle::select(
@@ -567,6 +570,8 @@ class AlertController extends Controller {
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
         ->where('status',1) 
+        ->offset($offset)
+        ->limit($limit)
         ->get();
         // dd($alerts);
         return response()->json([

@@ -34,11 +34,12 @@ All Alerts
               </div>
               <div id="alert">
             <!--Loading ANIMATION-->
-            <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>
+              <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>        
             <!--END LOADING ANIMATION-->                
                 <div class='inner'>
                      <!-- WHERE YOU WILL LOAD CONTENT -->
-                </div>           
+                </div> 
+
                </div>
             </div>
             <div class="col-sm-6">
