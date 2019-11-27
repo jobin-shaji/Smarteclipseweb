@@ -103,10 +103,10 @@ function initMap(){
     {
       var url = 'save/fence';
       var data = {
-      polygons : allPolly,
-      name : name
-    };
-    backgroundPostData(url,data,'none',{alert:true});  
+        polygons : allPolly,
+        name : name
+      };
+    backgroundPostData(url,data,'geofenceResponse',{alert:true});  
     }
     else if(polygon_length ==0)
     {
@@ -127,6 +127,18 @@ function initMap(){
     newShape.type = e.type;
     setSelection(newShape);
   });
+}
+
+function geofenceResponse(res){
+  if(res.status == 'success')
+  {
+    toastr.success('Geofence added successfully');
+    setTimeout(function () {
+      window.location = "/geofence";
+    }, 1000);
+  }else if(res.status == 'failed'){
+    toastr.error('Geofence name already exists!');
+  }
 }
 
 function deleteSelectedShape() {

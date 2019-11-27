@@ -367,6 +367,9 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='kmReport')
                 {
                     kmReport(res);
+                }else if(callBack=='geofenceResponse')
+                {
+                    geofenceResponse(res);
                 }
                 else if(callBack=='gpsData'){
                          gpsData(res);
