@@ -26,20 +26,23 @@ $(document).ready(function () {
 function  gpsAlert(res) 
 {
 	for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
-		$('.inner').append('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+		$('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
 	}
-	$("#alert").scrollTop($("#alert")[0].scrollHeight);
+	$("#alert").scrollTop(100);
 	var scrollTop = $(window).scrollTop() + $(window).height();
 	// var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();
+	
+
 	$('#alert').scroll(function(){
 	    if ($('#alert').scrollTop() == 0){
+
 			$('#loader').show();  
 	        setTimeout(function(){	
 	        	limit=limit+10;
 	        	offset=offset+1;
 	        	limitFunction(limit,offset);
 		        $('#loader').hide();
-	            $('#alert').scrollTop();
+	            // $('#alert').scrollTop(0);
 	        },780); 
 	    }
 	});
