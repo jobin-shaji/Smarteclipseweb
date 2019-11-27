@@ -30,9 +30,6 @@ function  gpsAlert(res)
 	}
 	$("#alert").scrollTop($("#alert")[0].scrollHeight);
 	var scrollTop = $(window).scrollTop() + $(window).height();
-
-
-	
 	// var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();
 	$('#alert').scroll(function(){
 	    if ($('#alert').scrollTop() == 0){
@@ -42,7 +39,7 @@ function  gpsAlert(res)
 	        	offset=offset+1;
 	        	limitFunction(limit,offset);
 		        $('#loader').hide();
-	            $('#alert').scrollTop(scrollTop);
+	            $('#alert').scrollTop();
 	        },780); 
 	    }
 	});
