@@ -68,26 +68,38 @@ $('document').ready(function(){
 }); 
 $('document').ready(function(){setTimeout(doWork,1000);});  
 
-// function continuousAlert(res){
-//   console.log(res);
-//     if(res.status == 'success'){
-//         var alert=res.alerts[0].latitude;
-//         var longitude=res.alerts[0].longitude;
-//         getPlaceNameFromLatLng(latitude,longitude);
-//         var vehicle_id=res.alerts[0].gps.vehicle.id;
+function continuousAlert(res){
+    if(res.status == 'success'){
+        var latitude=res.alerts[0].latitude;
+        var longitude=res.alerts[0].longitude;
+        getPlaceNameFromLatLng(latitude,longitude);
         
-//         var modal = document.getElementById('track_alert');
-//         modal.style.display = "block";
-//         document.getElementById("em_id").value = res.alerts[0].id;
-//         document.getElementById("alert_vehicle_id").value = res.vehicle;
-//         document.getElementById("decrypt_vehicle_id").value = vehicle_id;
-//         $('#emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
-//         $('#emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
-//         $('#emergency_vehicle_time').text(res.alerts[0].device_time);
-        
-       
-//     }
-// }
+        var modal = document.getElementById('track_alert');
+        modal.style.display = "block";
+        document.getElementById("alert_id").value = res.alerts[0].id;
+        document.getElementById("alert_vehicle_id").value = res.vehicle;
+        document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
+        $('#critical_alert_name').text(res.alerts[0].alert_type.description);
+        $('#critical_alert_time').text(res.alerts[0].device_time); 
+    }
+}
+
+function verifyCriticalAlert(){
+    var vehicle_id = document.getElementById("alert_vehicle_id").value;
+    var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
+    var url = 'continuous-alert/verify';
+    var data = {
+    id : vehicle_id
+    };
+    backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
+}
+
+function verifyCriticalAlertResponse(res){
+    if(res){
+        var modal = document.getElementById('track_alert');
+        modal.style.display = "none";
+    }
+}
 
 
 

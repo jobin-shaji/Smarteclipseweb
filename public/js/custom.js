@@ -263,10 +263,14 @@ function backgroundPostData(url, data, callBack, options) {
                     driverScoreAlerts(res);
                 }else if(callBack == 'emergencyAlert'){
                     emergencyAlert(res);
+                }else if(callBack == 'continuousAlert'){
+                    continuousAlert(res);
                 }else if(callBack == 'getPlaceName'){
                     getPlaceName(res);
                 }else if(callBack == 'verifyAlertResponse'){
                     verifyAlertResponse(res);
+                }else if(callBack == 'verifyCriticalAlertResponse'){
+                    verifyCriticalAlertResponse(res);
                 }
                 else if(callBack =='selectVehicleModeTrack'){
                     selectVehicleModeTrack(res);
@@ -462,6 +466,7 @@ function getPlaceNameFromLatLng(latitude,longitude){
 function getPlaceName(res){
     $('#emergency_vehicle_location').text(res);
     $('#header_emergency_vehicle_location').text(res);
+    $('#critical_alert_location').text(res);
 }
 
 function verifyEmergency(){
