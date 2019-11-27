@@ -7,6 +7,10 @@ class VehicleModels extends Model
 {  
     use SoftDeletes;    
 	protected $fillable=[
-		'vehicle_model','fuel_min','fuel_max'
+		'vehicle_model','vehicle_make_id','fuel_min','fuel_max'
 	];
+	public function vehicleMake()
+  	{
+    	return $this->hasOne('App\Modules\Operations\Models\VehicleMake','id','vehicle_make_id');
+  	}
 }

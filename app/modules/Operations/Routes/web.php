@@ -36,20 +36,14 @@ Route::post('/operations/enable','OperationsController@enableDealer')->name('ope
 
 	Route::get('/vehicle-make','VehicleMakeController@vehicleMakeListPage')->name('vehicle.make');
 	Route::post('/vehicle-make-list','VehicleMakeController@getVehicleMake')->name('vehicle-make-list');
-	
-	Route::get('/vehicle-make/{id}/edit','VehicleMakeController@edit')->name('vehicle-make.edit');
-	Route::post('/vehicle-make/{id}/edit','VehicleMakeController@update')->name('vehicle-make.update.p'); 
 
+	Route::get('/vehicle-make/{id}/edit','VehicleMakeController@edit')->name('vehicle.make.edit');
+	Route::post('/vehicle-make/{id}/edit','VehicleMakeController@update')->name('vehicle.make.update.p');
 
+	Route::post('/vehicle-make/disable','VehicleMakeController@disableVheicleMake')->name('vehicle-make.disable');
+	Route::post('/vehicle-make/enable','VehicleMakeController@enableVheicleMake')->name('vehicle-make.enable'); 
 
-
-
-
-
-
-
-
-
+//////////////////////////Vehicle model//////////////////////////////
 
 
 	Route::get('/vehicle-models-create','OperationsController@vehicleModelsCreate')->name('vehicle.models.create');
@@ -57,5 +51,11 @@ Route::post('/vehicle-models-create','OperationsController@vehicleModelsSave')->
 
 Route::get('/vehicle-models','OperationsController@vehicleModelsListPage')->name('vehicle.models');
 Route::post('/vehicle-models-list','OperationsController@getVehicleModels')->name('vehicle-models-list');
+
+Route::get('/vehicle-models/{id}/edit','OperationsController@modelEdit')->name('vehicle.models.edit');
+	Route::post('/vehicle-models/{id}/edit','OperationsController@modelUpdate')->name('vehicle.models.update.p');
+
+	Route::post('/vehicle-model/disable','OperationsController@disableVehicleModels')->name('vehicle-model.disable');
+	Route::post('/vehicle-model/enable','OperationsController@enableVehicleModels')->name('vehicle-model.enable'); 
 });
 

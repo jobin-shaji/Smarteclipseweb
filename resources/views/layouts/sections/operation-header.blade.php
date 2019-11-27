@@ -95,7 +95,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{url('/vehicle-models-create')}}">CREATE VEHICLE MODELS</a>
-                <!-- <a class="dropdown-item"href="{{url('/combined-gps-report')}}">LIST VEHICLE MODELS</a> -->
+                <a class="dropdown-item"href="{{url('/vehicle-models')}}">LIST VEHICLE MODELS</a>
                 
             </div>
         </li>

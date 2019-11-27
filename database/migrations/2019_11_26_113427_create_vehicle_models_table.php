@@ -16,6 +16,7 @@ class CreateVehicleModelsTable extends Migration
         Schema::create('vehicle_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('vehicle_model');
+            $table->integer('vehicle_make_id');
             $table->integer('fuel_min');
             $table->integer('fuel_max');
             $table->timestamps();

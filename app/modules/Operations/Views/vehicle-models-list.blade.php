@@ -30,10 +30,11 @@
                 <thead>
                   <tr>
                       <th>Sl.No</th>
-                      <th>Vehicle Models</th>                            
+                      <th>Vehicle Models</th> 
+                      <th>Vehicle Make</th>                            
                       <th>Fuel min</th>                              
-                      <th>Fuel max</th>                            
-                      
+                      <th>Fuel max</th>
+                      <th>Working Status</th>                            
                       <th style="width:160px;">Action</th>
                   </tr>
                 </thead>
@@ -51,5 +52,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/operations-list.js')}}"></script>
+    <script src="{{asset('js/gps/vehicle-model-list.js')}}"></script>
   @endsection
