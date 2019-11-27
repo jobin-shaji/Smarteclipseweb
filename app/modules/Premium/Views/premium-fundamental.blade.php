@@ -65,6 +65,10 @@
           <li><img src="{{url('/')}}/assets/images/ac.png" height="15px" width="15px" style="margin:0 2%">AC Status</li>
           <li style="height:0"></li> 
         </ul>
+        <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹2300 + Tax</h6>
+        <h6><b>Immobilizer:</b>  ₹500 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
         <p>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
    Alert Reports (4 months history)
@@ -135,6 +139,7 @@
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
           <li><b>Everything in Superior +</b></li>
+          <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%">Route Deviation[10 routes]</li>
           <li><i class="far fa-caret-square-left"></i>Route playback history(6 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(10 Geofences)</li>
           <li><i class="fas fa-list"></i>Whitelist</li>
@@ -146,6 +151,7 @@
           <li><img src="{{url('/')}}/assets/images/support.png" style="margin:0 2%">Privileged support</li>
           <li style="height:30px"></li> 
         </ul>
+        <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
         <p>
   <a  data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
    Alert Report (6 months history)

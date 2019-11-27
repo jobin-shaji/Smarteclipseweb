@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Modules\Operations\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-class VehicleModels extends Model
-{  
+class VehicleMake extends Model
+{
     use SoftDeletes;    
-	protected $fillable=[
-		'vehicle_model','fuel_min','fuel_max'
+    protected $fillable=[
+		'name'
 	];
 }

@@ -20,22 +20,9 @@ $(document).ready(function () {
 });
 function  gpsAlert(res) 
 {
-
-	console.log(res.alerts.length);
+	// console.log(res.alerts.length);
 	for(var i=0,n=Math.min(res.alerts.length,10); i<n;i++){
 	    $('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
-
-	// console.log(res.alerts.data);
-	for(var i=0;i<10;i++){
-		var j=i+1;
-	    $('.inner').prepend('<tr>'+
-	    '<th>'+j+'</th>'+
-    	'<td>'+res.alerts.data[i].alert_type.description+'</td>'+
-    	'<td>'+res.alerts.data[i].gps.vehicle.name+'</td>'+
-    	'<td>'+res.alerts.data[i].gps.vehicle.register_number+'</td>'+
-    	'<td>'+res.alerts.data[i].device_time+'</td>'+
-    	'</tr>');
-
 	}
 	$("#alert").scrollTop($("#alert")[0].scrollHeight);
 	var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();
@@ -43,17 +30,15 @@ function  gpsAlert(res)
 	    if ($('#alert').scrollTop() == 0){
 	        $('#loader').show();  
 	        setTimeout(function(){	
-	        if(res.alerts.length>i) 
-	        {
-
-
-	        	for(var j=i;j<i+10;j++){
-		        	$('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[j].id+')">'+res.alerts[j].alert_type.description+'</br><span class="date">'+res.alerts[j].device_time+'</span></div>');
-		        }
+	        // if(res.alerts.length<i) 
+	        // {
+	        	for(var j=i;j<res.alerts.length;j++){
+				$('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[j].id+')">'+res.alerts[j].alert_type.description+'</br><span class="date">'+res.alerts[j].device_time+'</span></div>');		   
+		    }
 		        i=j+1;
 		        $('#loader').hide();
 	            $('#alert').scrollTop(30);
-	        }
+	        // }
 	        },780); 
 	    }
 	});

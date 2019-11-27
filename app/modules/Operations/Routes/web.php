@@ -13,16 +13,49 @@ Route::post('/operations/delete','OperationsController@deleteDealer')->name('ope
 Route::post('/operations/activate','OperationsController@activateDealer')->name('dealer.activate');
 Route::post('/operations/disable','OperationsController@disableOperations')->name('operations.disable');
 Route::post('/operations/enable','OperationsController@enableDealer')->name('operations.enable');
+
+
+
+
 });
 
 
-Route::group(['middleware' => ['web','auth','role:root|operations'] , 'namespace' => 'App\Modules\Operations\Controllers' ] , function() {
+	Route::group(['middleware' => ['web','auth','role:root|operations'] , 'namespace' => 'App\Modules\Operations\Controllers' ] , function() {
 
-Route::get('/operations/{id}/change-password','OperationsController@changePassword')->name('operations.change-password');
-Route::post('/operations/{id}/update-password','OperationsController@updatePassword')->name('operations.update-password.p'); 
+	Route::get('/operations/{id}/change-password','OperationsController@changePassword')->name('operations.change-password');
+	Route::post('/operations/{id}/update-password','OperationsController@updatePassword')->name('operations.update-password.p'); 
 
-Route::get('/operations/profile','OperationsController@operationsProfile')->name('operations.profile');
+	Route::get('/operations/profile','OperationsController@operationsProfile')->name('operations.profile');
 	Route::get('/operations/profile-edit','OperationsController@editOperationsProfile')->name('operations.profile.edit');
 	Route::post('/operations/{id}/profile/edit','OperationsController@updateOperationsProfile')->name('operations.profile.update.p'); 
+
+	
+
+	Route::get('/vehicle-make-create','VehicleMakeController@create')->name('vehicle.make.create');
+	Route::post('/vehicle-make-create','VehicleMakeController@save')->name('vehicle.make.create.p');
+
+	Route::get('/vehicle-make','VehicleMakeController@vehicleMakeListPage')->name('vehicle.make');
+	Route::post('/vehicle-make-list','VehicleMakeController@getVehicleMake')->name('vehicle-make-list');
+	
+	Route::get('/vehicle-make/{id}/edit','VehicleMakeController@edit')->name('vehicle-make.edit');
+	Route::post('/vehicle-make/{id}/edit','VehicleMakeController@update')->name('vehicle-make.update.p'); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	Route::get('/vehicle-models-create','OperationsController@vehicleModelsCreate')->name('vehicle.models.create');
+Route::post('/vehicle-models-create','OperationsController@vehicleModelsSave')->name('vehicle.models.create.p');
+
+Route::get('/vehicle-models','OperationsController@vehicleModelsListPage')->name('vehicle.models');
+Route::post('/vehicle-models-list','OperationsController@getVehicleModels')->name('vehicle-models-list');
 });
 
