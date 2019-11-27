@@ -3,88 +3,64 @@ namespace App\Modules\Operations\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Operations\Models\Operations;
-use App\Modules\Operations\Models\VehicleModels;
-
+use App\Modules\Operations\Models\VehicleMake;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
-class OperationsController extends Controller {
-    
+class VehicleMakeController extends Controller {
     public function create()
     {
-       return view('Operations::operations-create');
+       return view('Operations::vehicle-make-create');
     }
-    //upload dealer details to database table
     public function save(Request $request)
     {
-        // \Auth::user()->root->first()->id
-        $root_id=\Auth::user()->id;
-        if($request->user()->hasRole('root')){
-            $rules = $this->user_create_rules();
-            $this->validate($request, $rules);
-            $user = User::create([
-                'username' => $request->username,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'status' => 1,
-                'password' => bcrypt($request->password),
-            ]);
-            $operations = Operations::create([
-                'user_id' => $user->id,
-                'root_id'=>$root_id,
-                'name' => $request->name,            
-                'address' => $request->address,
-            ]);
-            User::where('username', $request->username)->first()->assignRole('operations');
-            
-        }
-        $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New operations created successfully!'); 
+        $rules = $this->vehicle_make_rules();
+        $this->validate($request, $rules);       
+        $vehicle = VehicleMake::create([
+            'name' => $request->name
+        ]);
+        $request->session()->flash('message', 'created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('operations')); 
+        return redirect(route('vehicle.make.create')); 
     }
 ////////////////////////////operations list////////////////////////
 
      //Display employee details 
-    public function operationsListPage()
+    public function vehicleMakeListPage()
     {
-        return view('Operations::operations-list');
+        return view('Operations::vehicle-make-list');
     }
     //returns employees as json 
-    public function getOperations()
+    public function getVehicleMake()
     {
-        $operations = Operations::select(
+        $vehicle_make = VehicleMake::select(
             'id', 
-            'user_id',                      
-            'name',                   
-            'address',                                        
+            'name',                                                           
             'deleted_at'
         )
         ->withTrashed()
-        ->with('user:id,email,mobile,deleted_at')
         ->get();
-        return DataTables::of($operations)
+        return DataTables::of($vehicle_make)
         ->addIndexColumn()
-        ->addColumn('working_status', function ($operations) {
-            if($operations->user->deleted_at == null){ 
+        ->addColumn('working_status', function ($vehicle_make) {
+            if($vehicle_make->deleted_at == null){ 
             return "
                 <b style='color:#008000';>Enabled</b>
-                <button onclick=disableOperations(".$operations->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+                <button onclick=disableVehicleMake(".$vehicle_make->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
             ";
             }else{ 
             return "
                 <b style='color:#FF0000';>Disabled</b>
-                <button onclick=enableOperations(".$operations->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
+                <button onclick=enableVehicleMake(".$vehicle_make->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
             ";
             }
         })
-        ->addColumn('action', function ($operations) {
+        ->addColumn('action', function ($vehicle_make) {
              $b_url = \URL::to('/');
-            if($operations->user->deleted_at == null){ 
+            if($vehicle_make->deleted_at == null){ 
             return "
-            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+            <a href=".$b_url."/vehicle-make/".Crypt::encrypt($vehicle_make->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+            <a href=".$b_url."/vehicle-make/".Crypt::encrypt($vehicle_make->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
            
             ";
             }else{ 
@@ -99,7 +75,7 @@ class OperationsController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $operations = Operations::where('user_id', $decrypted)->first();
+        $operations = VehicleMake::where('user_id', $decrypted)->first();
         $user=User::find($decrypted);   
         
         if($operations == null){
@@ -113,13 +89,12 @@ class OperationsController extends Controller {
     {
         // dd(1);
         $decrypted = Crypt::decrypt($request->id); 
-        $operations = Operations::where('user_id', $decrypted)->first();
-        $user=User::find($decrypted);
-// dd($user);
-        if($operations == null){
+        $vehicle_make = VehicleMake::where('id', $decrypted)->first();
+        
+        if($vehicle_make == null){
             return view('Operations::404');
         }
-        return view('Operations::operations-edit',['operations' => $operations,'user' => $user]);
+        return view('Operations::vehicle-make-edit',['vehicle_make' => $vehicle_make]);
     }
     //update dealers details
     public function update(Request $request)
@@ -430,12 +405,9 @@ class OperationsController extends Controller {
         return $rules;
     }
     //user create rules 
-    public function user_create_rules(){
+    public function vehicle_make_rules(){
         $rules = [
-            'username' => 'required|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|string|unique:users|min:10|max:10',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required'
         ];
         return  $rules;
     }
