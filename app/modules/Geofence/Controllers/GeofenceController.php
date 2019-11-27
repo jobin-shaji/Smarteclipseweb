@@ -63,6 +63,14 @@ class GeofenceController extends Controller {
             ]);
         }else{
             foreach ($request->polygons as $polygon) {
+                $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->count();
+                if($geofence_name_count >=1)
+                {
+                    $response = [
+                        'status' => 'failed'
+                    ];
+                    return response()->json($response);
+                }
                 $response="";
                 foreach ($polygon as $single_coordinate) {
                     $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
@@ -79,12 +87,10 @@ class GeofenceController extends Controller {
                     'code' => $code
                 ]);
             }
-            return response()->json([
-                'status' => 'geofence',
-                'title' => 'Success',
-                'redirect' => url('geofence'),
-                'message' => 'Geofence added successfully'
-            ]);
+            $response = [
+                    'status' => 'success'
+                ];
+            return response()->json($response);
         }
     }
 
@@ -515,6 +521,14 @@ class GeofenceController extends Controller {
                 $geofence->response=$response;
             } 
         } 
+        $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->where('id', '!=',  $geofence_id )->count();
+        if($geofence_name_count >=1)
+        {
+            $response = [
+                'status' => 'failed'
+            ];
+            return response()->json($response);
+        }
         $geofence->save(); 
         $new_geofence_response=$geofence->response;      
         if($new_geofence_response != $old_geofence_response)  
@@ -529,12 +543,10 @@ class GeofenceController extends Controller {
                 $this->geofenceResponse($single_vehicle_geofence);
             }
         }                 
-        return response()->json([
-            'status' => 'edit geofence',
-            'title' => 'Success',
-            'redirect' => url('/geofence'),
-            'message' => 'Geofence added successfully'
-        ]);
+        $response = [
+                    'status' => 'success'
+                ];
+        return response()->json($response);
         
     }
 }
