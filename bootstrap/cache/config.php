@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'RAYFLEET',
+    'name' => 'SMART ECLIPSE',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -206,7 +206,7 @@
         'connection' => 'cache',
       ),
     ),
-    'prefix' => 'rayfleet_cache',
+    'prefix' => 'smart_eclipse_cache',
   ),
   'cors' => 
   array (
@@ -239,7 +239,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'tmpecl',
+        'database' => 'christeena',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -248,7 +248,7 @@
         'driver' => 'mysql',
         'host' => '192.168.14.124',
         'port' => '3306',
-        'database' => 'tmpecl',
+        'database' => 'christeena',
         'username' => 'etm',
         'password' => '123456',
         'unix_socket' => '',
@@ -264,7 +264,7 @@
         'driver' => 'pgsql',
         'host' => '192.168.14.124',
         'port' => '3306',
-        'database' => 'tmpecl',
+        'database' => 'christeena',
         'username' => 'etm',
         'password' => '123456',
         'charset' => 'utf8',
@@ -278,7 +278,7 @@
         'driver' => 'sqlsrv',
         'host' => '192.168.14.124',
         'port' => '3306',
-        'database' => 'tmpecl',
+        'database' => 'christeena',
         'username' => 'etm',
         'password' => '123456',
         'charset' => 'utf8',
@@ -755,7 +755,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'rayfleet_session',
+    'cookie' => 'smart_eclipse_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
