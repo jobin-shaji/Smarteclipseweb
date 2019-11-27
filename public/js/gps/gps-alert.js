@@ -12,66 +12,79 @@ function initMap() {
     mapTypeId: 'terrain'
   });
 }
+var j=0;
+var limit=10;
+var offset=1;
 $(document).ready(function () {   
      var url = 'gps-alert-list';
      var data={
+     	offset:offset,
+     	limit:limit
      }
       backgroundPostData(url,data,'gpsAlert',{alert:true});
 });
 function  gpsAlert(res) 
 {
-	// console.log(res.alerts.length);
-	for(var i=0,n=Math.min(res.alerts.length,10); i<n;i++){
-	    $('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+	for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
+		$('.inner').append('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
 	}
 	$("#alert").scrollTop($("#alert")[0].scrollHeight);
-	var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();
+	var scrollTop = $(window).scrollTop() + $(window).height();
+
+
+	
+	// var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();
 	$('#alert').scroll(function(){
 	    if ($('#alert').scrollTop() == 0){
-	        $('#loader').show();  
+			$('#loader').show();  
 	        setTimeout(function(){	
-	        // if(res.alerts.length<i) 
-	        // {
-	        	for(var j=i;j<res.alerts.length;j++){
-				$('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[j].id+')">'+res.alerts[j].alert_type.description+'</br><span class="date">'+res.alerts[j].device_time+'</span></div>');		   
-		    }
-		        i=j+1;
+	        	limit=limit+10;
+	        	offset=offset+1;
+	        	limitFunction(limit,offset);
 		        $('#loader').hide();
-	            $('#alert').scrollTop(30);
-	        // }
+	            $('#alert').scrollTop(scrollTop);
 	        },780); 
 	    }
 	});
-	}
-	function gpsAlertCount(value){
-		var url = 'gps-alert-tracker';
-	    var data={
-			id:value
-	    }
-	    backgroundPostData(url,data,'gpsAlertTracker',{alert:true});
-	}
-	function gpsAlertTracker(res)
-	{
-		var latitude=parseFloat(res.alertmap.latitude);
-		var longitude=parseFloat(res.alertmap.longitude);
-		 var map = new google.maps.Map(document.getElementById('map'), {
-		    zoom: 17,
-		    center: {lat: latitude, lng: longitude},
-		    mapTypeId: 'terrain'
-		});
-		$.ajax({
-			url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
-			method  :"get",
-			async   :true,
-			context :this,
-			success : function (Result) {
+}
+function limitFunction(limit,offset)
+{
+	var url = 'gps-alert-list';
+    var data={
+		limit:limit,
+		offset:offset
+    }
+    backgroundPostData(url,data,'gpsAlert',{alert:true});
+}
+function gpsAlertCount(value){
+	var url = 'gps-alert-tracker';
+    var data={
+		id:value
+    }
+    backgroundPostData(url,data,'gpsAlertTracker',{alert:true});
+}
+function gpsAlertTracker(res)
+{
+	var latitude=parseFloat(res.alertmap.latitude);
+	var longitude=parseFloat(res.alertmap.longitude);
+	 var map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 17,
+	    center: {lat: latitude, lng: longitude},
+	    mapTypeId: 'terrain'
+	});
+	$.ajax({
+		url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
+		method  :"get",
+		async   :true,
+		context :this,
+		success : function (Result) {
 
-				// console.log(Result);
-				// // var address = Result.results[0];                    
-				// // locationName=address.formatted_address;
-				locs();
-			}
-		});     
+			// console.log(Result);
+			// // var address = Result.results[0];                    
+			// // locationName=address.formatted_address;
+			locs();
+		}
+	});     
 // console.log(locationName);
   var url = 'alerts';
   var iconBase = {
