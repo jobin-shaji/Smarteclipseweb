@@ -450,7 +450,7 @@ class AlertController extends Controller {
             ->orderBy('id', 'desc')
             ->where('gps_id',$gps_id)
             ->whereIn('alert_type_id',$alert_id)
-            ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+            ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
             ->where('status',1) 
             ->paginate(15);
         return view('Alert::alert-list',['alerts'=>$alerts]);
@@ -503,7 +503,7 @@ class AlertController extends Controller {
             ->orderBy('id', 'desc')
             ->whereIn('gps_id',$single_vehicle_gps)
             ->whereIn('alert_type_id',$alert_id)
-            ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+            ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
             ->where('status',1) 
             ->paginate(15);
             // dd($alerts);
@@ -520,6 +520,9 @@ class AlertController extends Controller {
     }
     public function gpsAlertList(Request $request)
     {
+        $offset=$request->offset;
+        $limit=$request->limit;
+        // dd($limit);
         $user = $request->user();
         $client_id=\Auth::user()->client->id;   
         $VehicleGpss=Vehicle::select(
@@ -565,15 +568,16 @@ class AlertController extends Controller {
         ->orderBy('id', 'desc')
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
-        ->whereNotIn('alert_type_id',[17,18,23,24,13,10,12])
+        ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
         ->where('status',1) 
+        ->offset($offset)
+        ->limit($limit)
         ->get();
         // dd($alerts);
         return response()->json([
             'alerts' => $alerts,
             'status' => 'gpsAlert'           
-        ]);
-                  
+        ]);                  
     }
     public function alertLocation(Request $request){
         $decrypted_id = $request->id;
