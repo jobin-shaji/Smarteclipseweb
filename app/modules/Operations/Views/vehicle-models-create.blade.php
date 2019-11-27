@@ -34,6 +34,20 @@
                       </span>
                     @endif
                   </div>
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Vehicle Make</label>
+                    <select class="form-control selectpicker select2" data-live-search="true" title="Select Vehicle Make" id="vehicle_make" name="vehicle_make">
+                              <option value="" selected="selected" disabled="disabled">Select</option>
+                              @foreach ($vehicle_makes as $vehicle_make)
+                              <option value="{{$vehicle_make->id}}">{{$vehicle_make->name}}</option>
+                              @endforeach  
+                            </select>
+                    @if ($errors->has('vehicle_make'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('vehicle_make') }}</strong>
+                      </span>
+                    @endif
+                  </div>
                   
                   <div class="form-group has-feedback">
                     <label class="srequired">fuel min</label>

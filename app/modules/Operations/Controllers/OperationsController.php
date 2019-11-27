@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Operations\Models\Operations;
 use App\Modules\Operations\Models\VehicleModels;
+use App\Modules\Operations\Models\VehicleMake;
+
 
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -43,14 +45,10 @@ class OperationsController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('operations')); 
     }
-////////////////////////////operations list////////////////////////
-
-     //Display employee details 
     public function operationsListPage()
     {
         return view('Operations::operations-list');
     }
-    //returns employees as json 
     public function getOperations()
     {
         $operations = Operations::select(
@@ -107,8 +105,6 @@ class OperationsController extends Controller {
         }
         return view('Operations::operations-details',['operations' => $operations,'user' => $user]);
     }
-
-    //for edit page of Dealers
     public function edit(Request $request)
     {
         // dd(1);
@@ -121,7 +117,6 @@ class OperationsController extends Controller {
         }
         return view('Operations::operations-edit',['operations' => $operations,'user' => $user]);
     }
-    //update dealers details
     public function update(Request $request)
     {  
         $user = User::find($request->id);
@@ -212,47 +207,6 @@ class OperationsController extends Controller {
             'message' => 'Opertaions enabled successfully'
         ]);
     }
-   
-    //delete employee details from table
-    public function deleteDealer(Request $request)
-    {
-        $dealer = Dealer::find($request->uid);
-        if($dealer == null){
-            return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Dealer does not exist'
-            ]);
-        }
-        $dealer->delete();
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Dealer deleted successfully'
-        ]);
-    }
-    // restore emplopyee
-    public function activateDealer(Request $request)
-    {
-        $dealer = Dealer::withTrashed()->find($request->id);
-        if($dealer==null){
-            return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Dealer does not exist'
-            ]);
-        }
-        $dealer->restore();
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Dealer restored successfully'
-        ]);
-    }
-
-////////////////////////Dealer Profile-start/////////////////
-
-    //Dealer profile view
     public function operationsProfile()
     {
         $operations_id = \Auth::user()->operations->id;
@@ -265,7 +219,6 @@ class OperationsController extends Controller {
         }
         return view('Operations::operations-profile',['operations' => $operations,'user' => $user]);
     }
-
     //for edit page of operations profile
     public function editOperationsProfile()
     {
@@ -296,11 +249,11 @@ class OperationsController extends Controller {
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('operations.profile'));  
     }
-
-
-     public function vehicleModelsCreate()
+    public function vehicleModelsCreate()
     {
-       return view('Operations::vehicle-models-create');
+        $vehicle_make=VehicleMake::select('id','name')
+        ->get();
+       return view('Operations::vehicle-models-create',['vehicle_makes'=>$vehicle_make]);
     }
     //upload dealer details to database table
     public function vehicleModelsSave(Request $request)
@@ -312,6 +265,7 @@ class OperationsController extends Controller {
             $this->validate($request, $rules);
             $vehicle_models = VehicleModels::create([
                 'vehicle_model' => $request->name,
+                'vehicle_make_id' => $request->vehicle_make,
                 'fuel_min' => $request->fuel_min,
                 'fuel_max' => $request->fuel_max,
             ]);                       
@@ -329,38 +283,35 @@ class OperationsController extends Controller {
     //returns employees as json 
     public function getVehicleModels()
     {
-        $operations = Operations::select(
+        $vehicle_models = VehicleModels::select(
             'id', 
-            'user_id',                      
-            'name',                   
-            'address',                                        
+            'vehicle_model',                      
+            'vehicle_make_id',                   
+            'fuel_min', 
+            'fuel_max',                                       
             'deleted_at'
         )
         ->withTrashed()
-        ->with('user:id,email,mobile,deleted_at')
+        ->with('vehicleMake:id,name')
         ->get();
-        return DataTables::of($operations)
+        return DataTables::of($vehicle_models)
         ->addIndexColumn()
-        ->addColumn('working_status', function ($operations) {
-            if($operations->user->deleted_at == null){ 
+        ->addColumn('working_status', function ($vehicle_models) {
+            if($vehicle_models->deleted_at == null){ 
             return "
                 <b style='color:#008000';>Enabled</b>
-                <button onclick=disableOperations(".$operations->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
-            ";
+                <button onclick=disableVehicleModels(".$vehicle_models->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>";
             }else{ 
             return "
                 <b style='color:#FF0000';>Disabled</b>
-                <button onclick=enableOperations(".$operations->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
-            ";
+                <button onclick=enableVehicleModels(".$vehicle_models->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>";
             }
         })
-        ->addColumn('action', function ($operations) {
+        ->addColumn('action', function ($vehicle_models) {
              $b_url = \URL::to('/');
-            if($operations->user->deleted_at == null){ 
+            if($vehicle_models->deleted_at == null){ 
             return "
-            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-            <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+            <a href=".$b_url."/vehicle-models/".Crypt::encrypt($vehicle_models->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
            
             ";
             }else{ 
@@ -370,11 +321,73 @@ class OperationsController extends Controller {
         ->rawColumns(['link', 'action','working_status'])
         ->make();
     }
+//////////////////Vehicle Model edit/////////////
+    public function modelEdit(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $vehicle_models = VehicleModels::where('id', $decrypted)->first(); 
+        $vehicle_make=VehicleMake::select('id','name')
+        ->get();    
+        if($vehicle_models == null){
+            return view('Operations::404');
+        }
+        return view('Operations::vehicle-models-edit',['vehicle_models' => $vehicle_models,'vehicle_makes' => $vehicle_make]);
+    }
+    public function modelUpdate(Request $request)
+    {  
+        $vehicle_models = VehicleModels::where('id', $request->id)->first();
+        if($vehicle_models == null){
+           return view('Operations::404');
+        } 
+        $rules = $this->vehiclemodelsUpdatesRules($vehicle_models);
+        $this->validate($request, $rules);   
+        $vehicle_models->vehicle_model = $request->name;
+        $vehicle_models->vehicle_make_id = $request->vehicle_make;
+        $vehicle_models->fuel_min = $request->fuel_min;
+        $vehicle_models->fuel_max = $request->fuel_max;
+        $vehicle_models->save();
+        $did = encrypt($vehicle_models->id);
+        $request->session()->flash('message', 'vehicle models details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicle.models.edit',$did));  
+    }
+    public function disableVehicleModels(Request $request)
+    {
+        $vehicle_models = VehicleModels::find($request->id);       
+        if($vehicle_models == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'vehicle model does not exist'
+            ]);
+        }
+        $vehicle_models->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Vehicle model disabled successfully'
+        ]);
+    }
+    public function enableVehicleModels(Request $request)
+    {
+        $vehicle_models = VehicleModels::withTrashed()->find($request->id);
+        if($vehicle_models==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Vehicle model does not exist'
+            ]);
+        }
+        $vehicle_models->restore();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Vehicle model enabled successfully'
+        ]);
+    }
 
 
-
-
-
+    
 
 
 
@@ -396,7 +409,8 @@ class OperationsController extends Controller {
     public function vehicle_model_create_rules()
     {
         $rules = [
-            'name' => 'required',       
+            'name' => 'required',  
+            'vehicle_make'=> 'required',     
             'fuel_min' => 'required',       
             'fuel_max' => 'required',
            
@@ -439,4 +453,16 @@ class OperationsController extends Controller {
         ];
         return  $rules;
     }
+    public function vehiclemodelsUpdatesRules($vehicle_models)
+    {
+        $rules = [
+            'name' => 'required',
+            'vehicle_make' => 'required',
+            'fuel_min' => 'required',
+            'fuel_max' => 'required'
+
+        ];
+        return  $rules;
+    }
+
 }
