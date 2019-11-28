@@ -17,23 +17,20 @@ All Alerts
     @endif 
   </nav>
   <div class="container-fluid">
-    <div class="card-body">
+    <div class="card-body"><h3>Alerts</h3>
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
           <div class="row">
             <div class="col-sm-12">
-              <div class="panel-heading">
-               
-              </div>
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                 <thead>
                   <tr>
-                    <th>Sl.No</th>
+                    <th>SL.No</th>
                     <th>Alert</th>
                     <th>Vehicle Name</th>
                     <th>Register Number</th>
                     <!-- <th>Location</th> -->
-                    <th>DateTime</th> 
+                    <th>Date & Time</th> 
                     <th>Action</th>                 
                   </tr>
                 </thead>
