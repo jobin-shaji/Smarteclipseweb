@@ -586,12 +586,12 @@ class VehicleController extends Controller
     public function verifyContinuousAlert(Request $request)
     {
         $decrypted_vehicle_id = Crypt::decrypt($request->id); 
+        $alert_id = $request->alert_id; 
         $vehicle=Vehicle::find($decrypted_vehicle_id);
-        $alerts = Alert::whereIn('alert_type_id',[10,13])
+        $alerts = Alert::where('alert_type_id',$alert_id)
                         ->where('status',0)
                         ->where('gps_id',$vehicle->gps_id)
                         ->get();
-        dd($alerts);
         if($alerts == null){
             return response()->json([
                 'status' => 0,
