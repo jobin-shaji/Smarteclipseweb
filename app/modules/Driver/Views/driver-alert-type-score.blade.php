@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-    Performance Score
+    Alert Points
 @endsection
 @section('content')
   
@@ -8,7 +8,7 @@
 
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update Driver Performance Score</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Alert Points</li>
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
