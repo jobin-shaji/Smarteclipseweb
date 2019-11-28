@@ -106,7 +106,7 @@
         </div>
       </div>
     </div>
-
+    
     <div class="cover_poi">
       <div  class="poi_atm poi_item">
         <a href="#" id="poi_atm">
