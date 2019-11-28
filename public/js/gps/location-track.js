@@ -57,13 +57,13 @@ $('document').ready(function(){setTimeout(getMarkers,5000);});
 $('document').ready(function(){
   initMap();
   setTimeout(getMarkers,5000);
-  // setInterval(function() {
-  //       var url = 'continuous-alert';
-  //       var data = { 
-  //         vehicle_id:track_vehicle_id
-  //       };
-  //       backgroundPostData(url,data,'continuousAlert',{alert:false});
-  // }, 8000);
+  setInterval(function() {
+        var url = 'continuous-alert';
+        var data = { 
+          vehicle_id:track_vehicle_id
+        };
+        backgroundPostData(url,data,'continuousAlert',{alert:false});
+  }, 8000);
 
 }); 
 $('document').ready(function(){setTimeout(doWork,1000);});  
@@ -76,7 +76,7 @@ function continuousAlert(res){
         
         var modal = document.getElementById('track_alert');
         modal.style.display = "block";
-        document.getElementById("alert_id").value = res.alerts[0].id;
+        document.getElementById("alert_id").value = res.alerts[0].alert_type_id;
         document.getElementById("alert_vehicle_id").value = res.vehicle;
         document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
         $('#critical_alert_name').text(res.alerts[0].alert_type.description);
@@ -85,11 +85,13 @@ function continuousAlert(res){
 }
 
 function verifyCriticalAlert(){
+    var alert_id = document.getElementById("alert_id").value;
     var vehicle_id = document.getElementById("alert_vehicle_id").value;
     var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
     var url = 'continuous-alert/verify';
     var data = {
-    id : vehicle_id
+    id : vehicle_id,
+    alert_id : alert_id
     };
     backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
 }
