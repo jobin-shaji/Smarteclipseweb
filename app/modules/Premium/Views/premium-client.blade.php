@@ -49,11 +49,32 @@
            <li style="height:24px"></li> 
           <li style="height:33px"></li> 
         </ul>
-        <h4 style="color: red"><u><b>RENEWAL CHARGE</b></u></h4>
-        <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
-        <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
-        <h6><i>(1 year validity)</i></h6>
+      <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <h4 style="color: red"><u><b>After 1 Year</b></u></h4>
+          <h6><b>Data charge:</b>  QAR </h6>
+          <h6><b>Server & Software charge:</b></h6>
+          <h6><i>(1 year validity)</i></h6>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <h4 style="color: red"><u><b>After 1 Year</b></u></h4>
+          <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+          <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
+          <h6><i>(1 year validity)</i></h6>
+        <?php }
+        else { ?>
+          <h4 style="color: red"><u><b>After 1 Year</b></u></h4>
+          <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+          <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
+          <h6><i>(1 year validity)</i></h6>
+        <?php } ?> 
         <p>
+          <br>
+          <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
+          <br>
           <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
            Alert Reports (1 month history)
           </a>
@@ -85,7 +106,7 @@
             <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li> 
             <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li> 
             <li><img src="{{url('/')}}/assets/images/air.png" >Alert Over the air parameter change Alert</li> 
-            <li><a href="#">Contact your distributor for upgradation</a></li>
+            
           </ul>
           </div>
         </div>
@@ -134,10 +155,32 @@
           <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li>
           <li style="height:30px"></li> 
         </ul>
+        <!-- <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹1700 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6> -->
+        <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <h6><b>Data charge:</b> </h6>
+        <h6><b>Server & Software charge:</b> </h6>
+        <h6><i>(1 year validity)</i></h6>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹1700 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
+        <?php }
+        else { ?>
         <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
         <h6><b>Server & Software charge:</b>  ₹1700 + Tax</h6>
         <h6><i>(1 year validity)</i></h6>
+        <?php } ?> 
         <p>
+          <br>
+          <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
+          <br>
   <a  data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
    Alert Reports (2 months history)
   </a>
@@ -169,7 +212,6 @@
           <li><img src="{{url('/')}}/assets/images/state-on.png" style="margin:0 2% 0 0">Alert – Emergency state ON* Alert</li>
           <li><img src="{{url('/')}}/assets/images/state-off.png" style="margin:0 2% 0 0">Alert – emergency State OFF Alert</li>
           <li><img src="{{url('/')}}/assets/images/air.png" style="margin:0 2% 0 0">Alert Over the air parameter change Alert</li>
-          <li><a href="#">Contact your distributor for upgradation</a></li>
           </ul>
   </div>
 </div>
@@ -223,11 +265,36 @@
           <li><img src="{{url('/')}}/assets/images/ac.png" height="15px" width="15px" style="margin:0 2%">AC Status</li>
           <li style="height:0"></li> 
         </ul>
+        <!-- <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹2300 + Tax</h6>
+        <h6><b>Immobilizer:</b>  ₹500 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6> -->
+        <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <h6><b>Data charge:</b></h6>
+        <h6><b>Server & Software charge:</b></h6>
+        <h6><b>Immobilizer:</b></h6>
+        <h6><i>(1 year validity)</i></h6>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹2300 + Tax</h6>
+        <h6><b>Immobilizer:</b>  ₹500 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
+        <?php }
+        else { ?>
         <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
         <h6><b>Server & Software charge:</b>  ₹2300 + Tax</h6>
         <h6><b>Immobilizer:</b>  ₹500 + Tax</h6>
         <h6><i>(1 year validity)</i></h6>
+        <?php } ?> 
         <p>
+          <br>
+          <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
+          <br>
   <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
    Alert Reports (4 months history)
   </a>
@@ -262,7 +329,6 @@
           <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2% 0 0">Towing alert</li>
           <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2% 0 0">Fuel filling alert</li>
           <li><img src="{{url('/')}}/assets/images/fuel-low.png" style="margin:0 2% 0 0">Sudden decrease in fuel level alert</li>
-          <li><a href="#">Contact your distributor for upgradation</a></li>
         </ul>
   </div>
 </div>
@@ -309,8 +375,24 @@
           <li><img src="{{url('/')}}/assets/images/support.png" style="margin:0 2%">Privileged support</li>
           <li style="height:30px"></li> 
         </ul>
+        <!-- <h6><b>Total charge:</b>  ₹500000 + Tax</h6> -->
+        <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <h6><b>Total charge:</b></h6>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
+        <?php }
+        else { ?>
         <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
+        <?php } ?> 
         <p>
+          <br>
+          <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
+          <br>
   <a  data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
    Alert Report (6 months history)
   </a>
@@ -346,7 +428,6 @@
           <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2% 0 0">Fuel filling alert</li>
           <li><img src="{{url('/')}}/assets/images/fuel-low.png" style="margin:0 2% 0 0">Sudden decrease in fuel level alert</li>
           <li><img src="{{url('/')}}/assets/images/report.png" style="margin:0 2% 0 0">Customized report</li>
-          <li><a href="#">Contact your distributor for upgradation</a></li>
         </ul>
   </div>
 </div>

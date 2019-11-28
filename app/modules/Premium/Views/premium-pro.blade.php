@@ -48,9 +48,26 @@
            <li style="height:24px"></li> 
           <li style="height:33px"></li> 
         </ul>
+        
+        <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <h6><b>Data charge:</b> </h6>
+        <h6><b>Server & Software charge:</b></h6>
+        <h6><i>(1 year validity)</i></h6>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
+        <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
+        <h6><i>(1 year validity)</i></h6>
+        <?php }
+        else { ?>
         <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
         <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
         <h6><i>(1 year validity)</i></h6>
+        <?php } ?> 
         <p>
           <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
            Alert Reports (1 month history)

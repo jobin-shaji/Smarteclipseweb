@@ -48,7 +48,15 @@ padding: 8px 0px 0px 0px;
     bottom: 10%;
 }
 
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 
 
 
