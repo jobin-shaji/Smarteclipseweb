@@ -53,8 +53,23 @@
           <li><img src="{{url('/')}}/assets/images/support.png" style="margin:0 2%">Privileged support</li>
           <li style="height:30px"></li> 
         </ul>
+        <?php
+      $url=url()->current();
+      $rayfleet_key="rayfleet";
+      $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {  ?>
+          <h6><b>Total charge:</b></h6>
+        <?php } 
+        else if (strpos($url, $eclipse_key) == true) { ?>
+          <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
+        <?php }
+        else { ?>
         <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
+        <?php } ?> 
         <p>
+          <br>
+          <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
+          <br>
   <a  data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
    Alert Report (6 months history)
   </a>
@@ -90,7 +105,6 @@
           <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2% 0 0">Fuel filling alert</li>
           <li><img src="{{url('/')}}/assets/images/fuel-low.png" style="margin:0 2% 0 0">Sudden decrease in fuel level alert</li>
           <li><img src="{{url('/')}}/assets/images/report.png" style="margin:0 2% 0 0">Customized report</li>
-          <li><a href="#">Contact your distributor for upgradation</a></li>
         </ul>
   </div>
 </div>

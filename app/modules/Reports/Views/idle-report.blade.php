@@ -58,7 +58,7 @@ Halt Report
                         </div>
                       </div>
                       </div>                  
-                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                         <thead>
                             <tr>
                               <th>SL.No</th>
