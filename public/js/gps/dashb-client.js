@@ -8,6 +8,7 @@ var haightAshbury = {
   lat: latMap,
   lng: lngMap
 };
+var refesh_flag=0;
 var markers = [];
 var map;
 var map_flag;
@@ -35,8 +36,9 @@ function initMap() {
   // check each 10 sec
 
 window.setInterval(function() {
+
    // alert(1);
-  if (track_flag == 0) {
+  if (track_flag == 0 && refesh_flag==0) {
     dashcount();
     getVehicleSequence();
   }
@@ -210,7 +212,9 @@ function selectVehicleTrack(res) {
   if(circleStatus==1){
     cityCircle.setMap(null);
   }
-  redarLocationSelectVehicle(res.lat,res.lon,0.1);
+
+  refesh_flag=1;
+  redarLocationSelectVehicle(res.lat,res.lon,0.06);
 }
 
 $(".vehicle_gps_id").click(function() {

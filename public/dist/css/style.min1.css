@@ -17769,5 +17769,13 @@ a,
     margin-left: 3%;
 }
 
+.refresh_map {
+    position: fixed;
+    z-index: 9999;
+    text-align: center;
+    margin-left: 50%;
+    margin-top: 21px;
+}
+
 
 
