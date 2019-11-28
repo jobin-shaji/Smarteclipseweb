@@ -543,7 +543,7 @@ class VehicleController extends Controller
         ]);
     }
 
-    //continuous alert
+    //critical alert
     public function continuousAlerts(Request $request)
     {
         $vehicle_id=$request->vehicle_id;
