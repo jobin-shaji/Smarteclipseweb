@@ -591,7 +591,6 @@ class VehicleController extends Controller
                         ->where('status',0)
                         ->where('gps_id',$vehicle->gps_id)
                         ->get();
-        dd($alerts);
         if($alerts == null){
             return response()->json([
                 'status' => 0,
