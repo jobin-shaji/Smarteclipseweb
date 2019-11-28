@@ -136,6 +136,27 @@
   </div>
 </section>
 
+<div id="track_alert" class="modal_for_track" style="color: red">      
+  <div class="modal-content">
+    <div class="modal-header">
+        <div class="container" style="text-align: center;">
+           <h3 style="font-weight: bold;">Critical Alert</h3>
+        </div>
+        <button onclick="verifyCriticalAlert()" style="text-align: right;"><i class="fa fa-close"></i></button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/1200px-Achtung.svg.png" height="120" width="145"> <br>
+        Alert :  <h4 id="critical_alert_name"></h4>
+        Location :  <h4 id="critical_alert_location"></h4>
+        Time : <h4 id="critical_alert_time"></h4>
+        <input type="hidden" id="alert_id">
+        <input type="hidden" id="alert_vehicle_id">
+        <input type="hidden" id="decrypt_vehicle_id">
+        <button onclick="verifyCriticalAlert()">Verify</button>
+    </div>
+  </div>
+</div>
+
 @section('script')
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
 <style type="text/css">

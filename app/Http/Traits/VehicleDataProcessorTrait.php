@@ -482,19 +482,11 @@ trait VehicleDataProcessorTrait{
             'status'
         )
         ->where('gps_id',$single_vehicle_gps_id)
+        ->whereNotIn('id',['17','18','23','24'])
         ->whereDate('device_time', '>=', $from_date)
         ->whereDate('device_time', '<=', $to_date)
         ->get();
-        $user_alert = UserAlerts::select(
-            'alert_id'
-        )
-        ->where('client_id',$client_id)
-        ->where('status',1)
-        ->get();
-        $alert_id = [];
-        foreach($user_alert as $user_alert){
-            $alert_id[] = $user_alert->alert_id;
-        }
+        
         $route_deviation =RouteDeviation::select(
             'id',
             'vehicle_id', 
@@ -521,7 +513,7 @@ trait VehicleDataProcessorTrait{
             'accident_impact' => $alerts->where('alert_type_id',14)->count(),  
             'zig_zag' => $alerts->where('alert_type_id',3)->count(), 
             'over_speed' => $alerts->where('alert_type_id',12)->count(),  
-            'user_alert' => $alerts->whereIn('alert_type_id',$alert_id)->count(),
+            'user_alert' => $alerts->count(),
             'geofence_entry' => $alerts->where('alert_type_id',5)->count(),
             'geofence_exit' => $alerts->where('alert_type_id',6)->count(),
             'geofence_entry_overspeed' => $alerts->where('alert_type_id',15)->count(),

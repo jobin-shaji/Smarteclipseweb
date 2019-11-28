@@ -79,6 +79,27 @@
                 
             </div>
         </li>
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE MAKE
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{url('/vehicle-make-create')}}">CREATE VEHICLE MAKE</a>
+                <a class="dropdown-item"href="{{url('/vehicle-make')}}">LIST VEHICLE MAKE</a>
+                
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE MODELS
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{url('/vehicle-models-create')}}">CREATE VEHICLE MODELS</a>
+                <a class="dropdown-item"href="{{url('/vehicle-models')}}">LIST VEHICLE MODELS</a>
+                
+            </div>
+        </li>
+       
 
 
       <!--   <li class="nav-item dropdown">

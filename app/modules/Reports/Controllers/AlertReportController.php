@@ -22,19 +22,10 @@ class AlertReportController extends Controller
     public function alertReport()
     {
         $client_id=\Auth::user()->client->id;
-        $user_alert = UserAlerts::select(
-            'alert_id'
-        )
-        ->where('client_id',$client_id)
-        ->where('status',1)
-        ->get();
-        $alert_id = [];
-        foreach($user_alert as $user_alert){
-            $alert_id[] = $user_alert->alert_id;
-        }
+        
         $AlertType=AlertType::select('id','code','description')
-        ->whereIn('id',$alert_id)
-        ->whereNotIn('id',[17,18,23,24,13,10,12])
+        // ->whereIn('id',$alert_id)
+        ->whereNotIn('id',[17,18,23,24])
         // ->whereNotIn('id',[17,18,23,24])       
         ->get();
         $vehicles=Vehicle::select('id','name','register_number','client_id')
@@ -81,7 +72,7 @@ class AlertReportController extends Controller
         // ->orderBy('id', 'desc')
         ->orderBy('device_time', 'DESC')
         ->where('alert_type_id',$alert_id)
-         ->whereNotIn('alert_type_id',[17,18,23,24,13,10]);
+         ->whereNotIn('alert_type_id',[17,18,23,24]);
         // ->whereNotIn('alert_type_id',[17,18,23,24]);
        if($alert_id==0 && $vehicle_id==0)
        {  
@@ -124,7 +115,7 @@ class AlertReportController extends Controller
         }
         $AlertType=AlertType::select('id','code','description')
         ->whereIn('id',$user_alert_id)
-        ->whereNotIn('id',[17,18,23,24,13,10])        
+        ->whereNotIn('id',[17,18,23,24])        
         ->get();
          $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client)

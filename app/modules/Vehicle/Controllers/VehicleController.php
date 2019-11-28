@@ -554,8 +554,11 @@ class VehicleController extends Controller
             'id',
             'alert_type_id',
             'gps_id',
+            'latitude',
+            'longitude',
             'device_time'
         )
+        ->with('gps.vehicle')
         ->with('alertType')
         ->where('gps_id',$vehicle->gps_id)
         ->where('device_time','>=',$last_alert_time)
@@ -568,14 +571,44 @@ class VehicleController extends Controller
                 'status' => 'failed'
             ];
         }else{
-            $alert=$alerts[0]->alertType->description;
+            $vehicle_id=$alerts[0]->gps->vehicle->id;
+            $vehicle_id = Crypt::encrypt($vehicle_id);
             $response = [
                 'status' => 'success',
-                'alert' => $alert
+                'alerts' => $alerts,
+                'vehicle' => $vehicle_id
             ];
         }
         return response()->json($response); 
     }
+
+    // critical alert verification
+    public function verifyContinuousAlert(Request $request)
+    {
+        $decrypted_vehicle_id = Crypt::decrypt($request->id); 
+        $vehicle=Vehicle::find($decrypted_vehicle_id);
+        $alerts = Alert::whereIn('alert_type_id',[10,13])
+                        ->where('status',0)
+                        ->where('gps_id',$vehicle->gps_id)
+                        ->get();
+        dd($alerts);
+        if($alerts == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Alert does not exist'
+            ]);
+        }
+        foreach ($alerts as $alert) {
+            $alert->status = 1;
+            $alert->save();
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Alert verified successfully'
+        ]);
+     }
 
     // vehicle drivers list
     public function vehicleDriverLogList()

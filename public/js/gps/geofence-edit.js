@@ -106,8 +106,7 @@ function initMap(){
       name : name,
       geofence_id : geofence_id
     };
-    backgroundPostData(url,data,'none',{alert:true});  
-    // console.log(allPolly);
+    backgroundPostData(url,data,'geofenceResponse',{alert:true});  
     }
     else
     {
@@ -124,6 +123,18 @@ function initMap(){
     newShape.type = e.type;
     setSelection(newShape);
   });
+}
+
+function geofenceResponse(res){
+  if(res.status == 'success')
+  {
+    toastr.success('Geofence updated successfully');
+    setTimeout(function () {
+      window.location = "/geofence";
+    }, 1000);
+  }else if(res.status == 'failed'){
+    toastr.error('Geofence name already exists!');
+  }
 }
 
 function deleteSelectedShape() {
