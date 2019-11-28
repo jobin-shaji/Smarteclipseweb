@@ -78,7 +78,11 @@ function initMap(){
     var vertices = polygon.getPath();
     var len = vertices.getLength();
     // overlays.push(polygon);
-    if(len>=10)
+    if(len<3)
+    {
+      alert("Atleast 3 points required");
+      polygon.setMap(null);
+    }else if(len>10)
     {
       alert("Only 10 points allowed");
       polygon.setMap(null);
