@@ -104,7 +104,7 @@
                         </li> -->
                          <li class="nav-item"> 
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
-                                <i class="fa fa-home" aria-hidden="true"></i>
+                                <i class="fa fa-home" aria-hidden="true" style="font-size: 2em!important;padding: 35% 0 0 0"></i>
                             </a>
                         </li>
                         <!-- <li class="nav-item dropdown">
