@@ -68,7 +68,6 @@ function modecount(res) {
 
 
 function vehicleTrack(res) {
-  console.log(res);
   if(res.status!="failed"){
     var JSONObject = res.user_data;
     var marker, i;
@@ -288,7 +287,6 @@ function moving(vehicle_mode) {
 }
 
 function selectVehicleModeTrack(res) {
- console.log(res);
  deleteMarkers();
  flag = 0;
  vehicleTrack(res);
