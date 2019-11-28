@@ -49,7 +49,7 @@
            <li style="height:24px"></li> 
           <li style="height:33px"></li> 
         </ul>
-
+        <h4 style="color: red"><u><b>RENEWAL CHARGE</b></u></h4>
         <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
         <h6><b>Server & Software charge:</b>  ₹600 + Tax</h6>
         <h6><i>(1 year validity)</i></h6>
