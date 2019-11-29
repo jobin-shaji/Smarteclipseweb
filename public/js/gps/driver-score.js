@@ -7,9 +7,13 @@ $(document).ready(function() {
 });
 
 function check(){
+  var driver=$('#driver').val(); 
+  
     
-    var driver=$('#driver').val(); 
     driverBehaviour(driver); 
+    score(driver);
+}
+function score(driver){
     var url = 'driver-score';
     var data = {
       driver:driver
@@ -18,8 +22,6 @@ function check(){
     backgroundPostData(url, data, 'driverScore', {alert: false});
 // 
 }
-
-  // alert(1);
 
 function driverScore(res) {
   $("#loader-1").hide();
