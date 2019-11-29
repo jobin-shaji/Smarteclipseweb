@@ -706,7 +706,7 @@
   <div class="row">
     <div class="col-md-12 full-height">
       <div class="refresh_map" onclick="refreshPage()">
-        <i class="fa fa-refresh" aria-hidden="true"></i>
+        <!-- <i class="fa fa-refresh" aria-hidden="true"></i> -->
       </div>
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
@@ -809,7 +809,7 @@
 
 
       <div class="iconsbg1234">
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')" style="max-width: 21%!important">
           <!-- <div class="card card-hover"> -->
              <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
@@ -826,7 +826,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')" style="max-width: 21%!important">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -842,7 +842,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')" style="max-width: 21%!important">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -858,7 +858,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')" style="max-width: 23%!important">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -942,8 +942,8 @@
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
-              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
-                <h4 class="m-b-0 m-t-5 score_data_text">
+              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px;">
+                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
                   <img src="assets/images/location.png">
                     Location
                 </h4>

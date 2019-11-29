@@ -78,10 +78,10 @@
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
                         <thead>
                             <tr>
-                              <th>SL.No</th>
-                              <th>Moving</th>
-                              <th>Halt</th>
-                              <th>Sleep</th>                              
+                              <th><b>SL.No</b></th>
+                              <th><b>Moving</b></th>
+                              <th><b>Halt</b></th>
+                              <th><b>Sleep</b></th>                              
                                       
                             </tr>
                         </thead>

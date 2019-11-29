@@ -112,11 +112,14 @@
                     </div>
                   </div>
                   <div class="col-md-12 col-lg-6">
-                    <input type="checkbox" name="type" value="camera"> Camera enable/disable
+                    <!-- <input type="checkbox" name="type" value="camera"> Camera enable/disable
                     <div id="camera_enable" style="display: none">
                       <div id="warn">Please connect your camera to scan QR code.</div>
                       <video id="preview" style="height:100%; width: 100%;"></video>
-                    </div>
+                    </div> -->
+                    <textarea id="scanner" style="height:30%; width: 100%;" placeholder="Please click here for scanning.."></textarea>
+                    <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
+                    <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
                   </div>
                 </div>
 
