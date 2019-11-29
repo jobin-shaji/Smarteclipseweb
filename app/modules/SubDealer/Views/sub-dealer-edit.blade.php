@@ -1,12 +1,12 @@
 @extends('layouts.eclipse')
 @section('title')
-  Update Sub Dealer Details
+  Update Dealer Details
 @endsection
 @section('content')
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Sub Dealer</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Dealer</li>
     </ol>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -21,7 +21,7 @@
       <div class="card-body wizard-content"> 
         <form  method="POST" action="{{route('sub.dealers.update.p',$user->id)}}">
           {{csrf_field()}}
-          <div class="card"><h4>Sub Dealer Edit</h4>
+          <div class="card"><h4>Dealer Edit</h4>
             <div class="card-body">
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 

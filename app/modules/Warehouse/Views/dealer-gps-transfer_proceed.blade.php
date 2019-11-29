@@ -31,14 +31,14 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group has-feedback">
-            <label>Sub Dealer Name</label>
+            <label>Dealer Name</label>
             <select class="form-control"  name="sub_dealer_user_id" readonly>
               <option value="{{$sub_dealer_user_id}}">{{$sub_dealer_name}}</option>
             </select>
           </div>
 
           <div class="form-group has-feedback">
-            <label>Sub Dealer Address</label>
+            <label>Dealer Address</label>
             <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
           </div>
 

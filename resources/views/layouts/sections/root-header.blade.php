@@ -36,17 +36,17 @@
         </a>
         <ul class="dropdown-menu multi-level">
             <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >DEALERS</a>
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >DISTRIBUTORS</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/dealer/create')}}">ADD DEALER</a></li>
-                <li><a class="dropdown-item" href="{{url('/dealers')}}">LIST DEALERS</a></li>
+                <li><a class="dropdown-item" href="{{url('/dealer/create')}}">ADD DISTRIBUTOR</a></li>
+                <li><a class="dropdown-item" href="{{url('/dealers')}}">LIST DISTRIBUTORS</a></li>
                 </ul>
             </li>
 
             <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SUB DEALERS</a>
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DEALERS</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/sub-dealers')}}">LIST SUB DEALERS</a></li>
+                <li><a class="dropdown-item" href="{{url('/sub-dealers')}}">LIST DEALERS</a></li>
                 </ul>
             </li>
             <li class="dropdown-submenu">

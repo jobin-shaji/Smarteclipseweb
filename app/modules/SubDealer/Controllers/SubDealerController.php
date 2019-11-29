@@ -56,7 +56,7 @@ class SubDealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Subdealer does not exist'
+                'message' => 'Dealer does not exist'
             ]);
         }
         $sub_dealer_user->delete();
@@ -64,7 +64,7 @@ class SubDealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Subdealer disabled successfully'
+            'message' => 'Dealer disabled successfully'
         ]);
     }
     // restore emplopyee
@@ -76,7 +76,7 @@ class SubDealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Subdealer does not exist'
+                'message' => 'Dealer does not exist'
             ]);
         }
         $sub_dealer_user->restore();
@@ -84,7 +84,7 @@ class SubDealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Subdealer enabled successfully'
+            'message' => 'Dealer enabled successfully'
         ]);
     }
 
@@ -245,7 +245,7 @@ class SubDealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Subdealer does not exist'
+                'message' => 'Dealer does not exist'
             ]);
         }
         $subdealer->user->delete();
@@ -253,7 +253,7 @@ class SubDealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Subdealer deactivated successfully'
+            'message' => 'Dealer deactivated successfully'
         ]);
     }
 
@@ -265,7 +265,7 @@ class SubDealerController extends Controller {
              return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Subdealer does not exist'
+                'message' => 'Dealer does not exist'
              ]);
         }
 
@@ -274,7 +274,7 @@ class SubDealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Subdealer activated successfully'
+            'message' => 'Dealer activated successfully'
         ]);
     }
 

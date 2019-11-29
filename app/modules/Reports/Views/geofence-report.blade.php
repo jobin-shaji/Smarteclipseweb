@@ -64,7 +64,7 @@ Geofence Report
                       </div>
                       <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                         <thead>
-                          <tr>
+                          <tr style="text-align: center;">
                             <th>SL.No</th>
                             <th>Vehicle Name</th>
                             <th>Register Number</th>

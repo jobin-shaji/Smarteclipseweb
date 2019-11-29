@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  View Sub Dealer
+  View Dealer
 @endsection
 @section('content')
 
@@ -10,7 +10,7 @@
 <div class="page-wrapper-root1">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Sub Dealer</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Dealer</li>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -23,7 +23,7 @@
   
 
   <div class="container-fluid">
-    <div class="card-body"><h4>Sub Dealer List</h4>
+    <div class="card-body"><h4>Dealer List</h4>
       <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
@@ -36,7 +36,7 @@
                       <th>Address</th>                              
                       <th>Mobile</th>                            
                       <th>email</th>
-                      <th>Dealer</th>
+                      <th>Distributor</th>
                       <th>Working Status</th>
                   </tr>
                 </thead>

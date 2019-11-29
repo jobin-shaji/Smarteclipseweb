@@ -79,7 +79,7 @@ Alert Report
                         @if(isset($alertReports))                
                         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                           <thead>
-                            <tr>
+                            <tr style="text-align: center;">
                               <th>SL.No</th>
                               <th>Vehicle</th>
                               <th>Register number</th>
