@@ -61,10 +61,10 @@ Halt Report
                       <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                         <thead>
                             <tr>
-                              <th>SL.No</th>
-                              <th>Vehicle</th>
-                              <th>Register Number</th>                         
-                              <th>Halt</th>                                                               
+                              <th><b>SL.No</b></th>
+                              <th><b>Vehicle</b></th>
+                              <th><b>Register Number</b></th>                         
+                              <th><b>Halt</b></th>                                                               
                             </tr>
                         </thead>
                          <tbody>

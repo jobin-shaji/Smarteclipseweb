@@ -141,9 +141,9 @@
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1> -->
         <ul class="list-unstyled mt-3 mb-4">
-          <li><b>Everything in Freebies +</b></li>
           <li><i class="fas fa-mobile-alt"></i>Mobile application</li>
           <li><i class="far fa-map"></i>Point of interest</li>
+          <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li>
           <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%">Route Deviation[4 routes]</li>
           <li><i class="far fa-caret-square-left"></i>Route playback history(2 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(4 Geofences)</li>
@@ -152,7 +152,6 @@
           <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
            <li><img src="{{url('/')}}/assets/images/ac.png" height="15px" width="15px" style="margin:0 2%">AC Status</li>
           <li><i class="far fa-share-square"></i>Share in webapp</li>
-          <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li>
           <li style="height:30px"></li> 
         </ul>
         <!-- <h6><b>Data charge:</b>  ₹1700 + Tax</h6>
@@ -244,25 +243,24 @@
       <div class="card-body">
         <!-- <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1> -->
        <ul class="list-unstyled mt-3 mb-4">
-           <li><b>Everything in Fundamental +</b></li>
            <li><i class="fas fa-mobile-alt"></i>Mobile application</li>
-           <li><i class="far fa-map"></i>Point of interest</li>
+          <li><i class="far fa-map"></i>Point of interest</li>
+          <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li>
+          <li><i class="far fa-star"></i>Driver score</li>
+          <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2%">Towing alert</li>
+          <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
+           <li><img src="{{url('/')}}/assets/images/ac.png" height="15px" width="15px" style="margin:0 2%">AC Status</li>
+          <li><i class="far fa-share-square"></i>Share in webapp</li>
            <li><img src="{{url('/')}}/assets/images/route.png" style="margin:0 2%">Route Deviation[8 routes]</li>
            <li><i class="far fa-caret-square-left"></i>Route playback history(4 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(8 Geofences)</li>
-          <li><i class="far fa-star"></i>Driver score</li>
           <li><i class="far fa-file-alt"></i>Invoice</li>
-          <li><img src="{{url('/')}}/assets/images/towing.png" style="margin:0 2%">Towing alert</li>
-          <li><img src="{{url('/')}}/assets/images/radar.png" style="margin:0 2%">Radar</li>
           <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
-          <li><i class="far fa-share-square"></i>Share in webapp</li>
-          <li><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Emergency alerts</li>
           <li><img src="{{url('/')}}/assets/images/logo.png" style="margin:0 2%">Client Logo</li> 
           <li><img src="{{url('/')}}/assets/images/immobilizer.png" style="margin:0 2%">Immobilizer</li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
           <li><img src="{{url('/')}}/assets/images/theft.png" style="margin:0 2%">Anti-Theft Mode</li>
-          <li><img src="{{url('/')}}/assets/images/ac.png" height="15px" width="15px" style="margin:0 2%">AC Status</li>
           <li style="height:0"></li> 
         </ul>
         <!-- <h6><b>Data charge:</b>  ₹1700 + Tax</h6>

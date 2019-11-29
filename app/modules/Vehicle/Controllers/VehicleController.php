@@ -1068,7 +1068,7 @@ class VehicleController extends Controller
             $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-            if(\Auth::user()->hasRole('fundamental|pro|superior')){
+            if(\Auth::user()->hasRole('pro|superior')){
                 $fuel =$track_data->fuel_status*100/15;
                 $fuel = (int)$fuel;
                 $fuel_status=$fuel."%";
@@ -1077,7 +1077,7 @@ class VehicleController extends Controller
             {
                 $fuel_status="UPGRADE VERSION";
             }
-            if(\Auth::user()->hasRole('pro|superior')){
+            if(\Auth::user()->hasRole('fundamental|pro|superior')){
                 $ac_status =$track_data->ac_status;
                 if($ac_status == 1){
                     $ac_status="ON";

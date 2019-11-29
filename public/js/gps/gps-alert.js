@@ -28,7 +28,7 @@ function  gpsAlert(res)
 	for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
 		$('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
 	}
-	$("#alert").scrollTop(100);
+	$("#alert").scrollTop(10);
 	var scrollTop = $(window).scrollTop() + $(window).height();
 	// var scrollTop = $(document).height() - $(window).height() - $(window).scrollTop();
 	

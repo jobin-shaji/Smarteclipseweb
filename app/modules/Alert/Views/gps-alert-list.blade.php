@@ -1,12 +1,4 @@
 @extends('layouts.eclipse')
-<style>
-  body {font-family:Arial;}
-#alert {width:550px;height:400px;border: 1px solid;overflow:scroll}
-#loader {display:none;}
-.messages {min-height:40px;border-bottom:1px solid #1f1f1f;}
-.date {font-size:11px;color:#1f1f1f;}
-
-  </style>
 @section('title')
 All Alerts
 @endsection
@@ -35,11 +27,14 @@ All Alerts
               <div id="alert">
             <!--Loading ANIMATION-->
               <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>        
-            <!--END LOADING ANIMATION-->                
-                <div class='inner'>
-                     <!-- WHERE YOU WILL LOAD CONTENT -->
-                </div> 
-
+                <table class="container">
+                 
+                  <tbody>
+                    <tr>
+                      <td class="inner"></td>
+                    </tr>
+                  </tbody>
+                </table>
                </div>
             </div>
             <div class="col-sm-6">
@@ -63,3 +58,74 @@ All Alerts
 
  @endsection
  @endsection
+ <style type="text/css">
+   /* 
+  Side Navigation Menu V2, RWD
+  ===================
+  License:
+  https://goo.gl/EaUPrt
+  ===================
+  Author: @PableraShow
+
+ */
+
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  line-height: 2em;
+  color:#A7A1AE;
+  background-color:#797979;
+}
+.container td {
+    font-weight: normal;
+    font-size: 1em;
+  -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+     -moz-box-shadow: 0 2px 2px -2px #0E1119;
+          box-shadow: 0 2px 2px -2px #0E1119;
+}
+.container {
+    text-align: left;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+  display: table;
+  padding: 0 0 8em 0;
+}
+
+.container td {
+    padding-bottom: 10%!important;
+    padding-top: 10%;
+  padding-left:10%;  
+}
+
+/* Background-color of the odd rows */
+.container tr:nth-child(odd) {
+    background-color: #323C50;
+}
+.container td:first-child { color: #FB667A; }
+@media (max-width: 800px) {
+.container td:nth-child(4),
+.container th:nth-child(4) { display: none; }
+}
+
+#alert {
+  width:350px;
+  height:400px;
+  border: 1px solid;
+  overflow:scroll;
+  margin-left: 10%
+}
+#loader {
+  display:none;
+}
+.messages {
+  min-height:40px;
+  padding: 3% 0 2% 0;
+}
+.date {
+  font-size:16px;color:#ffffff;
+}
+ </style>
