@@ -705,6 +705,9 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 full-height">
+      <div class="refresh_map" onclick="refreshPage()">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+      </div>
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
     <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
@@ -801,7 +804,10 @@
         </div>
       </div>
     </div>
+
     <div class="dashboard-main-Right cover_vehicle_track_list">
+
+
       <div class="iconsbg1234">
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
           <!-- <div class="card card-hover"> -->
