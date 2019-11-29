@@ -53,7 +53,7 @@
               <h3 id="dealer">
                 <div class="loader"></div>
               </h3>
-              <p>Active Dealers</p>
+              <p>Active Distributors</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -69,7 +69,7 @@
               <h3 id="sub_dealer">
                 <div class="loader"></div>
               </h3>
-              <p>Active Subdealers</p>
+              <p>Active Dealers</p>
             </div>
             <div class="icon">
               <i class="fa fa-user"></i>
@@ -170,7 +170,7 @@
                         <h3 id="dealer_subdealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>Active Subdealers</p>
+                        <p>Active Dealers</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>

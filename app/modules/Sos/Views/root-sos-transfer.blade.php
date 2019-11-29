@@ -30,9 +30,9 @@
                 <div class="row">
                   <div class="col-md-12 col-lg-6">
                     <div class="form-group has-feedback">
-                        <label class="srequired">Dealer Name</label>
+                        <label class="srequired">Distributor Name</label>
                         <select class="form-control select2 dealerData" id="to_user" name="dealer_user_id" data-live-search="true" title="Select Dealer" required>
-                          <option value="">Select Dealer</option>
+                          <option value="">Select Distributor</option>
                           @foreach($entities as $entity)
                           <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                           @endforeach

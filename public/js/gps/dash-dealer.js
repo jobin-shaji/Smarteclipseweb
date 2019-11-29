@@ -51,7 +51,7 @@ function dealerGpsUser(res){
   var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ["Sub dealers","Clients"],
+      labels: ["Dealers","Clients"],
       datasets: [{
         label: '#:',
        data:[res.sub_dealer,res.client],
