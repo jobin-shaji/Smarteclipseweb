@@ -142,6 +142,46 @@
                       </div>
                     </form>
                   </section>
+
+                  <section class="hilite-content">
+                  <!-- title row -->
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-xs-12">
+                        <h3 class="page-header">
+                          <i class="fa fa-user"> Update Model</i> 
+                        </h3>
+                      </div>
+                    </div>
+                    <form  method="POST" action="{{route('vehicles.model.update.p',$vehicle->id)}}">
+                    {{csrf_field()}}
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                          <div class="form-group has-feedback">
+                            <label class="srequired">Model</label>
+
+
+                              <select class="form-control {{ $errors->has('model') ? ' has-error' : '' }}"  name="model" value="{{ old('model') }}" required>
+                              <option disabled="disabled">Select Model</option>
+                              @foreach($vehicle_models as $vehicle_model)
+                              <option value="{{$vehicle_model->id}}" @if($vehicle_model->id==$vehicle->model_id){{"selected"}} @endif>{{$vehicle_model->name}}</option>
+                              @endforeach
+                            </select>
+                           
+                          </div>
+                          @if ($errors->has('model'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('model') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-10 col-md-12">
+                          <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
+                        </div>
+                      </div>
+                    </form>
+                  </section>
                 </div>
               </div>
             </div>
