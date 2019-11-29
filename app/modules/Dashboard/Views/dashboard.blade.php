@@ -809,7 +809,7 @@
 
 
       <div class="iconsbg1234">
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')" style="max-width: 21%!important">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')" style="max-width: 22%!important">
           <!-- <div class="card card-hover"> -->
              <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
@@ -826,7 +826,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')" style="max-width: 21%!important">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')" style="max-width: 20%!important">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
@@ -842,7 +842,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')" style="max-width: 21%!important">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')" style="max-width: 20%!important">
           <div class="card card-hover">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>

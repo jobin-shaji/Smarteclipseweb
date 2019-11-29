@@ -26,7 +26,7 @@ $(document).ready(function () {
 function  gpsAlert(res) 
 {
 	for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
-		$('.inner').prepend('<div class="messages" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+		$('.inner').prepend('<div class="messages alert_color_'+res.alerts[i].id+'" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
 	}
 	$("#alert").scrollTop(10);
 	var scrollTop = $(window).scrollTop() + $(window).height();
@@ -62,6 +62,13 @@ function gpsAlertCount(value){
 		id:value
     }
     backgroundPostData(url,data,'gpsAlertTracker',{alert:true});
+    $('.messages').removeClass('allert');
+    changeAtiveColor(value);
+}
+
+ function changeAtiveColor(value){
+  $('.alert_color_'+value).addClass('allert');
+  
 }
 function gpsAlertTracker(res)
 {
