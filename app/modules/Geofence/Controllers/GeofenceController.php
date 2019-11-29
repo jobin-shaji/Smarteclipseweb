@@ -63,7 +63,7 @@ class GeofenceController extends Controller {
             ]);
         }else{
             foreach ($request->polygons as $polygon) {
-                $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->count();
+                $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->withTrashed()->count();
                 if($geofence_name_count >=1)
                 {
                     $response = [
@@ -521,7 +521,7 @@ class GeofenceController extends Controller {
                 $geofence->response=$response;
             } 
         } 
-        $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->where('id', '!=',  $geofence_id )->count();
+        $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->where('id', '!=',  $geofence_id )->withTrashed()->count();
         if($geofence_name_count >=1)
         {
             $response = [
