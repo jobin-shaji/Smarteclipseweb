@@ -58,13 +58,13 @@
       $rayfleet_key="rayfleet";
       $eclipse_key="eclipse";
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <h6><b>Total charge:</b></h6>
+          <!-- <h6><b>Total charge:</b></h6> -->
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
+          <!-- <h6><b>Total charge:</b>  ₹500000 + Tax</h6> -->
         <?php }
         else { ?>
-        <h6><b>Total charge:</b>  ₹500000 + Tax</h6>
+        <!-- <h6><b>Total charge:</b>  ₹500000 + Tax</h6> -->
         <?php } ?> 
         <p>
           <br>
