@@ -25,7 +25,7 @@
             <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label class="srequired">Vehicle model</label>
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_models->vehicle_model}}"> 
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_models->name}}"> 
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 @if ($errors->has('name'))
                 <span class="help-block">

@@ -22,9 +22,10 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="card-body">
-    
-                           
+      <div class="panel-heading">
+        <div class="cover_div_search">
           <div class="row">
+
             <div class="col-lg-6 col-md-6">
               <h3 style="text-align:center;">Driver Score</h3>
               <h6 style="text-align:center;font-size: 12px;">Note: Kindly click on the box to get the individual details of driver.</h6>
@@ -45,11 +46,44 @@
               <canvas id="driver-behaviour-alerts"></canvas>  
               </div>
             </div>
+
+            <div class="col-lg-2 col-md-2">
+              <div class="form-group">    
+                <label>Driver</label>                      
+                <select class="form-control selectpicker" style="width: 100%" data-live-search="true" title="Select Driver" id="driver" name="driver" onchange="check()">
+                  <option value="" selected="selected" disabled="disabled">select</option>
+                    @foreach ($drivers as $driver)                          
+                    <option value="{{$driver->id}}" >{{$driver->name}}</option>
+                    @endforeach 
+                </select>
+              </div>
+            </div>                  
           </div>
-  
-    
-    </div>
-                
+        </div>
+      </div>   
+
+      <div class="row">
+
+        <div class="col-lg-6 col-md-6">
+          <h3 style="text-align:center;">Driver Score</h3>
+          <h6 style="text-align:center;font-size: 12px;">Note: Kindly click on the box to get the individual details of driver.</h6>
+          <div >
+          <canvas id="driver-behaviour"></canvas>  
+          </div>
+        </div>
+        <div class="loader-wrapper" id="loader-1">
+            <div id="loader"></div>
+          </div>  
+        <div class="col-lg-6 col-md-6">
+          <h3 style="text-align:center;">Driver Behaviour</h3>
+          <h6 style="text-align:center;font-size: 12px;">Note: Kindly click on the box to get the individual details of driver.</h6>
+          <div >
+          <canvas id="driver-behaviour-alerts"></canvas>  
+
+          </div>
+        </div>
+      </div>    
+    </div>                
   </div>
 </div>
 
@@ -59,5 +93,4 @@
   @section('script')
     <script src="{{asset('js/gps/mdb.js')}}"></script>
     <script src="{{asset('js/gps/driver-score.js')}}"></script>
-    <script src="{{asset('js/gps/driver-alert-score.js')}}"></script>
-  @endsection
+     @endsection

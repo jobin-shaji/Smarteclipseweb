@@ -264,7 +264,7 @@ class OperationsController extends Controller {
             $rules = $this->vehicle_model_create_rules();
             $this->validate($request, $rules);
             $vehicle_models = VehicleModels::create([
-                'vehicle_model' => $request->name,
+                'name' => $request->name,
                 'vehicle_make_id' => $request->vehicle_make,
                 'fuel_min' => $request->fuel_min,
                 'fuel_max' => $request->fuel_max,
@@ -285,7 +285,7 @@ class OperationsController extends Controller {
     {
         $vehicle_models = VehicleModels::select(
             'id', 
-            'vehicle_model',                      
+            'name',                      
             'vehicle_make_id',                   
             'fuel_min', 
             'fuel_max',                                       
@@ -341,7 +341,7 @@ class OperationsController extends Controller {
         } 
         $rules = $this->vehiclemodelsUpdatesRules($vehicle_models);
         $this->validate($request, $rules);   
-        $vehicle_models->vehicle_model = $request->name;
+        $vehicle_models->name = $request->name;
         $vehicle_models->vehicle_make_id = $request->vehicle_make;
         $vehicle_models->fuel_min = $request->fuel_min;
         $vehicle_models->fuel_max = $request->fuel_max;

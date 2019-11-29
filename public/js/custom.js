@@ -40,8 +40,23 @@ $(function () {
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
+            calculate();
         });
-
+        function calculate() {
+            var d1 = $('#fromDate').data("DateTimePicker").date();
+            var d2 = $('#toDate').data("DateTimePicker").date();
+            var timeDiff = 0
+            if(d2) {
+                timeDiff = (d2 - d1) / 1000;
+            }
+            var DateDiff = Math.floor(timeDiff / (60 * 60 * 24));
+            if(DateDiff>15)
+            {
+                var fromDate=$('#fromDate').val();
+                document.getElementById("toDate").value = fromDate;
+                alert("please select date between 15");
+            }
+        }
         
 
 

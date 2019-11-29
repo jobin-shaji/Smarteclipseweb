@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVehicleModelsTable extends Migration
+class CreateOdometerUpdatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateVehicleModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_models', function (Blueprint $table) {
+        Schema::create('odometer_updates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('vehicle_make_id');
-            $table->integer('fuel_min');
-            $table->integer('fuel_max');
+            $table->integer('vehicle_id');
+            $table->integer('gps_id');
+            $table->string('old_odometer');
+            $table->string('new_odometer');
+            $table->dateTime('edited_at');
+            $table->integer('updated_by');
             $table->timestamps();
-            $table->softDeletes();
-            
         });
     }
 
@@ -32,6 +32,6 @@ class CreateVehicleModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicle_models');
+        Schema::dropIfExists('odometer_updates');
     }
 }

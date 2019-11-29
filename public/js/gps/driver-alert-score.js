@@ -7,6 +7,7 @@ $(document).ready(function() {
 });
 
 
+
 function driverScoreAlerts(res) {
   var ctxL = document.getElementById("driver-behaviour-alerts").getContext('2d');
   var myLineChart = new Chart(ctxL, {

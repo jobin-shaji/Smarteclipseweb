@@ -1,14 +1,33 @@
 $(document).ready(function() {
-  $("#loader-1").hide();
- var url = 'driver-score';
- var data = {
 
- };
- backgroundPostData(url, data, 'driverScore', {alert: false});
+    $("#loader-1").show();
+ check();
+ driverBehaviour();
+
+
+
 });
 
+function check(){
+  var driver=$('#driver').val(); 
+  
+    
+    driverBehaviour(driver); 
+    score(driver);
+}
+function score(driver){
+    var url = 'driver-score';
+    var data = {
+      driver:driver
+    };
+    $("#loader-1").show();
+    backgroundPostData(url, data, 'driverScore', {alert: false});
+
+}
 
 function driverScore(res) {
+
+  $("#loader-1").hide();
 
   var ctxPA = document.getElementById("driver-behaviour").getContext('2d');
   $("#loader-1").show();
@@ -68,5 +87,42 @@ function driverScore(res) {
   }
   });
 }
+function driverBehaviour(driver){
+    var url = 'driver-score-alerts';
+    var data = {
+      driver:driver
+    };
+    backgroundPostData(url, data, 'driverScoreAlerts', {alert: false});
+  }
+
+
+function driverScoreAlerts(res) {
+  var ctxL = document.getElementById("driver-behaviour-alerts").getContext('2d');
+  var myLineChart = new Chart(ctxL, {
+  type: 'line',
+  data: {
+  labels: ["Harsh break", "Overspeed", "Tilt", "Impact", "OS+GF Entry", "OS+GF Exit"],
+  datasets: res
+  },
+  options: {
+  responsive: true,
+  scales: {
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Alert Type'
+      }
+    }],
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Count'
+      }
+    }]
+  } 
+  }
+  });
+}
+
 
 
