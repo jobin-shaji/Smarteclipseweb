@@ -7,7 +7,7 @@ class VehicleModels extends Model
 {  
     use SoftDeletes;    
 	protected $fillable=[
-		'vehicle_model','vehicle_make_id','fuel_min','fuel_max'
+		'name','vehicle_make_id','fuel_min','fuel_max'
 	];
 	public function vehicleMake()
   	{
