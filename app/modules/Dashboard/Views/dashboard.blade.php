@@ -936,8 +936,8 @@
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
                  
-              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
-                <h4 class="m-b-0 m-t-5 score_data_text">
+              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px;">
+                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
                   <img src="assets/images/location.png">
                     Location
                 </h4>
