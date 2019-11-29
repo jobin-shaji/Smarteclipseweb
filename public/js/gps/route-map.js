@@ -83,7 +83,7 @@
         function checkRouteValue(){
           var markers=$('#locationLatLng').val();
           if(markers==""){
-            alert("please Draw your route");
+            alert("Please draw your route");
             return false; 
           }else{
             return true; 
