@@ -1,13 +1,28 @@
 $(document).ready(function() {
- var url = 'driver-score';
- var data = {
+    $("#loader-1").show();
+ check();
+ driverBehaviour();
 
- };
- backgroundPostData(url, data, 'driverScore', {alert: false});
+
 });
 
+function check(){
+    
+    var driver=$('#driver').val(); 
+    driverBehaviour(driver); 
+    var url = 'driver-score';
+    var data = {
+      driver:driver
+    };
+    $("#loader-1").show();
+    backgroundPostData(url, data, 'driverScore', {alert: false});
+// 
+}
+
+  // alert(1);
 
 function driverScore(res) {
+  $("#loader-1").hide();
   var ctxPA = document.getElementById("driver-behaviour").getContext('2d');
   var myPolarChart = new Chart(ctxPA, {
   type: 'polarArea',
@@ -65,5 +80,42 @@ function driverScore(res) {
   }
   });
 }
+function driverBehaviour(driver){
+    var url = 'driver-score-alerts';
+    var data = {
+      driver:driver
+    };
+    backgroundPostData(url, data, 'driverScoreAlerts', {alert: false});
+  }
+
+
+function driverScoreAlerts(res) {
+  var ctxL = document.getElementById("driver-behaviour-alerts").getContext('2d');
+  var myLineChart = new Chart(ctxL, {
+  type: 'line',
+  data: {
+  labels: ["Harsh break", "Overspeed", "Tilt", "Impact", "OS+GF Entry", "OS+GF Exit"],
+  datasets: res
+  },
+  options: {
+  responsive: true,
+  scales: {
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Alert Type'
+      }
+    }],
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Count'
+      }
+    }]
+  } 
+  }
+  });
+}
+
 
 

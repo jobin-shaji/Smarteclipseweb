@@ -284,19 +284,39 @@ class DriverController extends Controller {
     //driver score page
     public function driverScorePage()
     {
-       return view('Driver::driver-score');
+        $client_id=\Auth::user()->client->id;         
+        $drivers = Driver::select(
+            'id',
+            'name',
+            'points'
+        )
+        ->where('client_id',$client_id)
+        ->get();
+       return view('Driver::driver-score',['drivers' => $drivers]);
     }
 
     //driver score
     public function driverScore(Request $request)
     {
+        $driver=$request->driver;
+        if($driver){
+            $driver_id=$request->driver;
+        }
+        else
+        {
+           $driver_id=0; 
+        }
         $client_id=\Auth::user()->client->id;
         $drivers = Driver::select(
                 'id',
                 'name',
                 'points')
-                ->where('client_id',$client_id)
-                ->get();
+                ->where('client_id',$client_id);
+                if($driver!=0)
+                {
+                  $drivers=$drivers->where('id',$driver_id);  
+                }
+                $drivers=$drivers->get();
         $single_driver_name = [];
         $single_driver_point = [];
         foreach($drivers as $driver){
@@ -344,7 +364,12 @@ class DriverController extends Controller {
         foreach($over_speed_gf_exit_alerts as $over_speed_gf_exit_alert){
             $single_over_speed_gf_exit_alerts[] = $over_speed_gf_exit_alert->id;
         }
-        $drivers = Driver::where('client_id',$client_id)->get();
+        $driver=$request->driver;
+        $drivers = Driver::where('client_id',$client_id);
+        if($driver){
+            $drivers = $drivers->where('id',$driver);
+        } 
+        $drivers = $drivers->get();
         $score=[];
         foreach($drivers as $driver){
             $harsh_breaking_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_harsh_braking_alerts)->count();
