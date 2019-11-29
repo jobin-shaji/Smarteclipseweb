@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $("#loader-1").hide();
  var url = 'driver-score';
  var data = {
 
@@ -8,7 +9,9 @@ $(document).ready(function() {
 
 
 function driverScore(res) {
+
   var ctxPA = document.getElementById("driver-behaviour").getContext('2d');
+  $("#loader-1").show();
   var myPolarChart = new Chart(ctxPA, {
   type: 'polarArea',
   data: {
