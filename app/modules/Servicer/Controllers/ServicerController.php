@@ -9,6 +9,8 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Warehouse\Models\GpsStock;
 
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Operations\Models\VehicleModel;
+
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Vehicle\Models\Document;
@@ -493,11 +495,13 @@ class ServicerController extends Controller {
         ->get();       
         $drivers=Driver::select('id','name')
         ->where('client_id',$client_id)
-        ->get();       
+        ->get();    
+
+         $models=VehicleModel::select('id','name')->get();   
        if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'client_id'=>$request->id,'drivers'=>$drivers]);
+        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
 
 

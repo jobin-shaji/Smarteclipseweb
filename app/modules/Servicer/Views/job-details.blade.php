@@ -220,6 +220,23 @@
                          </span>
                          @endif
                       </div>
+
+                       <div class="form-group row" style="float:none!important">
+                         <label for="fname" class="col-sm-5 text-right control-label col-form-label">model</label>
+                         <div class="form-group has-feedback">
+                            <select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="model" value="{{ old('model') }}"  id="model" required>
+                                <option value="" selected disabled>Select Vehicle Model</option>
+                                 @foreach($models as $model)
+                                 <option value="{{$model->id}}">{{$model->name}}</option>
+                                 @endforeach
+                            </select>
+                         </div>
+                         @if ($errors->has('model'))
+                         <span class="help-block">
+                         <strong class="error-text">{{ $errors->first('model') }}</strong>
+                         </span>
+                         @endif
+                      </div>
                      
                     <!--   <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Job Complete Date</label>
