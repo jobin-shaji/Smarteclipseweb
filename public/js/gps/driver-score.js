@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-    $("#loader-1").show();
+$("#loader-1").show();
  check();
  driverBehaviour();
 
@@ -16,18 +15,18 @@ function check(){
     score(driver);
 }
 function score(driver){
+  $("#loader-1").show();
     var url = 'driver-score';
     var data = {
       driver:driver
     };
-    $("#loader-1").show();
+    
     backgroundPostData(url, data, 'driverScore', {alert: false});
 
 }
 
 function driverScore(res) {
 
-  $("#loader-1").hide();
 
   var ctxPA = document.getElementById("driver-behaviour").getContext('2d');
   $("#loader-1").show();
