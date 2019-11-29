@@ -25,13 +25,13 @@ All Alerts
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
                 <thead>
                   <tr>
-                    <th>SL.No</th>
-                    <th>Alert</th>
-                    <th>Vehicle Name</th>
-                    <th>Register Number</th>
+                    <th><b>SL.No</b></th>
+                    <th><b>Alert</b></th>
+                    <th><b>Vehicle Name</b></th>
+                    <th><b>Register Number</b></th>
                     <!-- <th>Location</th> -->
-                    <th>Date & Time</th> 
-                    <th>Action</th>                 
+                    <th><b>Date & Time</b></th> 
+                    <th><b>Action</b></th>                 
                   </tr>
                 </thead>
                 <tbody>

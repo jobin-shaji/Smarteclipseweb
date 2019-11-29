@@ -706,7 +706,7 @@
   <div class="row">
     <div class="col-md-12 full-height">
       <div class="refresh_map" onclick="refreshPage()">
-        <i class="fa fa-refresh" aria-hidden="true"></i>
+        <!-- <i class="fa fa-refresh" aria-hidden="true"></i> -->
       </div>
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
