@@ -55,10 +55,11 @@ scanner.addListener('scan', function (content) {
 
 $(function(){
     $('#add_qr_button').click(function() {
+        alert('Do you want to add this?');
         var content = $('#scanner').val();
         if(content){
-          var check_empty = content.slice(180, 190);
-          if(check_empty == "")
+          var content_length = content.length;
+          if(content_length >= 174 && content_length <= 180)
           {
             var scanned_serial_no = content.slice(12, 31);
             var serial_no = scanned_serial_no.replace(' ');
@@ -98,17 +99,18 @@ $(function(){
                 }
             });
           }else{
-            toastr.error('Invalid record! ');
+            alert('Invalid record! Please scan one item at a time');
           }
           
         }else{
-          toastr.warning('Please scan QR code ');
+          alert('Please scan QR code ');
         }
     });
 });
 
 $(function(){
   $('#reset_qr_button').click(function() {
+    alert('Do you want to clear this?');
     document.getElementById('scanner').value = "";
   });
 });
