@@ -816,7 +816,12 @@ class ServicerController extends Controller {
     {
         $user = $request->user();
         $client_id=$request->client_id;
+        $job_type=$request->job_type;
+        
         $client = Client::find($client_id);
+
+      
+
         $gps_stocks = GpsStock::select(
             'gps_id',
             'client_id'
@@ -861,6 +866,25 @@ class ServicerController extends Controller {
         ->whereNotIn('id',$single_gps)
         ->whereNotIn('id',$servicer_gps)
         ->get();
+
+        if($job_type==1)
+        {
+
+        $devices=Gps::select('id','imei','serial_no')
+        ->whereIn('id',$stock_gps_id)
+        ->whereNotIn('id',$single_gps)
+        ->whereNotIn('id',$servicer_gps)
+        ->get();
+
+        }else if($job_type==2){
+
+         $devices=Gps::select('id','imei','serial_no')
+        ->whereIn('id',$stock_gps_id)
+        ->get();
+
+        }else{
+         $devices=[];   
+        }
  
         // if($user->hasRole('sub_dealer')){
         if($devices)
