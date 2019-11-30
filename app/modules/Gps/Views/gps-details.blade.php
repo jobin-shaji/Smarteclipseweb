@@ -92,13 +92,10 @@
               </div>
             </div>
             <div class="col-lg-2 col-md-12">
-            <?php 
-              $qr=$gps->serial_no;
-            ?>
-       
-            {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
-
-
+              <?php 
+                $qr='Serial No.: '.$gps->serial_no.'IMEI: '.$gps->imei.'Website: '.'https://vstmobility.com'.'Playstore Link: '.'https://play.google.com/store/apps/details?id=vehiclest.vst.gps&hl=en_US';
+              ?>
+              {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
             </div>
           </div>
     
