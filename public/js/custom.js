@@ -1164,12 +1164,33 @@ function downloadSosLabel(id){
   downloadFile(url,data);
 }
 
+
+// code 
+function jobtypeonchange(){
+   $("#client").val("");
+
+
+$('#gps').find('option').remove();
+
+
+
+  
+}
+
 function getClientServicerGps(res){
     if(res)
-    {       
+    {    
+
+
+
+        var job_type = $("#job_type option:selected").val();
+        if(job_type==""||job_type==undefined){
+         alert('select job type!');   
+        }
         var url = 'servicer-client-gps';
         var data = {
-             client_id : res
+             client_id : res,
+             job_type:job_type
         };   
         backgroundPostData(url,data,'clientGps',{alert:false});   
     }

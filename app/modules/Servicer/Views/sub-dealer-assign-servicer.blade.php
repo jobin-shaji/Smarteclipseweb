@@ -67,6 +67,21 @@
                       @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
+                      <div class="form-group has-feedback">
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type" onchange="jobtypeonchange()">
+                          <option value="">select</option>
+                          <option value="1">Installation</option>
+                          <option value="2">Service</option>                         
+                        </select>
+                      </div>
+                      @if ($errors->has('job_type'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('job_type') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+                    <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
                       <div class="form-group has-feedback">
                         <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client" onchange="getClientServicerGps(this.value)">
@@ -83,6 +98,8 @@
                       </span>
                       @endif
                     </div>
+                    
+
                      <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Gps</label>
                       <div class="form-group has-feedback">
@@ -100,22 +117,7 @@
                     </div>
 
 
-                     
-                    <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
-                      <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type">
-                          <option value="">select</option>
-                          <option value="1">Installation</option>
-                          <option value="2">Service</option>                         
-                        </select>
-                      </div>
-                      @if ($errors->has('job_type'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('job_type') }}</strong>
-                      </span>
-                      @endif
-                    </div>
+             
                     <div class="form-group row" style="float:none!important">               
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Description</label> 
                       <div class="form-group has-feedback">
