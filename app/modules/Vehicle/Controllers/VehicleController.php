@@ -27,7 +27,7 @@ use App\Modules\Servicer\Models\ServicerJob;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Operations\Models\VehicleModels;
-
+use App\Modules\Vehicle\Models\OdometerUpdate;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use Carbon\Carbon;
 use PDF;
@@ -203,14 +203,29 @@ class VehicleController extends Controller
         if($gps == null){
            return view('Vehicle::404');
         }
+        $old_odometer=$gps->km;
         $rules = $this->vehicleOdometerUpdateRules($gps);
         $this->validate($request, $rules);
-        $gps->km = $request->odometer;
-        $gps->save();        
+        $odometer_in_km=$request->odometer;
+        $odometer_in_meter=round($odometer_in_km*1000);
+        $gps->km = $odometer_in_meter;
+        $save_update = $gps->save(); 
+        if($save_update)
+        {
+            $odometer_update = OdometerUpdate::create([
+                'vehicle_id' => $request->id,
+                'gps_id' => $vehicle->gps_id,
+                'old_odometer' => $old_odometer,
+                'new_odometer' => $odometer_in_meter,
+                'edited_at' => date('Y-m-d H:i:s') ,
+                'updated_by' => $vehicle->client_id
+            ]);  
+        }       
         $request->session()->flash('message', 'Vehicle odometer updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicles.details',$encrypted_gps_id));
-     }
+    }
+
     // details page
     public function details(Request $request)
     {
