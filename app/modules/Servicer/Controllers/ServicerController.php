@@ -9,7 +9,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Warehouse\Models\GpsStock;
 
 use App\Modules\Vehicle\Models\Vehicle;
-use App\Modules\Operations\Models\VehicleModel;
+use App\Modules\Operations\Models\VehicleModels;
 
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
@@ -497,7 +497,7 @@ class ServicerController extends Controller {
         ->where('client_id',$client_id)
         ->get();    
 
-         $models=VehicleModel::select('id','name')->get();   
+         $models=VehicleModels::select('id','name')->get();   
        if($servicer_job == null){
            return view('Servicer::404');
         }

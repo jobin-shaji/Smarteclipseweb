@@ -1087,9 +1087,7 @@ class GpsController extends Controller {
             $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-            $fuel =$track_data->fuel_status*100/15;
-            $fuel = (int)$fuel;
-            $fuel_status=$fuel."%";
+            $fuel_status="0"."%";
             $ac_status =$track_data->ac_status;
             if($ac_status == 1){
                 $ac_status="ON";

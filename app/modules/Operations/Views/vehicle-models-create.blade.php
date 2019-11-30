@@ -25,15 +25,7 @@
             {{csrf_field()}}
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group has-feedback">
-                    <label class="srequired">Vehicle models</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required autocomplete="off"> 
-                    @if ($errors->has('name'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('name') }}</strong>
-                      </span>
-                    @endif
-                  </div>
+                 
                   <div class="form-group has-feedback">
                     <label class="srequired">Vehicle Make</label>
                     <select class="form-control selectpicker select2" data-live-search="true" title="Select Vehicle Make" id="vehicle_make" name="vehicle_make">
@@ -48,9 +40,18 @@
                       </span>
                     @endif
                   </div>
+                   <div class="form-group has-feedback">
+                    <label class="srequired">Vehicle models</label>
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required autocomplete="off"> 
+                    @if ($errors->has('name'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('name') }}</strong>
+                      </span>
+                    @endif
+                  </div>
                   
                   <div class="form-group has-feedback">
-                    <label class="srequired">fuel min</label>
+                    <label class="srequired">fuel min(V*91)</label>
                     <input type="text" class="form-control {{ $errors->has('fuel_min') ? ' has-error' : '' }}" placeholder="" name="fuel_min" value="{{ old('fuel_min') }}" required> 
                     @if ($errors->has('fuel_min'))
                       <span class="help-block">
@@ -60,7 +61,7 @@
                   </div>
                  
                   <div class="form-group has-feedback">
-                    <label class="srequired">fuel max</label>
+                    <label class="srequired">fuel max(V*91)</label>
                     <input type="text" class="form-control {{ $errors->has('fuel_max') ? ' has-error' : '' }}" placeholder="" name="fuel_max" value="{{ old('fuel_max') }}" min="1" required >
 
                     @if ($errors->has('fuel_max'))

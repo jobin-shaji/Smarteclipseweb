@@ -31,8 +31,8 @@
                         <th>Name</th>                            
                         <th>Address</th>                              
                         <th>Mobile</th>                            
-                        <th>email</th>
-                        <th>Sub Dealer</th>
+                        <th>Email</th>
+                        <th>Dealer</th>
                         <!-- <th style="width:160px;">Action</th> -->
                       </tr>
                   </thead>

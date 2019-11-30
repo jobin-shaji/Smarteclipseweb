@@ -26,6 +26,8 @@ use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Servicer\Models\ServicerJob;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Operations\Models\VehicleModels;
+use App\Modules\Vehicle\Models\OdometerUpdate;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use Carbon\Carbon;
 use PDF;
@@ -201,14 +203,29 @@ class VehicleController extends Controller
         if($gps == null){
            return view('Vehicle::404');
         }
+        $old_odometer=$gps->km;
         $rules = $this->vehicleOdometerUpdateRules($gps);
         $this->validate($request, $rules);
-        $gps->km = $request->odometer;
-        $gps->save();        
+        $odometer_in_km=$request->odometer;
+        $odometer_in_meter=round($odometer_in_km*1000);
+        $gps->km = $odometer_in_meter;
+        $save_update = $gps->save(); 
+        if($save_update)
+        {
+            $odometer_update = OdometerUpdate::create([
+                'vehicle_id' => $request->id,
+                'gps_id' => $vehicle->gps_id,
+                'old_odometer' => $old_odometer,
+                'new_odometer' => $odometer_in_meter,
+                'edited_at' => date('Y-m-d H:i:s') ,
+                'updated_by' => $vehicle->client_id
+            ]);  
+        }       
         $request->session()->flash('message', 'Vehicle odometer updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicles.details',$encrypted_gps_id));
-     }
+    }
+
     // details page
     public function details(Request $request)
     {
@@ -228,7 +245,8 @@ class VehicleController extends Controller
                 ->where('vehicle_id',$vehicle->id)
                 ->with('documentType:id,name')
                 ->get();
-        return view('Vehicle::vehicle-details',['vehicle' => $vehicle,'drivers' => $drivers,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs]);
+        $vehicle_models = VehicleModels::select('id','name')->get();
+        return view('Vehicle::vehicle-details',['vehicle' => $vehicle,'drivers' => $drivers,'docTypes'=>$docTypes,'vehicleDocs'=>$vehicleDocs,'vehicle_models'=>$vehicle_models]);
     }
 
     //for dependent dropdown doc add
@@ -1069,9 +1087,35 @@ class VehicleController extends Controller
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
-                $fuel =$track_data->fuel_status*100/15;
-                $fuel = (int)$fuel;
-                $fuel_status=$fuel."%";
+                $gps_id= $get_vehicle->gps_id;
+                $gps_fuel=Gps::select('id','fuel_status')
+                ->where('id',$gps_id)
+                ->first();
+                
+                $vehicle=Vehicle::select(
+                    'id',
+                    'gps_id',
+                    'model_id',
+                    'client_id'
+                )
+                ->where('gps_id',$gps_id)
+                ->first(); 
+                $model= $vehicle->model_id;
+                $vehicle_models=VehicleModels::select(
+                    'id',
+                    'fuel_min',
+                    'fuel_max'
+                )
+                ->where('id',$model)
+                ->first();
+                $fuel_gps=$gps_fuel->fuel_status;
+                $fuel_min=$vehicle_models->fuel_min;
+                $fuel_max=$vehicle_models->fuel_max;
+                $modulus=$fuel_min-$fuel_max;
+                $value=$vehicle_models->fuel_min-$fuel_gps;
+                $fuel=($value/$modulus)*100;
+                $ruel_round=round($fuel);
+                $fuel_status=$ruel_round."%";
             }      
             else
             {
@@ -1824,6 +1868,14 @@ class VehicleController extends Controller
         return  $rules;  
     }
 
+    public function vehicleModelUpdateRules($vehicle)
+    {
+        $rules = [
+            'model' => 'required',
+        ];
+        return  $rules; 
+    }
+
     // vehicle route create rules
     public function vehicleRouteCreateRules()
     {
@@ -2338,120 +2390,65 @@ class VehicleController extends Controller
         }
         return response()->json($response_data);
     }
-///////////////////API-end////////////////////////////////////////
 
- public function fuelTrack(Request $request)
+//////////////////////////////////////////////////////////////////
+    public function modelUpdate(Request $request)
     {
-        $currentDateTime=Date('Y-m-d H:i:s');
-        $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
-        $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
-        $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
-        $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
-        $offline="Offline";
-        $signal_strength="Connection Lost";
+        $vehicle = Vehicle::find($request->id);
+        $encrypted_gps_id = encrypt($request->id);
+        // $gps = Gps::find($vehicle->gps_id);
+        if($vehicle == null){
+           return view('Vehicle::404');
+        }
+        $rules = $this->vehicleModelUpdateRules($vehicle);
+        $this->validate($request, $rules);
+        $vehicle->model_id = $request->model;
+        $vehicle->save();        
+        $request->session()->flash('message', 'Vehicle model updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('vehicles.details',$encrypted_gps_id));
+     }
 
+
+
+
+
+
+
+
+///////////////////API-end////////////////////////////////////////
+    public function fuelTrack(Request $request)
+    {
+        $gps_id=1;
+        $gps_fuel=Gps::select('id','fuel_status')
+        ->where('id',$gps_id)
+        ->first();
         
-    
-        $track_data=Gps::select('lat as latitude',
-                      'lon as longitude',
-                      'heading as angle',
-                      'mode as vehicleStatus',
-                      'ac_status',
-                      'speed',
-                      'fuel_status',
-                      'battery_status as battery_percentage',
-                      'device_time as dateTime',
-                      'main_power_status as power',
-                      'ignition as ign',
-                      'id',
-                      'gsm_signal_strength as signalStrength'
-                    )
-                    ->where('device_time', '>=',$last_update_time)
-                    ->where('id',$get_vehicle->gps_id)
-                    ->first();
-        $minutes=0;
-        if($track_data == null){
-            $track_data = Gps::select('lat as latitude',
-                              'lon as longitude',
-                              'heading as angle',
-                              'speed',
-                              'ac_status',
-                              'fuel_status',
-                              'battery_status as battery_percentage',
-                              'device_time as dateTime',
-                              'main_power_status as power',
-                              'ignition as ign',
-                              \DB::raw("'$signal_strength' as signalStrength"),
-                              \DB::raw("'$offline' as vehicleStatus")
-                              )
-                              ->where('id',$get_vehicle->gps_id)
-                              ->first();
-            $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
-        }
- 
-        if($track_data){
-            $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
-            $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
-            $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-            if(\Auth::user()->hasRole('pro|superior')){
-                $fuel =$track_data->fuel_status*100/15;
-                $fuel = (int)$fuel;
-                $fuel_status=$fuel."%";
-            }      
-            else
-            {
-                $fuel_status="UPGRADE VERSION";
-            }
-            if(\Auth::user()->hasRole('fundamental|pro|superior')){
-                $ac_status =$track_data->ac_status;
-                if($ac_status == 1){
-                    $ac_status="ON";
-                }else{
-                    $ac_status="OFF";
-                }
-            }      
-            else
-            {
-                $ac_status="UPGRADE VERSION";
-            }
+        $vehicle=Vehicle::select(
+            'id',
+            'gps_id',
+            'model_id',
+            'client_id'
+        )
+        ->where('gps_id',$gps_id)
+        ->first(); 
+        $model= $vehicle->model_id;
+        $vehicle_models=VehicleModels::select(
+            'id',
+            'fuel_min',
+            'fuel_max'
+        )
+        ->where('id',$model)
+        ->first();
+        $fuel_gps=$gps_fuel->fuel_status;
+        $fuel_min=$vehicle_models->fuel_min;
+        $fuel_max=$vehicle_models->fuel_max;
+        $modulus=$fuel_min-$fuel_max;
+        $value=$vehicle_models->fuel_min-$fuel_gps;
+        $fuel=($value/$modulus)*100;
 
-            $reponseData=array(
-                        "latitude"=>floatval($snapRoute['lat']),
-                        "longitude"=>floatval($snapRoute['lng']),
-                        "angle"=>$track_data->angle,
-                        "vehicleStatus"=>$track_data->vehicleStatus,
-                        "speed"=>round($track_data->speed),
-                        "dateTime"=>$track_data->dateTime,
-                        "power"=>$track_data->power,
-                        "ign"=>$track_data->ign,
-                        "battery_status"=>round($track_data->battery_percentage),
-                        "signalStrength"=>$track_data->signalStrength,
-                        "connection_lost_time_motion"=>$connection_lost_time_motion,
-                        "connection_lost_time_halt"=>$connection_lost_time_halt,
-                        "connection_lost_time_sleep"=>$connection_lost_time_sleep,
-                        "last_seen"=>$minutes,
-                        "connection_lost_time_minutes"=>$connection_lost_time_minutes,
-                        "fuel"=>$fuel_status,
-                        "ac"=>$ac_status,
-                        "place"=>$plcaeName,
-                        "fuelquantity"=>""
-                      );
-            $response_data = array('status'  => 'success',
-                           'message' => 'success',
-                           'code'    =>1,
-                           'vehicle_type' => $get_vehicle->vehicleType->name,
-                           'client_name' => $get_vehicle->client->name,
-                           'vehicle_reg' => $get_vehicle->register_number,
-                           'vehicle_name' => $get_vehicle->name,
-                           'liveData' => $reponseData
-                            );
-        }else{
-            $response_data = array('status'  => 'failed',
-                           'message' => 'failed',
-                            'code'    =>0);
-        }
-             // dd($response_data['liveData']['ign']);
-        return response()->json($response_data); 
+        dd($fuel);
+        // return response()->json($response_data); 
     }
 
    

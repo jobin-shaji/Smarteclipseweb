@@ -50,7 +50,7 @@ function rootGpsUser(res){
   var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ["Dealers","Sub-dealers","Client"],
+      labels: ["Distributors","Dealers","Client"],
       datasets: [{
         label: '#:',
         data:[res.dealer,res.sub_dealer,res.client],

@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-   Sub Dealer Details
+   Dealer Details
 @endsection
 @section('content')
 <section class="hilite-content">
@@ -8,7 +8,7 @@
     <div class="page-wrapper-root1">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Sub Dealer Details</li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Dealer Details</li>
         </ol>
         @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -23,7 +23,7 @@
           <div class="card-body wizard-content">
             <form  method="POST" action="#">
               {{csrf_field()}}
-              <div class="card"><h4>Sub Dealer Details</h4>
+              <div class="card"><h4>Dealer Details</h4>
                 <div class="card-body">
                   <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>

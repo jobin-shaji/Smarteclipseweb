@@ -59,15 +59,10 @@ All Alerts
  @endsection
  @endsection
  <style type="text/css">
-   /* 
-  Side Navigation Menu V2, RWD
-  ===================
-  License:
-  https://goo.gl/EaUPrt
-  ===================
-  Author: @PableraShow
 
- */
+  .allert{
+    background-color: #03ea3569;
+  }
 
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
@@ -98,25 +93,30 @@ body {
 .container td {
     padding-bottom: 10%!important;
     padding-top: 10%;
-  padding-left:10%;  
+  /*padding-left:10%;  */
+
 }
 
 /* Background-color of the odd rows */
 .container tr:nth-child(odd) {
     background-color: #323C50;
 }
-.container td:first-child { color: #FB667A; }
+.container td:first-child { 
+  color: #f09b00; 
+  font-weight: bold;
+}
 @media (max-width: 800px) {
 .container td:nth-child(4),
 .container th:nth-child(4) { display: none; }
 }
 
 #alert {
-  width:350px;
+  width:300px;
   height:400px;
   border: 1px solid;
   overflow:scroll;
-  margin-left: 10%
+  margin-left: 10%;
+  border-bottom: solid 2px white;
 }
 #loader {
   display:none;
@@ -124,8 +124,11 @@ body {
 .messages {
   min-height:40px;
   padding: 3% 0 2% 0;
+  border-bottom: 2px solid white;
+  cursor: pointer;
 }
 .date {
   font-size:16px;color:#ffffff;
+
 }
  </style>

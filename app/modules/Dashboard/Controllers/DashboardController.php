@@ -18,6 +18,7 @@ use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Servicer\Models\ServicerJob;
+use App\Modules\Operations\Models\VehicleModels;
 
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
@@ -512,14 +513,35 @@ class DashboardController extends Controller
         $network_status=$gps->gsm_signal_strength;
         $ignition=$gps->ignition;
         if($user->hasRole('root')){
-            $fuel =$gps->fuel_status*100/15;
-            $fuel = (int)$fuel;
-            $fuel_status=$fuel."%";
+            $fuel_status="0"."%";
         }      
         else if($user->hasRole('fundamental|pro|superior')){
-          $fuel =$gps->fuel_status*100/15;
-          $fuel = (int)$fuel;
-            $fuel_status=$fuel."%";
+            $gps_id= $request->gps_id;
+            $gps_fuel=$gps->fuel_status;
+            $vehicle=Vehicle::select(
+                'id',
+                'gps_id',
+                'model_id',
+                'client_id'
+            )
+            ->where('gps_id',$gps_id)
+            ->first(); 
+            $model= $vehicle->model_id;
+            $vehicle_models=VehicleModels::select(
+                'id',
+                'fuel_min',
+                'fuel_max'
+            )
+            ->where('id',$model)
+            ->first();
+            $fuel_gps=$gps_fuel->fuel_status;
+            $fuel_min=$vehicle_models->fuel_min;
+            $fuel_max=$vehicle_models->fuel_max;
+            $modulus=$fuel_min-$fuel_max;
+            $value=$vehicle_models->fuel_min-$fuel_gps;
+            $fuel=($value/$modulus)*100;
+            $ruel_round=round($fuel);
+            $fuel_status=$ruel_round."%";
         }
         else
         {

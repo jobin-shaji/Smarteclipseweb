@@ -171,7 +171,7 @@ class DealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Distributor does not exist'
             ]);
         }
         $dealer_user->delete();
@@ -179,7 +179,7 @@ class DealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer disabled successfully'
+            'message' => 'Distributor disabled successfully'
         ]);
     }
     // restore emplopyee
@@ -191,7 +191,7 @@ class DealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Distributor does not exist'
             ]);
         }
         $dealer_user->restore();
@@ -199,7 +199,7 @@ class DealerController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer enabled successfully'
+            'message' => 'Distributor enabled successfully'
         ]);
     }
    
@@ -211,14 +211,14 @@ class DealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Distributor does not exist'
             ]);
         }
         $dealer->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer deleted successfully'
+            'message' => 'Distributor deleted successfully'
         ]);
     }
     // restore emplopyee
@@ -229,14 +229,14 @@ class DealerController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Dealer does not exist'
+                'message' => 'Distributor does not exist'
             ]);
         }
         $dealer->restore();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Dealer restored successfully'
+            'message' => 'Distributor restored successfully'
         ]);
     }
 
