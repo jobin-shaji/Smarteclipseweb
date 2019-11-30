@@ -57,9 +57,9 @@ Over Speed Report
                         </div>
                       </div>
                       </div>                 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr>
                              <th>SL.No</th>
                               <th>Vehicle</th>
                               <th>Alert Type</th>

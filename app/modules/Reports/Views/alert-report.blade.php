@@ -77,7 +77,7 @@ Alert Report
                         </form> 
                         
                         @if(isset($alertReports))                
-                        <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
+                        <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                           <thead>
                             <tr style="text-align: center;">
                               <th>SL.No</th>
