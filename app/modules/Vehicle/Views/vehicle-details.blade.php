@@ -124,9 +124,12 @@
                     {{csrf_field()}}
                       <div class="row">
                         <div class="col-lg-12 col-md-12">
+                          <?php $odometer_in_meter=$vehicle->gps->km;
+                                $odometer_in_km=round($odometer_in_meter/1000);
+                          ?>
                           <div class="form-group has-feedback">
-                            <label class="srequired">Odometer(in meter)</label>
-                            <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$vehicle->gps->km}}">
+                            <label class="srequired">Odometer(in km)</label>
+                            <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$odometer_in_km}}">
                           </div>
                           @if ($errors->has('odometer'))
                             <span class="help-block">
