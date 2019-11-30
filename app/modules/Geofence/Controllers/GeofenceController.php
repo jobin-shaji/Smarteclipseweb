@@ -44,11 +44,11 @@ class GeofenceController extends Controller {
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
         }
         else if($request->user()->hasRole('pro')&& $geofence==10) {
-            $request->session()->flash('message', 'exceed the limit'); 
+            $request->session()->flash('message', 'Maximum Limit has been Reached'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return view('Geofence::geofence-list');
         }else{
-            $request->session()->flash('message', 'Please upgrade your current plan for adding more geofence'); 
+            $request->session()->flash('message', 'Please upgrade your current plan for adding more Geofence'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return view('Geofence::geofence-list');
         }
@@ -59,7 +59,7 @@ class GeofenceController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Please draw the geofence'
+                'message' => 'Please draw the Geofence'
             ]);
         }else{
             foreach ($request->polygons as $polygon) {
@@ -315,7 +315,7 @@ class GeofenceController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Scheduled geofence deleted successfully'
+            'message' => 'Scheduled Geofence deleted successfully'
         ]);
     }
 
@@ -382,7 +382,7 @@ class GeofenceController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Please draw the geofence'
+                'message' => 'Please draw the Geofence'
             ]);
         }else{ 
         foreach ($request->polygons as $polygon) {
@@ -458,7 +458,7 @@ class GeofenceController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Please draw the geofence'
+                'message' => 'Please draw the Geofence'
             ]);
         }else{ 
         foreach ($request->polygons as $polygon) {

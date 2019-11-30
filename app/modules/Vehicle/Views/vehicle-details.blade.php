@@ -267,12 +267,14 @@
                       <div class="col-xs-8">
                         <div class="row">
                           <div class="col-md-6">
+                            
                             <h3 class="page-header">
                               <i class="fa fa-file"> Vehicle Documents</i> 
                             </h3>
                           </div>
                           <div class="panel-body">
                             <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                              
                               <thead>
                                 <tr>
                                   <th>SL No.</th>

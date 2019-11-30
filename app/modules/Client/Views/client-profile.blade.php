@@ -78,8 +78,8 @@
           {{csrf_field()}}
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group has-feedback">
-                  <label class="srequired">Upload Logo</label>
+                <div class="form-group has-feedback" style="width: 100px!important">
+                  <label class="srequired" style="width: 100%!important">Upload Logo</label>
                   <div class="row">
                     <div class="col-md-6">
                       <input type="file" name="logo" value="{{$client->logo }}">
@@ -88,7 +88,7 @@
                       @if($client->logo)
                         <img width="150" height="100" src="/logo/{{ $client->logo }}" />
                       @else
-                      <p>No Logo found</p>
+                      
                       @endif
                     </div>
                   </div>
