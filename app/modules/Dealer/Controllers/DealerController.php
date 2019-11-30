@@ -68,7 +68,20 @@ class DealerController extends Controller {
         // \Auth::user()->root->first()->id
         $root_id=\Auth::user()->id;
         if($request->user()->hasRole('root')){
-            $rules = $this->user_create_rules();
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rayfleet_user_create_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) {
+                 $rules = $this->user_create_rules();
+            }
+            else
+            {
+               $rules = $this->user_create_rules();
+            }
             $this->validate($request, $rules);
             $user = User::create([
                 'username' => $request->username,
@@ -122,7 +135,20 @@ class DealerController extends Controller {
         if($dealer == null){
            return view('Dealer::404');
         } 
-        $rules = $this->dealersUpdatesRules($user);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->dealersUpdatesRulesRayfleet($user);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->dealersUpdatesRules($user);
+        }
+        else
+        {
+           $rules = $this->dealersUpdatesRules($user);
+        }
         $this->validate($request, $rules);   
         $dealer->name = $request->name;
         $dealer->save();
@@ -274,7 +300,20 @@ class DealerController extends Controller {
         if($dealer == null){
            return view('Dealer::404');
         } 
-        $rules = $this->dealerProfileUpdatesRules($user);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->dealerProfileUpdatesRulesRayfleet($user);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->dealerProfileUpdatesRules($user);
+        }
+        else
+        {
+           $rules = $this->dealerProfileUpdatesRules($user);
+        }
         $this->validate($request, $rules);   
         $dealer->name = $request->name;
         $dealer->address = $request->address;
@@ -289,31 +328,28 @@ class DealerController extends Controller {
 
 ////////////////////////Dealer Profile-end////////////////
 
-     public function updatePasswordRule()
+    public function updatePasswordRule()
     {
         $rules=[
             'password' => 'required|string|min:6|confirmed'
         ];
         return $rules;
     }
-    //validation for employee creation
-    public function dealerCreateRules()
-    {
-        $rules = [
-            'name' => 'required',       
-            'address' => 'required',       
-            'phone_number' => 'required|numeric|min:10|max:10',
-            'username' => 'nullable|string|max:20|unique:dealers',
-            'password' => 'nullable|string|min:6|confirmed',
-        ];
-        return  $rules;
-    }
+    
     //validation for employee updation
     public function dealersUpdatesRules($user)
     {
         $rules = [
             'name' => 'required',
             'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
+        ];
+        return  $rules;
+    }
+    public function dealersUpdatesRulesRayfleet($user)
+    {
+        $rules = [
+            'name' => 'required',
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
         ];
         return  $rules;
     }
@@ -327,19 +363,34 @@ class DealerController extends Controller {
         return  $rules;
 
     }
-    public function passwordUpdateRules()
-    {
-        $rules=[
-            'password' => 'required|string|min:6|confirmed'
+
+    public function dealerProfileUpdatesRulesRayfleet($user){
+        $rules = [
+            'name' => 'required',       
+            'address' => 'required',       
+            'mobile' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
-        return $rules;
+        return  $rules;
+
     }
+    
     //user create rules 
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => 'required|string|unique:users|min:10|max:10',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+
+    public function rayfleet_user_create_rules(){
+        $rules = [
+            'username' => 'required|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|string|unique:users|min:11|max:11',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
