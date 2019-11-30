@@ -2286,6 +2286,10 @@ class VehicleController extends Controller
                                    "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
+
+            if($type==3){
+             $to_date=date('Y-m-d', strtotime("yesterday midnight"));
+            }
             $response_data = array('status' => 'success', 
                                    'message' => 'success', 
                                    'code' => 1, 
