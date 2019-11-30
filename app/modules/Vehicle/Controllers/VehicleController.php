@@ -1088,9 +1088,6 @@ class VehicleController extends Controller
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
                 $gps_id= $get_vehicle->gps_id;
-                $gps_fuel=Gps::select('id','fuel_status')
-                ->where('id',$gps_id)
-                ->first();
                 
                 $vehicle=Vehicle::select(
                     'id',
@@ -1108,7 +1105,7 @@ class VehicleController extends Controller
                 )
                 ->where('id',$model)
                 ->first();
-                $fuel_gps=$gps_fuel->fuel_status;
+                $fuel_gps=$track_data->fuel_status;
                 $fuel_min=$vehicle_models->fuel_min;
                 $fuel_max=$vehicle_models->fuel_max;
                 $modulus=$fuel_min-$fuel_max;
