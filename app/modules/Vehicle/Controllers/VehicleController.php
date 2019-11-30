@@ -2288,8 +2288,9 @@ class VehicleController extends Controller
                                   );
 
             if($type==3){
-             $to_date=date('Y-m-d', strtotime("yesterday midnight"));
+             $to_date=date('Y-m-d H:i:s', strtotime("yesterday midnight"));
             }
+
             $response_data = array('status' => 'success', 
                                    'message' => 'success', 
                                    'code' => 1, 
