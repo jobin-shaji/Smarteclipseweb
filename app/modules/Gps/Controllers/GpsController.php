@@ -1087,9 +1087,33 @@ class GpsController extends Controller {
             $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
-            $fuel =$track_data->fuel_status*100/15;
-            $fuel = (int)$fuel;
-            $fuel_status=$fuel."%";
+            $gps_id= $request->id;
+            $gps_fuel=$track_data->fuel_status;
+            
+            $vehicle=Vehicle::select(
+                'id',
+                'gps_id',
+                'model_id',
+                'client_id'
+            )
+            ->where('gps_id',$gps_id)
+            ->first(); 
+            $model= $vehicle->model_id;
+            $vehicle_models=VehicleModels::select(
+                'id',
+                'fuel_min',
+                'fuel_max'
+            )
+            ->where('id',$model)
+            ->first();
+            $fuel_gps=$gps_fuel->fuel_status;
+            $fuel_min=$vehicle_models->fuel_min;
+            $fuel_max=$vehicle_models->fuel_max;
+            $modulus=$fuel_min-$fuel_max;
+            $value=$vehicle_models->fuel_min-$fuel_gps;
+            $fuel=($value/$modulus)*100;
+            $ruel_round=round($fuel);
+            $fuel_status=$ruel_round."%";
             $ac_status =$track_data->ac_status;
             if($ac_status == 1){
                 $ac_status="ON";
