@@ -16,8 +16,21 @@ class EmployeeController extends Controller {
 
     //upload employee details to database table
     public function saveEmployee(Request $request)
-    {    
-        $rules = $this->employeeCreateRules();
+    { 
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->employeeCreateRulesRayfleet();
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->employeeCreateRules();
+        }
+        else
+        {
+           $rules = $this->employeeCreateRules();
+        }   
         $this->validate($request, $rules);           
         $employee = Employee::create([            
             'name' => $request->name,  
@@ -88,7 +101,20 @@ class EmployeeController extends Controller {
         if($employee == null){
            return view('Employee::404');
         } 
-        $rules = $this->employeeUpdateRules($employee);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->employeeUpdateRulesRayfleet($employee);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->employeeUpdateRules($employee);
+        }
+        else
+        {
+           $rules = $this->employeeUpdateRules($employee);
+        }
         $this->validate($request, $rules); 
         $employee->code = $request->code;      
         $employee->name = $request->name;
@@ -164,6 +190,20 @@ class EmployeeController extends Controller {
         ];
         return  $rules;
     }
+
+    public function employeeCreateRulesRayfleet()
+    {
+        $rules = [
+            'name' => 'required',
+            'code' => 'required|unique:employees',
+            'mobile' => 'required|string|min:11|max:11|unique:employees',  
+            'email' => 'email|required|unique:employees',
+            'username' => 'required|unique:employees',
+            'password' => 'required',
+        ];
+        return  $rules;
+    }
+
      //validation for employee updation
     public function employeeUpdateRules($employee)
     {
@@ -171,6 +211,17 @@ class EmployeeController extends Controller {
             'name' => 'required',
             'code' => 'required|unique:employees,code,'.$employee->id,
             'mobile' => 'required|string|min:10|max:10|unique:employees,mobile,'.$employee->id,
+            'email' => 'email|required|unique:employees,email,'.$employee->id,
+        ];
+        return  $rules;
+    }
+
+    public function employeeUpdateRulesRayfleet($employee)
+    {
+        $rules = [
+            'name' => 'required',
+            'code' => 'required|unique:employees,code,'.$employee->id,
+            'mobile' => 'required|string|min:11|max:11|unique:employees,mobile,'.$employee->id,
             'email' => 'email|required|unique:employees,email,'.$employee->id,
         ];
         return  $rules;
