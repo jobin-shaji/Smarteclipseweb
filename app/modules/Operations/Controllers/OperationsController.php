@@ -22,7 +22,20 @@ class OperationsController extends Controller {
         // \Auth::user()->root->first()->id
         $root_id=\Auth::user()->id;
         if($request->user()->hasRole('root')){
-            $rules = $this->user_create_rules();
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rayfleet_user_create_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) {
+                 $rules = $this->user_create_rules();
+            }
+            else
+            {
+               $rules = $this->user_create_rules();
+            }
             $this->validate($request, $rules);
             $user = User::create([
                 'username' => $request->username,
@@ -125,7 +138,20 @@ class OperationsController extends Controller {
         if($operations == null){
            return view('Operations::404');
         } 
-        $rules = $this->operationsUpdatesRules($user);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->operationsUpdatesRulesRayfleet($user);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->operationsUpdatesRules($user);
+        }
+        else
+        {
+           $rules = $this->operationsUpdatesRules($user);
+        }
         $this->validate($request, $rules);   
         $operations->name = $request->name;
         $operations->address = $request->address;       
@@ -237,7 +263,20 @@ class OperationsController extends Controller {
         if($operation == null){
            return view('Operation::404');
         } 
-        $rules = $this->operationProfileUpdatesRules($user);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->operationProfileUpdatesRulesRayfleet($user);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->operationProfileUpdatesRules($user);
+        }
+        else
+        {
+           $rules = $this->operationProfileUpdatesRules($user);
+        }
         $this->validate($request, $rules);   
         $operation->name = $request->name;
         $operation->address = $request->address;
@@ -426,6 +465,15 @@ class OperationsController extends Controller {
         ];
         return  $rules;
     }
+    public function operationsUpdatesRulesRayfleet($user)
+    {
+        $rules = [
+            'name' => 'required',
+            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
+        ];
+        return  $rules;
+    }
+
     public function operationProfileUpdatesRules($user){
         $rules = [
             'name' => 'required',       
@@ -436,6 +484,17 @@ class OperationsController extends Controller {
         return  $rules;
 
     }
+
+    public function operationProfileUpdatesRulesRayfleet($user){
+        $rules = [
+            'name' => 'required',       
+            'address' => 'required',       
+            'mobile' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+        ];
+        return  $rules;
+
+    } 
     public function passwordUpdateRules()
     {
         $rules=[
@@ -449,6 +508,16 @@ class OperationsController extends Controller {
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => 'required|string|unique:users|min:10|max:10',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+
+    public function rayfleet_user_create_rules(){
+        $rules = [
+            'username' => 'required|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|string|unique:users|min:11|max:11',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;

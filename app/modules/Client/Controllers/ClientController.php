@@ -211,16 +211,15 @@ class ClientController extends Controller {
            return view('Client::404');
         } 
         $url=url()->current();
-            $rayfleet_key="rayfleet";
-            $eclipse_key="eclipse";
-            if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rayfleetClientUpdateRules($client);
-            }
-            else
-            {
-               $rules = $this->clientUpdateRules($client);
-            }
-           
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetClientUpdateRules($client);
+        }
+        else
+        {
+           $rules = $this->clientUpdateRules($client);
+        }
        
         $this->validate($request, $rules);       
         $client->name = $request->name;
