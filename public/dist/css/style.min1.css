@@ -11052,8 +11052,50 @@ html body .font-22 {
     font-size: 22px
 }
 
+@media (min-width:991px) {
 html body .font-24 {
-    font-size: 24px;color:#000;float:left;
+    font-size: 24px;
+    color:#000;
+    float:left;
+    padding: 83% 0 0 0;
+}
+}
+
+@media (min-width:768px) {
+html body .font-24 {
+    font-size: 24px;
+    color:#000;
+    float:left;
+    padding: 83% 0 0 0;
+}
+}
+@media (min-width:1000px) {
+html body .font-24 {
+    font-size: 24px;
+    color:#000;
+    float:left;
+    padding: 0 0 0 0!important;
+}
+}
+@media (min-width:1200px) {
+html body .font-24 {
+    font-size: 24px;
+    color:#000;
+    float:left;
+    padding: 8% 0 0 0!important;
+}
+}
+@media (min-width:768px) {
+i.fa.fa-home{
+    padding: 0% 0 0 0!important;
+
+}
+}
+@media (min-width:1200px) {
+i.fa.fa-home{
+    padding: 8% 0 0 0!important;
+
+}
 }
 
 html body .display-5 {
@@ -17366,7 +17408,7 @@ border-radius: 6px 0 6px 6px;
 .track_status{
     /*display: none;*/
     font-weight:900;
-     font-size: 12px;
+     font-size: 11px;
     font-family:courier;
     display: block;
 }

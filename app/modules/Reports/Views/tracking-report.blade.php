@@ -75,14 +75,13 @@
                       </div>
                       </div>    
 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center">
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr>
                               <th><b>SL.No</b></th>
                               <th><b>Moving</b></th>
                               <th><b>Halt</b></th>
                               <th><b>Sleep</b></th>                              
-                                      
                             </tr>
                         </thead>
                          <tbody>
