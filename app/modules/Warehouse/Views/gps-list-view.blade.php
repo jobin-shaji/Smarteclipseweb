@@ -28,18 +28,18 @@
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
                                       <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="width:100%">
+                                          <table class="table table-bordered  table-striped " style="text-align: center;">
                                             <thead>
                                               <tr>
-                                                <th>SL.No</th>
-                                                <th>IMEI</th>
-                                                <th>Serial No</th>
-                                                <th>ICC ID</th>
-                                                <th>IMSI</th>
-                                                <th>Version</th>
-                                                <th>Batch Number</th>
-                                                <th>Employee Code</th>
-                                                <th>Model Name</th>
+                                                <th><b>SL.No</b></th>
+                                                <th><b>IMEI</b></th>
+                                                <th><b>Serial No</b></th>
+                                                <th><b>ICC ID</b></th>
+                                                <th><b>IMSI</b></th>
+                                                <th><b>Version</b></th>
+                                                <th><b>Batch Number</b></th>
+                                                <th><b>Employee Code</b></th>
+                                                <th><b>Model Name</b></th>
                                               </tr>
                                             </thead>
                                             <tbody>
