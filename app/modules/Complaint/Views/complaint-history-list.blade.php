@@ -9,6 +9,7 @@
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Servicer Complaint History List</li>
+        <b>Complaint History</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">

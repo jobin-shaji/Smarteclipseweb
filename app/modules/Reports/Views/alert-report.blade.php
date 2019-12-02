@@ -103,6 +103,7 @@ Alert Report
                         </table>
                         {{ $alertReports->appends(['sort' => 'votes','vehicle' =>$vehicle_id,'alert' => $alert_id,'fromDate' =>$from,'toDate' => $to])->links() }}
                         @endif
+                        
                       </div>
                     </div>
                   </div>

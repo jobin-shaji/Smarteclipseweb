@@ -12,6 +12,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer</li>
+        <h4>GPS Transfer</h4>
       </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -20,7 +21,7 @@
             </div>
           </div>
       @endif 
-      <h4>GPS Transfer</h4>
+      
     </nav>
     
       <div class="card-body">

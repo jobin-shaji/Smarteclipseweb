@@ -7,6 +7,7 @@
  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Dealer</li>
+      <h4>Dealer Edit</h4>
     </ol>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -21,7 +22,7 @@
       <div class="card-body wizard-content"> 
         <form  method="POST" action="{{route('sub.dealers.update.p',$user->id)}}">
           {{csrf_field()}}
-          <div class="card"><h4>Dealer Edit</h4>
+          <div class="card">
             <div class="card-body">
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
