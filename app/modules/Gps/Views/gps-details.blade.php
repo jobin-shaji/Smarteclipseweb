@@ -9,6 +9,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device Details</li>
+        <h4>Device Details</h4>
          @if(Session::has('message'))
         <div class="pad margin no-print">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">

@@ -7,7 +7,8 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Complaint Management</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Assign Servicer</li>
+        <h4>Assign Complaints for Servicer</h4>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -22,7 +23,6 @@
         <div class="card-body wizard-content">
           <div class="box box-success">
             <div class="box-header ui-sortable-handle" style="cursor: move;">
-              <h3 class="box-title">Detalied view of complaint</h3>
             </div>
             <form  method="POST" action="{{route('complaint.assign.servicer.p', $complaint->id)}}">
             {{csrf_field()}}
