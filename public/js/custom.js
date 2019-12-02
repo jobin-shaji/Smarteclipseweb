@@ -37,10 +37,8 @@ $(function () {
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
-           // ;
         });
         function calculate() {
-            // alert(1);
             var d1 = $('#fromDate').data("DateTimePicker").date();
             var d2 = $('#toDate').data("DateTimePicker").date();
             var timeDiff = 0
@@ -55,12 +53,6 @@ $(function () {
                 alert("please select date between 15");
             }
         }
-        
-
-
-
-
-
         $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
             var incrementDay = moment(new Date(e.date));
             incrementDay.add(1, 'days');
