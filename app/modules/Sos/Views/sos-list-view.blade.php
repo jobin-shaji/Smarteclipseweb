@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS List</li>
-        
+        <h4>SOS List</h4>
       </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -17,7 +17,7 @@
     </nav>
  
     <div class="container-fluid">
-    <div class="card-body"><h4>SOS List</h4>
+    <div class="card-body">
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
@@ -28,14 +28,14 @@
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
                                       <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="width:100%;">
+                                          <table class="table table-bordered  table-striped " style="text-align: center;">
                                             <thead>
                                               <tr>
-                                                <th>SL.No</th>
-                                                <th>Serial NO</th>
-                                                <th>Model Name</th>
-                                                <th>Version</th>
-                                                <th>Brand</th>
+                                                <th><b>SL.No</b></th>
+                                                <th><b>Serial NO</b></th>
+                                                <th><b>Model Name</b></th>
+                                                <th><b>Version</b></th>
+                                                <th><b>Brand</b></th>
                                               </tr>
                                             </thead>
                                             <tbody>
