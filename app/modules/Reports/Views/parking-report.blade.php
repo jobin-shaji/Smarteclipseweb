@@ -70,7 +70,7 @@ Parking Report
                           <tr style="text-align: center;">
                             <td id="sl"></td>
                             <td id="vehicle_name"></td>
-                            <td id="register_number"></td>
+                            <td id="register_number">No data available</td>
                             <td id="sleep"></td>
                           </tr>
                         </tbody>
