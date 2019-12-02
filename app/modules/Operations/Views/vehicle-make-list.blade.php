@@ -31,8 +31,6 @@
                   <tr>
                       <th>Sl.No</th>
                       <th>Name</th> 
-                      <th>Working Status</th>                            
-                      
                       <th style="width:160px;">Action</th>
                   </tr>
                 </thead>

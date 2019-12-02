@@ -36,7 +36,6 @@ function callBackDataTable(){
             {data: 'vehicle_make.name', name: 'vehicle_make.name' },            
             {data: 'fuel_min', name: 'fuel_min' },
             {data: 'fuel_max', name: 'fuel_max' },            
-            {data: 'working_status', name: 'working_status',searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

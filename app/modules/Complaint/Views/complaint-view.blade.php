@@ -8,6 +8,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Complaint Details</li>
+        <h4>Detalied view of complaint</h4>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -22,7 +23,6 @@
         <div class="card-body wizard-content">
           <div class="box box-success">
             <div class="box-header ui-sortable-handle" style="cursor: move;">
-              <h3 class="box-title">Detalied view of complaint</h3>
             </div>
             <div class="box-body">
               <ul class="list-group">

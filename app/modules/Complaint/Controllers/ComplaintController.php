@@ -189,7 +189,7 @@ class ComplaintController extends Controller {
                     }
                     else
                     {
-                        return $complaints->complaintType->name;
+                        return $complaints->servicer->name;
                     }                    
                 }
                 

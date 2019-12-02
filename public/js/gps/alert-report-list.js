@@ -6,7 +6,7 @@ function check()
         alert('please enter vehicle');
     }
   
-    else{       
+    else{    
         var vehicle_id=$('#vehicle').val();       
         var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('fromDate').value;
