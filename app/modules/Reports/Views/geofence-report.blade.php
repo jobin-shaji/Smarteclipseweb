@@ -48,7 +48,6 @@ Geofence Report
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
                           </div>
                           </div>
-
                           <div class="col-lg-3 col-md-3 pt-4">  
                            <div class="form-group">          
                             <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
