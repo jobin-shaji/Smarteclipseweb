@@ -335,17 +335,6 @@ class OperationsController extends Controller {
         ->get();
         return DataTables::of($vehicle_models)
         ->addIndexColumn()
-        ->addColumn('working_status', function ($vehicle_models) {
-            if($vehicle_models->deleted_at == null){ 
-            return "
-                <b style='color:#008000';>Enabled</b>
-                <button onclick=disableVehicleModels(".$vehicle_models->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>";
-            }else{ 
-            return "
-                <b style='color:#FF0000';>Disabled</b>
-                <button onclick=enableVehicleModels(".$vehicle_models->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>";
-            }
-        })
         ->addColumn('action', function ($vehicle_models) {
              $b_url = \URL::to('/');
             if($vehicle_models->deleted_at == null){ 
