@@ -5,6 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a><a href="/gps-sub-dealer">/GPS List</a>/GPS Log</li>
+        <h4>GPS Activated/Deactivated Log</h4>
       </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -16,7 +17,7 @@
     </nav>
  
     <div class="container-fluid">
-    <div class="card-body"><h4>GPS Activated/Deactivated Log</h4>
+    <div class="card-body">
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
@@ -27,14 +28,14 @@
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
                                       <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="width:100%">
+                                          <table class="table table-bordered  table-striped " style="width:100%;text-align: center;margin-left: 10%">
                                             <thead>
                                               <tr>
-                                                <th>Sl.No</th>
-                                                <th>Imei</th>
-                                                <th>Status</th>
-                                                <th>Updated By</th>
-                                                <th>DateTime</th>
+                                                <th><b>SL.No</b></th>
+                                                <th><b>Imei</b></th>
+                                                <th><b>Status</b></th>
+                                                <th><b>Updated By</b></th>
+                                                <th><b>DateTime</b></th>
                                               </tr>
                                             </thead>
                                             <tbody>

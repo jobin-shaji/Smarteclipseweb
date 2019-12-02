@@ -9,6 +9,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer List </li>
+        <h4>GPS Transfer List</h4>
         @if(Session::has('message'))
           <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -20,7 +21,7 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="card-body"><h4>GPS Transfer List</h4>
+      <div class="card-body">
         <div class="table-responsive">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">
