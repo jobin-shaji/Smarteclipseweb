@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-    Update operations Details
+    Update Vehicle Make Details
 @endsection
 @section('content')
 
