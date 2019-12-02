@@ -24,7 +24,7 @@
                 <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                            <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;width:100%" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>Sl.No</th>
