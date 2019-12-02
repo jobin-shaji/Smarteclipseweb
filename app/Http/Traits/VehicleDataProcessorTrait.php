@@ -452,6 +452,21 @@ trait VehicleDataProcessorTrait{
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
             $appDate = date('Y-m-d', strtotime("-30 day midnight")) . " " . date('Y-m-d');
         }
+        else if ($searchType == "6") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-60 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-60 day midnight")) . " " . date('Y-m-d');
+        }
+        else if ($searchType == "7") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-120 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-120 day midnight")) . " " . date('Y-m-d');
+        }
+        else if ($searchType == "8") {
+            $from_date = date('Y-m-d H:i:s', strtotime("-180 day midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $appDate = date('Y-m-d', strtotime("-180 day midnight")) . " " . date('Y-m-d');
+        }
         $output_data = ["from_date" => $from_date, 
                         "to_date" => $to_date, 
                         "appDate" => $appDate

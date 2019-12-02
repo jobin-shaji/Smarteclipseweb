@@ -43,7 +43,16 @@ Total KM Report
                                 <option value="1">Today</option>
                                 <option value="2">Yesterday</option>
                                 <option value="3">Last 7 days</option>
-                                <option value="5">Last 30 days</option>                            
+                                <option value="5">Last 30 days</option>
+                                @if(\Auth::user()->hasRole('fundamental|superior|pro'))
+                                <option value="6">2 Months</option>
+                                @endif 
+                                @if(\Auth::user()->hasRole('superior|pro'))
+                                <option value="7">4 Months</option>
+                                @endif
+                                @if(\Auth::user()->hasRole('pro'))
+                                <option value="8">6 Months</option>
+                                @endif                           
                               </select>
                             </div>
                           </div>                         

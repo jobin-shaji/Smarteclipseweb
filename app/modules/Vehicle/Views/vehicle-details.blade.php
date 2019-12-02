@@ -260,7 +260,7 @@
                     </form>
                   </section>
                 </div>
-
+                @if($vehicleDocs->count()!=0)
                 <div class="col-lg-6 col-md-12">    
                   <section class="hilite-content">
                     <div class="row">
@@ -274,8 +274,7 @@
                           </div>
                           <div class="panel-body">
                             <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
-                              
-                              <thead>
+                             <thead>
                                 <tr>
                                   <th>SL No.</th>
                                   <th>Document Type</th>
@@ -310,6 +309,7 @@
                     </div>
                   </section>
                 </div>
+                @endif
               </div>
             </div>
           </div>
