@@ -70,8 +70,8 @@ Halt Report
                          <tbody>
                             <tr>
                               <td id="sl"></td>
-                              <td id="vehicle_name"></td>                              
-                              <td id="register_number">No data available</td>     
+                              <td id="vehicle_name"><b style="float: right;margin-right: -13px">No data</b></td>                              
+                              <td id="register_number"><b style="float: left;margin-left: -15px">Available</b></td>     
                               <td id="halt"></td>     
                             </tr>
                         </tbody>
