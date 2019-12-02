@@ -5,6 +5,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Instock</li>
+      <h4>GPS Instock</h4>
     </ol>
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -16,7 +17,7 @@
   </nav>
   
   <div class="container-fluid">
-    <div class="card-body"><h4>GPS Instock</h4>
+    <div class="card-body">
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
           <div class="row">
