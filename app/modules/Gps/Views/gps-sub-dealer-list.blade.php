@@ -4,7 +4,7 @@
 <div class="page-wrapper page-wrapper_new">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Gps List </li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS List </li>
       <h4>GPS List</h4>
     </ol>
     @if(Session::has('message'))
