@@ -59,5 +59,10 @@ function callBackDataTable(data=null){
     });
 }
 
+var disabledDates = ["2019-11-02"];
+
+
+
+
 
 
