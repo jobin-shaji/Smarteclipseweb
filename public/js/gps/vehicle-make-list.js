@@ -38,6 +38,8 @@ function callBackDataTable(){
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
+// 61432428
+// 91860821
 function disableVehicleMake(vehicle_make){
     if(confirm('Are you sure to deactivate this user?')){
         var url = 'vehicle-make/disable';
