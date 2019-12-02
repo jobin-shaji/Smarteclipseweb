@@ -124,9 +124,9 @@ $(function () {
 var d = new Date();
 free_date=d.setMonth(d.getMonth() - 1);
 
-fundamental_date=d.setMonth(d.getMonth() - 2);
-superior_date=d.setMonth(d.getMonth() - 4);
-pro_date=d.setMonth(d.getMonth() - 6);
+fundamental_date=d.setMonth(d.getMonth() - 1);
+superior_date=d.setMonth(d.getMonth() - 2);
+pro_date=d.setMonth(d.getMonth() - 2);
     $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date() 
