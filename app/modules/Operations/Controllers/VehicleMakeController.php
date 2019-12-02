@@ -38,19 +38,6 @@ class VehicleMakeController extends Controller {
         ->get();
         return DataTables::of($vehicle_make)
         ->addIndexColumn()
-        ->addColumn('working_status', function ($vehicle_make) {
-            if($vehicle_make->deleted_at == null){ 
-            return "
-                <b style='color:#008000';>Enabled</b>
-                <button onclick=disableVehicleMake(".$vehicle_make->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
-            ";
-            }else{ 
-            return "
-                <b style='color:#FF0000';>Disabled</b>
-                <button onclick=enableVehicleMake(".$vehicle_make->id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
-            ";
-            }
-        })
         ->addColumn('action', function ($vehicle_make) {
              $b_url = \URL::to('/');
             if($vehicle_make->deleted_at == null){ 
