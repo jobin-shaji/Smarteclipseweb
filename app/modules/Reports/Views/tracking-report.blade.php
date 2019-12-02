@@ -87,8 +87,8 @@
                          <tbody>
                             <tr>
                               <td id="sl"></td>
-                              <td id="motion"></td>
-                              <td id="halt">No data avaliable</td>
+                              <td id="motion"><b style="float: right;margin-right: -13px">No data</b></td>
+                              <td id="halt"><b style="float: left;margin-left: -15px">Available</b></td>
                               <td id="sleep"></td>
                             </tr>
                         </tbody>
