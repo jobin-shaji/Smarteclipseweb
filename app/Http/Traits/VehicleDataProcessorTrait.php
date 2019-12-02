@@ -442,7 +442,7 @@ trait VehicleDataProcessorTrait{
         } else if ($searchType == "3") {
             $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
             $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d');
+            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d', strtotime("yesterday midnight"));
         } else if ($searchType == "4") {
             $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
             $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));

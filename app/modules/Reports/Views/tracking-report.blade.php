@@ -88,7 +88,7 @@
                             <tr>
                               <td id="sl"></td>
                               <td id="motion"></td>
-                              <td id="halt"></td>
+                              <td id="halt">No data avaliable</td>
                               <td id="sleep"></td>
                             </tr>
                         </tbody>
