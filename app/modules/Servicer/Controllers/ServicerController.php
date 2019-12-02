@@ -97,7 +97,7 @@ class ServicerController extends Controller {
         $user->mobile = $request->mobile;
         $user->save();
 
-        $request->session()->flash('message', 'Servicer details updated successfully!'); 
+        $request->session()->flash('message', 'Details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
 
         return redirect()->route('servicer.details',['id' => encrypt($servicer->id)]);

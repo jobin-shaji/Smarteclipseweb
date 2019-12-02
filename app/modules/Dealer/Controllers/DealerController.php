@@ -321,7 +321,7 @@ class DealerController extends Controller {
         $user->mobile = $request->mobile;
         $user->email = $request->email;
         $user->save();
-        $request->session()->flash('message', 'Your details updated successfully!');
+        $request->session()->flash('message', 'Details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('dealer.profile'));  
     }
