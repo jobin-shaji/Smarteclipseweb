@@ -121,7 +121,7 @@
                     <video id="preview" style="height:100%; width: 100%;"></video>
                   </div>
                 </div> -->
-                <textarea id="scanner" style="height:30%; width: 100%;" placeholder="Please click here for scanning.."></textarea>
+                <textarea id="scanner" autofocus="autofocus" style="height:30%; width: 100%;" placeholder="Please click here for scanning.."></textarea>
                 <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
                 <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
               </div>
