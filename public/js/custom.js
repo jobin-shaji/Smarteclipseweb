@@ -27,10 +27,12 @@ $(function () {
         });
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
+            calculate();
             var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
             incrementDay.add(1, 'days');
             $('#toDate').data('DateTimePicker').minDate(incrementDay);
             $(this).data("DateTimePicker").hide();
+             
         });
         $('#toDate').datetimepicker().on('dp.change', function (e) {            
             var decrementDay = moment(new Date(e.date));
