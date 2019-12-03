@@ -7,6 +7,7 @@ Performance Score History
   	<nav aria-label="breadcrumb">
       	<ol class="breadcrumb">
         	<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Performance score history</li>
+        	<h4>Performance Score History</h4>
      	</ol>
        	@if(Session::has('message'))
           <div class="pad margin no-print">
@@ -16,8 +17,8 @@ Performance Score History
           </div>
         @endif  
     </nav>
-  	<div class="container-fluid">
-	    <div class="card-body"><h4>Performance Score History</h4>
+	<div class="container-fluid">
+	    <div class="card-body">
 	    	<div class="table-responsive">
 		        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
 		          	<div class="row">
@@ -39,23 +40,19 @@ Performance Score History
 															</select>
 						                          		</div>
 						                          	</div>
-
 						                          	<div class="col-lg-3 col-md-3">   <div class="form-group">  
 								                            <label> From Date</label>
-								                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
+								                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
 						                          		</div>
 						                          	</div>
-
 						                          	<div class="col-lg-3 col-md-3"> 
 						                           		<div class="form-group">  
 							                            	<label> To date</label>
-							                            	<input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
+							                            	<input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
 						                          		</div>
 						                          	</div>
-
-
 				                          			<div class="col-lg-3 col-md-3 pt-4">  
-							                           <div class="form-group">     
+				                          				<div class="form-group">     
 							                            	<button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>                 
 				                          				</div>
 				                          			</div>
@@ -65,7 +62,7 @@ Performance Score History
 					                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important" id="dataTable">
 					                        <thead>
 					                            <tr>
-					                              	<th>Sl.No</th>
+					                              	<th>SL.No</th>
 													<th>Vehicle Name</th>
 													<th>Register Number</th>
 													<th>Driver Name</th>
@@ -82,9 +79,9 @@ Performance Score History
 		            	</div>
 		          	</div>
 		        </div>
-	        </div>
-	    </div>
-  	</div>
+		    </div>
+		</div>
+	</div>
 </div>
 </section>
 @section('script')

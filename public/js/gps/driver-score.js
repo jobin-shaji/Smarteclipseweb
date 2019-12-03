@@ -1,16 +1,12 @@
 $(document).ready(function() {
 $("#loader-1").show();
  check();
- driverBehaviour();
-
-
-
+ // driverBehaviour();
 });
 
 function check(){
-  var driver=$('#driver').val(); 
-  
-    
+  var driver=$('#driver').val();  
+  // alert(driver) ;
     driverBehaviour(driver); 
     score(driver);
 }
