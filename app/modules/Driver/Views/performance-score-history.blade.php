@@ -16,9 +16,9 @@ Performance Score History
           </div>
         @endif  
     </nav>
-  	<div class="container-fluid">
-	    <div class="card-body"><h4>Performance Score History</h4>
-	    	<div class="table-responsive">
+	<div class="container-fluid">
+		<div class="card-body"><h4>Performance Score History</h4>
+			<div class="table-responsive">
 		        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
 		          	<div class="row">
 		            	<div class="col-sm-12">
@@ -39,23 +39,19 @@ Performance Score History
 															</select>
 						                          		</div>
 						                          	</div>
-
 						                          	<div class="col-lg-3 col-md-3">   <div class="form-group">  
 								                            <label> From Date</label>
-								                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
+								                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
 						                          		</div>
 						                          	</div>
-
 						                          	<div class="col-lg-3 col-md-3"> 
 						                           		<div class="form-group">  
 							                            	<label> To date</label>
-							                            	<input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
+							                            	<input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
 						                          		</div>
 						                          	</div>
-
-
 				                          			<div class="col-lg-3 col-md-3 pt-4">  
-							                           <div class="form-group">     
+				                          				<div class="form-group">     
 							                            	<button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>                 
 				                          				</div>
 				                          			</div>
@@ -82,9 +78,9 @@ Performance Score History
 		            	</div>
 		          	</div>
 		        </div>
-	        </div>
-	    </div>
-  	</div>
+		    </div>
+		</div>
+	</div>
 </div>
 </section>
 @section('script')
