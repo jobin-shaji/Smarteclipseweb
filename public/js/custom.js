@@ -37,7 +37,6 @@ $(function () {
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
-           
         });
         function calculate() {
             var d1 = $('#fromDate').data("DateTimePicker").date();
