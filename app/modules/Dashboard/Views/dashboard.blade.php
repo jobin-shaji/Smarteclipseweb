@@ -407,12 +407,26 @@
               <h3 id="pending_jobs">
                 <div class="loader"></div>
               </h3>
-              <p>NEW JOBS</p>
+              <p>Installation Job</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
             <a href="/job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+          <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="pending_service_jobs">
+                <div class="loader">0</div>
+              </h3>
+              <p>Service Job</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
