@@ -9,4 +9,8 @@ class Driver extends Model
 	protected $fillable=[
 		'name','address','mobile','client_id','points','deleted_at'
 	];
+
+	public function alerts(){
+		return $this->hasMany('App\Modules\Driver\Models\DriverBehaviour');
+	}
 }

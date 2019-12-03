@@ -8,7 +8,6 @@ Route::get('/complaint-type/create','ComplaintController@createComplaintType')->
 Route::post('/complaint-type/create','ComplaintController@saveComplaintType')->name('complaint-type.create.p');
 Route::post('/complaint-type/delete','ComplaintController@deleteComplaintType')->name('complaint-type.delete');
 Route::post('/complaint-type/activate','ComplaintController@activateComplaintType')->name('complaint-type.activate');
-
 });
 
 Route::group(['middleware' => ['web','auth','role:root|sub_dealer|client'] , 'namespace' => 'App\Modules\Complaint\Controllers' ] , function() {	

@@ -1,8 +1,5 @@
 $(function () {
-
-
     const timeout = 9000000;  // 900000 ms = 15 minutes
-
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
         clearTimeout(idleTimer);
@@ -34,12 +31,13 @@ $(function () {
             $(this).data("DateTimePicker").hide();
              
         });
-        $('#toDate').datetimepicker().on('dp.change', function (e) {            
+        $('#toDate').datetimepicker().on('dp.change', function (e) {   
+         calculate();         
             var decrementDay = moment(new Date(e.date));
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
-            calculate();
+           
         });
         function calculate() {
             var d1 = $('#fromDate').data("DateTimePicker").date();
