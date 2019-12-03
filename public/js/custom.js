@@ -51,6 +51,8 @@ $(function () {
             {
                 var fromDate=$('#fromDate').val();
                 document.getElementById("toDate").value = fromDate;
+                var toDate=$('#toDate').val();
+                document.getElementById("fromDate").value = toDate;
                 alert("Please select date upto 15 days ");
             }
         }
