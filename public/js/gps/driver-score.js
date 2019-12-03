@@ -1,7 +1,7 @@
 $(document).ready(function() {
 $("#loader-1").show();
  check();
- driverBehaviour();
+ // driverBehaviour();
 });
 
 function check(){
