@@ -45,8 +45,8 @@ function initMap(){
         // strokeWeight: 1,
         fillOpacity: parseFloat(opacity),
         strokeWeight: parseFloat(strokeWeight),
-        anchor: new google.maps.Point(0, 5),
-        rotation: 0 //<-- Car angle
+        anchor: new google.maps.Point(0, 5)
+        // rotation: 0 //<-- Car angle
     };
     marker = new google.maps.Marker({
         map: map,
@@ -331,14 +331,14 @@ function getMarkers() {
         moveMarker();
         var icon = { // car icon
                     path:vehiclePath,
-                    scale:0.7,
+                    scale:vehicle_scale,
                     fillColor: vehicleColor, //<-- Car Color, you can change it 
                     // fillOpacity: 1,
                     // strokeWeight: 1,
                     fillOpacity: parseFloat(opacity),
                     strokeWeight: parseFloat(strokeWeight),
-                    anchor: new google.maps.Point(0, 5),
-                    rotation:angle  //<-- Car angle
+                    anchor: new google.maps.Point(0, 5)
+                    // rotation:angle  //<-- Car angle
                 };
               marker.setIcon(icon);
 
