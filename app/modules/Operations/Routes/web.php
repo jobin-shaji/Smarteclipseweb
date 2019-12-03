@@ -47,15 +47,19 @@ Route::post('/operations/enable','OperationsController@enableDealer')->name('ope
 
 
 	Route::get('/vehicle-models-create','OperationsController@vehicleModelsCreate')->name('vehicle.models.create');
-Route::post('/vehicle-models-create','OperationsController@vehicleModelsSave')->name('vehicle.models.create.p');
+	Route::post('/vehicle-models-create','OperationsController@vehicleModelsSave')->name('vehicle.models.create.p');
 
-Route::get('/vehicle-models','OperationsController@vehicleModelsListPage')->name('vehicle.models');
-Route::post('/vehicle-models-list','OperationsController@getVehicleModels')->name('vehicle-models-list');
+	Route::get('/vehicle-models','OperationsController@vehicleModelsListPage')->name('vehicle.models');
+	Route::post('/vehicle-models-list','OperationsController@getVehicleModels')->name('vehicle-models-list');
 
-Route::get('/vehicle-models/{id}/edit','OperationsController@modelEdit')->name('vehicle.models.edit');
+	Route::get('/vehicle-models/{id}/edit','OperationsController@modelEdit')->name('vehicle.models.edit');
 	Route::post('/vehicle-models/{id}/edit','OperationsController@modelUpdate')->name('vehicle.models.update.p');
 
 	Route::post('/vehicle-model/disable','OperationsController@disableVehicleModels')->name('vehicle-model.disable');
 	Route::post('/vehicle-model/enable','OperationsController@enableVehicleModels')->name('vehicle-model.enable'); 
+
+	//DURATION
+	Route::get('/vehicle-duration','DurationController@vehicleDuration')->name('vehicle.duration');
+	Route::post('/vehicle-duration-list','DurationController@vehicleDurationList')->name('vehicle.duration.list');
 });
 
