@@ -49,7 +49,7 @@ $(function () {
             var DateDiff = Math.floor(timeDiff / (60 * 60 * 24));
             if(DateDiff>15)
             {
-                // var fromDate=$('#fromDate').val();
+                var fromDate=$('#fromDate').val();
                 document.getElementById("toDate").value = "";
                 alert("Please select date upto 15 days ");
             }

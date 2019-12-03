@@ -38,13 +38,13 @@ Parking Report
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> From Date</label>
-                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" required>
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" required>
                           </div>
                           </div>
                             <div class="col-lg-3 col-md-3 pt-4">
