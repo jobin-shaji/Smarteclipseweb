@@ -378,7 +378,6 @@ class DriverController extends Controller {
             $drivers = $drivers->where('id',$driver_id);
         }
         $drivers = $drivers->get();
-        // dd($drivers);
         $score=[];
         foreach($drivers as $driver){
             $harsh_breaking_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_harsh_braking_alerts)->count();
