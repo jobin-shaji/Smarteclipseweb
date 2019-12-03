@@ -32,12 +32,12 @@ $(function () {
              
         });
         $('#toDate').datetimepicker().on('dp.change', function (e) {   
-         calculate();         
+               
             var decrementDay = moment(new Date(e.date));
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-            $(this).data("DateTimePicker").hide();
-           
+            $(this).data("DateTimePicker").hide(); 
+             calculate();            
         });
         function calculate() {
             var d1 = $('#fromDate').data("DateTimePicker").date();
@@ -49,10 +49,8 @@ $(function () {
             var DateDiff = Math.floor(timeDiff / (60 * 60 * 24));
             if(DateDiff>15)
             {
-                var fromDate=$('#fromDate').val();
-                document.getElementById("toDate").value = fromDate;
-                var toDate=$('#toDate').val();
-                document.getElementById("fromDate").value = toDate;
+                // var fromDate=$('#fromDate').val();
+                document.getElementById("toDate").value = "";
                 alert("Please select date upto 15 days ");
             }
         }
