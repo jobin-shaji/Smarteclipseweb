@@ -55,9 +55,9 @@ scanner.addListener('scan', function (content) {
 
 $(function(){
     $('#add_qr_button').click(function() {
-        alert('Do you want to add this?');
         var content = $('#scanner').val();
         if(content){
+          alert('Do you want to add this?');
           var content_length = content.length;
           if(content_length >= 174 && content_length <= 180)
           {
