@@ -28,7 +28,7 @@ $(function () {
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
             var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
-            incrementDay.add(0, 'days');
+            incrementDay.add(1, 'days');
             $('#toDate').data('DateTimePicker').minDate(incrementDay);
             $(this).data("DateTimePicker").hide();
         });
@@ -37,6 +37,7 @@ $(function () {
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
+            calculate();
         });
         function calculate() {
             var d1 = $('#fromDate').data("DateTimePicker").date();
@@ -125,7 +126,6 @@ $(function () {
      });
     $(".datepickerPro" ).datetimepicker({ 
         format: 'DD-MM-YYYY',
-        defaultDate: '',
         maxDate: new Date(),
         minDate:pro_date
     });
