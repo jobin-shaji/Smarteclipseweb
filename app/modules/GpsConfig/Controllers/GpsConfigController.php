@@ -5,8 +5,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsConfiguration;
-
-
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
