@@ -333,6 +333,14 @@ class DriverController extends Controller {
     //driver score alerts
     public function driverScoreAlerts(Request $request)
     {
+        $client_driver=$request->driver;
+        if($client_driver){
+            $driver_id=$request->driver;
+        }
+        else
+        {
+           $driver_id=0; 
+        }
         $client_id=\Auth::user()->client->id;
         $harsh_braking_alerts=Alert::where('alert_type_id',1)->get();
         $single_harsh_braking_alerts = [];
@@ -364,12 +372,13 @@ class DriverController extends Controller {
         foreach($over_speed_gf_exit_alerts as $over_speed_gf_exit_alert){
             $single_over_speed_gf_exit_alerts[] = $over_speed_gf_exit_alert->id;
         }
-        $driver=$request->driver;
+        // $driver=$request->driver;
         $drivers = Driver::where('client_id',$client_id);
-        if($driver){
-            $drivers = $drivers->where('id',$driver);
-        } 
+        if($client_driver){
+            $drivers = $drivers->where('id',$driver_id);
+        }
         $drivers = $drivers->get();
+        // dd($drivers);
         $score=[];
         foreach($drivers as $driver){
             $harsh_breaking_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_harsh_braking_alerts)->count();
