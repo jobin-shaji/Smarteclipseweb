@@ -7,6 +7,7 @@ Performance Score History
   	<nav aria-label="breadcrumb">
       	<ol class="breadcrumb">
         	<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Performance score history</li>
+        	<h4>Performance Score History</h4>
      	</ol>
        	@if(Session::has('message'))
           <div class="pad margin no-print">
@@ -17,7 +18,7 @@ Performance Score History
         @endif  
     </nav>
   	<div class="container-fluid">
-	    <div class="card-body"><h4>Performance Score History</h4>
+	    <div class="card-body">
 	    	<div class="table-responsive">
 		        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
 		          	<div class="row">
@@ -65,7 +66,7 @@ Performance Score History
 					                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important" id="dataTable">
 					                        <thead>
 					                            <tr>
-					                              	<th>Sl.No</th>
+					                              	<th>SL.No</th>
 													<th>Vehicle Name</th>
 													<th>Register Number</th>
 													<th>Driver Name</th>
