@@ -14,7 +14,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading">Bus Stop Updation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Bus Stop</li>
-        <h4>Bus Stop Edit</h4>
+        
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
