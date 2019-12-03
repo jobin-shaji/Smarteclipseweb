@@ -53,7 +53,7 @@ $(function () {
             {
                 var fromDate=$('#fromDate').val();
                 document.getElementById("toDate").value = fromDate;
-                alert("please select date between 15");
+                alert("Please select date upto 15 days ");
             }
         }
         $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
