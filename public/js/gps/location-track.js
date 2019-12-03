@@ -597,7 +597,7 @@ function initMap(){
         map.panTo(markerLatLng);
         moveMarker();
         var icon = { // car icon
-                    //path:vehiclePath,
+                    path:vehiclePath,
                     scale: parseFloat(vehicleScale),
                     fillColor: vehicleColor, //<-- Car Color, you can change it 
                     // fillOpacity: 1,
