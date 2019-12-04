@@ -3,7 +3,10 @@
  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{url('/gps-data')}}">All GPS </a>
+        <a class="nav-link" href="{{url('/gps-data')}}">PROCESSED DATA</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url('/public-vltdata')}}">UNPROCESSED DATA</a>
       </li>
       <li class="nav-item dropdown">
             <a class="nav-link" href="{{url('/all-gps-data-public')}}">CONSOLE</a>
