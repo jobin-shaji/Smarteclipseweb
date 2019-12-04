@@ -7,8 +7,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route List</li>
-        <b>Route List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Assign Route</li>
+        <b>Assign Route</b>
      </ol>
     </nav>
  
