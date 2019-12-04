@@ -51,13 +51,13 @@ Alert Report
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                      
                                     <label> From Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif">
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif" autocomplete="off">
                                   </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                     
                                     <label> To Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($alertReports)) {{$to}} @endif">
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($alertReports)) {{$to}} @endif" autocomplete="off">
                                   </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-5">  
