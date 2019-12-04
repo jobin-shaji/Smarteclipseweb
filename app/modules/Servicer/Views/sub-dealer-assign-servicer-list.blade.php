@@ -31,7 +31,7 @@
                   <tr>
                       <th>SL.No</th>
                       <th>Job Code</th>
-                      <th>Service Engieer</th>
+                      <th>Service Engineer</th>
                       <th>Client</th>
                       <th>Gps</th>
                       <th>Job Type</th>
