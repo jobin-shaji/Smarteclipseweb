@@ -11,7 +11,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Dealer</li>
-      <h4>Dealer List</h4>
+      <b>Dealer List</b>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -29,7 +29,7 @@
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
                       <th>SL.No</th>

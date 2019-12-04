@@ -7,7 +7,7 @@ Stock Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title"> Stock Report</h4>
+        <b> Stock Report</b>
       </div>
     </div>
   </div>
@@ -46,10 +46,10 @@ Stock Report
                         </div>
                       </div>
                       </div>                 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                         <thead>
                             <tr>
-                             <th>Sl.No</th>
+                             <th>SL.No</th>
                               <th>IMEI</th>
                               <th>Serial No</th>
                               <th>E-sim Number</th>

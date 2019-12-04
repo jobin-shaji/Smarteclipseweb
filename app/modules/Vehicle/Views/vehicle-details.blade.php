@@ -8,8 +8,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-page-heading">Vehicle Details</li>
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Details</li>
+      <b>Vehicle Details</b>
       @if(Session::has('message'))
   <div class="pad margin no-print">
     <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -273,13 +273,13 @@
                             </h3>
                           </div>
                           <div class="panel-body">
-                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                              <thead>
                                 <tr>
-                                  <th>SL No.</th>
-                                  <th>Document Type</th>
-                                  <th>Expiry Date</th>
-                                  <th>Action</th>
+                                  <th><b>SL No</b></th>
+                                  <th><b>Document Type</b></th>
+                                  <th><b>Expiry Date</b></th>
+                                  <th><b>Action</b></th>
                                 </tr>
                               </thead>
                               <tbody>

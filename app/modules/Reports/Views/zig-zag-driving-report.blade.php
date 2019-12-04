@@ -7,7 +7,7 @@ Zig Zag Driving Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Zig Zag Driving Report</h4>
+        <b>  Zig Zag Driving Report</b>
       </div>
     </div>
   </div>

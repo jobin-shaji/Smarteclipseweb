@@ -11,6 +11,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Operation Manager Details</li>
+      <b>Details of Operation Manager</b>
     </ol>
   </nav>
  

@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer</li>
-        <h4>GPS Transfer</h4>
+        <b>GPS Transfer</b>
       </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -92,9 +92,10 @@
                     <div class="form-group has-feedback">
                       <label class="srequired">GPS List</label>
                         <input type="hidden" name="gps_id[]" id="gps_id" value="">
-                        <table class="table table-bordered  table-striped " style="width:100%">
+                        <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;">
                           <thead>
                             <tr>
+                              <th>SL No.</th>
                               <th>Serial Number</th>
                               <th>Batch Number</th>
                               <th>Employee Code</th>

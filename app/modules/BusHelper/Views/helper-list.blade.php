@@ -7,8 +7,8 @@
 <div class="page-wrapper_new">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-page-heading">Helper List</li>
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Helper List</li>
+      <b>Helper List</b>
     </ol>  
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -27,7 +27,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                    <th>Sl.No</th>  
+                    <th>SL.No</th>  
                     <th>ID</th>                             
                     <th>Name</th>                                                        
                     <th>Address</th>  

@@ -9,6 +9,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/End User Role</li>
+        <b>User Role</b>
       </ol>
       @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -44,7 +45,7 @@
                     
             <div class="row">
               <div class="col-sm-12">
-                <table id="client_roles" class="table table-hover table-bordered  table-striped datatable" style="width:50%" id="dataTable">
+                <table id="client_roles" class="table table-hover table-bordered  table-striped datatable" style="width:50%;text-align: center;" id="dataTable">
                   <thead>
                     <tr>
                       <th>SL.No</th>                              

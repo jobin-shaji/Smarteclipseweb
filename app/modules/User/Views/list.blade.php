@@ -8,22 +8,23 @@
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">User</li>
+        <b>Users List</b>
       </ol>
 </section>
 <section class="content">
   <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Users List 
+                <div class="panel-heading"> 
                     <a href="{{route('users.create')}}">
                     <button class="btn btn-xs btn-primary pull-right">Add new user</button>
                     </a>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                         <thead>
                             <tr>
-                                <th>Id </th>
+                                <th>Id</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Mobile</th>

@@ -7,7 +7,7 @@ Main Battery Disconnect Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Main Battery Disconnect Report</h4>
+        <b>  Main Battery Disconnect Report</b>
       </div>
     </div>
   </div>
