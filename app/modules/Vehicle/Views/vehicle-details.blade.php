@@ -89,7 +89,7 @@
                           <div class="form-group has-feedback">
                             <label class="srequired">Driver</label>
                             <select class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}"  name="driver_id" value="{{ old('driver_id') }}" required>
-                              <option>Select Driver</option>
+                              <option value="" disabled="disabled">Select Driver</option>
                               @foreach($drivers as $driver)
                               <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif>{{$driver->name}}</option>
                               @endforeach
@@ -130,13 +130,13 @@
                           <div class="form-group has-feedback">
                             <label class="srequired">Odometer(in km)</label>
                             <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$odometer_in_km}}">
-                          </div>
+                          </div>                        
+                        </div>
                           @if ($errors->has('odometer'))
                             <span class="help-block">
                                 <strong class="error-text">{{ $errors->first('odometer') }}</strong>
                             </span>
                           @endif
-                        </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-10 col-md-12">
