@@ -22,8 +22,7 @@ function score(driver){
 }
 
 function driverScore(res) {
-
-
+// console.log(res.drive_score);
   var ctxPA = document.getElementById("driver-behaviour").getContext('2d');
   $("#loader-1").show();
   var myPolarChart = new Chart(ctxPA, {

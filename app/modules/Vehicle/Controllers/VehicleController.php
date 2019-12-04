@@ -681,10 +681,10 @@ class VehicleController extends Controller
             $vehicle_id[]=$vehicle->id;
         }
         $vehicle_documents = Document::select(
-        'vehicle_id',
-        'document_type_id',
-        'expiry_date',
-        'path'
+            'vehicle_id',
+            'document_type_id',
+            \DB::raw('DATE_FORMAT(expiry_date, "%d-%m-%Y") as expiry_date'),
+            'path'
         )
         ->with('documentType:id,name')
         ->with('vehicle:id,name,register_number');
@@ -1860,11 +1860,10 @@ class VehicleController extends Controller
     public function vehicleOdometerUpdateRules($gps)
     {
         $rules = [
-            'odometer' => 'required',
+            'odometer' => 'required|max:7',
         ];
         return  $rules;  
     }
-
     public function vehicleModelUpdateRules($vehicle)
     {
         $rules = [
