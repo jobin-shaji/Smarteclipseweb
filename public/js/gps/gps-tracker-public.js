@@ -12,9 +12,9 @@ function mapCheck() {
     if(document.getElementById('gps_id').value == ''){
           alert('Please select GPS');
       }else if(document.getElementById('from_date').value == ''){
-          alert('Please enter from date');
+          alert('Please select From date');
       }else if(document.getElementById('to_date').value == ''){
-          alert('Please enter to date');
+          alert('Please select To date');
       }
       else{
           var from_date = document.getElementById('from_date').value;
