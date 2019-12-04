@@ -5,11 +5,11 @@ function check(){
     if(document.getElementById('vehicle').value == ''){
         alert('please select vehicle');
     }
-    // else if(document.getElementById('fromDate').value == ''){
-    //     alert('please enter from date');
-    // }else if(document.getElementById('toDate').value == ''){
-    //     alert('please enter to date');
-    // }
+    else if(document.getElementById('fromDate').value == ''){
+        alert('please enter from date');
+    }else if(document.getElementById('toDate').value == ''){
+        alert('please enter to date');
+    }
     else{
         calculate();
         callBackDataTable();

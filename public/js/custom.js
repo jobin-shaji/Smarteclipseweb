@@ -24,7 +24,7 @@ $(function () {
         });
         $('#fromDate').datetimepicker().on('dp.change', function (e) {
             var startdate=$(this).data('fromdate');
-            calculate();
+            // calculate();
             var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
             incrementDay.add(1, 'days');
             $('#toDate').data('DateTimePicker').minDate(incrementDay);
@@ -37,23 +37,9 @@ $(function () {
             decrementDay.subtract(0, 'days');
             $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
             $(this).data("DateTimePicker").hide();
-             calculate();            
+            // calculate();            
         });
-        function calculate() {
-            var d1 = $('#fromDate').data("DateTimePicker").date();
-            var d2 = $('#toDate').data("DateTimePicker").date();
-            var timeDiff = 0
-            if(d2) {
-                timeDiff = (d2 - d1) / 1000;
-            }
-            var DateDiff = Math.floor(timeDiff / (60 * 60 * 24));
-            if(DateDiff>15)
-            {
-                var fromDate=$('#fromDate').val();
-                document.getElementById("toDate").value = "";
-                alert("Please select date upto 15 days ");
-            }
-        }
+        
         $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
             var incrementDay = moment(new Date(e.date));
             incrementDay.add(1, 'days');
@@ -105,7 +91,7 @@ $(function () {
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date()
     });
-    $( ".datepicker" ).datetimepicker({
+    $(".datepicker" ).datetimepicker({
         format: 'DD-MM-YYYY',
         maxDate: new Date()
      });
