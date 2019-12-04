@@ -89,6 +89,16 @@ Alert Report
                             </tr>
                           </thead>
                           <tbody>
+                            @if($alertReports->count() == 0)
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td><b style="float: right;margin-right: -13px">No data</b></td>
+                              <td><b style="float: left;margin-left: -15px">Available</b></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            @endif
                             @foreach($alertReports as $alertReport)                  
                             <tr>           
                               <td>{{ $loop->iteration }}</td>
