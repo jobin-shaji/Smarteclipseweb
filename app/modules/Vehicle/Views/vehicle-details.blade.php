@@ -273,13 +273,13 @@
                             </h3>
                           </div>
                           <div class="panel-body">
-                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                              <thead>
                                 <tr>
-                                  <th>SL No.</th>
-                                  <th>Document Type</th>
-                                  <th>Expiry Date</th>
-                                  <th>Action</th>
+                                  <th><b>SL No</b></th>
+                                  <th><b>Document Type</b></th>
+                                  <th><b>Expiry Date</b></th>
+                                  <th><b>Action</b></th>
                                 </tr>
                               </thead>
                               <tbody>
