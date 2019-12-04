@@ -1100,7 +1100,9 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
-        ->get();       
+        ->orderBy('job_date','Desc')
+        ->get();  
+        // dd($servicer_job);   
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
