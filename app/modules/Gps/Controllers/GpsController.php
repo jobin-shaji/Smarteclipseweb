@@ -671,6 +671,14 @@ class GpsController extends Controller {
         $gps_data = VltData::select('id','header')->groupBy('header')->get();
         return view('Gps::vltdata-list',['gps' => $gps,'gpsDatas' => $gps_data]);
     }
+    public function publicVltdataListPage()
+    {
+        // $ota = OtaType::all();
+        $gps = Gps::all();
+         // $gps = Gps::all();
+        $gps_data = VltData::select('id','header')->groupBy('header')->get();
+        return view('Gps::public-vltdata-list',['gps' => $gps,'gpsDatas' => $gps_data]);
+    }
 
     public function getVltData(Request $request)
     {
@@ -704,6 +712,43 @@ class GpsController extends Controller {
          //     ";  
          //     })
          // ->rawColumns(['link', 'action'])
+        
+        ->make();
+    }
+
+
+
+    public function getPublicVltData(Request $request)
+    {    
+        if($request->gps && $request->header){
+            
+         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->limit(500);  
+        }
+        else if($request->gps){
+         $items = VltData::where('imei',$request->gps)->limit(500);  
+        }
+        else if($request->header){
+            $items = VltData::where('header',$request->header)->limit(500); 
+        }
+        else{
+         $items = VltData::limit(500);  
+        }
+
+         // $items = VltData::all();                
+        return DataTables::of($items)
+        ->addIndexColumn()        
+         ->addColumn('forhuman', function ($items) {
+                $forhuman=0;
+                $forhuman=Carbon::parse($items->created_at)->diffForHumans();;
+                return $forhuman;
+             })
+         ->addColumn('action', function ($items) {
+               $b_url = \URL::to('/');
+            return "
+           <a href=".$b_url."/id/".Crypt::encrypt($items->id)."/pased class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View Details</a>
+             ";  
+             })
+         ->rawColumns(['link', 'action'])
         
         ->make();
     }
