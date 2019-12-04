@@ -30,7 +30,7 @@ $(document).ready(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
-            {data: 'job_id', name: 'job_id'},
+            {data: 'job_id', name: 'job_id', orderable: false},
             {data: 'clients.name', name: 'clients.name', orderable: false},
             {data: 'job_type', name: 'job_type', orderable: false},
             {data: 'servicer.name', name: 'servicer.name', orderable: false},
