@@ -204,6 +204,9 @@ class VehicleController extends Controller
            return view('Vehicle::404');
         }
         $old_odometer=$gps->km;
+        //  $custom_messages = [
+        // 'name.required' => 'Please mention the reason'
+        // ];
         $rules = $this->vehicleOdometerUpdateRules($gps);
         $this->validate($request, $rules);
         $odometer_in_km=$request->odometer;
@@ -674,8 +677,8 @@ class VehicleController extends Controller
         $selected_vehicle_id= $request->vehicle_id; 
         $selected_status= $request->status; 
         $vehicles=Vehicle::select('id','name','register_number','client_id')
-                            ->where('client_id',$client_id)
-                            ->get();
+        ->where('client_id',$client_id)
+        ->get();
         $vehicle_id=[];
         foreach ($vehicles as $vehicle) {
             $vehicle_id[]=$vehicle->id;
@@ -683,7 +686,8 @@ class VehicleController extends Controller
         $vehicle_documents = Document::select(
             'vehicle_id',
             'document_type_id',
-            \DB::raw('DATE_FORMAT(expiry_date, "%d-%m-%Y") as expiry_date'),
+            'expiry_date',
+            \DB::raw('DATE_FORMAT(expiry_date, "%d-%m-%Y") as updated_expiry_date'),
             'path'
         )
         ->with('documentType:id,name')
@@ -1860,7 +1864,7 @@ class VehicleController extends Controller
     public function vehicleOdometerUpdateRules($gps)
     {
         $rules = [
-            'odometer' => 'required|max:7',
+            'odometer' => 'required|numeric|digits_between:0,7',
         ];
         return  $rules;  
     }
