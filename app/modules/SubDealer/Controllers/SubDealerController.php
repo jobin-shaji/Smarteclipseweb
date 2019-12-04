@@ -129,7 +129,7 @@ class SubDealerController extends Controller {
             User::where('username', $request->username)->first()->assignRole('sub_dealer');
         }
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New sub dealer created successfully!'); 
+        $request->session()->flash('message', 'New Dealer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
          return redirect(route('subdealers'));        
     }
@@ -214,7 +214,7 @@ class SubDealerController extends Controller {
         $user->mobile = $request->mobile_number;
         $user->save();
         $did = encrypt($subdealer->id);
-        $request->session()->flash('message', 'Sub dealer details updated successfully!');
+        $request->session()->flash('message', 'Dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sub.dealer.details',$did));  
     }
