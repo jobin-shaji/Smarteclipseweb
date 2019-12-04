@@ -84,7 +84,8 @@ $(function(){
                           var gps_batch_number=res.gps_batch_number;
                           var gps_employee_code=res.gps_employee_code;
                           $("#gps_id").val(items); 
-                          var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                          var sl_no = document.getElementById('stock_table').rows.length;
+                          var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>"+ sl_no + "</td><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                           $("table tbody").append(markup);
                           var value = $('#gps_id').val();
                           if (value) {

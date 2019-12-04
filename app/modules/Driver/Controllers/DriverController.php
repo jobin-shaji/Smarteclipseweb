@@ -300,24 +300,26 @@ class DriverController extends Controller {
     public function driverScore(Request $request)
     {
         $driver=$request->driver;
-        if($driver){
-            $driver_id=$request->driver;
-        }
-        else
-        {
-           $driver_id=0; 
-        }
+       
+        // if($driver){
+        //     $driver_id=$request->driver;
+        // }
+        // else
+        // {
+        //    $driver_id=0; 
+        // }
         $client_id=\Auth::user()->client->id;
         $drivers = Driver::select(
-                'id',
-                'name',
-                'points')
-                ->where('client_id',$client_id);
-                if($driver!=0)
-                {
-                  $drivers=$drivers->where('id',$driver_id);  
-                }
-                $drivers=$drivers->get();
+            'id',
+            'name',
+            'points'
+        )
+        ->where('client_id',$client_id);
+        if($driver)
+        {
+          $drivers=$drivers->where('id',$driver);  
+        }
+        $drivers=$drivers->get();
         $single_driver_name = [];
         $single_driver_point = [];
         foreach($drivers as $driver){

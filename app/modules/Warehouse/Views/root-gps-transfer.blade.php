@@ -92,9 +92,10 @@
                     <div class="form-group has-feedback">
                       <label class="srequired">GPS List</label>
                         <input type="hidden" name="gps_id[]" id="gps_id" value="">
-                        <table class="table table-bordered  table-striped " style="width:100%;text-align: center;">
+                        <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;">
                           <thead>
                             <tr>
+                              <th>SL No.</th>
                               <th>Serial Number</th>
                               <th>Batch Number</th>
                               <th>Employee Code</th>

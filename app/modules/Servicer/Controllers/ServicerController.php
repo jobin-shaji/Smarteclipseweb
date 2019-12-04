@@ -395,6 +395,12 @@ class ServicerController extends Controller {
 
         return view('Servicer::job-list');
     }
+     // for service
+     public function serviceJobList()
+    {
+
+        return view('Servicer::service-job-list');
+    }
     public function getJobsList()
     {
         $user_id=\Auth::user()->servicer->id;
@@ -414,6 +420,7 @@ class ServicerController extends Controller {
             'status'
         )
         ->where('servicer_id',$user_id)
+        ->where('job_type',1)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
         ->with('user:id,username')
@@ -462,6 +469,87 @@ class ServicerController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+
+// for service
+ public function getServiceJobsList()
+    {
+        $user_id=\Auth::user()->servicer->id;
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'gps_id',
+            'job_complete_date', 
+            \DB::raw('Date(job_date) as job_date'),                 
+            'created_at',           
+            'location',
+            'status'
+        )
+        ->where('servicer_id',$user_id)
+        ->where('job_type',2)
+        ->whereNull('job_complete_date')
+        ->with('gps:id,imei,serial_no')
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+        ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }                       
+         }) 
+        // ->addColumn('location', function ($servicer_job) {                    
+        //     $latitude= $servicer_job->latitude;
+        //     $longitude=$servicer_job->longitude;          
+        //     if(!empty($latitude) && !empty($longitude)){
+        //         //Send request and receive json data by address
+        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
+        //         $output = json_decode($geocodeFromLatLong);         
+        //         $status = $output->status;
+        //         //Get address from json data
+        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        //         //Return address of the given latitude and longitude
+        //         if(!empty($address)){
+        //             $location=$address;
+        //             return $location;                                 
+        //         }        
+        //     }
+        //     else
+        //     {
+        //         return "No Address";
+        //     }
+        //  })
+        ->addColumn('action', function ($servicer_job) {
+             $b_url = \URL::to('/');
+                return "
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";
+          
+        })
+         ->addColumn('action', function ($servicer_job) {
+             $b_url = \URL::to('/');
+                return "
+    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+
+
+
+
     public function jobDetails(Request $request)
     {
 
@@ -503,8 +591,48 @@ class ServicerController extends Controller {
         }
         return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
+// FOR SERVICE
+public function serviceJobDetails(Request $request)
+    {
 
+        $decrypted = Crypt::decrypt($request->id); 
+        $servicer_job = ServicerJob::select(
+            'id',
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_date',
+            'job_complete_date',
+            'status',
+            'latitude',
+            'longitude',
+            'gps_id'
+        )
+        ->withTrashed()
+        ->where('id', $decrypted)
+        ->with('gps:id,imei,serial_no')
+        ->with('clients:id,name')
+        ->first();
+        $client_id=$servicer_job->client_id;
+        // dd($client_id);
+        $servicer_id=\Auth::user()->servicer->id;
+        $vehicleTypes=VehicleType::select(
+            'id','name'
+        )
+        ->get();       
+        $drivers=Driver::select('id','name')
+        ->where('client_id',$client_id)
+        ->get();    
 
+         $models=VehicleModels::select('id','name')->get();   
+       if($servicer_job == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::service-job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
+    }
     public function servicerJobSave(Request $request)
     { 
          $custom_messages = [
@@ -621,6 +749,35 @@ class ServicerController extends Controller {
         // return redirect(route('job.list'));  
         // return redirect(route('job-complete.certificate',$service_job_id));  
     }
+    // for service
+    public function jobSave(Request $request)
+    { 
+
+        $job_completed_date=date("Y-m-d"); 
+        $servicer_job = ServicerJob::find($request->id);
+        if($servicer_job!=null)
+        {
+        $servicer_job->job_complete_date = $job_completed_date;
+
+        $servicer_job->comment = $request->comment;
+            $servicer_job->status = 1;
+            $servicer_job->save();
+          
+            // dd($servicer_job->id);
+            $service_job_id=Crypt::encrypt($servicer_job->id);
+            $request->session()->flash('message', 'Job  completed successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+       }else
+       {
+             $request->session()->flash('message', 'Job completion failed'); 
+             $request->session()->flash('alert-class', 'alert-danger');
+             return redirect()->route('job.history.details');
+
+      }
+    }
+
+
     // save vehicle
    
      public function jobCompleteCertificate(Request $request)
