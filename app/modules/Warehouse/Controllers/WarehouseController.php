@@ -219,7 +219,7 @@ class WarehouseController extends Controller {
             $user_stock_devices[] = $device->gps_id;
         }
         $device = Gps::select('id', 'serial_no','batch_number','employee_code')
-                        ->whereIn('id',$user_stock_devices)
+                        // ->whereIn('id',$user_stock_devices)
                         ->where('serial_no',$device_serial_no)
                         ->first();
         if($device==null){
