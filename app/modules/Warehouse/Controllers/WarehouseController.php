@@ -199,7 +199,7 @@ class WarehouseController extends Controller {
     //get scanned gps and check gps status
     public function getScannedGps(Request $request)
     {
-        $device_serial_no=$request->serial_no;
+        $device_serial_no= trim($request->serial_no," ,\0,\n,\x0B,\r");
         $user = \Auth::user();
         $user_stock_devices=[];
         if($user->hasRole('root'))
