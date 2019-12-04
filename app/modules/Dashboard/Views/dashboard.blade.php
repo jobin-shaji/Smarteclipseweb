@@ -125,7 +125,7 @@
                         <h3 id="gps_new_arrival_dealer">
                           <div class="loader"></div>
                         </h3>
-                        <p>GPS New Arrivals</p>
+                        <p>New Arrivals</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
@@ -327,7 +327,7 @@
             <h3 id="gps_new_arrival_subdealer">
               <div class="loader"></div>
             </h3>
-            <p>GPS New Arrivals</p>
+            <p>New Arrivals</p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
