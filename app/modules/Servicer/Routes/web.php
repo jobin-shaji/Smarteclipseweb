@@ -47,13 +47,18 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 
 	Route::get('/job-list','ServicerController@jobList')->name('job.list');
+	Route::get('/service-job-list','ServicerController@serviceJobList')->name('service.job.list');
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
-	
-	Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
+	Route::post('/service-list-jobs','ServicerController@getServiceJobsList')->name('service.list.jobs');
+
+	 Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
+
+	Route::get('/servicejob/{id}/servicedetails','ServicerController@serviceJobDetails')->name('service.job.details');
 
 	Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
 
 	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
+	Route::post('/servicejob-complete-save/{id}','ServicerController@jobSave')->name('servicejob.complete.save');
 
 	// Route::get('/job-complete/{id}/downloads/{vid}','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 
