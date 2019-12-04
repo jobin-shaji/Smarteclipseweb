@@ -99,7 +99,7 @@ class DealerController extends Controller {
             User::where('username', $request->username)->first()->assignRole('dealer');
         }
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New dealer created successfully!'); 
+        $request->session()->flash('message', 'New Distributor created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('dealers')); 
     }
@@ -155,7 +155,7 @@ class DealerController extends Controller {
         $user->mobile = $request->phone_number;
         $user->save();
         $did = encrypt($user->id);
-        $request->session()->flash('message', 'Dealer details updated successfully!');
+        $request->session()->flash('message', 'Distributor details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('dealers.edit',$did));  
     }
