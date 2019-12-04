@@ -606,8 +606,8 @@ function initMap(){
                     // strokeWeight: 1,
                     fillOpacity: parseFloat(opacity),
                     strokeWeight: parseFloat(strokeWeight),
-                    anchor: new google.maps.Point(0, 5),
-                    rotation:angle  //<-- Car angle
+                    anchor: new google.maps.Point(0, 5)
+                    /*rotation:angle*/  //<-- Car angle
                 };
               marker.setIcon(icon);
               marker.setMap(map);
