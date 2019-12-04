@@ -34,7 +34,6 @@
                       <th>Vehicle Make</th>                            
                       <th>Fuel min</th>                              
                       <th>Fuel max</th>
-                      <th>Working Status</th>                            
                       <th style="width:160px;">Action</th>
                   </tr>
                 </thead>

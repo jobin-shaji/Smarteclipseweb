@@ -1088,9 +1088,6 @@ class VehicleController extends Controller
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
                 $gps_id= $get_vehicle->gps_id;
-                $gps_fuel=Gps::select('id','fuel_status')
-                ->where('id',$gps_id)
-                ->first();
                 
                 $vehicle=Vehicle::select(
                     'id',
@@ -1108,7 +1105,7 @@ class VehicleController extends Controller
                 )
                 ->where('id',$model)
                 ->first();
-                $fuel_gps=$gps_fuel->fuel_status;
+                $fuel_gps=$track_data->fuel_status;
                 $fuel_min=$vehicle_models->fuel_min;
                 $fuel_max=$vehicle_models->fuel_max;
                 $modulus=$fuel_min-$fuel_max;
@@ -1986,38 +1983,40 @@ class VehicleController extends Controller
         }
     }
 /////////////// snap root for live data///////////////////////////////////
-    // function LiveSnapRoot($b_lat, $b_lng) {
-    //     $lat = $b_lat;
-    //     $lng = $b_lng;
-    //     if($lat != null){
-    //         $route = $lat.",".$lng;
-    //         $url = "https://roads.googleapis.com/v1/snapToRoads?path=".$route."&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
-    //         $geocode_stats = file_get_contents($url);
-    //         $output_deals = json_decode($geocode_stats);
-    //         if (isset($output_deals->snappedPoints)) {
-    //             $outPut_snap = $output_deals->snappedPoints;
-    //             // var_dump($output_deals);
-    //             if ($outPut_snap) {
-    //                 foreach ($outPut_snap as $ldata) {
-    //                     $lat = $ldata->location->latitude;
-    //                     $lng = $ldata->location->longitude;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     $userData = ["lat" => $lat, "lng" => $lng];
-    //     return $userData;
+    function LiveSnapRoot($b_lat, $b_lng) {
+        $lat = $b_lat;
+        $lng = $b_lng;
+        if($lat != null){
+            $route = $lat.",".$lng;
+            $url = "https://roads.googleapis.com/v1/snapToRoads?path=".$route."&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
+            $geocode_stats = file_get_contents($url);
+            $output_deals = json_decode($geocode_stats);
+            if (isset($output_deals->snappedPoints)) {
+                $outPut_snap = $output_deals->snappedPoints;
+                // var_dump($output_deals);
+                if ($outPut_snap) {
+                    foreach ($outPut_snap as $ldata) {
+                        $lat = $ldata->location->latitude;
+                        $lng = $ldata->location->longitude;
+                    }
+                }
+            }
+        }
+        $userData = ["lat" => $lat, "lng" => $lng];
+        return $userData;
 
-    // }
+    }
 
-     function LiveSnapRoot($b_lat, $b_lng) {
+/*
+-------unsnapped location points-------------*/
+     /*function LiveSnapRoot($b_lat, $b_lng) {
         $lat = $b_lat;
         $lng = $b_lng;
         
         $userData = ["lat" => $lat, "lng" => $lng];
         return $userData;
 
-    }
+    }*/
 
 
 ///////////////////API-start////////////////////////////////////////
@@ -2289,6 +2288,11 @@ class VehicleController extends Controller
                                    "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
+
+            if($type==3){
+             $to_date=date('Y-m-d H:i:s', strtotime("yesterday midnight"));
+            }
+
             $response_data = array('status' => 'success', 
                                    'message' => 'success', 
                                    'code' => 1, 

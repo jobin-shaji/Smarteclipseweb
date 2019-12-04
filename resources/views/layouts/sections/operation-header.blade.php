@@ -96,7 +96,14 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{url('/vehicle-models-create')}}">CREATE VEHICLE MODELS</a>
                 <a class="dropdown-item"href="{{url('/vehicle-models')}}">LIST VEHICLE MODELS</a>
-                
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DURATIONS
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"href="{{url('/vehicle-duration')}}">LIST VEHICLE DURATIONS</a>
             </div>
         </li>
        

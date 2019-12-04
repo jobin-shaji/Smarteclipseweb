@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS LIST</li>
-        
+        <h4>GPS List</h4>
       </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -17,7 +17,7 @@
     </nav>
  
     <div class="container-fluid">
-    <div class="card-body"><h4>GPS List</h4>
+    <div class="card-body">
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
@@ -28,18 +28,18 @@
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
                                       <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="width:100%">
+                                          <table class="table table-bordered  table-striped " style="text-align: center;">
                                             <thead>
                                               <tr>
-                                                <th>SL.No</th>
-                                                <th>IMEI</th>
-                                                <th>Serial No</th>
-                                                <th>ICC ID</th>
-                                                <th>IMSI</th>
-                                                <th>Version</th>
-                                                <th>Batch Number</th>
-                                                <th>Employee Code</th>
-                                                <th>Model Name</th>
+                                                <th><b>SL.No</b></th>
+                                                <th><b>IMEI</b></th>
+                                                <th><b>Serial No</b></th>
+                                                <th><b>ICC ID</b></th>
+                                                <th><b>IMSI</b></th>
+                                                <th><b>Version</b></th>
+                                                <th><b>Batch Number</b></th>
+                                                <th><b>Employee Code</b></th>
+                                                <th><b>Model Name</b></th>
                                               </tr>
                                             </thead>
                                             <tbody>

@@ -52,7 +52,7 @@
                   </div>
                     <div class="form-group has-feedback">
                     <label>Address</label>
-                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$operations->address}}" >
+                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$operations->address}}" readonly>
                   </div>
                 
                 <div class="form-group has-feedback">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group has-feedback">
                     <label>Email</label>
-                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
+                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" readonly>
                   </div> 
                
 

@@ -123,27 +123,29 @@ function verifyCriticalAlertResponse(res){
       else
       return null;
   }
-// -----------------------------------------------
-  // function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
-  //  {
-  //     $.ajax({
-  //      url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
-  //     crossDomain: true,
-  //     dataType: 'jsonp'
-  //      }).done(function(response) {
-  //     if (response.error) {
-  //       // alert("error" + response.error.message);
-  //       return;
-  //     }
-  //     $.each(response.snappedPoints, function (i, snap_data) {
-  //     var loc=snap_data.location;
-  //     var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-  //     addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
-  //     });
-  //    });
-  //  }
+  /*
+-----------------------------------------------*/
+  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+   {
+      $.ajax({
+       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+      crossDomain: true,
+      dataType: 'jsonp'
+       }).done(function(response) {
+      if (response.error) {
+        // alert("error" + response.error.message);
+        return;
+      }
+      $.each(response.snappedPoints, function (i, snap_data) {
+      var loc=snap_data.location;
+      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
+      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
+      });
+     });
+   }
 
-
+/*
+   ------unsnapped points-------
    function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
    {
       
@@ -151,7 +153,7 @@ function verifyCriticalAlertResponse(res){
       var latlng = new google.maps.LatLng(latitude,longitude);
       addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
       
-   }
+   }*/
 // ---------------------que list--------------------------
 function transition(result)
     {
@@ -604,8 +606,8 @@ function initMap(){
                     // strokeWeight: 1,
                     fillOpacity: parseFloat(opacity),
                     strokeWeight: parseFloat(strokeWeight),
-                    anchor: new google.maps.Point(0, 5),
-                    rotation:angle  //<-- Car angle
+                    anchor: new google.maps.Point(0, 5)
+                    /*rotation:angle*/  //<-- Car angle
                 };
               marker.setIcon(icon);
               marker.setMap(map);

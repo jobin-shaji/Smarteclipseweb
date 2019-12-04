@@ -14,7 +14,7 @@
           <?php } 
           else if (strpos($url, $eclipse_key) == true) { ?>
                 <footer class="footer"> 
-			      	Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions</a>
+			      	Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
 			        <div class="footer-bottom">
 			         ECLIPSE &nbsp;Version 0.1
 			        </div>
@@ -23,7 +23,7 @@
           else { ?>
 
 				<footer class="footer"> 
-			      	Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions</a>
+			      	Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
 			        <div class="footer-bottom">
 			         ECLIPSE &nbsp;Version 0.1
 			        </div>

@@ -117,9 +117,7 @@ class ComplaintController extends Controller {
             'message' => 'Complaint Type restored successfully'
         ]);
     }
-
-///////////////////////////////////////////////////////////////////////////////////////
-
+    //////////////////////////////////////////////////////////////////////////////
     //Display complaints details 
     public function complaintListPage()
     {
@@ -189,7 +187,7 @@ class ComplaintController extends Controller {
                     }
                     else
                     {
-                        return $complaints->complaintType->name;
+                        return $complaints->servicer->name;
                     }                    
                 }
                 

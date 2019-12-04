@@ -5,6 +5,10 @@ use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Geofence\Models\Geofence;
+use App\Modules\Vehicle\Models\VehicleGeofence;
+use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
@@ -211,16 +215,15 @@ class ClientController extends Controller {
            return view('Client::404');
         } 
         $url=url()->current();
-            $rayfleet_key="rayfleet";
-            $eclipse_key="eclipse";
-            if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rayfleetClientUpdateRules($client);
-            }
-            else
-            {
-               $rules = $this->clientUpdateRules($client);
-            }
-           
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->rayfleetClientUpdateRules($client);
+        }
+        else
+        {
+           $rules = $this->clientUpdateRules($client);
+        }
        
         $this->validate($request, $rules);       
         $client->name = $request->name;
@@ -564,6 +567,15 @@ class ClientController extends Controller {
         $rules=$this->activatesubscription();
         $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
+        $geofences= Geofence::where('user_id',$client_user_id)->withTrashed()->get();
+        foreach ($geofences as $geofence) {
+            $vehicle_geofences=VehicleGeofence::where('geofence_id',$geofence->id)->withTrashed()->get();
+            foreach ($vehicle_geofences as $vehicle_geofence) {
+                $vehicle_geofence->forceDelete();
+                $clear_geofence=$this->geofenceResponse($vehicle_geofence->vehicle_id);
+            }
+            $geofence->forceDelete();
+        }
         $user = User::find($client_user_id); 
         if($request->client_role==6)
         {
@@ -597,6 +609,15 @@ class ClientController extends Controller {
         $decrypted_user_id = Crypt::decrypt($request->user_id); 
         $decrypted_role_id = Crypt::decrypt($request->role_id); 
         $user = User::find($decrypted_user_id); 
+        $geofences= Geofence::where('user_id',$decrypted_user_id)->withTrashed()->get();
+        foreach ($geofences as $geofence) {
+            $vehicle_geofences=VehicleGeofence::where('geofence_id',$geofence->id)->withTrashed()->get();
+            foreach ($vehicle_geofences as $vehicle_geofence) {
+                $vehicle_geofence->forceDelete();
+                $clear_geofence=$this->geofenceResponse($vehicle_geofence->vehicle_id);
+            }
+            $geofence->forceDelete();
+        }
         $user->role = 0;
         $user->save();        
         $user->removeRole($decrypted_role_id);
@@ -604,6 +625,28 @@ class ClientController extends Controller {
         $roles = $user->roles;      
         return redirect(route('client.subscription',$request->user_id));
         
+    }
+
+    public function geofenceResponse($vehicle_id)
+    {
+        $response_string="";
+        $vehicle = Vehicle::find($vehicle_id);
+        $vehicle_geofences=VehicleGeofence::where('vehicle_id',$vehicle_id)->get();
+        foreach ($vehicle_geofences as $single_geofence) {
+            $geofence_id=$single_geofence->geofence_id;
+            $geofence_details=Geofence::where('id',$geofence_id)->first();
+            $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
+        }
+        if($response_string==""){
+            $response_string="CLR VGF";
+        }else{
+            $response_string="SET VGF:".$response_string;
+        }
+        $geofence_response= OtaResponse::create([
+                    'gps_id' => $vehicle->gps_id,
+                    'response' => $response_string
+                ]);
+        return $geofence_response;
     }
 
     //delete Sub Dealer details from table

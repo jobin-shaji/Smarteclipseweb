@@ -158,8 +158,8 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
     fillColor: car_color, //<-- Car Color, you can change it
     fillOpacity: fillOpacity,
     strokeWeight: strokeWeight,
-    anchor: new google.maps.Point(0, 5),
-    rotation: 180 //<-- Car angle
+    anchor: new google.maps.Point(0, 5)
+    // rotation: 180 //<-- Car angle
   };
 
   var marker = new google.maps.Marker({

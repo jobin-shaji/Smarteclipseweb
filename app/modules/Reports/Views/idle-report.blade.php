@@ -38,13 +38,13 @@ Halt Report
                           <div class="col-md-3"> 
                           <div class="form-group">                    
                             <label> From Date</label>
-                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif  form-control" id="fromDate" name="fromDate" required>
                           </div>
                           </div>
                           <div class="col-md-3">
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif  form-control" id="toDate" name="toDate" required>
                           </div>
                           </div>
 
@@ -58,9 +58,9 @@ Halt Report
                         </div>
                       </div>
                       </div>                  
-                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr>
                               <th><b>SL.No</b></th>
                               <th><b>Vehicle</b></th>
                               <th><b>Register Number</b></th>                         
@@ -70,8 +70,8 @@ Halt Report
                          <tbody>
                             <tr>
                               <td id="sl"></td>
-                              <td id="vehicle_name"></td>                              
-                              <td id="register_number"></td>     
+                              <td id="vehicle_name"><b style="float: right;margin-right: -13px">No data</b></td>                              
+                              <td id="register_number"><b style="float: left;margin-left: -15px">Available</b></td>     
                               <td id="halt"></td>     
                             </tr>
                         </tbody>

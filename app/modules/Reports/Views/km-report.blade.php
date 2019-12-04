@@ -43,7 +43,16 @@ Total KM Report
                                 <option value="1">Today</option>
                                 <option value="2">Yesterday</option>
                                 <option value="3">Last 7 days</option>
-                                <option value="5">Last 30 days</option>                            
+                                <option value="5">Last 30 days</option>
+                                @if(\Auth::user()->hasRole('fundamental|superior|pro'))
+                                <option value="6">2 Months</option>
+                                @endif 
+                                @if(\Auth::user()->hasRole('superior|pro'))
+                                <option value="7">4 Months</option>
+                                @endif
+                                @if(\Auth::user()->hasRole('pro'))
+                                <option value="8">6 Months</option>
+                                @endif                           
                               </select>
                             </div>
                           </div>                         
@@ -181,6 +190,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                        @if(\Auth::user()->hasRole('fundamental|superior|pro'))
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/ac.png" width="10%" height="60px" class="report_img"/>
@@ -190,6 +200,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                        @endif
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="10%" height="60px" class="report_img"/>
@@ -199,6 +210,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                        @if(\Auth::user()->hasRole('fundamental|superior|pro'))
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/ac.png" width="10%" height="60px" class="report_img"/>
@@ -208,6 +220,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                         @endif
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="10%" height="60px" class="report_img"/>
@@ -217,6 +230,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                        @if(\Auth::user()->hasRole('fundamental|superior|pro'))
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/ac.png" width="10%" height="60px" class="report_img"/>
@@ -226,6 +240,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                        @endif
                         <!-- <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/overspeed.png" width="25%" height="80px" class="report_img"/>

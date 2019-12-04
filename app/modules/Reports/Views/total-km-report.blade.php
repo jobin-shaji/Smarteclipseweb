@@ -51,7 +51,7 @@ Total KM Report
                              <div>          
                               <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
                               </div>
-                              <div style="float: right;margin-top: -15%;margin-right: 10%;">
+                              <div style="float: right;margin-top: -14%;margin-right: 10%;">
                                 <button class="btn btn-sm btn1 btn-primary dwnld" id="excel" onclick="downloadTotalKMReport()">
                                   <i class="fa fa-file"></i>Download Excel</button>                        
                               </div>
@@ -60,9 +60,9 @@ Total KM Report
                         </div>
                       </div>
                       </div>                                 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr>
                               <th>SL.No</th>
                               <th>Vehicle</th>
                               <th>Register Number</th>                          

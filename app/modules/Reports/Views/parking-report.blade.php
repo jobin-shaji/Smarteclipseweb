@@ -38,13 +38,13 @@ Parking Report
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> From Date</label>
-                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" required autocomplete="off" onkeydown="return false">
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" autocomplete="off" required onkeydown="return false">
                           </div>
                           </div>
                             <div class="col-lg-3 col-md-3 pt-4">
@@ -57,9 +57,9 @@ Parking Report
                       </div>
                       </div>  
                 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr>
                               <th><b>SL.No</b></th>
                               <th><b>Vehicle</b></th>
                               <th><b>Register Number</b></th>                              
@@ -67,10 +67,10 @@ Parking Report
                             </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                          <tr style="text-align: center;">
                             <td id="sl"></td>
                             <td id="vehicle_name"></td>
-                            <td id="register_number"></td>
+                            <td id="register_number"><b style="float: left;margin-left: -15px">No data Available</b></td>
                             <td id="sleep"></td>
                           </tr>
                         </tbody>

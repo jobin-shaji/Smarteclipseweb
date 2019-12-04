@@ -6,8 +6,9 @@
 <div class="page-wrapper_new">  
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-page-heading"><b>All Vehicle Documents</b></li>
+     
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Documents</li>
+      <b>All Vehicle Documents</b>
     </ol>
     @if(Session::has('message'))
     <div class="pad margin no-print">
@@ -59,14 +60,14 @@
                 </div> 
                 <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                   <thead>
-                    <tr>
-                      <th>Sl.No</th>
-                      <th>Document Name</th>
-                      <th>Vehicle Name</th>
-                      <th>Register Number</th>
-                      <th>Expiry Date</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                    <tr style="text-align: center;">
+                      <th><b>SL.No</b></th>
+                      <th><b>Document Name</b></th>
+                      <th><b>Vehicle Name</b></th>
+                      <th><b>Register Number</b></th>
+                      <th><b>Expiry Date</b></th>
+                      <th><b>Status</b></th>
+                      <th><b>Action</b></th>
                     </tr>
                   </thead>
                 </table>

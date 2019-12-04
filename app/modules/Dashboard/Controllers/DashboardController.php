@@ -517,9 +517,8 @@ class DashboardController extends Controller
         if($user->hasRole('root')){
             $fuel_status="0"."%";
         }      
-        else if($user->hasRole('fundamental|pro|superior')){
+        else if($user->hasRole('pro|superior')){
             $gps_id= $request->gps_id;
-            $gps_fuel=$gps->fuel_status;
             $vehicle=Vehicle::select(
                 'id',
                 'gps_id',
@@ -536,7 +535,8 @@ class DashboardController extends Controller
             )
             ->where('id',$model)
             ->first();
-            $fuel_gps=$gps_fuel->fuel_status;
+
+            $fuel_gps=$gps->fuel_status;
             $fuel_min=$vehicle_models->fuel_min;
             $fuel_max=$vehicle_models->fuel_max;
             $modulus=$fuel_min-$fuel_max;

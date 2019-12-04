@@ -46,7 +46,16 @@
                               <option value="1">Today</option>
                               <option value="2">Yesterday</option>
                               <option value="3">Last 7 days</option>
-                              <option value="5">Last 30 Days</option>   
+                              <option value="5">Last 30 Days</option> 
+                               @if(\Auth::user()->hasRole('fundamental|superior|pro'))
+                                <option value="6">2 Months</option>
+                                @endif 
+                                @if(\Auth::user()->hasRole('superior|pro'))
+                                <option value="7">4 Months</option>
+                                @endif
+                                @if(\Auth::user()->hasRole('pro'))
+                                <option value="8">6 Months</option>
+                                @endif         
                               <!-- <option value="5">Custom Range</option>                           -->
                             </select>
                           </div>
@@ -75,21 +84,20 @@
                       </div>
                       </div>    
 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center">
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr>
                               <th><b>SL.No</b></th>
                               <th><b>Moving</b></th>
                               <th><b>Halt</b></th>
                               <th><b>Sleep</b></th>                              
-                                      
                             </tr>
                         </thead>
                          <tbody>
                             <tr>
                               <td id="sl"></td>
-                              <td id="motion"></td>
-                              <td id="halt"></td>
+                              <td id="motion"><b style="float: right;margin-right: -13px">No data</b></td>
+                              <td id="halt"><b style="float: left;margin-left: -15px">Available</b></td>
                               <td id="sleep"></td>
                             </tr>
                         </tbody>

@@ -98,7 +98,20 @@ class SubDealerController extends Controller {
     { 
         $dealer_id = \Auth::user()->dealer->id;
         if($request->user()->hasRole('dealer')){
-        $rules = $this->subdealerCreateRules();
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->subdealerCreateRulesRayfleet();
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->subdealerCreateRules();
+        }
+        else
+        {
+           $rules = $this->subdealerCreateRules();
+        }
         $this->validate($request, $rules);
         $user = User::create([
             'username' => $request->username,
@@ -181,7 +194,20 @@ class SubDealerController extends Controller {
         if($subdealer == null){
            return view('SubDealer::404');
         } 
-        $rules = $this->subdealersUpdateRules($user);
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) {
+             $rules = $this->subdealersUpdateRulesRayfleet($user);
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+             $rules = $this->subdealersUpdateRules($user);
+        }
+        else
+        {
+           $rules = $this->subdealersUpdateRules($user);
+        }
         $this->validate($request, $rules);       
         $subdealer->name = $request->name;
         $subdealer->save();
@@ -308,12 +334,35 @@ class SubDealerController extends Controller {
         return  $rules;
     }
 
+    public function subdealerCreateRulesRayfleet(){
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'username' => 'required|unique:users',
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+        return  $rules;
+    }
+
     //validation for employee updation
     public function subdealersUpdateRules($user)
     {
         $rules = [
             'name' => 'required',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
+            
+        ];
+        return  $rules;
+    }
+
+    //validation for employee updation
+    public function subdealersUpdateRulesRayfleet($user)
+    {
+        $rules = [
+            'name' => 'required',
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id
             
         ];
         return  $rules;
