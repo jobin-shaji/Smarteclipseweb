@@ -11,6 +11,7 @@
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route List</li>
+        <h4>Route List</h4>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -44,7 +45,7 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
                 <thead>
                   <tr>
-                      <th>#</th>
+                      <th>SL</th>
                       <th>Route Name</th>
                       <th style="width:160px;">Action</th>
                   </tr>
