@@ -80,12 +80,12 @@ Alert Report
                         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                           <thead>
                             <tr style="text-align: center;">
-                              <th>SL.No</th>
-                              <th>Vehicle</th>
-                              <th>Register number</th>
-                              <th>Alert Type</th>                             
-                              <th>DateTime</th>  
-                              <th>Action</th>                                   
+                              <th><b>SL.No</b></th>
+                              <th><b>Vehicle</b></th>
+                              <th><b>Register number</b></th>
+                              <th><b>Alert Type</b></th>                             
+                              <th><b>DateTime</b></th>  
+                              <th><b>Action</b></th>                                   
                             </tr>
                           </thead>
                           <tbody>
