@@ -42,7 +42,7 @@ function callBackDataTable(data=null){
             {data: 'document_type.name', name: 'document_type.name'},
             {data: 'vehicle.name', name: 'vehicle.name'},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'expiry_date', name: 'expiry_date'},
+            {data: 'updated_expiry_date', name: 'updated_expiry_date'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],

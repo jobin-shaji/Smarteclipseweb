@@ -683,7 +683,8 @@ class VehicleController extends Controller
         $vehicle_documents = Document::select(
             'vehicle_id',
             'document_type_id',
-            \DB::raw('DATE_FORMAT(expiry_date, "%d-%m-%Y") as expiry_date'),
+            'expiry_date',
+            \DB::raw('DATE_FORMAT(expiry_date, "%d-%m-%Y") as updated_expiry_date'),
             'path'
         )
         ->with('documentType:id,name')
