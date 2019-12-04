@@ -10,8 +10,8 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-page-heading">Student Creation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Student</li>
+        <b>Student Creation</b>
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">

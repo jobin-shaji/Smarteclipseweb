@@ -6,8 +6,10 @@ All Alerts
 <div class="page-wrapper_new"> 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Alerts </li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Alerts</li>
+      <b>Alerts</b>
     </ol>
+
     @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -26,10 +28,10 @@ All Alerts
               <div class="panel-heading">
                
               </div>
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
                 <thead>
                   <tr>
-                    <th>Sl.No</th>
+                    <th>SL.No</th>
                     <th>Alert</th>
                     <th>Vehicle Name</th>
                     <th>Register Number</th>

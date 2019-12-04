@@ -26,7 +26,7 @@
             <div class="col-sm-12">
               <div class="panel-heading">
                        
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
                       <th>SL.No</th>

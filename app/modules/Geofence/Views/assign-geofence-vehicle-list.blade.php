@@ -8,7 +8,7 @@
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Assign Geofence  List</li>
-        <h4>Assign Geofence</h4>
+        <b>Assign Geofence</b>
      </ol>
      @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -80,7 +80,7 @@
                         </div>
                       </div>
                       </div>
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
                       <th>SL.No</th>

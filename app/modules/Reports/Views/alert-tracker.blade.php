@@ -20,7 +20,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title"> Alert View</h4>
+                <b> Alert View</b>
                 @if(Session::has('message'))
                 <div class="pad margin no-print">
                   <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">

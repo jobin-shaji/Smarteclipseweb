@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Vehicle</li>
-            <h4>Vehicle List</h4>
+            <b>Vehicle List</b>
         </ol>
         @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -27,7 +27,7 @@
                             <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;width:100%" id="dataTable">
                             <thead>
                                 <tr>
-                                    <th>Sl.No</th>
+                                    <th>SL.No</th>
                                     <th>Vehicle Name</th>
                                     <th>Register Number</th>
                                     <th>Serial Number</th>

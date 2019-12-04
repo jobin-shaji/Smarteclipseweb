@@ -11,11 +11,12 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route View</li>
+        <b>Route View</b>
      </ol>
     </nav>
     <div class="row">
       <div class="col-lg-5 col-md-5">
-        <table class="table table-bordered  table-striped " style="width:100%">
+        <table class="table table-bordered  table-striped " style="width:100%;text-align: center;">
           <thead>
             <tr>
               <th>Sl.No</th>

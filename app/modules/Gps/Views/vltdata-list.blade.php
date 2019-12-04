@@ -46,10 +46,10 @@
 <div class="clearfix"></div>
 <section class="content" >  
     <div class="col-md-6" style="overflow: scroll">        
-      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;font-size: 13.5px!important" id="dataTable">
+      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;font-size: 13.5px!important;text-align: center;" id="dataTable">
           <thead>
               <tr>
-                <th>Sl.No</th>
+                <th>SL.No</th>
                 <th>Vlt data</th>               
                 <th>Created At </th>
                 <th>Server Time</th>   

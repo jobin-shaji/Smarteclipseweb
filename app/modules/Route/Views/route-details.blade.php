@@ -11,6 +11,7 @@
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route View</li>
+        <b>Route View</b>
      </ol>
     </nav>
     <div class="row">

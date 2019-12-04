@@ -11,6 +11,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Student Notification</li>
+        <b>Add Student Notification</b>
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
