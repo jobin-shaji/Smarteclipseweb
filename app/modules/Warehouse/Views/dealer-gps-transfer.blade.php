@@ -97,6 +97,7 @@
                       <table class="table table-bordered  table-striped " style="width:100%">
                         <thead>
                           <tr>
+                            <th>SL No.</th>
                             <th>Serial Number</th>
                             <th>Batch Number</th>
                             <th>Employee Code</th>
