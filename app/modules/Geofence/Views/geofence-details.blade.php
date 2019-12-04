@@ -32,7 +32,7 @@
         <label>Created By : {{$geofence->clients->name}}</label>
       </div>
       <div class="col-md-4">
-        <label>Created On : {{$geofence->created_at}}</label>
+        <label>Created On : {{date('d-m-Y', strtotime($geofence->updated_at))}}</label>
       </div>
     </div>
            

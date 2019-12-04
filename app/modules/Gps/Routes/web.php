@@ -123,4 +123,10 @@ Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps
 Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
 Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 
+
+
+
+Route::get('/public-vltdata','GpsController@publicVltdataListPage')->name('public-vlt-data');
+Route::post('/public-vltdata-list','GpsController@getPublicVltData')->name('public-vltdata-list');
+
 });
