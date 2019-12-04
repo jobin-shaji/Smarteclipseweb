@@ -1860,7 +1860,7 @@ class VehicleController extends Controller
     public function vehicleOdometerUpdateRules($gps)
     {
         $rules = [
-            'odometer' => 'required',
+            'odometer' => 'required|max:7',
         ];
         return  $rules;  
     }
