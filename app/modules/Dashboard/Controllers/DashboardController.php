@@ -233,7 +233,9 @@ class DashboardController extends Controller
          $servicer_id=$user->servicer->id;
         return response()->json([
             
-            'pending_jobs' => ServicerJob::whereNull('job_complete_date')->where('servicer_id',$servicer_id)->count(), 
+            'pending_jobs' => ServicerJob::whereNull('job_complete_date')
+             ->where('servicer_id',$servicer_id)->where('job_type',1)->count(), 
+             'pending_service_jobs' => ServicerJob::whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(), 
             'completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->count(),
             'status' => 'dbcount'
         ]);
