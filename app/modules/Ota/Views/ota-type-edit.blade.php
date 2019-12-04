@@ -9,8 +9,8 @@
 <div class="page-wrapper-root1">
    <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update Ota Type</li>
-
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update OTA Type</li>
+            <b>OTA Type Updation</b>
          </ol>
           @if(Session::has('message'))
           <div class="pad margin no-print">

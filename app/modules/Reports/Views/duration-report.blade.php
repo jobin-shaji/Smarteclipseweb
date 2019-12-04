@@ -7,7 +7,7 @@ Vehicle Mode Duration Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Vehicle Mode Duration Report</h4>
+        <b>Vehicle Mode Duration Report</b>
       </div>
     </div>
   </div>

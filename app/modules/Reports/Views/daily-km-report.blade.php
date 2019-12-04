@@ -7,7 +7,7 @@ Daily KM Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">  Daily KM Report</h4>
+        <b>  Daily KM Report</b>
       </div>
     </div>
   </div>

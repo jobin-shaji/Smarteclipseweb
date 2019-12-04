@@ -8,6 +8,7 @@
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Operation Manager</li>
+      <b>Add Operation Manager</b>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">

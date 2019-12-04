@@ -10,8 +10,8 @@
   <div class="page-wrapper_new">
       <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-page-heading">Driver Updation</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Edit Driver</li>
+        <b>Driver Updation</b>
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">

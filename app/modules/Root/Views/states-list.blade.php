@@ -21,6 +21,7 @@
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">State List</li>
+        <b>List of States</b>
       </ol>
 </section>
 
@@ -32,10 +33,10 @@
                 <div class="panel-heading">States</div>
                 <div class="table-responsive">
                 <div class="panel-body">
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                         <thead>
                             <tr>
-                              <th>Sl.No</th>
+                              <th>SL.No</th>
                               <th>Name</th>
                               <th style="width:160px;">Action</th>
                             </tr>

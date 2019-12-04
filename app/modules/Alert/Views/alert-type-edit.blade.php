@@ -9,6 +9,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update Alert Type</li>
+        <b>Update Alert Type</b>
       </ol>
       @if(Session::has('message'))
       <div class="pad margin no-print">

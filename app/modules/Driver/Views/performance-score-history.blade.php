@@ -7,7 +7,7 @@ Performance Score History
   	<nav aria-label="breadcrumb">
       	<ol class="breadcrumb">
         	<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Performance score history</li>
-        	<h4>Performance Score History</h4>
+        	<b>Performance Score History</b>
      	</ol>
        	@if(Session::has('message'))
           <div class="pad margin no-print">
@@ -59,7 +59,7 @@ Performance Score History
 				                        		</div>
 				                      		</div>
 				                      	</div>                  
-					                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important" id="dataTable">
+					                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important;text-align: center;" id="dataTable">
 					                        <thead>
 					                            <tr>
 					                              	<th>SL.No</th>

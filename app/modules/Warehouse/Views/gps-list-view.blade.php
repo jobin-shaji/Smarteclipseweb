@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS LIST</li>
-        <h4>GPS List</h4>
+        <b>GPS List</b>
       </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">

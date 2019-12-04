@@ -10,8 +10,9 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-page-heading"><b>Driver List</b></li>
+        <li class="breadcrumb-page-heading"></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Driver List</li>
+        <b>Driver List</b>
        </ol>  
        @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -31,7 +32,7 @@
           <div class="row">
             <div class="col-sm-12">
 
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
                       <th>SL.No</th>                              

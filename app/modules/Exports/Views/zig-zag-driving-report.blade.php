@@ -1,7 +1,7 @@
 <table>
     <thead>
     <tr>
-        <th>Sl.No</th>
+        <th>SL.No</th>
         <th>Vehicle</th>
         <th>Alert Type</th>
         <th>DateTime</th>  

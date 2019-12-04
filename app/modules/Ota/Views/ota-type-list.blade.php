@@ -10,8 +10,8 @@
 <div class="page-wrapper-root1">
    <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Ota Types</li>
-
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View OTA Types</li>
+            <b>OTA Type List</b>
          </ol>
           @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -30,10 +30,10 @@
           <div class="row">
             <div class="col-sm-12">
 
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
-                      <th>Sl.No</th>                              
+                      <th>SL.No</th>                              
                       <th>Name</th>                            
                       <th>Code</th>  
                       <th>Default</th>                              
