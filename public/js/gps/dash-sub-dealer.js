@@ -64,7 +64,7 @@ function subDealerGpsUser(res)
     options: {
     title: {
       display: true,
-      text: ' Users Vehicle'
+      text: ' Users With Vehicle'
     },
       scales: {
       //   yAxes: [{

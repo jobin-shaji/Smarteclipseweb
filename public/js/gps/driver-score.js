@@ -38,6 +38,8 @@ function driverScore(res) {
   responsive: true
   }
   });
+
+  
 }
 function driverBehaviour(driver){
     var url = 'driver-score-alerts';
