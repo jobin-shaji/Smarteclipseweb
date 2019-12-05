@@ -1136,12 +1136,9 @@ $('#gps').find('option').remove();
  
 }
 
-function getClientServicerGps(res){
+    function getClientServicerGps(res){
     if(res)
     {    
-
-
-
         var job_type = $("#job_type option:selected").val();
         if(job_type==""||job_type==undefined){
          alert('select job type!');   
@@ -1158,6 +1155,7 @@ function getClientServicerGps(res){
 }
 function clientGps(res)
 {
+    console.log(res.location);
      $("#gps").empty();
     var expired_documents;
     length=res.devices.length;
@@ -1165,7 +1163,8 @@ function clientGps(res)
  for (var i = 0; i < length; i++) {
          var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
          $("#gps").append(gps);   
-     }    
+     }  
+     $('#search_place').val(res.location); 
 }
 function driverMobileExisted(res)
 {

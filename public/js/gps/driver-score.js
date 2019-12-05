@@ -1,12 +1,9 @@
 $(document).ready(function() {
-  var driver=$('#driver').val();  
-    driverBehaviour(driver); 
-    score(driver);
+  check();
 });
 
 function check(){
   var driver=$('#driver').val();  
-  // alert(driver) ;
     driverBehaviour(driver); 
     score(driver);
 }
@@ -15,11 +12,11 @@ function score(driver){
     var url = 'driver-score';
     var data = {
       driver:driver
-    };
-    
+    };    
     backgroundPostData(url, data, 'driverScore', {alert: false});
 
 }
+ if (myPolarChart) myPolarChart.destroy();
 
 function driverScore(res) {
 // console.log(res.drive_score);
@@ -31,13 +28,9 @@ function driverScore(res) {
   labels: res.drive_data,
   datasets: [{
   data: res.drive_score,
-   backgroundColor:'rgba(242,156,18, 0.2)',
-        borderColor:'rgba(242,156,18,1)',
-  // backgroundColor: [
-    
-  //   ],
-  // hoverBackgroundColor: [],
-  // borderColor: []
+  backgroundColor: [],
+  hoverBackgroundColor: [],
+  borderColor: []
   }],
   borderWidth : 2
   },
@@ -45,6 +38,8 @@ function driverScore(res) {
   responsive: true
   }
   });
+
+  
 }
 function driverBehaviour(driver){
     var url = 'driver-score-alerts';
