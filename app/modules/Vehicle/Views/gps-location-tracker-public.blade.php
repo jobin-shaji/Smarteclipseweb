@@ -1,5 +1,6 @@
 @extends('layouts.api-app')
 @section('content')
+<h3 style="margin-left: 5%"><b>GPS Fix and Non Fix</b></h3>
 <section class="content box">
   <div class="page-wrapper_new_map">
     <div class="panel-heading">

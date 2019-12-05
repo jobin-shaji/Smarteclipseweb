@@ -327,7 +327,7 @@ class SubDealerController extends Controller {
             'name' => 'required',
             'address' => 'required',
             'username' => 'required|unique:users',
-            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
+            'mobile_number' => 'required|numeric|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];

@@ -1,6 +1,7 @@
 @extends('layouts.api-app')
 
 @section('content')
+<h3 style="margin-left: 5%"><b>Console</b></h3>
 
 <section class="hilite-content">
 
