@@ -83,19 +83,28 @@ $(function(){
                           var gps_serial_no=res.gps_serial_no;
                           var gps_batch_number=res.gps_batch_number;
                           var gps_employee_code=res.gps_employee_code;
-                          $("#gps_id").val(items); 
-                          var sl_no = document.getElementById('stock_table').rows.length;
-                          var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>"+ sl_no + "</td><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                          $("#gps_id").val(items);
+                          var old_device_count = $('#scanned_device_count').text();
+                          var scanned_device_count = parseInt(old_device_count)+1;
+                          $('#scanned_device_count').text(scanned_device_count);
+                          var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                           $("table tbody").append(markup);
                           var value = $('#gps_id').val();
                           if (value) {
                             $("#transfer_button").show();
                           }
                           document.getElementById('scanner').value = "";
+                          $("#scanner").focus();
                           toastr.success('Scanned Successfully');
                       }
-                  }else{
+                  }else if(res.status == 0){
                     toastr.error('Could not find this device');
+                  }else if(res.status == 2){
+                    toastr.error('Device not found in stock');
+                  }else if(res.status == 3){
+                    toastr.error('Device already transferred');
+                  }else if(res.status == 4){
+                    toastr.error('Please accept this device for transaction');
                   }
                 }
             });
@@ -121,7 +130,10 @@ function deleteValueArray(gps_id){
   if (item_data > -1) {
       items.splice(item_data, 1);
       $('.cover_imei_'+gps_id).remove();
-      $('#gps_id').val(items);
+      var old_device_count = $('#scanned_device_count').text();
+      var scanned_device_count = parseInt(old_device_count)-1;
+      $('#scanned_device_count').text(scanned_device_count);
+      $('#gps_id').val(items); 
       var value = $('#gps_id').val();
       if (value) {
         $("#transfer_button").show();

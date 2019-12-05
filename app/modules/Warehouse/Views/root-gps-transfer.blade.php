@@ -88,6 +88,9 @@
                           <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
                         </span>
                       @endif
+                    </div>  
+                    <div class="form-group has-feedback">
+                      <label>Scanned GPS Count : <span id="scanned_device_count">0</span></label>
                     </div>                   
                     <div class="form-group has-feedback">
                       <label class="srequired">GPS List</label>
@@ -95,7 +98,6 @@
                         <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;">
                           <thead>
                             <tr>
-                              <th>SL No.</th>
                               <th>Serial Number</th>
                               <th>Batch Number</th>
                               <th>Employee Code</th>
@@ -119,9 +121,11 @@
                       <div id="warn">Please connect your camera to scan QR code.</div>
                       <video id="preview" style="height:100%; width: 100%;"></video>
                     </div> -->
-                    <textarea id="scanner" autofocus="autofocus" style="height:30%; width: 100%;" placeholder="Please click here for scanning.."></textarea>
-                    <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
-                    <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
+                    <div style="position: absolute; bottom: 0;">
+                      <textarea id="scanner" autofocus="autofocus" style="height:50%;width: 100%;" placeholder="Please click here for scanning.."></textarea>
+                      <button type="button" class="btn btn-primary" id="add_qr_button" >ADD</button>
+                      <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
+                    </div>
                   </div>
                 </div>
 
