@@ -255,7 +255,7 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
+            'mobile_number' => 'required|numeric|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
             
         ];
         return  $rules;
@@ -265,7 +265,7 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
+            'mobile_number' => 'required|numeric|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
             
         ];
         return  $rules;
