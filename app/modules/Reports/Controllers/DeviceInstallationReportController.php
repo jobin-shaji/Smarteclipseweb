@@ -47,7 +47,7 @@ class DeviceInstallationReportController extends Controller {
             'job_id',
             'job_type',
             'description',
-            'job_complete_date',                
+            \DB::raw('Date(job_complete_date) as job_complete_date'),                
             'location',
             'gps_id'
         )
@@ -55,8 +55,8 @@ class DeviceInstallationReportController extends Controller {
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
-        ->whereDate('job_complete_date', '>=', $from_date)
-        ->whereDate('job_complete_date', '<=', $to_date);
+        ->where('job_complete_date', '>=', $from_date)
+        ->where('job_complete_date', '<=', $to_date);
         if($client_id==0 && $servicer_id==0)
         { 
            $completed_jobs =$completed_jobs->whereIn('client_id',$all_clients)->whereIn('servicer_id',$all_servicers);
