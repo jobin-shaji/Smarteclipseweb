@@ -124,3 +124,59 @@ Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps
 Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
 
 });
+
+
+//for packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+	Route::get('/packet-split-data','PacketSplitController@packetSplitListPage')->name('packet.split');
+	Route::post('/allpacket-list','PacketSplitController@getPacketAllData')->name('allpacket.list');
+	
+});
+//for lgn packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+	Route::get('/lgn-split-data','LgnController@lgnSplitListPage')->name('lgn.split');
+	Route::post('/alllgn-list','LgnController@getLgnAllData')->name('alllgn.list');
+	
+});
+//for hln packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+	Route::get('/hlm-split-data','HlmController@hlmSplitListPage')->name('hlm.split');
+	Route::post('/allhlm-list','HlmController@getHlmAllData')->name('allhlm.list');
+	
+});
+// /for ful packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/ful-split-data','FulController@FulListPage')->name('ful.split');
+Route::post('/allful-list','FulController@getFulAllData')->name('allful.list');
+	
+});
+// /for ack packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/ack-split-data','AckController@AckListPage')->name('ack.split');
+Route::post('/allack-list','AckController@getAckAllData')->name('allack.list');
+	
+});
+// /for alt packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/alt-split-data','AltController@AltListPage')->name('alt.split');
+Route::post('/allalt-list','AltController@getAltAllData')->name('allalt.list');
+	
+});
+// /for alt packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/crt-split-data','CrtController@CrtListPage')->name('crt.split');
+Route::post('/allcrt-list','CrtController@getCrtAllData')->name('allcrt.list');
+	
+});
+// /for alt packet
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+Route::get('/epb-split-data','EpbController@EpbListPage')->name('epb.split');
+Route::post('/allepb-list','EpbController@getEpbAllData')->name('allepb.list');
+	
+});
+
