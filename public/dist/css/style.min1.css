@@ -737,7 +737,7 @@ section.content-header.root_content_header {
 }
 
 .container-fluid {
-    width: 100%;
+    width: 101%;
     padding-right: 10px;
     padding-left: 10px;
     margin-right: auto;
@@ -5402,7 +5402,8 @@ input[type=submit].btn-block {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 0.6rem
+    /*padding: 0.6rem*/
+    margin-right: 15px!important;
 }
 
 .card-title {

@@ -71,15 +71,15 @@
                 <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                     <thead>
                         <tr>
-                          <th>SL.No</th>                                   
-                          <th>Job Code</th>                              
-                          <th>Client</th>                            
-                          <th>Job Type </th>
-                          <th>Servicer</th>
-                          <th>GPS Serial Number</th>                       
-                          <th>Description</th>                              
-                          <th>Job Location</th>                            
-                          <th>Job Complete Date </th>
+                          <th><b>SL.No</b></th>                                   
+                          <th><b>Job Code</b></th>                              
+                          <th><b>Client</b></th>                            
+                          <th><b>Job Type </b></th>
+                          <th><b>Servicer</b></th>
+                          <th><b>GPS Serial Number</b></th>                       
+                          <th><b>Description</b></th>                              
+                          <th><b>Job Location</b></th>                            
+                          <th><b>Job Complete Date </b></th>
                         </tr>
                     </thead>
                 </table>
