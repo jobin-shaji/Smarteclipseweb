@@ -19,7 +19,7 @@ function check(){
 }
 
 
-function callBackDataTable(data=null){
+function callBackDataTable(data){
     // var  data = {
     
     // }; 
@@ -51,7 +51,7 @@ function callBackDataTable(data=null){
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'description', name: 'description', orderable: false},
             {data: 'points', name: 'points', orderable: false},
-            {data: 'created_at', name: 'created_at', orderable: false},         
+            {data: 'date', name: 'date', orderable: false},         
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
