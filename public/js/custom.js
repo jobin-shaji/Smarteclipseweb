@@ -235,8 +235,6 @@ function backgroundPostData(url, data, callBack, options) {
                     driverScore(res);
                 }else if(callBack =='driverScoreAlerts'){
                     driverScoreAlerts(res);
-                }else if(callBack == 'emergencyAlert'){
-                    emergencyAlert(res);
                 }else if(callBack == 'continuousAlert'){
                     continuousAlert(res);
                 }else if(callBack == 'getPlaceName'){
@@ -388,34 +386,6 @@ function backgroundPostData(url, data, callBack, options) {
         }
     });
 
-}
-
-function emergencyAlert(res){
-    if(res.status == 'success'){
-        var latitude=res.alerts[0].latitude;
-        var longitude=res.alerts[0].longitude;
-        getPlaceNameFromLatLng(latitude,longitude);
-        var vehicle_id=res.alerts[0].gps.vehicle.id;
-        if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
-            $("#header-emergency").show();
-            document.getElementById("header_em_id").value = res.alerts[0].id;
-            document.getElementById("header_alert_vehicle_id").value = res.vehicle;
-            document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
-            $('#header_emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
-            $('#header_emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
-            $('#header_emergency_vehicle_time').text(res.alerts[0].device_time);
-        }else{
-            var modal = document.getElementById('emergency');
-            modal.style.display = "block";
-            document.getElementById("em_id").value = res.alerts[0].id;
-            document.getElementById("alert_vehicle_id").value = res.vehicle;
-            document.getElementById("decrypt_vehicle_id").value = vehicle_id;
-            $('#emergency_vehicle_driver').text(res.alerts[0].gps.vehicle.driver.name);
-            $('#emergency_vehicle_number').text(res.alerts[0].gps.vehicle.register_number);
-            $('#emergency_vehicle_time').text(res.alerts[0].device_time);
-        }
-       
-    }
 }
 
 function openPremium(){
@@ -1009,15 +979,6 @@ $(function () {
         event.preventDefault();
         $(this).closest('.navbar-minimal').toggleClass('open');
     })
- 
-
-    setInterval(function() {
-        var url = 'emergency-alert';
-        var data = {
-        };
-        backgroundPostData(url,data,'emergencyAlert',{alert:false});
-    }, 8000);
-
 });
 
 function clearLocalStorage(){
@@ -1261,12 +1222,33 @@ function rootSubdealer(res)
 // ---------------check notification-----------------------------------
 
     function notificationCount(res){
-        
         if(res.status=="success"){
             var count_notification=res.notification_count;
-            
-                $("#bell_notification_count").text(count_notification);
-                      
+            $("#bell_notification_count").text(count_notification);          
+        }
+        if(res.emergency_response.status == 'success'){
+            var latitude=res.emergency_response.alerts[0].latitude;
+            var longitude=res.emergency_response.alerts[0].longitude;
+            getPlaceNameFromLatLng(latitude,longitude);
+            var vehicle_id=res.emergency_response.alerts[0].gps.vehicle.id;
+            if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
+                $("#header-emergency").show();
+                document.getElementById("header_em_id").value = res.emergency_response.alerts[0].id;
+                document.getElementById("header_alert_vehicle_id").value = res.emergency_response.vehicle;
+                document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
+                $('#header_emergency_vehicle_driver').text(res.emergency_response.alerts[0].gps.vehicle.driver.name);
+                $('#header_emergency_vehicle_number').text(res.emergency_response.alerts[0].gps.vehicle.register_number);
+                $('#header_emergency_vehicle_time').text(res.emergency_response.alerts[0].device_time);
+            }else{
+                var modal = document.getElementById('emergency');
+                modal.style.display = "block";
+                document.getElementById("em_id").value = res.emergency_response.alerts[0].id;
+                document.getElementById("alert_vehicle_id").value = res.emergency_response.vehicle;
+                document.getElementById("decrypt_vehicle_id").value = vehicle_id;
+                $('#emergency_vehicle_driver').text(res.emergency_response.alerts[0].gps.vehicle.driver.name);
+                $('#emergency_vehicle_number').text(res.emergency_response.alerts[0].gps.vehicle.register_number);
+                $('#emergency_vehicle_time').text(res.emergency_response.alerts[0].device_time);
+            }
         }
     }
 
