@@ -446,8 +446,12 @@ class AlertController extends Controller {
         ]);
         }
         else{
-           return response()->json([                          
-                'status' => 'failed'           
+            $response=[
+                    'status' => 'failed'
+                ];
+            return response()->json([                          
+                'status' => 'failed',  
+                'emergency_response' => $response
             ]);   
         }  
     }
