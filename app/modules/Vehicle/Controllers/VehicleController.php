@@ -369,7 +369,8 @@ class VehicleController extends Controller
         $user_role=$user->roles->first()->name;
         if($user_role=='client')
         {
-            return redirect(route('vehicles.details',$encrypted_vehicle_id));
+            return redirect()->back();
+            // return redirect(route('vehicles.details',$encrypted_vehicle_id));
         }
         else
         {
@@ -685,6 +686,7 @@ class VehicleController extends Controller
             $vehicle_id[]=$vehicle->id;
         }
         $vehicle_documents = Document::select(
+            'id',
             'vehicle_id',
             'document_type_id',
             'expiry_date',
@@ -717,7 +719,6 @@ class VehicleController extends Controller
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
         } 
         $vehicle_documents =$vehicle_documents->get();
-
         return DataTables::of($vehicle_documents)
             ->addIndexColumn()
             ->addColumn('status', function ($vehicle_documents) {
@@ -737,7 +738,9 @@ class VehicleController extends Controller
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
                 $path = url($b_url.'/documents').'/'.$vehicle_documents->path;
-                return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+                return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
+               
+               <a href=".$b_url."/vehicle-doc/".Crypt::encrypt($vehicle_documents->id)."/delete class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'>Delete </a>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
