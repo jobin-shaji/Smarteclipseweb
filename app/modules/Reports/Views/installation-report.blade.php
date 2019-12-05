@@ -78,7 +78,7 @@
                           <th>Servicer</th>
                           <th>GPS Serial Number</th>                       
                           <th>Description</th>                              
-                          <th>Location</th>                            
+                          <th>Job Location</th>                            
                           <th>Job Complete Date </th>
                         </tr>
                     </thead>
