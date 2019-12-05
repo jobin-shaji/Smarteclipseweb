@@ -8,8 +8,6 @@ Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashbo
         Route::post('/vehicle-detail','DashboardController@vehicleDetails')->name('vehicle.detail');
         Route::post('/dash-vehicle-track','DashboardController@dashVehicleTrack')->name('dash.vehicle.track');
         Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
-        
-        Route::post('/emergency-alert','DashboardController@emergencyAlerts')->name('emergency.alerts');
 
         Route::post('/emergency-alert/verify','DashboardController@verifyEmergencyAlert')->name('emergency-alert.verify');
 

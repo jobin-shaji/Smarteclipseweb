@@ -12,6 +12,7 @@ use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Warehouse\Models\GpsStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use DataTables;
@@ -402,12 +403,49 @@ class AlertController extends Controller {
         ->where('status',0)
         ->get()
         ->count();
-            return response()->json([                          
-                'notification_count' => $alert,
-                'status' => 'success',
-                'flag' => $flag          
-            ]);
+
+        $all_gps=GpsStock::where('client_id',$client_id)->get();
+        $single_gps=[];
+        foreach ($all_gps as $gps) {
+            $single_gps[]=$gps->gps_id;
+        }
+        $alerts = Alert::select(
+            'id',
+            'alert_type_id',
+            'gps_id',
+            'latitude',
+            'longitude',
+            'device_time'
+        )
+        //->with('vehicle:id,name,register_number,driver_id')
+        ->with('gps.vehicle')
+        ->with('gps.vehicle.driver')
+        ->whereIn('gps_id',$single_gps)
+        ->where('alert_type_id',21)
+        ->where('status',0)
+        ->get();
+        if(sizeof($alerts) == 0){
+            $response=[
+                'status' => 'failed'
+            ];
         }else{
+            $vehicle_id=$alerts[0]->gps->vehicle->id;
+            $vehicle_id = Crypt::encrypt($vehicle_id);
+            $response = [
+                'status' => 'success',
+                'alerts' => $alerts,
+                'vehicle' => $vehicle_id
+            ];
+        }
+
+        return response()->json([                          
+            'notification_count' => $alert,
+            'status' => 'success',
+            'flag' => $flag,
+            'emergency_response' => $response       
+        ]);
+        }
+        else{
            return response()->json([                          
                 'status' => 'failed'           
             ]);   
