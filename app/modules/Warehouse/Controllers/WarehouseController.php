@@ -199,48 +199,125 @@ class WarehouseController extends Controller {
     //get scanned gps and check gps status
     public function getScannedGps(Request $request)
     {
-        $device_serial_no=$request->serial_no;
+        $device_serial_no= trim($request->serial_no," ,\0,\n,\x0B,\r");
         $user = \Auth::user();
-        $user_stock_devices=[];
-        if($user->hasRole('root'))
-        {
-            $stock_devices = GpsStock::select('id', 'gps_id','dealer_id')
-                            ->where('dealer_id',null)->get();
-        }else if($user->hasRole('dealer')){
-            $dealer_id=$user->dealer->id;
-            $stock_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
-                            ->where('dealer_id',$dealer_id)->where('subdealer_id',null)->get();
-        }else if($user->hasRole('sub_dealer')){
-            $subdealer_id=$user->subdealer->id;
-            $stock_devices = GpsStock::select('id', 'gps_id','subdealer_id','client_id')
-                            ->where('subdealer_id',$subdealer_id)->where('client_id',null)->get();
-        }
-        foreach($stock_devices as $device){
-            $user_stock_devices[] = $device->gps_id;
-        }
         $device = Gps::select('id', 'serial_no','batch_number','employee_code')
-                        ->whereIn('id',$user_stock_devices)
                         ->where('serial_no',$device_serial_no)
                         ->first();
-        if($device==null){
+        if($device != null)
+        {
+            $device_in_stock = GpsStock::where('gps_id',$device->id)->first();
+            if($device_in_stock != null)
+            {
+                if($user->hasRole('root'))
+                {
+                    $stock_devices = GpsStock::select('id', 'gps_id','dealer_id')
+                                    ->where('dealer_id',null)->where('gps_id',$device->id)->count();
+                    if($stock_devices != 0){
+                        $gps_id=$device->id;
+                        $gps_serial_no=$device->serial_no;
+                        $gps_batch_number=$device->batch_number;
+                        $gps_employee_code=$device->employee_code;
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'gps_id' => $gps_id,
+                            'gps_serial_no' => $gps_serial_no,
+                            'gps_batch_number' => $gps_batch_number,
+                            'gps_employee_code' => $gps_employee_code
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+                }else if($user->hasRole('dealer')){
+                    $dealer_id=$user->dealer->id;
+                    $stock_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
+                        ->where('dealer_id',$dealer_id)->where('subdealer_id',null)->where('gps_id',$device->id)->count();
+                    $non_accepted_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
+                        ->where('dealer_id',0)->where('subdealer_id',null)->where('gps_id',$device->id)->count();
+
+                    if($stock_devices != 0){
+                        $gps_id=$device->id;
+                        $gps_serial_no=$device->serial_no;
+                        $gps_batch_number=$device->batch_number;
+                        $gps_employee_code=$device->employee_code;
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'gps_id' => $gps_id,
+                            'gps_serial_no' => $gps_serial_no,
+                            'gps_batch_number' => $gps_batch_number,
+                            'gps_employee_code' => $gps_employee_code
+                        ));
+                    }else if( $non_accepted_devices != 0){
+                        return response()->json(array(
+                            'status' => 4,
+                            'message' => 'Please accept this device for transaction',
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+
+                }else if($user->hasRole('sub_dealer')){
+                    $subdealer_id=$user->subdealer->id;
+                    $stock_devices = GpsStock::select('id', 'gps_id','subdealer_id','client_id')
+                        ->where('subdealer_id',$subdealer_id)->where('client_id',null)->where('gps_id',$device->id)->count();
+                    $non_accepted_devices = GpsStock::select('id', 'gps_id','subdealer_id','client_id')
+                        ->where('subdealer_id',0)->where('client_id',null)->where('gps_id',$device->id)->count();
+
+                    if($stock_devices != 0){
+                        $gps_id=$device->id;
+                        $gps_serial_no=$device->serial_no;
+                        $gps_batch_number=$device->batch_number;
+                        $gps_employee_code=$device->employee_code;
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'gps_id' => $gps_id,
+                            'gps_serial_no' => $gps_serial_no,
+                            'gps_batch_number' => $gps_batch_number,
+                            'gps_employee_code' => $gps_employee_code
+                        ));
+                    }else if( $non_accepted_devices != 0){
+                        return response()->json(array(
+                            'status' => 4,
+                            'message' => 'Please accept this device for transaction',
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+                }
+            }
+            else
+            {
+                return response()->json(array(
+                    'status' => 2,
+                    'message' => 'Device not found in stock',
+                ));
+            }
+        }
+        else
+        {
             return response()->json(array(
                 'status' => 0,
-                'title' => 'Error',
+                'message' => 'Device not found',
             ));
-        }else{
-            $gps_id=$device->id;
-            $gps_serial_no=$device->serial_no;
-            $gps_batch_number=$device->batch_number;
-            $gps_employee_code=$device->employee_code;
-            return response()->json(array(
-                'status' => 1,
-                'title' => 'success',
-                'gps_id' => $gps_id,
-                'gps_serial_no' => $gps_serial_no,
-                'gps_batch_number' => $gps_batch_number,
-                'gps_employee_code' => $gps_employee_code
-            ));
-        } 
+        }
     }
 
     //get address and mobile details based on dealer selection

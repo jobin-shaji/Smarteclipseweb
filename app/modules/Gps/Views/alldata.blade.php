@@ -10,10 +10,10 @@
             <div class="panel panel-default">
                 <div class="table-responsive">
                 <div class="panel-body">
-                    <table class="table table-hover table-bordered  table-striped " style="width:100%;">
+                    <table class="table table-hover table-bordered  table-striped " style="width:100%;text-align: center;">
                         <thead>
                             <tr>
-                              <th>Sl.No</th>
+                              <th>SL.No</th>
                               <th>IMEI</th>
                               <th>size</th>
                               <th>date</th>

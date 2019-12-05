@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS List</li>
-        <h4>SOS List</h4>
+        <b>SOS List</b>
       </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -24,11 +24,11 @@
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
-                              <div class="col-md-11 col-md-offset-1">
+                              <!-- <div class="col-md-11 col-md-offset-1">
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
-                                      <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="text-align: center;">
+                                      <div class="panel-body"> -->
+                                          <table class="table table-bordered  table-striped " style="text-align: center;margin-left: 1%!important">
                                             <thead>
                                               <tr>
                                                 <th><b>SL.No</b></th>
@@ -39,6 +39,15 @@
                                               </tr>
                                             </thead>
                                             <tbody>
+                                              @if($devices->count() ==0)
+                                              <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b style="margin-right: -12%;float: right;">No Data</b></td>
+                                                <td><b style="float: left;margin-left: -4%">Available</b></td>
+                                                <td></td>
+                                              </tr>
+                                              @endif
                                               @foreach($devices as $device)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
@@ -50,10 +59,10 @@
                                               @endforeach
                                             </tbody>
                                           </table>
-                                      </div>
+                                      <!-- </div>
                                     </div>
                                   </div>
-                              </div>
+                              </div> -->
                           </div>
                       </section>
                     </div>                

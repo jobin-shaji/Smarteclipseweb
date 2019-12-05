@@ -7,7 +7,7 @@ Alert Report
     <div class="page-breadcrumb">
       <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">  Alert Report</h4>
+          <b>  Alert Report</b>
         </div>
       </div>
     </div>
@@ -51,13 +51,13 @@ Alert Report
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                      
                                     <label> From Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif">
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif" autocomplete="off">
                                   </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                     
                                     <label> To Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($alertReports)) {{$to}} @endif">
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($alertReports)) {{$to}} @endif" autocomplete="off">
                                   </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-5">  
@@ -80,15 +80,25 @@ Alert Report
                         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                           <thead>
                             <tr style="text-align: center;">
-                              <th>SL.No</th>
-                              <th>Vehicle</th>
-                              <th>Register number</th>
-                              <th>Alert Type</th>                             
-                              <th>DateTime</th>  
-                              <th>Action</th>                                   
+                              <th><b>SL.No</b></th>
+                              <th><b>Vehicle</b></th>
+                              <th><b>Register number</b></th>
+                              <th><b>Alert Type</b></th>                             
+                              <th><b>DateTime</b></th>  
+                              <th><b>Action</b></th>                                   
                             </tr>
                           </thead>
                           <tbody>
+                            @if($alertReports->count() == 0)
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td><b style="float: right;margin-right: -13px">No data</b></td>
+                              <td><b style="float: left;margin-left: -15px">Available</b></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            @endif
                             @foreach($alertReports as $alertReport)                  
                             <tr>           
                               <td>{{ $loop->iteration }}</td>

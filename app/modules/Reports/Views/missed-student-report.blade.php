@@ -8,6 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Missed Student Report</li>
+          <b>Student Missing Report</b>
        </ol>         
     </nav>  
     <div class="container-fluid">

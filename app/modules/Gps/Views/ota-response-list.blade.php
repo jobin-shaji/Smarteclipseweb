@@ -8,7 +8,7 @@ OTA Response
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">OTA Response</h4>
+        <b>OTA Response</b>
       </div>
     </div>
   </div>
@@ -28,10 +28,10 @@ OTA Response
                           <option value="{{$gps->id}}">{{$gps->imei}}</option>
                         @endforeach
                       </select>             
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;margin-top: 3%" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;margin-top: 3%;text-align: center;" id="dataTable">
                         <thead>
                            <tr>
-                            <th>Sl.No</th>                
+                            <th>SL.No</th>                
                             <th>Response</th>  
                             <th>Sent at</th> 
                             <th>Verified at</th>                      

@@ -30,10 +30,10 @@
 </section>
 <div class="clearfix"></div>
 <section class="content">          
-      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
           <thead>
               <tr>
-                <th>Sl.No</th>
+                <th>SL.No</th>
                 <th>IMEI</th>
                 <th>Size</th>
                 <th>Device Date</th>

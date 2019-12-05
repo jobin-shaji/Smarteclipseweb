@@ -1,7 +1,7 @@
 <table>
     <thead>
     <tr>
-        <th>Sl.No</th>
+        <th>SL.No</th>
         <th>Vehicle</th>
         <th>Register Number</th>
         <th>Scheduling Route</th>

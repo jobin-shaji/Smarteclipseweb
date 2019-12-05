@@ -11,6 +11,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Geofence View</li>
+        <b>Geofence View</b>
      </ol>
      @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -31,7 +32,7 @@
         <label>Created By : {{$geofence->clients->name}}</label>
       </div>
       <div class="col-md-4">
-        <label>Created On : {{$geofence->created_at}}</label>
+        <label>Created On : {{date('d-m-Y', strtotime($geofence->updated_at))}}</label>
       </div>
     </div>
            

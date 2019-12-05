@@ -1,6 +1,5 @@
 $(document).ready(function () {
-// var value=0;
-    callBackDataTable();
+    // callBackDataTable();
 });
 document.getElementById("geofence").style.visibility = "hidden";
     var checkboxes = document.getElementsByName('checkbox1');

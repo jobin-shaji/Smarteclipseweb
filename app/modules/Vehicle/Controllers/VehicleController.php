@@ -204,6 +204,9 @@ class VehicleController extends Controller
            return view('Vehicle::404');
         }
         $old_odometer=$gps->km;
+        //  $custom_messages = [
+        // 'name.required' => 'Please mention the reason'
+        // ];
         $rules = $this->vehicleOdometerUpdateRules($gps);
         $this->validate($request, $rules);
         $odometer_in_km=$request->odometer;
@@ -366,7 +369,8 @@ class VehicleController extends Controller
         $user_role=$user->roles->first()->name;
         if($user_role=='client')
         {
-            return redirect(route('vehicles.details',$encrypted_vehicle_id));
+            return redirect()->back();
+            // return redirect(route('vehicles.details',$encrypted_vehicle_id));
         }
         else
         {
@@ -644,6 +648,7 @@ class VehicleController extends Controller
             'to_driver_id',
             'client_id',
             'created_at'
+            // \DB::raw('DATE_FORMAT(created_at, "%d-%m-%Y") as created_at')
         )
         ->where('client_id',$client_id)
         ->with('Fromdriver:id,name')
@@ -674,17 +679,19 @@ class VehicleController extends Controller
         $selected_vehicle_id= $request->vehicle_id; 
         $selected_status= $request->status; 
         $vehicles=Vehicle::select('id','name','register_number','client_id')
-                            ->where('client_id',$client_id)
-                            ->get();
+        ->where('client_id',$client_id)
+        ->get();
         $vehicle_id=[];
         foreach ($vehicles as $vehicle) {
             $vehicle_id[]=$vehicle->id;
         }
         $vehicle_documents = Document::select(
-        'vehicle_id',
-        'document_type_id',
-        'expiry_date',
-        'path'
+            'id',
+            'vehicle_id',
+            'document_type_id',
+            'expiry_date',
+            \DB::raw('DATE_FORMAT(expiry_date, "%d-%m-%Y") as updated_expiry_date'),
+            'path'
         )
         ->with('documentType:id,name')
         ->with('vehicle:id,name,register_number');
@@ -712,7 +719,6 @@ class VehicleController extends Controller
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
         } 
         $vehicle_documents =$vehicle_documents->get();
-
         return DataTables::of($vehicle_documents)
             ->addIndexColumn()
             ->addColumn('status', function ($vehicle_documents) {
@@ -732,7 +738,9 @@ class VehicleController extends Controller
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
                 $path = url($b_url.'/documents').'/'.$vehicle_documents->path;
-                return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>";
+                return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
+               
+               <a href=".$b_url."/vehicle-doc/".Crypt::encrypt($vehicle_documents->id)."/delete class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'>Delete </a>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
@@ -1860,11 +1868,10 @@ class VehicleController extends Controller
     public function vehicleOdometerUpdateRules($gps)
     {
         $rules = [
-            'odometer' => 'required',
+            'odometer' => 'required|numeric|digits_between:0,7',
         ];
         return  $rules;  
     }
-
     public function vehicleModelUpdateRules($vehicle)
     {
         $rules = [

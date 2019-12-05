@@ -23,7 +23,7 @@ All Alerts
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
           <div class="row">
             <div class="col-sm-12">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" >
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
                 <thead>
                   <tr>
                     <th><b>SL.No</b></th>

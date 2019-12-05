@@ -12,7 +12,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer</li>
-        <h4>GPS Transfer</h4>
+        <b>GPS Transfer</b>
         @if(Session::has('message'))
           <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-warning') }}" style="margin-bottom: 0!important;">
@@ -90,11 +90,13 @@
                     @endif
                   </div>
                   
-
+                  <div class="form-group has-feedback">
+                    <label>Scanned GPS Count: <span id="scanned_device_count">0</span></label>
+                  </div> 
                   <div class="form-group has-feedback">
                     <label class="srequired">GPS List</label>
                       <input type="hidden" name="gps_id[]" id="gps_id" value="">
-                      <table class="table table-bordered  table-striped " style="width:100%">
+                      <table class="table table-bordered  table-striped " id="stock_table" style="width:100%">
                         <thead>
                           <tr>
                             <th>Serial Number</th>
@@ -121,9 +123,11 @@
                     <video id="preview" style="height:100%; width: 100%;"></video>
                   </div>
                 </div> -->
-                <textarea id="scanner" autofocus="autofocus" style="height:30%; width: 100%;" placeholder="Please click here for scanning.."></textarea>
-                <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
-                <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
+                <div style="position: absolute; bottom: 0;">
+                  <textarea id="scanner" autofocus="autofocus" style="height:30%; width: 100%;" placeholder="Please click here for scanning.."></textarea>
+                  <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
+                  <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
+                </div>
               </div>
 
               <div class="row">

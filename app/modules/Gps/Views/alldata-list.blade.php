@@ -212,10 +212,10 @@
 <section class="content" >
 <!-- <div class=col-md-8>           -->
   <div class="col-md-6" style="overflow: scroll">
-      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:70%;font-size: 13.5px!important">
+      <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:70%;font-size: 13.5px!important;text-align: center;">
           <thead>
               <tr>
-                <th>Sl.No</th>
+                <th>SL.No</th>
                 <th>IMEI</th>
                 <th>Size</th>
                 <th>Device Date</th>

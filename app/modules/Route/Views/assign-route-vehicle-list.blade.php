@@ -7,8 +7,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Route List</li>
-        <h4>Route List</h4>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Assign Route</li>
+        <b>Assign Route</b>
      </ol>
     </nav>
  
@@ -63,7 +63,7 @@
                         </div>
                       </div>
                       </div>
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
                       <th>SL</th>

@@ -8,6 +8,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Update vehicle models Details</li>
+        <b>Vehicle Model Updation</b>
       </ol>
       @if(Session::has('message'))
       <div class="pad margin no-print">

@@ -10,7 +10,7 @@
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Distributors List</li>
-      <h4>Distributors List</h4>
+      <b>Distributors List</b>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -28,10 +28,10 @@
           <div class="row">
             <div class="col-sm-12">
 
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
-                      <th>Sl.No</th>
+                      <th>SL.No</th>
                       <th>Name</th>                            
                       <th>Address</th>                              
                       <th>Mobile</th>                            

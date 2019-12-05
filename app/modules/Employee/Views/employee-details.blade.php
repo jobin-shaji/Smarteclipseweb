@@ -7,8 +7,8 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-page-heading">Employee Details</li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Employee Details</li>
+        <b>Details of Employee</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">

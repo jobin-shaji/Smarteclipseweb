@@ -7,7 +7,7 @@ Over Speed Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title"> Over Speed Report</h4>
+        <b> Over Speed Report</b>
       </div>
     </div>
   </div>

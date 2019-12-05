@@ -100,6 +100,7 @@ class DriverController extends Controller {
              // <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
             return "
             <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit </a>
+            <a href=".$b_url."/single-drivers-score/".Crypt::encrypt($driver->id)." class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'>Driver Score </a>
             
             <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
         }else{                   
@@ -226,7 +227,7 @@ class DriverController extends Controller {
         $driver_id= $request->driver_id;            
         $from = $request->from_date;
         $to = $request->to_date;
-
+        // dd($driver_id);
         $drivers = Driver::where('client_id',$client_id)->get();
         $single_drivers = [];
         foreach($drivers as $driver){
@@ -264,24 +265,26 @@ class DriverController extends Controller {
                 $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
                 ->where('driver_id',$driver_id);
                 if($from){
-                  $search_from_date=date("Y-m-d", strtotime($from));                      
+                  $search_from_date=date("Y-m-d", strtotime($from));
                   $search_to_date=date("Y-m-d", strtotime($to));
                   $performance_Score = $performance_Score->whereDate('created_at', '>=', $search_from_date)
                   ->whereDate('created_at', '<=', $search_to_date);
                 }
             }       
-             $performance_Score = $performance_Score->get();
+            $performance_Score = $performance_Score->get();
             return DataTables::of($performance_Score)
             ->addIndexColumn()
             ->addColumn('description', function ($performance_Score) {
                 $description=$performance_Score->alert->alertType->description;
-                return $description;
-                    
+                return $description;                    
+            })  
+            ->addColumn('date', function ($performance_Score) {
+                $date=date("H:i:s d-m-y", strtotime($performance_Score->created_at));
+                return $date;                    
             })            
         ->rawColumns(['link', 'action'])
         ->make();
     }
-
     //driver score page
     public function driverScorePage()
     {
@@ -296,28 +299,44 @@ class DriverController extends Controller {
        return view('Driver::driver-score',['drivers' => $drivers]);
     }
 
+
+    public function singleDriverScorePage(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $driver = Driver::find($decrypted);       
+        if($driver == null)
+        {
+           return view('Driver::404');
+        }
+        return view('Driver::single-driver-score',['id' => $decrypted]);
+        // return view('Driver::driver-score',['id' => $request->id]);
+
+    }
+
     //driver score
     public function driverScore(Request $request)
     {
         $driver=$request->driver;
-        if($driver){
-            $driver_id=$request->driver;
-        }
-        else
-        {
-           $driver_id=0; 
-        }
+       
+        // if($driver){
+        //     $driver_id=$request->driver;
+        // }
+        // else
+        // {
+        //    $driver_id=0; 
+        // }
         $client_id=\Auth::user()->client->id;
         $drivers = Driver::select(
-                'id',
-                'name',
-                'points')
-                ->where('client_id',$client_id);
-                if($driver!=0)
-                {
-                  $drivers=$drivers->where('id',$driver_id);  
-                }
-                $drivers=$drivers->get();
+            'id',
+            'name',
+            'points'
+        )
+        ->where('client_id',$client_id);
+        if($driver)
+        {
+          $drivers=$drivers->where('id',$driver);  
+        }
+        $drivers=$drivers->get();
         $single_driver_name = [];
         $single_driver_point = [];
         foreach($drivers as $driver){

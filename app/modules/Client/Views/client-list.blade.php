@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/End User List</li>
-        <h4>End User List</h4>
+        <b>End User List</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">

@@ -7,7 +7,7 @@ Total KM Report
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Vehicle Report</h4>
+        <b>Vehicle Report</b>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@ Total KM Report
                       </div>
                     </div>  
                     <div class="col-md-12">                               
-                      <div class="row">
+                      <div class="row" style="margin-left: 2.5%!important">
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/sudden-accelaration.png" width="10%" height="60px" class="report_img"/>

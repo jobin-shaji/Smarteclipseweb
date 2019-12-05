@@ -11,6 +11,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Traffic Rules List </li>
+        <b>Traffic Rules View</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -27,7 +28,7 @@
           <div class="row">
             <div class="col-sm-12">
 
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
                       <th>#</th>

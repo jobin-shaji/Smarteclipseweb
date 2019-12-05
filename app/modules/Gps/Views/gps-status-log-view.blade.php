@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a><a href="/gps-sub-dealer">/GPS List</a>/GPS Log</li>
-        <h4>GPS Activated/Deactivated Log</h4>
+        <b>GPS Activated/Deactivated Log</b>
       </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -35,10 +35,20 @@
                                                 <th><b>Imei</b></th>
                                                 <th><b>Status</b></th>
                                                 <th><b>Updated By</b></th>
-                                                <th><b>DateTime</b></th>
+                                                <th><b>Date & Time</b></th>
                                               </tr>
                                             </thead>
+                                           
                                             <tbody>
+                                              @if($gps_logs->count() ==0)
+                                              <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b style="margin-right: -12%;float: right;">No Data</b></td>
+                                                <td><b style="float: left;margin-left: -4%">Available</b></td>
+                                                <td></td>
+                                              </tr>
+                                              @endif
                                               @foreach($gps_logs as $gps_log)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>

@@ -108,6 +108,8 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 	Route::get('/log-report','DeviceLogReportController@logReport')->name('log-report');
 	Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');
+	Route::get('/device-installation-report','DeviceInstallationReportController@installationReport')->name('device.installation.report');
+	Route::post('/device-installation-report-list','DeviceInstallationReportController@installationReportList')->name('device.installation.report.list');
 	// Route::post('/track-report/export','TrackingReportController@export')->name('track.report.export');
 });
 

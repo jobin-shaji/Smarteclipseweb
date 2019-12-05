@@ -8,8 +8,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-page-heading">Vehicle Details</li>
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Details</li>
+      <b>Vehicle Details</b>
       @if(Session::has('message'))
   <div class="pad margin no-print">
     <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -89,7 +89,7 @@
                           <div class="form-group has-feedback">
                             <label class="srequired">Driver</label>
                             <select class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}"  name="driver_id" value="{{ old('driver_id') }}" required>
-                              <option>Select Driver</option>
+                              <option value="" disabled="disabled">Select Driver</option>
                               @foreach($drivers as $driver)
                               <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif>{{$driver->name}}</option>
                               @endforeach
@@ -130,13 +130,13 @@
                           <div class="form-group has-feedback">
                             <label class="srequired">Odometer(in km)</label>
                             <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$odometer_in_km}}">
-                          </div>
+                          </div>                        
+                        </div>
                           @if ($errors->has('odometer'))
                             <span class="help-block">
                                 <strong class="error-text">{{ $errors->first('odometer') }}</strong>
                             </span>
                           @endif
-                        </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-10 col-md-12">
@@ -273,13 +273,13 @@
                             </h3>
                           </div>
                           <div class="panel-body">
-                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%" id="dataTable">
+                            <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                              <thead>
                                 <tr>
-                                  <th>SL No.</th>
-                                  <th>Document Type</th>
-                                  <th>Expiry Date</th>
-                                  <th>Action</th>
+                                  <th><b>SL No</b></th>
+                                  <th><b>Document Type</b></th>
+                                  <th><b>Expiry Date</b></th>
+                                  <th><b>Action</b></th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -287,7 +287,7 @@
                                   <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$doc->documentType->name}}</td>
-                                    <td>{{$doc->expiry_date}}</td>
+                                    <td>{{date('d-m-Y', strtotime($doc->expiry_date))}}</td>
                                     @if($doc->expiry_date)
                                       <td>
                                         <a href="/documents/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>

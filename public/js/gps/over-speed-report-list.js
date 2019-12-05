@@ -9,9 +9,9 @@ function check(){
         alert('please enter vehicle');
     }
       else if(document.getElementById('fromDate').value == ''){
-        alert('Please enter from date');
+        alert('Please select From date');
     }else if(document.getElementById('toDate').value == ''){
-        alert('Please enter to date');
+        alert('Please select To date');
     }
     else{
         calculate();
