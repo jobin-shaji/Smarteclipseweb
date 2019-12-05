@@ -15,6 +15,7 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::get('/performance-score-history','DriverController@performanceScoreHistory')->name('performance.score.history');
 	Route::post('/performance-score-history-list','DriverController@performanceScoreHistoryList')->name('performance-score-history-list');
 	Route::get('/drivers-score-page','DriverController@driverScorePage')->name('drivers-score-page');
+	Route::get('/single-drivers-score/{id}','DriverController@singleDriverScorePage')->name('single-drivers-score-page');
 	Route::post('/driver-score','DriverController@driverScore')->name('driver.score');
 	Route::post('/driver-score-alerts','DriverController@driverScoreAlerts')->name('driver.score-alerts');
 });
