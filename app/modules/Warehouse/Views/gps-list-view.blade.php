@@ -24,11 +24,11 @@
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
-                              <div class="col-md-10 col-md-offset-1">
+                              <!-- <div class="col-md-10 col-md-offset-1">
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
-                                      <div class="panel-body">
-                                          <table class="table table-bordered  table-striped " style="text-align: center;">
+                                      <div class="panel-body"> -->
+                                          <table class="table table-bordered  table-striped " style="text-align: center;overflow: scroll!important;margin-left: 1%!important;">
                                             <thead>
                                               <tr>
                                                 <th><b>SL.No</b></th>
@@ -58,10 +58,10 @@
                                               @endforeach
                                             </tbody>
                                           </table>
-                                      </div>
+                                      <!-- </div>
                                     </div>
                                   </div>
-                              </div>
+                              </div> -->
                           </div>
                       </section>
                     </div>                
