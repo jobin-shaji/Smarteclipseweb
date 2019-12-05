@@ -1,12 +1,9 @@
 $(document).ready(function() {
-$("#loader-1").show();
- check();
- // driverBehaviour();
+  check();
 });
 
 function check(){
   var driver=$('#driver').val();  
-  // alert(driver) ;
     driverBehaviour(driver); 
     score(driver);
 }
@@ -15,11 +12,11 @@ function score(driver){
     var url = 'driver-score';
     var data = {
       driver:driver
-    };
-    
+    };    
     backgroundPostData(url, data, 'driverScore', {alert: false});
 
 }
+ if (myPolarChart) myPolarChart.destroy();
 
 function driverScore(res) {
 // console.log(res.drive_score);

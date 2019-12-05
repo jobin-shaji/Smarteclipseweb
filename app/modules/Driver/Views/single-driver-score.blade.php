@@ -23,24 +23,11 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="card-body">
-      <div class="panel-heading">
-        <div class="cover_div_search">
-          <div class="row">
-            <div class="col-lg-2 col-md-2">
-              <div class="form-group">    
-                <label>Driver</label>                      
-                <select class="form-control selectpicker" style="width: 100%" data-live-search="true" title="Select Driver" id="driver" name="driver" onchange="check()">
-                  <option selected="selected" disabled="disabled">select</option>
-                  <option value="0" >All</option>
-                    @foreach ($drivers as $driver)                          
-                    <option value="{{$driver->id}}" >{{$driver->name}}</option>
-                    @endforeach
-                </select>
-              </div>
-            </div>                  
-          </div>
-        </div>
-      </div>   
+     <!--  <div class="panel-heading">
+        <div class="cover_div_search">  -->      
+          <input type="hidden" id="driver" name="driver" value="{{$id}}">
+       <!--  </div>
+      </div>  -->  
 
       <div class="row">
          <div class="loader-wrapper" id="loader-1">
