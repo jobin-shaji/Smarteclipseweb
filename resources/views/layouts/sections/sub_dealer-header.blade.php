@@ -78,6 +78,7 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                              <a class="dropdown-item" href="{{url('/log-report')}}">DEVICE ACTIVATION REPORT<span></span></a>
+                             <a class="dropdown-item" href="{{url('/device-installation-report')}}">DEVICE INSTALLATION REPORT<span></span></a>
                             </div>
                         </li>
                        <li class="nav-item dropdown">
