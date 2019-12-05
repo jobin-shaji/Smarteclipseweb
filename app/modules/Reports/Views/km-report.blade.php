@@ -69,7 +69,7 @@ Total KM Report
                       </div>
                     </div>  
                     <div class="col-md-12">                               
-                      <div class="row">
+                      <div class="row" style="margin-left: 2.5%!important">
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/sudden-accelaration.png" width="10%" height="60px" class="report_img"/>
