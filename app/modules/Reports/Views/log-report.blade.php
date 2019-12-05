@@ -58,7 +58,7 @@
                               <th>IMEI</th>                              
                               <th>Status</th>                            
                               <th>Updated By  </th>
-                              <th>DateTime  </th>
+                              <th>Date & Time  </th>
                               
                             </tr>
                         </thead>
