@@ -1165,17 +1165,20 @@ class DashboardController extends Controller
         $single_client=[];
         $single_client_name=[];
         foreach($clients as $client){
-            $single_client_name[] = $client->name;
+            
             $single_client[] = $client->id;
         }
         $vehicles = Vehicle::select('id','name','register_number','gps_id','client_id',
             \DB::raw('count(id) as count') )
         ->whereIn('client_id',$single_client)
+        ->with('client:id,name')
         ->groupBy('client_id')
         ->get();
         $gps_count = [];
         foreach($vehicles as $gps_sale){           
-                $gps_count[] = $gps_sale->count;                
+                $gps_count[] = $gps_sale->count;
+                $single_client_name[] = $gps_sale->client->name;
+                               
         }
         $sub_dealer_gps_sale=array(
             "client"=>$single_client_name,
