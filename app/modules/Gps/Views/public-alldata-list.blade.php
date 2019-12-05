@@ -1,11 +1,12 @@
 @extends('layouts.api-app')
 
 @section('content')
-
+  <h3 style="margin-left: 5%"><b>Processed Data</b></h3> 
 <section class="hilite-content">
-      <!-- title row -->     
+      <!-- title row -->   
+
   <div class="row">
-   
+      
       <div class="col-md-12">
         <form  method="POST" action="{{route('gps.create.p')}}">
         {{csrf_field()}}
@@ -30,7 +31,7 @@
             <option value="{{$gpsData->header}}">{{$gpsData->header}}</option>
             @endforeach             
           </select>
-          <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+          <button class="btn btn-sm btn-info btn2 srch" onclick="check()" style="margin-top: 0%!important"> <i class="fa fa-search"></i> </button>
         </div> 
       </div>
           
@@ -208,15 +209,15 @@
       <table class="table table-hover table-bordered  table-striped datatable"  id="dataTable" style="width:100%;text-align: center;">
           <thead>
               <tr>
-                <th>SL.No</th>
-                <th>IMEI</th>
-                <th>Size</th>
-                <th>Device Date</th>
-                <th>Device Time</th>
-                <th>Server Date</th>
-                <th>Server Time</th>
-                <th>Data</th> 
-                <th>Action</th>                     
+                <th><b>SL.No</b></th>
+                <th><b>IMEI</b></th>
+                <th><b>Size</b></th>
+                <th><b>Device Date</b></th>
+                <th><b>Device Time</b></th>
+                <th><b>Server Date</b></th>
+                <th><b>Server Time</b></th>
+                <th><b>Data</b></th> 
+                <th><b>Action</b></th>                     
               </tr>
           </thead>
       </table>       
