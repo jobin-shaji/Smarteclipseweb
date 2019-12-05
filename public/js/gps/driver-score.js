@@ -1,12 +1,9 @@
 $(document).ready(function() {
-  var driver=$('#driver').val();  
-    driverBehaviour(driver); 
-    score(driver);
+  check();
 });
 
 function check(){
   var driver=$('#driver').val();  
-  // alert(driver) ;
     driverBehaviour(driver); 
     score(driver);
 }
@@ -15,11 +12,11 @@ function score(driver){
     var url = 'driver-score';
     var data = {
       driver:driver
-    };
-    
+    };    
     backgroundPostData(url, data, 'driverScore', {alert: false});
 
 }
+ if (myPolarChart) myPolarChart.destroy();
 
 function driverScore(res) {
 // console.log(res.drive_score);
@@ -31,13 +28,48 @@ function driverScore(res) {
   labels: res.drive_data,
   datasets: [{
   data: res.drive_score,
-   backgroundColor:'rgba(242,156,18, 0.2)',
-        borderColor:'rgba(242,156,18,1)',
-  // backgroundColor: [
-    
-  //   ],
-  // hoverBackgroundColor: [],
-  // borderColor: []
+  backgroundColor: [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)'
+    ],
+  hoverBackgroundColor: [
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'
+    ],
+  borderColor: [
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'
+    ]
   }],
   borderWidth : 2
   },
