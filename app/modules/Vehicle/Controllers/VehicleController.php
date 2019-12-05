@@ -647,6 +647,7 @@ class VehicleController extends Controller
             'to_driver_id',
             'client_id',
             'created_at'
+            // \DB::raw('DATE_FORMAT(created_at, "%d-%m-%Y") as created_at')
         )
         ->where('client_id',$client_id)
         ->with('Fromdriver:id,name')
