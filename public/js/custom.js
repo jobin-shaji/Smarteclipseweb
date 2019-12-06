@@ -1369,3 +1369,14 @@ console.log(res.gpsData.header);
     // console.log(res);
     $('#gpsHLMDataModal').modal('show');
 }
+
+
+
+
+
+
+
+
+
+
+
