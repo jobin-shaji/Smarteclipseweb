@@ -15,7 +15,8 @@ use Config;
 class ConfigurationController extends Controller {
     public function create()
     {
-       return view('Configuration::configuration-create');
+        $items = Configuration::all(); 
+       return view('Configuration::configuration-create',['config'=> $items]);
     }
     public function save(Request $request)
     {
@@ -30,5 +31,13 @@ class ConfigurationController extends Controller {
         $request->session()->flash('message', 'New Configuration created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('configuration.create')); 
+    }
+    public function getConfiguration(Request $request)
+    {  
+        $items = Configuration::find(1);  
+        
+        return response()->json([
+                'config' => $items        
+        ]);
     }
 }
