@@ -39,15 +39,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              @if($devices->count() ==0)
-                                              <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td><b style="margin-right: -12%;float: right;">No Data</b></td>
-                                                <td><b style="float: left;margin-left: -4%">Available</b></td>
-                                                <td></td>
-                                              </tr>
-                                              @endif
+                                            
                                               @foreach($devices as $device)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
