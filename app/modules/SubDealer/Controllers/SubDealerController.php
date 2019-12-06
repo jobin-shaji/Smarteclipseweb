@@ -192,9 +192,10 @@ class SubDealerController extends Controller {
     {
 
         $subdealer = subdealer::where('user_id', $request->id)->first();
-        dd($subdealer);
+
         $user = User::find($request->id);
         if($subdealer == null){
+
            return view('SubDealer::404');
         } 
         $url=url()->current();
@@ -209,14 +210,17 @@ class SubDealerController extends Controller {
         }
         else
         {
+
            $rules = $this->subdealersUpdateRules($user);
         }
-        $this->validate($request, $rules);       
+
+        $this->validate($request, $rules);  
+
         $subdealer->name = $request->name;
         $subdealer->save();
         $user->mobile = $request->mobile_number;
         $user->save();
-        $did = encrypt($subdealer->id);
+        $did = encrypt($user->id);
         $request->session()->flash('message', 'Dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sub.dealer.details',$did));  
