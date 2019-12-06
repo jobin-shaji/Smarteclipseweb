@@ -1218,7 +1218,7 @@ function rootSubdealer(res)
         var url = 'notification_alert_count';
         var data = {};
         backgroundPostData(url,data,'notificationCount',{alert:false});
-      });
+    });
 // ---------------check notification-----------------------------------
 
     function notificationCount(res){
