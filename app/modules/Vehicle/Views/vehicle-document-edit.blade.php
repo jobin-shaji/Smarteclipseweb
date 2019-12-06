@@ -59,7 +59,7 @@
                       </div>
                       <div class="col-md-6">
                         @if($vehicle_doc->path)
-                          <img width="150" height="100" src="/documents/{{ $vehicle_doc->path }}" />
+                          <img width="150" height="100" src="/documents/vehicledocs/{{ $vehicle_doc->path }}" />
                         @else
                         <p>No image found</p>
                         @endif

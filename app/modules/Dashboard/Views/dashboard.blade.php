@@ -429,18 +429,33 @@
             <a href="/service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+      
         <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
           <div class="small-box bg-yellow bxs">
             <div class="inner">
               <h3 id="completed_jobs">
                 <div class="loader"></div>
               </h3>
-              <p>COMPLETED JOBS</p>
+              <p> INSTALLATION COMPLETED JOBS</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>  
             </div>
               <a href="/job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3 id="service_completed_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p> SERVICE COMPLETED JOBS</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>  
+            </div>
+              <a href="/servicerjob-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>

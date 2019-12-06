@@ -65,10 +65,14 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	// Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
+//for installation job history
+	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history.list');
 
-	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history-list');
+
 	Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
-
+//for service job history
+	Route::get('/servicerjob-history-list','ServicerController@serviceJobHistoryList')->name('servicerjob.history.list');
+    Route::post('/servicelist-history-jobs','ServicerController@getserviceJobsHistoryList')->name('servicelist.history.jobs');	
 
 	Route::get('/servicer/profile','ServicerController@servicerProfile')->name('servicer.profile');
 	Route::get('/servicer/{id}/change-password','ServicerController@changePassword')->name('servicer.change-password');

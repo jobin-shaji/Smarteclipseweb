@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServicerJobStatusesTable extends Migration
+class CreateConfigurationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateServicerJobStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('servicer_job_statuses', function (Blueprint $table) {
+        Schema::create('configurations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('status');
-            $table->string('description');
+            $table->string('name');
+            $table->json('value');
+            $table->string('code');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateServicerJobStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicer_job_statuses');
+        Schema::dropIfExists('configurations');
     }
 }

@@ -31,9 +31,9 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
-            {data: 'name', name: 'name' , orderable: false,searchable: false},            
-            {data: 'clients.name', name: 'clients.name',searchable: false, orderable: false},           
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name: 'name' , orderable: false},            
+            {data: 'clients.name', name: 'clients.name',orderable: false},           
             {data: 'action', name: 'action', orderable: false, searchable: false},           
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
@@ -49,7 +49,7 @@ function delGeofence(geofence){
     } 
 }
 function activateGeofence(geofence){
-    if(confirm('Are you sure to activate this?')){
+    if(confirm('Are you sure to activate this? (Please re-assign Geofence Entry & Exit to use)')){
         var url = 'geofence/activate';
         var data = {
             id : geofence

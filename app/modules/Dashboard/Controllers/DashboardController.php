@@ -236,7 +236,9 @@ class DashboardController extends Controller
             'pending_jobs' => ServicerJob::whereNull('job_complete_date')
              ->where('servicer_id',$servicer_id)->where('job_type',1)->count(), 
              'pending_service_jobs' => ServicerJob::whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(), 
-            'completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->count(),
+            'completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',3)->count(),
+            'service_completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count(),
+
             'status' => 'dbcount'
         ]);
     }
