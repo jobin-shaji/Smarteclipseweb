@@ -11,7 +11,7 @@ var labelIndex = 0;
 
 function initMap(res) {   
           map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
+          zoom: 14,
           center:{lat: latMap, lng: lngMap},
           mapTypeId: 'terrain',
 

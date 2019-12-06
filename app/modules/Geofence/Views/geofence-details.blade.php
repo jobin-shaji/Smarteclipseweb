@@ -26,13 +26,13 @@
     <input type="hidden" name="hd_id" id="g_id" value="{{$id}}">
     <div class="row">
       <div class="col-md-4">
-        <label>Name : {{$geofence->name}}</label>
+        <span><b>Name</b> : {{$geofence->name}}</span>
       </div>
       <div class="col-md-4">
-        <label>Created By : {{$geofence->clients->name}}</label>
+        <span><b>Created At</b> : {{($geofence->created_at)}}</span>
       </div>
       <div class="col-md-4">
-        <label>Created On : {{date('d-m-Y', strtotime($geofence->updated_at))}}</label>
+        <span><b>Updated At</b> : {{($geofence->updated_at)}}</span>
       </div>
     </div>
            
