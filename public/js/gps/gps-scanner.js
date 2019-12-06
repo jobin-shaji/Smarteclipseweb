@@ -91,6 +91,8 @@ $(function(){
                           $("table tbody").append(markup);
                           var value = $('#gps_id').val();
                           if (value) {
+                            $("#stock_table_heading").show();
+                            $("#stock_table").show();
                             $("#transfer_button").show();
                           }
                           document.getElementById('scanner').value = "";
@@ -136,8 +138,12 @@ function deleteValueArray(gps_id){
       $('#gps_id').val(items); 
       var value = $('#gps_id').val();
       if (value) {
+        $("#stock_table_heading").show();
+        $("#stock_table").show();
         $("#transfer_button").show();
       }else{
+        $("#stock_table_heading").hide();
+        $("#stock_table").hide();
         $("#transfer_button").hide();
       }
     }
