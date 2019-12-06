@@ -41,30 +41,30 @@
               Connection lost: <span id="connection_lost_last_seen"></span>
             </span>
           </div>
-          <div class="col-sm-12 social-buttons">
+          <div class="col-sm-12 social-buttons" style="margin-left: 2.5%!important;">
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <img src="../../assets/images/plate.png" width=30px height=25px><label id="vehicle_name" class="mgl"></label>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11%;font-size: 11px;">: <label class="mgl" id="ignition"></label></b></b>
+              <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11.5%;font-size: 11px;">: <label class="mgl" id="ignition"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 19%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
+              <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 17.8%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 12.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
+              <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 11.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 1%;font-size: 11px;">: <label class="mgl" id="car_power"></label></b></b>
+              <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 2%;font-size: 11px;">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
             <a class=" btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
-              <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 9%;font-size: 11px;">: <label class="mgl" id="network_status"></label></b></b>
+              <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 10%;font-size: 11px;">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 11px;">: <label class="mgl" id="ac"></label></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
+              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 23.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
@@ -86,12 +86,13 @@
             </div>
             <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
           </div>
-            <hr>
+            
             <?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
             ?>
 
             @role('fundamental|superior|pro')
+            <hr style="margin-left: 3%">
               <div class="share_button">
                 <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a>
                 <!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
