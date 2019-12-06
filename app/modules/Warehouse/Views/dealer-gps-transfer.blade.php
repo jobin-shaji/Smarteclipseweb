@@ -94,9 +94,9 @@
                     <label>Scanned GPS Count: <span id="scanned_device_count">0</span></label>
                   </div> 
                   <div class="form-group has-feedback">
-                    <label class="srequired">GPS List</label>
+                    <label class="srequired" id="stock_table_heading" style="display: none;">GPS List</label>
                       <input type="hidden" name="gps_id[]" id="gps_id" value="">
-                      <table class="table table-bordered  table-striped " id="stock_table" style="width:100%">
+                      <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;display: none;">
                         <thead>
                           <tr>
                             <th>Serial Number</th>
@@ -132,7 +132,7 @@
 
               <div class="row">
                 <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button">Transfer</button>
+                  <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button" style="display: none;">Transfer</button>
                 </div>
               </div>
             </form>

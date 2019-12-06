@@ -1211,7 +1211,7 @@ function rootSubdealer(res)
         var url = 'notification_alert_count';
         var data = {};
         backgroundPostData(url,data,'notificationCount',{alert:false});
-    }, 8000);//hai
+    }, 8000);
 
     $( document ).ready(function() {
         var flag;
