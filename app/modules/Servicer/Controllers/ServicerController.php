@@ -207,7 +207,10 @@ class ServicerController extends Controller {
     public function saveAssignServicer(Request $request)
     {
         $rules = $this->servicerJobRules();
-        $this->validate($request, $rules);
+        $customMessages = [
+            'gps.required' => 'The GPS field is required.'
+        ];
+        $this->validate($request, $rules, $customMessages);
         $job_date=date("Y-m-d", strtotime($request->job_date));
         
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
@@ -230,7 +233,7 @@ class ServicerController extends Controller {
             'description' => $request->description,
             'gps_id' => $request->gps, 
             'job_date' => $job_date,                
-            'status' => 0,
+            'status' => 1, //ASSIGNED STATUS
             'location'=>$request->search_place
             // 'latitude'=>$location_lat,
             // 'longitude'=>$location_lng              
@@ -295,13 +298,13 @@ class ServicerController extends Controller {
     public function subDealerAssignServicer()
     {
         $sub_dealer_id=\Auth::user()->subDealer->id;
-        // dd($sub_dealer_id);
+   
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->where('status',0)
         ->where('type',2)
         ->get();
-        // dd($servicer);
+
         $clients = Client::select('id','name','user_id','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
@@ -310,7 +313,10 @@ class ServicerController extends Controller {
     public function saveSubDealerAssignServicer(Request $request)
     {
         $rules = $this->servicerJobRules();
-        $this->validate($request, $rules);
+        $customMessages = [
+            'gps.required' => 'The GPS field is required.'
+        ];
+        $this->validate($request, $rules, $customMessages);
         $job_date=date("Y-m-d", strtotime($request->job_date));        
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
 
@@ -336,7 +342,7 @@ class ServicerController extends Controller {
                 'description' => $request->description,
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
-                'status' => 0, 
+                'status' => 1, //ASSIGN STATUS
                 'location'=>$location 
                 // 'latitude'=>$location_lat,
                 // 'longitude'=>$location_lng           
@@ -656,7 +662,7 @@ public function serviceJobDetails(Request $request)
             
        
             $servicer_job->comment = $request->comment;
-            $servicer_job->status = 1;
+            $servicer_job->status = 3;
             $servicer_job->save();
             if($servicer_job)
             {        
@@ -760,7 +766,7 @@ public function serviceJobDetails(Request $request)
         $servicer_job->job_complete_date = $job_completed_date;
 
         $servicer_job->comment = $request->comment;
-            $servicer_job->status = 1;
+            $servicer_job->status = 3;
             $servicer_job->save();
           
             // dd($servicer_job->id);

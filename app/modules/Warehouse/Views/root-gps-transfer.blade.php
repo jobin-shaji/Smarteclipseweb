@@ -93,9 +93,9 @@
                       <label>Scanned GPS Count : <span id="scanned_device_count">0</span></label>
                     </div>                   
                     <div class="form-group has-feedback">
-                      <label class="srequired">GPS List</label>
+                      <label class="srequired" id="stock_table_heading" style="display: none;">GPS List</label>
                         <input type="hidden" name="gps_id[]" id="gps_id" value="">
-                        <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;">
+                        <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;display: none;">
                           <thead>
                             <tr>
                               <th>Serial Number</th>
