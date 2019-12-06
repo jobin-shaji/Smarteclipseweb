@@ -41,7 +41,7 @@
               Connection lost: <span id="connection_lost_last_seen"></span>
             </span>
           </div>
-          <div class="col-sm-12 social-buttons">
+          <div class="col-sm-12 social-buttons" style="margin-left: 2.5%!important;">
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <img src="../../assets/images/plate.png" width=30px height=25px><label id="vehicle_name" class="mgl"></label>
             </a>
@@ -86,12 +86,13 @@
             </div>
             <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
           </div>
-            <hr>
+            
             <?php
             $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
             ?>
 
             @role('fundamental|superior|pro')
+            <hr style="margin-left: 3%">
               <div class="share_button">
                 <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a>
                 <!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
