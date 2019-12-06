@@ -376,6 +376,12 @@ function backgroundPostData(url, data, callBack, options) {
                     gpsAlertTracker(res);
 
                 }
+                 else if(callBack=='getConfigData')
+                {
+                    getConfigData(res);
+
+                }
+                
 
                 
 

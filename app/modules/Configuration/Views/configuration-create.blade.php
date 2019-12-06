@@ -52,6 +52,7 @@
               <input type="plan_id" id="plan_id" value="">
            
           </div>
+
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
           <form  method="POST" action="{{route('configuration.create.p')}}">
@@ -65,6 +66,7 @@
                       </button>
                     </div>
                     <div class="modal-body mx-3">    
+
                         <label  data-success="right" >Name</label>                    
                         <input type="text" id="name" name="name" required="required" class="form-control validate {{ $errors->has('name') ? ' has-error' : '' }}">
                          @if ($errors->has('name'))

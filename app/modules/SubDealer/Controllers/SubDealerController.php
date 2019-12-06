@@ -177,6 +177,7 @@ class SubDealerController extends Controller {
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
+
         $subdealers = SubDealer::withTrashed()->where('user_id', $decrypted)->first();
         $user=User::find($decrypted);        
         if($subdealers == null)
@@ -189,9 +190,12 @@ class SubDealerController extends Controller {
     //update dealers details
     public function update(Request $request)
     {
+
         $subdealer = subdealer::where('user_id', $request->id)->first();
+
         $user = User::find($request->id);
         if($subdealer == null){
+
            return view('SubDealer::404');
         } 
         $url=url()->current();
@@ -206,14 +210,17 @@ class SubDealerController extends Controller {
         }
         else
         {
+
            $rules = $this->subdealersUpdateRules($user);
         }
-        $this->validate($request, $rules);       
+
+        $this->validate($request, $rules);  
+
         $subdealer->name = $request->name;
         $subdealer->save();
         $user->mobile = $request->mobile_number;
         $user->save();
-        $did = encrypt($subdealer->id);
+        $did = encrypt($user->id);
         $request->session()->flash('message', 'Dealer details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sub.dealer.details',$did));  
