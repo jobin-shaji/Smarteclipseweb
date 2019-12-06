@@ -176,15 +176,15 @@ table, th, td {
       <td id="lac"></td>
     </tr>
     <tr>
-      <td>CELL ID</td>
+      <td>Cell ID</td>
       <td id="cell_id"></td>
     </tr>
       <tr>
-      <td>SPEED</td>
+      <td>Speed</td>
       <td id="SPEED"></td>
     </tr>
       <tr>
-      <td>HEADING</td>
+      <td>Heading</td>
       <td id="heading"></td>
     </tr>
      <tr>

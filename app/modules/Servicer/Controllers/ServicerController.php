@@ -445,31 +445,33 @@ class ServicerController extends Controller {
                 return "Service" ; 
             }                       
          }) 
-        // ->addColumn('location', function ($servicer_job) {                    
-        //     $latitude= $servicer_job->latitude;
-        //     $longitude=$servicer_job->longitude;          
-        //     if(!empty($latitude) && !empty($longitude)){
-        //         //Send request and receive json data by address
-        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-        //         $output = json_decode($geocodeFromLatLong);         
-        //         $status = $output->status;
-        //         //Get address from json data
-        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-        //         //Return address of the given latitude and longitude
-        //         if(!empty($address)){
-        //             $location=$address;
-        //             return $location;                                 
-        //         }        
-        //     }
-        //     else
-        //     {
-        //         return "No Address";
-        //     }
-        //  })
+           ->addColumn('status', function ($servicer_job) {
+            if($servicer_job->status==0)
+            {
+                return "Cancel" ; 
+            }
+            else if($servicer_job->status==1)
+            {
+                return "Assigned" ; 
+            } 
+            else if($servicer_job->status==2)
+            {
+                return "Pending" ; 
+            } else{
+                  return "Completed" ; 
+            }                            
+         }) 
+       
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
+if($servicer_job->status==0){
+    return "<font color='red'>Cancelled</font>";
+                
+            }else
+            {
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+            }
           
         })
         ->rawColumns(['link', 'action'])
@@ -515,39 +517,35 @@ class ServicerController extends Controller {
                 return "Service" ; 
             }                       
          }) 
-        // ->addColumn('location', function ($servicer_job) {                    
-        //     $latitude= $servicer_job->latitude;
-        //     $longitude=$servicer_job->longitude;          
-        //     if(!empty($latitude) && !empty($longitude)){
-        //         //Send request and receive json data by address
-        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-        //         $output = json_decode($geocodeFromLatLong);         
-        //         $status = $output->status;
-        //         //Get address from json data
-        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-        //         //Return address of the given latitude and longitude
-        //         if(!empty($address)){
-        //             $location=$address;
-        //             return $location;                                 
-        //         }        
-        //     }
-        //     else
-        //     {
-        //         return "No Address";
-        //     }
-        //  })
+         ->addColumn('status', function ($servicer_job) {
+            if($servicer_job->status==0)
+            {
+                return "Cancel" ; 
+            }
+            else if($servicer_job->status==1)
+            {
+                return "Assigned" ; 
+            } 
+            else if($servicer_job->status==2)
+            {
+                return "Pending" ; 
+            } else{
+                  return "Completed" ; 
+            }                            
+         }) 
         ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
+                if($servicer_job->status==0){
+    return "<font color='red'>Cancelled</font>";
+                
+            }else
+            {
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+            }
           
         })
-         ->addColumn('action', function ($servicer_job) {
-             $b_url = \URL::to('/');
-                return "
-    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";
-          
-        })
+       
         ->rawColumns(['link', 'action'])
         ->make();
     }
@@ -824,6 +822,10 @@ public function serviceJobDetails(Request $request)
     {
         return view('Servicer::job-history-list');
     }
+       public function serviceJobHistoryList()
+    {
+        return view('Servicer::servicejob-history-list');
+    }
     public function getJobsHistoryList()
     {
         $user_id=\Auth::user()->servicer->id;
@@ -844,6 +846,58 @@ public function serviceJobDetails(Request $request)
         )
         ->where('servicer_id',$user_id)
         ->whereNotNull('job_complete_date')
+         ->where('job_type',1)
+        ->with('user:id,username')
+        ->with('gps:id,imei,serial_no')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+         ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }
+                       
+         })
+       
+         ->addColumn('action', function ($servicer_job) {
+           $b_url = \URL::to('/');
+                return "
+                <a href=".$b_url."/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+
+ public function getserviceJobsHistoryList()
+    {
+        $user_id=\Auth::user()->servicer->id;
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'job_complete_date', 
+             \DB::raw('Date(job_date) as job_date'),                 
+            'created_at',
+            'status',
+            'location',
+            'gps_id'
+        )
+        ->where('servicer_id',$user_id)
+        ->whereNotNull('job_complete_date')
+         ->where('job_type',2)
         ->with('user:id,username')
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
@@ -892,7 +946,6 @@ public function serviceJobDetails(Request $request)
         ->rawColumns(['link', 'action'])
         ->make();
     }
-
      public function jobHistoryDetails(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 

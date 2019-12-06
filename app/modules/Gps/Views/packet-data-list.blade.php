@@ -122,7 +122,7 @@ table, th, td {
       <td id="date"></td>
     </tr>
     <tr>
-      <td>Code</td>
+      <td>Alert ID</td>
       <td id="code"></td>
     </tr>
       <tr>

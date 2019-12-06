@@ -149,7 +149,7 @@ table, th, td {
     </tr>
    
       <tr>
-      <td>SPEED</td>
+      <td>Speed</td>
       <td id="SPEED"></td>
     </tr>
    
