@@ -250,6 +250,27 @@ class UsersTableSeeder extends Seeder
             'country_id'=>178,
             'amount'=>25000
         ]);
+
+        DB::table('servicer_job_statuses')->insert([
+            'status' => 0,
+            'description' => "Cancel"
+        ]);
+
+        DB::table('servicer_job_statuses')->insert([
+            'status' => 1,
+            'description' => "Assign"
+        ]);
+
+        DB::table('servicer_job_statuses')->insert([
+            'status' => 2,
+            'description' => "Pending"
+        ]);
+
+        DB::table('servicer_job_statuses')->insert([
+            'status' => 3,
+            'description' => "Complete"
+        ]);
+
         
     }
 }

@@ -16,6 +16,7 @@ class CreateServicerJobStatusesTable extends Migration
         Schema::create('servicer_job_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('status');
+            $table->string('description');
             $table->timestamps();
         });
     }
