@@ -50,11 +50,12 @@ var vehicleStatus;
 var connection_lost_time_halt;
 var connection_lost_time_sleep;
 var connection_lost_time_minutes;
-
+  alert(1);
 
 $('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
 $('document').ready(function(){
+
   initMap();
   setTimeout(getMarkers,5000);
   setInterval(function() {
