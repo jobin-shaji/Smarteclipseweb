@@ -177,6 +177,7 @@ class SubDealerController extends Controller {
     public function edit(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
+
         $subdealers = SubDealer::withTrashed()->where('user_id', $decrypted)->first();
         $user=User::find($decrypted);        
         if($subdealers == null)
@@ -189,7 +190,9 @@ class SubDealerController extends Controller {
     //update dealers details
     public function update(Request $request)
     {
+
         $subdealer = subdealer::where('user_id', $request->id)->first();
+        dd($subdealer);
         $user = User::find($request->id);
         if($subdealer == null){
            return view('SubDealer::404');
