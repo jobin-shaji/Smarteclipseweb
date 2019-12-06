@@ -737,7 +737,7 @@ class VehicleController extends Controller
              })
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
-                $path = url($b_url.'/documents').'/'.$vehicle_documents->path;
+                $path = url($b_url.'/documents/vehicledocs').'/'.$vehicle_documents->path;
                 return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
                
                <a href=".$b_url."/vehicle-doc/".Crypt::encrypt($vehicle_documents->id)."/delete class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'>Delete </a>";
