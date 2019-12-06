@@ -13,8 +13,12 @@
         </a>
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/job-list')}}">JOB LIST </a>  
-            <a class="dropdown-item" href="{{url('/job-history-list')}}">JOB HISTORY </a>
+            <a class="dropdown-item" href="{{url('/job-list')}}"> INSTALLATION JOB LIST </a>
+              <a class="dropdown-item" href="{{url('/service-job-list')}}"> SERVICE JOB LIST </a>    
+            <a class="dropdown-item" href="{{url('/job-history-list')}}">
+             INSTALLATION JOB HISTORY </a>
+             <a class="dropdown-item" href="{{url('/servicerjob-history-list')}}">
+             SERVICE JOB HISTORY </a>
         </div>
     </li>
     <li class="nav-item dropdown">

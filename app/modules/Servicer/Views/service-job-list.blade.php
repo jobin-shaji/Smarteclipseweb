@@ -38,6 +38,7 @@
                     <th>Description</th>
                     <th>Location</th>
                     <th>Job Date</th> 
+                    <th>status</th>
                     <th>Action</th>                      
                   </tr>
                 </thead>
