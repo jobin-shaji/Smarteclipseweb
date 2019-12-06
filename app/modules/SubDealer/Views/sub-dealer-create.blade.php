@@ -59,17 +59,49 @@ Create Dealer
                   </span>
                   @endif
                 </div>
-                <div class="form-group row" style="float:none!important">
-                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
-                  <div class="form-group has-feedback">
-                    <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" min="0">
-                  </div>
-                  @if ($errors->has('mobile_number'))
-                  <span class="help-block">
-                  <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
-                  </span>
-                  @endif
-                </div>
+                 <?php
+                      $url=url()->current();
+                      $rayfleet_key="rayfleet";
+                      $eclipse_key="eclipse";
+                      if (strpos($url, $rayfleet_key) == true) {  ?>
+                          <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <div class="form-group has-feedback">
+                          <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" required min="11111111111" max="99999999999" oninvalid="this.setCustomValidity('Mobile Number cannot be less or greater than 11 digits')" autocomplete="off">
+                        </div>
+                        @if ($errors->has('mobile_number'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                      <?php } 
+                      else if (strpos($url, $eclipse_key) == true) { ?>
+                         <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <div class="form-group has-feedback">
+                          <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" required min="1111111111" max="9999999999" oninvalid="this.setCustomValidity('Mobile Number cannot be less or greater than 10 digits')" autocomplete="off">
+                        </div>
+                        @if ($errors->has('mobile_number'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                      <?php }
+                      else { ?>
+                           <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <div class="form-group has-feedback">
+                          <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" required min="1111111111" max="9999999999" oninvalid="this.setCustomValidity('Mobile Number cannot be less or greater than 10 digits')" autocomplete="off">
+                        </div>
+                        @if ($errors->has('mobile_number'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                      <?php } ?>
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email.</label>
                   <div class="form-group has-feedback">
