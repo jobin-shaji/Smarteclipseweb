@@ -226,6 +226,7 @@ class GeofenceController extends Controller {
         ->get();
         $geofence = Geofence::select('id','user_id','name','cordinates','deleted_at')
         ->where('user_id',$user_id)
+        ->orderBy('created_at','DESC')
         ->get();
         
          return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
