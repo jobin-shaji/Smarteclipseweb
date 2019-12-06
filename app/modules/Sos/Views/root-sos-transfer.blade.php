@@ -90,8 +90,11 @@
                       @endif
                     </div>
                    
-
                     <div class="form-group has-feedback">
+                      <label>Scanned SOS Count: <span id="scanned_device_count">0</span></label>
+                    </div> 
+
+                    <div class="form-group has-feedback" id ="sos_table" style="display: none;">
                       <label class="srequired">SOS List</label>
                         <input type="hidden" name="sos_id[]" id="sos_id" value="">
                         <table class="table table-bordered  table-striped " style="width:100%">
@@ -123,7 +126,7 @@
 
                 <div class="row">
                   <div class="col-lg-1 col-md-1">
-                    <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button">Transfer</button>
+                    <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button" style="display :none">Transfer</button>
                   </div>
                 </div>     
               </form>

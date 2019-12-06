@@ -278,7 +278,7 @@ class VehicleController extends Controller
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   time().'.'.$getFileExt;
         //Move Uploaded File
-        $destinationPath = 'documents';
+        $destinationPath = 'documents/vehicledocs';
         $file->move($destinationPath,$uploadedFile);
         $documents = Document::create([
             'vehicle_id' => $request->vehicle_id,
@@ -325,13 +325,13 @@ class VehicleController extends Controller
         $file=$request->path;
         if($file){
             $old_file = $vehicle_doc->path;
-            $myFile = "documents/".$old_file;
+            $myFile = "documents/vehicledocs/".$old_file;
             $delete_file=unlink($myFile);
             if($delete_file){
                 $getFileExt   = $file->getClientOriginalExtension();
                 $uploadedFile =   time().'.'.$getFileExt;
                 //Move Uploaded File
-                $destinationPath = 'documents';
+                $destinationPath = 'documents/vehicledocs';
                 $file->move($destinationPath,$uploadedFile);
                 $vehicle_doc->path = $uploadedFile;
             }
@@ -358,7 +358,7 @@ class VehicleController extends Controller
         $file=$vehicle_doc->path;
         if($file){
             // $old_file = $vehicle_doc->path;
-            // $myFile = "documents/".$old_file;
+            // $myFile = "documents/vehicledocs/".$old_file;
             // $delete_file=unlink($myFile);
             $vehicle_doc->delete(); 
         }
@@ -737,7 +737,7 @@ class VehicleController extends Controller
              })
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
-                $path = url($b_url.'/documents').'/'.$vehicle_documents->path;
+                $path = url($b_url.'/documents/vehicledocs').'/'.$vehicle_documents->path;
                 return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
                
                <a href=".$b_url."/vehicle-doc/".Crypt::encrypt($vehicle_documents->id)."/delete class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'>Delete </a>";

@@ -118,7 +118,7 @@ table, th, td {
       <td id="imei"></td>
     </tr>
      <tr>
-      <td>ALERT ID</td>
+      <td>Alert ID</td>
       <td id="alert_id"></td>
     </tr>
      <tr>
@@ -171,15 +171,15 @@ table, th, td {
       <td id="LAC"></td>
     </tr>
     <tr>
-      <td>CELL ID</td>
+      <td>Cell ID</td>
       <td id="cell_id"></td>
     </tr>
       <tr>
-      <td>SPEED</td>
+      <td>Speed</td>
       <td id="SPEED"></td>
     </tr>
       <tr>
-      <td>HEADING</td>
+      <td>Heading</td>
       <td id="heading"></td>
     </tr>
      <tr>

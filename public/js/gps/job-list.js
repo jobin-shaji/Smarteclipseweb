@@ -39,7 +39,8 @@ $(document).ready(function () {
             {data: 'gps.serial_no', name: 'gps.serial_no'},
             {data: 'description', name: 'description'},
             {data: 'location', name: 'location'},
-            {data: 'job_date', name: 'job_date'},   
+            {data: 'job_date', name: 'job_date'}, 
+            {data: 'status', name: 'status'},     
             {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],

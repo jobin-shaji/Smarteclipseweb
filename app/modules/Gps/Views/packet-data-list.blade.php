@@ -7,17 +7,17 @@
   <div class="row">
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
-        <div class="cover_div_search">
+        <div>
          
             <div class="row">
 
              <div class="col-lg-3 col-md-3"> 
         <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
-                <label> NRM PACKET</label>  
-<textarea rows="4"  id="packetvalue"  cols="50">
+          <label> NRM PACKET</label>  <br>
+           <p style="margin-top: 16%;margin-bottom: -3rem">Packet :-</p><textarea rows="4"  id="packetvalue"  cols="50" style="width: 70%!important;margin-left: 23%;margin-bottom: 3.5rem">
 
                   </textarea>
-                      <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
+                      <button class="btn btn-info btn2 srch" id="searchclick" style="float:right;padding: 0!important;margin-right: -30%;margin-top: 10%"> SUBMIT </button>                     
                <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
               </div>
             </div>
@@ -49,60 +49,14 @@
       </div>
       <div class="modal-footer">
         <span class="pull-center">
-          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
-            SET OTA
-          </button> -->
+          
         </span>
       </div>
     </div>
   </div>
 </div>
 </div>
-<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allHLMDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-        
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-<div class="clearfix"></div>
-<section class="content" >
-<!-- <div class=col-md-8>           -->
-  <div class="col-md-6" style="overflow: scroll">
-  <!DOCTYPE html>
-
-<style>
-thead {color:black;}
-tbody {color:black;}
-tfoot {color:red;}
-
-table, th, td {
-  border: 1px solid black;
-}
-</style>
-</head>
-
-<body>
-
-<table style="width:50%;font-size: 13.5px!important">
+<table class="greyGridTable" ><!-- style="width:50%;font-size: 13.5px!important" -->
  
   <tbody>
    <th>Packet Params</th>
@@ -122,7 +76,7 @@ table, th, td {
       <td id="date"></td>
     </tr>
     <tr>
-      <td>Code</td>
+      <td>Alert ID</td>
       <td id="code"></td>
     </tr>
       <tr>
@@ -208,6 +162,54 @@ table, th, td {
   </tbody>
   
 </table>
+</section>
+<div class="clearfix"></div>
+<section class="content" >
+<!-- <div class=col-md-8>           -->
+  <div class="col-md-6" style="overflow: scroll">
+  <!DOCTYPE html>
+
+<style>
+table.greyGridTable {
+  border: 2px solid #cccccc;
+  width: 20%;
+  border-collapse: collapse;
+  margin-left: 40%;
+  margin-top:-12%;
+}
+table.greyGridTable td, table.greyGridTable th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 4px;
+}
+table.greyGridTable tbody td {
+  font-size: 13px;
+}
+table.greyGridTable td:nth-child(even) {
+  background: #EBEBEB;
+}
+table.greyGridTable thead {
+  background: #FFFFFF;
+  border-bottom: 4px solid #333333;
+}
+table.greyGridTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  border-left: 2px solid #333333;
+}
+table.greyGridTable thead th:first-child {
+  border-left: none;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+
 
 
 

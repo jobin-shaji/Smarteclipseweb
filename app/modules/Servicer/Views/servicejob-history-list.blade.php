@@ -7,8 +7,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Pending Jobs List</li>
-        <b></b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Service completed jobs List</li>
+        <b>Completed Job List of Service</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -20,7 +20,7 @@
     </nav>
  
  <div class="container-fluid">
-    <div class="card-body"><h4>Installation Pending Jobs List</h4>
+    <div class="card-body">
       <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
@@ -39,7 +39,6 @@
                     <th>Description</th>
                     <th>Location</th>
                     <th>Job Date</th> 
-                    <th>Status</th>
                     <th>Action</th>                      
                   </tr>
                 </thead>
@@ -56,5 +55,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/job-list.js')}}"></script>
+    <script src="{{asset('js/gps/servicejob-history-list.js')}}"></script>
   @endsection
