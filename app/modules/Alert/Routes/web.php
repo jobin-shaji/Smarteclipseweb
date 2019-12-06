@@ -10,6 +10,7 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/alert-type/{id}/edit','AlertController@update')->name('alert.types.update.p'); 
 	Route::post('/alert-type/delete','AlertController@deleteAlertType')->name('alert.type.delete');
 	Route::post('/alert-type/activate','AlertController@activateAlertType')->name('alert.type.activate');
+	
 
 });
 

@@ -696,7 +696,7 @@ public function serviceJobDetails(Request $request)
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
             //Move Uploaded File
-            $destinationPath = 'documents';
+            $destinationPath = 'documents/vehicledocs';
             $file->move($destinationPath,$uploadedFile);
 
             $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
