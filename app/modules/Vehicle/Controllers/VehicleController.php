@@ -278,7 +278,7 @@ class VehicleController extends Controller
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   time().'.'.$getFileExt;
         //Move Uploaded File
-        $destinationPath = 'documents';
+        $destinationPath = 'documents/vehicledocs';
         $file->move($destinationPath,$uploadedFile);
         $documents = Document::create([
             'vehicle_id' => $request->vehicle_id,
@@ -325,13 +325,13 @@ class VehicleController extends Controller
         $file=$request->path;
         if($file){
             $old_file = $vehicle_doc->path;
-            $myFile = "documents/".$old_file;
+            $myFile = "documents/vehicledocs/".$old_file;
             $delete_file=unlink($myFile);
             if($delete_file){
                 $getFileExt   = $file->getClientOriginalExtension();
                 $uploadedFile =   time().'.'.$getFileExt;
                 //Move Uploaded File
-                $destinationPath = 'documents';
+                $destinationPath = 'documents/vehicledocs';
                 $file->move($destinationPath,$uploadedFile);
                 $vehicle_doc->path = $uploadedFile;
             }
@@ -358,7 +358,7 @@ class VehicleController extends Controller
         $file=$vehicle_doc->path;
         if($file){
             // $old_file = $vehicle_doc->path;
-            // $myFile = "documents/".$old_file;
+            // $myFile = "documents/vehicledocs/".$old_file;
             // $delete_file=unlink($myFile);
             $vehicle_doc->delete(); 
         }
