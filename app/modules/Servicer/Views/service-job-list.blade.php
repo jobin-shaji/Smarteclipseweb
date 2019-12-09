@@ -7,7 +7,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Servicer Pending Jobs  List</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Servicer Pending Jobs List</li>
+        <b>Service Pending Jobs</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -19,7 +20,7 @@
     </nav>
  
  <div class="container-fluid">
-    <div class="card-body"><h4>Servicer Pending Jobs  List</h4>
+    <div class="card-body">
       <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
@@ -34,7 +35,7 @@
                     <th>Client</th>                      
                     <th>Job Type</th>
                     <th>Assignee</th>
-                    <th>GPS</th>
+                    <th>GPS Serial No</th>
                     <th>Description</th>
                     <th>Location</th>
                     <th>Job Date</th> 
@@ -50,8 +51,7 @@
     </div>               
   </div>
  </div>
-
-
+</div>
 @endsection
 
   @section('script')

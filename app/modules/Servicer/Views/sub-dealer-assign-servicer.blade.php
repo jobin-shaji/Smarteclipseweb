@@ -163,7 +163,6 @@
     </div>            
   </div>
 </div>
-
 <div class="clearfix"></div>
 @section('script')
 <script async defer

@@ -2,6 +2,8 @@
 
 namespace App\Modules\Vehicle\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
 use App\Modules\User\Models\User;
@@ -36,6 +38,45 @@ use Config;
 
 class VehicleController extends Controller 
 {
+
+
+
+    /** 
+     * Response data 
+     */
+    private $data;
+
+    /**
+     * Http response code
+     */
+    private $code;
+
+    /**
+     * Response status
+     */
+    private $success;
+
+    /**
+     * Response message
+     */
+    private $message;
+
+    /**
+     * Init class attributes
+     */
+    public function __construct()
+    {
+        $this->data     = [];
+        $this->code     = Response::HTTP_OK;
+        $this->success  = true;
+        $this->message  = '';
+    }
+
+    /**
+     * add geo fence
+     * @author  spm
+     * 
+     */
     use VehicleDataProcessorTrait;
     
     // show list page
@@ -2140,11 +2181,11 @@ class VehicleController extends Controller
         $user = User::where('id', $user_id)->first();
         if ($user == null) 
         {
-            $data = array('status' => 'failed', 
-                          'message' => 'user does not exist', 
-                          'code' => 0
+            $this->success=false;
+            $data = array('success' => $this->success, 
+                          'message' => 'user does not exist'
                          );
-            return response()->json($data);
+            return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
         $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
@@ -2214,21 +2255,25 @@ class VehicleController extends Controller
                                    "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
-                $response_data = array('status' => 'success', 
-                                   'message' => 'success', 
-                                   'code' => 1, 
+                $response_data = array('success' => $this->success, 
+                                   'message' => 'success',
                                    'vehicle_value' => $statics,
                                    'search_date'=>$app_date
                                   );
         }        
         else {
-            $response_data = array('status' => 'failed', 
-                                   'message' => 'failed', 
-                                   'code' => 0
+            $this->success=false;
+            $response_data = array('success' => $this->success, 
+                                   'message' => 'failed'
                                   );
         }
-        return response()->json($response_data);
+        return response()->json($response_data,$this->code);
     }
+
+
+
+
+
 
     public function getVehicleTravelSummary(Request $request) {
         $user_id = $request->user_id;
@@ -2239,11 +2284,11 @@ class VehicleController extends Controller
         $user = User::where('id', $user_id)->first();
         if ($user == null) 
         {
-            $data = array('status' => 'failed', 
-                          'message' => 'user does not exist', 
-                          'code' => 0
+            $this->success=false;
+            $data = array('success' => $this->success, 
+                          'message' => 'user does not exist'
                          );
-            return response()->json($data);
+            return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
         $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
@@ -2300,18 +2345,18 @@ class VehicleController extends Controller
              $to_date=date('Y-m-d H:i:s', strtotime("yesterday midnight"));
             }
 
-            $response_data = array('status' => 'success', 
+            $response_data = array('success' => $this->success, 
                                    'message' => 'success', 
-                                   'code' => 1, 
                                    'user_name' => $user->username, 
                                    'travel_summary' => $travel_data,
                                    'from_date'=>$from_date,
                                    'to_date'=>$to_date
                                   );
         }else {
-            $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
+            $this->success=false;
+            $response_data = array('status' => $this->success, 'message' => 'failed');
         }
-        return response()->json($response_data);
+        return response()->json($response_data,$this->code);
     }
 
     public function getTravelSummary(Request $request) {
