@@ -49,8 +49,7 @@
                   </tr>
                 </thead>
               </table>
-              <input type="plan_id" id="plan_id" value="">
-           
+              <input type="hidden" id="plan_id" value="">           
           </div>
 
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -75,13 +74,14 @@
                       </span>
                     @endif
                     <br/>
-                        <label  data-success="right" >Value</label>  
-                        <textarea type="text" id="config" name="config" required="required" class="form-control validate" ></textarea>
+                        <label  data-success="right" >Value</label>
+                        <div id="config"></div>  
+                        
                          <label  data-success="right" >Code</label>                    
                         <input type="text" id="code" name="code" required="required" class="form-control validate" >                      
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                      <button class="btn btn-default">Login</button>
+                      <button class="btn btn-default">Submit</button>
                     </div>
                   </div>
                 </div>
