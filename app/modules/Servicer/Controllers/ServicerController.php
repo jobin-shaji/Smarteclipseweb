@@ -541,7 +541,7 @@ if($servicer_job->status==0){
             }else
             {
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
             }
           
         })
