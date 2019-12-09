@@ -286,9 +286,21 @@ class DashboardController extends Controller
             $single_clients_array[] = $clients_array->id;
         }
         $transferred_gps_count=GpsStock::whereIn('client_id',$single_clients_array)->where('subdealer_id',$sub_dealer_id)->count(); 
+
+
+        $single_new_transfer_ids=[];
+        $new_arrival_gps_count=0;
+        $new_arrival_gps=GpsTransfer::where('to_user_id',$sub_dealer_user_id)->whereNull('accepted_on')->get();
+        if($new_arrival_gps){
+            foreach ($new_arrival_gps as $new_gps) {
+               $single_new_transfer_ids[] = $new_gps->id;
+            }
+            $new_arrival_gps_count=GpsTransferItems::whereIn('gps_transfer_id',$single_new_transfer_ids)->count();
+        }
+
         return response()->json([
             'clients' => Client::where('sub_dealer_id',$sub_dealer_id)->count(),
-            'new_arrivals' => GpsTransfer::where('to_user_id',$sub_dealer_user_id)->whereNull('accepted_on')->count(),
+            'new_arrivals' => $new_arrival_gps_count,
             'total_gps' => $total_gps,
             'transferred_gps' => $transferred_gps_count,
             'status' => 'dbcount'           
