@@ -78,7 +78,7 @@
     <div class="container">
 
       <div class="logo">
-                <a href="index.html"><img src="smart/assets/img/logos.png" alt="" /></a>
+                <a href="#"><img src="smart/assets/img/logos.png" alt="" /></a>
             </div>
 
       <nav id="nav-menu-container">
