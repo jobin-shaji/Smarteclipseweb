@@ -159,26 +159,25 @@
                             </a>
                             <ul class="dropdown-menu multi-level">
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >GEOFENCE</a>
-                                    <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('/fence')}}">ADD GEOFENCE</a></li>
                                     <li><a class="dropdown-item" href="{{url('/geofence')}}">LIST GEOFENCES</a></li>
                                     <li><a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}">ASSIGN GEOFENCE</a></li>
-                                    </ul>
                                 </li>
-                                @role('fundamental|superior|pro')
+                            </ul>
+                        </li>
+                        @role('fundamental|superior|pro')
+                        <li class="nav-item dropdown-submenu">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE
+                            </a>
+                            <ul class="dropdown-menu multi-level">
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">ROUTE</a>
-                                    <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
                                     <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
                                     <li><a class="dropdown-item" href="{{url('/assign/route-vehicle')}}">ASSIGN ROUTE</a></li>
-                                    </ul>
                                 </li>
-                                @endrole
                             </ul>
                         </li>
-
+                        @endrole
                         
 
                         <li class="nav-item dropdown-submenu">
