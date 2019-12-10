@@ -1580,7 +1580,7 @@ class GpsController extends Controller {
         // dd($header);
         return view('Gps::public-alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
-     public function getPublicAllData(Request $request)
+    public function getPublicAllData(Request $request)
     {
         if($request->gps && $request->header){
             

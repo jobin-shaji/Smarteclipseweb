@@ -12,8 +12,7 @@
         {{csrf_field()}}
         <div  style ="margin-left: 77px"class="form-group has-feedback">
           <label class="srequired">GPS</label>
-          <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>
-          <option selected="selected" disabled="disabled">Select</option>                
+          <select class="select2 form-control" id="gps_id" name="gps_id"  data-live-search="true" title="Select GPS" required onchange='callBackDataTable(this.value)'>        
             <option value="">All</option>
             @foreach($gps as $gps)
             <option value="{{$gps->id}}">{{$gps->imei}}</option>

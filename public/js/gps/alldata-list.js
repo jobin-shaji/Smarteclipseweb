@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // callBackDataTable();
+    callBackDataTable();
 });
 document.getElementById("geofence").style.visibility = "hidden";
     var checkboxes = document.getElementsByName('checkbox1');
@@ -86,6 +86,7 @@ function check(){
     // }
 }
 function callBackDataTable(value){
+
   if(value==null)
   {
     gps=document.getElementById('gps_id').value;
@@ -94,7 +95,6 @@ function callBackDataTable(value){
   else{
     gps=value;
   }
-    // console.log(gps);
     var  data = {
         gps : gps,
         header : document.getElementById('header').value   
