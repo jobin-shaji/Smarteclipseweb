@@ -122,7 +122,7 @@ class ConfigurationController extends Controller {
                               'pro'=>$pro
                            ];
 
-                $config_data_json=json_encode($config_data,true);servicerJ
+                $config_data_json=json_encode($config_data,true);
                 $save_config = Configuration::find(1);
                 $save_config->value = $config_data_json;
                 $save_config->date = date('Y-m-d');
@@ -142,7 +142,8 @@ class ConfigurationController extends Controller {
     }
     public function getConfiguration(Request $request)
     {  
-        $version = ConfigurationVersion::where('plan',$request->name)->orderBy('id','desc')->first();  
+        $version = ConfigurationVersion::where('plan',$request->name)->orderBy('id',desc)->first();         
+        return response()->json([
                 'version' => $version        
         ]);
     }
