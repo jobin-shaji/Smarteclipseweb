@@ -36,7 +36,7 @@
                 <thead>
                   <?php 
                   $index = 1;
-                  
+                  $version=$value['version'];
                   foreach( json_decode($value['value']) as $item => $item_value)
                   {
                     $item_value_data=json_encode($item_value);
@@ -44,7 +44,7 @@
                   <tr>
                       <td><?php echo $index; ?></td>
                       <td><?php echo $item; ?></td>
-                      <td><button type="button" onclick='getConfiguration({{ $item_value_data }} ) '>Configure</button></td>
+                      <td><button type="button" onclick='getConfiguration({{$item_value_data}},"{{$item}}","{{$version}}")'>Configure</button></td>
                   </tr>
                   <?php 
                   $index++;
@@ -73,19 +73,14 @@
                     </div>
                     <div class="modal-body mx-3">    
 
-                        <label  data-success="right" >Name</label>                    
-                        <input type="text" id="name" name="name" required="required" class="form-control validate {{ $errors->has('name') ? ' has-error' : '' }}">
-                         @if ($errors->has('name'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('name') }}</strong>
-                      </span>
-                    @endif
-                    <br/>
+                     
                         <label  data-success="right" >Value</label>
                         <div id="config"></div>  
+                         <label  data-success="right" >Version</label>
+                      <input type="text" id="version" name="version" value="">
                         
-                         <label  data-success="right" >Code</label>                    
-                        <input type="text" id="code" name="code" required="required" class="form-control validate" >                      
+                        
+                                          
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
                       <button class="btn btn-default">Submit</button>

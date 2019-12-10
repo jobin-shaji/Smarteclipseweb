@@ -19,6 +19,8 @@ class CreateConfigurationsTable extends Migration
             $table->json('value');
             $table->string('code');
             $table->date('date');
+            $table->string('version');
+
             $table->timestamps();
         });
     }

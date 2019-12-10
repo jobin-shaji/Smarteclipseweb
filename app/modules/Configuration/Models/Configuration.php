@@ -5,6 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 class Configuration extends Model
 {
    protected $fillable=[
-		'name','value','code'
+		'name','value','code','date','version'
 	];
 }
