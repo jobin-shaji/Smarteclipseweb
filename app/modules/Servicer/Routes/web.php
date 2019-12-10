@@ -55,6 +55,8 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	Route::get('/servicejob/{id}/servicedetails','ServicerController@serviceJobDetails')->name('service.job.details');
 
+	Route::get('/servicejob/{id}/serviceedit','ServicerController@serviceJobedit')->name('service.job.details');
+
 	Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
 
 	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');

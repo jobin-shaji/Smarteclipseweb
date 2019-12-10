@@ -543,7 +543,7 @@ if($servicer_job->status==0){
                 if($servicer_job->status==2)
             {
                return "
-                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> edit</a>";  
+                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Edit</a>";  
             } 
             else{
                 
@@ -646,6 +646,51 @@ public function serviceJobDetails(Request $request)
         }
         return view('Servicer::service-job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
+
+    public function serviceJobedit(Request $request)
+    {
+
+        $decrypted = Crypt::decrypt($request->id); 
+        $servicer_job = ServicerJob::select(
+           'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'gps_id',
+            'job_complete_date', 
+            \DB::raw('Date(job_date) as job_date'),                 
+            'created_at',           
+            'location',
+            'status'
+        )
+        ->withTrashed()
+        ->where('id', $decrypted)
+        ->with('gps:id,imei,serial_no')
+        ->with('clients:id,name')
+        ->with('user:id,username')
+        ->first();
+        $job_id=$servicer_job->job_id;
+        $client_id=$servicer_job->client_id;
+        // dd($client_id);
+        $servicer_id=\Auth::user()->servicer->id;
+        $vehicleTypes=VehicleType::select(
+            'id','name'
+        )
+        ->get();       
+        $drivers=Driver::select('id','name')
+        ->where('client_id',$client_id)
+        ->get();    
+
+         $models=VehicleModels::select('id','name')->get();   
+       if($servicer_job == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::service-job-edit',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
+    }
+
     public function servicerJobSave(Request $request)
     { 
          $custom_messages = [

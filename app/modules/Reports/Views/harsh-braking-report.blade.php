@@ -65,7 +65,7 @@
                               <th>Vehicle</th>
                               <th>Alert Type</th>
 
-                              <th>DateTime</th>
+                              <th>Date & Time</th>
                               <th>Action</th>        
                             </tr>
                         </thead>

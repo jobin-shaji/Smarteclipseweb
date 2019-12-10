@@ -85,9 +85,15 @@
                     <div class="col-md-6">
                       <input type="file" name="logo" value="{{$client->logo }}">
                     </div>
+                    <?php if(!empty($response)) { ?>
+                    <div class="response <?php echo $response["type"]; ?>
+                        ">
+                        <?php echo $response["message"]; ?>
+                    </div>
+                    <?php }?>
                     <div class="col-md-6">
                       @if($client->logo)
-                        <img width="150" height="100" src="/logo/{{ $client->logo }}" />
+                        <img width="150" height="40" src="/logo/{{ $client->logo }}" />
                       @else
                       
                       @endif
@@ -95,15 +101,15 @@
                   </div>
                 </div>
                 @if ($errors->has('logo'))
-                  <span class="help-block">
+                  <div style="width: 141%">
                       <strong class="error-text">{{ $errors->first('logo') }}</strong>
-                  </span>
+                  </div>
                 @endif
               </div>
             </div>
             <div class="row">
               <div class="col-md-3 ">
-                <button type="submit" class="btn btn-primary btn-md form-btn ">Upload</button>
+                <button type="submit" name="upload" class="btn btn-primary btn-md form-btn ">Upload</button>
               </div>
             </div>
           </form>
@@ -129,3 +135,4 @@
 @endsection
 
 <div class="clearfix"></div>
+
