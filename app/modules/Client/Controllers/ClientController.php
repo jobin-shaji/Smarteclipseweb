@@ -984,7 +984,7 @@ class ClientController extends Controller {
     public function logoUpdateRules()
     {
         $rules = [
-            'logo' => 'required'
+            'logo' => 'mimes:png|required|max:2000|dimensions:max_width=150,max_height=40' 
         ];
         return  $rules;
     }

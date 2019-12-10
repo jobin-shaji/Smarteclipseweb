@@ -33,7 +33,7 @@
                       <th>Address</th>                              
                       <th>Mobile</th>                            
                       <th>email</th>
-                      <th style="width:160px;">Action</th>
+                      <th style="width:0px!important;">Action</th>
                     </tr>
                   </thead>
                 </table>

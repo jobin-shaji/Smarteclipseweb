@@ -69,7 +69,7 @@ Performance Score History
 													<th>GPS-Serial Number</th>
 													<th>Alert Type</th>
 													<th>Point</th>
-													<th>DateTime</th>
+													<th>Date & Time</th>
 					                            </tr>
 					                        </thead>
 					                    </table>

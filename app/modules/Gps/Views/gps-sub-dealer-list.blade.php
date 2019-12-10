@@ -23,16 +23,16 @@
           <div class="row">
             <div class="col-sm-12">
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
-                <thead>
+                <thead style="width: 5%!important">
                   <tr>
-                    <th>SL.No</th>
-                    <th>IMEI</th>
-                    <th>Serial Number</th>
-                    <th>Batch Number</th>
-                    <th>Employee Code</th>
-                    <th>Model Name</th>
-                    <th>User</th>
-                    <th>Action</th>
+                    <th style="width: 5%!important">SL.No</th>
+                    <th style="width: 10%!important">IMEI</th>
+                    <th style="width: 10%!important">Serial Number</th>
+                    <th style="width: 10%!important">Batch Number</th>
+                    <th style="width: 10%!important">Employee Code</th>
+                    <th style="width: 10%!important">Model Name</th>
+                    <th style="width: 10%!important">User</th>
+                    <th style="width: 0px!important">Action</th>
                   </tr>
                 </thead>
               </table>

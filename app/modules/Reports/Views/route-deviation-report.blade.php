@@ -66,7 +66,7 @@
                               <th>Register Number</th>
                               <th>Scheduling Route</th>
                               <th>Deviating Place</th>
-                              <th>Date&Time</th>        
+                              <th>Date & Time</th>        
                             </tr>
                         </thead>
                     </table>
