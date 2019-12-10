@@ -32,7 +32,7 @@
                     <th>Batch Number</th>
                     <th>Employee Code</th>
                     <th>Model Name</th>
-                    <th>Action</th>
+                    <th style="width: 0px!important">Action</th>
                   </tr>
                 </thead>
               </table>

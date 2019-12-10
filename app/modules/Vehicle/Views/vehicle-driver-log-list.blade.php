@@ -37,7 +37,7 @@
                                     <th>Register Number</th>
                                     <th>From Driver</th>
                                     <th>To Driver</th>
-                                    <th>DateTime</th>
+                                    <th>Date & Time</th>
                                 </tr>
                             </thead>
                             </table>
