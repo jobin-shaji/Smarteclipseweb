@@ -62,6 +62,10 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
 	Route::post('/servicejob-complete-save/{id}','ServicerController@jobSave')->name('servicejob.complete.save');
 
+	// Route::post('/job-complete-save/{id}','ServicerController@jobSave')->name('job.complete.save');
+	// Route::post('/servicejob-complete-save/{id}','ServicerController@servicerJobSave')->name('servicejob.complete.save');
+
+
 	// Route::get('/job-complete/{id}/downloads/{vid}','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 
 

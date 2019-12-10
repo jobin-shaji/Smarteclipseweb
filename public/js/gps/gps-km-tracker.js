@@ -41,6 +41,7 @@ function mapCheck() {
     });
   }
   function polyline(res){
+    console.log(res);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: {lat: 10.069564, lng: 76.301823},
@@ -62,12 +63,13 @@ function mapCheck() {
         position: new google.maps.LatLng(parseFloat(element.lat), parseFloat(element.lng)),
         map: map
       });
-        
-         var km=Math.round(element.km/1000);
-          // console.log(km);
-      var infowindow = new google.maps.InfoWindow({
+      // var km=Math.round(element.km/1000);
+      var km=Math.round(element.km);
 
-          content: i+1+"-"+km.toString()+" km",
+      var latitude=element.lat;
+      var longitude=element.lng;
+      var infowindow = new google.maps.InfoWindow({
+          content: i+1+"-"+km.toString()+" meter<br/>"+"lat -"+latitude+"<br/> Lng -"+longitude,
       });
       infowindow.open(map, marker);
       google.maps.event.addListener(marker, 'click', (function(marker) {

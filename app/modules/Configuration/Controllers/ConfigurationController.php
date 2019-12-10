@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Configuration\Models\Configuration;
+use App\Modules\Configuration\Models\ConfigurationVersion;
+
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -16,7 +18,6 @@ class ConfigurationController extends Controller {
     public function create()
     {
         $items = Configuration::all()->toArray(); 
-
         //echo '<pre>'.print_r($items, true).'</pre>';
        //die();
         // dd($items->value);
@@ -121,13 +122,19 @@ class ConfigurationController extends Controller {
                               'pro'=>$pro
                            ];
 
-                $config_data_json=json_encode($config_data,true);
+                $config_data_json=json_encode($config_data,true);servicerJ
                 $save_config = Configuration::find(1);
                 $save_config->value = $config_data_json;
                 $save_config->date = date('Y-m-d');
                 $save_config->version = $request->version;
                 $save_config->save();
-           
+                if($save_config){
+                  $gps = ConfigurationVersion::create([
+                    'plan'=>$plan,
+                    'version'=>$request->version       
+                  ]); 
+                }
+                        
         }
         $request->session()->flash('message', 'New Configuration created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
@@ -135,10 +142,8 @@ class ConfigurationController extends Controller {
     }
     public function getConfiguration(Request $request)
     {  
-        $items = Configuration::find(1);  
-        
-        return response()->json([
-                'config' => $items        
+        $version = ConfigurationVersion::where('plan',$request->name)->orderBy('id','desc')->first();  
+                'version' => $version        
         ]);
     }
 

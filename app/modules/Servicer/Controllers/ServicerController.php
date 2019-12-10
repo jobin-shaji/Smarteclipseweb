@@ -813,24 +813,26 @@ public function serviceJobDetails(Request $request)
 
         $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
+        // dd( $servicer_job);
         if($servicer_job!=null)
         {
-        $servicer_job->job_complete_date = $job_completed_date;
-
-        $servicer_job->comment = $request->comment;
+            $servicer_job->job_complete_date = $job_completed_date;
+            $servicer_job->comment = $request->comment;
             $servicer_job->status = 3;
-            $servicer_job->save();
-          
+            $servicer_job->save();         
             // dd($servicer_job->id);
-            $service_job_id=Crypt::encrypt($servicer_job->id);
+            $service_job_id=Crypt::encrypt($servicer_job->id);           
             $request->session()->flash('message', 'Job  completed successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+            // return redirect()->route('job.history.details',['id' => $service_job_id]);
+             // return redirect()->back();
+            return redirect()->route('service.job.list');
+
        }else
        {
              $request->session()->flash('message', 'Job completion failed'); 
              $request->session()->flash('alert-class', 'alert-danger');
-             return redirect()->route('job.history.details');
+             return redirect()->route('service.job.list');
 
       }
     }
