@@ -19,44 +19,50 @@
           </div>
         </div>
         @endif 
-  </nav>         
+  </nav>    
+
+
+
   <div class="card-body">
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-                     
+            <?php 
+            foreach($config as $key => $value)
+            {
+            ?>
+            <h1><?php echo $value['name']; ?></h1>
              <table class="table table-hover table-bordered  table-striped datatable" style="width:40%;text-align: center;" id="dataTable">
                 <thead>
+                  <?php 
+                  $index = 1;
+                  
+                  foreach( json_decode($value['value']) as $item => $item_value)
+                  {
+                    $item_value_data=json_encode($item_value);
+                  ?>
                   <tr>
-                      <td>1</td>
-                      <td>Freebies</td>
-                      <td><button type="button" onclick="plan(1)">Configure</button></td>
+                      <td><?php echo $index; ?></td>
+                      <td><?php echo $item; ?></td>
+                      <td><button type="button" onclick='getConfiguration({{ $item_value_data }} ) '>Configure</button></td>
                   </tr>
-                   <tr>
-                      <td>2</td>
-                      <td>Fundamental</td>
-                      <td><button type="button" onclick="plan(2)">Configure</button></td>
-                  </tr>
-                   <tr>
-                      <td>3</td>
-                      <td>Superior</td>
-                      <td><button type="button" onclick="plan(3)">Configure</button></td>
-                  </tr>
-                   <tr>
-                      <td>4</td>
-                      <td>Pro</td>
-                      <td><button type="button" onclick="plan(4)">Configure</button></td>
-                  </tr>
+                  <?php 
+                  $index++;
+                }
+                ?>
                 </thead>
               </table>
-              <input type="plan_id" id="plan_id" value="">
-           
+              <?php 
+            }
+            ?>
+                        
           </div>
 
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
           <form  method="POST" action="{{route('configuration.create.p')}}">
             {{csrf_field()}}    
+             <input type="hidden" id="plan_id" name="plan_id" value="">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header text-center">
@@ -75,13 +81,14 @@
                       </span>
                     @endif
                     <br/>
-                        <label  data-success="right" >Value</label>  
-                        <textarea type="text" id="config" name="config" required="required" class="form-control validate" ></textarea>
+                        <label  data-success="right" >Value</label>
+                        <div id="config"></div>  
+                        
                          <label  data-success="right" >Code</label>                    
                         <input type="text" id="code" name="code" required="required" class="form-control validate" >                      
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                      <button class="btn btn-default">Login</button>
+                      <button class="btn btn-default">Submit</button>
                     </div>
                   </div>
                 </div>
