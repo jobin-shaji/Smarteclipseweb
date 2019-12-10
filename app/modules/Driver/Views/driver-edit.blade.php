@@ -56,17 +56,49 @@
                   @endif
                   </div>
 
-                  <div class="form-group row" style="float:none!important">
-                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
-                        <div class="form-group has-feedback">
-                          <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ $driver->mobile}}">
+                  <?php
+                      $url=url()->current();
+                      $rayfleet_key="rayfleet";
+                      $eclipse_key="eclipse";
+                      if (strpos($url, $rayfleet_key) == true) {  ?>
+                          <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" minlength="11" maxlength="11"> 
+                          </div>
+                          @if ($errors->has('mobile'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                            </span>
+                          @endif
                         </div>
-                    @if ($errors->has('mobile'))
-                      <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('mobile') }}</strong>
-                      </span>
-                    @endif
-                  </div>
+                      <?php } 
+                      else if (strpos($url, $eclipse_key) == true) { ?>
+                         <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" minlength="10" maxlength="10"> 
+                          </div>
+                          @if ($errors->has('mobile'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php }
+                      else { ?>
+                          <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" minlength="10" maxlength="10"> 
+                          </div>
+                          @if ($errors->has('mobile'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php } ?>
                 </div>
               </div>
             <div class="row">

@@ -129,7 +129,7 @@
                           ?>
                           <div class="form-group has-feedback">
                             <label class="srequired">Odometer(in km)</label>
-                            <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$odometer_in_km}}">
+                            <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$odometer_in_km}}" minlength="1" maxlength="7" oninvalid="this.setCustomValidity('Odometer reading should not be more than 7 digits')">
                           </div>                        
                         </div>
                           @if ($errors->has('odometer'))

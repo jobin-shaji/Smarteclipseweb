@@ -35,11 +35,11 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
-                      <th>SL.No</th>                              
-                      <th>Name</th>                            
-                      <th>Address</th>                              
-                      <th>Mobile</th>                            
-                      <th style="width:160px;">Action</th>
+                      <th style="width:5%!important;">SL.No</th>                              
+                      <th style="width:20%!important;">Name</th>                            
+                      <th style="width:30%!important;">Address</th>                              
+                      <th style="width:10%!important;">Mobile</th>                            
+                      <th style="width:15%!important;">Action</th>
                   </tr>
                 </thead>
               </table>
