@@ -17,10 +17,12 @@ function plan(planName){
   }
 
 
-function getConfiguration(data)
+function getConfiguration(data,name,version)
 {
+
   $('#myModal').modal('show');
   $('#name').empty();
+   $('#version').empty();
   $('#config').empty();
 
       var freebies=data;
@@ -227,6 +229,8 @@ function getConfiguration(data)
             '<tr><td>Route Play Back Month</td><td>'+route_playback_history_month+'</td></tr>';  
             // console.log(plan);
         $("#config").append(plan);
+        $('#plan_id').val(name);
+        $('#version').val(version);
 }
 
 //

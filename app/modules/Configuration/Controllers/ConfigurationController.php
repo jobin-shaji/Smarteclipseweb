@@ -25,9 +25,9 @@ class ConfigurationController extends Controller {
     public function save(Request $request)
     {
         if($request->user()->hasRole('root')){ 
-            $plan_id=$request->plan_id; 
+            $plan=$request->plan_id; 
 
-            $ac_status =  $this->congig_status($request->ac_status);    
+            $ac_status =  $this->congig_status($request->ac_status);  
             $anti_theft_mode =  $this->congig_status($request->anti_theft_mode);                        
             $api_access=$this->congig_status($request->api_access);    
             $client_domain=$this->congig_status($request->client_domain); 
@@ -39,7 +39,7 @@ class ConfigurationController extends Controller {
             $driver_score=$this->congig_status($request->driver_score); 
             $emergency_alerts=$this->congig_status($request->emergency_alerts); 
             $fuel=$this->congig_status($request->fuel); 
-            $geofence_count=$this->congig_status($request->geofence_count); 
+            $geofence_count=$request->geofence_count; 
             $immobilizer=$this->congig_status($request->immobilizer); 
             $invoice=$this->congig_status($request->invoice); 
             $mobile_application=$this->congig_status($request->mobile_application); 
@@ -47,11 +47,11 @@ class ConfigurationController extends Controller {
             $point_of_interest=$this->congig_status($request->point_of_interest); 
             $privillaged_support=$this->congig_status($request->privillaged_support); 
             $radar=$this->congig_status($request->radar); 
-            $route_deviation_count=$this->congig_status($request->route_deviation_count); 
+            $route_deviation_count=$request->route_deviation_count; 
             $share_in_web_app=$this->congig_status($request->share_in_web_app); 
             $towing_alert=$this->congig_status($request->towing_alert); 
             $white_list=$this->congig_status($request->white_list); 
-            $route_playback_history_month=$this->congig_status($request->route_playback_history_month); 
+            $route_playback_history_month=$request->route_playback_history_month; 
             $configuration_value=[];         
             $configuration_value=[
                     "fuel"=> $fuel,
@@ -78,12 +78,12 @@ class ConfigurationController extends Controller {
                     "privillaged_support"=> $privillaged_support, 
                     "route_deviation_count"=> $route_deviation_count, 
                     "route_playback_history_month"=> $route_playback_history_month, 
-                    "daily_report_summary_to_reg_mail" => $route_playback_history_month
+                    "daily_report_summary_to_reg_mail" => $daily_report_summary_to_reg_mail
                    ];
 
                $configuration = Configuration::select('value')->first();
                $value = json_decode($configuration->value, true);
-               if($plan_id==1){
+               if($plan=='freebies'){
                 $freebies=$configuration_value;
 
                }
@@ -91,7 +91,7 @@ class ConfigurationController extends Controller {
                 $freebies=$value['freebies'];
 
                }
-               if($plan_id==2){
+               if($plan=='fundamental'){
                 $fundamental=$configuration_value;
 
                }
@@ -99,7 +99,7 @@ class ConfigurationController extends Controller {
                 $fundamental=$value['fundamental'];
 
                }
-                if($plan_id==3){
+                if($plan=='superior'){
                 $superior=$configuration_value;
 
                }
@@ -107,7 +107,7 @@ class ConfigurationController extends Controller {
                 $superior=$value['superior'];
 
                }
-               if($plan_id==4){
+               if($plan=='pro'){
                 $pro=$configuration_value;
 
                }
@@ -123,9 +123,9 @@ class ConfigurationController extends Controller {
 
                 $config_data_json=json_encode($config_data,true);
                 $save_config = Configuration::find(1);
-                $save_config->name = $request->name;
                 $save_config->value = $config_data_json;
-                $save_config->code = $request->code;
+                $save_config->date = date('Y-m-d');
+                $save_config->version = $request->version;
                 $save_config->save();
            
         }
