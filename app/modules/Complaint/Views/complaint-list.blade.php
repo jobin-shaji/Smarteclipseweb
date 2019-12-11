@@ -33,6 +33,7 @@
                     <th>Complaint Type</th>                         
                     <th>Description</th>
                     <th>Date</th>
+                    <th>Status</th>
                     @role('sub_dealer|root')
                       <th>Assigned To</th>
                     @endrole

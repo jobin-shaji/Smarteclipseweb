@@ -365,17 +365,17 @@ class VehicleController extends Controller
         $this->validate($request, $rules,$custom_messages);
         $file=$request->path;
         if($file){
-            $old_file = $vehicle_doc->path;
-            $myFile = "documents/vehicledocs/".$old_file;
-            $delete_file=unlink($myFile);
-            if($delete_file){
+            // $old_file = $vehicle_doc->path;
+            // $myFile = "documents/vehicledocs/".$old_file;
+            // $delete_file=unlink($myFile);
+            // if($delete_file){
                 $getFileExt   = $file->getClientOriginalExtension();
                 $uploadedFile =   time().'.'.$getFileExt;
                 //Move Uploaded File
                 $destinationPath = 'documents/vehicledocs';
                 $file->move($destinationPath,$uploadedFile);
                 $vehicle_doc->path = $uploadedFile;
-            }
+            // }
         }
         
         $vehicle_doc->vehicle_id = $request->vehicle_id;
@@ -743,7 +743,7 @@ class VehicleController extends Controller
         else if($selected_status=="valid"){
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
             ->where(function ($vehicle_documents) {
-                $vehicle_documents->whereDate('expiry_date', '>', date('Y-m-d'))
+                $vehicle_documents->whereDate('expiry_date', '>=', date('Y-m-d'))
                 ->orWhereNull('expiry_date');
             });
         }
@@ -2175,23 +2175,23 @@ class VehicleController extends Controller
     {
         $user_id = $request->user_id;
         $vehicle_id = $request->vehicle_id;
-        $type = $request->type;
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
-        $user = User::where('id', $user_id)->first();
+        $user = Client::where('user_id', $user_id)->first();
         if ($user == null) 
         {
             $this->success=false;
             $data = array('success' => $this->success, 
-                          'message' => 'user does not exist'
+                          'message' => 'user does not exist',
+                          'data'    =>$this->data
                          );
             return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
-        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
-        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
-        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
-        $app_date = $date_and_time['appDate'];
+        $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+        $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+        $date_and_time = array('from_date' => $from_date,'to_date' => $to_date );
+
         $vehicle_details = Vehicle::where('id', $vehicle_id)
                                  ->whereNull('deleted_at')
                                  ->first();
@@ -2210,11 +2210,6 @@ class VehicleController extends Controller
                                ->get();
                            
             $maximum_speed=$gps_data->max('speed');   
-            if($type==2)
-            {
-              // for get single date km
-              $to_date=$from_date;
-            }
 
             $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
                                  ->whereDate('date','>=',$from_date)
@@ -2255,16 +2250,18 @@ class VehicleController extends Controller
                                    "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
-                $response_data = array('success' => $this->success, 
-                                   'message' => 'success',
-                                   'vehicle_value' => $statics,
-                                   'search_date'=>$app_date
-                                  );
+            $this->data[] = ['vehicle_value' => $statics];
+            $response_data = array(
+                                    'success' => $this->success, 
+                                    'message' => 'success',
+                                    'data'    =>$this->data
+                                );
         }        
         else {
             $this->success=false;
             $response_data = array('success' => $this->success, 
-                                   'message' => 'failed'
+                                   'message' => 'failed',
+                                   'data'    =>$this->data
                                   );
         }
         return response()->json($response_data,$this->code);
@@ -2278,22 +2275,23 @@ class VehicleController extends Controller
     public function getVehicleTravelSummary(Request $request) {
         $user_id = $request->user_id;
         $vehicle_id = $request->vehicle_id;
-        $type = $request->type;
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
-        $user = User::where('id', $user_id)->first();
+        $user = Client::where('user_id', $user_id)->first();
         if ($user == null) 
         {
             $this->success=false;
             $data = array('success' => $this->success, 
-                          'message' => 'user does not exist'
+                          'message' => 'user does not exist',
+                          'data'    =>$this->data
                          );
             return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
-        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
-        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
-        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+        
+        $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+        $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+        $date_and_time = array('from_date' => $from_date,'to_date' => $to_date );
 
         $vehicle_details = Vehicle::where('id', $vehicle_id)
                                  ->whereNull('deleted_at')
@@ -2307,12 +2305,6 @@ class VehicleController extends Controller
                                ->get();
             $avg_speed = $gps_data->avg('speed');
             $max_speed = $gps_data->max('speed');
-            // km dummy
-            if($type==2)
-            {
-              // for get single date km
-                $to_date=$from_date;
-            }
 
             $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
                                  ->whereDate('date','>=',$from_date)
@@ -2341,20 +2333,22 @@ class VehicleController extends Controller
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
 
-            if($type==3){
-             $to_date=date('Y-m-d H:i:s', strtotime("yesterday midnight"));
-            }
+            $this->data[] = [
+                            'user_name' => $user->username, 
+                            'travel_summary' => $travel_data
+                            ];
 
             $response_data = array('success' => $this->success, 
                                    'message' => 'success', 
-                                   'user_name' => $user->username, 
-                                   'travel_summary' => $travel_data,
-                                   'from_date'=>$from_date,
-                                   'to_date'=>$to_date
+                                   'data'    =>$this->data
                                   );
         }else {
             $this->success=false;
-            $response_data = array('status' => $this->success, 'message' => 'failed');
+            $response_data = array(
+                                    'status' => $this->success, 
+                                    'message' => 'failed',
+                                    'data'    =>$this->data
+                                );
         }
         return response()->json($response_data,$this->code);
     }

@@ -727,8 +727,6 @@ public function serviceJobDetails(Request $request)
             $engine_number = $request->engine_number;
             $chassis_number = $request->chassis_number;
 
-
-
             $vehicle_create= Vehicle::create([
                 'name' => $name,
                 'register_number' => $register_number,
