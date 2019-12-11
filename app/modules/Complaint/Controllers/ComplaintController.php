@@ -144,7 +144,8 @@ class ComplaintController extends Controller {
             ->with('ticket:id,code')
             ->with('client:id,name,sub_dealer_id')
             ->with('servicer:id,name')
-            ->with('complaintType:id,name,complaint_category');
+            ->with('complaintType:id,name,complaint_category')
+            ->orderBy('id','desc');
             // ->where('status','!=', 2);
             if(\Auth::user()->hasRole('client'))
             {
