@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading"></li>
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Driver</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Driver</li>
         <b>Create driver</b> 
       </ol>
       @if(Session::has('message'))
