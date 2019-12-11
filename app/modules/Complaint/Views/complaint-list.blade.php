@@ -22,8 +22,8 @@
       <div class="table-responsive ">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
-            <div class="col-sm-12">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important;text-align: center;" id="dataTable">
+            <div class="col-sm-12" style="overflow: scroll">
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important;text-align: center" id="dataTable">
                 <thead>
                   <tr>
                     <th>SL.No</th>

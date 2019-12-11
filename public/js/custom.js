@@ -381,6 +381,13 @@ function backgroundPostData(url, data, callBack, options) {
                     getConfigData(res);
 
                 }
+                 else if(callBack=='jobsComplete')
+                {
+                    jobsComplete(res);
+
+                }
+
+                
                 
 
                 
