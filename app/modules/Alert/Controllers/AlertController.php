@@ -564,6 +564,7 @@ class AlertController extends Controller {
     {
         $offset=$request->offset;
         $limit=$request->limit;
+
         // dd($limit);
         $user = $request->user();
         $client_id=\Auth::user()->client->id;   
