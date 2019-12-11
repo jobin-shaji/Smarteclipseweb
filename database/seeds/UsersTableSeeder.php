@@ -271,6 +271,37 @@ class UsersTableSeeder extends Seeder
             'description' => "Complete"
         ]);
 
+        DB::table('configurations')->insert([
+            'name' => 'plan',
+            'value' => '{"pro": {"fuel": "true", "radar": "true", "invoice": "true", "ac_status": "false", "api_access": "false", "white_list": "true", "client_logo": "true", "immobilizer": "true", "driver_score": "true", "towing_alert": "true", "client_domain": "false", "modify_design": "true", "custom_feature": "true", "geofence_count": "10", "anti_theft_mode": "false", "database_backup": "true", "emergency_alerts": "true", "share_in_web_app": "true", "point_of_interest": "true", "mobile_application": "true", "daily_report_as_sms": "true", "privillaged_support": "true", "route_deviation_count": "10", "route_playback_history_month": "10", "daily_report_summary_to_reg_mail": "true"}, "freebies": {"fuel": "false", "radar": "false", "invoice": "false", "ac_status": "false", "api_access": "false", "white_list": "false", "client_logo": "false", "immobilizer": "false", "driver_score": "false", "towing_alert": "false", "client_domain": "true", "modify_design": "false", "custom_feature": "false", "geofence_count": "8", "anti_theft_mode": "false", "database_backup": "false", "emergency_alerts": "false", "share_in_web_app": "false", "point_of_interest": "false", "mobile_application": "false", "daily_report_as_sms": "false", "privillaged_support": "false", "route_deviation_count": "8", "route_playback_history_month": "8", "daily_report_summary_to_reg_mail": "true"}, "superior": {"fuel": "false", "radar": "false", "invoice": "false", "ac_status": "true", "api_access": "true", "white_list": "false", "client_logo": "true", "immobilizer": "false", "driver_score": "false", "towing_alert": "false", "client_domain": "true", "modify_design": "false", "custom_feature": "true", "geofence_count": "8", "anti_theft_mode": "true", "database_backup": "false", "emergency_alerts": "false", "share_in_web_app": "false", "point_of_interest": "false", "mobile_application": "false", "daily_report_as_sms": "false", "privillaged_support": "false", "route_deviation_count": "8", "route_playback_history_month": "4", "daily_report_summary_to_reg_mail": "false"}, "fundamental": {"fuel": "false", "radar": "false", "invoice": "false", "ac_status": "true", "api_access": "true", "white_list": "false", "client_logo": "false", "immobilizer": "false", "driver_score": "false", "towing_alert": "false", "client_domain": "true", "modify_design": "false", "custom_feature": "false", "geofence_count": "3", "anti_theft_mode": "true", "database_backup": "false", "emergency_alerts": "false", "share_in_web_app": "false", "point_of_interest": "false", "mobile_application": "false", "daily_report_as_sms": "false", "privillaged_support": "false", "route_deviation_count": "2", "route_playback_history_month": "2", "daily_report_summary_to_reg_mail": "true"}}',
+            'code' => 'plan',
+            'date'=>date('Y-m-d'),
+            'version'=>'1.0'
+
+        ]);
+
+          DB::table('configuration_versions')->insert([
+            'plan' => 'freebies',
+            'version' => '1.0'
+        ]);
+          DB::table('configuration_versions')->insert([
+            'plan' => 'fundamental',
+            'version' => '1.0'
+        ]);
+        DB::table('configuration_versions')->insert([
+            'plan' => 'superior',
+            'version' => '1.0'
+        ]);
+        DB::table('configuration_versions')->insert([
+            'plan' => 'pro',
+            'version' => '1.0'
+
+        ]);
+
+
+
+
+
         
     }
 }

@@ -142,7 +142,7 @@ class ConfigurationController extends Controller {
     }
     public function getConfiguration(Request $request)
     {  
-        $version = ConfigurationVersion::where('plan',$request->name)->orderBy('id',desc)->first();         
+        $version = ConfigurationVersion::where('plan',$request->name)->orderBy('id','desc')->first();         
         return response()->json([
                 'version' => $version        
         ]);
