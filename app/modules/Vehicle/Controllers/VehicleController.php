@@ -2183,7 +2183,8 @@ class VehicleController extends Controller
         {
             $this->success=false;
             $data = array('success' => $this->success, 
-                          'message' => 'user does not exist'
+                          'message' => 'user does not exist',
+                          'data'    =>$this->data
                          );
             return response()->json($data,$this->code);
         }
@@ -2255,16 +2256,18 @@ class VehicleController extends Controller
                                    "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
-                $response_data = array('success' => $this->success, 
-                                   'message' => 'success',
-                                   'vehicle_value' => $statics,
-                                   'search_date'=>$app_date
-                                  );
+            $this->data = ['vehicle_value' => $statics];
+            $response_data = array(
+                                    'success' => $this->success, 
+                                    'message' => 'success',
+                                    'data'    =>$this->data
+                                );
         }        
         else {
             $this->success=false;
             $response_data = array('success' => $this->success, 
-                                   'message' => 'failed'
+                                   'message' => 'failed',
+                                   'data'    =>$this->data
                                   );
         }
         return response()->json($response_data,$this->code);
@@ -2286,7 +2289,8 @@ class VehicleController extends Controller
         {
             $this->success=false;
             $data = array('success' => $this->success, 
-                          'message' => 'user does not exist'
+                          'message' => 'user does not exist',
+                          'data'    =>$this->data
                          );
             return response()->json($data,$this->code);
         }
@@ -2345,16 +2349,21 @@ class VehicleController extends Controller
              $to_date=date('Y-m-d H:i:s', strtotime("yesterday midnight"));
             }
 
+            $this->data = ['user_name' => $user->username, 
+                            'travel_summary' => $travel_data
+                        ];
+
             $response_data = array('success' => $this->success, 
                                    'message' => 'success', 
-                                   'user_name' => $user->username, 
-                                   'travel_summary' => $travel_data,
-                                   'from_date'=>$from_date,
-                                   'to_date'=>$to_date
+                                   'data'    =>$this->data
                                   );
         }else {
             $this->success=false;
-            $response_data = array('status' => $this->success, 'message' => 'failed');
+            $response_data = array(
+                                    'status' => $this->success, 
+                                    'message' => 'failed',
+                                    'data'    =>$this->data
+                                );
         }
         return response()->json($response_data,$this->code);
     }
