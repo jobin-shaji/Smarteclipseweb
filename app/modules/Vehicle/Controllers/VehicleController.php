@@ -221,7 +221,7 @@ class VehicleController extends Controller
         }
 
         $encrypted_vehicle_id = encrypt($vehicle->id);
-        $request->session()->flash('message', 'Vehicle details updated successfully!'); 
+        $request->session()->flash('message', 'Driver updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         $user=\Auth::user();
         $user_role=$user->roles->first()->name;
@@ -390,7 +390,7 @@ class VehicleController extends Controller
 
     // vehicle doc delete
     public function vehicleDocumentDelete(Request $request)
-    {
+    { 
         $decrypted_id = Crypt::decrypt($request->id);
         $vehicle_doc=Document::find($decrypted_id);
         if($vehicle_doc == null){
