@@ -37,8 +37,6 @@ function getConfiguration(data,name,version)
   var share_in_web_app=freebies.share_in_web_app;
   var towing_alert=freebies.towing_alert;
   var white_list=freebies.white_list;
-
-
     if(ac_status==='true'){
       ac_input="<input type='checkbox' id='ac_status' name='ac_status' value='true' checked='checked'>";
     }
@@ -216,14 +214,13 @@ function getConfiguration(data,name,version)
             // console.log(plan);
         $("#config").append(plan);
         $('#plan_id').val(name);
-        $('#version').val(version);
+        // $('#version').val(version);
+        
         var url = 'get-config-data';
         var data = {
           name:name
         };   
-        backgroundPostData(url,data,'getConfigData',{alert:false}); 
-
-   
+        backgroundPostData(url,data,'getConfigData',{alert:false});   
 }
 
 //

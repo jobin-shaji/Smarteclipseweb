@@ -14,7 +14,7 @@ class CreateConfigurationVersionsTable extends Migration
     {
         Schema::create('configuration_versions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('config_id');
+            $table->string('plan');
             $table->string('version');
             $table->timestamps();
         });
