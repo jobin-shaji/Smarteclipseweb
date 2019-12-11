@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="form-group has-feedback">
-                              <label class="srequired">GPS</label>
+                              <label class="srequired">GPS Serial Number</label>
                               <input type="text" class="form-control" value="{{$vehicle->gps->serial_no}}" disabled> 
                               <span class="glyphicon glyphicon-home form-control-feedback"></span>
                             </div>
@@ -293,7 +293,7 @@
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
                                         <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' id ="delete_button" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                                       </td>
                                     @else
                                       <td>
