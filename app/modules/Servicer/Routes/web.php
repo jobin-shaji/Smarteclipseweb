@@ -61,7 +61,7 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
 	Route::post('/servicejob-complete-save/{id}','ServicerController@jobSave')->name('servicejob.complete.save');
-
+	Route::post('/servicejob-complete-edit/{id}','ServicerController@jobupdate')->name('servicejob.complete.edit');
 	// Route::post('/job-complete-save/{id}','ServicerController@jobSave')->name('job.complete.save');
 	// Route::post('/servicejob-complete-save/{id}','ServicerController@servicerJobSave')->name('servicejob.complete.save');
 
@@ -87,14 +87,7 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	Route::post('/servicer/profile/{id}/edit','ServicerController@profileUpdate')->name('servicer.profile.update.p');
 	
 
-
-
-
-
-
-
-
-
+	Route::post('/servicer-job-complete','ServicerController@jobstatuscomplete')->name('servicer.job.complete.p');
 
 });
 Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {

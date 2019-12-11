@@ -840,7 +840,7 @@
       <div class="iconsbg1234">
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')" style="max-width: 23%!important">
           <!-- <div class="card card-hover"> -->
-             <div class="card card-hover">
+             <div class="card card-hover" style="cursor: pointer;">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#84b752!important">
@@ -856,7 +856,7 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')" style="max-width: 20%!important">
-          <div class="card card-hover">
+          <div class="card card-hover" style="cursor: pointer;">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #69b4b9!important">
@@ -872,7 +872,7 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')" style="max-width: 20%!important">
-          <div class="card card-hover">
+          <div class="card card-hover" style="cursor: pointer;">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #858585!important">
@@ -888,7 +888,7 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')" style="max-width: 23%!important">
-          <div class="card card-hover">
+          <div class="card card-hover" style="cursor: pointer;">
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#c41900!important">
