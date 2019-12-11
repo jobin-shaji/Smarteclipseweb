@@ -365,7 +365,8 @@
                             @role('fundamental|superior|pro')
                                 <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
                             @endrole
-                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>                         
+                                <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>
+                                <a class="dropdown-item" href="{{url('/gps-alert')}}"> ALERT LOCATION <span></span></a>                         
                             </div>
                         </li>
                         
