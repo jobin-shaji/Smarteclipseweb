@@ -76,9 +76,7 @@ class GeofenceController extends Controller {
                     $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
                 }
                 $response=rtrim($response,"#");
-                $last_id=Geofence::max('id');
-                $code_last_id=$last_id+1;
-                $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
+                $code = $this->fiveDigitRandomNumber();
                 Geofence::create([
                     'user_id' => $request->user()->id,
                     'name' => $request->name,
@@ -92,6 +90,18 @@ class GeofenceController extends Controller {
                 ];
             return response()->json($response);
         }
+    }
+
+    public function fiveDigitRandomNumber()
+    {
+        do
+        {
+            $five_digit_random_number = mt_rand(10000, 99999);
+            $geofence_code_count=Geofence::where('code',$five_digit_random_number)->withTrashed()->count();
+        }
+        while($geofence_code_count >= 1);
+
+        return $five_digit_random_number;
     }
 
 

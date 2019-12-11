@@ -2175,10 +2175,9 @@ class VehicleController extends Controller
     {
         $user_id = $request->user_id;
         $vehicle_id = $request->vehicle_id;
-        $type = $request->type;
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
-        $user = User::where('id', $user_id)->first();
+        $user = Client::where('user_id', $user_id)->first();
         if ($user == null) 
         {
             $this->success=false;
@@ -2189,10 +2188,10 @@ class VehicleController extends Controller
             return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
-        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
-        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
-        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
-        $app_date = $date_and_time['appDate'];
+        $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+        $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+        $date_and_time = array('from_date' => $from_date,'to_date' => $to_date );
+
         $vehicle_details = Vehicle::where('id', $vehicle_id)
                                  ->whereNull('deleted_at')
                                  ->first();
@@ -2211,11 +2210,6 @@ class VehicleController extends Controller
                                ->get();
                            
             $maximum_speed=$gps_data->max('speed');   
-            if($type==2)
-            {
-              // for get single date km
-              $to_date=$from_date;
-            }
 
             $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
                                  ->whereDate('date','>=',$from_date)
@@ -2256,7 +2250,7 @@ class VehicleController extends Controller
                                    "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
-            $this->data = ['vehicle_value' => $statics];
+            $this->data[] = ['vehicle_value' => $statics];
             $response_data = array(
                                     'success' => $this->success, 
                                     'message' => 'success',
@@ -2281,10 +2275,9 @@ class VehicleController extends Controller
     public function getVehicleTravelSummary(Request $request) {
         $user_id = $request->user_id;
         $vehicle_id = $request->vehicle_id;
-        $type = $request->type;
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
-        $user = User::where('id', $user_id)->first();
+        $user = Client::where('user_id', $user_id)->first();
         if ($user == null) 
         {
             $this->success=false;
@@ -2295,9 +2288,10 @@ class VehicleController extends Controller
             return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
-        $date_and_time = $this->getDateFromType($type, $custom_from_date, $custom_to_date);
-        $from_date = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
-        $to_date = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+        
+        $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
+        $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
+        $date_and_time = array('from_date' => $from_date,'to_date' => $to_date );
 
         $vehicle_details = Vehicle::where('id', $vehicle_id)
                                  ->whereNull('deleted_at')
@@ -2311,12 +2305,6 @@ class VehicleController extends Controller
                                ->get();
             $avg_speed = $gps_data->avg('speed');
             $max_speed = $gps_data->max('speed');
-            // km dummy
-            if($type==2)
-            {
-              // for get single date km
-                $to_date=$from_date;
-            }
 
             $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
                                  ->whereDate('date','>=',$from_date)
@@ -2345,13 +2333,10 @@ class VehicleController extends Controller
                                    "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
 
-            if($type==3){
-             $to_date=date('Y-m-d H:i:s', strtotime("yesterday midnight"));
-            }
-
-            $this->data = ['user_name' => $user->username, 
+            $this->data[] = [
+                            'user_name' => $user->username, 
                             'travel_summary' => $travel_data
-                        ];
+                            ];
 
             $response_data = array('success' => $this->success, 
                                    'message' => 'success', 
