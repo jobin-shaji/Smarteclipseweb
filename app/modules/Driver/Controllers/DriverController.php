@@ -61,7 +61,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric|min:10|max:10|unique:drivers',
+            'mobile' => 'required|numeric|unique:drivers',
             
         ];
         return  $rules;
@@ -71,7 +71,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric|min:11|max:11|unique:drivers',
+            'mobile' => 'required|numeric|unique:drivers',
             
         ];
         return  $rules;
@@ -81,16 +81,17 @@ class DriverController extends Controller {
     public function getDriverlist(Request $request)
     {
         $client_id=\Auth::user()->client->id;
-
         $driver = Driver::select(
         'id', 
         'name',                   
         'address',
         'mobile',
         'client_id',
+        'created_at',
         'deleted_at')
         ->withTrashed()
         ->where('client_id',$client_id)
+        ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($driver)
         ->addIndexColumn()
@@ -487,7 +488,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric|min:10|max:10|unique:drivers,mobile,'.$driver->id
+            'mobile' => 'required|numeric|unique:drivers,mobile,'.$driver->id
             
         ];
         return  $rules;
@@ -498,7 +499,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'mobile' => 'required|numeric|min:11|max:11|unique:drivers,mobile,'.$driver->id
+            'mobile' => 'required|numeric|unique:drivers,mobile,'.$driver->id
             
         ];
         return  $rules;

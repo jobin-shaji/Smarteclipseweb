@@ -73,7 +73,16 @@ class GeofenceController extends Controller {
                 }
                 $response="";
                 foreach ($polygon as $single_coordinate) {
-                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                    $lat_integer = intval($single_coordinate[0]);  
+                    $lat_integer = str_pad($lat_integer,3,'0',STR_PAD_LEFT);
+                    $lat_decimal=explode('.', number_format($single_coordinate[0], 6))[1];
+                    $latitude=$lat_integer.'.'.$lat_decimal;
+
+                    $lng_integer = intval($single_coordinate[1]);  
+                    $lng_integer = str_pad($lng_integer,3,'0',STR_PAD_LEFT);
+                    $lng_decimal=explode('.', number_format($single_coordinate[1], 6))[1];
+                    $longitude=$lng_integer.'.'.$lng_decimal;
+                    $response .=$latitude.'-'.$longitude.'#';
                 }
                 $response=rtrim($response,"#");
                 $code = $this->fiveDigitRandomNumber();
@@ -525,7 +534,16 @@ class GeofenceController extends Controller {
         foreach ($request->polygons as $polygon) {
                 $response="";
                 foreach ($polygon as $single_coordinate) {
-                    $response .=$single_coordinate[0].'-'.$single_coordinate[1].'#';
+                    $lat_integer = intval($single_coordinate[0]);  
+                    $lat_integer = str_pad($lat_integer,3,'0',STR_PAD_LEFT);
+                    $lat_decimal=explode('.', number_format($single_coordinate[0], 6))[1];
+                    $latitude=$lat_integer.'.'.$lat_decimal;
+
+                    $lng_integer = intval($single_coordinate[1]);  
+                    $lng_integer = str_pad($lng_integer,3,'0',STR_PAD_LEFT);
+                    $lng_decimal=explode('.', number_format($single_coordinate[1], 6))[1];
+                    $longitude=$lng_integer.'.'.$lng_decimal;
+                    $response .=$latitude.'-'.$longitude.'#';
                 }
                 $response=rtrim($response,"#");
                 $geofence->cordinates=$polygon;

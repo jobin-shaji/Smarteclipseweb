@@ -34,3 +34,8 @@ $(document).ready(function() {
             }
         });
     });
+
+
+$('#delete_button').click(function () {
+    alert('Are you sure to delete this document?');
+});

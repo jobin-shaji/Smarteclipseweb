@@ -11,7 +11,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading"></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Driver</li>
-        <b>Add driver</b> 
+        <b>Create driver</b> 
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -93,7 +93,7 @@
                         <div class="form-group row">
                           <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Address</label>
                           <div class="form-group has-feedback">
-                            <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
+                            <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5 maxlength="150"></textarea>
                           </div>
                           @if ($errors->has('address'))
                             <span class="help-block">

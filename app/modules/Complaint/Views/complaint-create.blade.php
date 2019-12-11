@@ -63,7 +63,8 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">Description</label>
-                        <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required>
+                        <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
+                        <!-- <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required> -->
                         @if ($errors->has('description'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('description') }}</strong>

@@ -31,7 +31,7 @@
             {{csrf_field()}}
             <div class="row">
               <div class="col-lg-6 col-md-12">
-                  <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span><b>DRIVER INFORMATION</b></h4>
+                  
                   <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                       <div class="form-group has-feedback">
@@ -47,7 +47,7 @@
                   <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $driver->address}}">
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $driver->address}}" maxlength="150">
                       </div>
                     @if ($errors->has('address'))
                     <span class="help-block">
@@ -62,9 +62,9 @@
                       $eclipse_key="eclipse";
                       if (strpos($url, $rayfleet_key) == true) {  ?>
                           <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
                           <div class="form-group has-feedback">
-                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" minlength="11" maxlength="11"> 
+                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ $driver->mobile}}" minlength="11" maxlength="11"> 
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -75,9 +75,9 @@
                       <?php } 
                       else if (strpos($url, $eclipse_key) == true) { ?>
                          <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
                           <div class="form-group has-feedback">
-                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" minlength="10" maxlength="10"> 
+                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ $driver->mobile}}" minlength="10" maxlength="10"> 
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -88,9 +88,9 @@
                       <?php }
                       else { ?>
                           <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
                           <div class="form-group has-feedback">
-                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" minlength="10" maxlength="10"> 
+                             <input type="text" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ $driver->mobile}}" minlength="10" maxlength="10"> 
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -103,7 +103,7 @@
               </div>
             <div class="row">
               <div class="col-lg-6">
-                      <button type="submit" class="btn btn-primary">Update</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
               </div>
             </div>
           </form>

@@ -811,30 +811,79 @@ public function serviceJobDetails(Request $request)
 
         $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
-        // dd( $servicer_job);
+        if($servicer_job!=null)
+        {
+        $servicer_job->job_complete_date = $job_completed_date;
+
+        $servicer_job->comment = $request->comment;
+            $servicer_job->status = 3;
+            $servicer_job->save();
+          
+            // dd($servicer_job->id);
+            $service_job_id=Crypt::encrypt($servicer_job->id);
+            $request->session()->flash('message', 'Job  completed successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+       }else
+       {
+             $request->session()->flash('message', 'Job completion failed'); 
+             $request->session()->flash('alert-class', 'alert-danger');
+             return redirect()->route('job.history.details');
+
+      }
+    }
+
+    public function jobstatuscomplete(Request $request)
+    { 
+      $job_completed_date=date("Y-m-d"); 
+        $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
             $servicer_job->job_complete_date = $job_completed_date;
             $servicer_job->comment = $request->comment;
             $servicer_job->status = 3;
+            $servicer_job->save();
+            $service_job_id=Crypt::encrypt($servicer_job->id);
+       }
+       else
+       {
+            return response()->json([
+                'status' => 1,
+                'title' => 'Failed',
+                'message' => 'Something went wrong'
+            ]);
+             // $request->session()->flash('message', 'Job completion failed'); 
+             // $request->session()->flash('alert-class', 'alert-danger');
+             // return redirect()->route('job.history.details');
+        }
+    }
+
+    public function jobupdate(Request $request)
+    { 
+
+        $servicer_job = ServicerJob::find($request->id);
+        // dd( $servicer_job);
+        if($servicer_job!=null)
+        {
+            $servicer_job->comment = $request->comment;
+            $servicer_job->status = 2;
             $servicer_job->save();         
             // dd($servicer_job->id);
             $service_job_id=Crypt::encrypt($servicer_job->id);           
-            $request->session()->flash('message', 'Job  completed successfully!'); 
+            $request->session()->flash('message', 'Comments added successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             // return redirect()->route('job.history.details',['id' => $service_job_id]);
              // return redirect()->back();
             return redirect()->route('service.job.list');
 
-       }else
+       }
+       else
        {
-             $request->session()->flash('message', 'Job completion failed'); 
-             $request->session()->flash('alert-class', 'alert-danger');
-             return redirect()->route('service.job.list');
-
-      }
+            $request->session()->flash('message', 'Coments adding failed'); 
+            $request->session()->flash('alert-class', 'alert-danger');
+            return redirect()->route('service.job.list');
+        }
     }
-
 
     // save vehicle
    
