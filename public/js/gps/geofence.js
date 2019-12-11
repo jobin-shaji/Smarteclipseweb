@@ -73,7 +73,7 @@ function initMap(){
       zIndex: 1
     }
   });
-  // console.log(drawingManager);
+  
   drawingManager.setMap(map);
   google.maps.event.addDomListener(drawingManager, 'polygoncomplete', function(polygon) {
     var vertices = polygon.getPath();
