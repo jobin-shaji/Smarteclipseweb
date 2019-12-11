@@ -19,6 +19,7 @@ class UserAlertController extends Controller {
         $user_alert=array();
         $user_alert = UserAlerts::select('client_id', 'alert_id', 'status')
         ->where('client_id',$client->id)
+        ->where('alert_id','!=',21)
         ->with('alertType:id,description,code')
         ->get();
         return view('UserAlert::alert-manager',['user_alert' => $user_alert]);

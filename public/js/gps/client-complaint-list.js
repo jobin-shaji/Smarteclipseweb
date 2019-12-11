@@ -40,7 +40,7 @@ function callBackDataTable(){
             {data: 'complaint_type.name', name: 'complaint_type.name'},
             {data: 'description', name: 'description'},
             {data: 'created_at', name: 'created_at'},
-
+             {data: 'status', name: 'status'},
             
             {data: 'action', name: 'action', orderable: false, searchable: false},        
         ],
