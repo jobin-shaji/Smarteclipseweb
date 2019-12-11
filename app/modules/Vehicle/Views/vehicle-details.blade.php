@@ -287,7 +287,8 @@
                                   <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$doc->documentType->name}}</td>
-                                    <td>{{date('d-m-Y', strtotime($doc->expiry_date))}}</td>
+
+                                    <td>@if($doc->expiry_date){{date('d-m-Y', strtotime($doc->expiry_date))}}@endif</td>
                                     @if($doc->expiry_date)
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
