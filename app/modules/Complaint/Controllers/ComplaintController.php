@@ -144,8 +144,8 @@ class ComplaintController extends Controller {
             ->with('ticket:id,code')
             ->with('client:id,name,sub_dealer_id')
             ->with('servicer:id,name')
-            ->with('complaintType:id,name,complaint_category')
-            ->where('status','!=', 2);
+            ->with('complaintType:id,name,complaint_category');
+            // ->where('status','!=', 2);
             if(\Auth::user()->hasRole('client'))
             {
                 $client_id=\Auth::user()->client->id;
@@ -192,6 +192,18 @@ class ComplaintController extends Controller {
                 }
                 
             })
+            ->addColumn('status', function ($complaints) { 
+                if($complaints->status==0){
+                    return "Not Assigned";
+                }
+                else if($complaints->status==1){
+                    return "Assigned";
+                }
+                 else if($complaints->status==2){
+                    return "Closed";
+                }
+                                        
+            })
             ->addColumn('complaint_category', function ($complaints) { 
                  if($complaints->complaintType->complaint_category==0) 
                  {
@@ -212,6 +224,7 @@ class ComplaintController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         $devices=GpsStock::with('gps')->where('client_id',$client_id)->get();
+
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
         return view('Complaint::complaint-create',['devices'=>$devices,'complaint_type'=>$complaint_type]);
