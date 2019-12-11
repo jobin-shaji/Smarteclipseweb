@@ -365,17 +365,17 @@ class VehicleController extends Controller
         $this->validate($request, $rules,$custom_messages);
         $file=$request->path;
         if($file){
-            $old_file = $vehicle_doc->path;
-            $myFile = "documents/vehicledocs/".$old_file;
-            $delete_file=unlink($myFile);
-            if($delete_file){
+            // $old_file = $vehicle_doc->path;
+            // $myFile = "documents/vehicledocs/".$old_file;
+            // $delete_file=unlink($myFile);
+            // if($delete_file){
                 $getFileExt   = $file->getClientOriginalExtension();
                 $uploadedFile =   time().'.'.$getFileExt;
                 //Move Uploaded File
                 $destinationPath = 'documents/vehicledocs';
                 $file->move($destinationPath,$uploadedFile);
                 $vehicle_doc->path = $uploadedFile;
-            }
+            // }
         }
         
         $vehicle_doc->vehicle_id = $request->vehicle_id;
@@ -743,7 +743,7 @@ class VehicleController extends Controller
         else if($selected_status=="valid"){
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
             ->where(function ($vehicle_documents) {
-                $vehicle_documents->whereDate('expiry_date', '>', date('Y-m-d'))
+                $vehicle_documents->whereDate('expiry_date', '>=', date('Y-m-d'))
                 ->orWhereNull('expiry_date');
             });
         }

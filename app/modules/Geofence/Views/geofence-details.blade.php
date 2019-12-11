@@ -31,9 +31,11 @@
       <div class="col-md-4">
         <span><b>Created At</b> : {{($geofence->created_at)}}</span>
       </div>
+      @if($geofence->created_at != $geofence->updated_at)
       <div class="col-md-4">
         <span><b>Updated At</b> : {{($geofence->updated_at)}}</span>
       </div>
+      @endif
     </div>
            
     <div id="map" style=" width:100%;height:520px; margin-top: 10px;"></div>
