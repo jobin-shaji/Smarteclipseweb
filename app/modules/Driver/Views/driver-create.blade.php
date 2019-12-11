@@ -11,7 +11,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading"></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Driver</li>
-        <b>Create driver</b> 
+        <b>Add driver</b> 
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">

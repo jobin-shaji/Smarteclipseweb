@@ -152,7 +152,7 @@
                                     <!-- <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DRIVER</a>
                                     <ul class="dropdown-menu"> -->
                                     <li><a class="dropdown-item" href="/driver/create">ADD DRIVER</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/drivers')}}">LIST DRIVERS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/drivers')}}">DRIVER LIST</a></li>
                                     @role('fundamental|superior|pro')
                                     <li><a class="dropdown-item" href="{{url('/drivers-score-page')}}">DRIVER SCORE</a></li>
                                     <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
