@@ -844,22 +844,18 @@ public function serviceJobDetails(Request $request)
             $servicer_job->status = 3;
             $servicer_job->save();
             $service_job_id=Crypt::encrypt($servicer_job->id);
-             return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'successfully updated'
-            ]);
-            // $request->session()->flash('message', 'Job  completed successfully!'); 
-            // $request->session()->flash('alert-class', 'alert-success'); 
-            // return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
        }
        else
        {
+            return response()->json([
+                'status' => 1,
+                'title' => 'Failed',
+                'message' => 'Something went wrong'
+            ]);
              // $request->session()->flash('message', 'Job completion failed'); 
              // $request->session()->flash('alert-class', 'alert-danger');
              // return redirect()->route('job.history.details');
-
-      }
+        }
     }
 
     public function jobupdate(Request $request)
