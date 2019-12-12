@@ -7,8 +7,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Service completed jobs List</li>
-        <b>Service Completed Jobs List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Pending Jobs List</li>
+        <b> Pending Jobs</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -34,11 +34,10 @@
                     <th>Job Code</th>
                     <th>Client</th>                      
                     <th>Job Type</th>
-                    <th>Assignee</th>
                     <th>GPS Serial No</th>
                     <th>Description</th>
                     <th>Location</th>
-                    <th>Job Date</th> 
+                    <th>Job Date and Time</th> 
                     <th>Action</th>                      
                   </tr>
                 </thead>
@@ -51,9 +50,8 @@
   </div>
  </div>
 </div>
-
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/servicejob-history-list.js')}}"></script>
+    <script src="{{asset('js/gps/pending-job-list.js')}}"></script>
   @endsection

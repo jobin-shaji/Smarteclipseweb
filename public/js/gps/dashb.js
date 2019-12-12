@@ -48,6 +48,10 @@ function dbcount(res){
       $('#gps').text(res.gps); 
       $('#gps_add_to_stock').text(res.gps_add_to_stock); 
       $('#pending_gps').text(res.gps_to_verify); 
+      $('#all_pending_jobs').text(res.all_pending_jobs); 
+      
+
+      
       
          
 }

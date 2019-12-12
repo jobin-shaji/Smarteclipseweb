@@ -48,6 +48,13 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	Route::get('/job-list','ServicerController@jobList')->name('job.list');
 	Route::get('/service-job-list','ServicerController@serviceJobList')->name('service.job.list');
+
+
+
+	Route::get('/pending-job-list','ServicerController@pendingJob')->name('pending.job.list');
+	Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pending.job.list');
+
+
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
 	Route::post('/service-list-jobs','ServicerController@getServiceJobsList')->name('service.list.jobs');
 

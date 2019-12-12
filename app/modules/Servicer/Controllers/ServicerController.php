@@ -268,7 +268,7 @@ class ServicerController extends Controller {
             'description',
             'gps_id',
             // 'job_date',
-             \DB::raw('Date(job_date) as job_date'),                 
+            'job_date',                 
             'created_at',
             'status'
         )
@@ -317,7 +317,8 @@ class ServicerController extends Controller {
             'gps.required' => 'The GPS field is required.'
         ];
         $this->validate($request, $rules, $customMessages);
-        $job_date=date("Y-m-d H:i:m", strtotime($request->job_date));        
+        $job_date=date("Y-m-d H:i:s", strtotime($request->job_date));   
+
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
 
         // $placeLatLng=$this->getPlaceLatLng($request->search_place);
@@ -369,7 +370,7 @@ class ServicerController extends Controller {
             'description',
             'gps_id',
             // 'job_date', 
-             \DB::raw('Date(job_date) as job_date'),                
+            'job_date',                
             'created_at',
             'status'
         )
@@ -420,7 +421,7 @@ class ServicerController extends Controller {
             'description',
             'gps_id',
             'job_complete_date', 
-            \DB::raw('Date(job_date) as job_date'),                 
+            'job_date',                 
             'created_at',           
             'location',
             'status'
@@ -492,7 +493,7 @@ if($servicer_job->status==0){
             'description',
             'gps_id',
             'job_complete_date', 
-            \DB::raw('Date(job_date) as job_date'),                 
+            'job_date',                 
             'created_at',           
             'location',
             'status'
@@ -941,7 +942,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             \DB::raw('Date(job_date) as job_date'),                 
+             'job_date',                 
             'created_at',
             'status',
             'location',
@@ -992,7 +993,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             \DB::raw('Date(job_date) as job_date'),                 
+            'job_date',                 
             'created_at',
             'status',
             'location',
@@ -1279,7 +1280,9 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             \DB::raw('Date(job_date) as job_date'),                 
+             // \DB::raw('Date(job_date) as job_date'),     
+           'job_date',                 
+
             'created_at',
             'gps_id',
             'status'
@@ -1411,6 +1414,80 @@ public function serviceJobDetails(Request $request)
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('servicer.profile'));  
     }
+
+    public function pendingJob()
+    {
+        return view('Servicer::pending-job-list');
+    }
+     public function pendingJobList()
+    {
+        $user_id=\Auth::user()->servicer->id;
+        $servicer_job = ServicerJob::select(
+            'id', 
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'gps_id',
+            'job_complete_date', 
+            // \DB::raw('Date(job_date) as job_date'),   
+            'job_date',                 
+            'created_at',           
+            'location',
+            'status'
+        )
+        ->where('servicer_id',$user_id)
+        ->whereNull('job_complete_date')
+        ->with('gps:id,imei,serial_no')
+        ->with('user:id,username')
+        ->with('clients:id,name')
+        ->with('servicer:id,name')
+        ->where('job_date','<',date('Y-m-d H:i:s'))
+        ->orderBy('job_date','Desc')
+        ->get();       
+        return DataTables::of($servicer_job)
+        ->addIndexColumn()
+        ->addColumn('job_type', function ($servicer_job) {
+            if($servicer_job->job_type==1)
+            {
+                return "Installation" ; 
+            }
+            else
+            {
+                return "Service" ; 
+            }                       
+        })           
+       
+         ->addColumn('action', function ($servicer_job) {
+             $b_url = \URL::to('/');
+            if($servicer_job->status==0){
+                return "<font color='red'>Cancelled</font>";
+                            
+            }else
+            {
+                return "
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+            }
+          
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+     
+
+
+
+
+
+
+
+
+
+
+
+
     public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
