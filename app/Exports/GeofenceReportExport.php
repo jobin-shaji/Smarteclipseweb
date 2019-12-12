@@ -20,30 +20,42 @@ class GeofenceReportExport implements FromView
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
             }
-            $query =GpsData::select(
+           $query =Alert::select(          
                 'id',
+                'alert_type_id',
+                'device_time',   
                 'gps_id',
-                'alert_id',    
-                'device_time'
+                'latitude',
+                'longitude',
+                'status'
             )
+            ->with('alertType:id,description')
             ->with('gps.vehicle')
-            ->with('alert:id,code,description')
-            ->whereIn('gps_id',$gps_list)
-            ->whereIn('alert_id',[18,19,20,21]);
+            ->orderBy('device_time', 'DESC')
+           ->whereIn('gps_id',$gps_list)
+            ->whereIn('alert_type_id',[5,6])
+            ->orderBy('device_time', 'DESC')
+            ->limit(1000);           
         }
         else
         {
             $vehicle=Vehicle::withTrashed()->find($vehicle); 
-            $query =GpsData::select(
+             $query =Alert::select(          
                 'id',
+                'alert_type_id',
+                'device_time',   
                 'gps_id',
-                'alert_id',    
-                'device_time'
+                'latitude',
+                'longitude',
+                'status'
             )
+            ->with('alertType:id,description')
             ->with('gps.vehicle')
-            ->with('alert:id,code,description')
-            ->whereIn('alert_id',[18,19,20,21])
-            ->where('gps_id',$vehicle->gps_id);
+            ->orderBy('device_time', 'DESC')
+           ->whereIn('gps_id',$vehicle->gps_id)
+            ->whereIn('alert_type_id',[5,6])
+            ->orderBy('device_time', 'DESC')
+            ->limit(1000);   
         }       
         if($from){
            $search_from_date=date("Y-m-d", strtotime($from));
