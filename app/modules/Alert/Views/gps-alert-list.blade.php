@@ -37,7 +37,12 @@ All Alerts
                   </tbody>
                 </table>
                </div>
+
             </div>
+            <div class="loader-wrapper" id="loader-1">
+           
+              <div id="loader"></div>
+            </div> 
             <div class="col-sm-6">
             <input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
             <input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">    

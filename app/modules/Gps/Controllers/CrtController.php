@@ -16,7 +16,7 @@ use Config;
 class CrtController extends Controller {
 
     
- public function CrtListPage()
+    public function CrtListPage()
     {
         return view('Gps::crt-data-list');
     }
