@@ -366,7 +366,6 @@
                                 <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>   
                             @endrole
                                 <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>
-                                <a class="dropdown-item" href="{{url('/gps-alert')}}"> ALERT LOCATION <span></span></a>                         
                             </div>
                         </li>
                         
@@ -436,7 +435,7 @@
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
                             </div>
-                                <a class="dropdown-item" href="{{url('/alert')}}">VIEW ALL ALERTS</a>
+                                <a class="dropdown-item" href="{{url('/gps-alert')}}">VIEW ALL ALERTS</a>
                             </div>
                         </li>                      
                         <li class="nav-item dropdown">
