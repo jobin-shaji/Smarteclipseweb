@@ -35,14 +35,7 @@ $('#alert').scroll(function() {
   if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
     limit=limit;
     offset=offset+limit;
-    // limitFunction(limit,offset);
-    var url = 'gps-alert-list';
-  var data={
-    limit:limit,
-    offset:offset
-  }
-  backgroundPostData(url,data,'gpsAlert',{alert:true});
-          
+    limitFunction(limit,offset);  
   }
 });
 function responseList(res){
@@ -52,17 +45,14 @@ function responseList(res){
 }
 function limitFunction(limit,offset)
 {
-  console.log(limit);
   var url = 'gps-alert-list';
   var data={
     limit:limit,
     offset:offset
   }
   backgroundPostData(url,data,'gpsAlert',{alert:true});
-  // break;
 }
 function gpsAlertCount(value){
-  // console.log(value);
   var url = 'gps-alert-tracker';
   var data={
     id:value
@@ -93,12 +83,6 @@ function gpsAlertTracker(res)
       locs();
     }
   });     
-  // console.log(locationName);
-  var url = 'alerts';
-  // var iconBase = {
-  //   url: '/alerts/'+res.alert_icon, // url
-  //   scaledSize: new google.maps.Size(50, 50), // scaled size
-  // }; 
   var alertMap = {
     alerttype: {
       center: {lat: latitude, lng: longitude},               
