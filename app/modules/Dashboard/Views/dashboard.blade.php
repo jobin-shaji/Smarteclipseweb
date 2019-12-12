@@ -401,7 +401,7 @@
   <div class="page-wrapper-root1">
     <section class="content">
       <div class="row">
-        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #704dc5!important">
           <div class="small-box bg-green bxs">
             <div class="inner">
               <h3 id="pending_jobs">
@@ -412,10 +412,10 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/job-list" class="small-box-footer" style="background-color: #0b24d6!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-          <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+          <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #1767ca!important">
           <div class="small-box bg-green bxs">
             <div class="inner">
               <h3 id="pending_service_jobs">
@@ -426,11 +426,11 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/service-job-list" class="small-box-footer" style="background-color: #002c7d!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       
-        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid"  style="background-color: #d46415!important">
           <div class="small-box bg-yellow bxs">
             <div class="inner">
               <h3 id="completed_jobs">
@@ -441,10 +441,10 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>  
             </div>
-              <a href="/job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="/job-history-list" class="small-box-footer" style="background-color: #963f0c!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #0f6f03!important" >
           <div class="small-box bg-yellow bxs">
             <div class="inner">
               <h3 id="service_completed_jobs">
@@ -455,7 +455,7 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>  
             </div>
-              <a href="/servicerjob-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="/servicerjob-history-list" class="small-box-footer" style="background-color: #073e03!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>

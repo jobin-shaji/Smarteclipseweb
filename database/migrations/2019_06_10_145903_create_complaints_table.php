@@ -18,6 +18,7 @@ class CreateComplaintsTable extends Migration
             $table->string('ticket_id');
             $table->integer('gps_id');
             $table->integer('complaint_type_id');
+            $table->string('title');
             $table->text('description');
             $table->integer('client_id');
             $table->integer('status')->comment = '0-inactive,1-assigned,2-completed';

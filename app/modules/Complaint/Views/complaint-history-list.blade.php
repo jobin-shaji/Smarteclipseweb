@@ -35,7 +35,7 @@
                     <th>Ticket Code</th>   
                     <th>IMEI</th>                              
                     <th>Complaint</th>                            
-                    <th>Description</th>
+                    <th>Complaint Title</th>
                     <th>Date</th>
                     <th>Closed Date</th>
                     <th>Assigned By</th>                    

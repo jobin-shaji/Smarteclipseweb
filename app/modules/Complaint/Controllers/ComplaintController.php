@@ -133,7 +133,8 @@ class ComplaintController extends Controller {
                 'id', 
                 'ticket_id',
                 'gps_id',                      
-                'complaint_type_id',                   
+                'complaint_type_id',
+                'title',                   
                 'description',                                        
                 'created_at',
                 'client_id',
@@ -163,7 +164,7 @@ class ComplaintController extends Controller {
                 $complaints = $complaints->whereIn('client_id',$client_id);
             }
             $complaints = $complaints->get();
-            // dd($complaints);
+            
             return DataTables::of($complaints)
             ->addIndexColumn()
             ->addColumn('action', function ($complaints) {
@@ -252,6 +253,7 @@ class ComplaintController extends Controller {
                 'ticket_id' => $ticket->id,
                 'gps_id' => $request->gps_id,
                 'complaint_type_id' => $request->complaint_type_id,
+                'title' => $request->title,
                 'description' => $request->description,
                 'client_id' => $client_id
             ]);
@@ -390,7 +392,8 @@ class ComplaintController extends Controller {
             'id', 
             'ticket_id',
             'gps_id',                      
-            'complaint_type_id',                   
+            'complaint_type_id',
+            'title',              
             'description',                                        
             'created_at',
             'client_id',
@@ -427,7 +430,8 @@ class ComplaintController extends Controller {
             'id', 
             'ticket_id',
             'gps_id',                      
-            'complaint_type_id',                   
+            'complaint_type_id',
+            'title',                   
             'description',                                        
             'created_at',
             'client_id',
@@ -477,7 +481,8 @@ class ComplaintController extends Controller {
             'id', 
             'ticket_id',
             'gps_id',                      
-            'complaint_type_id',                   
+            'complaint_type_id', 
+            'title',                  
             'description',                                        
             'created_at',
             'client_id',
@@ -541,6 +546,7 @@ class ComplaintController extends Controller {
         $rules = [
             'gps_id' => 'required',       
             'complaint_type_id' => 'required',
+            'title' => 'required',
             'description' => 'required'
         ];
         return  $rules;

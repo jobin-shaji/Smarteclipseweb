@@ -8,7 +8,7 @@
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Service completed jobs List</li>
-        <b>Completed Service Jobs</b>
+        <b>Service Completed Jobs List</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">

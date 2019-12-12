@@ -62,6 +62,17 @@
                       </div>
 
                       <div class="form-group has-feedback">
+                        <label class="srequired">Complaint Title</label>
+                        <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
+                        
+                        @if ($errors->has('title'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('title') }}</strong>
+                          </span>
+                        @endif
+                      </div>  
+
+                      <div class="form-group has-feedback">
                         <label class="srequired">Description</label>
                         <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
                         <!-- <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required> -->

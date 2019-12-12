@@ -31,7 +31,7 @@
                     <th>IMEI</th>                              
                     <th>Complaint Category</th>                      
                     <th>Complaint Type</th>                         
-                    <th>Description</th>
+                    <th>Complaint Title</th>
                     <th>Date</th>
                     <th>Status</th>
                     @role('sub_dealer|root')

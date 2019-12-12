@@ -7,8 +7,8 @@
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Assign Servicer  List</li>
-        <b>Servicers Job List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Assign Servicer List</li>
+        <b>Assign Servicer List</b>
      </ol>
     </nav>
  
