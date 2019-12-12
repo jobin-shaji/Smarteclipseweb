@@ -130,26 +130,34 @@
                             </a>
                             <ul class="dropdown-menu multi-level">
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
-                                    <ul class="dropdown-menu">
+                                    <!-- <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
+                                    <ul class="dropdown-menu"> -->
                                     <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
                                     <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
                                     <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
                                     @role('fundamental|superior|pro')
                                     <!-- <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
                                      @endrole
-                                    </ul>
+                                    <!-- </ul> -->
                                 </li>
+                                
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown-submenu">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DRIVER
+                            </a>
+                            <ul class="dropdown-menu multi-level">
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DRIVER</a>
-                                    <ul class="dropdown-menu">
+                                    <!-- <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DRIVER</a>
+                                    <ul class="dropdown-menu"> -->
                                     <li><a class="dropdown-item" href="/driver/create">ADD DRIVER</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/drivers')}}">LIST DRIVERS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/drivers')}}">DRIVER LIST</a></li>
                                     @role('fundamental|superior|pro')
                                     <li><a class="dropdown-item" href="{{url('/drivers-score-page')}}">DRIVER SCORE</a></li>
                                     <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
                                     @endrole
-                                    </ul>
+                                    <!-- </ul> -->
                                 </li>
                             </ul>
                         </li>

@@ -8,8 +8,8 @@
 <div class="page-wrapper-root1">
  <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Job</li>
-            <b>Detail of Job</b>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Job Details</li>
+            <b>Job Details</b>
          </ol>
          @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -58,7 +58,7 @@
                         <div class="form-group row" style="float:none!important">               
                           <label for="fname" class="col-md-5 text-right control-label col-form-label">Description</label> 
                           <div class="form-group has-feedback">
-                            <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{$servicer_job->description}}" required readonly>
+                            <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{$servicer_job->description}}" required readonly maxlength="250">
                             <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                           </div>
                           @if ($errors->has('description'))
@@ -110,7 +110,7 @@
                          @endif
 
 
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Driver </button>
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="margin-bottom: 1%!important;margin-top: 3%!important">Create Driver </button>
                       </div>               
                         <input type="hidden"   name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
                         <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" > 
@@ -126,7 +126,7 @@
                          @endif
                         </div>
                         <div class="form-group row" style="float:none!important">
-                          <label for="fname" class="col-md-6 text-right control-label col-form-label">Register Number</label>
+                          <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
                           <div class="form-group has-feedback">
                             <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" id="register_number" required>
                          </div>
@@ -279,10 +279,11 @@
     <div class="modal-dialog" >
     
       <!-- Modal content-->
-      <div class="modal-content">
+      <div class="modal-content" style="width: 60%!important">
+        <button type="button" class="close" data-dismiss="modal" style="margin-left: 90%;margin-top: 2%">&times;</button>
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"></h4>
+          
+          <b>Create Driver</b>
         </div>
         <div class="modal-body" >
           <form  method="POST" id="form1">
@@ -345,7 +346,7 @@
             </div>
           </div>
         </div>  -->   
-        <div class="modal-footer">   
+        <div class="modal-footer" style="padding: 3% 34% 1% 18%!important">   
           <button type="button" id="btn" class="btn btn-primary" onclick="createDriver({{$servicer_job->id}})">Create</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>

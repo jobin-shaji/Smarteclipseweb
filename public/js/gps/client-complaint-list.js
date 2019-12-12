@@ -38,7 +38,7 @@ function callBackDataTable(){
             {data: 'complaint_category', name: 'complaint_category', orderable: false, searchable: false},
             
             {data: 'complaint_type.name', name: 'complaint_type.name', orderable: false, searchable: false},
-            {data: 'description', name: 'description', orderable: false, searchable: false},
+            {data: 'title', name: 'title', orderable: false, searchable: false},
             {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
              {data: 'status', name: 'status', orderable: false, searchable: false},
             

@@ -9,7 +9,7 @@
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Complaints</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Complaints</li>
         <b>Add Complaint</b>
       </ol>
       @if(Session::has('message'))
@@ -60,6 +60,17 @@
                         <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
                         </select>
                       </div>
+
+                      <div class="form-group has-feedback">
+                        <label class="srequired">Complaint Title</label>
+                        <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
+                        
+                        @if ($errors->has('title'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('title') }}</strong>
+                          </span>
+                        @endif
+                      </div>  
 
                       <div class="form-group has-feedback">
                         <label class="srequired">Description</label>
