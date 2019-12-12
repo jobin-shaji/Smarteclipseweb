@@ -1,4 +1,10 @@
 
+
+$(document).ready(function () { 
+     $("#loader-1").show();
+});
+
+
 var locationNameData;
 var locationName="";
 var latitude= parseFloat(document.getElementById('lat').value);
@@ -26,13 +32,14 @@ function  gpsAlert(res)
   responseList(res);
 }
 $('#alert').scroll(function() {
-  // alert(offset);
-  // if($('#alert').height()+$('#alert').scrollTop() >= 360){
-  if($('#alert').height() >= 360){
-    limit=limit+3;
+  if($('#alert').height()+$('#alert').scrollTop() >= 397){
+    limit=limit;
     offset=offset+limit;
     limitFunction(limit,offset);
+   // break;
   }
+
+   
 });
 function responseList(res){
   for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
@@ -41,6 +48,7 @@ function responseList(res){
 }
 function limitFunction(limit,offset)
 {
+  console.log(limit);
   var url = 'gps-alert-list';
   var data={
     limit:limit,
