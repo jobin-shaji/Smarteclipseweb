@@ -47,27 +47,26 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
-                 <a class="dropdown-item" href="{{url('/vltdata')}}">UNPROCESSED DATA</a>
-                  <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
-                    <a class="dropdown-item" href="{{url('/packet-split-data')}}">
-                    NRM PACKET DATA </a>
-
-                    <a class="dropdown-item" href="{{url('/lgn-split-data')}}">
-                 LOGIN/ACTIVATION PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/vltdata')}}">UNPROCESSED DATA</a>
+                <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
+                <a class="dropdown-item" href="{{url('/packet-split-data')}}">
+                NRM PACKET DATA </a>
+                <a class="dropdown-item" href="{{url('/lgn-split-data')}}">
+                LOGIN/ACTIVATION PACKET DATA</a>
                 <a class="dropdown-item" href="{{url('/hlm-split-data')}}">
-                 HLM PACKET DATA</a>
-        <a class="dropdown-item" href="{{url('/ful-split-data')}}">
-                 FULL PACKET DATA</a>
-                   <a class="dropdown-item" href="{{url('/ack-split-data')}}">
-                 ACKNOWLEDGMENT PACKET DATA</a>
-             <a class="dropdown-item" href="{{url('/alt-split-data')}}">
-                 ALERT PACKET DATA</a>
-        <a class="dropdown-item" href="{{url('/crt-split-data')}}">
-                 CRT PACKET DATA</a>
-    <a class="dropdown-item" href="{{url('/epb-split-data')}}">
-                 EMERGENCY(EPB) PACKET DATA</a>
-           
-       
+                HLM PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/ful-split-data')}}">
+                FULL PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/ack-split-data')}}">
+                ACKNOWLEDGMENT PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/alt-split-data')}}">
+                ALERT PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/crt-split-data')}}">
+                CRT PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/epb-split-data')}}">
+                EMERGENCY(EPB) PACKET DATA</a>
+                <a class="dropdown-item" href="{{url('/batch-split-data')}}">
+                BATCH PACKET DATA</a>
             </div>
         </li>
 
@@ -82,10 +81,6 @@
                 
             </div>
         </li> 
-
-
-
-
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> TESTED REPORT

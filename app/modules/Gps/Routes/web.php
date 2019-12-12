@@ -153,6 +153,9 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 
 	Route::get('/epb-split-data','EpbController@EpbListPage')->name('epb.split');
 	Route::post('/allepb-list','EpbController@getEpbAllData')->name('allepb.list');
+
+	Route::get('/batch-split-data','BatchController@batchListPage')->name('batch.split');
+	Route::post('/all-batch-list','BatchController@getBatchAllData')->name('all.batch.list');
 	
 });
 
