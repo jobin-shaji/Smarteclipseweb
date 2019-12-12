@@ -37,7 +37,7 @@ function callBackDataTable(){
             {data: 'ticket.code', name: 'ticket.code'},
             {data: 'gps.imei', name: 'gps.imei'},
             {data: 'complaint_type.name', name: 'complaint_type.name'},
-            {data: 'description', name: 'description'},
+            {data: 'title', name: 'title'},
             {data: 'created_at', name: 'created_at'},
              {data: 'closed_on', name: 'closed_on'},
             {data: 'assigned_by', name: 'assigned_by'},

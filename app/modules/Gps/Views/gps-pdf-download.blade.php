@@ -18,7 +18,7 @@
 
         <?php 
 
-        $qr='Serial No.: '.$gps->serial_no.'IMEI: '.$gps->imei.'Website: '.'https://vstmobility.com'.'Playstore Link: '.'https://play.google.com/store/apps/details?id=vehiclest.vst.gps&hl=en_US';
+        $qr='Serial No.: '.$gps->serial_no."\n".'IMEI: '.$gps->imei."\n".'Website: '.'https://vstmobility.com'."\n".'Playstore Link: '.'https://play.google.com/store/apps/details?id=vehiclest.vst.gps&hl=en_US';
         
         ?>
         <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($qr)) !!}" />

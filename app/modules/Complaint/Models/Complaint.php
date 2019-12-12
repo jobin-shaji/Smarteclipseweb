@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Complaint extends Model
 {
   protected $fillable=[
-		'ticket_id','gps_id','complaint_type_id','description','client_id','status','servicer_id','assigned_by','closed_on','servicer_comment'
+		'ticket_id','gps_id','complaint_type_id','description','client_id','status','servicer_id','assigned_by','closed_on','servicer_comment','title'
 	];
 
 	public function gps()
