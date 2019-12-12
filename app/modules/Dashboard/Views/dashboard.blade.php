@@ -25,7 +25,7 @@
     color:#000;
   }
   .btn-pop:hover {background:#f7b018;}
-  </style>
+</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <section class="content">
@@ -456,6 +456,20 @@
               <i class="fa fa-tablet"></i>  
             </div>
               <a href="/servicerjob-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="all_pending_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>PENDING JOBS</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/pending-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>

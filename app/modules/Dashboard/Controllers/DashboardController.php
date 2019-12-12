@@ -87,8 +87,7 @@ class DashboardController extends Controller
         $single_gps=[];
         foreach ($gpss as $gps) {
             $single_gps[]=$gps->id;
-        }
-        
+        }       
         $vehicles = Vehicle::select('id','register_number','name','gps_id')
         ->where('client_id',$client_id)
         ->whereIn('gps_id',$single_gps)
@@ -230,7 +229,7 @@ class DashboardController extends Controller
     }
     function servicerDashboardView($user)
     {
-         $servicer_id=$user->servicer->id;
+        $servicer_id=$user->servicer->id;
         return response()->json([
             
             'pending_jobs' => ServicerJob::whereNull('job_complete_date')
@@ -238,6 +237,7 @@ class DashboardController extends Controller
              'pending_service_jobs' => ServicerJob::whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(), 
             'completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',3)->count(),
             'service_completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count(),
+            'all_pending_jobs' => ServicerJob::where('job_date','<',date('Y-m-d H:i:s'))->where('status',2)->where('servicer_id',$servicer_id)->count(), 
 
             'status' => 'dbcount'
         ]);
