@@ -14,7 +14,7 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $geofenceReportExport->gps->vehicle->name }}</td>           
             <td>{{ $geofenceReportExport->gps->vehicle->register_number }}</td>
-            <td>{{ $geofenceReportExport->alert->description }}</td>
+            <td>{{ $geofenceReportExport->alertType->description }}</td>
             <td>{{ $geofenceReportExport->device_time }}</td>            
         </tr>
         @endforeach

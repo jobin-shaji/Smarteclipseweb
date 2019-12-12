@@ -1,4 +1,10 @@
 
+
+$(document).ready(function () { 
+     $("#loader-1").show();
+});
+
+
 var locationNameData;
 var locationName="";
 var latitude= parseFloat(document.getElementById('lat').value);
@@ -26,12 +32,10 @@ function  gpsAlert(res)
   responseList(res);
 }
 $('#alert').scroll(function() {
-  // alert(offset);
-  // if($('#alert').height()+$('#alert').scrollTop() >= 360){
-  if($('#alert').height() >= 360){
-    limit=limit+3;
+  if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+    limit=limit;
     offset=offset+limit;
-    limitFunction(limit,offset);
+    limitFunction(limit,offset);  
   }
 });
 function responseList(res){
@@ -49,7 +53,6 @@ function limitFunction(limit,offset)
   backgroundPostData(url,data,'gpsAlert',{alert:true});
 }
 function gpsAlertCount(value){
-  // console.log(value);
   var url = 'gps-alert-tracker';
   var data={
     id:value
@@ -80,12 +83,6 @@ function gpsAlertTracker(res)
       locs();
     }
   });     
-  // console.log(locationName);
-  var url = 'alerts';
-  // var iconBase = {
-  //   url: '/alerts/'+res.alert_icon, // url
-  //   scaledSize: new google.maps.Size(50, 50), // scaled size
-  // }; 
   var alertMap = {
     alerttype: {
       center: {lat: latitude, lng: longitude},               
@@ -121,6 +118,7 @@ function gpsAlertTracker(res)
     '<div style="background-color:#FF8C00; color:#fff;font-weight:600"><spna style="padding:30px ;">Alert Map</span></div>'+  
     '<div style="padding-top:5px;"><i class="fa fa-car"></i> '+res.get_vehicle.register_number+'</div>'+ 
     '<div style="padding-top:5px;"><i class="fa fa-bell-o"></i> '+res.alert_icon.description+'</div>'+ 
+     '<div style="padding-top:5px;"><i class="fa fa-calendar"></i> '+res.alertmap.device_time+'</div>'+ 
     '</div>'; 
   }
 }
