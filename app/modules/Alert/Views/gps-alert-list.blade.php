@@ -17,8 +17,13 @@ All Alerts
       </div>
     @endif 
   </nav>
+
   <div class="container-fluid">
     <div class="card-body">
+      <div class="loader-wrapper" id="loader-1">
+           
+              <div id="loader"></div>
+            </div> 
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
           <div class="row">
@@ -39,10 +44,7 @@ All Alerts
                </div>
 
             </div>
-            <div class="loader-wrapper" id="loader-1">
-           
-              <div id="loader"></div>
-            </div> 
+
             <div class="col-sm-6">
             <input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
             <input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">    
