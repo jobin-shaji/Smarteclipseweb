@@ -139,11 +139,13 @@ $( ".date_expiry_edit" ).datetimepicker({
  $( ".manufacturing_date_edit" ).datetimepicker({
     format: 'DD-MM-YYYY',
     minDate: '2019-01-01',       
-    // maxDate: new Date(),
-    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
-    // useCurrent: false
+   maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
    
  });
+ $(".job_date_picker" ).datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        minDate: new Date()
+    });
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
@@ -1141,6 +1143,38 @@ function clientGps(res)
      }  
      $('#search_place').val(res.location); 
 }
+
+
+function getvehicleModel(res){
+    console.log(res);
+    if(res)
+    {    
+        var url = 'get-vehicle-models';
+        var data = {
+             make_id : res
+        };   
+        backgroundPostData(url,data,'vehicleModel',{alert:false});   
+    }
+    
+           
+}
+function vehicleModel(res)
+{
+    console.log(res);
+     $("#model").empty();
+  
+    length=res.vehicle_models.length;
+   // console.log(res.devices[0].imei);
+    for (var i = 0; i < length; i++) {
+         var models='  <option value="'+res.vehicle_models[i].id+'"  >'+res.vehicle_models[i].name+'</option>';  
+         $("#model").append(models);   
+     }  
+}
+
+
+
+
+
 function driverMobileExisted(res)
 {
     var closable = alertify.alert().setting('closable');

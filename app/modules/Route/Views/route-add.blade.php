@@ -55,7 +55,7 @@
               </div>
             </form>
             <div class="col-lg-3">
-              <h4 class="page-title" style="text-align: right;">Create Route</h4>
+              <h4 class="page-title" style="text-align: right;">Add Route</h4>
             </div>
           </div>
         </form>

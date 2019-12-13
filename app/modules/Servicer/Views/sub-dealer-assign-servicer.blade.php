@@ -11,7 +11,7 @@
  <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Assign Servicer</li>
-            <b>Assign Job</b>
+            <b>Assign Servicer</b>
          </ol>
          @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -135,7 +135,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Date</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" date_expiry form-control {{ $errors->has('job_date') ? ' has-error' : '' }} datetimepicker" placeholder="Mobile" name="job_date" value="{{ old('job_date') }}" required>
+                        <input type="text" class=" job_date_picker form-control {{ $errors->has('job_date') ? ' has-error' : '' }} " placeholder="Mobile" name="job_date" value="{{ old('job_date') }}" required>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_date'))

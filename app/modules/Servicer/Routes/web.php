@@ -48,6 +48,13 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 
 	Route::get('/job-list','ServicerController@jobList')->name('job.list');
 	Route::get('/service-job-list','ServicerController@serviceJobList')->name('service.job.list');
+
+
+
+	Route::get('/pending-job-list','ServicerController@pendingJob')->name('pending.job.list');
+	Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pending.job.list');
+
+
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
 	Route::post('/service-list-jobs','ServicerController@getServiceJobsList')->name('service.list.jobs');
 
@@ -62,6 +69,7 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
 	Route::post('/servicejob-complete-save/{id}','ServicerController@jobSave')->name('servicejob.complete.save');
 	Route::post('/servicejob-complete-edit/{id}','ServicerController@jobupdate')->name('servicejob.complete.edit');
+	Route::post('/get-vehicle-models', 'ServicerController@getVehicleModels')->name('get.vehicle.models');
 	// Route::post('/job-complete-save/{id}','ServicerController@jobSave')->name('job.complete.save');
 	// Route::post('/servicejob-complete-save/{id}','ServicerController@servicerJobSave')->name('servicejob.complete.save');
 

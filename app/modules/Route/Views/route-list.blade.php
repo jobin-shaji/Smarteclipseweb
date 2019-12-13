@@ -45,9 +45,9 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
-                      <th>SL</th>
+                      <th>SL.No</th>
                       <th>Route Name</th>
-                      <th style="width:160px;">Action</th>
+                      <th style="width:0px!important;">Action</th>
                   </tr>
                 </thead>
               </table>

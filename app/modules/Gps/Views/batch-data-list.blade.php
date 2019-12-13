@@ -26,7 +26,7 @@
 <section class="content" >
   <div class="row">
     <div class="col-md-6">
-      <table class="table table-hover table-bordered  table-striped" style="width: 0!important;margin-left: 10%;border: solid 2px black!important;margin-top: 5%;text-align: center;">
+      <table class="table table-hover table-bordered  table-striped" style="width: 0!important;margin-left: 10%;border: solid 2px black!important;margin-top: 3%;text-align: center;">
         <thead>
           <tr>
           </tr>

@@ -298,6 +298,16 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
+          DB::table('configurations')->insert([
+            'name' => 'vehicle',
+            'value' => '{"BUS": {"ideal": "1573802602_ideal_icon.png", "sleep": "1573802602_sleep_icon.png", "online": "1573802602_online_vehicle.png", "offline": "1573802602_offline_vehicle.png"}, "Car": {"ideal": "1575349465_ideal_icon.png", "sleep": "1575349465_sleep_icon.png", "online": "1575349465_online_vehicle.png", "offline": "1575349465_offline_vehicle.png"}, "auto rickshaw": {"ideal": "1573801348_ideal_icon.png", "sleep": "1573801348_sleep_icon.png", "online": "1573801348_online_vehicle.png", "offline": "1573801348_offline_vehicle.png"}}',
+            'code' => 'vehicle',
+            'date'=>date('Y-m-d'),
+            'version'=>'1.0'
+
+        ]);
+
+
 
 
 
