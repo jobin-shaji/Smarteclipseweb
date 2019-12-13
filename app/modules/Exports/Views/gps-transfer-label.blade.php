@@ -44,9 +44,8 @@
       </tr>
 
       <tr style="position:absolute;" >
-        <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >From:<br><br><span style="font-size:13px">VST Mobility Solutions Pvt. Ltd. Kerala Technology Innovation Zone,<br>
-          Kinfra Hi-Tech Park, HMT Colony, North Kalamassery,<br>
-          Ernakulam, Kerala, India 683503</span><br>
+        <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >From:<br><br><span style="font-size:13px">{{$from_user_details->name}},<br>
+          {{$from_user_details->address}}</span><br>
         </td>
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >Certifications:<br><span> <img src="./images/certifications1.png" width="200" height="40"></span>
         </td>
