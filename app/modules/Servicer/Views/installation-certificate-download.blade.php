@@ -26,8 +26,10 @@ div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight
 	$date = $date->format('d/m/Y');
 ?>
 <div style="position:absolute;left:50%;margin-left:-297px;top:0px;width:595px;height:841px;border-style:outset;overflow:hidden">
-<div style="position:absolute;left:44.88px;top:41.80px" class="cls_002"><span class="cls_002">Dealer :{{$servicer_job->user->mobile}},{{$servicer_job->user->email}}</span></div>
-<div style="position:absolute;left:43.68px;top:56.44px" class="cls_002"><span class="cls_002">Address</span></div>
+<div style="position:absolute;left:44.88px;top:41.80px" class="cls_002"><span class="cls_002"> {{$servicer_job->sub_dealer->name}}</span></div>
+<div style="position:absolute;left:43.68px;top:56.44px" class="cls_002"><span class="cls_002">{{$servicer_job->sub_dealer->address}},<br>
+{{$servicer_job->user->email}},<br>
+{{$servicer_job->user->mobile}}</span></div>
 <div style="position:absolute;left:409.44px;top:36.72px" class="cls_003"><span class="cls_003">Smart</span><span class="cls_004"></span></div>
 <div style="position:absolute;left:44.16px;top:185.32px" class="cls_002"><span class="cls_002">This is to certify that , this vehicle is equiped with the AIS 140 compliant device,</span></div>
 <div style="position:absolute;left:44.64px;top:201.16px" class="cls_002"><span class="cls_002">approved by </span><span class="cls_005">CDAC </span><span class="cls_002">and </span><span class="cls_005">ARAI.</span></div>
@@ -43,7 +45,7 @@ div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight
 <div style="position:absolute;left:303.84px;top:356.04px" class="cls_006"><span class="cls_006">Warranty Upto</span></div>
 <div style="position:absolute;left:49.68px;top:383.40px" class="cls_006"><span class="cls_006">Vehicle Type:{{$vehicle->vehicleType->name}}</span></div>
 <div style="position:absolute;left:305.04px;top:383.16px" class="cls_006"><span class="cls_006">Token No.</span></div>
-<div style="position:absolute;left:44.16px;top:456.36px" class="cls_006"><span class="cls_006">Issued By:{{$servicer_job->user->username}}</span></div>
+<div style="position:absolute;left:44.16px;top:456.36px" class="cls_006"><span class="cls_006">Issued By:{{$servicer_job->sub_dealer->name}}</span></div>
 <div style="position:absolute;left:303.84px;top:455.88px" class="cls_006"><span class="cls_006">Inspected and Approved By:</span></div>
 <div style="position:absolute;left:44.16px;top:507.24px" class="cls_006"><span class="cls_006">Franchisee Name :</span></div>
 <div style="position:absolute;left:303.60px;top:507.24px" class="cls_006"><span class="cls_006">Name & Signature</span></div>
