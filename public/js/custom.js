@@ -1143,6 +1143,38 @@ function clientGps(res)
      }  
      $('#search_place').val(res.location); 
 }
+
+
+function getvehicleModel(res){
+    
+    if(res)
+    {    
+        var url = 'get-vehicle-models';
+        var data = {
+             make_id : res
+        };   
+        backgroundPostData(url,data,'vehicleModel',{alert:false});   
+    }
+    
+           
+}
+function vehicleModel(res)
+{
+    console.log(res);
+     $("#model").empty();
+  
+    length=res.vehicle_models.length;
+   // console.log(res.devices[0].imei);
+    for (var i = 0; i < length; i++) {
+         var models='  <option value="'+res.vehicle_models[i].id+'"  >'+res.vehicle_models[i].name+'</option>';  
+         $("#model").append(models);   
+     }  
+}
+
+
+
+
+
 function driverMobileExisted(res)
 {
     var closable = alertify.alert().setting('closable');

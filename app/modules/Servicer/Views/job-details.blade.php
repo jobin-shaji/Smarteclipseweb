@@ -221,6 +221,22 @@
                          </span>
                          @endif
                       </div>
+                       <div class="form-group row" style="float:none!important">
+                         <label for="fname" class="col-sm-5 text-right control-label col-form-label">Manufacturer</label>
+                         <div class="form-group has-feedback">
+                            <select class="form-control {{ $errors->has('make') ? ' has-error' : '' }}" placeholder="Name" name="make" value="{{ old('make') }}"  id="make" required onchange="getvehicleModel(this.value)">
+                                <option value="" selected disabled>Select Vehicle Make</option>
+                                 @foreach($makes as $make)
+                                 <option value="{{$make->id}}">{{$make->name}}</option>
+                                 @endforeach
+                            </select>
+                         </div>
+                         @if ($errors->has('make'))
+                         <span class="help-block">
+                         <strong class="error-text">{{ $errors->first('make') }}</strong>
+                         </span>
+                         @endif
+                      </div>
 
                        <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">model</label>
