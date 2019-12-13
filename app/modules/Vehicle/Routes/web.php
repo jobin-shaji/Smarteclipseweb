@@ -157,8 +157,8 @@ Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controlle
 
 Route::group(['prefix' => 'api/v2','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
-	Route::post('/vehicle_report','VehicleController@singleVehicleReport');
-	Route::post('/vehicle_travel_summary','VehicleController@getVehicleTravelSummary');
+	Route::post('/vehicle_report','VehicleController@eclipseSingleVehicleReport');
+	Route::post('/vehicle_travel_summary','VehicleController@eclipseGetVehicleTravelSummary');
 
 });
 
