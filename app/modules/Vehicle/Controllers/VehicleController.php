@@ -873,8 +873,11 @@ class VehicleController extends Controller
         // sleep vehicle image
         }
         // sleep vehicle image
+        $name = $request->name; 
+        $name = str_replace(' ', '_', $name);//replace spaces with underscore 
+        $name = strtolower($name); //convert string to lowercase
         $vehicle_type = VehicleType::create([
-            'name' => $request->name,
+            'name' => $name,
             'svg_icon' => $request->svg_icon,
             'vehicle_scale' => $request->scale,
             'opacity' => $request->opacity,
@@ -967,7 +970,10 @@ class VehicleController extends Controller
         $rules = $this->vehicleTypeUpdateRules();
         $this->validate($request, $rules);
 
-        $vehicle_type->name = $request->name;
+        $name = $request->name; 
+        $name = str_replace(' ', '_', $name);//replace spaces with underscore 
+        $name = strtolower($name); //convert string to lowercase
+        $vehicle_type->name = $name;
         $vehicle_type->svg_icon = $request->svg_icon;
 
         $vehicle_type->vehicle_scale = $request->scale;
