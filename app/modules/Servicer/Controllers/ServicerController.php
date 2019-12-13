@@ -10,6 +10,8 @@ use App\Modules\Warehouse\Models\GpsStock;
 
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Operations\Models\VehicleModels;
+use App\Modules\Operations\Models\VehicleMake;
+
 
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
@@ -96,7 +98,6 @@ class ServicerController extends Controller {
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->save();
-
         $request->session()->flash('message', 'Details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
 
@@ -597,13 +598,14 @@ if($servicer_job->status==0){
         ->get();       
         $drivers=Driver::select('id','name')
         ->where('client_id',$client_id)
-        ->get();    
+        ->get();
+         $makes=VehicleMake::select('id','name')->get();     
 
          $models=VehicleModels::select('id','name')->get();   
        if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
+        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes]);
     }
 // FOR SERVICE
 public function serviceJobDetails(Request $request)
@@ -727,6 +729,7 @@ public function serviceJobDetails(Request $request)
             $servicer_job_id = $request->servicer_job_id;
             $engine_number = $request->engine_number;
             $chassis_number = $request->chassis_number;
+            $model = $request->model;
 
             $vehicle_create= Vehicle::create([
                 'name' => $name,
@@ -735,6 +738,7 @@ public function serviceJobDetails(Request $request)
                 'gps_id' => $gps_id,
                 'client_id' => $client_id,
                 'servicer_job_id' =>$servicer_job->id,
+                'model_id' =>$model,
                 'engine_number' => $engine_number,
                 'chassis_number' => $chassis_number,
                 'driver_id' => $driver_id,
@@ -1463,19 +1467,52 @@ public function serviceJobDetails(Request $request)
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
             if($servicer_job->status==0){
-                return "<font color='red'>Cancelled</font>";
-                            
+                return "<font color='red'>Cancelled</font>";                            
             }else
             {
-                return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                if($servicer_job->job_type==1)
+                {
+                    return "
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                }
+               
+                else if($servicer_job->status==2)
+                {
+                   return "
+                    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Edit</a>";  
+                } 
             }
-          
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
      
+    public function getVehicleModels(Request $request)
+    {
+        $user = $request->user();
+        $make_id=$request->make_id;
+        $vehicle_models=VehicleModels::select('id','vehicle_make_id','name')
+        ->where('vehicle_make_id',$make_id)      
+        ->get();
+        if($vehicle_models)
+        {               
+            $response_data = array(
+                'status'  => 'vehicleModels',
+                'vehicle_models' => $vehicle_models
+               
+            );
+        }      
+        else
+        {
+             $response_data = array(
+                    'status'  => 'failed',
+                    'message' => 'failed',
+                    'code'    =>0
+                );
+        }
+        return response()->json($response_data); 
+        // }
+    }
 
 
 
@@ -1603,7 +1640,11 @@ public function serviceJobDetails(Request $request)
             'activation_photo' => 'required|mimes:jpeg,png|max:4096',
             'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
             'comment' => 'required',
-            'driver'=>'required'
+            'driver'=>'required',
+            'model'=>'required',
+            'make'=>'required'
+
+
 
         ];
         return  $rules;
