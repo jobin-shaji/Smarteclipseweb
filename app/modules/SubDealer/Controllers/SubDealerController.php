@@ -215,10 +215,11 @@ class SubDealerController extends Controller {
         }
 
         $this->validate($request, $rules);  
-
         $subdealer->name = $request->name;
+        $subdealer->address = $request->address;
         $subdealer->save();
         $user->mobile = $request->mobile_number;
+        $user->email = $request->email;
         $user->save();
         $did = encrypt($user->id);
         $request->session()->flash('message', 'Dealer details updated successfully!');
@@ -358,7 +359,10 @@ class SubDealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'address' => 'required'
+
             
         ];
         return  $rules;
@@ -369,7 +373,11 @@ class SubDealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'address' => 'required'
+
+
             
         ];
         return  $rules;
