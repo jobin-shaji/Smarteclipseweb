@@ -1146,7 +1146,7 @@ function clientGps(res)
 
 
 function getvehicleModel(res){
-    
+    console.log(res);
     if(res)
     {    
         var url = 'get-vehicle-models';

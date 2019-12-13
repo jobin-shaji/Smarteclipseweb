@@ -98,7 +98,6 @@ class ServicerController extends Controller {
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->save();
-
         $request->session()->flash('message', 'Details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
 
@@ -730,6 +729,7 @@ public function serviceJobDetails(Request $request)
             $servicer_job_id = $request->servicer_job_id;
             $engine_number = $request->engine_number;
             $chassis_number = $request->chassis_number;
+            $model = $request->model;
 
             $vehicle_create= Vehicle::create([
                 'name' => $name,
@@ -738,6 +738,7 @@ public function serviceJobDetails(Request $request)
                 'gps_id' => $gps_id,
                 'client_id' => $client_id,
                 'servicer_job_id' =>$servicer_job->id,
+                'model_id' =>$model,
                 'engine_number' => $engine_number,
                 'chassis_number' => $chassis_number,
                 'driver_id' => $driver_id,
@@ -1491,7 +1492,7 @@ public function serviceJobDetails(Request $request)
         $user = $request->user();
         $make_id=$request->make_id;
         $vehicle_models=VehicleModels::select('id','vehicle_make_id','name')
-        ->whereIn('vehicle_make_id',$make_id)      
+        ->where('vehicle_make_id',$make_id)      
         ->get();
         if($vehicle_models)
         {               
@@ -1639,7 +1640,11 @@ public function serviceJobDetails(Request $request)
             'activation_photo' => 'required|mimes:jpeg,png|max:4096',
             'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
             'comment' => 'required',
-            'driver'=>'required'
+            'driver'=>'required',
+            'model'=>'required',
+            'make'=>'required'
+
+
 
         ];
         return  $rules;
