@@ -162,16 +162,41 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/configuration-create')}}">PLAN CONFIGURATION </a>          
         </div>
-    </li> 
-    <li class="nav-item dropdown">
+    </li>
+
+
+
+      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/subscription/create')}}">ADD WARRANTY AND PLANS </a>
-            <a class="dropdown-item" href="{{url('/subscription')}}">LIST WARRANTY AND PLANS </a>
+        <ul class="dropdown-menu multi-level">
+             <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" > SETTING PLANS</a>
+                <ul class="dropdown-menu">
+                <li>
+                   <a class="dropdown-item" href="{{url('/subscription/create')}}">ADD WARRANTY AND PLANS </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{url('/subscription')}}">LIST WARRANTY AND PLANS </a>
           
-        </div>
-    </li> 
+                </li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" > APPLICATION VERSION</a>
+                <ul class="dropdown-menu">
+                <li>
+                   <a class="dropdown-item" href="{{url('/version-type/create')}}">ADD VERSION </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{url('/version-rule')}}">LIST VERSION</a>
+          
+                </li>
+                </ul>
+            </li>
+            
+        </ul>
+    </li>
+  
   
 </ul>
