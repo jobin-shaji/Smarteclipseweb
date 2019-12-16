@@ -16,13 +16,14 @@ $(function(){
                 
                  $('#header').html(res.data.header);
                  $('#imei').html(res.data.imei); 
+                 
                  $('#date').html(res.data.date); 
                  $('#time').html(res.data.time); 
                  $('#latitude').html(res.data.latitude); 
                  $('#latitude_dir').html(res.data.lat_dir);
                  $('#long').html(res.data.longitude); 
                  $('#long_dir').html(res.data.lon_dir); 
-                 $('#activationKey').html(res.data.activationKey); 
+                 $('#activationKey').html(res.data.activation_key); 
                  $('#SPEED').html(res.data.speed); 
                  $('#device_time').html(res.data.device_time);
 

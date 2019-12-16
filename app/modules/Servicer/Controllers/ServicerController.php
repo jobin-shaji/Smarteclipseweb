@@ -504,6 +504,7 @@ if($servicer_job->status==0){
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
