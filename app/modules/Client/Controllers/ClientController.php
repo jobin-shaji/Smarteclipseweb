@@ -748,7 +748,7 @@ class ClientController extends Controller {
             //Move Uploaded File
             $destinationPath = 'logo';
              // $image_resize = Image::make($uploadedFile->getRealPath()); 
-             // $resize_image=$image_resize->resize(150, 40);
+             // $resize_image=$uploadedFile->resize(150, 40);
             $file->move($destinationPath,$uploadedFile);
             $client->logo = $uploadedFile;
             $client->save();
