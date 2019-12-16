@@ -34,6 +34,7 @@ $(document).ready(function () {
           
             // {data: 'servicer.name', name: 'servicer.name'},
             {data: 'clients.name', name: 'clients.name'},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
             {data: 'job_type', name: 'job_type'},
             {data: 'gps.serial_no', name: 'gps.serial_no'},
             {data: 'description', name: 'description'},

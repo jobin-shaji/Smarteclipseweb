@@ -432,6 +432,7 @@ class ServicerController extends Controller {
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -960,7 +961,8 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
-        ->orderBy('job_date','desc')
+        ->with('vehicle:id,register_number,gps_id')
+        ->orderBy('job_complete_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1012,6 +1014,7 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1274,8 +1277,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             // \DB::raw('Date(job_date) as job_date'),     
-           'job_date',                 
+             'job_date',                 
 
             'created_at',
             'gps_id',
@@ -1283,6 +1285,7 @@ public function serviceJobDetails(Request $request)
         )
         ->where('user_id',$user_id)
         ->whereNotNull('job_complete_date')
+        ->with('vehicle:id,register_number,gps_id')
         ->with('user:id,username')
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
@@ -1440,6 +1443,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->where('job_date','<',date('Y-m-d H:i:s'))
         ->orderBy('job_date','Desc')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
