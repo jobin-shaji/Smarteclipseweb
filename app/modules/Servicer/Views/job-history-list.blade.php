@@ -32,7 +32,8 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Job Code</th>
-                    <th>Client</th>                      
+                    <th>Client</th>  
+                    <th>Vehicle Number</th>                    
                     <th>Job Type</th>
                     <th>Assignee</th>
                     <th>GPS Serial No</th>
