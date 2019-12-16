@@ -42,4 +42,8 @@ class Complaint extends Model
    public function assignedBy(){
       return $this->hasOne('App\Modules\User\Models\User','id','assigned_by');
   }
+   public function vehicle(){
+      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id');
+  }
+
 }
