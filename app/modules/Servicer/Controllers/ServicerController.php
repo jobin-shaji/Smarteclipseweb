@@ -693,18 +693,20 @@ public function serviceJobDetails(Request $request)
         }
         return view('Servicer::service-job-edit',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
-
     public function servicerJobSave(Request $request)
     { 
-         $custom_messages = [
-        'path.required' => 'File cannot be blank',
-        'installation_photo.required' => 'File cannot be blank',
-        'activation_photo.required' => 'File cannot be blank',
-        'vehicle_photo.required' => 'File cannot be blank'
+        $custom_messages = [
+            'file.required' => 'Rc Book cannot be blank',
+             // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'
+            'installation_photo.required' => 'File cannot be blank',
+            'activation_photo.required' => 'File cannot be blank',
+            'vehicle_photo.required' => 'File cannot be blank'
         ];
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
-        $this->validate($request,$rules);      
+        $this->validate($request,$rules,$custom_messages);  
+        
+
         // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
         $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
@@ -745,7 +747,7 @@ public function serviceJobDetails(Request $request)
                 'status' => 1
             ]);
             // $this->validate($request, $rules, $custom_messages);
-            $file=$request->path;
+            $file=$request->file;
             $installation_photo=$request->installation_photo;
             $activation_photo=$request->activation_photo;
             $vehicle_photo=$request->vehicle_photo;
@@ -1635,19 +1637,19 @@ public function serviceJobDetails(Request $request)
             'engine_number' => 'required',
             'chassis_number' => 'required',
             'name' => 'required',
-            'path' => 'required|mimes:jpeg,png|max:4096',
+            'file' => 'required|mimes:jpeg,png|max:4096',
             'installation_photo' => 'required|mimes:jpeg,png|max:4096',
             'activation_photo' => 'required|mimes:jpeg,png|max:4096',
             'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
             'comment' => 'required',
-            'driver'=>'required',
+            // 'driver'=>'required',
             'model'=>'required',
             'make'=>'required'
 
 
 
         ];
-        return  $rules;
+        return  $rules; 
     }
 
 
