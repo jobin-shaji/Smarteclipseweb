@@ -162,8 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         App\Modules\ModulesServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+        // Intervention\Image\ImageServiceProvider::class
         /*
          * Package Service Providers...
          */
@@ -229,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'QrCode'=>SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        // 'Image' => Intervention\Image\Facades\Image::class
 
     ],
 
