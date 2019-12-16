@@ -13,7 +13,8 @@
                          <!-- Logo text -->
                    <span class="logo-text">
                         @role('client|school')
-                            @if(\Auth::user()->client->logo)
+                            @if(\Auth::user()->hasRole(['pro|fundamental|superior']))
+                           
                               <img class="light-logo"  src="{{ url('/') }}/logo/{{ \Auth::user()->client->logo }}" />
                             @else
                                 <?php
