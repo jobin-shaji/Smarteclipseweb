@@ -82,7 +82,8 @@
                 <div class="form-group has-feedback" style="width: 100px!important">
                   <label class="srequired" style="width: 100%!important">Upload Logo</label>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="width: 215%!important">
+                      <p style="font-size: 11px!important;color: green">Image Dimension should be <b>150(w) X 40(h)</b> <br>Image types allowed: <b>PNG</b><br>Image size should be not more than <b>2mb</b></p>
                       <input type="file" name="logo" value="{{$client->logo }}">
                     </div>
                     <?php if(!empty($response)) { ?>
