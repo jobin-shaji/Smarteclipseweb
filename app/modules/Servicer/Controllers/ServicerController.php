@@ -1277,7 +1277,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             // \DB::raw('Date(job_date) as job_date'),     
+              
            'job_date',                 
 
             'created_at',
