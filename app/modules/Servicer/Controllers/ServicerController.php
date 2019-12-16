@@ -962,7 +962,7 @@ public function serviceJobDetails(Request $request)
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->with('vehicle:id,register_number,gps_id')
-        ->orderBy('job_date','desc')
+        ->orderBy('job_complete_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1277,8 +1277,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-              
-           'job_date',                 
+             'job_date',                 
 
             'created_at',
             'gps_id',

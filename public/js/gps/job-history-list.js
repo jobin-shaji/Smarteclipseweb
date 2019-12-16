@@ -39,6 +39,7 @@ $(document).ready(function () {
             {data: 'description', name: 'description', orderable: false},
             {data: 'location', name: 'location', orderable: false},
             {data: 'job_date', name: 'job_date', orderable: false},   
+             {data: 'job_complete_date', name: 'job_complete_date', orderable: false}, 
             {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
