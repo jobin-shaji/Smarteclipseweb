@@ -101,8 +101,8 @@
                   </div>
                 </div>
                 @if ($errors->has('logo'))
-                  <div style="width: 141%">
-                      <strong class="error-text">{{ $errors->first('logo') }}</strong>
+                  <div style="width: 215%">
+                      <strong class="error-text">Dimension should be 150(w) X 40(h) <br>Image allowed:PNG<br>Image size not more than 2mb</strong>
                   </div>
                 @endif
               </div>
