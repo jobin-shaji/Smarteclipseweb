@@ -629,8 +629,21 @@ class ClientController extends Controller {
         $user->role = 0;
         $user->save();        
         $user->removeRole($decrypted_role_id);
+        $roles = $user->roles;
+        $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
+        foreach ($vehicles as $vehicle) {
+            $response_string="CLR VGF";
+            $geofence_response= OtaResponse::create([
+                'gps_id' => $vehicle->gps_id,
+                'response' => $response_string
+            ]);
+        }
 
-        $roles = $user->roles;      
+
+
+
+
+
         return redirect(route('client.subscription',$request->user_id));
         
     }
