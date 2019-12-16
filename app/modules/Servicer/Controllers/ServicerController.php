@@ -295,17 +295,14 @@ class ServicerController extends Controller {
         ->rawColumns(['link'])
         ->make();
     }
-
     public function subDealerAssignServicer()
     {
-        $sub_dealer_id=\Auth::user()->subDealer->id;
-   
+        $sub_dealer_id=\Auth::user()->subDealer->id;  
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->where('status',0)
         ->where('type',2)
         ->get();
-
         $clients = Client::select('id','name','user_id','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
@@ -381,6 +378,7 @@ class ServicerController extends Controller {
         ->with('clients:id,name')
         ->whereNull('job_complete_date')
         ->with('servicer:id,name')
+        ->orderBy('job_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -961,6 +959,7 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->orderBy('job_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1165,16 +1164,6 @@ public function serviceJobDetails(Request $request)
         }
 
 
-
-
-
-
-
-
-
-
-
-
         $gps_stocks = GpsStock::select(
             'gps_id',
             'client_id'
@@ -1230,11 +1219,9 @@ public function serviceJobDetails(Request $request)
         ->get();
 
         }else if($job_type==2){
-
-         $devices=Gps::select('id','imei','serial_no')
-        ->whereIn('id',$stock_gps_id)
-        ->get();
-
+            $devices=Gps::select('id','imei','serial_no')
+            ->whereIn('id',$stock_gps_id)
+            ->get();
         }else{
          $devices=[];   
         }

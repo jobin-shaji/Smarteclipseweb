@@ -141,7 +141,8 @@ class ComplaintController extends Controller {
                 'status',
                 'servicer_id'
             )
-            ->with('gps:id,imei')
+            ->with('gps:id,imei,serial_no')
+            ->with('vehicle.vehicleType:id,name')
             ->with('ticket:id,code')
             ->with('client:id,name,sub_dealer_id')
             ->with('servicer:id,name')
@@ -216,6 +217,7 @@ class ComplaintController extends Controller {
                     
                  }               
             })
+           
             ->rawColumns(['link', 'action'])
             ->make();
         

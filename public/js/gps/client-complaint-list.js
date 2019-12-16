@@ -34,7 +34,7 @@ function callBackDataTable(){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'ticket.code', name: 'ticket.code', orderable: false, searchable: false},
-            {data: 'gps.imei', name: 'gps.imei', orderable: false, searchable: false},
+            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false, searchable: false},
             {data: 'complaint_category', name: 'complaint_category', orderable: false, searchable: false},
             
             {data: 'complaint_type.name', name: 'complaint_type.name', orderable: false, searchable: false},
