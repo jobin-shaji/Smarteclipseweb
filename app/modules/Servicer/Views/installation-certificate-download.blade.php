@@ -18,14 +18,14 @@ div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight
 </style>
 <script type="text/javascript" src="wz_jsgraphics.js"></script>
 </head>
-<body style="margin:2cm !important">
+<body >
 	<?php
 	$job_complete_date = $servicer_job->job_complete_date;
 	$date = new DateTime($job_complete_date);
 
 	$date = $date->format('d/m/Y');
 ?>
-<div style="position:fixed;left: 7%;top: 7%;width:595px;height:841px;border-style:outset;overflow:hidden">
+<div style="position:fixed;margin:1%;border-style:outset;overflow:hidden">
 <div style="position:absolute;left:44.88px;top:41.80px" class="cls_002"><span class="cls_002"> <b>{{$servicer_job->sub_dealer->name}}</b></span></div>
 <div style="position:absolute;left:43.68px;top:56.44px" class="cls_002"><span class="cls_002"><b>{{$servicer_job->sub_dealer->address}}</b><br><b>
 {{$servicer_job->user->email}}</b><br><b>
