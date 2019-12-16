@@ -224,8 +224,7 @@ class ClientController extends Controller {
         {
            $rules = $this->clientUpdateRules($client);
         }
-       
-        $this->validate($request, $rules);       
+        $this->validate($request, $rules);   
         $client->name = $request->name;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
         if($placeLatLng==null){
@@ -255,9 +254,8 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|numeric|min:10|max:10|unique:users,mobile,'.$subdealer->user_id
-            
-        ];
+            'mobile_number' => 'required|digits:10|unique:users,mobile,'.$subdealer->user_id
+              ];
         return  $rules;
     }
 
