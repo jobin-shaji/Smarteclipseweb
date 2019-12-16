@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+  $("#message").hide();
   $('#country_id').on('change', function() {
     var countryID = $(this).val();
     var data={ countryID : countryID };
@@ -32,6 +33,7 @@ $(document).ready(function() {
   });
 });
 $(document).ready(function() {
+  $("#message").hide();
   $('#state_id').on('change', function() {
     var stateID = $(this).val();
     var data={ stateID : stateID };
@@ -63,3 +65,20 @@ $(document).ready(function() {
     }
   });
 });
+
+//for restrict number from text
+$('#name').keypress(function (e) {
+  $("#message").hide();
+        var regex = new RegExp("^[a-zA-Z]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else
+        {
+          $("#message").show();
+          e.preventDefault();
+        
+        return false;
+        }
+    });

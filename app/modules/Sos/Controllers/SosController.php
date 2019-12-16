@@ -994,6 +994,9 @@ class SosController extends Controller {
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
                             ->where('sos_transfer_id',$sos_transfer_id)
                             ->get();
+            $from_user_details = Root::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$sos_transfer->from_user_id)
+                                ->first();
             $role_details = Dealer::select('id', 'name', 'address','user_id')
                                 ->where('user_id',$sos_transfer->to_user_id)
                                 ->first();
@@ -1001,7 +1004,7 @@ class SosController extends Controller {
                                 ->where('id',$role_details->user_id)
                                 ->first();
             view()->share('sos_transfer',$sos_transfer);
-            $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1011,6 +1014,9 @@ class SosController extends Controller {
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
                             ->where('sos_transfer_id',$sos_transfer_id)
                             ->get();
+            $from_user_details = Dealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$sos_transfer->from_user_id)
+                                ->first();
             $role_details = SubDealer::select('id', 'name', 'address','user_id')
                                 ->where('user_id',$sos_transfer->to_user_id)
                                 ->first();
@@ -1018,7 +1024,7 @@ class SosController extends Controller {
                                 ->where('id',$role_details->user_id)
                                 ->first();
             view()->share('sos_transfer',$sos_transfer);
-            $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1028,6 +1034,9 @@ class SosController extends Controller {
             $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
                             ->where('sos_transfer_id',$sos_transfer_id)
                             ->get();
+            $from_user_details = SubDealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$sos_transfer->from_user_id)
+                                ->first();
             $role_details = Client::select('id', 'name', 'address','user_id')
                                 ->where('user_id',$sos_transfer->to_user_id)
                                 ->first();
@@ -1035,7 +1044,7 @@ class SosController extends Controller {
                                 ->where('id',$role_details->user_id)
                                 ->first();
             view()->share('sos_transfer',$sos_transfer);
-            $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
