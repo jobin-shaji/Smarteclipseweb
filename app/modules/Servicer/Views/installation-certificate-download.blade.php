@@ -18,7 +18,7 @@ div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight
 </style>
 <script type="text/javascript" src="wz_jsgraphics.js"></script>
 </head>
-<body>
+<body style="margin:2cm !important">
 	<?php
 	$job_complete_date = $servicer_job->job_complete_date;
 	$date = new DateTime($job_complete_date);
