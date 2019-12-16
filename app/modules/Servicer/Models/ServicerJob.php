@@ -31,5 +31,9 @@ class ServicerJob extends Model
     public function sub_dealer()
     {
       return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','user_id','user_id');
-    }  
+    }
+     public function vehicle()
+    {
+      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id');
+    }    
 }
