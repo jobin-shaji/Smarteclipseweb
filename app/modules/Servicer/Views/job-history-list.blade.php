@@ -40,6 +40,7 @@
                     <th>Description</th>
                     <th>Location</th>
                     <th>Job Date</th> 
+                        <th>Job Completed Date</th> 
                     <th>Action</th>                      
                   </tr>
                 </thead>
