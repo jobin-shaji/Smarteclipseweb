@@ -127,8 +127,8 @@
                         </li> -->
 
                         <li class="nav-item dropdown-submenu">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
-                            </a>
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">VEHICLE
+                           </a>
                             <ul class="dropdown-menu multi-level">
                                 <li class="dropdown-submenu">
                                     <!-- <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
