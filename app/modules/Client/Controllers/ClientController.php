@@ -745,11 +745,12 @@ class ClientController extends Controller {
             }
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
-            //Move Uploaded File
-            $destinationPath = 'logo';
-             // $image_resize = Image::make($uploadedFile->getRealPath()); 
-             // $resize_image=$uploadedFile->resize(150, 40);
-            $file->move($destinationPath,$uploadedFile);
+            $destinationPath =  public_path('/logo');
+            $img = Image::make($file->getRealPath());
+            $img->resize(150, 40, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$uploadedFile);
+            // $file->move($destinationPath,$uploadedFile);
             $client->logo = $uploadedFile;
             $client->save();
         }
