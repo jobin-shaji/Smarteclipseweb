@@ -41,7 +41,8 @@ function callBackDataTable(){
             {data: 'title', name: 'title', orderable: false, searchable: false},
             {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
              {data: 'status', name: 'status', orderable: false, searchable: false},
-            
+             {data: 'vehicle.vehicle_type.name', name: 'vehicle.vehicle_type.name', orderable: false, searchable: false},
+
             {data: 'action', name: 'action', orderable: false, searchable: false},        
         ],
         
