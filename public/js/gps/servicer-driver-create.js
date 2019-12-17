@@ -2,21 +2,24 @@ function createDriver(res){
     var mobile = document.getElementById("mobile").value;
     var phoneno = /^\d{10}$/;
     if(document.getElementById('driver_name').value == ''){
+         alert("please enter name");
         // alertify.confirm('please enter name', function(){ alertify.success('Ok') });
-        var closable = alertify.alert().setting('closable');
-        alertify.alert()
-        .setting({'label':'OK','message': 'Please enter name'}).show();
+        // var closable = alertify.alert().setting('closable');
+        // alertify.alert()
+        // .setting({'label':'OK','message': 'Please enter name'}).show();
     }
     else if(document.getElementById('mobile').value == '' ){
-         var closable = alertify.alert().setting('closable');
-        alertify.alert()
-        .setting({'label':'OK','message': 'Please enter mobile number'}).show();
+        alert("please enter mobile number");
+        //  var closable = alertify.alert().setting('closable');
+        // alertify.alert()
+        // .setting({'label':'OK','message': 'Please enter mobile number'}).show();
         
     }
     else if(document.getElementById('address').value == ''){
-        var closable = alertify.alert().setting('closable');
-        alertify.alert()
-        .setting({'label':'OK','message': 'please enter address'}).show();    
+         alert("please enter Address ");
+        // var closable = alertify.alert().setting('closable');
+        // alertify.alert()
+        // .setting({'label':'OK','message': 'please enter address'}).show();    
    
     }
      else{

@@ -30,15 +30,17 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
-                    <th>SL.No</th>
+                    <th>SL.No111</th>
                     <th>Job Code</th>
-                    <th>Client</th>                      
+                    <th>Client</th>   
+                    <th>Vehicle Number</th>                   
                     <th>Job Type</th>
                     <th>Assignee</th>
                     <th>GPS Serial No</th>
                     <th>Description</th>
                     <th>Location</th>
                     <th>Job Date</th> 
+                  a <th>Job Completed Date</th>
                     <th>Action</th>                      
                   </tr>
                 </thead>

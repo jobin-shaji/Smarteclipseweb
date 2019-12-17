@@ -95,7 +95,7 @@
                       <div class="form-group row" style="float:none!important">
                          <label for="fname" class="col-sm-5 text-right control-label col-form-label">Driver</label>
                          <div class="form-group has-feedback">
-                           <select class="form-control select2" data-live-search="true" title="Select Servicer" id="driver" name="driver" required>
+                           <select class="form-control select2" data-live-search="true" title="Select Servicer" id="driver" name="driver" >
                                <option value="">Select</option>
                                   @foreach ($drivers as $driver)
                                   <option value="{{$driver->id}}">{{$driver->name}}</option>
@@ -162,11 +162,11 @@
                        <div class="form-group row" style="float:none!important">
                            <label for="fname" class="col-md-6 text-right control-label col-form-label">RC Book</label>
                            <div class="form-group has-feedback">
-                              <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" id="path" value="{{ old('path') }}" required> 
+                              <input type="file" class="form-control {{ $errors->has('file') ? ' has-error' : '' }}" placeholder="Choose File" name="file" id="file" value="{{ old('file') }}" required> 
                               </div>
-                              @if ($errors->has('path'))
+                              @if ($errors->has('file'))
                                 <span class="help-block">
-                                    <strong class="error-text">{{ $errors->first('path') }}</strong>
+                                    <strong class="error-text">{{ $errors->first('file') }}</strong>
                                 </span>
                               @endif
                         </div>

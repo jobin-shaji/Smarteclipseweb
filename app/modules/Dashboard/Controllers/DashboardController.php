@@ -1022,7 +1022,7 @@ class DashboardController extends Controller
         $user = $request->user();  
         $client=Client::where('user_id',$user->id)->first();
         $client_id=$client->id;
-        $single_vehicle =  $this->getSingleVehicle($user->id);
+        $single_vehicle=  $this->getSingleVehicle($client_id);
         // $expired_documents =  $this->getExpiredDocuments($single_vehicle);
         // $expire_documents =  $this->getExpireDocuments($single_vehicle);        
         $expired_documents=Document::select([
@@ -1035,7 +1035,10 @@ class DashboardController extends Controller
         ->with('documentType:id,name')
         ->whereIn('vehicle_id',$single_vehicle)
         ->whereDate('expiry_date', '<', date('Y-m-d'))
-        ->get();        
+        ->orderBy('expiry_date','DESC')
+        ->take(3)
+        ->get();    
+        // dd($single_vehicle);
         $expire_documents=Document::select([
             'id',
             'vehicle_id',

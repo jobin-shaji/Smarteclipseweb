@@ -39,10 +39,9 @@
                           </span>
                         @endif
                     </div>
-                 
                     <div class="form-group has-feedback">
                       <label class="srequired">Mobile No.</label>
-                        <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}">
+                        <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$user->mobile}}">
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
