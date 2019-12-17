@@ -62,8 +62,8 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('roots')->insert([
-            'address' => 'vst',
-            'name' => 'vst',
+            'address' => 'Kerala Technology Innovation Zone,Kinfra Hi-Tech Park, HMT Colony, North Kalamassery,Ernakulam, Kerala, India 683503',
+            'name' => 'VST Mobility Solutions Pvt. Ltd.',
             'user_id'=>1,
         ]);
 
