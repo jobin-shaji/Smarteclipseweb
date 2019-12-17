@@ -29,12 +29,12 @@
                   <thead>
                     <tr>
                       <th>SL.No</th>
-                      <th>Name</th>                            
+                      <th style="width:173px!important;">Name</th>                            
                       <th>Address</th>                              
                       <th>Mobile</th>                            
                       <th>Email</th>
                       <th>Dealer</th>
-                      <th>Working Status</th>
+                      <th style="width:0px!important;">Working Status</th>
                     </tr>
                   </thead>
                 </table>
