@@ -39,9 +39,16 @@ $('#alert').scroll(function() {
   }
 });
 function responseList(res){
-  for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
-    $('.inner').append('<div class="messages alert_color_'+res.alerts[i].id+'" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+  if(res.alerts.length==0){
+    $('.inner').append('<div class="messages">No data available</div>');
+
   }
+  else{
+    for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
+      $('.inner').append('<div class="messages alert_color_'+res.alerts[i].id+'" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'('+res.alerts[i].gps.vehicle.name+')</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+    }
+  }
+  
 }
 function limitFunction(limit,offset)
 {
@@ -96,9 +103,9 @@ function gpsAlertTracker(res)
       fillColor: '#FF0000',
       fillOpacity: 0.35,
       map: map,
-      center: alertMap[alert].center,
+      center: alertMap[alert].center
       // radius: Math.sqrt(citymap[city].population) * 100
-      radius: 100
+      // radius: 0
     });
   }
   var marker = new google.maps.Marker({

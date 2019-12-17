@@ -1510,17 +1510,7 @@ public function serviceJobDetails(Request $request)
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    public function servicerProfileUpdateRules($servicer)
+public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
             'name' => 'required',

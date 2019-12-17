@@ -559,6 +559,7 @@
                         <i class="fas fa-search"></i>
                       </button>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -755,13 +756,14 @@
     </div>
     <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
     <div class="pageContainer">
+
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
-          <div class="st-panel">
+          <div class="st-panel" style="width: 50%">
             <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
-            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important">
+            <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height:164px;width: 103%">
               @foreach ($vehicles as $vehicle)       
                 <div class="border-card">
                   <div class="card-type-icon with-border">
@@ -787,12 +789,19 @@
                 </div>
               @endforeach  
             </div>
+               <button type="submit" onclick="refreshPage()" class="btn btn-primary btn-block">
+                Clear
+              </button>
           </div>
           <div class="right-bottom">
             <div class="st-button-main">
               <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
             </div>
+          
           </div>
+        
+             
+           
 
           @role('fundamental|superior|pro|school')
           <div class="right-bottom2">
@@ -822,7 +831,9 @@
                         <i class="fas fa-search"></i>
                       </button>
                     </div>
+
                   </div>
+
                 </div>
               </div>
             </form>
