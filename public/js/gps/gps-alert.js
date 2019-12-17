@@ -96,9 +96,9 @@ function gpsAlertTracker(res)
       fillColor: '#FF0000',
       fillOpacity: 0.35,
       map: map,
-      center: alertMap[alert].center,
+      center: alertMap[alert].center
       // radius: Math.sqrt(citymap[city].population) * 100
-      radius: 100
+      // radius: 0
     });
   }
   var marker = new google.maps.Marker({
