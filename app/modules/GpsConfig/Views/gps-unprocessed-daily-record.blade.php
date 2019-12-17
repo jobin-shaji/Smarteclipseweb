@@ -33,7 +33,7 @@
             </div>  
             <div class="col-lg-3 col-md-3"> 
               <div class="form-group" style="margin-top: 10%;">
-                <button class="btn btn-sm btn-info btn2 srch" onclick="downloadGpsProcessedDataReport()"> DOWNLOAD</button>                  
+                <button class="btn btn-sm btn-info btn2 srch" onclick="downloadGpsUnprocessedDataReport()"> DOWNLOAD</button>                  
               </div>
             </div>               
           </div>
@@ -51,7 +51,6 @@
               <th>SL NO.</th>
               <th>IMEI</th>
               <th>VLT DATA</th>
-              <th>DEVICE TIME</th>
               <th>CREATED AT</th>
             </tr>
           </thead>
@@ -65,6 +64,6 @@
 
 
 @section('script')
-    <script src="{{asset('js/gps/gps-daily-records-list.js')}}"></script>
+    <script src="{{asset('js/gps/gps-unprocessed-daily-records-list.js')}}"></script>
 @endsection
 @endsection
