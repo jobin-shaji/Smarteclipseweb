@@ -874,6 +874,28 @@ function downloadMainBatteryDisconnectReport(){
     }
 }
 
+function downloadGpsUnprocessedDataReport(){    
+    var url = 'gps-unprocessed-records/export';
+    var gps_id=$('#gps_id').val();   
+    var date=$('#date').val();
+
+    var data = {
+    'gps_id':gps_id,'date':date
+    };
+    downloadFile(url,data);
+}
+
+function downloadGpsProcessedDataReport(){    
+    var url = 'gps-processed-records/export';
+    var gps_id=$('#gps_id').val();   
+    var date=$('#date').val();
+
+    var data = {
+    'gps_id':gps_id,'date':date
+    };
+    downloadFile(url,data);
+}
+
 
 // function downloadTotalKMReport(){    
 //     var url = 'total-km-report/export';
