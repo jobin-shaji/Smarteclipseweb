@@ -116,7 +116,10 @@ table, th, td {
       <td>IMEI</td>
       <td id="imei"></td>
     </tr>
-    
+     <tr>
+      <td>Activation Key</td>
+      <td id="activationKey"></td>
+    </tr>
     <tr>
       <td>Date</td>
       <td id="date"></td>

@@ -295,17 +295,14 @@ class ServicerController extends Controller {
         ->rawColumns(['link'])
         ->make();
     }
-
     public function subDealerAssignServicer()
     {
-        $sub_dealer_id=\Auth::user()->subDealer->id;
-   
+        $sub_dealer_id=\Auth::user()->subDealer->id;  
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->where('status',0)
         ->where('type',2)
         ->get();
-
         $clients = Client::select('id','name','user_id','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
@@ -381,6 +378,7 @@ class ServicerController extends Controller {
         ->with('clients:id,name')
         ->whereNull('job_complete_date')
         ->with('servicer:id,name')
+        ->orderBy('job_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -434,6 +432,7 @@ class ServicerController extends Controller {
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -506,6 +505,7 @@ if($servicer_job->status==0){
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -961,6 +961,8 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
+        ->orderBy('job_complete_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1012,6 +1014,7 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1165,16 +1168,6 @@ public function serviceJobDetails(Request $request)
         }
 
 
-
-
-
-
-
-
-
-
-
-
         $gps_stocks = GpsStock::select(
             'gps_id',
             'client_id'
@@ -1230,11 +1223,9 @@ public function serviceJobDetails(Request $request)
         ->get();
 
         }else if($job_type==2){
-
-         $devices=Gps::select('id','imei','serial_no')
-        ->whereIn('id',$stock_gps_id)
-        ->get();
-
+            $devices=Gps::select('id','imei','serial_no')
+            ->whereIn('id',$stock_gps_id)
+            ->get();
         }else{
          $devices=[];   
         }
@@ -1286,8 +1277,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             // \DB::raw('Date(job_date) as job_date'),     
-           'job_date',                 
+             'job_date',                 
 
             'created_at',
             'gps_id',
@@ -1295,6 +1285,7 @@ public function serviceJobDetails(Request $request)
         )
         ->where('user_id',$user_id)
         ->whereNotNull('job_complete_date')
+        ->with('vehicle:id,register_number,gps_id')
         ->with('user:id,username')
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
@@ -1452,6 +1443,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->where('job_date','<',date('Y-m-d H:i:s'))
         ->orderBy('job_date','Desc')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()

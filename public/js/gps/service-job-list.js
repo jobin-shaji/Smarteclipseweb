@@ -31,9 +31,8 @@ $(document).ready(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'job_id', name: 'job_id'},
-          
-            // {data: 'servicer.name', name: 'servicer.name'},
             {data: 'clients.name', name: 'clients.name'},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
             {data: 'job_type', name: 'job_type'},
             {data: 'user.username', name: 'user.username'},
             {data: 'gps.serial_no', name: 'gps.serial_no'},

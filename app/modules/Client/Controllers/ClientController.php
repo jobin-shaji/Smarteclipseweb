@@ -22,6 +22,7 @@ use App\Modules\Client\Models\ClientTransaction;
 use App\Modules\Subscription\Models\Plan;
 use App\Modules\Subscription\Models\Subscription;
 use DataTables;
+use Intervention\Image\ImageManagerStatic as Image;
 class ClientController extends Controller {
    
     //employee creation page
@@ -575,6 +576,15 @@ class ClientController extends Controller {
             $geofence->forceDelete();
         }
         $user = User::find($client_user_id); 
+        $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
+        foreach ($vehicles as $vehicle) {
+            $response_string="CLR VGF";
+            $geofence_response= OtaResponse::create([
+                'gps_id' => $vehicle->gps_id,
+                'response' => $response_string
+            ]);
+        }
+        // dd($gps_id);
         if($request->client_role==6)
         {
             $user->role = 1;
@@ -619,8 +629,21 @@ class ClientController extends Controller {
         $user->role = 0;
         $user->save();        
         $user->removeRole($decrypted_role_id);
+        $roles = $user->roles;
+        $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
+        foreach ($vehicles as $vehicle) {
+            $response_string="CLR VGF";
+            $geofence_response= OtaResponse::create([
+                'gps_id' => $vehicle->gps_id,
+                'response' => $response_string
+            ]);
+        }
 
-        $roles = $user->roles;      
+
+
+
+
+
         return redirect(route('client.subscription',$request->user_id));
         
     }
@@ -722,9 +745,12 @@ class ClientController extends Controller {
             }
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
-            //Move Uploaded File
-            $destinationPath = 'logo';
-            $file->move($destinationPath,$uploadedFile);
+            $destinationPath =  public_path('/logo');
+            $img = Image::make($file->getRealPath());
+            $img->resize(150, 40, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$uploadedFile);
+            // $file->move($destinationPath,$uploadedFile);
             $client->logo = $uploadedFile;
             $client->save();
         }
@@ -982,7 +1008,7 @@ class ClientController extends Controller {
     public function logoUpdateRules()
     {
         $rules = [
-            'logo' => 'mimes:png|required|max:2000|dimensions:max_width=150,max_height=40' 
+            'logo' => 'mimes:png|required|max:2000' 
         ];
         return  $rules;
     }
