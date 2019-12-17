@@ -918,13 +918,17 @@ class VehicleController extends Controller
     // update vehicle type
     public function updateVehicleType(Request $request)
     {
+
       $vehicle_type = VehicleType::find($request->id);
+
        if($vehicle_type == null){
            return view('Vehicle::404');
         }
 
         $online_vehicle=$request->online_icon;
+
         if($online_vehicle){
+              
         $getFileExt   = $online_vehicle->getClientOriginalExtension();
         $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
         //Move Uploaded File
@@ -932,6 +936,8 @@ class VehicleController extends Controller
         $online_vehicle->move($destinationPath,$online_uploadedFile);
         $vehicle_type->online_icon = $online_uploadedFile;
         }
+        
+       
         // online vehicle image
          // offline vehicle image
         $offline_vehicle=$request->offline_icon;
@@ -975,12 +981,12 @@ class VehicleController extends Controller
         $name = strtolower($name); //convert string to lowercase
         $vehicle_type->name = $name;
         $vehicle_type->svg_icon = $request->svg_icon;
-
+ 
         $vehicle_type->vehicle_scale = $request->scale;
         $vehicle_type->opacity = $request->opacity;
         $vehicle_type->strokeWeight = $request->weight;
         $vehicle_type->save();
-
+ // dd($request->svg_icon);
         $this->updateVehicleTypeApiResponse();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
@@ -2695,7 +2701,7 @@ class VehicleController extends Controller
         $value=$vehicle_models->fuel_min-$fuel_gps;
         $fuel=($value/$modulus)*100;
 
-        dd($fuel);
+       
         // return response()->json($response_data); 
     }
 
@@ -2713,10 +2719,7 @@ class VehicleController extends Controller
                                              ];
         }
 
-        return (new Configuration())->create([
-
-
-        ]);
+     
 
        
 
