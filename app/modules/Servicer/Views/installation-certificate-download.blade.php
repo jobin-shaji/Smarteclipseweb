@@ -227,7 +227,7 @@
                 <span class="cls_002">Name & Signature</span>
             </div>
 
-            <div style="position:absolute;left:400px;top:740px" class="cls_002">
+            <div style="position:absolute;left:350px;top:740px" class="cls_002">
                 <span class="cls_002">Official Seal</span>
             </div>
             <br><br>
