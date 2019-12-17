@@ -31,7 +31,7 @@ $(document).ready(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
             {data: 'job_id', name: 'job_id', orderable: false},         
-            // {data: 'servicer.name', name: 'servicer.name'},
+        
             {data: 'clients.name', name: 'clients.name', orderable: false},
             {data: 'vehicle.register_number', name: 'vehicle.register_number'},
             {data: 'job_type', name: 'job_type', orderable: false},
@@ -40,6 +40,7 @@ $(document).ready(function () {
             {data: 'description', name: 'description', orderable: false},
             {data: 'location', name: 'location', orderable: false},
             {data: 'job_date', name: 'job_date', orderable: false},   
+            {data: 'job_complete_date', name: 'job_complete_date', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
