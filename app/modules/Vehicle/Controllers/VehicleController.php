@@ -708,6 +708,7 @@ class VehicleController extends Controller
     public function allVehicleDocList()
     {
         $client_id=\Auth::user()->client->id;
+        // dd($client_id);
         $vehicles=Vehicle::select('id','name','register_number','client_id')
                             ->where('client_id',$client_id)
                             ->get();
@@ -756,10 +757,10 @@ class VehicleController extends Controller
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
             ->whereDate('expiry_date', '<', date('Y-m-d'));
         }
-        // else
-        // {
-        //     $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
-        // } 
+        else
+        {
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
+        } 
         $vehicle_documents =$vehicle_documents->get();
         return DataTables::of($vehicle_documents)
             ->addIndexColumn()
