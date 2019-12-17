@@ -29,14 +29,14 @@ $(document).ready(function () {
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
-            {data: 'job_id', name: 'job_id'},
-            {data: 'servicer.name', name: 'servicer.name', orderable: false},
-            {data: 'clients.name', name: 'clients.name', orderable: false},
-            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
-            {data: 'job_type', name: 'job_type', orderable: false},
-            {data: 'description', name: 'description', orderable: false},
-            {data: 'job_date', name: 'job_date', orderable: false},   
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'job_id', name: 'job_id', orderable: false, searchable: false},
+            {data: 'servicer.name', name: 'servicer.name', orderable: false, searchable: false},
+            {data: 'clients.name', name: 'clients.name', orderable: false, searchable: false},
+            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false, searchable: false},
+            {data: 'job_type', name: 'job_type', orderable: false, searchable: false},
+            {data: 'description', name: 'description', orderable: false, searchable: false},
+            {data: 'job_date', name: 'job_date', orderable: false, searchable: false},   
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

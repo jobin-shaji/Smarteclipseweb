@@ -28,7 +28,9 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>         
-            <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a>            
+                <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> 
+                <a class="dropdown-item" href="{{url('/gps-records')}}">DEVICE PROCESSED DAILY RECORDS</a>
+                <a class="dropdown-item" href="{{url('/gps-unprocessed-records')}}">DEVICE UNPROCESSED DAILY RECORDS</a>
             </div>
         </li>      
         <li class="nav-item dropdown">

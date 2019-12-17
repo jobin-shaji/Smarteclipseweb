@@ -62,8 +62,8 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('roots')->insert([
-            'address' => 'vst',
-            'name' => 'vst',
+            'address' => 'Kerala Technology Innovation Zone,Kinfra Hi-Tech Park, HMT Colony, North Kalamassery,Ernakulam, Kerala, India 683503',
+            'name' => 'VST Mobility Solutions Pvt. Ltd.',
             'user_id'=>1,
         ]);
 
@@ -297,6 +297,16 @@ class UsersTableSeeder extends Seeder
             'version' => '1.0'
 
         ]);
+
+          DB::table('configurations')->insert([
+            'name' => 'vehicle',
+            'value' => '{"BUS": {"ideal": "1573802602_ideal_icon.png", "sleep": "1573802602_sleep_icon.png", "online": "1573802602_online_vehicle.png", "offline": "1573802602_offline_vehicle.png"}, "Car": {"ideal": "1575349465_ideal_icon.png", "sleep": "1575349465_sleep_icon.png", "online": "1575349465_online_vehicle.png", "offline": "1575349465_offline_vehicle.png"}, "auto rickshaw": {"ideal": "1573801348_ideal_icon.png", "sleep": "1573801348_sleep_icon.png", "online": "1573801348_online_vehicle.png", "offline": "1573801348_offline_vehicle.png"}}',
+            'code' => 'vehicle',
+            'date'=>date('Y-m-d'),
+            'version'=>'1.0'
+
+        ]);
+
 
 
 

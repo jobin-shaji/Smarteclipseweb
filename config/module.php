@@ -36,7 +36,8 @@ return  [
        'Employee',
        'GpsConfig',
        'Operations',
-       'Configuration'
+       'Configuration',
+       'Version'
 
     ]
 ]

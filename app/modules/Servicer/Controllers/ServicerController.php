@@ -10,6 +10,8 @@ use App\Modules\Warehouse\Models\GpsStock;
 
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Operations\Models\VehicleModels;
+use App\Modules\Operations\Models\VehicleMake;
+
 
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
@@ -96,7 +98,6 @@ class ServicerController extends Controller {
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->save();
-
         $request->session()->flash('message', 'Details updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
 
@@ -294,17 +295,14 @@ class ServicerController extends Controller {
         ->rawColumns(['link'])
         ->make();
     }
-
     public function subDealerAssignServicer()
     {
-        $sub_dealer_id=\Auth::user()->subDealer->id;
-   
+        $sub_dealer_id=\Auth::user()->subDealer->id;  
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->where('status',0)
         ->where('type',2)
         ->get();
-
         $clients = Client::select('id','name','user_id','sub_dealer_id')
         ->where('sub_dealer_id',$sub_dealer_id)
         ->get();
@@ -380,6 +378,7 @@ class ServicerController extends Controller {
         ->with('clients:id,name')
         ->whereNull('job_complete_date')
         ->with('servicer:id,name')
+        ->orderBy('job_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -505,6 +504,7 @@ if($servicer_job->status==0){
         ->with('user:id,username')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+      
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -597,13 +597,14 @@ if($servicer_job->status==0){
         ->get();       
         $drivers=Driver::select('id','name')
         ->where('client_id',$client_id)
-        ->get();    
+        ->get();
+         $makes=VehicleMake::select('id','name')->get();     
 
          $models=VehicleModels::select('id','name')->get();   
        if($servicer_job == null){
            return view('Servicer::404');
         }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
+        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes]);
     }
 // FOR SERVICE
 public function serviceJobDetails(Request $request)
@@ -691,18 +692,20 @@ public function serviceJobDetails(Request $request)
         }
         return view('Servicer::service-job-edit',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
-
     public function servicerJobSave(Request $request)
     { 
-         $custom_messages = [
-        'path.required' => 'File cannot be blank',
-        'installation_photo.required' => 'File cannot be blank',
-        'activation_photo.required' => 'File cannot be blank',
-        'vehicle_photo.required' => 'File cannot be blank'
+        $custom_messages = [
+            'file.required' => 'Rc Book cannot be blank',
+             // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'
+            'installation_photo.required' => 'File cannot be blank',
+            'activation_photo.required' => 'File cannot be blank',
+            'vehicle_photo.required' => 'File cannot be blank'
         ];
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
-        $this->validate($request,$rules);      
+        $this->validate($request,$rules,$custom_messages);  
+        
+
         // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
         $job_completed_date=date("Y-m-d"); 
         $servicer_job = ServicerJob::find($request->id);
@@ -727,6 +730,7 @@ public function serviceJobDetails(Request $request)
             $servicer_job_id = $request->servicer_job_id;
             $engine_number = $request->engine_number;
             $chassis_number = $request->chassis_number;
+            $model = $request->model;
 
             $vehicle_create= Vehicle::create([
                 'name' => $name,
@@ -735,13 +739,14 @@ public function serviceJobDetails(Request $request)
                 'gps_id' => $gps_id,
                 'client_id' => $client_id,
                 'servicer_job_id' =>$servicer_job->id,
+                'model_id' =>$model,
                 'engine_number' => $engine_number,
                 'chassis_number' => $chassis_number,
                 'driver_id' => $driver_id,
                 'status' => 1
             ]);
             // $this->validate($request, $rules, $custom_messages);
-            $file=$request->path;
+            $file=$request->file;
             $installation_photo=$request->installation_photo;
             $activation_photo=$request->activation_photo;
             $vehicle_photo=$request->vehicle_photo;
@@ -955,6 +960,8 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
+        ->orderBy('job_complete_date','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1006,6 +1013,8 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->with('vehicle:id,register_number,gps_id')
+         ->orderBy('job_complete_date','Desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1159,16 +1168,6 @@ public function serviceJobDetails(Request $request)
         }
 
 
-
-
-
-
-
-
-
-
-
-
         $gps_stocks = GpsStock::select(
             'gps_id',
             'client_id'
@@ -1224,11 +1223,9 @@ public function serviceJobDetails(Request $request)
         ->get();
 
         }else if($job_type==2){
-
-         $devices=Gps::select('id','imei','serial_no')
-        ->whereIn('id',$stock_gps_id)
-        ->get();
-
+            $devices=Gps::select('id','imei','serial_no')
+            ->whereIn('id',$stock_gps_id)
+            ->get();
         }else{
          $devices=[];   
         }
@@ -1280,8 +1277,7 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'job_complete_date', 
-             // \DB::raw('Date(job_date) as job_date'),     
-           'job_date',                 
+             'job_date',                 
 
             'created_at',
             'gps_id',
@@ -1289,6 +1285,7 @@ public function serviceJobDetails(Request $request)
         )
         ->where('user_id',$user_id)
         ->whereNotNull('job_complete_date')
+        ->with('vehicle:id,register_number,gps_id')
         ->with('user:id,username')
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
@@ -1446,6 +1443,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->where('job_date','<',date('Y-m-d H:i:s'))
         ->orderBy('job_date','Desc')
+        ->with('vehicle:id,register_number,gps_id')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1463,32 +1461,55 @@ public function serviceJobDetails(Request $request)
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
             if($servicer_job->status==0){
-                return "<font color='red'>Cancelled</font>";
-                            
+                return "<font color='red'>Cancelled</font>";                            
             }else
             {
-                return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                if($servicer_job->job_type==1)
+                {
+                    return "
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                }
+               
+                else if($servicer_job->status==2)
+                {
+                   return "
+                    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Edit</a>";  
+                } 
             }
-          
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
      
+    public function getVehicleModels(Request $request)
+    {
+        $user = $request->user();
+        $make_id=$request->make_id;
+        $vehicle_models=VehicleModels::select('id','vehicle_make_id','name')
+        ->where('vehicle_make_id',$make_id)      
+        ->get();
+        if($vehicle_models)
+        {               
+            $response_data = array(
+                'status'  => 'vehicleModels',
+                'vehicle_models' => $vehicle_models
+               
+            );
+        }      
+        else
+        {
+             $response_data = array(
+                    'status'  => 'failed',
+                    'message' => 'failed',
+                    'code'    =>0
+                );
+        }
+        return response()->json($response_data); 
+        // }
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-    public function servicerProfileUpdateRules($servicer)
+public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
             'name' => 'required',
@@ -1598,15 +1619,19 @@ public function serviceJobDetails(Request $request)
             'engine_number' => 'required',
             'chassis_number' => 'required',
             'name' => 'required',
-            'path' => 'required|mimes:jpeg,png|max:4096',
+            'file' => 'required|mimes:jpeg,png|max:4096',
             'installation_photo' => 'required|mimes:jpeg,png|max:4096',
             'activation_photo' => 'required|mimes:jpeg,png|max:4096',
             'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
             'comment' => 'required',
-            'driver'=>'required'
+            // 'driver'=>'required',
+            'model'=>'required',
+            'make'=>'required'
+
+
 
         ];
-        return  $rules;
+        return  $rules; 
     }
 
 

@@ -78,6 +78,28 @@
                         @endif
                       </div>
                       <?php } ?>
+                       <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label> 
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" value="{{ $subdealers->address}}"> 
+                        </div>
+                        @if ($errors->has('address'))
+                          <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('address') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                       <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <div class="form-group has-feedback">
+                          <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" value="{{ $user->email}}" placeholder="email" name="email" value="{{ old('email') }}" required  autocomplete="off">
+                        </div>
+                        @if ($errors->has('email'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('email') }}</strong>
+                          </span>
+                        @endif
+                      </div>
               <div class="col-md-1 ">
                 <button type="submit" class="btn btn-primary btn-md form-btn">Update</button>
               </div>

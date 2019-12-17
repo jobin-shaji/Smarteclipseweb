@@ -17,6 +17,7 @@ use App\Modules\Gps\Models\VltData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Warehouse\Models\GpsStock;
+use App\Modules\Root\Models\Root;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -991,6 +992,9 @@ class WarehouseController extends Controller {
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
                             ->where('gps_transfer_id',$gps_transfer_id)
                             ->get();
+            $from_user_details = Root::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->from_user_id)
+                                ->first();
             $role_details = Dealer::select('id', 'name', 'address','user_id')
                                 ->where('user_id',$gps_transfer->to_user_id)
                                 ->first();
@@ -998,7 +1002,7 @@ class WarehouseController extends Controller {
                                 ->where('id',$role_details->user_id)
                                 ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1008,6 +1012,9 @@ class WarehouseController extends Controller {
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
                             ->where('gps_transfer_id',$gps_transfer_id)
                             ->get();
+            $from_user_details = Dealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->from_user_id)
+                                ->first();
             $role_details = SubDealer::select('id', 'name', 'address','user_id')
                                 ->where('user_id',$gps_transfer->to_user_id)
                                 ->first();
@@ -1015,7 +1022,7 @@ class WarehouseController extends Controller {
                                 ->where('id',$role_details->user_id)
                                 ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1025,6 +1032,9 @@ class WarehouseController extends Controller {
             $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
                             ->where('gps_transfer_id',$gps_transfer_id)
                             ->get();
+            $from_user_details = SubDealer::select('id', 'name', 'address','user_id')
+                                ->where('user_id',$gps_transfer->from_user_id)
+                                ->first();
             $role_details = Client::select('id', 'name', 'address','user_id')
                                 ->where('user_id',$gps_transfer->to_user_id)
                                 ->first();
@@ -1032,7 +1042,7 @@ class WarehouseController extends Controller {
                                 ->where('id',$role_details->user_id)
                                 ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );

@@ -1,112 +1,240 @@
+<html>
+    <head><meta http-equiv=Content-Type content="text/html; charset=UTF-8">
 
+        <style type="text/css">
+            span.cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            div.cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            span.cls_003{font-family:Times,serif;font-size:21.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+            div.cls_003{font-family:Times,serif;font-size:21.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+            span.cls_004{font-family:Times,serif;font-size:30.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+            div.cls_004{font-family:Times,serif;font-size:30.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+            span.cls_005{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+            div.cls_005{font-family:Times,serif;font-size:11.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+            span.cls_006{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            div.cls_006{font-family:Times,serif;font-size:12px!important;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            span.cls_007{font-family:Times,serif;font-size:10px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            .lineheight {
+                line-height: 20px;
+            }
+            body{
+                margin: :0px;
+                padding: :0px;
+            }
+            -->
+            .border{
+            width: 570px;
+                float: left;
+                display: block;
+                border: 1px solid #000;
+                padding:30px 0 50px;
+            }
+            .clear{clear:both;
+            }
+            .same-width{width:100%;
+            float:left;      
+            padding-bottom:10px;
+            }
+            .top-bg-left{
+            width:70%;
+            float:left;
+            }
+            .top-bg-right{
+            width:30%;
+            float:left;
+            }
 
+            .logo{
+            width:100%;float:left;display:block;
+            }.logo img{
+            width:150px;
+            float:right;}
+            .marg-auto{
+            width:540px;margin:30px auto;
+            }
+            .top-text{
+            width:100%;float:left;display:block; margin-top:10px;
+            font-size:16px;
+            }
+            .top-text-left{
+            width:50%;float:left;
+            }.top-text-right{
+            width:50%;float:left;
+                margin-left: -1px;
+            }
 
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<META http-equiv="X-UA-Compatible" content="IE=8">
-<TITLE></TITLE>
-<META name="generator" content="BCL easyConverter SDK 5.0.140">
-<STYLE type="text/css">
+            .top-text span.cls_006 {
+                 font-size: 12px;
+            }
+            .mrg-left-5{margin-left:5px;
+            }
 
-body {margin-top: 0px;margin-left: 0px;}
+            .mrg-top-70{margin-top:60px;
+            }.mrg-top-50{margin-top:50px;
+            }
+            .officeal-txt{
+                width: 200px;
+                float: right;
+                margin-top: 50px;}
+            .top-text-left-1 {
+                width: 100%;
+                float: left;
+            }
+            .mrg-30{
+            margin-top:30px;
+            }
 
-#page_1 {position:relative; overflow: hidden;margin: 10px 0px 5px 0px;padding: 3px;border: 1px solid;width: 716px;height: 942px;}
+            .inner-bg-left{
+            width:510px;
+            margin:0px auto;
+            }
+            .inner-border{
+            margin: 0;
+                border: 1px solid #000;
+                border-bottom: 0px solid #000;
+            }.boderder-bottom{
+            border-bottom:1px solid #000;
+            }
+            .inner-left{
+            width: 42%;
+                float: left;
+                border-right: 1px solid #000;
+                padding: 10px 0;
+                padding-left: 5px;
+                    min-height: 30px;
 
-#page_1 #p1dimg1 {position:absolute;top:0px;left:5px;z-index:-1;width:714px;height:1000px;}
-#page_1 #p1dimg1 #p1img1 {width:714px;height:1000px;}
+            }
+            .inner-right{
+            width:53%;
+            float:left;
+            min-height: 30px;
+                border-right: 1px solid #000;
+            padding:10px 0;
+               padding-left: 5px;
+            }
+            .yellow{
+            background:#f5bb14;
+            }
+            .border-0{
+            border:0px;
+            }
+            .gray{
+            background:#bebdbc;
+            }
+            .br-bt{
+            border-bottom:1px solid #000;}
+            .mrg-40
+            {margin-top:40px;
+            }
+            .yellow{background: #f5bb14;}
+            .grey{background: #bebdbc;}
+            .cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+        </style>
 
+        <script type="text/javascript" src="wz_jsgraphics.js"></script>
 
+    </head>
+    <body >
+        <?php
+        $job_complete_date = $servicer_job->job_complete_date;
+        $date = new DateTime($job_complete_date);
 
+        $date = $date->format('d/m/Y');
+        ?>
+        <div style="position:fixed;margin:1%;overflow:auto">
+            <div style="position:absolute;left:70px;top:41.80px" class="cls_002">
+                <span class="cls_002 lineheight"> {{$servicer_job->sub_dealer->name}}</span>
+            </div>
 
-.dclr {clear:both;float:none;height:1px;margin:0px;padding:0px;overflow:hidden;}
+            <div style="position:absolute;left:70px;top:56.44px" class="cls_002">
+                <span class="cls_002 lineheight">
+                    {{$servicer_job->sub_dealer->address}}
+                    <br>
+                    {{$servicer_job->user->email}}
+                    <br>
+                    {{$servicer_job->user->mobile}}
+                </span>
+            </div>
 
-.ft0{font: bold 16px 'Calibri';line-height: 19px;}
-.ft1{font: 1px 'Calibri';line-height: 1px;}
-.ft2{font: bold 15px 'Calibri';line-height: 18px;}
-.ft3{font: bold 16px 'Calibri';text-decoration: underline;line-height: 19px;}
-.ft4{font: 16px 'Calibri';line-height: 19px;}
-.ft5{font: 16px 'Times New Roman';line-height: 19px;}
+            <div style="position:absolute;left:500px;top:36.72px" class="cls_003">
+                <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
+            </div>
 
-.p0{text-align: left;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
-.p1{text-align: right;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
-.p2{text-align: left;padding-left: 250px;margin-top: 27px;margin-bottom: 0px;}
-.p3{text-align: left;padding-left: 50px;margin-top: 13px;margin-bottom: 0px;}
-.p4{text-align: left;padding-left: 50px;margin-top: 12px;margin-bottom: 0px;}
-.p5{text-align: left;padding-left: 245px;margin-top: 25px;margin-bottom: 0px;}
-.p6{text-align: left;padding-left: 50px;margin-top: 24px;margin-bottom: 0px;}
-.p7{text-align: left;padding-left: 50px;margin-top: 13px;margin-bottom: 0px;}
-.p8{text-align: left;padding-left: 50px;margin-top: 13px;margin-bottom: 0px;}
-.p9{text-align: justify;padding-left: 49px;padding-right: 49px;margin-top: 13px;margin-bottom: 0px;text-indent: 43px;}
-.p10{text-align: left;padding-left: 338px;margin-top: 4px;margin-bottom: 0px;}
-.p11{text-align: left;padding-left: 48px;margin-top: 25px;margin-bottom: 0px;}
-.p12{text-align: left;padding-left: 48px;margin-top: 12px;margin-bottom: 0px;}
-.p13{text-align: left;padding-left: 48px;margin-top: 13px;margin-bottom: 0px;}
-.p14{text-align: left;padding-left: 91px;margin-top: 13px;margin-bottom: 0px;}
-.p15{text-align: left;padding-left: 50px;margin-top: 5px;margin-bottom: 0px;}
-.p16{text-align: right;padding-right: 10px;margin-top: 30px;margin-bottom: 0px;}
+            <div style="position:absolute;left:70px;top:185.32px" class="cls_002">
+                <span class="cls_002">This is to certify that , this vehicle is equiped with the AIS 140 compliant device,</span>
+            </div>
 
-.td0{padding: 0px;margin: 0px;width: 300px;vertical-align: bottom;}
-.td1{padding: 0px;margin: 0px;width: 153px;vertical-align: bottom;}
+            <div style="position:absolute;left:70px;top:201.16px" class="cls_002">
+                <span class="cls_002" style="letter-spacing: 1px">approved by </span>
+                <span class="cls_005" >CDAC </span>
+                <span class="cls_002">and </span>
+                <span class="cls_005">ARAI.</span>
+            </div>
 
-.tr0{height: 20px;}
-.tr1{height: 24px;}
+            <table border="1" cellspacing="0" cellpadding="5px" style="margin-top: 25%;margin-left: 53px">
+                <tr>
+                    <td class="cls_002 yellow">Issue Date</td>
+                    <td>{{$date}}</td>
+                    <td class="cls_002 yellow">VLT Model No</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 grey">Regn No</td>
+                    <td>{{$vehicle->register_number}}</td>
+                    <td class="cls_002 grey">VLT Sim No</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 yellow">Vehicle Chasis No</td>
+                    <td>{{$vehicle->chassis_number}}</td>
+                    <td class="cls_002 yellow">IMEI No</td>
+                    <td>{{$vehicle->gps->imei}}</td>
+                </tr>
+                <tr>
+                    <td class="cls_002 grey">Owner Mobile No</td>
+                    <td>{{$client->user->mobile}}</td>
+                    <td class="cls_002 grey">RTO Office</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 yellow">Franchisee Details</td>
+                    <td></td>
+                    <td class="cls_002 yellow">Warranty Upto</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 grey">Vehicle type</td>
+                    <td>{{$vehicle->vehicleType->name}}</td>
+                    <td class="cls_002 grey">Token No</td>
+                    <td></td>
+                </tr>
+            </table>
+           
+            
+            <div style="position:absolute;left:90px;top:570px" class="cls_002">
+                <span class="cls_002">Issued By: {{$servicer_job->sub_dealer->name}}</span>
+            </div>
 
-.t0{width: 655px;margin-left: 91px;margin-top: 3px;font: bold 16px 'Calibri';}
+            <div style="position:absolute;left:350px;top:570px" class="cls_002">
+                <span class="cls_002">Inspected and Approved By:</span>
+            </div>
 
-</STYLE>
-</HEAD>
+            <div style="position:absolute;left:90px;top:650px" class="cls_002">
+                <span class="cls_002">Franchisee Name :</span>
+            </div>
 
-<BODY>
-<DIV id="page_1">
-<DIV id="p1dimg1">
+            <div style="position:absolute;left:350px;top:650px" class="cls_002">
+                <span class="cls_002">Name & Signature</span>
+            </div>
 
-
-
-<DIV class="dclr"></DIV>
-<TABLE cellpadding=0 cellspacing=0 class="t0">
-<TR>
-  <TD class="tr0 td0"><P class="p0 ft0" style="margin-left: -10px;">SUB DEALER/OEM ICON</P></TD>
-  <!-- <TD class="tr0 td1"><P class="p1 ft0">ADDRESS WITH</P></TD> -->
-</TR>
-<TR>
-  <TD class="tr1 td0"><P class="p0 ft1">&nbsp;</P></TD>
-  <TD class="tr1 td1"><P class="p1 ft2">{{$servicer_job->user->mobile}},{{$servicer_job->user->email}}</P></TD>
-</TR>
-</TABLE>
-<?php
-	$job_complete_date = $servicer_job->job_complete_date;
-	$date = new DateTime($job_complete_date);
-
-	$date = $date->format('d/m/Y');
-?>
-<P class="p2 ft3">INSTALLATION CERTIFICATE</P>
-<P class="p3 ft4">DATE:  {{$date}}</P>
-<P class="p4 ft4">DOCUMENT NUMBER:  <?php echo str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT)?></P>
-<P class="p5 ft4">TO WHOMSOVER IT MAY CONCERN</P>
-<P class="p6 ft4">Dear Sir,</P>
-<P class="p7 ft4">Sub: Installation of Smart Eclipse Manufactured by VST Mobility solutions, Kochi</P>
-<P class="p8 ft4">Ref:ARAI certification number</P>
-<P class="p9 ft4">We VST Mobility Solution/SUB Dealer name , manufacturers/Dealers of AIS 140 ARAI certified GPS solutions hereby confirm that we have completed the installation of GPS device for the following vehicle as mentioned below,</P>
-
-<P class="p4 ft4">Vehicle Engine Number:  {{$vehicle->engine_number}}</P>
-<P class="p3 ft4">Vehicle Chassis number:  {{$vehicle->chassis_number}}
-</P>
-<P class="p3 ft4">Vehicle Make & Model:  {{$vehicle->name}}</P>
-<P class="p3 ft4">Vehicle Reg No:  {{$vehicle->register_number}}</P>
-<P class="p4 ft4">VTU model:  </P>
-<P class="p3 ft4">IMEI number:  {{$vehicle->gps->imei}}</P>
-<P class="p3 ft4">Owner name:  {{$client->name}}</P>
-<P class="p3 ft4">Owner address:  {{$client->address}}</P>
-<P class="p4 ft4">Mobile no:  {{$client->user->mobile}}</P>
-<P class="p3 ft4">Email:  {{$client->user->email}}</P>
-<P class="p11 ft4">Yours truly,</P>
-<P class="p12 ft4">{{$servicer_job->user->username}}</P>
-<P class="p13 ft4">Signature and name of service Engineer</P>
-<P class="p14 ft4"><NOBR>-------------------------------------Tamper</NOBR> <NOBR>here----------------------------------------------------------</NOBR></P>
-<P class="p15 ft5">CUSTOMER FEEDBACK:</P>
-<P class="p16 ft4">NAME AND SIGNATURE OF CUSTOMER</P>
-</DIV>
-</BODY>
-</HTML>
+            <div style="position:absolute;left:350px;top:740px" class="cls_002">
+                <span class="cls_002">Official Seal</span>
+            </div>
+            <br><br>
+            <div style="position:absolute;left:500px;top:900px" class="cls_003">
+                <img src="assets/images/logo1.png" alt="Logo" height="50px" width="100px">
+            </div>
+        </div>
+        
+    </body>
+</html>
