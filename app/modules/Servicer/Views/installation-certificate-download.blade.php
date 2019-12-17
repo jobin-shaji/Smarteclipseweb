@@ -10,7 +10,7 @@
             div.cls_004{font-family:Times,serif;font-size:30.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
             span.cls_005{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
             div.cls_005{font-family:Times,serif;font-size:11.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
-            span.cls_006{font-family:Times,serif;font-size:25px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+            span.cls_006{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
             div.cls_006{font-family:Times,serif;font-size:12px!important;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
             span.cls_007{font-family:Times,serif;font-size:10px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
             div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
@@ -126,6 +126,9 @@
             .mrg-40
             {margin-top:40px;
             }
+            .yellow{background: #f5bb14;}
+            .grey{background: #bebdbc;}
+            .cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
         </style>
 
         <script type="text/javascript" src="wz_jsgraphics.js"></script>
@@ -138,12 +141,12 @@
 
         $date = $date->format('d/m/Y');
         ?>
-        <div style="position:fixed;margin:1%;overflow:hidden">
-            <div style="position:absolute;left:50px;top:41.80px" class="cls_002">
-                <span class="cls_002 lineheight"> <b>{{$servicer_job->sub_dealer->name}}</b></span>
+        <div style="position:fixed;margin:1%;overflow:auto">
+            <div style="position:absolute;left:70px;top:41.80px" class="cls_002">
+                <span class="cls_002 lineheight"> {{$servicer_job->sub_dealer->name}}</span>
             </div>
 
-            <div style="position:absolute;left:50px;top:56.44px" class="cls_002">
+            <div style="position:absolute;left:70px;top:56.44px" class="cls_002">
                 <span class="cls_002 lineheight">
                     {{$servicer_job->sub_dealer->address}}
                     <br>
@@ -153,76 +156,85 @@
                 </span>
             </div>
 
-            <div style="position:absolute;left:409.44px;top:36.72px" class="cls_003">
+            <div style="position:absolute;left:500px;top:36.72px" class="cls_003">
                 <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
             </div>
 
-            <div style="position:absolute;left:50px;top:185.32px" class="cls_002">
+            <div style="position:absolute;left:70px;top:185.32px" class="cls_002">
                 <span class="cls_002">This is to certify that , this vehicle is equiped with the AIS 140 compliant device,</span>
             </div>
 
-            <div style="position:absolute;left:50px;top:201.16px" class="cls_002">
+            <div style="position:absolute;left:70px;top:201.16px" class="cls_002">
                 <span class="cls_002" style="letter-spacing: 1px">approved by </span>
                 <span class="cls_005" >CDAC </span>
                 <span class="cls_002">and </span>
                 <span class="cls_005">ARAI.</span>
             </div>
-            <div style= "width: 510px;margin-top: 25%;margin-left: 50px">
 
-                <div style="width: 100%; float: left;display: block; margin-top: 10px;font-size: 16px; border: 1px solid #000; border-bottom: 0px;     margin-top: 40px;">
-                    <div class="cls_006" style="  width: 50%; float: left;">
-                        <span style="width: 38%; float: left; border-right: 1px solid #000;border-left: 1px solid #000; padding: 10px 0; padding-left: 5px; min-height: 27px;     background: #f5bb14;">Issue Date
-                        </span>
-                        <span style="width: 50%; float: left;min-height: 30px; border-right: 1px solid #000; padding: 10px 0; padding-left: 5px;margin-left: 55%" >{{$date}}
-                        </span>
-                    </div>
-                   <div class="cls_006" style="width: 50%; float: left; margin-left: 53.8%;">
-                        <span  style="width: 42%; float: left; border-right: 1px solid #000; padding: 10px 0; padding-left: 5px; min-height: 27px;     background: #f5bb14;">VLT Model No
-                        </span>
-                        <span style="width: 37.5%; float: left;min-height: 30px; border-right: 1px solid #000; padding: 10px 0;margin-left:54.8%" >&nbsp;
-                        </span>
-                    </div>
-                </div>
-
-                <div style="width: 100%; display: block; font-size: 16px; border: 1px solid #000;margin-top: 36px;">
-                    <div class="cls_006" style="  width: 50%; float: left;">
-                        <span style="width: 38%; float: left; border-right: 1px solid #000;border-left: 1px solid #000; padding: 10px 0; padding-left: 5px; min-height: 27px;     background: #f5bb14;">Issue Date
-                        </span>
-                        <span style="width: 50%; float: left;min-height: 30px; border-right: 1px solid #000; padding: 10px 0; padding-left: 5px;margin-left: 55%" >{{$date}}
-                        </span>
-                    </div>
-                   <div class="cls_006" style="width: 50%; float: left; margin-left: -66.6%;">
-                        <span  style="width: 42%; float: left; border-right: 1px solid #000; padding: 10px 0; padding-left: 5px; min-height: 27px;     background: #f5bb14;">VLT Model No
-                        </span>
-                        <span style="width: 37.7%; float: left;min-height: 30px; border-right: 1px solid #000; padding: 10px 0;margin-left:54.8%" >&nbsp;
-                        </span>
-                    </div>
-                </div>
-            </div>
+            <table border="1" cellspacing="0" cellpadding="5px" style="margin-top: 25%;margin-left: 53px">
+                <tr>
+                    <td class="cls_002 yellow">Issue Date</td>
+                    <td>{{$date}}</td>
+                    <td class="cls_002 yellow">VLT Model No</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 grey">Regn No</td>
+                    <td>{{$vehicle->register_number}}</td>
+                    <td class="cls_002 grey">VLT Sim No</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 yellow">Vehicle Chasis No</td>
+                    <td>{{$vehicle->chassis_number}}</td>
+                    <td class="cls_002 yellow">IMEI No</td>
+                    <td>{{$vehicle->gps->imei}}</td>
+                </tr>
+                <tr>
+                    <td class="cls_002 grey">Owner Mobile No</td>
+                    <td>{{$client->user->mobile}}</td>
+                    <td class="cls_002 grey">RTO Office</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 yellow">Franchisee Details</td>
+                    <td></td>
+                    <td class="cls_002 yellow">Warranty Upto</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="cls_002 grey">Vehicle type</td>
+                    <td>{{$vehicle->vehicleType->name}}</td>
+                    <td class="cls_002 grey">Token No</td>
+                    <td></td>
+                </tr>
+            </table>
+           
             
-            <div style="position:absolute;left:90px;top:570px" class="cls_006">
-                <span class="cls_006">Issued By<b style="margin-left: 9.9%">:</b> {{$servicer_job->sub_dealer->name}}</span>
+            <div style="position:absolute;left:90px;top:570px" class="cls_002">
+                <span class="cls_002">Issued By: {{$servicer_job->sub_dealer->name}}</span>
             </div>
 
-            <div style="position:absolute;left:350px;top:570px" class="cls_006">
-                <span class="cls_006">Inspected and Approved By:</span>
+            <div style="position:absolute;left:350px;top:570px" class="cls_002">
+                <span class="cls_002">Inspected and Approved By:</span>
             </div>
 
-            <div style="position:absolute;left:90px;top:650px" class="cls_006">
-                <span class="cls_006">Franchisee Name <b style="margin-left: 2%">:</b> </span>
+            <div style="position:absolute;left:90px;top:650px" class="cls_002">
+                <span class="cls_002">Franchisee Name :</span>
             </div>
 
-            <div style="position:absolute;left:350px;top:650px" class="cls_006">
-                <span class="cls_006">Name & Signature</span>
+            <div style="position:absolute;left:350px;top:650px" class="cls_002">
+                <span class="cls_002">Name & Signature</span>
             </div>
 
-            <div style="position:absolute;left:400px;top:740px" class="cls_006">
-                <span class="cls_006">Official Seal</span>
+            <div style="position:absolute;left:400px;top:740px" class="cls_002">
+                <span class="cls_002">Official Seal</span>
             </div>
-
-            <div style="position:absolute;left:462.96px;top:794.60px" class="cls_007">
-                <span class="cls_007">VST Mobility Solutions</span>
+            <br><br>
+            <div style="position:absolute;left:500px;top:900px" class="cls_003">
+                <img src="assets/images/logo1.png" alt="Logo" height="50px" width="100px">
             </div>
         </div>
+        
     </body>
 </html>
