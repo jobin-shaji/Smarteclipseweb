@@ -226,169 +226,171 @@ function backgroundPostData(url, data, callBack, options) {
             toast(res);
             }
             if (callBack){
-                window[callBack](res);
-                // if (callBack == 'callBackDataTables'){
 
-                //     callBackDataTable();
-                // }else if(callBack == 'vehicleTrack'){
-                //     vehicleTrack(res);
-                // }else if(callBack =='selectVehicleTrack'){
-                //     selectVehicleTrack(res);
-                // }else if(callBack =='driverScore'){
-                //     driverScore(res);
-                // }else if(callBack =='driverScoreAlerts'){
-                //     driverScoreAlerts(res);
-                // }else if(callBack == 'continuousAlert'){
-                //     continuousAlert(res);
-                // }else if(callBack == 'getPlaceName'){
-                //     getPlaceName(res);
-                // }else if(callBack == 'verifyAlertResponse'){
-                //     verifyAlertResponse(res);
-                // }else if(callBack == 'verifyCriticalAlertResponse'){
-                //     verifyCriticalAlertResponse(res);
-                // }
-                // else if(callBack =='selectVehicleModeTrack'){
-                //     selectVehicleModeTrack(res);
-                // }
-                // else if(callBack =='searchLocation'){
-                //     searchLocation(res);
-                // }else if(callBack == 'loadMap'){
-                //     loadMap(res);
-                // }
-                // else if(callBack =='rootGpsSale'){
+                // console.dir(Object.keys(window));
+                // window['callBackDataTables'](res);
+                if (callBack == 'callBackDataTables'){
+
+                    callBackDataTable();
+                }else if(callBack == 'vehicleTrack'){
+                    vehicleTrack(res);
+                }else if(callBack =='selectVehicleTrack'){
+                    selectVehicleTrack(res);
+                }else if(callBack =='driverScore'){
+                    driverScore(res);
+                }else if(callBack =='driverScoreAlerts'){
+                    driverScoreAlerts(res);
+                }else if(callBack == 'continuousAlert'){
+                    continuousAlert(res);
+                }else if(callBack == 'getPlaceName'){
+                    getPlaceName(res);
+                }else if(callBack == 'verifyAlertResponse'){
+                    verifyAlertResponse(res);
+                }else if(callBack == 'verifyCriticalAlertResponse'){
+                    verifyCriticalAlertResponse(res);
+                }
+                else if(callBack =='selectVehicleModeTrack'){
+                    selectVehicleModeTrack(res);
+                }
+                else if(callBack =='searchLocation'){
+                    searchLocation(res);
+                }else if(callBack == 'loadMap'){
+                    loadMap(res);
+                }
+                else if(callBack =='rootGpsSale'){
                     
-                //     rootGpsSale(res);
-                // }
-                // else if(callBack =='rootGpsUser'){
+                    rootGpsSale(res);
+                }
+                else if(callBack =='rootGpsUser'){
                     
-                //     rootGpsUser(res);
-                // }
-                // else if(callBack =='dealerGpsSale'){
+                    rootGpsUser(res);
+                }
+                else if(callBack =='dealerGpsSale'){
                     
-                //     dealerGpsSale(res);
-                // }
-                // else if(callBack =='dealerGpsUser'){
+                    dealerGpsSale(res);
+                }
+                else if(callBack =='dealerGpsUser'){
                     
-                //     dealerGpsUser(res);
-                // }
+                    dealerGpsUser(res);
+                }
                 
-                // else if(callBack =='subDealerGpsSale'){
+                else if(callBack =='subDealerGpsSale'){
                     
-                //     subDealerGpsSale(res);
-                // }
-                // else if(callBack =='subDealerGpsUser'){
+                    subDealerGpsSale(res);
+                }
+                else if(callBack =='subDealerGpsUser'){
                     
-                //     subDealerGpsUser(res);
-                // }
-                // else if(callBack =='clientGps'){
+                    subDealerGpsUser(res);
+                }
+                else if(callBack =='clientGps'){
 
-                //     clientGps(res);
-                // }
-                // else if(callBack =='vehicleInvoice'){
+                    clientGps(res);
+                }
+                else if(callBack =='vehicleInvoice'){
 
-                //     vehicleInvoice(res);
-                // }
+                    vehicleInvoice(res);
+                }
 
-                // else if(callBack =='AssignClientRole'){
+                else if(callBack =='AssignClientRole'){
 
-                //     AssignClientRole(res);
-                // }
-                // else if(callBack =='rootSubdealer'){
+                    AssignClientRole(res);
+                }
+                else if(callBack =='rootSubdealer'){
 
-                //     rootSubdealer(res);
-                // }
-                // else if(callBack =='assignRouteCount'){
+                    rootSubdealer(res);
+                }
+                else if(callBack =='assignRouteCount'){
 
-                //     assignRouteCount(res);
-                // }
-                // else if(callBack =='assignGeofenceCount'){
+                    assignRouteCount(res);
+                }
+                else if(callBack =='assignGeofenceCount'){
 
-                //     assignGeofenceCount(res);
-                // }else if(callBack=='notificationCount'){
-                //          notificationCount(res);
-                // }else if(callBack=='gpsData'){
-                //          gpsData(res);
+                    assignGeofenceCount(res);
+                }else if(callBack=='notificationCount'){
+                         notificationCount(res);
+                }else if(callBack=='gpsData'){
+                         gpsData(res);
 
-                // }else if(callBack=='playBackData'){
+                }else if(callBack=='playBackData'){
                     
-                //          playBackData(res);
-                // }
+                         playBackData(res);
+                }
 
-                // else if(callBack== 'alertNotification'){
-                //     alertNotification(res);
-                // }
-                // else if(callBack== 'downloadData'){
-                //     downloadData(res);
-                // }
-                // else if(callBack== 'modecount'){
-                //     modecount(res);
-                // }
-                // else if(callBack=='vehicleTrackReport')
-                // {
-                //    vehicleTrackReport(res)
-                // }
-                // else if(callBack=='vehicleIdleReport')
-                // {
-                //    vehicleIdleReport(res)
-                // }
-                // else if(callBack=='vehicleParkingReport')
-                // {
-                //    vehicleParkingReport(res)
-                // }
-                // else if(callBack=='alertsReport')
-                // {
-                //    alertsReport(res)
-                // }
-                // else if(callBack=='TotalKM')
-                // {
-                //    TotalKM(res)
-                // }
-                // else if(callBack=='kmReport')
-                // {
-                //     kmReport(res);
-                // }else if(callBack=='geofenceResponse')
-                // {
-                //     geofenceResponse(res);
-                // }
-                // else if(callBack=='gpsData'){
-                //          gpsData(res);
-                // }else if(callBack=='gpsDataBth'){
-                //          gpsDataBth(res);
-                // }else if(callBack=='alldata'){
-                //          alldata(res);
-                // }
-                // else if(callBack=='gpsDataHlm'){
-                //          gpsDataHlm(res);
-                // }
-                // else if(callBack=='allGpsConfiguredata')
-                // {
-                //     allGpsConfiguredata(res);
-                // }
+                else if(callBack== 'alertNotification'){
+                    alertNotification(res);
+                }
+                else if(callBack== 'downloadData'){
+                    downloadData(res);
+                }
+                else if(callBack== 'modecount'){
+                    modecount(res);
+                }
+                else if(callBack=='vehicleTrackReport')
+                {
+                   vehicleTrackReport(res)
+                }
+                else if(callBack=='vehicleIdleReport')
+                {
+                   vehicleIdleReport(res)
+                }
+                else if(callBack=='vehicleParkingReport')
+                {
+                   vehicleParkingReport(res)
+                }
+                else if(callBack=='alertsReport')
+                {
+                   alertsReport(res)
+                }
+                else if(callBack=='TotalKM')
+                {
+                   TotalKM(res)
+                }
+                else if(callBack=='kmReport')
+                {
+                    kmReport(res);
+                }else if(callBack=='geofenceResponse')
+                {
+                    geofenceResponse(res);
+                }
+                else if(callBack=='gpsData'){
+                         gpsData(res);
+                }else if(callBack=='gpsDataBth'){
+                         gpsDataBth(res);
+                }else if(callBack=='alldata'){
+                         alldata(res);
+                }
+                else if(callBack=='gpsDataHlm'){
+                         gpsDataHlm(res);
+                }
+                else if(callBack=='allGpsConfiguredata')
+                {
+                    allGpsConfiguredata(res);
+                }
 
-                // else if(callBack=='setOtaParams')
-                // {
-                //     setOtaParams(res);
-                // }   
-                // else if(callBack=='gpsAlert')
-                // {
-                //     gpsAlert(res);
+                else if(callBack=='setOtaParams')
+                {
+                    setOtaParams(res);
+                }   
+                else if(callBack=='gpsAlert')
+                {
+                    gpsAlert(res);
 
-                // }
-                // else if(callBack=='gpsAlertTracker')
-                // {
-                //     gpsAlertTracker(res);
+                }
+                else if(callBack=='gpsAlertTracker')
+                {
+                    gpsAlertTracker(res);
 
-                // }
-                //  else if(callBack=='getConfigData')
-                // {
-                //     getConfigData(res);
+                }
+                 else if(callBack=='getConfigData')
+                {
+                    getConfigData(res);
 
-                // }
-                //  else if(callBack=='jobsComplete')
-                // {
-                //     jobsComplete(res);
+                }
+                 else if(callBack=='jobsComplete')
+                {
+                    jobsComplete(res);
 
-                // }
+                }
 
                 
                 
