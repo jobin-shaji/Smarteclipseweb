@@ -79,8 +79,8 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   line-height: 2em;
-  color:#A7A1AE;
-  background-color:#797979;
+  /*color:#A7A1AE;
+  background-color:#797979;*/
 }
 .container td {
     font-weight: normal;
@@ -107,10 +107,10 @@ body {
 
 /* Background-color of the odd rows */
 .container tr:nth-child(odd) {
-    background-color: #323C50;
+    /*background-color: #323C50;*/
 }
 .container td:first-child { 
-  color: #f09b00; 
+  /*color: #f09b00; */
   font-weight: bold;
 }
 @media (max-width: 800px) {
@@ -136,7 +136,8 @@ body {
   cursor: pointer;
 }
 .date {
-  font-size:16px;color:#ffffff;
+  font-size:16px;
+  /*color:#ffffff;*/
 
 }
  </style>

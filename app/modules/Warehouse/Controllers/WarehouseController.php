@@ -1001,8 +1001,11 @@ class WarehouseController extends Controller {
             $user_details = User::select('id', 'mobile')
                                 ->where('id',$role_details->user_id)
                                 ->first();
+            $user_details_data = User::select('id', 'mobile')
+            ->where('id',$from_user_details->user_id)
+            ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1021,8 +1024,11 @@ class WarehouseController extends Controller {
             $user_details = User::select('id', 'mobile')
                                 ->where('id',$role_details->user_id)
                                 ->first();
+             $user_details_data = User::select('id', 'mobile')
+            ->where('id',$from_user_details->user_id)
+            ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1041,8 +1047,11 @@ class WarehouseController extends Controller {
             $user_details = User::select('id', 'mobile')
                                 ->where('id',$role_details->user_id)
                                 ->first();
+             $user_details_data = User::select('id', 'mobile')
+            ->where('id',$from_user_details->user_id)
+            ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
