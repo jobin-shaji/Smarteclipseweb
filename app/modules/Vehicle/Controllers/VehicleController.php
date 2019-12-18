@@ -708,6 +708,7 @@ class VehicleController extends Controller
     public function allVehicleDocList()
     {
         $client_id=\Auth::user()->client->id;
+        // dd($client_id);
         $vehicles=Vehicle::select('id','name','register_number','client_id')
                             ->where('client_id',$client_id)
                             ->get();
