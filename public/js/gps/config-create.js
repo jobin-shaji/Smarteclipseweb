@@ -7,11 +7,13 @@ $(document).ready(function () {
 
 function getConfiguration(data,name,version)
 {
+  // alert(name);
+  console.log(data);
   $('#myModal').modal('show');
   $('#name').empty();
   $('#version').empty();
   $('#config').empty();
-  var freebies=data;
+  var freebies=data.configuration;
   var ac_status=freebies.ac_status;
   var anti_theft_mode=freebies.anti_theft_mode;
   var api_access=freebies.api_access;
@@ -214,11 +216,14 @@ function getConfiguration(data,name,version)
             // console.log(plan);
         $("#config").append(plan);
         $('#plan_id').val(name);
+        $('#plan_name').val(data.type);
+
+
         // $('#version').val(version);
         
         var url = 'get-config-data';
         var data = {
-          name:name
+          name:data.type
         };   
         backgroundPostData(url,data,'getConfigData',{alert:false});   
 }
