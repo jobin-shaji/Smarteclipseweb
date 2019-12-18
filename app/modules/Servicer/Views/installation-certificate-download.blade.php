@@ -168,7 +168,7 @@
             </div>
 
             <div style="position:absolute;left:70px;top:187.32px" class="cls_002">
-                <span class="cls_002">This is to certify that , this vehicle is equiped with the AIS 140 compliant device,</span>
+                <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device,</span>
             </div>
 
             <div style="position:absolute;left:70px;top:201.16px" class="cls_002">
