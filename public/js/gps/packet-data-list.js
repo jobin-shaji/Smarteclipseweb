@@ -13,8 +13,8 @@ $(function(){
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (res) {
-                
-                 $('#header').html(res.data.header);
+                console.log(res.data.header);
+                 $('#headernew').html(res.data.header);
                  $('#imei').html(res.data.imei); 
                  $('#date').html(res.data.date); 
                  $('#time').html(res.data.time); 
@@ -28,7 +28,8 @@ $(function(){
                  $('#MNC').html(res.data.mnc); 
                  $('#LAC').html(res.data.lac); 
                  $('#cell_id').html(res.data.cell_id); 
-                 $('#SPEED').html(res.data.speed); 
+                 $('#SPEED').html(res.data.speed);
+                 $('#gps_fix').html(res.data.gps_fix);
                  $('#heading').html(res.data.heading); 
                  $('#no_of_satelites').html(res.data.no_of_satelites); 
                  $('#gsm_signal_strength').html(res.data.gsm_signal_strength); 
