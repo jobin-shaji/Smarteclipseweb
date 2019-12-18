@@ -135,6 +135,13 @@
 
     </head>
     <body >
+
+        <div>
+            <p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:-5px "><b><u>Device Installation Certificate</u></b>
+            </p>
+
+        </div>
+        <br>
         <?php
         $job_complete_date = $servicer_job->job_complete_date;
         $date = new DateTime($job_complete_date);
@@ -142,11 +149,11 @@
         $date = $date->format('d/m/Y');
         ?>
         <div style="position:fixed;margin:1%;overflow:auto">
-            <div style="position:absolute;left:70px;top:41.80px" class="cls_002">
+            <div style="position:absolute;left:70px;top:43.80px" class="cls_002">
                 <span class="cls_002 lineheight"> {{$servicer_job->sub_dealer->name}}</span>
             </div>
 
-            <div style="position:absolute;left:70px;top:56.44px" class="cls_002">
+            <div style="position:absolute;left:70px;top:58.44px" class="cls_002">
                 <span class="cls_002 lineheight">
                     {{$servicer_job->sub_dealer->address}}
                     <br>
@@ -156,11 +163,11 @@
                 </span>
             </div>
 
-            <div style="position:absolute;left:500px;top:36.72px" class="cls_003">
+            <div style="position:absolute;left:500px;top:38.72px" class="cls_003">
                 <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
             </div>
 
-            <div style="position:absolute;left:70px;top:185.32px" class="cls_002">
+            <div style="position:absolute;left:70px;top:187.32px" class="cls_002">
                 <span class="cls_002">This is to certify that , this vehicle is equiped with the AIS 140 compliant device,</span>
             </div>
 
