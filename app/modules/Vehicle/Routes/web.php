@@ -38,7 +38,7 @@ Route::post('/continuous-alert','VehicleController@continuousAlerts')->name('con
 
 Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert')->name('continuous-alert.verify');
 
-
+Route::get('/playback-second/{id}','VehicleController@playbackB')->name('vehicle.playback2.page');
 
 
 //////////////////////////////////Route in vehicle//////////////////////////////
