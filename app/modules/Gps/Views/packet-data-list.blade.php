@@ -64,7 +64,7 @@
 
     <tr>
       <td>Header</td>
-      <td id="header"></td>
+      <td id="headernew"></td>
     </tr>
 
     <tr>
@@ -86,6 +86,10 @@
      <tr>
       <td>Device Time</td>
       <td id="device_time"></td>
+    </tr>
+     <tr>
+      <td>GPS  Fix</td>
+      <td id="gps_fix"></td>
     </tr>
     <tr>
       <td>Packet Status</td>
