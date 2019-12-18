@@ -10,10 +10,13 @@ use App\Modules\Alert\Models\Alert;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsModeChange;
+use App\Http\Traits\VehicleDataProcessorTrait;
 
 use DataTables;
 class IdleReportController extends Controller
 {
+    use VehicleDataProcessorTrait;
+
     public function idleReport()
     {
         $client_id=\Auth::user()->client->id;
@@ -36,36 +39,40 @@ class IdleReportController extends Controller
         $previous_mode = 0;
         $vehicle_sleep=0;
         $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
-        $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
-           ->where('device_time','<=',$request->to_date)  
-           ->where('gps_id',$vehicleGps->gps_id)
-           ->orderBy('device_time','asc')
-           ->get();
-         // dd($gps_modes);
-        foreach ($gps_modes as $mode) {
-        if($initial_time == 0){
-            $initial_time = $mode->device_time;
-            $previous_time = $mode->device_time;
-            $previous_mode = $mode->mode;
-        }else{           
-             if($mode->mode == "H"){
-               $time = strtotime($mode->device_time) - strtotime($previous_time);
-               $halt= $halt+$time;   
-               // dd($halt) ;
-               if($halt<0)
-               {
-                $halt="0";               
-               }  
+        $from_date = date('Y-m-d H:i:s', strtotime($from));
+        $to_date = date('Y-m-d H:i:s', strtotime($to.' 23:59:59'));
+        $date_and_time=array('from_date' => $from_date, 'to_date' => $to_date);
+        $vehicle_profile = $this->vehicleProfile($vehicle,$date_and_time,$client_id);
+      //   $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
+      //      ->where('device_time','<=',$request->to_date)  
+      //      ->where('gps_id',$vehicleGps->gps_id)
+      //      ->orderBy('device_time','asc')
+      //      ->get();
+      //    // dd($gps_modes);
+      //   foreach ($gps_modes as $mode) {
+      //   if($initial_time == 0){
+      //       $initial_time = $mode->device_time;
+      //       $previous_time = $mode->device_time;
+      //       $previous_mode = $mode->mode;
+      //   }else{           
+      //        if($mode->mode == "H"){
+      //          $time = strtotime($mode->device_time) - strtotime($previous_time);
+      //          $halt= $halt+$time;   
+      //          // dd($halt) ;
+      //          if($halt<0)
+      //          {
+      //           $halt="0";               
+      //          }  
                                     
-            }
-        }
-        $previous_time = $mode->device_time;
-      }
+      //       }
+      //   }
+      //   $previous_time = $mode->device_time;
+      // }
      
       return response()->json([           
             'vehicle_name' => $vehicleGps->name,  
             'register_number' => $vehicleGps->register_number,   
-            'halt' => $this->timeFormate($halt),          
+            'halt' => $vehicle_profile['halt'],          
             'status' => 'idle_report'           
         ]);           
     }

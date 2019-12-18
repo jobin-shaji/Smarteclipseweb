@@ -35,8 +35,10 @@
               <i class="fa fa-circle" style="color:#858585;" aria-hidden="true"></i> Sleep
             </span>
             <span id="offline" style="display: none;font-size: 13px;">
-              <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Offline: Last seen <span id="last_seen"></span>
+              <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Offline</br> Last seen: <span id="last_seen"></span>
             </span>
+
+
             <span id="connection_lost" style="display: none;font-size: 13px;">
               Connection lost: <span id="connection_lost_last_seen"></span>
             </span>
@@ -126,6 +128,12 @@
       </div>
       <div class="poi_item">
         <a target="_blank" href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
+          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
+        </a>
+      </div>
+
+       <div class="poi_item">
+        <a target="_blank" href="{{url('/playback-second/'.Crypt::encrypt($Vehicle_id))}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
         </a>
       </div>

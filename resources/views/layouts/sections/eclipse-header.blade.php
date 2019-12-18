@@ -127,8 +127,8 @@
                         </li> -->
 
                         <li class="nav-item dropdown-submenu">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE
-                            </a>
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">VEHICLE
+                           </a>
                             <ul class="dropdown-menu multi-level">
                                 <li class="dropdown-submenu">
                                     <!-- <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
@@ -207,7 +207,7 @@
                                     <li class="sys_vapor cover_total_km">
                                         <a href="{{url('/total-km-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                               <img src="{{ url('/') }}/Report-icons/report-2.png"  />
                                            <span class="system_info" >Total KM Report</span>
                                            </div>
                                             
@@ -216,7 +216,7 @@
                                      <li class="sys_vapor cover_vehicle_report">
                                         <a href="{{url('/km-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                               <img src="{{ url('/') }}/Report-icons/vehicle-report.png"  />
                                            <span class="system_info" >Vehicle Report</span>
                                            </div>
                                             
@@ -281,7 +281,7 @@
                                     <li class="sys_vapor cover_dailyreport">
                                         <a href="{{url('/daily-km-report')}}">
                                             <div class="system_icon">
-                                               <img src="{{ url('/') }}/Report-icons/Total-KM-report.png"  />
+                                               <img src="{{ url('/') }}/Report-icons/report-1.png"  />
                                                <span class="system_info">Daily KM Report </span></div>
                                            
                                         </a>

@@ -708,6 +708,7 @@ class VehicleController extends Controller
     public function allVehicleDocList()
     {
         $client_id=\Auth::user()->client->id;
+        // dd($client_id);
         $vehicles=Vehicle::select('id','name','register_number','client_id')
                             ->where('client_id',$client_id)
                             ->get();
@@ -756,10 +757,10 @@ class VehicleController extends Controller
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id)
             ->whereDate('expiry_date', '<', date('Y-m-d'));
         }
-        // else
-        // {
-        //     $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
-        // } 
+        else
+        {
+            $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
+        } 
         $vehicle_documents =$vehicle_documents->get();
         return DataTables::of($vehicle_documents)
             ->addIndexColumn()
@@ -888,6 +889,7 @@ class VehicleController extends Controller
             'sleep_icon'=>$sleep_uploadedFile,
             'status' =>1,
            ]);
+        $this->updateVehicleTypeApiResponse();
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle_type.details',Crypt::encrypt($vehicle_type->id)));
@@ -1194,7 +1196,7 @@ class VehicleController extends Controller
             {
                 $ac_status="UPGRADE VERSION";
             }
-
+            $last_seen=date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
                         "longitude"=>floatval($snapRoute['lng']),
@@ -1209,7 +1211,8 @@ class VehicleController extends Controller
                         "connection_lost_time_motion"=>$connection_lost_time_motion,
                         "connection_lost_time_halt"=>$connection_lost_time_halt,
                         "connection_lost_time_sleep"=>$connection_lost_time_sleep,
-                        "last_seen"=>$minutes,
+                        // "last_seen"=>$minutes,
+                        "last_seen"=>$last_seen,
                         "connection_lost_time_minutes"=>$connection_lost_time_minutes,
                         "fuel"=>$fuel_status,
                         "ac"=>$ac_status,
@@ -1240,6 +1243,13 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
        
     }
+
+     public function playbackB(Request $request){
+        $decrypted_id = Crypt::decrypt($request->id);  
+        return view('Vehicle::playbak-second',['Vehicle_id' => $decrypted_id] );
+       
+    }
+
     public function playbackPageInTrack(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
         return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id] );
@@ -2706,23 +2716,28 @@ class VehicleController extends Controller
     }
 
 
-    function updateVehicleTypeApiResponse(){
+    public function updateVehicleTypeApiResponse(){
         $vehicle_types=VehicleType::all();
         $vehicle_type_list=[];
         foreach ($vehicle_types as $vehicle_type)
         {
-           $vehicle_type_list[$vehicle_type->name]=[
-                                                'online'=>$vehicle_type->online_icon,
-                                                'offline'=>$vehicle_type->offline_icon,
-                                                'ideal'=>$vehicle_type->ideal_icon,
-                                                'sleep'=>$vehicle_type->sleep_icon,
-                                             ];
+
+           $vehicle_type_list[]=[
+                                  "type"  => $vehicle_type->name,
+                                  "icon"  =>[
+                                    'online'=>$vehicle_type->online_icon,
+                                    'offline'=>$vehicle_type->offline_icon,
+                                    'ideal'=>$vehicle_type->ideal_icon,
+                                    'sleep'=>$vehicle_type->sleep_icon,
+                                  ]
+
+                                ];
         }
 
-     
-
-       
-
+        $vehicle_type_configration=Configuration::where('code','vehicle')->first();
+        $vehicle_type_configration->value=json_encode($vehicle_type_list);
+        $vehicle_type_configration->version=$vehicle_type_configration->version+0.1;
+        return $vehicle_type_configration->save();
     }
 
    

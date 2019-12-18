@@ -39,11 +39,13 @@
                   $version=$value['version'];
                   foreach( json_decode($value['value']) as $item => $item_value)
                   {
+
                     $item_value_data=json_encode($item_value);
+                    
                   ?>
                   <tr>
                       <td><?php echo $index; ?></td>
-                      <td><?php echo $item; ?></td>
+                      <td><?php echo $item_value->type; ?></td>
                       <td><button type="button" onclick='getConfiguration({{$item_value_data}},"{{$item}}","{{$version}}")'>Configure</button></td>
                   </tr>
                   <?php 
@@ -62,7 +64,8 @@
   aria-hidden="true">
           <form  method="POST" action="{{route('configuration.create.p')}}">
             {{csrf_field()}}    
-             <input type="hidden" id="plan_id" name="plan_id" value="">
+             <input type="text" id="plan_id" name="plan_id" value="">
+           
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header text-center">
@@ -76,6 +79,8 @@
                      
                         <label  data-success="right" >Value</label>
                         <div id="config"></div>  
+                         <label  data-success="right" >Plan</label>
+                        <input type="text" id="plan_name" name="plan_name" value="">
                          <label  data-success="right" >Version</label>
                       <input type="text" id="version" name="version" value="">
                         

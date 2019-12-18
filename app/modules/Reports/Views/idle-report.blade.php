@@ -76,6 +76,9 @@ Halt Report
                             </tr>
                         </tbody>
                     </table>
+                    <div class="loader-wrapper" id="loader-1">
+                      <div id="loader"></div>
+                    </div> 
                  </div>
                   </div>
                 </div>
@@ -91,6 +94,7 @@ Halt Report
 </div>
 </section>
 @section('script')
+    <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
     <script src="{{asset('js/gps/idle-report-list.js')}}"></script>
 @endsection
 @endsection

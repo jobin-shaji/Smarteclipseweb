@@ -25,6 +25,7 @@ class AckController extends Controller {
     public function getAckAllData(Request $request)
     {
       $packet=$request->content;
+    
       $header=substr($packet,0,3);
       if($header == "ACK")
       {
@@ -34,6 +35,7 @@ class AckController extends Controller {
     }
 
     public function processAckData($vlt_data){
+
         $comma_seperated = substr($vlt_data,96);
         $imei = substr($vlt_data,3,15);
         $date = substr($vlt_data,22,6);
