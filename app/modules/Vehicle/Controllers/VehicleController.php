@@ -889,6 +889,7 @@ class VehicleController extends Controller
             'sleep_icon'=>$sleep_uploadedFile,
             'status' =>1,
            ]);
+        $this->updateVehicleTypeApiResponse();
         $request->session()->flash('message', 'New Vehicle type created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicle_type.details',Crypt::encrypt($vehicle_type->id)));
@@ -1241,6 +1242,13 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
        
     }
+
+     public function playbackB(Request $request){
+        $decrypted_id = Crypt::decrypt($request->id);  
+        return view('Vehicle::playbak-second',['Vehicle_id' => $decrypted_id] );
+       
+    }
+
     public function playbackPageInTrack(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
         return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id] );
@@ -2707,23 +2715,28 @@ class VehicleController extends Controller
     }
 
 
-    function updateVehicleTypeApiResponse(){
+    public function updateVehicleTypeApiResponse(){
         $vehicle_types=VehicleType::all();
         $vehicle_type_list=[];
         foreach ($vehicle_types as $vehicle_type)
         {
-           $vehicle_type_list[$vehicle_type->name]=[
-                                                'online'=>$vehicle_type->online_icon,
-                                                'offline'=>$vehicle_type->offline_icon,
-                                                'ideal'=>$vehicle_type->ideal_icon,
-                                                'sleep'=>$vehicle_type->sleep_icon,
-                                             ];
+
+           $vehicle_type_list[]=[
+                                  "type"  => $vehicle_type->name,
+                                  "icon"  =>[
+                                    'online'=>$vehicle_type->online_icon,
+                                    'offline'=>$vehicle_type->offline_icon,
+                                    'ideal'=>$vehicle_type->ideal_icon,
+                                    'sleep'=>$vehicle_type->sleep_icon,
+                                  ]
+
+                                ];
         }
 
-     
-
-       
-
+        $vehicle_type_configration=Configuration::where('code','vehicle')->first();
+        $vehicle_type_configration->value=json_encode($vehicle_type_list);
+        $vehicle_type_configration->version=$vehicle_type_configration->version+0.1;
+        return $vehicle_type_configration->save();
     }
 
    
