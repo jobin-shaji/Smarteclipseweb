@@ -586,6 +586,7 @@ class DashboardController extends Controller
         if(!empty($latitude) && !empty($longitude)){
             $address =  $this->getAddress($latitude,$longitude); 
         }
+        
         $battery_status=(int)$gps->battery_status;
 
         if($mode=="M")
