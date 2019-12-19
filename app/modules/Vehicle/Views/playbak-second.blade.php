@@ -15,6 +15,7 @@
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
      <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -61,61 +62,7 @@
             </div>
         </div>
     </div>
-
     <!-- Style -->
-    <style>
-        #cover-spin {
-            position: fixed;
-            width: 100%;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background-color: rgba(255,255,255,0.7);
-            z-index: 9999;
-            display: none;
-        }
-
-        @-webkit-keyframes spin {
-            from {
-                -webkit-transform: rotate(0deg);
-            }
-
-            to {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        #cover-spin::after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 48%;
-            top: 40%;
-            width: 40px;
-            height: 40px;
-            border-style: solid;
-            border-color: black;
-            border-top-color: transparent;
-            border-width: 4px;
-            border-radius: 50%;
-            -webkit-animation: spin .8s linear infinite;
-            animation: spin .8s linear infinite;
-        }
-    </style>
-    <!--   Core JS Files   -->
-
-
     <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('playback_assets/assets/js/core/popper.min.js')}}"></script>
@@ -128,31 +75,36 @@
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
       
     <script>
-        var startPointLatitude  = null;
-        var startPointLongitude = null;
-        var endPointLatitude    = null;
-        var endPointLongitude   = null;
         var bearsMarkeronStartPoint;
-        var blPlaceCaronMap = false;
-        var FirstLoop = false;
-
-        //var parisMarker = new H.map.Marker({ lat: 10.192656, lng: 76.386666 });
-        var objImg = document.createElement('img');
-        objImg.src = '/assets/images/Car.png';
-        var outerElement = document.createElement('div')
-        var domIcon = new H.map.DomIcon(outerElement);
         var bearsMarker;
+        var startPointLatitude       = null;
+        var startPointLongitude      = null;
+        var endPointLatitude         = null;
+        var endPointLongitude        = null;
+        
+        var blPlaceCaronMap          = false;
+        var FirstLoop                = false;
+        var first_point              = true;
+        var total_offset             = 0;
+        var last_offset              = false;
+        var objImg                   = document.createElement('img');
+        var vehicle_online      =   '{{asset("playback/assets/img/car_online.png")}}';
+        var vehicle_halt        =   '{{asset("playback/assets/img/car_halt.png")}}';
+        var vehicle_sleep       =   '{{asset("playback/assets/img/car_sleep.png")}}';
+        var vehicle_offline     =   '{{asset("playback/assets/img/car_offline.png")}}';
+        var outerElement        = document.createElement('div')
+        var domIcon             = new H.map.DomIcon(outerElement);
+        var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
+        var stop_icon           = new H.map.Icon('{{asset("playback/assets/img/flag.png")}}');
+        var hidpi               = ('devicePixelRatio' in window && devicePixelRatio > 1);
+        var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
+        var app_id              = "vvfyuslVdzP04AK3BlBq",
+            app_code            = "f63d__fBLLCuREIGNr6BjQ";
+        var mapContainer        = document.getElementById('markers');
+        var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
+        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
 
-        var hidpi = ('devicePixelRatio' in window && devicePixelRatio > 1);
-        var secure = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
-        var app_id = "vvfyuslVdzP04AK3BlBq",
-            app_code = "f63d__fBLLCuREIGNr6BjQ";
-
-        var mapContainer = document.getElementById('markers');
-        var platform = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
-        var maptypes = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
-
-        var map = new H.Map(mapContainer, maptypes.normal.map);
+        var map                 = new H.Map(mapContainer, maptypes.normal.map);
         map.setCenter({ lat: 10.192656, lng: 76.386666 });
         map.setZoom(14);
         var zoomToResult = true;
@@ -169,30 +121,24 @@
         var offset=1;
         var isDataLoadInProgress = false;
         var dataLoadingCompleted = false;
-        // getLocationData();
-    
+        var vehicle_mode;
+        var previousCoorinates;
+        var blacklineStyle;
          
-        // window.setInterval(function(){
-        //     getLocationData();
-        // }, 20000);
 
-
-
-        var locationQueue=[];
-        var mapUpdateInterval = window.setInterval(function(){
+        var locationQueue       = [];
+        var mapUpdateInterval   = window.setInterval(function(){
             plotLocationOnMap();
         }, 500);
 
-    
+         
+
         function getLocationData(){
-            var id = document.getElementById('vehicle_id').value;
-        var from_time = document.getElementById('fromDate').value;
-        var to_time = document.getElementById('toDate').value;
             isDataLoadInProgress = true;
             var Objdata = {
-             "fromDateTime": from_time,
-             "toDateTime": to_time,
-             "vehicleid": id,
+             "fromDateTime": "2019-12-10 10:00:00",
+             "toDateTime": "2019-12-10 11:00:00",
+             "vehicleid": "1",
              "offset": offset
             }
 
@@ -206,8 +152,17 @@
 
                     if( typeof response.playback != undefined)
                     {
-                        locationStore(response.playback);
-                        offset = offset+1;
+
+
+                        total_offset=response.total_offset;
+                        if(offset < total_offset){
+                         locationStore(response.playback);
+                         offset = offset+1;
+                          if(offset==total_offset){
+                            last_offset=true;
+                            alert(1);
+                          }
+                        }
                     }
                     else
                     {
@@ -230,24 +185,32 @@
             }); 
         }
 
-        function locationStore(data){
+        function locationStore(data)
+        {
+            for (var i = 0; i < data.length; i++)
+            {
 
-            
-            for (var i = 0; i < data.length; i++) {
-              
-                var location_data = {   "lat"   : data[i].latitude, 
-                                        "lng"   : data[i].longitude,
-                                        "angle" : data[i].angle
-                                    };                   
-                location_data_que.push(location_data);
+                   location_data_que.push({   
+                            "lat"   : data[i].latitude, 
+                            "lng"   : data[i].longitude,
+                            "angle" : data[i].angle,
+                            "mode"  : data[i].vehicleStatus
+                        });
+
                 isDataLoadInProgress = false;
                 if( data.total_offset == offset)
                 {
                     dataLoadingCompleted = true;
                     console.log('data loading completed');
-                }                     
+                } 
+
+
+              
+                  
             }
         }
+
+     
 
         function plotLocationOnMap()
         {
@@ -256,17 +219,26 @@
             {
                
                 moveMap(location_data_que[0].lat,location_data_que[0].lng);
+                // create start marker
+                if(first_point==true){
+                    
+                     var madridMarker = new H.map.Marker({lat:location_data_que[0].lat, lng:location_data_que[0].lng},{ icon: start_icon});
+                     map.addObject(madridMarker);
+                }
+                first_point=false;
+                // create start marker
+
+
 
                 if( (startPointLatitude != null) && (startPointLongitude!=null) )
                 {
                     endPointLatitude    = location_data_que[0].lat;
                     endPointLongitude   = location_data_que[0].lng;
+                    vehicle_mode        = location_data_que[0].mode;
                     // calculate the direction of movement   
                     var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
 
-                    console.log('direction' + direction);
-
-                    moveMarker(direction,endPointLatitude,endPointLongitude);
+                    moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
                 }
                 startPointLatitude  = location_data_que[0].lat;
@@ -279,6 +251,15 @@
                     console.log('Loading fresh set of data');
                     getLocationData();
                 }
+
+                // stop point
+                if(last_offset==true && location_data_que.length==0){
+                     
+                     var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
+                     map.addObject(flag);
+                }
+                // stop point
+                
              }
         }
 
@@ -316,7 +297,7 @@
 
         function getDegree(lat1, long1, lat2, long2)
         {
-           
+    
             var dLon = (long2 - long1);
             var y = Math.sin(dLon) * Math.cos(lat2);
             var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
@@ -337,16 +318,32 @@
           lineString.pushPoint({lat:lat1, lng:lng1});
           lineString.pushPoint({lat:lat2, lng:lng2});
           map.addObject(new H.map.Polyline(
-            lineString, { style: { lineWidth: 4 }}
+            lineString, { style: { lineWidth: 6 ,
+                                    strokeColor: 'rgb(25, 25, 25,0.8)'
+                                 }}
           ));
         }
 
-        function moveMarker(RotateDegree,lat,lng){
+        function moveMarker(RotateDegree,lat,lng,vehicle_mode){
+            console.log('mode '+vehicle_mode);
             if ((bearsMarkeronStartPoint != null) && (blPlaceCaronMap == true)) {
                 map.removeObject(bearsMarkeronStartPoint);
                 blPlaceCaronMap = false;
             }
-
+            
+            if(vehicle_mode=="M")
+             {
+              objImg.src = vehicle_online;
+             }else if(vehicle_mode=="H")
+             {
+              objImg.src = vehicle_halt;
+             }else if(vehicle_mode=="S")
+             {
+              objImg.src = vehicle_sleep;
+             }else{
+              objImg.src = vehicle_offline;
+             }
+            
             el = objImg;
             var carDirection = RotateDegree;
             if (el.style.transform.includes("rotate")) {
@@ -355,16 +352,26 @@
                 el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
             }
             outerElement.appendChild(el);
-            outerElement.style.top = "-20px";
+            outerElement.style.top = "-30px";
+            outerElement.style.width = "200px";
+
             var domIcon = new H.map.DomIcon(outerElement);
             bearsMarkeronStartPoint = new H.map.DomMarker({ lat:lat, lng:lng }, {
                 icon: domIcon
             });
             map.addObject(bearsMarkeronStartPoint);
             blPlaceCaronMap = true;
-            
-        }
+    }
 
+
+
+      
+
+
+
+
+
+    
 
     </script>
 
