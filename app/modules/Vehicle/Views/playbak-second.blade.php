@@ -46,9 +46,25 @@
               </span>
             </div>
           </div>
+
+            <div>
+            <div style="float: left;margin-left: 3%">
+              <label style="font-weight:bold">Speed</label>
+              <select name="speed" id="speed">
+                  <option value="1">1X</option>
+                  <option value="2">2X</option>
+                  <option value="3">3X</option>
+                  <option value="4">4X</option>
+                  <option value="5">5X</option>
+                  <option value="6">6X</option>
+              </select>
+            </div>
+          </div>
+
+
           <div class="contoller" style="float: left;margin-left: 3%;margin-top: 1.7%">
             <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Play</button>
+              <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
 
             </span>
           </div>
@@ -124,16 +140,25 @@
         var vehicle_mode;
         var previousCoorinates;
         var blacklineStyle;
+        var speed_val            = 1;
+        var Speed                = 600;
+    
          
 
         var locationQueue       = [];
-        var mapUpdateInterval   = window.setInterval(function(){
-            plotLocationOnMap();
-        }, 500);
 
          
+        function startPlayBack(){
+                speed_val   =   $('#speed').val();
+                speed       =   speed/speed_val;
+                getLocationData();
+        }
 
         function getLocationData(){
+             var mapUpdateInterval   = window.setInterval(function(){
+            plotLocationOnMap();
+             }, Speed);
+
             isDataLoadInProgress = true;
             var Objdata = {
              "fromDateTime": "2019-12-10 10:00:00",
@@ -160,7 +185,7 @@
                          offset = offset+1;
                           if(offset==total_offset){
                             last_offset=true;
-                            alert(1);
+                      
                           }
                         }
                     }
