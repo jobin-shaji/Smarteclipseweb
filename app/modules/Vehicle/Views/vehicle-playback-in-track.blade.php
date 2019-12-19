@@ -150,13 +150,11 @@
           // var end_date=$.urlParam('toDate');
           
              var Objdata = {
-                // "vehicleid": $('#vehicle_id').val(),
-                  vehicleid: "7",
-                fromDateTime: "2019-10-27 01:02:20",
-                toDateTime: "2019-12-18 01:02:20",
+                vehicleid: $('#vehicle_id').val(),                
+                fromDateTime: $('#fromDate').val(),
+                toDateTime: $('#toDate').val(),
                  offset: offset
             }
-            console.log(Objdata);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -166,7 +164,6 @@
                 data: Objdata,
                 async: false,
                 success: function (response) {
-console.log(response);
                     if( typeof response.playback != undefined)
                     {
 
@@ -177,7 +174,7 @@ console.log(response);
                          offset = offset+1;
                           if(offset==total_offset){
                             last_offset=true;
-                            alert(1);
+                            // alert(1);
                           }
                         }
                     }
