@@ -13,6 +13,7 @@
         <?php } ?> </title>
 
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+      <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <!-- Fonts and icons -->
      <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}"> -->
@@ -35,7 +36,7 @@
 
 
     <div class="wrapper overlay-sidebar">
-
+{{csrf_field()}}
   <input type="hidden" name="vid" id="vehicle_id" style="width:140px;resize:none;height:30px" value="{{$vehicle_id}}" rows="1"> 
           <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
             <div  style="float: left;margin-left: 3%">
@@ -144,20 +145,26 @@
 
         function getLocationData(){
             isDataLoadInProgress = true;
-            // alert($('#fromDate').val());
+          //   var vehicle_id=$.urlParam('vehicle_id');
+          // var start_date=$.urlParam('fromDate');
+          // var end_date=$.urlParam('toDate');
+          
              var Objdata = {
                 // "vehicleid": $('#vehicle_id').val(),
-                  "vehicleid": "7",
-                "fromDateTime": $('#fromDate').val(),
-                "toDateTime": $('#toDate').val(),
-                 "offset": offset
+                  vehicleid: "7",
+                fromDateTime: "2019-10-27 01:02:20",
+                toDateTime: "2019-12-18 01:02:20",
+                 offset: offset
             }
+            console.log(Objdata);
             $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
                 type: "POST",
-                // url: 'http://app.rayfleet.com/api/v1/vehicle_playback',
-                url: 'vehicle-playback',
+                url: '/vehicle-playback',
                 data: Objdata,
-                async: true,
+                async: false,
                 success: function (response) {
 console.log(response);
                     if( typeof response.playback != undefined)
