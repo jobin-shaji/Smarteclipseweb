@@ -45,7 +45,9 @@
 
       <tr style="position:absolute;" >
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >From:<br><br><span style="font-size:13px">{{$from_user_details->name}},<br>
-          {{$from_user_details->address}}</span><br>
+          {{$from_user_details->address}},</span><br>
+            {{$user_details_data->mobile}}</span><br>
+        </td>
         </td>
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:20px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >Certifications:<br><span> <img src="./images/certifications1.png" width="200" height="40"></span>
         </td>

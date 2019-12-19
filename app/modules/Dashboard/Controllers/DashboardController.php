@@ -509,7 +509,7 @@ class DashboardController extends Controller
         $output = json_decode($geocodeFromLatLong);         
         $status = $output->status;
         //Get address from json data
-        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        $address = ($status=="OK")?$output->results[0]->formatted_address:'';
         return $address; 
     }
 
@@ -586,6 +586,7 @@ class DashboardController extends Controller
         if(!empty($latitude) && !empty($longitude)){
             $address =  $this->getAddress($latitude,$longitude); 
         }
+        
         $battery_status=(int)$gps->battery_status;
 
         if($mode=="M")

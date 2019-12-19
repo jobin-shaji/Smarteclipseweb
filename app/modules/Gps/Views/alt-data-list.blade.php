@@ -226,6 +226,6 @@ table, th, td {
 
 
 @section('script')
-    <script src="{{asset('js/gps/ack-data-list.js')}}"></script>
+    <script src="{{asset('js/gps/alt-data-list.js')}}"></script>
 @endsection
 @endsection

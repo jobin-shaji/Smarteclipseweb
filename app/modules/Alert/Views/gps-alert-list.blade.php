@@ -27,16 +27,16 @@ All Alerts
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 left-width">
               <div class="panel-heading">               
               </div>
-              <div id="alert">
+              <div id="alert" class="alert-bg">
             <!--Loading ANIMATION-->
               <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>        
                 <table class="container">
                  
                   <tbody>
-                    <tr>
+                    <tr class="bg-color">
                       <td class="inner"></td>
                     </tr>
                   </tbody>
@@ -45,11 +45,11 @@ All Alerts
 
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6 right-width ">
             <input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
             <input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">    
             <div class="col-md-12 full-height">
-                <div id="map" style="width:100%; height:400px;"></div>
+                <div id="map" style="width:100%; height:400px;border: 1px solid #c5c7c7;"></div>
               </div>
             </div>
             
@@ -79,8 +79,8 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   line-height: 2em;
-  color:#A7A1AE;
-  background-color:#797979;
+  /*color:#A7A1AE;
+  background-color:#797979;*/
 }
 .container td {
     font-weight: normal;
@@ -107,10 +107,10 @@ body {
 
 /* Background-color of the odd rows */
 .container tr:nth-child(odd) {
-    background-color: #323C50;
+    /*background-color: #323C50;*/
 }
 .container td:first-child { 
-  color: #f09b00; 
+  /*color: #f09b00; */
   font-weight: bold;
 }
 @media (max-width: 800px) {
@@ -136,7 +136,52 @@ body {
   cursor: pointer;
 }
 .date {
-  font-size:16px;color:#ffffff;
+  font-size:16px;
+  /*color:#ffffff;*/
 
+}
+.container tr:nth-child(odd).bg-color
+{
+background: rgba(154, 154, 154, 0.05);
+
+}
+
+.bg-color .date
+{
+  color: #3e5569;
+      line-height: 25px;
+          font-size: 14px;
+}
+
+.container .bg-color td:first-child {
+    color: #f09b00;
+    font-weight:normal;
+}
+
+
+.bg-color .messages {
+        border-bottom: 1px solid #c6c7c7;
+    padding: 10px 10px;
+    font-weight: bold;
+    color: #e65706;
+}
+
+.container .bg-color td
+{    ppadding-bottom: 0%!important;
+    padding: 0px !important;;
+}
+
+#alert.alert-bg{
+    border-bottom: solid 1px #c5c7c7;
+     border: solid 1px #c5c7c7;
+}
+
+
+.col-sm-6.left-width {
+    max-width: 30%;
+}
+
+.col-sm-6.right-width  {
+    max-width: 65%;
 }
  </style>

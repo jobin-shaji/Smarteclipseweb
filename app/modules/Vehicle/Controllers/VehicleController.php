@@ -708,6 +708,7 @@ class VehicleController extends Controller
     public function allVehicleDocList()
     {
         $client_id=\Auth::user()->client->id;
+        // dd($client_id);
         $vehicles=Vehicle::select('id','name','register_number','client_id')
                             ->where('client_id',$client_id)
                             ->get();
@@ -1195,7 +1196,7 @@ class VehicleController extends Controller
             {
                 $ac_status="UPGRADE VERSION";
             }
-
+            $last_seen=date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
                         "longitude"=>floatval($snapRoute['lng']),
@@ -1210,7 +1211,8 @@ class VehicleController extends Controller
                         "connection_lost_time_motion"=>$connection_lost_time_motion,
                         "connection_lost_time_halt"=>$connection_lost_time_halt,
                         "connection_lost_time_sleep"=>$connection_lost_time_sleep,
-                        "last_seen"=>$minutes,
+                        // "last_seen"=>$minutes,
+                        "last_seen"=>$last_seen,
                         "connection_lost_time_minutes"=>$connection_lost_time_minutes,
                         "fuel"=>$fuel_status,
                         "ac"=>$ac_status,

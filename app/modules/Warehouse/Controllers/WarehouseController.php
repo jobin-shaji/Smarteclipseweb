@@ -130,10 +130,70 @@ class WarehouseController extends Controller {
         return view('Warehouse::gps-transfer-root-list');
     }
 
-    //gps transfer list data - root
-    public function getRootListData() 
+    //get from user in dependent dropdown
+    public function getFromListRoot(Request $request)
     {
-        $user_id=\Auth::user()->id;
+        $transfer_type=$request->transfer_type;
+        if($transfer_type == "1")
+        {
+            $from_users=Root::select('id','user_id','name')->get();
+        }
+        else if($transfer_type == "2")
+        {
+            $from_users=Dealer::select('id','user_id','name')->get();
+        }
+        else if($transfer_type == "3")
+        {
+            $from_users=SubDealer::select('id','user_id','name')->get();
+        }
+        return response()->json($from_users);
+    }
+
+    //get to user in dependent dropdown
+    public function getToListRoot(Request $request)
+    {
+        $transfer_type=$request->transfer_type; 
+        $from_user_id=$request->from_id;    
+        if($transfer_type == "1")
+        {
+            $root = Root::select('id','user_id')->where('user_id',$from_user_id)->first();
+            $to_users=Dealer::select('id','user_id','name','root_id')->where("root_id",$root->id)->get();
+        }
+        else if($transfer_type == "2")
+        {
+            if($from_user_id == '0')
+            {
+                $to_users=SubDealer::select('id','user_id','name','dealer_id')->get();
+            }
+            else
+            {
+                $dealer = Dealer::select('id','user_id')->where('user_id',$from_user_id)->first();
+                $to_users=SubDealer::select('id','user_id','name','dealer_id')->where("dealer_id",$dealer->id)->get();
+            }
+            
+        }
+        else if($transfer_type == "3")
+        {
+            if($from_user_id == '0')
+            {
+                $to_users=Client::select('id','user_id','name','sub_dealer_id')->get();
+            }
+            else
+            {
+                $sub_dealer = SubDealer::select('id','user_id')->where('user_id',$from_user_id)->first();
+                $to_users=Client::select('id','user_id','name','sub_dealer_id')->where("sub_dealer_id",$sub_dealer->id)->get();
+            }
+        }
+        return response()->json($to_users);
+    }
+
+    //gps transfer list data - root
+    public function getRootListData(Request $request) 
+    {
+        $transfer_type=$request->data['transfer_type'];
+        $from_user_id=$request->data['from_id'];
+        $to_user_id=$request->data['to_id'];
+
         $gps_transfer = GpsTransfer::select(
             'id', 
             'from_user_id', 
@@ -141,15 +201,25 @@ class WarehouseController extends Controller {
             'dispatched_on',
             'accepted_on',
             'deleted_at'
-            // \DB::raw('count(id) as count') 
         )
         ->with('fromUser:id,username')
         ->with('toUser:id,username')
         ->with('gpsTransferItems')
-        ->where('from_user_id',$user_id)
         ->orderBy('id','DESC')
-        ->withTrashed()
-        ->get();
+        ->withTrashed();
+        if($transfer_type == '1')
+        {
+            $gps_transfer = $this->manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
+
+        }else if($transfer_type == '2')
+        {
+            $gps_transfer = $this->distributorToDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
+        }
+        else if($transfer_type == '3')
+        {
+            $gps_transfer = $this->dealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
+        }
+
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
         ->addColumn('count', function ($gps_transfer) 
@@ -181,6 +251,106 @@ class WarehouseController extends Controller {
         })
         ->rawColumns(['link', 'action'])
         ->make();
+    }
+
+    public function manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id)
+    {
+        if($to_user_id == '0')
+        {
+            $all_distributors = Dealer::all();
+            $distributors=[];
+            foreach ($all_distributors as $distributor) {
+                $distributors[]=$distributor->user_id;
+            }
+            $gps_transfer = $gps_transfer->where('from_user_id',$from_user_id)->whereIn('to_user_id',$distributors)->get();
+        }
+        else
+        {
+            $gps_transfer = $gps_transfer->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
+        }
+        return $gps_transfer;
+    }
+
+    public function distributorToDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id)
+    {
+        if($from_user_id == '0' && $to_user_id == '0')
+        {
+            $all_distributors = Dealer::all();
+            $distributors=[];
+            foreach ($all_distributors as $distributor) {
+                $distributors[]=$distributor->user_id;
+            }
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $gps_transfer = $gps_transfer->whereIn('from_user_id',$distributors)->whereIn('to_user_id',$dealers)->get();
+        }
+        else if($from_user_id != '0' && $to_user_id == '0')
+        {
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $gps_transfer = $gps_transfer->where('from_user_id',$from_user_id)->whereIn('to_user_id',$dealers)->get();
+        }
+        else if($from_user_id == '0' && $to_user_id != '0')
+        {
+            $all_distributors = Dealer::all();
+            $distributors=[];
+            foreach ($all_distributors as $distributor) {
+                $distributors[]=$distributor->user_id;
+            }
+            $gps_transfer = $gps_transfer->whereIn('from_user_id',$distributors)->where('to_user_id',$to_user_id)->get();
+        }
+        else
+        {
+            $gps_transfer = $gps_transfer->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
+        }
+        return $gps_transfer;
+    }
+
+    public function dealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id)
+    {
+        if($from_user_id == '0' && $to_user_id == '0')
+        {
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $all_clients = Client::all();
+            $clients=[];
+            foreach ($all_clients as $client) {
+                $clients[]=$client->user_id;
+            }
+            $gps_transfer = $gps_transfer->whereIn('from_user_id',$dealers)->whereIn('to_user_id',$clients)->get();
+        }
+        else if($from_user_id != '0' && $to_user_id == '0')
+        {
+            $all_clients = Client::all();
+            $clients=[];
+            foreach ($all_clients as $client) {
+                $clients[]=$client->user_id;
+            }
+            $gps_transfer = $gps_transfer->where('from_user_id',$from_user_id)->whereIn('to_user_id',$clients)->get();
+        }
+        else if($from_user_id == '0' && $to_user_id != '0')
+        {
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $gps_transfer = $gps_transfer->whereIn('from_user_id',$dealers)->where('to_user_id',$to_user_id)->get();
+        }
+        else
+        {
+            $gps_transfer = $gps_transfer->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
+        }
+        return $gps_transfer;
     }
 
     // create root gps transfer
@@ -1001,8 +1171,11 @@ class WarehouseController extends Controller {
             $user_details = User::select('id', 'mobile')
                                 ->where('id',$role_details->user_id)
                                 ->first();
+            $user_details_data = User::select('id', 'mobile')
+            ->where('id',$from_user_details->user_id)
+            ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1021,8 +1194,11 @@ class WarehouseController extends Controller {
             $user_details = User::select('id', 'mobile')
                                 ->where('id',$role_details->user_id)
                                 ->first();
+             $user_details_data = User::select('id', 'mobile')
+            ->where('id',$from_user_details->user_id)
+            ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );
@@ -1041,8 +1217,11 @@ class WarehouseController extends Controller {
             $user_details = User::select('id', 'mobile')
                                 ->where('id',$role_details->user_id)
                                 ->first();
+             $user_details_data = User::select('id', 'mobile')
+            ->where('id',$from_user_details->user_id)
+            ->first();
             view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
             $headers = array(
                       'Content-Type'=> 'application/pdf'
                     );

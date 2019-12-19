@@ -7,11 +7,13 @@ $(document).ready(function () {
 
 function getConfiguration(data,name,version)
 {
+  // alert(name);
+  console.log(data);
   $('#myModal').modal('show');
   $('#name').empty();
   $('#version').empty();
   $('#config').empty();
-  var freebies=data;
+  var freebies=data.configuration;
   var ac_status=freebies.ac_status;
   var anti_theft_mode=freebies.anti_theft_mode;
   var api_access=freebies.api_access;
@@ -32,79 +34,80 @@ function getConfiguration(data,name,version)
   var point_of_interest=freebies.point_of_interest;
   var privillaged_support=freebies.privillaged_support;
   var radar=freebies.radar;
+  
   var route_deviation_count=freebies.route_deviation_count;
   var route_playback_history_month=freebies.route_playback_history_month;
   var share_in_web_app=freebies.share_in_web_app;
   var towing_alert=freebies.towing_alert;
   var white_list=freebies.white_list;
-    if(ac_status==='true'){
+    if(ac_status===true){
       ac_input="<input type='checkbox' id='ac_status' name='ac_status' value='true' checked='checked'>";
     }
     else{
         ac_input="<input type='checkbox' id='ac_status' name='ac_status' value='true' >";
     }
-    if(anti_theft_mode==='true'){
+    if(anti_theft_mode===true){
       theft_input="<input type='checkbox' id='anti_theft_mode' name='anti_theft_mode' value='true' checked>";
     }
     else{
         theft_input="<input type='checkbox' id='anti_theft_mode' name='anti_theft_mode' value='true'>";
     }
-    if(api_access==='true'){
+    if(api_access===true){
       api_access_input="<input type='checkbox' id='api_access' name='api_access' value='true' checked>";
     }
     else{
         api_access_input="<input type='checkbox' id='api_access' name='api_access' value='true'>";
     }
-    if(client_domain==='true'){
+    if(client_domain===true){
       client_domain_input="<input type='checkbox' id='client_domain' name='client_domain' value='true' checked>";
     }
     else{
         client_domain_input="<input type='checkbox' id='client_domain' name='client_domain' value='true'>";
     }
-    if(client_logo==='true'){
+    if(client_logo===true){
       client_logo_input="<input type='checkbox' id='client_logo' name='client_logo'  value='true' checked>";
     }
     else{
         client_logo_input="<input type='checkbox' id='client_logo' name='client_logo' value='true'>";
     }
-    if(custom_feature==='true'){
+    if(custom_feature===true){
       custom_feature_input="<input type='checkbox' id='custom_feature' name='custom_feature' value='true' checked>";
     }
     else{
         custom_feature_input="<input type='checkbox' id='custom_feature' name='custom_feature' value='true'>";
     }
-    if(daily_report_as_sms==='true'){
+    if(daily_report_as_sms===true){
       daily_report_as_sms_input="<input type='checkbox' id='daily_report_as_sms' name='daily_report_as_sms' value='true' checked>";
     }
     else{
         daily_report_as_sms_input="<input type='checkbox' id='daily_report_as_sms' name='daily_report_as_sms' value='true'>";
     }
-    if(daily_report_summary_to_reg_mail==='true'){
+    if(daily_report_summary_to_reg_mail===true){
       daily_report_summary_to_reg_mail_input="<input type='checkbox' id='daily_report_summary_to_reg_mail' value='true' name='daily_report_summary_to_reg_mail' checked>";
     }
     else{
         daily_report_summary_to_reg_mail_input="<input type='checkbox' id='daily_report_summary_to_reg_mail' name='daily_report_summary_to_reg_mail' value='true'>";
     }
-    if(database_backup==='true'){
+    if(database_backup===true){
       database_backup_input="<input type='checkbox' id='database_backup' name='database_backup' value='true' checked>";
     }
     else{
         database_backup_input="<input type='checkbox' id='database_backup' name='database_backup' value='true'>";
     }
-    if(driver_score==='true'){
+    if(driver_score===true){
       driver_score_input="<input type='checkbox' id='driver_score' name='driver_score' value='true' checked>";
     }
     else{
         driver_score_input="<input type='checkbox' id='driver_score' name='driver_score' value='true'>";
     }
 
-    if(emergency_alerts==='true'){
+    if(emergency_alerts===true){
       emergency_alerts_input="<input type='checkbox' id='emergency_alerts' name='emergency_alerts' value='true' checked>";
     }
     else{
         emergency_alerts_input="<input type='checkbox' id='emergency_alerts' name='emergency_alerts' value='true'>";
     }
-    if(fuel==='true'){
+    if(fuel===true){
       fuel_input="<input type='checkbox' id='fuel' name='fuel' value='true' checked>";
     }
     else{
@@ -114,46 +117,46 @@ function getConfiguration(data,name,version)
       geofence_count_input="<input type='text' id='geofence_count' name='geofence_count' value='"+geofence_count+"'>";
     }
  
-    if(immobilizer==='true'){
+    if(immobilizer===true){
       immobilizer_input="<input type='checkbox' id='immobilizer' name='immobilizer' value='true' checked>";
     }
     else{
         immobilizer_input="<input type='checkbox' id='immobilizer' name='immobilizer' value='true'>";
     }
-    if(invoice==='true'){
+    if(invoice===true){
       invoice_input="<input type='checkbox' id='invoice' name='invoice' value='true' checked>";
     }
     else{
         invoice_input="<input type='checkbox' id='invoice' name='invoice' value='true'>";
     }
-    if(mobile_application==='true'){
+    if(mobile_application===true){
       mobile_application_input="<input type='checkbox' id='mobile_application' name='mobile_application' value='true' checked>";
     }
     else{
         mobile_application_input="<input type='checkbox' id='mobile_application' name='mobile_application' value='true'>";
     }
 
-     if(modify_design==='true'){
+     if(modify_design===true){
       modify_design_input="<input type='checkbox' id='modify_design' name='modify_design' value='true' checked>";
     }
     else{
         modify_design_input="<input type='checkbox' id='modify_design' name='modify_design' value='true'>";
     }
      
-     if(point_of_interest==='true'){
+     if(point_of_interest===true){
       point_of_interest="<input type='checkbox' id='point_of_interest' name='point_of_interest' value='true' checked>";
     }
     else{
         point_of_interest="<input type='checkbox' id='point_of_interest' name='point_of_interest' value='true'>";
     }
-    if(privillaged_support==='true'){
+    if(privillaged_support===true){
       privillaged_support="<input type='checkbox' id='privillaged_support' name='privillaged_support' value='true' checked>";
     }
     else{
         privillaged_support="<input type='checkbox' id='privillaged_support' name='privillaged_support' value='true' >";
     }
 
-    if(radar==='true'){
+    if(radar===true){
       radar="<input type='checkbox' id='radar' name='radar' value='true' checked>";
     }
     else{
@@ -164,19 +167,19 @@ function getConfiguration(data,name,version)
       route_deviation_count="<input type='text' id='route_deviation_count' name='route_deviation_count' value='"+route_deviation_count+"'>";
     }
    
-    if(share_in_web_app==='true'){
+    if(share_in_web_app===true){
       share_in_web_app="<input type='checkbox' id='share_in_web_app' name='share_in_web_app' value='true' checked>";
     }
     else{
         share_in_web_app="<input type='checkbox' id='share_in_web_app' name='share_in_web_app' value='true'>";
     }
-    if(towing_alert==='true'){
+    if(towing_alert===true){
       towing_alert="<input type='checkbox' id='towing_alert' name='towing_alert' value='true' checked>";
     }
     else{
         towing_alert="<input type='checkbox' id='towing_alert' name='towing_alert' value='true'>";
     }
-    if(white_list==='true'){
+    if(white_list===true){
       white_list="<input type='checkbox' id='white_list' name='white_list' value='true' checked>";
     }
     else{
@@ -214,11 +217,14 @@ function getConfiguration(data,name,version)
             // console.log(plan);
         $("#config").append(plan);
         $('#plan_id').val(name);
+        $('#plan_name').val(data.type);
+
+
         // $('#version').val(version);
         
         var url = 'get-config-data';
         var data = {
-          name:name
+          name:data.type
         };   
         backgroundPostData(url,data,'getConfigData',{alert:false});   
 }

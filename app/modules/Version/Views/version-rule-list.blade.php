@@ -36,6 +36,10 @@
                       <th>Android version</th>
                       <th>IOS version</th>
                       <th>Description</th>
+                      <th>Android version code</th>
+                      <th>Android version priority</th>
+                      <th>IOS version code</th>
+                      <th>IOS version priority</th>
                      </tr>
                 </thead>
               </table>
