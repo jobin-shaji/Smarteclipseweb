@@ -27,8 +27,10 @@
 
     <div class="wrapper overlay-sidebar">
 <input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+
+<div class="top-date">
           <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
-            <div  style="float: left;margin-left: 3%">
+            <div  style="float: left;margin-left: 2%">
               <label style="font-weight:bold">Start Date</label>
               <input type="text" id="fromDate" name="fromDate">
               <span class="add-on">
@@ -37,7 +39,7 @@
             </div>
           </div>
           <div id="datetimepicker_live2" class="input-append date" style="margin-bottom: 0px!important">
-            <div style="float: left;margin-left: 3%">
+            <div style="float: left;margin-left: 2%">
               <label style="font-weight:bold">End Date</label>
               <input type="text" id="toDate" name="toDate">
               <span class="add-on">
@@ -45,17 +47,114 @@
               </span>
             </div>
           </div>
-          <div class="contoller" style="float: left;margin-left: 3%;margin-top: 1.7%">
+
+<div>
+            <div style="float: left;margin-left: 2%">
+              <label style="font-weight:bold">Speed</label>
+              <select name="speed" id="speed">
+                  <option value="1">1X</option>
+                  <option value="2">2X</option>
+                  <option value="3">3X</option>
+                  <option value="4">4X</option>
+                  <option value="5">5X</option>
+                  <option value="6">6X</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
             <span class="contoller">                           
               <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Play</button>
 
             </span>
           </div>
+             <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
+            <span class="contoller">                           
+              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">pause</button>
+
+            </span>
+          </div>
+             <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
+            <span class="contoller">                           
+              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Stop</button>
+
+            </span>
+          </div>
           
-        <div class="main-panel">
+</div>
+
+        <div class="main-panel main-pane-bg">
             <div class="content">
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
-                <div id="markers" style="width:1360px;height:595px"></div>
+                <div id="markers" style="width:100%px;height:595px; position: relative;">
+                    <div class="left-alert-box">
+                    <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+
+                             <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+
+                                <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+                         <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
                 <div class="page-inner mt--5">
                 </div>
             </div>
@@ -112,6 +211,112 @@
             -webkit-animation: spin .8s linear infinite;
             animation: spin .8s linear infinite;
         }
+.left-alert-box{
+           width: 20%;
+    float: left;
+    display: block;
+    max-height: 500px;
+    background-color: #fff;
+    /* border: 1px solid #dee2e6; */
+    position: absolute;
+    z-index: 99;
+    padding: 0 0px;
+    left: 0;
+    overflow-y: scroll;}
+    .left-alert-inner{
+    width: 90%;
+    float: left;
+    display: block;
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin: 10px 5%;
+
+    }
+     .left-alert-text
+     {
+    width: 94%;
+    float: left;
+    margin: 0 3% 0px;
+    padding: 5px 0;
+
+     }
+
+   .left-alert-text h5{
+width: 100%;
+    float: left;
+    font-size: 16px;
+    display: block;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: 10px;
+    color: #f0b102;
+    border-bottom: 1px solid #dcdcdc;
+   }
+        .left-alert-text p{
+            width: 100%;
+            float: left;
+                font-size: 15px;
+            display: block;
+            margin: 0;
+            padding: 8px 0;
+   
+        }
+.left-alert-time{
+width: 100%;
+float: right;
+display: block;
+text-align: right;
+
+}
+.alert-plus-bt{
+padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+
+}
+.left-alert-text p a{
+    color: #fff;
+    float: right;
+    padding: 3px 7px;
+    background: #f0b101;
+    border-radius: 52%;
+    text-decoration: none;
+    /* font-weight: bold; */
+    font-size: 20px;}
+.place-div{
+    margin: 0;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.place-div .left-alert-text {
+    width: 88%;
+    float: left;
+    margin: 0 6% 0px;
+    padding: 5px 0;
+}
+.top-date{
+
+    width: 100%;
+    float: left;
+    display: block;
+    padding: 10px 0 20px;
+}
+.main-pane-bg{
+        width: 100%;
+    float: left;
+}
+
+
+@media only screen and (max-width: 1400px)  {}
+
+
     </style>
     <!--   Core JS Files   -->
 
