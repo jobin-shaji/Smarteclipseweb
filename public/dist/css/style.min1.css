@@ -17165,6 +17165,10 @@ padding: 15px 10px;
     background: #41A659;
 }
 
+.gps_non_stock_dashboard_grid {
+    background: #F37C19;
+}
+
 .transferred_gps_dashboard_grid {
     background: #6A6F75;
 }

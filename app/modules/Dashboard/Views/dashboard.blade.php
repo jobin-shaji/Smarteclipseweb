@@ -30,6 +30,21 @@
   <div class="page-wrapper-root1">
     <section class="content">
       <div class="row">
+        <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="gps_manufactured">
+                <div class="loader"></div>
+              </h3>
+              <p>GPS Devices Manufactured</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/gps-all" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-green bxs">
@@ -37,7 +52,7 @@
               <h3 id="gps">
                 <div class="loader"></div>
               </h3>
-              <p>GPS In Stock</p>
+              <p>GPS Devices In Stock</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -45,8 +60,39 @@
             <a href="/gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="gps_transferred">
+                <div class="loader"></div>
+              </h3>
+              <p>GPS Devices Transferred</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/gps-transferred-root" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 gps_non_stock_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="gps_to_be_added_to_stock">
+                <div class="loader"></div>
+              </h3>
+              <p>GPS Devices: To be added to stock</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" >
+        <div class="col-lg-4 col-xs-8 dealer_dashboard_grid dash_grid" >
           <!-- small box -->
           <div class="small-box bg-yellow bxs">
             <div class="inner">
@@ -56,13 +102,13 @@
               <p>Active Distributors</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <i class="fa fa-user"></i>
             </div>
               <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+        <div class="col-lg-4 col-xs-8 sub_dealer_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-blue bxs">
             <div class="inner">
@@ -78,7 +124,7 @@
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+        <div class="col-lg-4 col-xs-8 client_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-green bxs">
             <div class="inner">
