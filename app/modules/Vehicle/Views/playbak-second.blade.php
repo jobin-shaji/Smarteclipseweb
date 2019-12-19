@@ -69,7 +69,7 @@
                          
               <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
 
-            </span>
+           
           </div>
              <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
             <span class="contoller">                           

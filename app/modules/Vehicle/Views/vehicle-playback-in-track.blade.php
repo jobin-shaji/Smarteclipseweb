@@ -37,9 +37,13 @@
 
     <div class="wrapper overlay-sidebar">
 {{csrf_field()}}
-  <input type="hidden" name="vid" id="vehicle_id" style="width:140px;resize:none;height:30px" value="{{$vehicle_id}}" rows="1"> 
+  <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}" > 
+
+   
+
+<div class="top-date">
           <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
-            <div  style="float: left;margin-left: 3%">
+            <div  style="float: left;margin-left: 2%">
               <label style="font-weight:bold">Start Date</label>
               <input type="text" id="fromDate" name="fromDate">
               <span class="add-on">
@@ -48,7 +52,7 @@
             </div>
           </div>
           <div id="datetimepicker_live2" class="input-append date" style="margin-bottom: 0px!important">
-            <div style="float: left;margin-left: 3%">
+            <div style="float: left;margin-left: 2%">
               <label style="font-weight:bold">End Date</label>
               <input type="text" id="toDate" name="toDate">
               <span class="add-on">
@@ -56,22 +60,279 @@
               </span>
             </div>
           </div>
-          <div class="contoller" style="float: left;margin-left: 3%;margin-top: 1.7%">
+
+
+            <div>
+            <div style="float: left;margin-left: 2%">
+
+              <label style="font-weight:bold">Speed</label>
+              <select name="speed" id="speed">
+                  <option value="1">1X</option>
+                  <option value="2">2X</option>
+                  <option value="3">3X</option>
+                  <option value="4">4X</option>
+                  <option value="5">5X</option>
+                  <option value="6">6X</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
+                         
+              <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
+
+           
+          </div>
+             <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
             <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Play</button>
+              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">pause</button>
+
+            </span>
+          </div>
+             <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
+            <span class="contoller">                           
+              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Stop</button>
 
             </span>
           </div>
           
-        <div class="main-panel">
+</div>
+
+        <div class="main-panel main-pane-bg">
             <div class="content">
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
-                <div id="markers" style="width:1360px;height:595px"></div>
+                <div id="markers" style="width:100%px;height:595px; position: relative;">
+                    <div class="left-alert-box">
+                    <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+
+                             <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+
+                                <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+                         <div class="left-alert-inner">
+                            <div class="left-alert-text">
+                                <h5>Heading</h5>
+                             <p>Place</p>
+                                <p>alert count
+       <a href="#">
+          +
+        </a>
+                                </p>  
+                                <p>05:28:22 03-12-19</p>
+
+                                <div class="left-alert-time"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
                 <div class="page-inner mt--5">
                 </div>
             </div>
         </div>
     </div>
+    <!-- Style -->
+
+    <style>
+        #cover-spin {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(255,255,255,0.7);
+            z-index: 9999;
+            display: none;
+        }
+
+        @-webkit-keyframes spin {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #cover-spin::after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 48%;
+            top: 40%;
+            width: 40px;
+            height: 40px;
+            border-style: solid;
+            border-color: black;
+            border-top-color: transparent;
+            border-width: 4px;
+            border-radius: 50%;
+            -webkit-animation: spin .8s linear infinite;
+            animation: spin .8s linear infinite;
+        }
+.left-alert-box{
+           width: 20%;
+    float: left;
+    display: block;
+    max-height: 500px;
+    background-color: #fff;
+    /* border: 1px solid #dee2e6; */
+    position: absolute;
+    z-index: 99;
+    padding: 0 0px;
+    left: 0;
+    overflow-y: scroll;}
+    .left-alert-inner{
+    width: 90%;
+    float: left;
+    display: block;
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin: 10px 5%;
+
+    }
+     .left-alert-text
+     {
+    width: 94%;
+    float: left;
+    margin: 0 3% 0px;
+    padding: 5px 0;
+
+     }
+
+   .left-alert-text h5{
+width: 100%;
+    float: left;
+    font-size: 16px;
+    display: block;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: 10px;
+    color: #f0b102;
+    border-bottom: 1px solid #dcdcdc;
+   }
+        .left-alert-text p{
+            width: 100%;
+            float: left;
+                font-size: 15px;
+            display: block;
+            margin: 0;
+            padding: 8px 0;
+   
+        }
+.left-alert-time{
+width: 100%;
+float: right;
+display: block;
+text-align: right;
+
+}
+.alert-plus-bt{
+padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+
+}
+.left-alert-text p a{
+    color: #fff;
+    float: right;
+    padding: 3px 7px;
+    background: #f0b101;
+    border-radius: 52%;
+    text-decoration: none;
+    /* font-weight: bold; */
+    font-size: 20px;}
+.place-div{
+    margin: 0;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.place-div .left-alert-text {
+    width: 88%;
+    float: left;
+    margin: 0 6% 0px;
+    padding: 5px 0;
+}
+.top-date{
+
+    width: 100%;
+    float: left;
+    display: block;
+    padding: 10px 0 20px;
+}
+.main-pane-bg{
+        width: 100%;
+    float: left;
+}
+
+
+@media only screen and (max-width: 1400px)  {}
+
+
+    </style>
     <!-- Style -->
     <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
@@ -134,36 +395,42 @@
         var vehicle_mode;
         var previousCoorinates;
         var blacklineStyle;
+        var speed_val            = 1;
+        var Speed                = 600;
+    
          
 
         var locationQueue       = [];
-        var mapUpdateInterval   = window.setInterval(function(){
-            plotLocationOnMap();
-        }, 500);
 
          
-
+        function startPlayBack(){
+                speed_val   =   $('#speed').val();
+                speed       =   speed/speed_val;
+                getLocationData();
+        }
         function getLocationData(){
+             var mapUpdateInterval   = window.setInterval(function(){
+            plotLocationOnMap();
+             }, Speed);
+
             isDataLoadInProgress = true;
-          //   var vehicle_id=$.urlParam('vehicle_id');
-          // var start_date=$.urlParam('fromDate');
-          // var end_date=$.urlParam('toDate');
-          
-             var Objdata = {
-                vehicleid: $('#vehicle_id').val(),                
+           var Objdata = {
+                vehicleid: 7, 
                 fromDateTime: $('#fromDate').val(),
                 toDateTime: $('#toDate').val(),
                  offset: offset
             }
             $.ajax({
-                headers: {
+                type: "POST",
+                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   },
-                type: "POST",
-                url: '/vehicle-playback',
+                //url: 'http://app.smarteclipse.com/api/v1/vehicle_playback',
+                 url: '/vehicle-playback',
                 data: Objdata,
-                async: false,
+                async: true,
                 success: function (response) {
+
                     if( typeof response.playback != undefined)
                     {
 
@@ -174,7 +441,7 @@
                          offset = offset+1;
                           if(offset==total_offset){
                             last_offset=true;
-                            // alert(1);
+                      
                           }
                         }
                     }
@@ -376,17 +643,6 @@
             map.addObject(bearsMarkeronStartPoint);
             blPlaceCaronMap = true;
     }
-
-
-
-      
-
-
-
-
-
-    
-
     </script>
 
 
