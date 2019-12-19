@@ -24,8 +24,8 @@ var ctx = document.getElementById("rootChart").getContext('2d');
       datasets: [{
         label: 'Gps Sale',
         data:res.gps_count,
-        backgroundColor:'rgba(242,156,18, 0.2)',
-        borderColor:'rgba(242,156,18,1)',
+        backgroundColor:'rgba(245, 186, 110)',
+        borderColor:'rgba(242, 143, 16)',
         borderWidth: 1
       }]
     },
