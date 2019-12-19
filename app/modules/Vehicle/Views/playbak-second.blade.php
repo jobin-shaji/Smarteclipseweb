@@ -49,8 +49,10 @@
             </div>
           </div>
 
-<div>
+
+            <div>
             <div style="float: left;margin-left: 2%">
+
               <label style="font-weight:bold">Speed</label>
               <select name="speed" id="speed">
                   <option value="1">1X</option>
@@ -64,8 +66,8 @@
           </div>
 
           <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
-            <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Play</button>
+                         
+              <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
 
             </span>
           </div>
@@ -381,16 +383,25 @@ padding: 5px 10px;
         var vehicle_mode;
         var previousCoorinates;
         var blacklineStyle;
+        var speed_val            = 1;
+        var Speed                = 600;
+    
          
 
         var locationQueue       = [];
-        var mapUpdateInterval   = window.setInterval(function(){
-            plotLocationOnMap();
-        }, 500);
 
          
+        function startPlayBack(){
+                speed_val   =   $('#speed').val();
+                speed       =   speed/speed_val;
+                getLocationData();
+        }
 
         function getLocationData(){
+             var mapUpdateInterval   = window.setInterval(function(){
+            plotLocationOnMap();
+             }, Speed);
+
             isDataLoadInProgress = true;
             var Objdata = {
              "fromDateTime": "2019-12-10 10:00:00",
@@ -417,7 +428,7 @@ padding: 5px 10px;
                          offset = offset+1;
                           if(offset==total_offset){
                             last_offset=true;
-                            alert(1);
+                      
                           }
                         }
                     }
@@ -621,14 +632,6 @@ padding: 5px 10px;
     }
 
 
-
-      
-
-
-
-
-
-    
 
     </script>
 
