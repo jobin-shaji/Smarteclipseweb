@@ -1,13 +1,24 @@
-$(document).ready(function () {
-    callBackDataTable();
-});
 
-function callBackDataTable(){
-    var  data = {
-    
-    }; 
+function check()
+{
+    if(document.getElementById('transfer_type').value == ''){
+        alert('please select transfer type');
+    }else if(document.getElementById('from_id').value == ''){
+        alert('please select from user');
+    }
+    else if(document.getElementById('to_id').value == ''){
+        alert('please select to user');
+    }else{
+        var transfer_type = document.getElementById('transfer_type').value;
+        var from_id = document.getElementById('from_id').value;
+        var to_id = document.getElementById('to_id').value;
+        var data = {'transfer_type':transfer_type , 'from_id':from_id , 'to_id':to_id};
+        callBackDataTable(data);
+    }
+       
+}
 
-
+function callBackDataTable(data){
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -135,6 +146,88 @@ $('.clientData').on('change', function() {
             $("#mobile").val(client_mobile); 
         }
     });
+});
+
+$('#transfer_type').on('change', function() {
+    var transfer_type = $(this).val();
+    if(transfer_type == 1)
+    {
+        $('#from_label').text("Manufacturer");
+        $('#to_label').text("Distributor");
+    }
+    else if(transfer_type == 2)
+    {
+        $('#from_label').text("Distributor");
+        $('#to_label').text("Dealer");
+    }
+    else
+    {
+        $('#from_label').text("Dealer");
+        $('#to_label').text("Client");
+    }
+    
+    var data={ transfer_type : transfer_type };
+    if(transfer_type) {
+      $.ajax({
+        type:'POST',
+        url: '/gps-transferred-root/get-from-list',
+        data:data ,
+        async: true,
+        headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data) {
+        if(data){
+          $('#from_id').empty();
+          $('#from_id').focus;
+          $('#from_id').append('<option value="">  Select User </option>'); 
+          if(transfer_type != 1)
+          {
+            $('#from_id').append('<option value="0">  All </option>'); 
+          }
+          $.each(data, function(key, value){
+            $('select[name="from_id"]').append('<option value="'+ value.user_id +'">' + value.name+ '</option>');
+          });
+        }else{
+          $('#from_id').empty();
+        }
+        }
+      });
+    }else{
+      $('#from_id').empty();
+    }
+});
+
+$('#from_id').on('change', function() {
+    var from_id = $('#from_id').val();
+    var transfer_type = $('#transfer_type').val();
+    var data={ from_id : from_id,transfer_type : transfer_type };
+    if(from_id) {
+      $.ajax({
+        type:'POST',
+        url: '/gps-transferred-root/get-to-list',
+        data:data ,
+        async: true,
+        headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data) {
+        if(data){
+          $('#to_id').empty();
+          $('#to_id').focus;
+          $('#to_id').append('<option value="">  Select User </option>'); 
+          $('#to_id').append('<option value="0">  All </option>'); 
+          $.each(data, function(key, value){
+            $('select[name="to_id"]').append('<option value="'+ value.user_id +'">' + value.name+ '</option>');
+          });
+        }else{
+          $('#to_id').empty();
+        }
+        }
+      });
+    }else{
+      $('#to_id').empty();
+    }
 });
 
 
