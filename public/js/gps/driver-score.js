@@ -28,7 +28,12 @@ function driverScore(res) {
   labels: res.drive_data,
   datasets: [{
   data: res.drive_score,
-  backgroundColor: [],
+  backgroundColor: [
+  "#f38b4a",
+          "#56d798",
+          "#ff8397",
+          "#6970d5"
+  ],
   hoverBackgroundColor: [],
   borderColor: []
   }],

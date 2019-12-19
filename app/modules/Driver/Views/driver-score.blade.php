@@ -23,7 +23,7 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="card-body">
-      <div class="panel-heading">
+      <!-- <div class="panel-heading">
         <div class="cover_div_search">
           <div class="row">
             <div class="col-lg-2 col-md-2">
@@ -40,7 +40,7 @@
             </div>                  
           </div>
         </div>
-      </div>   
+      </div>    -->
 
       <div class="row">
          <div class="loader-wrapper" id="loader-1">
