@@ -1,4 +1,20 @@
 $(function () {
+    //  $("#txtFrom").datepicker({
+    //     numberOfMonths: 1,
+    //     onSelect: function (selected) {
+    //         var dt = new Date(selected);
+    //         dt.setDate(dt.getDate() + 1);
+    //         $("#txtTo").datepicker("option", "minDate", dt);
+    //     }
+    // });
+    // $("#txtTo").datepicker({
+    //     numberOfMonths: 1,
+    //     onSelect: function (selected) {
+    //         var dt = new Date(selected);
+    //         dt.setDate(dt.getDate() - 1);
+    //         $("#txtFrom").datepicker("option", "maxDate", dt);
+    //     }
+    // });
     const timeout = 9000000;  // 900000 ms = 15 minutes
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
@@ -35,8 +51,8 @@ $(function () {
                
             var decrementDay = moment(new Date(e.date));
             decrementDay.subtract(0, 'days');
-            $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-            $(this).data("DateTimePicker").hide();
+            // $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+            // $(this).data("DateTimePicker").hide();
             // calculate();            
         });
         
@@ -146,6 +162,48 @@ $( ".date_expiry_edit" ).datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
         minDate: new Date()
     });
+
+
+//  $(function () {
+//     $("#txtFrom").datepicker({
+//         numberOfMonths: 1,
+//         onSelect: function (selected) {
+//             var dt = new Date(selected);
+//             dt.setDate(dt.getDate() + 1);
+//             $("#txtTo").datepicker("option", "minDate", dt);
+//         }
+//     });
+//     $("#txtTo").datepicker({
+//         numberOfMonths: 1,
+//         onSelect: function (selected) {
+//             var dt = new Date(selected);
+//             dt.setDate(dt.getDate() - 1);
+//             $("#txtFrom").datepicker("option", "maxDate", dt);
+//         }
+//     });
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
