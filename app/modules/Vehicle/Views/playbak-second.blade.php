@@ -6,6 +6,7 @@
 
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Fonts and icons -->
      <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}"> -->
     <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/atlantis.min.css')}}"> -->
@@ -91,68 +92,14 @@
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
                 <div id="markers" style="width:100%px;height:595px; position: relative;">
                     <div class="left-alert-box">
-                    <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
+                    <div id="details" class="left-alert-inner">
+                          
 
-                                <div class="left-alert-time"></div>
-                            </div>
+                    </div>
 
-                        </div>
+                          
 
-                             <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
-
-                                <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
-                         <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
+                      
 
                     </div>
 
@@ -214,6 +161,12 @@
             -webkit-animation: spin .8s linear infinite;
             animation: spin .8s linear infinite;
         }
+
+.place_data{
+    padding-right: 10px;
+    font-weight: bold;
+    color: #dab606;
+}
 .left-alert-box{
            width: 20%;
     float: left;
@@ -242,8 +195,16 @@
     width: 94%;
     float: left;
     margin: 0 3% 0px;
-    padding: 5px 0;
+    padding: 0 0;
 
+     }
+     .left-alert-text p.datetime_cover{
+        text-align: right;
+        font-weight: bold;
+        margin-top: 16px;
+        font-size: 11px;
+        padding: 5px 0 0;
+        color: #86710b;
      }
 
    .left-alert-text h5{
@@ -264,7 +225,7 @@ width: 100%;
                 font-size: 15px;
             display: block;
             margin: 0;
-            padding: 8px 0;
+            padding: 5px 0;
    
         }
 .left-alert-time{
@@ -377,6 +338,8 @@ padding: 5px 10px;
         var ui = H.ui.UI.createDefault(map, maptypes); // add UI
 
         var location_data_que   =  new Array();
+        var location_details_que =  new Array();
+
         var offset=1;
         var isDataLoadInProgress = false;
         var dataLoadingCompleted = false;
@@ -395,12 +358,25 @@ padding: 5px 10px;
                 speed_val   =   $('#speed').val();
                 speed       =   speed/speed_val;
                 getLocationData();
+               $('.left-alert-box').css('display','block');
+
+
         }
 
         function getLocationData(){
+             
              var mapUpdateInterval   = window.setInterval(function(){
-            plotLocationOnMap();
+             plotLocationOnMap();
              }, Speed);
+            // --------2019-12-19-2:20--------------------------------------------------------
+            var mapUpdateInterval   = window.setInterval(function(){
+             dataShownOnList();
+             }, 500);
+            // --------2019-12-19-2:20--------------------------------------------------------
+
+
+
+
 
             isDataLoadInProgress = true;
             var Objdata = {
@@ -464,6 +440,18 @@ padding: 5px 10px;
                             "angle" : data[i].angle,
                             "mode"  : data[i].vehicleStatus
                         });
+                  // --------2019-12-19-2:20--------------------------------------------------------
+                   location_details_que.push({
+                                                "lat"   : data[i].latitude, 
+                                                "lng"   : data[i].longitude,
+                                                "angle" : data[i].angle,
+                                                "mode"  : data[i].vehicleStatus,
+                                                "date"  : data[i].dateTime,
+                                                "speed" : data[i].speed
+
+                                             });
+                 // --------2019-12-19-2:20--------------------------------------------------------
+
 
                 isDataLoadInProgress = false;
                 if( data.total_offset == offset)
@@ -630,9 +618,119 @@ padding: 5px 10px;
             map.addObject(bearsMarkeronStartPoint);
             blPlaceCaronMap = true;
     }
+        // --------2019-12-19-2:20--------------------------------------------------------
+
+        async function dataShownOnList(){
+            if(location_details_que.length >0)
+            {
+                console.log(location_details_que.length);
+                // for(i=0;i<=location_details_que.length)
+               console.log(location_details_que);
+            var lat=location_details_que[0].lat;
+            var lng=location_details_que[0].lng;
+            var mode=location_details_que[0].mode;
+            var date=location_details_que[0].date;
+            var speed=location_details_que[0].speed;
+
+            var status = "";
+            if(mode=="M"){
+              status="<span style='color:#84b752 !important'>ONLINE<span>";     
+            }else if(mode=="S"){
+              status="<span style='color:#858585 !important;'>SLEEP<span>";     
+            }else if(mode=="H"){ 
+              status="<span style='color:#69b4b9 !important'>HALT<span>";     
+            }else{
+              status="<span style='color:#c41900 !important'>OFFLINE<span>";     
+            }
+             var location_name = await getPlaceName(lat,lng).then(function(data){
+                    var location_data = JSON.stringify(data.Response.View);
+               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
+
+             });
 
 
+              var details = ' <div class="left-alert-text">'+
+                                '<h5></h5>'+
+                             '<p class="location_name" id="location_name">'+
+                             '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
+                              '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
+                              '<p><span class="place_data">'+
+                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+speed+
+                                '<p class="datetime_cover" id="date">'+date+'</p>'+
+                                '<div class="left-alert-time"></div>'+
+                            '</div>';
 
+             $("#details").prepend(details);
+             popDetailsLocationQueue();
+
+             // $('#location_name').text(location_name);
+             // $('#date').text(date);
+
+             // console.log(location_details_que[0].date);
+         }
+
+        }
+
+
+        // --------2019-12-19-2:20--------------------------------------------------------
+
+
+        // --------2019-12-19-2:20--------------------------------------------------------
+        $( document ).ready(function() {
+            $('.left-alert-box').css('display','none');
+        });
+
+    function getPlaceName(lat,lng){
+        var location_name = "";
+        return $.ajax({
+          url: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
+          type: 'GET',
+          dataType: 'jsonp',
+          jsonp: 'jsoncallback',
+          data: {
+            prox: lat+','+lng,
+            mode: 'retrieveAddresses',
+            maxresults: '1',
+            gen: '9',
+            app_id: app_id,
+            app_code: app_code
+        }
+  
+
+        });
+         // return location_name;
+        }
+
+        function popLocationDataQueue()
+        {
+            if(location_details_que.length > 0)
+            {
+                return location_details_que.splice(0,1)[0];    
+            }
+            else
+            {
+                clearInterval(mapUpdateInterval);
+                console.log('no more map updation calls');
+                return null;
+            }
+        }
+
+
+       function popDetailsLocationQueue()
+        {
+            if(location_details_que.length > 0)
+            {
+                return location_details_que.splice(0,1)[0];    
+            }
+            else
+            {
+                console.log('no more map updation calls');
+                return null;
+            }
+        }
+
+
+       // --------2019-12-19-2:20-------------------------------------------------------
     </script>
 
 
@@ -651,6 +749,8 @@ padding: 5px 10px;
         format: 'yyyy-MM-dd HH:mm:ss',
       });
     </script>
+
+
 
 
 </body>
