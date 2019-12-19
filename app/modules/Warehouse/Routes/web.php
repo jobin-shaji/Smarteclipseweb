@@ -6,6 +6,8 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-transfer-root','WarehouseController@proceedRootGpsTransfer')->name('gps-transfer-root.transfer.p');
 	Route::post('/gps-transfer-root-proceed','WarehouseController@proceedConfirmRootGpsTransfer')->name('gps-transfer-root-proceed.create.p');
 	Route::get('/gps-transferred-root','WarehouseController@getRootList')->name('gps-transferred-root');
+	Route::post('/gps-transferred-root/get-from-list/','WarehouseController@getFromListRoot')->name('gps-transferred-root.get-from-list');
+	Route::post('/gps-transferred-root/get-to-list/','WarehouseController@getToListRoot')->name('gps-transferred-root.get-to-list');
 	Route::post('/gps-transfer-list-root','WarehouseController@getRootListData')->name('gps-transfer-list-root');
 	Route::post('/gps-transfer-root/cancel','WarehouseController@cancelRootGpsTransfer')->name('gps.cancel-root');
 

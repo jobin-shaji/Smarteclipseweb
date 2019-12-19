@@ -18,7 +18,7 @@ function initMap() {
 }
 var j=0;
 var limit=10;
-var offset=1;
+var offset=0;
 $(document).ready(function () {
   var url = 'gps-alert-list';
   var data={
