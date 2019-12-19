@@ -516,7 +516,7 @@ class DashboardController extends Controller
         $output = json_decode($geocodeFromLatLong);         
         $status = $output->status;
         //Get address from json data
-        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+        $address = ($status=="OK")?$output->results[0]->formatted_address:'';
         return $address; 
     }
 
