@@ -19,6 +19,10 @@ class CreateApplicationVersionsTable extends Migration
              $table->string('android_version');
              $table->string('ios_version');
              $table->text('description');
+             $table->string('android_version_code');
+             $table->string('android_version_priority');
+             $table->string('ios_version_code');
+             $table->string('ios_version_priority');
              $table->timestamps();
              $table->softDeletes();
         });

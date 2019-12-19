@@ -21,6 +21,7 @@ class VersionController extends Controller {
     // save version
     public function saveVersion(Request $request)
         {
+           
                 $rules = $this->versionRuleCreateRules();
                 $this->validate($request, $rules);
                 
@@ -29,6 +30,11 @@ class VersionController extends Controller {
                     'android_version' => $request->android_version,
                     'ios_version' => $request->ios_version,
                     'description' => $request->description,
+                    'android_version_code' => $request->android_version_code,
+                    'android_version_priority' => $request->android_version_priority,
+                    'ios_version_code' => $request->ios_version_code,
+                    'ios_version_priority' => $request->ios_version_priority,
+
                    ]);
 
                 $request->session()->flash('message', 'New  Version created successfully!'); 
@@ -44,7 +50,12 @@ class VersionController extends Controller {
                             'name',
                             'android_version',
                             'ios_version',
-                            'description')
+                            'description',
+                            'android_version_code'
+                            ,
+                            'android_version_priority',
+                            'ios_version_code','ios_version_priority'
+                        )
                             ->withTrashed()
                             ->get();
 
@@ -60,7 +71,12 @@ class VersionController extends Controller {
                 'name' => 'required',
                 'android_version' => 'required',
                 'ios_version' => 'required',
-                'description' => 'required'
+
+                'description' => 'required',
+                'android_version_code' => 'required',
+                 'android_version_priority' =>'required',
+                'ios_version_code' =>'required',
+                'ios_version_priority' =>'required'
             ];
             return  $rules;
         }

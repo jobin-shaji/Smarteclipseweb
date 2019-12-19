@@ -6,7 +6,7 @@ $(function(){
             var data = { content : content };
             $.ajax({
                 type:'POST',
-                url: "allack-list",
+                url: "allalt-list",
                 data:data ,
                 async: true,
                 headers: {
