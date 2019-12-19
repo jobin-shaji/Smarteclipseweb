@@ -1,20 +1,38 @@
 $(function () {
+    //  var d = new Date();
+    // free_date=d.setMonth(d.getMonth() - 1);
+    // fundamental_date=d.setMonth(d.getMonth() - 1);
+    // superior_date=d.setMonth(d.getMonth() - 2);
+    // pro_date=d.setMonth(d.getMonth() - 2);
     //  $("#txtFrom").datepicker({
     //     numberOfMonths: 1,
+    //     // maxDate:new Date(),
     //     onSelect: function (selected) {
     //         var dt = new Date(selected);
-    //         dt.setDate(dt.getDate() + 1);
+    //         // alert(dt);
+    //         if(dt>new Date()){
+    //             alert("please select proper date");
+    //             document.getElementById("txtFrom").value = "";
+    //         }else{
+    //              dt.setDate(dt.getDate() + 1);
     //         $("#txtTo").datepicker("option", "minDate", dt);
+    //         }
+           
     //     }
     // });
     // $("#txtTo").datepicker({
     //     numberOfMonths: 1,
+    //      maxDate:new Date(),
     //     onSelect: function (selected) {
     //         var dt = new Date(selected);
     //         dt.setDate(dt.getDate() - 1);
-    //         $("#txtFrom").datepicker("option", "maxDate", dt);
+    //         $("#txtFrom").datepicker("option", "maxDate", new Date());
     //     }
     // });
+
+
+
+
     const timeout = 9000000;  // 900000 ms = 15 minutes
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
@@ -51,8 +69,8 @@ $(function () {
                
             var decrementDay = moment(new Date(e.date));
             decrementDay.subtract(0, 'days');
-            // $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-            // $(this).data("DateTimePicker").hide();
+            $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
+            $(this).data("DateTimePicker").hide();
             // calculate();            
         });
         
