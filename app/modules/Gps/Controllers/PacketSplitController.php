@@ -60,7 +60,7 @@ class PacketSplitController extends Controller {
         $device_time = $this->getDateTime($date,$time);
         $array=[];
         $array=array(
-        	  'header' => $header,
+        	  'header' =>$header,
         	   'imei'=>$imei,
                 'date' => $date,
                 'time' => $time,
@@ -83,6 +83,7 @@ class PacketSplitController extends Controller {
                 'main_power_status' => $main_power_status,
                 'vehicle_mode' => $vehicle_mode,
                 'device_time' => $device_time,
+                 'gps_fix' => $gps_fix,
                 'vlt_data' => $vlt_data
               );
              return $array;

@@ -2,11 +2,12 @@
 $(function(){
     $('#searchclick').click(function() {
         var content = $('#packetvalue').val();
+    
         if(content){
-            var data = { content : content };
+            var data = {content:content};
             $.ajax({
                 type:'POST',
-                url: "allalt-list",
+                url: "allack-list",
                 data:data ,
                 async: true,
                 headers: {

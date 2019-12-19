@@ -56,16 +56,54 @@
                               <strong class="error-text">{{ $errors->first('ios_version') }}</strong>
                            </span>
                         @endif
-                      </div>   
-                      <div class="form-group has-feedback">
+                      </div> 
+                       <div class="form-group has-feedback">
                             <label>Description</label>
-                            <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Reason" name="description" value="{{ old('description') }}">
+                            <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="enter version" name="description" value="{{ old('description') }}">
                         @if ($errors->has('description'))
                            <span class="help-block">
                               <strong class="error-text">{{ $errors->first('description') }}</strong>
                            </span>
                         @endif
-                      </div>                                                       
+                      </div> 
+                       <div class="form-group has-feedback">
+                            <label>Android Version Code</label>
+                            <input type="text" class="form-control {{ $errors->has('android_version_code') ? ' has-error' : '' }}" placeholder="enter version code" name="android_version_code" value="{{ old('android_version_code') }}">
+                        @if ($errors->has('android_version_code'))
+                           <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('android_version_code') }}</strong>
+                           </span>
+                        @endif
+                      </div>           
+                      
+                        <div class="form-group has-feedback">
+                            <label>Android Version Priority</label>
+                            <input type="text" class="form-control {{ $errors->has('android_version_priority') ? ' has-error' : '' }}" placeholder="enter priority" 
+                            name="android_version_priority" value="{{ old('android_version_priority') }}">
+                        @if ($errors->has('android_version_priority'))
+                           <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('android_version_priority') }}</strong>
+                           </span>
+                        @endif
+                      </div>                      
+                      <div class="form-group has-feedback">
+                            <label>IOS Version Code</label>
+                            <input type="text" class="form-control {{ $errors->has('ios_version_code') ? ' has-error' : '' }}" placeholder="enter version code" name="ios_version_code" value="{{ old('ios_version_code') }}">
+                        @if ($errors->has('ios_version_code'))
+                           <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('ios_version_code') }}</strong>
+                           </span>
+                        @endif
+                      </div>  
+                      <div class="form-group has-feedback">
+                            <label>IOS Version  Priority</label>
+                            <input type="text" class="form-control {{ $errors->has('ios_version_priority') ? ' has-error' : '' }}" placeholder="enter priority" name="ios_version_priority" value="{{ old('ios_version_priority') }}">
+                        @if ($errors->has('ios_version_priority'))
+                           <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('ios_version_priority') }}</strong>
+                           </span>
+                        @endif
+                      </div>                                                            
                     </div>
                   </div>
                 </div>

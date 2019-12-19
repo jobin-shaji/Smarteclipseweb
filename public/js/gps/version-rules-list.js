@@ -41,6 +41,10 @@ function callBackDataTable(){
             {data: 'android_version', name: 'android_version',orderable: false, searchable: false},
             {data: 'ios_version', name: 'ios_version',orderable: false},
             {data: 'description', name: 'description',orderable: false,searchable: false},
+            {data: 'android_version_code', name: 'android_version_code',orderable: false},
+            {data: 'android_version_priority', name: 'android_version_priority',orderable: false},
+            {data: 'ios_version_code', name: 'ios_version_code',orderable: false},
+            {data: 'ios_version_priority', name: 'ios_version_priority',orderable: false},
            ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
