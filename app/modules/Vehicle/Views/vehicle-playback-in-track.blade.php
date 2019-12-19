@@ -415,7 +415,7 @@ padding: 5px 10px;
 
             isDataLoadInProgress = true;
            var Objdata = {
-                vehicleid: 7, 
+                vehicleid: $('#vehicle_id').val(), 
                 fromDateTime: $('#fromDate').val(),
                 toDateTime: $('#toDate').val(),
                  offset: offset
