@@ -62,12 +62,9 @@ class GpsController extends Controller {
                 return "
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps_stocks->gps_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                 <a href=".$b_url."/gps/".Crypt::encrypt($gps_stocks->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <button onclick=delGps(".$gps_stocks->gps_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Deactivate
-                </button>";
+                ";
             }else{
-                 return "
-                <button onclick=activateGps(".$gps_stocks->gps_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Restore
-                </button>";
+                 return "";
             }
         })
         ->rawColumns(['link', 'action'])

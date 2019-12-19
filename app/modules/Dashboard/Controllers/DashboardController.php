@@ -218,8 +218,15 @@ class DashboardController extends Controller
     }
     function rootDashboardView()
     {
+        $gps_manufactured = Gps::all()->count();
+        $gps_nontransferred_stock = GpsStock::whereNull('dealer_id')->whereNull('subdealer_id')->whereNull('client_id')->count();
+        $gps_transferred = GpsStock::whereNotNull('dealer_id')->count();
+        $gps_to_be_added_to_stock = $gps_manufactured-($gps_nontransferred_stock+$gps_transferred);
         return response()->json([
-            'gps' => GpsStock::whereNull('dealer_id')->whereNull('subdealer_id')->whereNull('client_id')->count(), 
+            'gps_manufactured' => $gps_manufactured, 
+            'gps' => $gps_nontransferred_stock, 
+            'gps_transferred' => $gps_transferred, 
+            'gps_to_be_added_to_stock' => $gps_to_be_added_to_stock, 
             'dealers' => Dealer::all()->count(), 
             'subdealers' => SubDealer::all()->count(),
             'clients' => Client::all()->count(),
