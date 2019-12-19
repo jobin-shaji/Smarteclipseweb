@@ -577,7 +577,8 @@ function downloadAlertReport(){
     var url = 'alert-report/export';
     var  vehicles=$('#vehicle').val();
     var  alerts=$('#alert').val();
-     if(alerts==null || vehicles==null)
+    
+     if(alerts==0 || vehicles==null)
      {
        var alert=0;
        var vehicle=0;
@@ -1421,7 +1422,7 @@ function getdataHLMList(id){
 
   function gpsDataHlm(res)
 {
-console.log(res.gpsData.header);
+// console.log(res.gpsData.header);
     $("#allHLMDataTable tr").remove();
     var gps=' <tr><td>Header</td><td>'+res.gpsData.header+'</td></tr>'+
             '<tr><td>Imei</td><td >'+res.gpsData.imei+'</td></tr>'+
@@ -1442,6 +1443,33 @@ console.log(res.gpsData.header);
     $('#gpsHLMDataModal').modal('show');
 }
 
+function dateDiff(value){
+     var fromDate=$('#fromDate').val();
+     var to_date=value
+     // alert(to_date);
+     if(fromDate!=null||to_date!=null)
+     {
+        if(fromDate>to_date)
+        {
+            document.getElementById("toDate").value = "";
+            alert("Please Select Proper date" );
+        }    
+     }     
+}
+function fromDateDiff(value){
+     var fromDate=value;
+     var to_date=$('#toDate').val()
+      
+     if(fromDate!=''&&to_date!='')
+     {
+        // alert(to_date);
+        if(to_date<fromDate)
+        {
+            document.getElementById("fromDate").value = "";
+            alert("Please Select Proper date" );
+        }  
+    }   
+}
 
 
 
