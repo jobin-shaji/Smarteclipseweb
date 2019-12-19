@@ -32,44 +32,12 @@ class IdleReportController extends Controller
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
-        $halt=0;
-        $time=0;
-        $initial_time = 0;
-        $previous_time =0;
-        $previous_mode = 0;
-        $vehicle_sleep=0;
         $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
         $from_date = date('Y-m-d H:i:s', strtotime($from));
         $to_date = date('Y-m-d H:i:s', strtotime($to.' 23:59:59'));
         $date_and_time=array('from_date' => $from_date, 'to_date' => $to_date);
         $vehicle_profile = $this->vehicleProfile($vehicle,$date_and_time,$client_id);
-      //   $gps_modes=GpsModeChange::where('device_time','>=',$request->from_date)
-      //      ->where('device_time','<=',$request->to_date)  
-      //      ->where('gps_id',$vehicleGps->gps_id)
-      //      ->orderBy('device_time','asc')
-      //      ->get();
-      //    // dd($gps_modes);
-      //   foreach ($gps_modes as $mode) {
-      //   if($initial_time == 0){
-      //       $initial_time = $mode->device_time;
-      //       $previous_time = $mode->device_time;
-      //       $previous_mode = $mode->mode;
-      //   }else{           
-      //        if($mode->mode == "H"){
-      //          $time = strtotime($mode->device_time) - strtotime($previous_time);
-      //          $halt= $halt+$time;   
-      //          // dd($halt) ;
-      //          if($halt<0)
-      //          {
-      //           $halt="0";               
-      //          }  
-                                    
-      //       }
-      //   }
-      //   $previous_time = $mode->device_time;
-      // }
-     
-      return response()->json([           
+        return response()->json([           
             'vehicle_name' => $vehicleGps->name,  
             'register_number' => $vehicleGps->register_number,   
             'halt' => $vehicle_profile['halt'],          

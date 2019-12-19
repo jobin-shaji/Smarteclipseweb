@@ -26,7 +26,43 @@
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
+              <div class="cover_div_search">
+                  <div class="row">    
+                    <div class="col-lg-3 col-md-2"> 
+                      <div class="form-group">                    
+                        <label> Type Of Transfer</label>
+                        <select class="form-control select2" data-live-search="true" title="Select Transfer Type" id="transfer_type" name="transfer_type">
+                          <option value="">Select Transfer Type</option>
+                          <option value="1">Manufacturer To Distributor</option>
+                          <option value="2">Distributor To Dealer</option>
+                          <option value="3">Dealer To Client</option>
+                        </select>
+                      </div>
+                    </div>                     
+                    <div class="col-lg-3 col-md-2"> 
+                      <div class="form-group">                    
+                        <label id="from_label"> From </label>
+                        <select class="form-control select2" id="from_id" name="from_id"  required>
+                        <option selected disabled>Please Select Previous Dropdown</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-2"> 
+                      <div class="form-group">                    
+                        <label id="to_label"> To </label>
+                        <select class="form-control select2" id="to_id" name="to_id"  required>
+                        <option selected disabled>Please Select Previous Dropdown</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-2 pt-4">
 
+                    <div class="form-group">          
+                      <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                    </div>
+                    </div>                         
+                  </div>
+                </div>
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
