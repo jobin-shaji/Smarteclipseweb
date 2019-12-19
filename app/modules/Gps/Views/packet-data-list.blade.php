@@ -56,6 +56,7 @@
   </div>
 </div>
 </div>
+<form method="POST">
 <table class="greyGridTable" ><!-- style="width:50%;font-size: 13.5px!important" -->
  
   <tbody>
@@ -63,85 +64,84 @@
       <th>Packet Values</th>
 
     <tr>
-      <td>Header</td>
-      <td id="headernew"></td>
+      <td>  <INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
 
     <tr>
       <td>IMEI</td>
-      <td id="imei"></td>
+      <td id="imei"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td id="date"></td>
+      <td id="date"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Alert ID</td>
-      <td id="code"></td>
+      <td id="code"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
       <tr>
       <td>Time</td>
-      <td id="time"></td>
+      <td id="time"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
      <tr>
       <td>Device Time</td>
-      <td id="device_time"></td>
+      <td id="device_time"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
      <tr>
       <td>GPS  Fix</td>
-      <td id="gps_fix"></td>
+      <td id="gps_fix"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Packet Status</td>
-      <td id="packet_status"></td>
+      <td id="packet_status"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Latitude</td>
-      <td id="latitude"></td>
+      <td id="latitude"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Latitude Dir</td>
-      <td id="latitude_dir"></td>
+      <td id="latitude_dir"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Longitude</td>
-      <td id="long"></td>
+      <td id="long"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>Longitude  Dir</td>
-      <td id="long_dir"></td>
+      <td id="long_dir"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>MCC</td>
-      <td id="MCC"></td>
+      <td id="MCC"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>MNC</td>
-      <td id="MNC"></td>
+      <td id="MNC"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>LAC</td>
-      <td id="LAC"></td>
+      <td id="LAC"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
     <tr>
       <td>CELL ID</td>
-      <td id="cell_id"></td>
+      <td id="cell_id"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
       <tr>
       <td>SPEED</td>
-      <td id="SPEED"></td>
+      <td id="SPEED"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
       <tr>
       <td>HEADING</td>
-      <td id="heading"></td>
+      <td id="heading"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
      <tr>
       <td>No Of Satelites</td>
-      <td id="no_of_satelites"></td>
+      <td id="no_of_satelites"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
      <tr>
       <td>HDOP</td>
-      <td id="hdop"></td>
+      <td id="hdop"><INPUT TYPE="TEXT"  id="headernew" NAME="name" SIZE="40"></td>
     </tr>
      <tr>
       <td>GSM Signal Strength</td>
@@ -166,6 +166,8 @@
   </tbody>
   
 </table>
+</form>
+
 </section>
 <div class="clearfix"></div>
 <section class="content" >
