@@ -170,7 +170,7 @@
             </div>
 
             <div style="position:absolute;left:70px;top:187.32px; line-height: 21px;" class="cls_002">
-                <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b></span>
+                <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
             </div>
 
             <p style="margin-top: 24%;margin-left: 70px"><b>Details of AIS 140 Device</b></p>
@@ -223,13 +223,13 @@
             </table>
            
             
-            <div style="position:absolute;left:70px;top:750px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:70px;top:770px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:70px;top:820px" class="cls_002">
+            <div style="position:absolute;left:70px;top:830px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:70px;top:860px" class="cls_002">
+             <div style="position:absolute;left:70px;top:870px" class="cls_002">
                 <span class="cls_002">{{$servicer_job->sub_dealer->name}}</span>
             </div>
             <div style="position:absolute;left:70px;top:930px" class="cls_002">
