@@ -37,13 +37,16 @@ class AckController extends Controller {
     public function processAckData($vlt_data){
 
         $comma_seperated = substr($vlt_data,96);
+
         $imei = substr($vlt_data,3,15);
         $date = substr($vlt_data,22,6);
         $time = substr($vlt_data,28,6);
         $end_char  = '*';
         $end_pos = strpos($vlt_data, $end_char);
-        $bad_response = substr($vlt_data,97,$end_pos);
+        $bad_response = substr($vlt_data,96,$end_pos);
+    
         $response = str_replace('*','',$bad_response);
+
         $code = substr($vlt_data,18,2);
         $lat = substr($vlt_data,34,10);
         $lng = substr($vlt_data,45,10);
@@ -85,6 +88,8 @@ class AckController extends Controller {
                 'vehicle_mode' => $vehicle_mode,
                 'response' => $response,
                 'vlt_data' => $vlt_data,
+                 'response' => $response,
+                 'comma_seperated'=>$comma_seperated,
                 'device_time' => $device_time
               );
              return $array;

@@ -101,7 +101,7 @@ table, th, td {
 
 <body>
 
-<table style="width:50%;font-size: 13.5px!important">
+<table style="width:60%;font-size: 13.5px!important">
  
   <tbody>
    <th>Packet Params</th>
@@ -109,68 +109,65 @@ table, th, td {
 
     <tr>
       <td>Header</td>
-      <td id="header"></td>
+      <td><INPUT TYPE="TEXT"  id="header" NAME="header" SIZE="110"></td>
     </tr>
 
     <tr>
       <td>IMEI</td>
-      <td id="imei"></td>
+      <td><INPUT TYPE="TEXT"  id="imei" NAME="imei" SIZE="110"></td>
     </tr>
      <tr>
       <td>Activation Key</td>
-      <td id="activationKey"></td>
+      <td><INPUT TYPE="TEXT"  id="activationKey" NAME="activationKey" SIZE="110"></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td id="date"></td>
+      <td><INPUT TYPE="TEXT"  id="date" NAME="date" SIZE="110"></td>
     </tr>
    
       <tr>
       <td>Time</td>
-      <td id="time"></td>
+      <td><INPUT TYPE="TEXT"  id="time" NAME="time" SIZE="110"></td>
     </tr>
      <tr>
       <td>Device Time</td>
-      <td id="device_time"></td>
+      <td><INPUT TYPE="TEXT"  id="device_time" NAME="device_time" SIZE="110"></td>
     </tr>
    
     <tr>
       <td>Latitude</td>
-      <td id="latitude"></td>
+      <td ><INPUT TYPE="TEXT"  id="latitude" NAME="latitude" SIZE="110"></td>
     </tr>
     <tr>
       <td>Latitude Dir</td>
-      <td id="latitude_dir"></td>
+      <td ><INPUT TYPE="TEXT"  id="latitude_dir" NAME="latitude_dir" SIZE="110"></td>
     </tr>
     <tr>
       <td>Longitude</td>
-      <td id="long"></td>
+      <td><INPUT TYPE="TEXT"  id="long" NAME="long" SIZE="110"></td>
     </tr>
     <tr>
       <td>Longitude  Dir</td>
-      <td id="long_dir"></td>
+      <td><INPUT TYPE="TEXT"  id="long_dir" NAME="long" SIZE="110"></td>
     </tr>
    
       <tr>
       <td>Speed</td>
-      <td id="SPEED"></td>
+      <td><INPUT TYPE="TEXT"  id="SPEED" NAME="SPEED" SIZE="110"></td>
     </tr>
-   
- 
-    
-    
-  </tbody>
-  
-</table>
-
-
-
+   </tbody>
+  </table>
+ <div data-container="button">
+   <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+height:40px;"> Generate </button>   
+</div>        
+<br>
+<br>
+ <textarea   id = "mergedvalue" style="float: right;display:none" rows="4" cols="50">
+</textarea> 
 </body>
 </html>
-
-
-   
-  </div>
+</div>
 </section>
 
 

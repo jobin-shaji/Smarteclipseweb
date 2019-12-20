@@ -46,3 +46,18 @@ $(function(){
     });
 });
 
+$(function(){
+$('#generate').click(function() {
+            var result = $('#headernew').val() + $('#imei').val()+ 
+            $('#code').val()+$('#packet_status').val()+
+            $('#gps_fix').val()+$('#date').val()+$('#time').val()+ 
+            $('#latitude').val()+$('#latitude_dir').val()+
+            $('#long').val()+$('#long_dir').val()+$('#MCC').val()+
+            $('#MNC').val()+$('#LAC').val()+$('#cell_id').val()+
+            $('#SPEED').val()+$('#heading').val()+$('#no_of_satelites').val()+
+            $('#hdop').val()+ $('#gsm_signal_strength').val()+$('#ignition').val()+
+            $('#main_power_status').val()+$('#vehicle_mode').val();
+            $('#mergedvalue').val(result);
+            $('#mergedvalue').show();
+    });
+});

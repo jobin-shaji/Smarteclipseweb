@@ -18,71 +18,11 @@
 
                   </textarea>
                       <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
-               <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
-              </div>
-            </div>
-
-        <!--  <div class="col-lg-3 col-md-3"> 
-           <div  style ="margin-left: 77px"class="form-group has-feedback">        
-          <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> <i class="fa fa-search"></i> </button>
-      </div>
-        </div>  -->                       
-      </div>
+                 </div>
+            </div></div>
     </div>      
   </div>
-  
-
-<div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
-            SET OTA
-          </button> -->
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allHLMDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-        
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
+  </section>
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
@@ -110,110 +50,122 @@ table, th, td {
 
     <tr>
       <td>Header</td>
-      <td id="header"></td>
+      <td ><INPUT TYPE="TEXT"  id="header" NAME="header" SIZE="110"></td>
     </tr>
 
     <tr>
       <td>IMEI</td>
-      <td id="imei"></td>
+      <td ><INPUT TYPE="TEXT"  id="imei" NAME="imei" SIZE="110"></td>
     </tr>
      <tr>
       <td>Alert ID</td>
-      <td id="alert_id"></td>
+      <td ><INPUT TYPE="TEXT"  id="alert_id" NAME="alert_id" SIZE="110"></td>
     </tr>
      <tr>
       <td>Gps Fix</td>
-      <td id="gps_fix"></td>
+      <td ><INPUT TYPE="TEXT"  id="gps_fix" NAME="gps_fix" SIZE="110"></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td id="date"></td>
+      <td ><INPUT TYPE="TEXT"  id="date" NAME="date" SIZE="110"></td>
     </tr>
    
       <tr>
       <td>Time</td>
-      <td id="time"></td>
+      <td><INPUT TYPE="TEXT"  id="time" NAME="time" SIZE="110"></td>
     </tr>
      <tr>
       <td>Device Time</td>
-      <td id="device_time"></td>
+      <td ><INPUT TYPE="TEXT"  id="device_time" NAME="device_time" SIZE="110"></td>
     </tr>
     <tr>
       <td>Packet Status</td>
-      <td id="packet_status"></td>
+      <td><INPUT TYPE="TEXT"  id="packet_status" NAME="packet_status" SIZE="110"></td>
     </tr>
     <tr>
       <td>Latitude</td>
-      <td id="latitude"></td>
+      <td ><INPUT TYPE="TEXT"  id="latitude" NAME="latitude" SIZE="110"></td>
     </tr>
     <tr>
       <td>Latitude Dir</td>
-      <td id="latitude_dir"></td>
+      <td ><INPUT TYPE="TEXT"  id="latitude_dir" NAME="latitude_dir" SIZE="110"></td>
     </tr>
     <tr>
       <td>Longitude</td>
-      <td id="long"></td>
+      <td><INPUT TYPE="TEXT"  id="long" NAME="long" SIZE="110"></td>
     </tr>
     <tr>
       <td>Longitude  Dir</td>
-      <td id="long_dir"></td>
+      <td ><INPUT TYPE="TEXT"  id="long_dir" NAME="long_dir" SIZE="110"></td>
     </tr>
     <tr>
       <td>MCC</td>
-      <td id="MCC"></td>
+      <td ><INPUT TYPE="TEXT"  id="MCC" NAME="MCC" SIZE="110"></td>
     </tr>
     <tr>
       <td>MNC</td>
-      <td id="MNC"></td>
+      <td ><INPUT TYPE="TEXT"  id="MNC" NAME="MNC" SIZE="110"></td>
     </tr>
     <tr>
       <td>LAC</td>
-      <td id="LAC"></td>
+      <td><INPUT TYPE="TEXT"  id="LAC" NAME="LAC" SIZE="110"></td>
     </tr>
     <tr>
       <td>Cell ID</td>
-      <td id="cell_id"></td>
+      <td ><INPUT TYPE="TEXT"  id="cell_id" NAME="cell_id" SIZE="110"></td>
     </tr>
       <tr>
       <td>Speed</td>
-      <td id="SPEED"></td>
+      <td><INPUT TYPE="TEXT"  id="SPEED" NAME="SPEED" SIZE="110"></td>
     </tr>
       <tr>
       <td>Heading</td>
-      <td id="heading"></td>
+      <td><INPUT TYPE="TEXT"  id="heading" NAME="heading" SIZE="110"></td>
     </tr>
      <tr>
       <td>No Of Satelites</td>
-      <td id="no_of_satelites"></td>
+      <td ><INPUT TYPE="TEXT"  id="no_of_satelites" NAME="no_of_satelites" SIZE="110"></td>
     </tr>
      <tr>
       <td>HDOP</td>
-      <td id="hdop"></td>
+      <td><INPUT TYPE="TEXT"  id="hdop" NAME="hdop" SIZE="110"></td>
     </tr>
      <tr>
       <td>GSM Signal Strength</td>
-      <td id="gsm_signal_strength"></td>
+      <td ><INPUT TYPE="TEXT"  id="gsm_signal_strength" NAME="gsm_signal_strength" SIZE="110"></td>
     </tr>
  
        <tr>
       <td>Ignition</td>
-      <td id="ignition"></td>
+      <td ><INPUT TYPE="TEXT"  id="ignition" NAME="ignition" SIZE="110"></td>
     </tr>
      
       <tr>
       <td>Main Power Status</td>
-      <td id="main_power_status"></td>
+      <td ><INPUT TYPE="TEXT"  id="main_power_status" NAME="main_power_status" SIZE="110"></td>
     </tr>
      
       <tr>
       <td>Vehicle Mode</td>
-      <td id="vehicle_mode"></td>
+      <td ><INPUT TYPE="TEXT"  id="vehicle_mode" NAME="vehicle_mode" SIZE="110"></td>
     </tr>
-    
+     <tr>
+      <td>key and values</td>
+      <td ><INPUT TYPE="TEXT"  id="key" NAME="key" SIZE="110"></td>
+    </tr>
+    <INPUT TYPE="hidden"  id="comma_seperated" NAME="comma_seperated" SIZE="110">
   </tbody>
   
 </table>
 
+<div data-container="button">
+   <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+height:40px;"> Generate </button>   
+</div>        
+<br>
+<br>
+ <textarea   id = "mergedvalue" style="float: right;display:none" rows="5" cols="50">
+</textarea> 
 
 
 </body>
