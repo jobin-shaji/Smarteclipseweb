@@ -28,7 +28,7 @@
 
 
     <div class="wrapper overlay-sidebar">
-<input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+<input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
 <div class="top-date">
           <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
@@ -407,7 +407,7 @@ padding: 5px 10px;
         var previousCoorinates;
         var blacklineStyle;
         var speed_val            = 1;
-        var Speed                = 600;
+        var Speed                = 5000;
         var loader               = false;
     
          
@@ -732,8 +732,8 @@ padding: 5px 10px;
                              '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
                               '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
                               '<p><span class="place_data">'+
-                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+speed+
-                                '<p class="datetime_cover" id="date">'+date+'</p>'+
+                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
+                                ' km/h <p class="datetime_cover" id="date">'+date+'</p>'+
                                 '<div class="left-alert-time"></div>'+
                             '</div>';
              $('#location_details').remove()            
@@ -817,13 +817,15 @@ padding: 5px 10px;
     </script>
     <script type="text/javascript">
       $('#datetimepicker_live1').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
+        format: 'yyyy-MM-dd hh:mm:ss',
+        pick12HourFormat: false 
    
       });
     </script>
     <script type="text/javascript">
       $('#datetimepicker_live2').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
+        format: 'yyyy-MM-dd hh:mm:ss',
+        pick12HourFormat: false 
       });
     </script>
 
