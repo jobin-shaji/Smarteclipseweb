@@ -16,7 +16,7 @@
             <!-- <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>   -->
             <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a> 
-            <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LOG</a> 
+            <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST</a> 
         </div>
     </li>
     <li class="nav-item dropdown">
@@ -27,7 +27,7 @@
             <a class="dropdown-item" href="{{url('/sos/create')}}">ADD SOS</a>
             <a class="dropdown-item" href="{{url('/sos')}}">IN STOCK</a>  
             <a class="dropdown-item" href="{{url('/sos-transfer-root/create')}}">TRANSFER SOS</a> 
-            <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LOG</a> 
+            <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST</a> 
             <a class="dropdown-item" href="{{url('/sos-transferred')}}">TRANSFERRED SOS</a>
         </div>
     </li>

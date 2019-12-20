@@ -89,21 +89,21 @@
 
         <div class="main-panel main-pane-bg">
             <div class="content">
+              <div class="lorder-cover-bg" id="lorder-cover-bg-image">
+                <div class="lorder-cover-bg-image" >
+                   <img id="loading-image" src="{{asset('playback/assets/img/loader.gif')}}" />
+               </div>
+               </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
                 <div id="markers" style="width:100%px;height:595px; position: relative;">
+                 
                     <div class="left-alert-box">
-                    <div id="details" class="left-alert-inner">
-                          
-
+                    <div id="details" class="left-alert-inner">  
+                       <span id="location_details">
+                        <h1 data-text="It's loading…" id="location_details_text">It's loading…</h1>
+                    </span>                     
+                    </div> 
                     </div>
-
-                          
-
-                      
-
-                    </div>
-
-
                 </div>
                 <div class="page-inner mt--5">
                 </div>
@@ -113,6 +113,52 @@
     <!-- Style -->
 
     <style>
+
+
+     
+   #location_details_text {
+    position: relative;
+    color: rgba(0, 0, 0, .3);
+    font-size: 1em
+   }
+  #location_details_text:before {
+    content: attr(data-text);
+    position: absolute;
+    overflow: hidden;
+    max-width: 7em;
+    white-space: nowrap;
+    color: #dab606;
+    animation: loading 8s linear;
+  }
+@keyframes loading {
+    0% {
+        max-width: 0;
+    }
+}
+h1#location_details_text {
+    margin-left: 45px;
+}
+    .lorder-cover-bg {
+    width: 100%;
+    position: absolute;
+    z-index: 9;
+    background: #00000075;
+    height: 595px;
+    display: none;
+}
+     .lorder-cover-bg-image{
+        width: 75px;
+        margin: 0px auto;
+     }
+          .lorder-cover-bg-image img{
+       width: 100%;
+    padding-top: 280px;
+          }
+         .lorder-cover-bg-image span{
+            width: 100%;
+            float: left;
+            text-align: center;
+         }
         #cover-spin {
             position: fixed;
             width: 100%;
@@ -308,10 +354,10 @@ padding: 5px 10px;
         var total_offset             = 0;
         var last_offset              = false;
         var objImg                   = document.createElement('img');
-        var vehicle_online      =   '{{asset("playback/assets/img/car_online.png")}}';
-        var vehicle_halt        =   '{{asset("playback/assets/img/car_halt.png")}}';
-        var vehicle_sleep       =   '{{asset("playback/assets/img/car_sleep.png")}}';
-        var vehicle_offline     =   '{{asset("playback/assets/img/car_offline.png")}}';
+        var vehicle_online      =   '{{asset("playback/assets/img/car_test.png")}}';
+        var vehicle_halt        =   '{{asset("playback/assets/img/car_test.png")}}';
+        var vehicle_sleep       =   '{{asset("playback/assets/img/car_test.png")}}';
+        var vehicle_offline     =   '{{asset("playback/assets/img/car_test.png")}}';
         var outerElement        = document.createElement('div')
         var domIcon             = new H.map.DomIcon(outerElement);
         var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
@@ -348,6 +394,7 @@ padding: 5px 10px;
         var blacklineStyle;
         var speed_val            = 1;
         var Speed                = 600;
+        var loader               = false;
     
          
 
@@ -355,10 +402,18 @@ padding: 5px 10px;
 
          
         function startPlayBack(){
+                loader      =   true;
                 speed_val   =   $('#speed').val();
                 speed       =   speed/speed_val;
+
+                if(loader == true){
+                 $("#lorder-cover-bg-image").css("display","block");
+                }
+
                 getLocationData();
                $('.left-alert-box').css('display','block');
+
+               
 
 
         }
@@ -473,6 +528,10 @@ padding: 5px 10px;
             console.log('Current length '+location_data_que.length);
             if(location_data_que.length >0)
             {
+                 loader = false;
+                 if(loader == false){
+                 $("#lorder-cover-bg-image").css("display","none");
+                }
                
                 moveMap(location_data_que[0].lat,location_data_que[0].lng);
                 // create start marker
@@ -608,7 +667,7 @@ padding: 5px 10px;
                 el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
             }
             outerElement.appendChild(el);
-            outerElement.style.top = "-30px";
+            outerElement.style.top = "-25px";
             outerElement.style.width = "200px";
 
             var domIcon = new H.map.DomIcon(outerElement);
@@ -659,7 +718,7 @@ padding: 5px 10px;
                                 '<p class="datetime_cover" id="date">'+date+'</p>'+
                                 '<div class="left-alert-time"></div>'+
                             '</div>';
-
+             $('#location_details').remove()            
              $("#details").prepend(details);
              popDetailsLocationQueue();
 
