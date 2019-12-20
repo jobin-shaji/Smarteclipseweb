@@ -86,6 +86,10 @@
           </div>
           
 </div>
+        <input type="text" name="online_icon" id="online_icon" value="{{$vehicle_type->online_icon}}">
+        <input type="text" name="offline_icon" id="offline_icon" value="{{$vehicle_type->offline_icon}}">
+        <input type="text" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->ideal_icon}}">
+        <input type="text" name="sleep_icon" id="sleep_icon" value="{{$vehicle_type->sleep_icon}}">
 
         <div class="main-panel main-pane-bg">
             <div class="content">
@@ -353,12 +357,22 @@ padding: 5px 10px;
         var first_point              = true;
         var total_offset             = 0;
         var last_offset              = false;
+        var vehicle_halt,vehicle_sleep,vehicle_offline,vehicle_online;
+
+     
+   
+               vehicle_halt        =   '/documents/'+$('#ideal_icon').val();
+               vehicle_sleep       =   '/documents/'+$('#sleep_icon').val();
+               vehicle_offline     =   '/documents/'+$('#offline_icon').val();
+               vehicle_online      =   '/documents/'+$('#online_icon').val();
+
+    
+
+
         var objImg                   = document.createElement('img');
-        var vehicle_online      =   '{{asset("playback/assets/img/car_test.png")}}';
-        var vehicle_halt        =   '{{asset("playback/assets/img/car_test.png")}}';
-        var vehicle_sleep       =   '{{asset("playback/assets/img/car_test.png")}}';
-        var vehicle_offline     =   '{{asset("playback/assets/img/car_test.png")}}';
-        var outerElement        = document.createElement('div')
+    
+
+             var outerElement        = document.createElement('div')
         var domIcon             = new H.map.DomIcon(outerElement);
         var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
         var stop_icon           = new H.map.Icon('{{asset("playback/assets/img/flag.png")}}');
@@ -402,6 +416,10 @@ padding: 5px 10px;
 
          
         function startPlayBack(){
+           
+
+
+
                 loader      =   true;
                 speed_val   =   $('#speed').val();
                 speed       =   speed/speed_val;
@@ -714,8 +732,8 @@ padding: 5px 10px;
                              '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
                               '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
                               '<p><span class="place_data">'+
-                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+speed+
-                                '<p class="datetime_cover" id="date">'+date+'</p>'+
+                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
+                                ' km/h <p class="datetime_cover" id="date">'+date+'</p>'+
                                 '<div class="left-alert-time"></div>'+
                             '</div>';
              $('#location_details').remove()            
