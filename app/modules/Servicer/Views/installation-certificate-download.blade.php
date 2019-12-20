@@ -190,7 +190,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="cls_002 grey">CDAC Certification No</td>
+                    <td class="cls_002 grey" style="width: 30%">CDAC Certification No</td>
                     <td>CDAC-CR045</td>
                 </tr>
             </table>
@@ -209,7 +209,7 @@
                     <td>{{$client->name}}</td>
                 </tr>
                 <tr>
-                    <td class="cls_002 grey">Registered Owner Address</td>
+                    <td class="cls_002 grey" style="width: 30%">Registered Owner Address</td>
                     <td>{{$client->address}}</td>
                 </tr>
                 <tr>
@@ -234,10 +234,6 @@
             </div>
             <div style="position:absolute;left:70px;top:930px" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
-            </div>
-            <br><br>
-            <div style="position:absolute;left:500px;top:980px" class="cls_003">
-                <img src="assets/images/logo1.png" alt="Logo" height="50px" width="100px">
             </div>
         </div>
         
