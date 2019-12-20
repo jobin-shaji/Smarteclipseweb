@@ -28,7 +28,7 @@
 
 
     <div class="wrapper overlay-sidebar">
-<input type="hidden" name="vid" id="vehicle_id" value="{{$Vehicle_id}}">
+<input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
 <div class="top-date">
           <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
