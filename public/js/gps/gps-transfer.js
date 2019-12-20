@@ -14,11 +14,32 @@ function check()
         var to_id = document.getElementById('to_id').value;
         var data = {'transfer_type':transfer_type , 'from_id':from_id , 'to_id':to_id};
         callBackDataTable(data);
+        countSection(data);
     }
        
 }
 
+function countSection(data)
+{
+    var url = 'gps-transferred-count-root';
+    var purl = getUrl() + '/' + url;
+    $.ajax({
+        type: 'POST',
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+            $('#transferred_count_string').text(res);
+        },
+    });
+}
+
+
 function callBackDataTable(data){
+    $('#count_section').show();
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -180,7 +201,7 @@ $('#transfer_type').on('change', function() {
         if(data){
           $('#from_id').empty();
           $('#from_id').focus;
-          $('#from_id').append('<option value="">  Select User </option>'); 
+          $('#from_id').append('<option selected disabled>  Select User </option>'); 
           if(transfer_type != 1)
           {
             $('#from_id').append('<option value="0">  All </option>'); 
@@ -215,7 +236,7 @@ $('#from_id').on('change', function() {
         if(data){
           $('#to_id').empty();
           $('#to_id').focus;
-          $('#to_id').append('<option value="">  Select User </option>'); 
+          $('#to_id').append('<option selected disabled>  Select User </option>'); 
           $('#to_id').append('<option value="0">  All </option>'); 
           $.each(data, function(key, value){
             $('select[name="to_id"]').append('<option value="'+ value.user_id +'">' + value.name+ '</option>');
