@@ -353,6 +353,221 @@ class WarehouseController extends Controller {
         return $gps_transfer;
     }
 
+    public function getTotalTransferredCount(Request $request)
+    {
+        $transfer_type=$request['transfer_type'];
+        $from_user_id=$request['from_id'];
+        $to_user_id=$request['to_id'];
+
+        $gps_transfers = GpsTransfer::select(
+            'id', 
+            'from_user_id', 
+            'to_user_id',
+            'dispatched_on',
+            'accepted_on',
+            'deleted_at'
+        )
+        ->with('fromUser:id,username')
+        ->with('toUser:id,username')
+        ->whereNotNULL('accepted_on');
+
+        if($transfer_type == 1)
+        {
+            $transferred_string = $this->manufacturerToDistributorTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+        }
+        else if($transfer_type == 2)
+        {
+            $transferred_string = $this->distributorToDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+        }
+        else if($transfer_type == 3)
+        {
+            $transferred_string = $this->dealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+        }
+
+        return response()->json($transferred_string);
+    }
+
+    public function manufacturerToDistributorTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    {
+        $from_user_details = Root::where('user_id',$from_user_id)->first();
+        if($to_user_id == '0')
+        {
+            $all_distributors = Dealer::all();
+            $distributors=[];
+            foreach ($all_distributors as $distributor) {
+                $distributors[]=$distributor->user_id;
+            }
+            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$distributors)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count." devices transferred to all distributors by ".$from_user_details->name;
+        }
+        else
+        {
+            $to_user_details = Dealer::where('user_id',$to_user_id)->first();
+            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $stock_in_distributor=GpsStock::where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by '.$from_user_details->name."\n".$to_user_details->name.' has '.$stock_in_distributor.' devices in stock.';
+        }
+        return $transferred_string;
+    }
+
+    public function distributorToDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    {
+        if($from_user_id)
+        {
+            $from_user_details = Dealer::where('user_id',$from_user_id)->first();
+        }
+        if($to_user_id)
+        {
+            $to_user_details = SubDealer::where('user_id',$to_user_id)->first();
+        }
+        if($from_user_id == '0' && $to_user_id == '0')
+        {
+            $all_distributors = Dealer::all();
+            $distributors=[];
+            foreach ($all_distributors as $distributor) {
+                $distributors[]=$distributor->user_id;
+            }
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $gps_transfers = $gps_transfers->whereIn('from_user_id',$distributors)->whereIn('to_user_id',$dealers)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count." devices transferred to dealers by distributors";
+        }
+        else if($from_user_id != '0' && $to_user_id == '0')
+        {
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$dealers)->get();
+
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to all dealers by '.$from_user_details->name;
+        }
+        else if($from_user_id == '0' && $to_user_id != '0')
+        {
+            $all_distributors = Dealer::all();
+            $distributors=[];
+            foreach ($all_distributors as $distributor) {
+                $distributors[]=$distributor->user_id;
+            }
+            $gps_transfers = $gps_transfers->whereIn('from_user_id',$distributors)->where('to_user_id',$to_user_id)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by distributors.';
+        }
+        else
+        {
+            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $stock_in_dealer=GpsStock::where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by '.$from_user_details->name.'. '."\n".$to_user_details->name.' has '.$stock_in_dealer.' devices in stock.';
+        }
+        return $transferred_string;
+    }
+
+    public function dealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    {
+        if($from_user_id)
+        {
+            $from_user_details = SubDealer::where('user_id',$from_user_id)->first();
+        }
+        if($to_user_id)
+        {
+            $to_user_details = Client::where('user_id',$to_user_id)->first();
+        }
+        if($from_user_id == '0' && $to_user_id == '0')
+        {
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $all_clients = Client::all();
+            $clients=[];
+            foreach ($all_clients as $client) {
+                $clients[]=$client->user_id;
+            }
+            $gps_transfers = $gps_transfers->whereIn('from_user_id',$dealers)->whereIn('to_user_id',$clients)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count." devices transferred to clients by dealers";
+        }
+        else if($from_user_id != '0' && $to_user_id == '0')
+        {
+            $all_clients = Client::all();
+            $clients=[];
+            foreach ($all_clients as $client) {
+                $clients[]=$client->user_id;
+            }
+            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$clients)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to all clients by '.$from_user_details->name;
+        }
+        else if($from_user_id == '0' && $to_user_id != '0')
+        {
+            $all_dealers = SubDealer::all();
+            $dealers=[];
+            foreach ($all_dealers as $dealer) {
+                $dealers[]=$dealer->user_id;
+            }
+            $gps_transfers = $gps_transfers->whereIn('from_user_id',$dealers)->where('to_user_id',$to_user_id)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by dealers.';
+        }
+        else
+        {
+            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
+            $gps_transfer_items=[];
+            foreach ($gps_transfers as $gps_transfer) {
+                $gps_transfer_items[] = $gps_transfer->id;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by '.$from_user_details->name.'. ';
+        }
+        return $transferred_string;
+    }
+
     // create root gps transfer
     public function createRootGpsTransfer(Request $request) 
     {
@@ -1227,6 +1442,107 @@ class WarehouseController extends Controller {
                     );
             return $pdf->download('GPSTransferLabel.pdf',$headers);
         }
+    }
+
+    //Device track in root panel
+
+    public function getRootDeviceTrack()
+    {
+        return view('Warehouse::device-track-root');
+    }
+
+    public function getRootDeviceTrackData(Request $request)
+    {
+        $gps_stock = GpsStock::select('id','gps_id','inserted_by','dealer_id','subdealer_id','client_id','deleted_at')
+                    ->with('gps')
+                    ->with('dealer')
+                    ->with('subdealer')
+                    ->with('client')
+                    ->with('manufacturer')
+                    ->get();
+        return DataTables::of($gps_stock)
+        ->addIndexColumn()
+        ->addColumn('manufacturer',function($gps_stock){
+            $manufacturer = $gps_stock->manufacturer['name'];
+            return $manufacturer;
+        })
+        ->addColumn('distributor',function($gps_stock){
+            $distributor = $gps_stock->dealer_id;
+            if($distributor)
+            {
+                return $gps_stock->dealer['name'];
+                
+            }
+            else if(isset($distributor))
+            {           
+                return 'Awaiting Transfer Confirmation';
+                //return "Awaiting <span title='Awaiting transfer confirmation'><i class='fa fa-info-circle' aria-hidden='true'></i></span>";
+            }
+            else{
+                return "Not Transferred";
+            }
+            
+        })
+        ->addColumn('dealer',function($gps_stock){
+            $dealer = $gps_stock->subdealer_id;
+            if($dealer)
+            {
+                return $gps_stock->subdealer['name'];
+                
+            }
+            else if(isset($dealer))
+            {           
+                return 'Awaiting Transfer Confirmation';
+            }
+            else{
+                return "Not Transferred";
+            }
+        })
+        ->addColumn('client',function($gps_stock){
+            $subdealer = $gps_stock->client_id;
+            if($subdealer)
+            {
+                return $gps_stock->client['name'];
+                
+            }
+            else if(isset($subdealer))
+            {           
+                return 'Awaiting Transfer Confirmation';
+            }
+            else{
+                return "Not Transferred";
+            }
+        })
+        ->addColumn('action', function ($gps_stock) 
+        {
+            $b_url = \URL::to('/');
+            if($gps_stock->deleted_at == null)
+            {
+                return "
+                <a href=".$b_url."/gps-device-track-root-details/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            }
+            else{
+                return "";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+    public function rootDeviceTrackDetails(Request $request)
+    {
+        $decrypted_gps_id = Crypt::decrypt($request->id); 
+        $gps_transfer_items = GpsTransferItems::where('gps_id',$decrypted_gps_id)->get();
+        $gps_transfer_ids = [];
+        foreach ($gps_transfer_items as $gps_transfer_item) {
+            $gps_transfer_ids[] = $gps_transfer_item->gps_transfer_id;
+        }
+        $gps_transfers = GpsTransfer::whereIn('id',$gps_transfer_ids)
+                            ->with('fromUser:id,username')
+                            ->with('toUser:id,username')
+                            ->withTrashed()
+                            ->get();
+        return view('Warehouse::device-track-root-details',['gps_transfers' => $gps_transfers]);
     }
 
     // root gps transfer rule

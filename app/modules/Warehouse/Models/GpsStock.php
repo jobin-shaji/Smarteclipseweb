@@ -43,4 +43,9 @@ class GpsStock extends Model
         return $this->hasone('App\Modules\User\Models\User','id','inserted_by');
     }
 
+    public function manufacturer()
+    {
+        return $this->hasone('App\Modules\Root\Models\Root','user_id','inserted_by');
+    }
+
 }
