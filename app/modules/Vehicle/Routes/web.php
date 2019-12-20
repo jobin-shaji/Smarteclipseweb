@@ -11,12 +11,10 @@ Route::post('/vehicles/save_vehicle','VehicleController@saveVehicle')->name('veh
 Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles.details');
 Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
 Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
-
 Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateFieldWithDocTypeID')->name('vehicles.findDateFieldWithDocTypeID');
 // Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
 // Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 // Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
-
 
 Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
@@ -40,6 +38,7 @@ Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert'
 
 Route::get('/playback-second/{id}','VehicleController@playbackB')->name('vehicle.playback2.page');
 
+Route::post('/vehicle-playback','VehicleController@vehiclePlayback')->name('vehicle-playback');
 
 //////////////////////////////////Route in vehicle//////////////////////////////
 
@@ -84,6 +83,8 @@ Route::post('/vehicles/location-track','VehicleController@locationTrack')->name(
 
 Route::get('/vehicles/fuel-track','VehicleController@fuelTrack')->name('vehicles.fuel-track');
 
+
+Route::get('/vehicles-second/{id}/location','VehicleController@vehicleLocationTrack')->name('vehicles-second.location');
 
 });
 

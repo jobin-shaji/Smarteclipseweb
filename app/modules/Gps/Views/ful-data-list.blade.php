@@ -14,7 +14,7 @@
              <div class="col-lg-3 col-md-3"> 
         <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
                 <label> Full PACKET</label>  
-<textarea rows="4"  id="packetvalue"  cols="50">
+        <textarea rows="5"  id="packetvalue"  cols="50">
 
                   </textarea>
                       <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
@@ -32,56 +32,8 @@
   </div>
   
 
-<div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
-            SET OTA
-          </button> -->
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allHLMDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-        
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+
+
 </section>
 <div class="clearfix"></div>
 <section class="content" >
@@ -102,7 +54,7 @@ table, th, td {
 
 <body>
 
-<table style="width:50%;font-size: 13.5px!important">
+<table style="width:60%;font-size: 13.5px!important">
  
   <tbody>
    <th>Packet Params</th>
@@ -110,168 +62,188 @@ table, th, td {
 
     <tr>
       <td>Header</td>
-      <td id="header"></td>
+      <td><INPUT TYPE="TEXT"  id="header" NAME="header" SIZE="110"></td>
     </tr>
 
     <tr>
       <td>IMEI</td>
-      <td id="imei"></td>
+      <td ><INPUT TYPE="TEXT"  id="imei" NAME="imei" SIZE="110"></td>
     </tr>
 
        <tr>
       <td>Alert ID</td>
-      <td id="alert_id"></td>
+      <td><INPUT TYPE="TEXT"  id="alert_id" NAME="alert_id" SIZE="110"></td>
     </tr>
     <tr>
       <td>Vendor ID</td>
-      <td id="vendor_id"></td>
+      <td><INPUT TYPE="TEXT"  id="vendor_id" NAME="vendor_id" SIZE="110"></td>
     </tr>
       <tr>
       <td>GNSS Fix</td>
-      <td id="gps_fix"></td>
+      <td><INPUT TYPE="TEXT"  id="gps_fix" NAME="gps_fix" SIZE="110"></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td id="date"></td>
+      <td><INPUT TYPE="TEXT"  id="date" NAME="date" SIZE="110"></td>
     </tr>
   
       <tr>
       <td>Time</td>
-      <td id="time"></td>
+      <td><INPUT TYPE="TEXT"  id="time" NAME="time" SIZE="110"></td>
     </tr>
      <tr>
       <td>Device Time</td>
-      <td id="device_time"></td>
+      <td><INPUT TYPE="TEXT"  id="device_time" NAME="device_time" SIZE="110"></td>
     </tr>
     <tr>
       <td>Packet Status</td>
-      <td id="packet_status"></td>
+      <td><INPUT TYPE="TEXT"  id="packet_status" NAME="packet_status" SIZE="110"></td>
     </tr>
     <tr>
       <td>Latitude</td>
-      <td id="latitude"></td>
+      <td><INPUT TYPE="TEXT"  id="latitude" NAME="latitude" SIZE="110"></td>
     </tr>
     <tr>
       <td>Latitude Dir</td>
-      <td id="latitude_dir"></td>
+      <td><INPUT TYPE="TEXT"  id="latitude_dir" NAME="latitude_dir" SIZE="110"></td>
     </tr>
     <tr>
       <td>Longitude</td>
-      <td id="long"></td>
+      <td><INPUT TYPE="TEXT"  id="long" NAME="long" SIZE="110"></td>
     </tr>
     <tr>
       <td>Longitude  Dir</td>
-      <td id="long_dir"></td>
+      <td><INPUT TYPE="TEXT"  id="long_dir" NAME="long_dir" SIZE="110"></td>
     </tr>
     <tr>
       <td>MCC</td>
-      <td id="MCC"></td>
+      <td ><INPUT TYPE="TEXT"  id="MCC" NAME="MCC" SIZE="110"></td>
     </tr>
     <tr>
       <td>MNC</td>
-      <td id="MNC"></td>
+      <td><INPUT TYPE="TEXT"  id="MNC" NAME="MNC" SIZE="110"></td>
     </tr>
     <tr>
       <td>LAC</td>
-      <td id="lac"></td>
+      <td><INPUT TYPE="TEXT"  id="lac" NAME="lac" SIZE="110"></td>
     </tr>
     <tr>
       <td>Cell ID</td>
-      <td id="cell_id"></td>
+      <td><INPUT TYPE="TEXT"  id="cell_id" NAME="cell_id" SIZE="110"></td>
     </tr>
       <tr>
       <td>Speed</td>
-      <td id="SPEED"></td>
+      <td ><INPUT TYPE="TEXT"  id="SPEED" NAME="SPEED" SIZE="110"></td>
     </tr>
       <tr>
       <td>Heading</td>
-      <td id="heading"></td>
+      <td ><INPUT TYPE="TEXT"  id="heading" NAME="heading" SIZE="110"></td>
     </tr>
      <tr>
       <td>No Of Satelites</td>
-      <td id="no_of_satelites"></td>
+      <td ><INPUT TYPE="TEXT"  id="no_of_satelites" NAME="no_of_satelites" SIZE="110"></td>
     </tr>
      <tr>
       <td>HDOP</td>
-      <td id="hdop"></td>
+      <td ><INPUT TYPE="TEXT"  id="hdop" NAME="hdop" SIZE="110"></td>
     </tr>
      <tr>
       <td>GSM Signal Strength</td>
-      <td id="gsm_signal_strength"></td>
+      <td><INPUT TYPE="TEXT"  id="gsm_signal_strength" NAME="gsm_signal_strength" SIZE="110"></td>
     </tr>
  
        <tr>
       <td>Ignition</td>
-      <td id="ignition"></td>
+      <td><INPUT TYPE="TEXT"  id="ignition" NAME="ignition" SIZE="110"></td>
     </tr>
      
       <tr>
       <td>Main Power Status</td>
-      <td id="main_power_status"></td>
+      <td ><INPUT TYPE="TEXT"  id="main_power_status" NAME="main_power_status" SIZE="110"></td>
     </tr>
+
+      <tr>
+      <td>Vehicle Mode</td>
+      <td ><INPUT TYPE="TEXT"  id="vehicle_mode" NAME="vehicle_mode" SIZE="110"></td>
+    </tr>
+
       <tr>
       <td>Firmware Version</td>
-      <td id="firmware_version"></td>
+      <td><INPUT TYPE="TEXT"  id="firmware_version" NAME="firmware_version" SIZE="110"></td>
     </tr>
      
     <tr>
       <td> Vehicle Reg.No</td>
-      <td id="vehicle_register_num"></td>
+      <td><INPUT TYPE="TEXT"  id="vehicle_register_num" NAME="vehicle_register_num" SIZE="110"></td>
     </tr>
       <tr>
       <td> Altitude</td>
-      <td id="altitude"></td>
+      <td ><INPUT TYPE="TEXT"  id="altitude" NAME="altitude" SIZE="110"></td>
     </tr>
      <tr>
       <td> PDOP</td>
-      <td id="pdop"></td>
+      <td><INPUT TYPE="TEXT"  id="pdop" NAME="pdop" SIZE="110"></td>
     </tr>
      <tr>
       <td> Network Operator Name</td>
-      <td id="nw_op_name"></td>
+      <td ><INPUT TYPE="TEXT"  id="nw_op_name" NAME="nw_op_name" SIZE="110"></td>
     </tr>
      <tr>
       <td> NMR</td>
-      <td id="nmr"></td>
+      <td><INPUT TYPE="TEXT"  id="nmr" NAME="nmr" SIZE="110"></td>
     </tr>
     <tr>
       <td> Main Input Voltage</td>
-      <td id="main_input_voltage"></td>
+      <td ><INPUT TYPE="TEXT"  id="main_input_voltage" NAME="main_input_voltage" SIZE="110"></td>
     </tr>
       <tr>
       <td> Internal Battery Voltage</td>
-      <td id="internal_battery_voltage"></td>
+      <td ><INPUT TYPE="TEXT"  id="internal_battery_voltage" NAME="internal_battery_voltage" SIZE="110"></td>
     </tr>
 
 <tr>
       <td> Tamper Alert</td>
-      <td id="tamper_alert"></td>
+      <td ><INPUT TYPE="TEXT"  id="tamper_alert" NAME="tamper_alert" SIZE="110"></td>
     </tr>
     <tr>
       <td> Digital I/O Status</td>
-      <td id="digital_io_status"></td>
+      <td ><INPUT TYPE="TEXT"  id="digital_io_status" NAME="digital_io_status" SIZE="110"></td>
     </tr>
     <tr>
       <td> Frame Number</td>
-      <td id="frame_number"></td>
+      <td><INPUT TYPE="TEXT"  id="frame_number" NAME="frame_number" SIZE="110"></td>
     </tr>
     
      <tr>
       <td> Checksum</td>
-      <td id="checksum"></td>
+      <td><INPUT TYPE="TEXT"  id="checksum" NAME="checksum" SIZE="110"></td>
     </tr>
   </tbody>
   
 </table>
-
+<div class="row">
+    <div class="panel-body" style="width: 100%;min-height: 10%">
+      <div class="panel-heading">
+        <div>
+          <div class="row">
+         <div class="col-lg-3 col-md-3"> 
+        <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+         <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+          height:40px;"> Generate </button>
+           
+              </div>
+              <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+            </div>
+          </div>
+      </div>      
+    </div>
+ </div>
+</div>
 
 
 </body>
 </html>
-
-
-   
-  </div>
+ </div>
 </section>
 
 

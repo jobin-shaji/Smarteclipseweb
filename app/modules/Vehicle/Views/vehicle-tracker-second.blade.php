@@ -142,7 +142,11 @@
       </div> -->
     </div>
 
-    <div id="map" class="live_track_map" style="width:100%;height:85vh;"></div>
+    <!-- <div id="map" class="live_track_map" style="width:100%;height:85vh;"></div> -->
+
+      <div id="markers" style="width:100%px;height:595px; position: relative;">
+      
+      </div>
     </div>
   </div>
   </div>
@@ -184,46 +188,17 @@ cursor:pointer
 }
 </style>
 <!-- <script src="{{asset('js/odometer.js')}}"></script> -->
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
+     <script>
+      // add behavior control
+
+         </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script>
-
-<script src="{{asset('js/gps/location-track.js')}}"></script>
-<script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>
-<script src="{{asset('js/gps_animation/markerAnimate.js')}}"></script>
-<script src="{{asset('js/gps_animation/SlidingMarker.js')}}"></script>
-<script type="text/javascript">
-  function clr1()
-  {
-    document.getElementById('actv1').style.background = "red";
-    document.getElementById('actv2').style.background = "white";
-    document.getElementById('actv3').style.background = "white";
-  }
-  function clr2()
-  {
-    document.getElementById('actv2').style.background = "red";
-    document.getElementById('actv1').style.background = "white";
-    document.getElementById('actv3').style.background = "white";
-  }
-  function clr3()
-  {
-    document.getElementById('actv3').style.background = "red";
-    document.getElementById('actv2').style.background = "white";
-    document.getElementById('actv1').style.background = "white";
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="{{asset('js/gps/location-track-second.js')}}"></script>
 @endsection
 
 @endsection

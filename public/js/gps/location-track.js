@@ -235,7 +235,7 @@ function doWork()
 
 function updateStatusData(current)
 {
-
+console.log(current);
   var latlng=current[0];
   var angle=current[1];
   var ac=current[2];
@@ -484,6 +484,7 @@ function updateStatusData(current)
       document.getElementById("car_location").innerHTML = place;
       document.getElementById("ac").innerHTML = ac;
       document.getElementById("fuel").innerHTML = fuel;
+       // document.getElementById("odometer").innerHTML = fuel;
       // document.getElementById("user").innerHTML = res.vehicle_name;
 
       $("#km_live_track").html('');

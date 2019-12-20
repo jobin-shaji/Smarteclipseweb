@@ -29,59 +29,7 @@
       </div>
     </div>      
   </div>
-  
-
-<div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
-            SET OTA
-          </button> -->
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allHLMDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-        
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
+  </section>
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
@@ -101,7 +49,7 @@ table, th, td {
 
 <body>
 
-<table style="width:50%;font-size: 13.5px!important">
+<table style="width:60%;font-size: 13.5px!important">
  
   <tbody>
    <th>Packet Params</th>
@@ -109,83 +57,95 @@ table, th, td {
 
     <tr>
       <td>Header</td>
-      <td id="header"></td>
+      <td><INPUT TYPE="TEXT"  id="header" NAME="header" SIZE="110"></td>
     </tr>
 
     <tr>
       <td>IMEI</td>
-      <td id="imei"></td>
+      <td><INPUT TYPE="TEXT"  id="imei" NAME="imei" SIZE="110"></td>
     </tr>
     
     <tr>
       <td>Date</td>
-      <td id="date"></td>
+      <td><INPUT TYPE="TEXT"  id="date" NAME="date" SIZE="110"></td>
     </tr>
    
       <tr>
       <td>Time</td>
-      <td id="time"></td>
+      <td><INPUT TYPE="TEXT"  id="time" NAME="time" SIZE="110"></td>
     </tr>
      <tr>
       <td>Device Time</td>
-      <td id="device_time"></td>
+      <td ><INPUT TYPE="TEXT"  id="device_time" NAME="device_time" SIZE="110"></td>
     </tr>
    
   
     <tr>
       <td>Vendor ID</td>
-      <td id="vendor_id"></td>
+      <td><INPUT TYPE="TEXT"  id="vendor_id" NAME="vendor_id" SIZE="110"></td>
     </tr>
     <tr>
       <td>Firmware Version</td>
-      <td id="firmware_version"></td>
+      <td ><INPUT TYPE="TEXT"  id="firmware_version" NAME="firmware_version" SIZE="110"></td>
     </tr>
     <tr>
       <td>update rate - Ignition ON</td>
-      <td id="update_rate_ignition_on"></td>
+      <td><INPUT TYPE="TEXT"  id="update_rate_ignition_on" NAME="update_rate_ignition_on" SIZE="110"></td>
     </tr>
    
       <tr>
       <td>update rate - Ignition OFF</td>
-      <td id="update_rate_ignition_off"></td>
+      <td ><INPUT TYPE="TEXT"  id="update_rate_ignition_off" NAME="update_rate_ignition_off" SIZE="110"></td>
     </tr>
    
   <tr>
-      <td>Battery Percentage</td>
-      <td id="battery_percentage"></td>
+      <td>Battery Percentage</td><td><INPUT TYPE="TEXT"  id="battery_percentage" NAME="battery_percentage" SIZE="110"></td>
     </tr>
    
     <tr>
       <td>Low Battery Threshold Value</td>
-      <td id="low_battery_threshold_value"></td>
+      <td><INPUT TYPE="TEXT"  id="low_battery_threshold_value" NAME="low_battery_threshold_value" SIZE="110"></td>
     </tr>
    
     <tr>
       <td>Memory percentage</td>
-      <td id="memory_percentage"></td>
+      <td><INPUT TYPE="TEXT"  id="memory_percentage" NAME="memory_percentage" SIZE="110"></td>
     </tr>
    
     <tr>
       <td>Digital I/O status</td>
-      <td id="digital_io_status"></td>
+      <td><INPUT TYPE="TEXT"  id="digital_io_status" NAME="digital_io_status" SIZE="110"></td>
     </tr>
     <tr>
       <td>Analog Input Status</td>
-      <td id="analog_io_status"></td>
+      <td><INPUT TYPE="TEXT"  id="analog_io_status" NAME="analog_io_status" SIZE="110"></td>
     </tr>
     
   </tbody>
   
 </table>
 
-
+ <div class="row">
+    <div class="panel-body" style="width: 100%;min-height: 10%">
+      <div class="panel-heading">
+        <div>
+          <div class="row">
+         <div class="col-lg-3 col-md-3"> 
+        <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+         <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+          height:40px;"> Generate </button>
+           
+              </div>
+              <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+            </div>
+          </div>
+      </div>      
+    </div>
+ </div>
+</div>
 
 </body>
-</html>
-
-
-   
-  </div>
+</html></div>
 </section>
 
 

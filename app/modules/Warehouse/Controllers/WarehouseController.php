@@ -1476,7 +1476,6 @@ class WarehouseController extends Controller {
             else if(isset($distributor))
             {           
                 return 'Awaiting Transfer Confirmation';
-                //return "Awaiting <span title='Awaiting transfer confirmation'><i class='fa fa-info-circle' aria-hidden='true'></i></span>";
             }
             else{
                 return "Not Transferred";

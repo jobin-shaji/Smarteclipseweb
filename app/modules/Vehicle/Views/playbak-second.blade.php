@@ -6,6 +6,7 @@
 
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Fonts and icons -->
      <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}"> -->
     <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/atlantis.min.css')}}"> -->
@@ -69,7 +70,7 @@
                          
               <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
 
-            </span>
+           
           </div>
              <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
             <span class="contoller">                           
@@ -85,78 +86,28 @@
           </div>
           
 </div>
+        <input type="text" name="online_icon" id="online_icon" value="{{$vehicle_type->online_icon}}">
+        <input type="text" name="offline_icon" id="offline_icon" value="{{$vehicle_type->offline_icon}}">
+        <input type="text" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->ideal_icon}}">
+        <input type="text" name="sleep_icon" id="sleep_icon" value="{{$vehicle_type->sleep_icon}}">
 
         <div class="main-panel main-pane-bg">
             <div class="content">
+              <div class="lorder-cover-bg" id="lorder-cover-bg-image">
+                <div class="lorder-cover-bg-image" >
+                   <img id="loading-image" src="{{asset('playback/assets/img/loader.gif')}}" />
+               </div>
+               </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
                 <div id="markers" style="width:100%px;height:595px; position: relative;">
+                 
                     <div class="left-alert-box">
-                    <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
-
-                             <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
-
-                                <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
-                         <div class="left-alert-inner">
-                            <div class="left-alert-text">
-                                <h5>Heading</h5>
-                             <p>Place</p>
-                                <p>alert count
-       <a href="#">
-          +
-        </a>
-                                </p>  
-                                <p>05:28:22 03-12-19</p>
-
-                                <div class="left-alert-time"></div>
-                            </div>
-
-                        </div>
-
+                    <div id="details" class="left-alert-inner">  
+                       <span id="location_details">
+                        <h1 data-text="It's loading…" id="location_details_text">It's loading…</h1>
+                    </span>                     
+                    </div> 
                     </div>
-
-
                 </div>
                 <div class="page-inner mt--5">
                 </div>
@@ -166,6 +117,52 @@
     <!-- Style -->
 
     <style>
+
+
+     
+   #location_details_text {
+    position: relative;
+    color: rgba(0, 0, 0, .3);
+    font-size: 1em
+   }
+  #location_details_text:before {
+    content: attr(data-text);
+    position: absolute;
+    overflow: hidden;
+    max-width: 7em;
+    white-space: nowrap;
+    color: #dab606;
+    animation: loading 8s linear;
+  }
+@keyframes loading {
+    0% {
+        max-width: 0;
+    }
+}
+h1#location_details_text {
+    margin-left: 45px;
+}
+    .lorder-cover-bg {
+    width: 100%;
+    position: absolute;
+    z-index: 9;
+    background: #00000075;
+    height: 595px;
+    display: none;
+}
+     .lorder-cover-bg-image{
+        width: 75px;
+        margin: 0px auto;
+     }
+          .lorder-cover-bg-image img{
+       width: 100%;
+    padding-top: 280px;
+          }
+         .lorder-cover-bg-image span{
+            width: 100%;
+            float: left;
+            text-align: center;
+         }
         #cover-spin {
             position: fixed;
             width: 100%;
@@ -214,6 +211,12 @@
             -webkit-animation: spin .8s linear infinite;
             animation: spin .8s linear infinite;
         }
+
+.place_data{
+    padding-right: 10px;
+    font-weight: bold;
+    color: #dab606;
+}
 .left-alert-box{
            width: 20%;
     float: left;
@@ -242,8 +245,16 @@
     width: 94%;
     float: left;
     margin: 0 3% 0px;
-    padding: 5px 0;
+    padding: 0 0;
 
+     }
+     .left-alert-text p.datetime_cover{
+        text-align: right;
+        font-weight: bold;
+        margin-top: 16px;
+        font-size: 11px;
+        padding: 5px 0 0;
+        color: #86710b;
      }
 
    .left-alert-text h5{
@@ -264,7 +275,7 @@ width: 100%;
                 font-size: 15px;
             display: block;
             margin: 0;
-            padding: 8px 0;
+            padding: 5px 0;
    
         }
 .left-alert-time{
@@ -346,12 +357,22 @@ padding: 5px 10px;
         var first_point              = true;
         var total_offset             = 0;
         var last_offset              = false;
+        var vehicle_halt,vehicle_sleep,vehicle_offline,vehicle_online;
+
+     
+   
+               vehicle_halt        =   '/documents/'+$('#ideal_icon').val();
+               vehicle_sleep       =   '/documents/'+$('#sleep_icon').val();
+               vehicle_offline     =   '/documents/'+$('#offline_icon').val();
+               vehicle_online      =   '/documents/'+$('#online_icon').val();
+
+    
+
+
         var objImg                   = document.createElement('img');
-        var vehicle_online      =   '{{asset("playback/assets/img/car_online.png")}}';
-        var vehicle_halt        =   '{{asset("playback/assets/img/car_halt.png")}}';
-        var vehicle_sleep       =   '{{asset("playback/assets/img/car_sleep.png")}}';
-        var vehicle_offline     =   '{{asset("playback/assets/img/car_offline.png")}}';
-        var outerElement        = document.createElement('div')
+    
+
+             var outerElement        = document.createElement('div')
         var domIcon             = new H.map.DomIcon(outerElement);
         var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
         var stop_icon           = new H.map.Icon('{{asset("playback/assets/img/flag.png")}}');
@@ -377,6 +398,8 @@ padding: 5px 10px;
         var ui = H.ui.UI.createDefault(map, maptypes); // add UI
 
         var location_data_que   =  new Array();
+        var location_details_que =  new Array();
+
         var offset=1;
         var isDataLoadInProgress = false;
         var dataLoadingCompleted = false;
@@ -385,6 +408,7 @@ padding: 5px 10px;
         var blacklineStyle;
         var speed_val            = 1;
         var Speed                = 600;
+        var loader               = false;
     
          
 
@@ -392,15 +416,40 @@ padding: 5px 10px;
 
          
         function startPlayBack(){
+           
+
+
+
+                loader      =   true;
                 speed_val   =   $('#speed').val();
                 speed       =   speed/speed_val;
+
+                if(loader == true){
+                 $("#lorder-cover-bg-image").css("display","block");
+                }
+
                 getLocationData();
+               $('.left-alert-box').css('display','block');
+
+               
+
+
         }
 
         function getLocationData(){
+             
              var mapUpdateInterval   = window.setInterval(function(){
-            plotLocationOnMap();
+             plotLocationOnMap();
              }, Speed);
+            // --------2019-12-19-2:20--------------------------------------------------------
+            var mapUpdateInterval   = window.setInterval(function(){
+             dataShownOnList();
+             }, 500);
+            // --------2019-12-19-2:20--------------------------------------------------------
+
+
+
+
 
             isDataLoadInProgress = true;
             var Objdata = {
@@ -464,6 +513,18 @@ padding: 5px 10px;
                             "angle" : data[i].angle,
                             "mode"  : data[i].vehicleStatus
                         });
+                  // --------2019-12-19-2:20--------------------------------------------------------
+                   location_details_que.push({
+                                                "lat"   : data[i].latitude, 
+                                                "lng"   : data[i].longitude,
+                                                "angle" : data[i].angle,
+                                                "mode"  : data[i].vehicleStatus,
+                                                "date"  : data[i].dateTime,
+                                                "speed" : data[i].speed
+
+                                             });
+                 // --------2019-12-19-2:20--------------------------------------------------------
+
 
                 isDataLoadInProgress = false;
                 if( data.total_offset == offset)
@@ -485,6 +546,10 @@ padding: 5px 10px;
             console.log('Current length '+location_data_que.length);
             if(location_data_que.length >0)
             {
+                 loader = false;
+                 if(loader == false){
+                 $("#lorder-cover-bg-image").css("display","none");
+                }
                
                 moveMap(location_data_que[0].lat,location_data_que[0].lng);
                 // create start marker
@@ -620,7 +685,7 @@ padding: 5px 10px;
                 el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
             }
             outerElement.appendChild(el);
-            outerElement.style.top = "-30px";
+            outerElement.style.top = "-25px";
             outerElement.style.width = "200px";
 
             var domIcon = new H.map.DomIcon(outerElement);
@@ -630,9 +695,119 @@ padding: 5px 10px;
             map.addObject(bearsMarkeronStartPoint);
             blPlaceCaronMap = true;
     }
+        // --------2019-12-19-2:20--------------------------------------------------------
+
+        async function dataShownOnList(){
+            if(location_details_que.length >0)
+            {
+                console.log(location_details_que.length);
+                // for(i=0;i<=location_details_que.length)
+               console.log(location_details_que);
+            var lat=location_details_que[0].lat;
+            var lng=location_details_que[0].lng;
+            var mode=location_details_que[0].mode;
+            var date=location_details_que[0].date;
+            var speed=location_details_que[0].speed;
+
+            var status = "";
+            if(mode=="M"){
+              status="<span style='color:#84b752 !important'>ONLINE<span>";     
+            }else if(mode=="S"){
+              status="<span style='color:#858585 !important;'>SLEEP<span>";     
+            }else if(mode=="H"){ 
+              status="<span style='color:#69b4b9 !important'>HALT<span>";     
+            }else{
+              status="<span style='color:#c41900 !important'>OFFLINE<span>";     
+            }
+             var location_name = await getPlaceName(lat,lng).then(function(data){
+                    var location_data = JSON.stringify(data.Response.View);
+               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
+
+             });
 
 
+              var details = ' <div class="left-alert-text">'+
+                                '<h5></h5>'+
+                             '<p class="location_name" id="location_name">'+
+                             '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
+                              '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
+                              '<p><span class="place_data">'+
+                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+speed+
+                                '<p class="datetime_cover" id="date">'+date+'</p>'+
+                                '<div class="left-alert-time"></div>'+
+                            '</div>';
+             $('#location_details').remove()            
+             $("#details").prepend(details);
+             popDetailsLocationQueue();
 
+             // $('#location_name').text(location_name);
+             // $('#date').text(date);
+
+             // console.log(location_details_que[0].date);
+         }
+
+        }
+
+
+        // --------2019-12-19-2:20--------------------------------------------------------
+
+
+        // --------2019-12-19-2:20--------------------------------------------------------
+        $( document ).ready(function() {
+            $('.left-alert-box').css('display','none');
+        });
+
+    function getPlaceName(lat,lng){
+        var location_name = "";
+        return $.ajax({
+          url: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
+          type: 'GET',
+          dataType: 'jsonp',
+          jsonp: 'jsoncallback',
+          data: {
+            prox: lat+','+lng,
+            mode: 'retrieveAddresses',
+            maxresults: '1',
+            gen: '9',
+            app_id: app_id,
+            app_code: app_code
+        }
+  
+
+        });
+         // return location_name;
+        }
+
+        function popLocationDataQueue()
+        {
+            if(location_details_que.length > 0)
+            {
+                return location_details_que.splice(0,1)[0];    
+            }
+            else
+            {
+                clearInterval(mapUpdateInterval);
+                console.log('no more map updation calls');
+                return null;
+            }
+        }
+
+
+       function popDetailsLocationQueue()
+        {
+            if(location_details_que.length > 0)
+            {
+                return location_details_que.splice(0,1)[0];    
+            }
+            else
+            {
+                console.log('no more map updation calls');
+                return null;
+            }
+        }
+
+
+       // --------2019-12-19-2:20-------------------------------------------------------
     </script>
 
 
@@ -651,6 +826,8 @@ padding: 5px 10px;
         format: 'yyyy-MM-dd HH:mm:ss',
       });
     </script>
+
+
 
 
 </body>

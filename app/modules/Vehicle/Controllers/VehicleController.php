@@ -1197,12 +1197,17 @@ class VehicleController extends Controller
                 $ac_status="UPGRADE VERSION";
             }
             $last_seen=date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
+
+            $gps_meter=$track_data->km;
+            $gps_km=$gps_meter/1000;
+            $odometer=round($gps_km);
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
                         "longitude"=>floatval($snapRoute['lng']),
                         "angle"=>$track_data->angle,
                         "vehicleStatus"=>$track_data->vehicleStatus,
                         "speed"=>round($track_data->speed),
+
                         "dateTime"=>$track_data->dateTime,
                         "power"=>$track_data->power,
                         "ign"=>$track_data->ign,
@@ -1217,7 +1222,8 @@ class VehicleController extends Controller
                         "fuel"=>$fuel_status,
                         "ac"=>$ac_status,
                         "place"=>$plcaeName,
-                        "fuelquantity"=>""
+                        "fuelquantity"=>"",
+                        "odometer"=>$odometer
                       );
             $response_data = array('status'  => 'success',
                            'message' => 'success',
@@ -1246,7 +1252,9 @@ class VehicleController extends Controller
 
      public function playbackB(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
-        return view('Vehicle::playbak-second',['Vehicle_id' => $decrypted_id] );
+        $get_vehicle=Vehicle::find($decrypted_id);
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id); 
+        return view('Vehicle::playbak-second',['Vehicle_id' => $decrypted_id,'vehicle_type' =>$vehicle_type] );
        
     }
 
@@ -2738,6 +2746,130 @@ class VehicleController extends Controller
         $vehicle_type_configration->value=json_encode($vehicle_type_list);
         $vehicle_type_configration->version=$vehicle_type_configration->version+0.1;
         return $vehicle_type_configration->save();
+    }
+
+
+
+    public function vehiclePlayback(Request $request)
+    { 
+        
+        $vehicleid = $request->vehicleid;
+        $from_date = $request->fromDateTime;
+        $to_date = $request->toDateTime;
+        $get_vehicle = Vehicle::find($vehicleid);
+        $offset = $request->offset;
+       
+        if ($get_vehicle == null)
+        {
+            $response_data = array(
+                'status' => 'failed',
+                'message' => 'vehicle is not activated',
+                'code' => 0
+            );
+            return response()->json($response_data);
+        }
+        if ($offset == 1 || $offset == null)
+        {
+            $start_offset = 0;
+            $limit = 30;
+        }
+        else
+        {
+            $limit = 30;
+            $start_offset = ($offset * $limit) - $limit;
+        }
+        $gps_id = $get_vehicle->gps_id;
+        $count_of_gpsdata = GpsData::select('latitude as latitude', 'longitude as longitude', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->whereNotNull('latitude')
+            ->whereNotNull('longitude')
+            ->orderBy('device_time', 'asc')
+            ->count();
+        $total_index = round($count_of_gpsdata / 30);
+        $track_data = GpsData::select('id', 'latitude as latitude', 'longitude as longitude', 'lat_dir as latitude_dir', 'lon_dir as longitude_dir', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->offset($start_offset)->limit($limit)->whereNotNull('latitude')
+            ->whereNotNull('longitude')
+            ->orderBy('device_time', 'asc')
+            ->get();
+
+        $respone_play_back = array();
+        foreach ($track_data as $track)
+        {
+            $alert_list = [];
+            // $device_time=$track->dateTime;
+            // $alert_list=$this->getDeviceAlerts($device_time,$gps_id);
+
+            $respone_play_back[] = array(
+                'id' => $track->id,
+                'latitude' => $track->latitude,
+                'longitude' => $track->longitude,
+                'latitude_dir' => $track->latitude_dir,
+                'longitude_dir' => $track->longitude_dir,
+                'angle' => $track->angle,
+                'vehicleStatus' => $track->vehicleStatus,
+                'speed' => $track->speed,
+                'dateTime' => $track->dateTime,
+                'alerts' => $alert_list,
+
+            );
+        }
+
+        if ($respone_play_back)
+        {
+            $response_data = array(
+                'status' => 'success',
+                'message' => 'success',
+                'code' => 1,
+
+                'vehicle_type' => $get_vehicle
+                    ->vehicleType->name,
+                'total_offset' => $total_index,
+                'playback' => $respone_play_back
+            );
+        }
+        else
+        {
+            $response_data = array(
+                'status' => 'failed',
+                'message' => 'failed',
+                'code' => 0
+            );
+        }
+        return response()->json($response_data);
+    }
+
+     /////////////////////////////Vehicle Tracker/////////////////////////////
+    public function vehicleLocationTrack(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $get_vehicle=Vehicle::find($decrypted_id);
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+        $track_data=Gps::select('lat as latitude',
+                              'lon as longitude'
+                              )         
+                              ->where('id',$get_vehicle->gps_id)
+                              ->first();   
+        if($track_data==null)
+        {
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
+        }
+        else if($track_data->latitude==null || $track_data->longitude==null)
+        {
+            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle'));
+        }
+        else
+        {
+            $latitude=$track_data->latitude;
+            $longitude= $track_data->longitude;
+        }
+
+        $snapRoute=$this->LiveSnapRoot($latitude,$longitude);
+        $latitude=$snapRoute['lat'];
+        $longitude=$snapRoute['lng'];
+
+
+        return view('Vehicle::vehicle-tracker-second',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
     }
 
    
