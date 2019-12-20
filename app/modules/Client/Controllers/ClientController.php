@@ -571,11 +571,11 @@ class ClientController extends Controller {
             $vehicle_geofences=VehicleGeofence::where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
                 $vehicle_geofence->forceDelete();
-                $clear_geofence=$this->geofenceResponse($vehicle_geofence->vehicle_id);
             }
-            $geofence->forceDelete();
+            $geofence_cleared = $geofence->forceDelete();
         }
         $user = User::find($client_user_id); 
+
         $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
             $response_string="CLR VGF";
@@ -584,6 +584,7 @@ class ClientController extends Controller {
                 'response' => $response_string
             ]);
         }
+        
         // dd($gps_id);
         if($request->client_role==6)
         {
@@ -622,14 +623,10 @@ class ClientController extends Controller {
             $vehicle_geofences=VehicleGeofence::where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
                 $vehicle_geofence->forceDelete();
-                $clear_geofence=$this->geofenceResponse($vehicle_geofence->vehicle_id);
             }
-            $geofence->forceDelete();
+            $geofence_cleared = $geofence->forceDelete();
         }
-        $user->role = 0;
-        $user->save();        
-        $user->removeRole($decrypted_role_id);
-        $roles = $user->roles;
+        
         $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
             $response_string="CLR VGF";
@@ -638,36 +635,14 @@ class ClientController extends Controller {
                 'response' => $response_string
             ]);
         }
-
-
-
-
-
+        
+        $user->role = 0;
+        $user->save();        
+        $user->removeRole($decrypted_role_id);
+        $roles = $user->roles;
 
         return redirect(route('client.subscription',$request->user_id));
         
-    }
-
-    public function geofenceResponse($vehicle_id)
-    {
-        $response_string="";
-        $vehicle = Vehicle::find($vehicle_id);
-        $vehicle_geofences=VehicleGeofence::where('vehicle_id',$vehicle_id)->get();
-        foreach ($vehicle_geofences as $single_geofence) {
-            $geofence_id=$single_geofence->geofence_id;
-            $geofence_details=Geofence::where('id',$geofence_id)->first();
-            $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
-        }
-        if($response_string==""){
-            $response_string="CLR VGF";
-        }else{
-            $response_string="SET VGF:".$response_string;
-        }
-        $geofence_response= OtaResponse::create([
-                    'gps_id' => $vehicle->gps_id,
-                    'response' => $response_string
-                ]);
-        return $geofence_response;
     }
 
     //delete Sub Dealer details from table
