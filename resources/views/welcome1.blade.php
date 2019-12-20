@@ -571,11 +571,19 @@
                         <p style="color: #bfeab3;">JAYAKUMARI ESTATE,MADAKKIMALA,KALPETTA,WAYANAD</p>
                        
                     </div>
-                   
-                </div>
-				<div class="row">
                     <div class="col-md-4">
-                       
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">Malayil Vehicle Track Solution</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
+						
+                      <p style="color: #bfeab3;">Gulf Tower M.C Road Mattoor P.O Kalady Ernakulam-683574</p>
+                      <p style="color: #bfeab3;"> Mob: 9744335604</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">I Track Solutions</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;MALAPPURAM</h3>
+						
+                      <p style="color: #bfeab3;">TMK Building Near ERAM Motors 22 Mile Manjeri Malappuram-676121 </p>
+                      <p style="color: #bfeab3;">Mob: 9995964385</p>
                     </div>
                     <div class="col-md-4" style="boder-color:red">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">TECTIV  </h4>

@@ -1260,7 +1260,9 @@ class VehicleController extends Controller
 
     public function playbackPageInTrack(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);  
-        return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id] );
+         $get_vehicle=Vehicle::find($decrypted_id);
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id); 
+        return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id,'vehicle_type' =>$vehicle_type] );
        
     }
     public function playbackHMap(Request $request){

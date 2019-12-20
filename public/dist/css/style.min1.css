@@ -5379,7 +5379,7 @@ input[type=submit].btn-block {
     min-width: 0;
     word-wrap: break-word;
         background-clip: border-box;
-        border-radius:20px;margin:0 5px;
+        border-radius:20px;margin:0 3px;
 
 }
 
@@ -17167,6 +17167,10 @@ padding: 15px 10px;
 
 .transferred_gps_dashboard_grid {
     background: #6A6F75;
+}
+
+.gps_non_stock_dashboard_grid {
+    background: #F37C19;
 }
 
 .dealer_dashboard_grid {
