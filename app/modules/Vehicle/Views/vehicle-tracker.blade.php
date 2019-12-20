@@ -54,6 +54,9 @@
               <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 17.8%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <img src="../../assets/images/odometer.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label></b></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 11.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
@@ -111,18 +114,18 @@
     </div>
     
     <div class="cover_poi">
-      <div  class="poi_atm poi_item">
-        <a href="#" id="poi_atm">
+      <div  class="poi_atm poi_item" id="actv1">
+        <a href="#" id="poi_atm" onclick="clr1()">
         <img src="{{ url('/') }}/images/ATM.png">
         </a>
       </div>
-      <div class="poi_petrol poi_item">
-        <a href="#" id="poi_petrol">
+      <div class="poi_petrol poi_item" id="actv2">
+        <a href="#" id="poi_petrol" onclick="clr2()">
           <img src="{{ url('/') }}/images/pump.png">
        </a>
       </div>
-      <div class="poi_hopital poi_item">
-        <a href="#" id="poi_hopital">
+      <div class="poi_hopital poi_item" id="actv3">
+        <a href="#" id="poi_hopital" onclick="clr3()">
           <img src="{{ url('/') }}/images/hospital.png">
         </a>
       </div>
@@ -132,11 +135,11 @@
         </a>
       </div>
 
-       <div class="poi_item">
+      <!--  <div class="poi_item">
         <a target="_blank" href="{{url('/playback-second/'.Crypt::encrypt($Vehicle_id))}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
         </a>
-      </div>
+      </div> -->
     </div>
 
     <div id="map" class="live_track_map" style="width:100%;height:85vh;"></div>
@@ -187,6 +190,26 @@ cursor:pointer
 <script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/gps_animation/markerAnimate.js')}}"></script>
 <script src="{{asset('js/gps_animation/SlidingMarker.js')}}"></script>
+<script type="text/javascript">
+  function clr1()
+  {
+    document.getElementById('actv1').style.background = "red";
+    document.getElementById('actv2').style.background = "white";
+    document.getElementById('actv3').style.background = "white";
+  }
+  function clr2()
+  {
+    document.getElementById('actv2').style.background = "red";
+    document.getElementById('actv1').style.background = "white";
+    document.getElementById('actv3').style.background = "white";
+  }
+  function clr3()
+  {
+    document.getElementById('actv3').style.background = "red";
+    document.getElementById('actv2').style.background = "white";
+    document.getElementById('actv1').style.background = "white";
+  }
+</script>
 
 
 

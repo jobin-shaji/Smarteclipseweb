@@ -48,6 +48,7 @@
                         <div class="card-body">
                             <p class="card-text"><b>Order Number : </b> {{$sos_transfer->order_number}} </p>
                             <p class="card-text"><b>Invoice Number : </b> {{$sos_transfer->invoice_number}} </p>
+                            <p class="card-text"><b>Scanned Employee Code : </b> {{$sos_transfer->scanned_employee_code}} </p>
                             <p class="card-text"><b>Shipped : </b> {{$sos_transfer->dispatched_on}} </p>
                             <h5 class="card-title" style="text-align: inherit!important">Shipping To,</h5>
                             <p class="card-text">{{$role_details->name}}<br>

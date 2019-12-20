@@ -98,7 +98,7 @@
                    @endrole
 
                    @role('client')
-                   <ul class="navbar-nav float-left mr-auto">
+                   <ul class="navbar-nav float-left">
                         <li class="nav-item d-none d-md-block">
                        </li>                       
                        <!--  <li class="nav-item search-box"> 

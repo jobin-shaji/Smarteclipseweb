@@ -1,4 +1,8 @@
 $(function () {
+    
+
+
+
     const timeout = 9000000;  // 900000 ms = 15 minutes
     var idleTimer = null;
     $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
@@ -577,7 +581,8 @@ function downloadAlertReport(){
     var url = 'alert-report/export';
     var  vehicles=$('#vehicle').val();
     var  alerts=$('#alert').val();
-     if(alerts==null || vehicles==null)
+    
+     if(alerts==0 || vehicles==null)
      {
        var alert=0;
        var vehicle=0;
@@ -1102,7 +1107,7 @@ function clientAlerts(){
         for (var i = 0; i < length; i++) {
          description=res.alert[i].alert_type.description;
 
-            var alert='<a class="dropdown-item" >'+description+'</a>';  
+            var alert='<div class="dropdown-item" >'+description+'</div>';  
             $("#alert_notification").append(alert);       
         }  
  }
@@ -1421,7 +1426,7 @@ function getdataHLMList(id){
 
   function gpsDataHlm(res)
 {
-console.log(res.gpsData.header);
+// console.log(res.gpsData.header);
     $("#allHLMDataTable tr").remove();
     var gps=' <tr><td>Header</td><td>'+res.gpsData.header+'</td></tr>'+
             '<tr><td>Imei</td><td >'+res.gpsData.imei+'</td></tr>'+
@@ -1442,6 +1447,31 @@ console.log(res.gpsData.header);
     $('#gpsHLMDataModal').modal('show');
 }
 
+// function dateDiff(value){
+//      var fromDate=$('#fromDate').val();
+//      var to_date=value
+//      // alert(to_date);
+//      if(fromDate!=null||to_date!=null)
+//      {
+//         if(fromDate>to_date)
+//         {
+//             document.getElementById("toDate").value = "";
+//             alert("Please Select Proper date" );
+//         }    
+//      }     
+// }
+// function fromDateDiff(value){
+//      var fromDate=value;
+//      var to_date=$('#toDate').val()
+//      if(fromDate!=''&&to_date!='')
+//      { 
+//         if(to_date<fromDate)
+//         {
+//             document.getElementById("fromDate").value = "";
+//             alert("Please Select Proper date" );
+//         }  
+//     }   
+// }
 
 
 

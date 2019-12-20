@@ -64,7 +64,7 @@
   aria-hidden="true">
           <form  method="POST" action="{{route('configuration.create.p')}}">
             {{csrf_field()}}    
-             <input type="text" id="plan_id" name="plan_id" value="">
+             <input type="hidden" id="plan_id" name="plan_id" value="">
            
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -80,7 +80,7 @@
                         <label  data-success="right" >Value</label>
                         <div id="config"></div>  
                          <label  data-success="right" >Plan</label>
-                        <input type="text" id="plan_name" name="plan_name" value="">
+                        <input type="text" id="plan_name" name="plan_name" value="" readonly="readonly"></br>
                          <label  data-success="right" >Version</label>
                       <input type="text" id="version" name="version" value="">
                         

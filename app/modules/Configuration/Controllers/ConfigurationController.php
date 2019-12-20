@@ -58,12 +58,15 @@ class ConfigurationController extends Controller {
             $field_values = [];
             foreach($fields as $each_field)
             {
-              $field_values[$each_field] = ( ctype_digit($request->{$each_field}) ) ? $request->{$each_field} : $this->congig_status($request->{$each_field});
+              
+              $field_values[$each_field] = ( ctype_digit($request->{$each_field}) ) ? (int)$request->{$each_field} : $this->congig_status($request->{$each_field});
             }
             $configuration = Configuration::where('code', 'plan')->first();
             $old_configuration_value = json_decode($configuration->value);
             $old_configuration_value[$plan]->configuration = $field_values; 
             $save_config = Configuration::find(1);
+
+            // dd($field_values);
             $save_config->value = json_encode($old_configuration_value,true);
             $save_config->date = date('Y-m-d');
             $save_config->version = $request->version;
@@ -91,11 +94,11 @@ class ConfigurationController extends Controller {
 
 
     function congig_status($status){
-        if($status==true){
-            return "true";
+        if($status=='true'){
+            return true;
         }
         else{
-            return "false";
+            return false;
         }
     }
 }
