@@ -5379,7 +5379,7 @@ input[type=submit].btn-block {
     min-width: 0;
     word-wrap: break-word;
         background-clip: border-box;
-        border-radius:20px;margin:0 5px;
+        border-radius:20px;margin:0 3px;
 
 }
 
