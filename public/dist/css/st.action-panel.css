@@ -208,7 +208,7 @@ img.light-logo {
     padding: 0px 6px;
     font-size:.8rem;
     line-height: 20px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 }
@@ -279,7 +279,7 @@ img.light-logo {
     padding: 0px 10px;
     font-size:.8rem;
     line-height: 64px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 }
@@ -348,7 +348,7 @@ padding:0;float:left;
     padding: 0px 20px;
     font-size:.9rem;
     line-height: 54px;
-    font-weight: 400;
+    font-weight: 500;
 }
 }
 
@@ -358,7 +358,7 @@ padding:0;float:left;
 
 
 
-@media (min-width:1600px) {
+@media (min-width:1350px) {
 
 html[dir=ltr] body .p-10 {
     padding:10px 0 5px 0;
@@ -416,10 +416,10 @@ padding:0;float:left;
 }
 
 .topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
-    padding: 0px 25px;
+    padding: 0px 23px;
     font-size:1rem;
     line-height: 64px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 }
