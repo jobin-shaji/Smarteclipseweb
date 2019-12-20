@@ -137,7 +137,7 @@
     <body >
 
         <div>
-            <p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:-5px "><b><u>Device Installation Certificate</u></b>
+            <p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:-5px "><b><u>Installation Certificate</u></b>
             </p>
 
         </div>
@@ -178,67 +178,63 @@
                 <span class="cls_005">ARAI.</span>
             </div>
 
-            <table border="1" cellspacing="0" cellpadding="5px" style="margin-top: 25%;margin-left: 53px">
-                <tr>
-                    <td class="cls_002 yellow">Issue Date</td>
-                    <td>{{$date}}</td>
-                    <td class="cls_002 yellow">VLT Model No</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="cls_002 grey">Regn No</td>
-                    <td>{{$vehicle->register_number}}</td>
-                    <td class="cls_002 grey">VLT Sim No</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="cls_002 yellow">Vehicle Chasis No</td>
-                    <td>{{$vehicle->chassis_number}}</td>
-                    <td class="cls_002 yellow">IMEI No</td>
+            <p style="margin-top: 24%;margin-left: 70px"><u>Details of AIS 140 Device</u></p>
+            <table border="1" cellspacing="0" cellpadding="5px" style="margin-top: 1%;margin-left: 53px">
+                 <tr>
+                    <td class="cls_002 yellow">Device IMEI</td>
                     <td>{{$vehicle->gps->imei}}</td>
+
+                    <td class="cls_002 yellow">Model</td>
+                    <td>VST0507C</td>
                 </tr>
                 <tr>
-                    <td class="cls_002 grey">Owner Mobile No</td>
-                    <td>{{$client->user->mobile}}</td>
-                    <td class="cls_002 grey">RTO Office</td>
-                    <td></td>
+                    <td class="cls_002 grey">Manufacturer</td>
+                    <td>
+                        <p>B2,Kerala Technology Innovation Zone</p>
+                        <p>Kinfra Hi Tech Park, Kalamassery</p>
+                        <p>Ernakulam</p>
+                    </td>
+                    <td class="cls_002 grey">CDAC Certification No</td>
+                    <td>CDAC-CR045</td>
+                </tr>
+            </table>
+            <p style="margin-left: 70px"><u>Details of the Vehicle</u></p>
+            <table border="1" cellspacing="0" cellpadding="5px" style="margin-top: 1%;margin-left: 53px">
+                <tr>
+                    <td class="cls_002 yellow">Registration Number</td>
+                    <td>{{$vehicle->register_number}}</td>
+                    <td class="cls_002 yellow">Chassis Number</td>
+                    <td>{{$vehicle->chassis_number}}</td>
                 </tr>
                 <tr>
-                    <td class="cls_002 yellow">Franchisee Details</td>
-                    <td></td>
-                    <td class="cls_002 yellow">Warranty Upto</td>
-                    <td></td>
+                    <td class="cls_002 grey">Registered Owner Name</td>
+                    <td>{{$client->name}}</td>
+                    <td class="cls_002 grey">Registered Owner Address</td>
+                    <td>{{$client->address}}</td>
                 </tr>
                 <tr>
-                    <td class="cls_002 grey">Vehicle type</td>
-                    <td>{{$vehicle->vehicleType->name}}</td>
-                    <td class="cls_002 grey">Token No</td>
-                    <td></td>
+                    <td class="cls_002 yellow">Engine Number</td>
+                    <td>{{$vehicle->engine_number}}</td>
+                    <td class="cls_002 yellow">Date of Installation</td>
+                    <td>{{$date}}</td>
                 </tr>
             </table>
            
             
-            <div style="position:absolute;left:90px;top:570px" class="cls_002">
-                <span class="cls_002">Issued By: {{$servicer_job->sub_dealer->name}}</span>
-            </div>
-
-            <div style="position:absolute;left:350px;top:570px" class="cls_002">
-                <span class="cls_002">Inspected and Approved By:</span>
-            </div>
-
             <div style="position:absolute;left:90px;top:650px" class="cls_002">
-                <span class="cls_002">Franchisee Name :</span>
+                <span class="cls_002">This letter has been issued on {{$date}} upon the specific request from the customer as a proof of installation</span>
             </div>
-
-            <div style="position:absolute;left:350px;top:650px" class="cls_002">
-                <span class="cls_002">Name & Signature</span>
+            <div style="position:absolute;left:90px;top:740px" class="cls_002">
+                <span class="cls_002">Yours Sincerly,</span>
             </div>
-
-            <div style="position:absolute;left:350px;top:740px" class="cls_002">
-                <span class="cls_002">Official Seal</span>
+             <div style="position:absolute;left:90px;top:770px" class="cls_002">
+                <span class="cls_002">{{$servicer_job->sub_dealer->name}}</span>
+            </div>
+            <div style="position:absolute;left:90px;top:880px" class="cls_002">
+                <span class="cls_002">Authorised Signatory</span>
             </div>
             <br><br>
-            <div style="position:absolute;left:500px;top:900px" class="cls_003">
+            <div style="position:absolute;left:500px;top:950px" class="cls_003">
                 <img src="assets/images/logo1.png" alt="Logo" height="50px" width="100px">
             </div>
         </div>
