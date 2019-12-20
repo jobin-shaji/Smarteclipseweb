@@ -2797,15 +2797,13 @@ class VehicleController extends Controller
 
           $from_date_time   = $track_data->first()->dateTime;
           $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
-          $alerts           = Alert::where('device_time','=<',$from_date_time)
-                                     // ->where('device_time','=>',$from_date_time)
-                                     // ->where('gps_id',$gps_id)
-                                     ->with('alertType')
-                                     ->get();
-        }
-
-      
-        if ($track_data->count() >0)
+          $alerts_list      = Alert::where('device_time','=<',$from_date_time)
+                                    ->where('device_time','=>',$from_date_time)
+                                    ->where('gps_id',$gps_id)
+                                    ->with('alertType')
+                                    ->get();
+         }
+        if ($track_data->count() > 0)
         {
             $response_data = array(
                 'status' => 'success',
