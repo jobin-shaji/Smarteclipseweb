@@ -9,57 +9,17 @@
       <div class="panel-heading">
         <div class="cover_div_search">
           <div class="row">
-           <div class="col-lg-3 col-md-3"> 
-           <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
-            <label>CRT PACKET</label>  
-            <textarea rows="4"  id="packetvalue"  cols="50">
-            </textarea>
-            <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
-              </div>
+            <div class="col-lg-3 col-md-3"> 
+               <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
+                <label>CRT PACKET</label>  
+                <textarea rows="4"  id="packetvalue"  cols="50">
+                </textarea>
+                <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button></div>
             </div>
           </div>
       </div>      
   </div>
-  <div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allDataTable" class="table table-bordered" >
-        </table> 
-       </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allHLMDataTable" class="table table-bordered" >
-       </table> 
-       </div>
-        <div class="modal-footer">
-        <span class="pull-center">
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+
 </section>
 <div class="clearfix"></div>
 <section class="content" >

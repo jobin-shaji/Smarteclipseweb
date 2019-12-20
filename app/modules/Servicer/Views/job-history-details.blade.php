@@ -24,11 +24,11 @@
               <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                 <div class="row">
                   <div class="col-md-6">      
-                     <?php 
+                <?php 
            
               $encript=Crypt::encrypt($servicer_job->id);
                $vehicle_id=Crypt::encrypt($vehicle_device->id);
-          ?>
+          ?> 
           <a href="{{route('job.complete.certificate.download',$encript)}}">
             <button class="btn btn-xs"><i class='fa fa-download'></i>Download Certificate</button>
           </a>

@@ -66,19 +66,16 @@ $(document).ready(function() {
   });
 });
 
-//for restrict number from text
+
 $('#name').keypress(function (e) {
-  $("#message").hide();
-        var regex = new RegExp("^[a-zA-Z]+$");
-        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-        if (regex.test(str)) {
-            return true;
-        }
-        else
-        {
-          $("#message").show();
-          e.preventDefault();
-        
-        return false;
-        }
+      $("#message").hide();
+     var keyCode = e.which;
+     if (keyCode >= 48 && keyCode <= 57) 
+     {
+       $("#message").show();
+        e.preventDefault();
+    }
+     
     });
+
+
