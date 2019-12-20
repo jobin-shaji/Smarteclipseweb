@@ -104,7 +104,7 @@ Alert Report
                             @endif
 
                             @foreach($alertReports as $alertReport)                  
-                            <tr> {{$alertReport}}          
+                            <tr> 
                               <td>{{ $loop->iteration }}</td>
                               <td>{{ $alertReport->gps->vehicle->name}}</td>
                               <td>{{ $alertReport->gps->vehicle->register_number }}</td>
