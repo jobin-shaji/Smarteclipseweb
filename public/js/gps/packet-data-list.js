@@ -14,30 +14,30 @@ $(function(){
                 },
                 success: function (res) {
                 console.log(res.data.header);
-                 $('#headernew').html(res.data.header);
-                 $('#imei').html(res.data.imei); 
-                 $('#date').html(res.data.date); 
-                 $('#time').html(res.data.time); 
-                 $('#code').html(res.data.code); 
-                 $('#packet_status').html(res.data.packet_status); 
-                 $('#latitude').html(res.data.latitude); 
-                 $('#latitude_dir').html(res.data.lat_dir);
-                 $('#long').html(res.data.longitude); 
-                 $('#long_dir').html(res.data.lon_dir); 
-                 $('#MCC').html(res.data.mcc); 
-                 $('#MNC').html(res.data.mnc); 
-                 $('#LAC').html(res.data.lac); 
-                 $('#cell_id').html(res.data.cell_id); 
-                 $('#SPEED').html(res.data.speed);
-                 $('#gps_fix').html(res.data.gps_fix);
-                 $('#heading').html(res.data.heading); 
-                 $('#no_of_satelites').html(res.data.no_of_satelites); 
-                 $('#gsm_signal_strength').html(res.data.gsm_signal_strength); 
-                 $('#ignition').html(res.data.ignition); 
-                 $('#main_power_status').html(res.data.main_power_status);
-                 $('#vehicle_mode').html(res.data.vehicle_mode);  
-                 $('#hdop').html(res.data.hdop);
-                   $('#device_time').html(res.data.device_time);
+                 $('#headernew').val(res.data.header);
+                 $('#imei').val(res.data.imei); 
+                 $('#date').val(res.data.date); 
+                 $('#time').val(res.data.time); 
+                 $('#code').val(res.data.code); 
+                 $('#packet_status').val(res.data.packet_status); 
+                 $('#latitude').val(res.data.latitude); 
+                 $('#latitude_dir').val(res.data.lat_dir);
+                 $('#long').val(res.data.longitude); 
+                 $('#long_dir').val(res.data.lon_dir); 
+                 $('#MCC').val(res.data.mcc); 
+                 $('#MNC').val(res.data.mnc); 
+                 $('#LAC').val(res.data.lac); 
+                 $('#cell_id').val(res.data.cell_id); 
+                 $('#SPEED').val(res.data.speed);
+                 $('#gps_fix').val(res.data.gps_fix);
+                 $('#heading').val(res.data.heading); 
+                 $('#no_of_satelites').val(res.data.no_of_satelites); 
+                 $('#gsm_signal_strength').val(res.data.gsm_signal_strength); 
+                 $('#ignition').val(res.data.ignition); 
+                 $('#main_power_status').val(res.data.main_power_status);
+                 $('#vehicle_mode').val(res.data.vehicle_mode);  
+                 $('#hdop').val(res.data.hdop);
+                   $('#device_time').val(res.data.device_time);
 
                 }
             });
@@ -46,3 +46,18 @@ $(function(){
     });
 });
 
+$(function(){
+$('#generate').click(function() {
+            var result = $('#headernew').val() + $('#imei').val()+ 
+            $('#code').val()+$('#packet_status').val()+
+            $('#gps_fix').val()+$('#date').val()+$('#time').val()+ 
+            $('#latitude').val()+$('#latitude_dir').val()+
+            $('#long').val()+$('#long_dir').val()+$('#MCC').val()+
+            $('#MNC').val()+$('#LAC').val()+$('#cell_id').val()+
+            $('#SPEED').val()+$('#heading').val()+$('#no_of_satelites').val()+
+            $('#hdop').val()+ $('#gsm_signal_strength').val()+$('#ignition').val()+
+            $('#main_power_status').val()+$('#vehicle_mode').val();
+            $('#mergedvalue').val(result);
+            $('#mergedvalue').show();
+    });
+});
