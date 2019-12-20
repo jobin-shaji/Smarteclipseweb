@@ -13,19 +13,17 @@ $(function(){
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (res) {
-                
-                 $('#header').html(res.data.header);
-                 $('#imei').html(res.data.imei); 
-                 
-                 $('#date').html(res.data.date); 
-                 $('#time').html(res.data.time); 
-                 $('#latitude').html(res.data.latitude); 
-                 $('#latitude_dir').html(res.data.lat_dir);
-                 $('#long').html(res.data.longitude); 
-                 $('#long_dir').html(res.data.lon_dir); 
-                 $('#activationKey').html(res.data.activation_key); 
-                 $('#SPEED').html(res.data.speed); 
-                 $('#device_time').html(res.data.device_time);
+                 $('#header').val(res.data.header);
+                 $('#imei').val(res.data.imei); 
+                 $('#date').val(res.data.date); 
+                 $('#time').val(res.data.time); 
+                 $('#latitude').val(res.data.latitude); 
+                 $('#latitude_dir').val(res.data.lat_dir);
+                 $('#long').val(res.data.longitude); 
+                 $('#long_dir').val(res.data.lon_dir); 
+                 $('#activationKey').val(res.data.activation_key); 
+                 $('#SPEED').val(res.data.speed); 
+                 $('#device_time').val(res.data.device_time);
 
                 }
             });
@@ -33,4 +31,13 @@ $(function(){
         }
     });
 });
-
+$(function(){
+$('#generate').click(function() {
+   
+            var result = $('#header').val()+$('#imei').val()+ $('#activationKey').val()+
+               $('#latitude').val()+ $('#latitude_dir').val()+$('#long').val()+ $('#long_dir').val()
+               +$('#date').val()+$('#time').val()+$('#SPEED').val() ; 
+            $('#mergedvalue').val(result);
+            $('#mergedvalue').show();
+    });
+});
