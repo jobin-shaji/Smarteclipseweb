@@ -77,7 +77,7 @@ Alert Report
                             </div>
                           </div>
                         </form> 
-                         <button type="button" class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadAlertReport()"><i class="fa fa-file"></i>Download Excel</button>
+                         <button type="button" class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadAlertReport()" style="float: right;margin-top: -87px;margin-right: 146px;"><i class="fa fa-file"></i>Download Excel</button>
                           
                         @if(isset($alertReports))                
                         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
