@@ -1,0 +1,222 @@
+@extends('layouts.eclipse')
+@section('content')
+<section class="content box">
+<div class="page-wrapper_new_map">
+
+  <div class="col-lg-12 col-sm-12">
+    <input type="hidden" name="vid" id="vehicle_id_data" value="{{$Vehicle_id}}">
+    <input type="hidden" name="svg_con" id="svg_con" value="{{$vehicle_type->svg_icon}}">
+    <input type="hidden" name="vehicle_scale" id="vehicle_scale" value="{{$vehicle_type->vehicle_scale}}">
+    <input type="hidden" name="opacity" id="opacity" value="{{$vehicle_type->opacity}}">
+    <input type="hidden" name="strokeWeight" id="strokeWeight" value="{{$vehicle_type->strokeWeight}}">
+    <input type="hidden" name="lat" id="lat" value="{{$latitude}}">
+    <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
+   <!--  <div style="background-color: white"><label style="font-size: 15px;color: red;margin-left: 50%">NETWORK LOST </label></div> -->
+   <style type="text/css"></style>
+    
+    <div class="card data_list_cover pull-right" style="width: 16rem" id="lost_blink_id">
+      <div class="card-body data_list_body " >
+        <p class="capitalize"><h2 class="card-title" id="user" style="font-size:20px!important;text-transform: uppercase;"></h2></p>
+        <p>
+        <b>
+        </b></p>
+        <div class="cover_ofline"><b>
+          <div class="cover_status" style="text-align: center;"> 
+            <span id="online" style="display: none;">
+              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Moving<span id="zero_speed"></span>
+            </span>
+            <span id="zero_speed_online" style="display: none;">
+              <i class="fa fa-circle" style="color:#84b752;" aria-hidden="true"></i> Vehicle stopped
+            </span>
+            <span id="halt" style="display: none;">
+              <i class="fa fa-circle" style="color:#69b4b9;" aria-hidden="true"></i> Halt
+            </span>
+            <span id="sleep" style="display: none;">
+              <i class="fa fa-circle" style="color:#858585;" aria-hidden="true"></i> Sleep
+            </span>
+            <span id="offline" style="display: none;font-size: 13px;">
+              <i class="fa fa-circle" style="color:#c41900;" aria-hidden="true"></i> Offline</br> Last seen: <span id="last_seen"></span>
+            </span>
+
+
+            <span id="connection_lost" style="display: none;font-size: 13px;">
+              Connection lost: <span id="connection_lost_last_seen"></span>
+            </span>
+          </div>
+          <div class="col-sm-12 social-buttons" style="margin-left: 2.5%!important;">
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <img src="../../assets/images/plate.png" width=30px height=25px><label id="vehicle_name" class="mgl"></label>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11.5%;font-size: 11px;">: <label class="mgl" id="ignition"></label></b></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 17.8%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <img src="../../assets/images/odometer.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label></b></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 11.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 2%;font-size: 11px;">: <label class="mgl" id="car_power"></label></b></b>
+            </a> 
+            <a class=" btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
+              <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 10%;font-size: 11px;">: <label class="mgl" id="network_status"></label></b></b>
+            </a> 
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 11px;">: <label class="mgl" id="ac"></label></b></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 23.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
+            </a>
+            <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i><image src="/assets/images/stop1-b.png" width="22" height="20"></i><b><label id="car_bettary">STOP TIME : </label></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">HALT TIME :</label></b>
+            </a>
+            <a class="btn btn-block btn-social btn-bitbucket track_item">
+              <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b> -->
+            </a>                                                      
+            <div class="viewmore_location">
+              <div>
+                <div style="float: left;padding: 3% 5% 8% 3%;"><img src="../../assets/images/marker.png" height="32px" width="24px"> <!-- <i class="fa fa-map-marker"></i> --></div>
+                <div id="car_location" style="font-size: .7rem!important;padding: 109% 8% 4% 19%;"></div>
+            </div>
+            </div>
+            <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
+          </div>
+            
+            <?php
+            $location_url=urlencode("https://www.google.com/maps/search/?api=1&query=".$latitude.",".$longitude);
+            ?>
+
+            @role('fundamental|superior|pro')
+            <hr style="margin-left: 3%">
+              <div class="share_button">
+                <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a>
+                <!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
+                <a target="_blank" href="mailto:?Subject=FrinMash&Body=I%20saw%20this%20and%20thought%20of%20you!%20 {{$location_url}}"><img src="{{ url('/') }}/share-icons/email.png" alt="Email" /></a>
+                <!-- watsapp -->
+                <a target="_blank" href="https://web.whatsapp.com/send?text={{$location_url}}" data-action="share/whatsapp/share"><img src="{{ url('/') }}/share-icons/whatsapp.png" alt="Email" /></a>
+                </div>
+              </div>
+            @endrole
+          </div>
+        </b>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cover_poi">
+      <div  class="poi_atm poi_item" id="actv1">
+        <a href="#" id="poi_atm" onclick="clr1()">
+        <img src="{{ url('/') }}/images/ATM.png">
+        </a>
+      </div>
+      <div class="poi_petrol poi_item" id="actv2">
+        <a href="#" id="poi_petrol" onclick="clr2()">
+          <img src="{{ url('/') }}/images/pump.png">
+       </a>
+      </div>
+      <div class="poi_hopital poi_item" id="actv3">
+        <a href="#" id="poi_hopital" onclick="clr3()">
+          <img src="{{ url('/') }}/images/hospital.png">
+        </a>
+      </div>
+      <div class="poi_item">
+        <a target="_blank" href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
+          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
+        </a>
+      </div>
+
+      <!--  <div class="poi_item">
+        <a target="_blank" href="{{url('/playback-second/'.Crypt::encrypt($Vehicle_id))}}">
+          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
+        </a>
+      </div> -->
+    </div>
+
+    <!-- <div id="map" class="live_track_map" style="width:100%;height:85vh;"></div> -->
+
+      <div id="markers" style="width:100%px;height:595px; position: relative;">
+      
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div id="track_alert" class="modal_for_track" style="color: red">      
+  <div class="modal-content">
+    <div class="modal-header">
+        <div class="container" style="text-align: center;">
+           <h3 style="font-weight: bold;">Critical Alert</h3>
+        </div>
+        <button onclick="verifyCriticalAlert()" style="text-align: right;"><i class="fa fa-close"></i></button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/1200px-Achtung.svg.png" height="120" width="145"> <br>
+        Alert :  <h4 id="critical_alert_name"></h4>
+        Location :  <h4 id="critical_alert_location"></h4>
+        Time : <h4 id="critical_alert_time"></h4>
+        <input type="hidden" id="alert_id">
+        <input type="hidden" id="alert_vehicle_id">
+        <input type="hidden" id="decrypt_vehicle_id">
+        <button onclick="verifyCriticalAlert()">Verify</button>
+    </div>
+  </div>
+</div>
+
+@section('script')
+<link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
+<style type="text/css">
+#pbk{
+width:100%;
+height:45px;
+border-radius:10px;
+background-color:#cd853f;
+color:#fff;
+font-family:'Raleway',sans-serif;
+font-size:18px;
+cursor:pointer
+}
+</style>
+<!-- <script src="{{asset('js/odometer.js')}}"></script> -->
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
+     <script>
+        var hidpi               = ('devicePixelRatio' in window && devicePixelRatio > 1);
+        var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
+        var app_id              = "vvfyuslVdzP04AK3BlBq",
+            app_code            = "f63d__fBLLCuREIGNr6BjQ";
+        var mapContainer        = document.getElementById('markers');
+        var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
+        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+        var map                 = new H.Map(mapContainer, maptypes.normal.map);
+        map.setCenter({ lat: 10.192656, lng: 76.386666 });
+        map.setZoom(14);
+        var zoomToResult = true;
+        var mapTileService = platform.getMapTileService({
+            type: 'base'
+        });
+        var parameters = {};
+        var uTurn = false;
+        new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
+
+         </script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script> -->
+<script src="{{asset('js/gps/location-track-second.js')}}"></script>
+@endsection
+
+@endsection
+
+<!--  <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script> -->

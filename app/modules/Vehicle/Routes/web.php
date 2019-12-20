@@ -84,6 +84,8 @@ Route::post('/vehicles/location-track','VehicleController@locationTrack')->name(
 Route::get('/vehicles/fuel-track','VehicleController@fuelTrack')->name('vehicles.fuel-track');
 
 
+Route::get('/vehicles-second/{id}/location','VehicleController@vehicleLocationTrack')->name('vehicles-second.location');
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////
