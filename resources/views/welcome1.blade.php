@@ -571,17 +571,25 @@
                         <p style="color: #bfeab3;">JAYAKUMARI ESTATE,MADAKKIMALA,KALPETTA,WAYANAD</p>
                        
                     </div>
-                   
-                </div>
-				<div class="row">
                     <div class="col-md-4">
-                       
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MALAYIL VEHICLE TRACK SOLUTIONS</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
+						
+                      <p style="color: #bfeab3;">GULF TOWER M.C ROAD MATTOOR P.O KALADY ERNAKULAM-683574</p>
+                      <p style="color: #bfeab3;"> Mob: 9744335604</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">I Track Solutions</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;MALAPPURAM</h3>
+						
+                      <p style="color: #bfeab3;">TMK BUILDING NEAR ERAM MOTORS 22 MILE MANJERI MALAPPURAM-676121 </p>
+                      <p style="color: #bfeab3;">Mob: 9995964385</p>
                     </div>
                     <div class="col-md-4" style="boder-color:red">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">TECTIV  </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KASARAGOD</h3>
 					
-                        <p style="color: #bfeab3;">NETWORKING AND SECURITY SYSTEMS DOOR N0:15/486N CENTER POINT BUILDING NEAR RTO OFFICE VELLARIKUNDU (PO) PIN :671533 KASARAGOD GST :32BKEPG4607C1ZV </p>
+                        <p style="color: #bfeab3;">NETWORKING AND SECURITY SYSTEMS DOOR N0:15/486N CENTER POINT BUILDING NEAR RTO OFFICE VELLARIKUNDU (PO) PIN :671533 KASARAGOD</p>
                        
                     </div>
 					 <div class="col-md-4">
@@ -927,7 +935,7 @@ path:nth-child(4) {
 			 <h2>GPS+IRNSS TRACKER<h2>
                <div class="row"> 
 					<div class="col-md-4 col-sm-2">
-						<h5 style="color: #fcd200;">1500mAh Battery</h5> 
+						<h6 style="color: #fcd200;text-transform: none;">1500mAh Battery</h6> 
 					</div> 
 					<div class="col-md-4 col-sm-2 col-xs-12">
 						<h5 style="color: #fcd200;">1.2 GB Data</h5> 
