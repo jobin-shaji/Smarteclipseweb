@@ -8,7 +8,7 @@
 html, body {
   height: 100%!important;
   margin: 0;
-  
+ 
 }
 
 
@@ -38,7 +38,7 @@ padding: 8px 0px 0px 0px;
 
 .full-height {
   height: 85vh;
-  
+ 
 }
 .left-bottom-car-details {
     width: 20%;
@@ -77,11 +77,11 @@ padding: 8px 0px 0px 0px;
 }}
 
 /*!
- * Bootstrap v4.1.0 (https://getbootstrap.com/)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+* Bootstrap v4.1.0 (https://getbootstrap.com/)
+* Copyright 2011-2018 The Bootstrap Authors
+* Copyright 2011-2018 Twitter, Inc.
+* Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+*/
 
 :root {
     --blue: #2255a4;
@@ -511,7 +511,7 @@ h3 {
 
 .h4,
 h4 {
-    font-size: 14px;line-height:1 
+    font-size: 14px;line-height:1
 }
 
 
@@ -750,7 +750,7 @@ section.content-header.root_content_header {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    
+   
 }
 
 .no-gutters {
@@ -837,7 +837,7 @@ section.content-header.root_content_header {
     position: relative;
     width: 100%;
     min-height: 1px;
-      
+     
 }
 
 .col {
@@ -894,7 +894,7 @@ section.content-header.root_content_header {
 
 .col-6 {
     -webkit-box-flex: 0;
-    
+   
 }
 
 .col-7 {
@@ -1339,7 +1339,7 @@ section.content-header.root_content_header {
     }
     .col-md-9 {
         -webkit-box-flex: 0;
-        
+       
     }
     .col-md-10 {
         -webkit-box-flex: 0;
@@ -2285,8 +2285,8 @@ section.content-header.root_content_header {
     padding: 3% 2% 3% 5%!important;
 }
 
-@keyframes blink { 
-   50% { border-color: #ff0000; } 
+@keyframes blink {
+   50% { border-color: #ff0000; }
 }
 .blinking{ /*or other element you want*/
     animation-name: blink !important;
@@ -2993,7 +2993,7 @@ fieldset:disabled a.btn {
 .btn-secondary {
     color: #fff;
     background-color: #6c757d;
- }
+}
 
 .btn-secondary:hover {
     color: #fff;
@@ -5380,7 +5380,7 @@ input[type=submit].btn-block {
     word-wrap: break-word;
         background-clip: border-box;
         border-radius:20px;margin:0 5px;
- 
+
 }
 
 .card>hr {
@@ -10199,7 +10199,7 @@ button.bg-purple:hover {
     /*margin-bottom: 1rem;*/
     float: left!important;
     width: 93%;
-    
+   
 }
 
 .text-center {
@@ -10283,7 +10283,7 @@ button.bg-purple:hover {
 }
 
 .text-white {
-    color: #000 !important;font-size:13px 
+    color: #000 !important;font-size:13px
 }
 
 .text-primary {
@@ -11534,7 +11534,7 @@ ul.list-style-none li a:hover {
     -webkit-box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.05);
     box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.05);
     background: #fff;
-    
+   
 }
 
 .topbar .navbar-collapse {
@@ -11677,7 +11677,7 @@ ul.list-style-none li a:hover {
     .topbar .top-navbar .navbar-nav .dropdown {
         position: static
     }
-  
+ 
     .topbar .top-navbar .navbar-header {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -12259,12 +12259,12 @@ html body .waves-notransition {
 
 
 /*!
- * animate.css -http://daneden.me/animate
- * Version - 3.5.1
- * Licensed under the MIT license - http://opensource.org/licenses/MIT
- *
- * Copyright (c) 2016 Daniel Eden
- */
+* animate.css -http://daneden.me/animate
+* Version - 3.5.1
+* Licensed under the MIT license - http://opensource.org/licenses/MIT
+*
+* Copyright (c) 2016 Daniel Eden
+*/
 
 .animated {
     -webkit-animation-duration: 1s;
@@ -16553,7 +16553,7 @@ h1.text-white i {
     }
 
     .navbar-minimal {
-        width: 60px;        
+        width: 60px;       
         min-height: 60px;
         max-height: 100%;
         background-color: rgb(51, 51, 51);
@@ -16632,7 +16632,7 @@ h1.text-white i {
     }
     .navbar-minimal > .navbar-menu > li > a:hover {
         background-color: rgb(242, 153, 25);
-        
+       
     }
     .navbar-minimal > .navbar-menu > li > a > .glyphicon {
         float: right;
@@ -16689,7 +16689,7 @@ h1.text-white i {
             width: 0;
             height: 0;
             border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;  
+            border-bottom: 10px solid transparent; 
             border-right: 10px solid rgb(51, 51, 51);
             border-right-color: rgba(51, 51, 51, 0.8);
         }
@@ -16715,7 +16715,7 @@ h1.text-white i {
     }
 
 
- /*   button.btn.btn-sm.btn1.btn-primary.form-control {
+/*   button.btn.btn-sm.btn1.btn-primary.form-control {
     width: 50%;
     float: left;
     }
@@ -16759,7 +16759,7 @@ li.nav-item.dropdown.show {
 
   background: #f2981973 !important;
   color: #fff;
-  
+ 
 }
 
 .my-card
@@ -16838,7 +16838,7 @@ button.btn.btn-sm.btn-info.form-control.btn-play-back {
 
 .dataTable button{
    padding: 6px;
-    margin: 1px; 
+    margin: 1px;
 }
 
 .card-body {
@@ -16915,7 +16915,7 @@ button.btn.btn-primary.address_btn {
 /* Modal Content */
 .modal-content {
   position: relative;
-  
+ 
   margin: auto;
   padding: 0;
   /*border: 1px solid #888;
@@ -16933,7 +16933,7 @@ button.btn.btn-primary.address_btn {
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0} 
+  from {top:-300px; opacity:0}
   to {top:0; opacity:1}
 }
 
@@ -17023,7 +17023,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 
 .panel-heading.plaback_head_data_change input{
     margin-top: 0px;
- 
+
 }
 
 .playback_head button#savebutton {
@@ -17165,10 +17165,6 @@ padding: 15px 10px;
     background: #41A659;
 }
 
-.gps_non_stock_dashboard_grid {
-    background: #F37C19;
-}
-
 .transferred_gps_dashboard_grid {
     background: #6A6F75;
 }
@@ -17201,7 +17197,7 @@ li.breadcrumb-item a {
 }
 
 .callout.callout-success {
-   
+  
     color: #338c33;
     background: #c5e0c9;
     padding: 15px;
@@ -17211,7 +17207,7 @@ li.breadcrumb-item a {
 }
 
 .callout.callout-warning {
-   
+  
     color: #F4F4F4;
     background: #DE7171;
     padding: 15px;
@@ -17224,7 +17220,7 @@ li.breadcrumb-item a {
 }
 
 /*.callout.callout-success {
-  
+ 
 }*/
 
 
@@ -17358,10 +17354,10 @@ border-radius: 6px 0 6px 6px;
     right: 82px;
 }
 
- #share-buttons img { width: 24px;  border: 0; box-shadow: 0; }
- .share_button {bottom: 55px;right: 71px;position: fixed;z-index: 2;}
- /*.cover_poi {position: fixed;z-index: 2;right: 40px;top: 203px;}*/
- /*.poi_item {padding-top: 8px;}*/
+#share-buttons img { width: 24px;  border: 0; box-shadow: 0; }
+.share_button {bottom: 55px;right: 71px;position: fixed;z-index: 2;}
+/*.cover_poi {position: fixed;z-index: 2;right: 40px;top: 203px;}*/
+/*.poi_item {padding-top: 8px;}*/
 .cover_poi {
     position: fixed;
     z-index: 2;
@@ -17373,8 +17369,8 @@ border-radius: 6px 0 6px 6px;
     border: solid 4px #fdfbf7;
     margin: 10% 0;
 }
- /*-------------------tooltip--------------------------------*/
- .tooltip {
+/*-------------------tooltip--------------------------------*/
+.tooltip {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
@@ -17399,10 +17395,10 @@ border-radius: 6px 0 6px 6px;
 }
 /*---------------------------------------------------------------*/
 
-.pac-container {  
-  
-  /*top: 0px !important;  
-  left: 0 !important; 
+.pac-container { 
+ 
+  /*top: 0px !important; 
+  left: 0 !important;
   position: relative !important;*/
 
 
@@ -17426,7 +17422,7 @@ border-radius: 6px 0 6px 6px;
 
 .track_status_active_hover{
     display: block !important;
-    
+   
 }
 
 span.cover_bell {
@@ -17448,7 +17444,7 @@ span.cover_bell {
 
 .form-check input,.form-check label{
     display:inline-block;
-    vertical-align:middle;  
+    vertical-align:middle; 
 }
 .branch_select_item {
     /*width: 12%;*/
@@ -17458,9 +17454,9 @@ fieldset{
   background-repeat:no-repeat;
   background-position:center;
   background-size:cover;
-    }    
- legend{width:200px;padding:10px 20px;}
- .cover_branch {
+    }   
+legend{width:200px;padding:10px 20px;}
+.cover_branch {
     padding: 27px;
 }
 .selectbox_cover.row {
@@ -17512,8 +17508,8 @@ span.select2-selection.select2-selection--multiple {
 }
 
 .info-box-text {
-    text-transform: uppercase; 
-    font-size: 14px; 
+    text-transform: uppercase;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -17740,7 +17736,7 @@ a,
 .signup__container {
   position: relative;
   top: 57%;
-  
+ 
   transform: translateY(-50%);
   display: flex;
   align-items: center;
@@ -17875,7 +17871,3 @@ a,
             -webkit-animation: spin .8s linear infinite;
             animation: spin .8s linear infinite;
         }
-
-
-
-

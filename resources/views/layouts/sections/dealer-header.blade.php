@@ -15,7 +15,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/gps-dealer-new')}}"> NEW ARRIVALS</a>
                                 <a class="dropdown-item" href="{{url('/gps-dealer')}}"> IN STOCK </a>  
-                                <a class="dropdown-item" href="{{url('/gps-transfer-dealer/create')}}"> DEVICE TRANSFER</a>
+                                <a class="dropdown-item" href="{{url('/gps-transfer-dealer/create')}}">TRANSFER DEVICE</a>
                                 <a class="dropdown-item" href="{{url('/gps-transfers-dealer')}}"> DEVICE TRANSFER LIST</a>                           
                             </div>
                         </li>
