@@ -223,13 +223,13 @@
             </table>
            
             
-            <div style="position:absolute;left:70px;top:720px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:70px;top:750px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:70px;top:800px" class="cls_002">
+            <div style="position:absolute;left:70px;top:820px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:70px;top:850px" class="cls_002">
+             <div style="position:absolute;left:70px;top:860px" class="cls_002">
                 <span class="cls_002">{{$servicer_job->sub_dealer->name}}</span>
             </div>
             <div style="position:absolute;left:70px;top:930px" class="cls_002">
