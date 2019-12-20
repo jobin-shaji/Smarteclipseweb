@@ -407,7 +407,7 @@ padding: 5px 10px;
         var previousCoorinates;
         var blacklineStyle;
         var speed_val            = 1;
-        var Speed                = 600;
+        var Speed                = 5000;
         var loader               = false;
     
          
@@ -818,12 +818,14 @@ padding: 5px 10px;
     <script type="text/javascript">
       $('#datetimepicker_live1').datetimepicker({
         format: 'yyyy-MM-dd hh:mm:ss',
+        pick12HourFormat: false 
    
       });
     </script>
     <script type="text/javascript">
       $('#datetimepicker_live2').datetimepicker({
         format: 'yyyy-MM-dd hh:mm:ss',
+        pick12HourFormat: false 
       });
     </script>
 
