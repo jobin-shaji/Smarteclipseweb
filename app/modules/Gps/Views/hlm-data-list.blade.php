@@ -7,33 +7,23 @@
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
         <div class="cover_div_search">
-         
-            <div class="row">
-
-             <div class="col-lg-3 col-md-3"> 
+          <div class="row">
+           <div class="col-lg-3 col-md-3"> 
               <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
                 <label> HLM PACKET</label>  
                 <textarea rows="4"  id="packetvalue"  cols="50">
-
-                  </textarea>
-                      <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
-               <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
+                </textarea>
+                 <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
               </div>
             </div>
-
-        <!--  <div class="col-lg-3 col-md-3"> 
-           <div  style ="margin-left: 77px"class="form-group has-feedback">        
-          <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> <i class="fa fa-search"></i> </button>
-      </div>
-        </div>  -->                       
-      </div>
+        </div>
     </div>      
   </div>
   </section>
-<div class="clearfix"></div>
+  <div class="clearfix"></div>
+
 <section class="content" >
-<!-- <div class=col-md-8>           -->
-  <div class="col-md-6" style="overflow: scroll">
+<div class="col-md-6" style="overflow: scroll">
   <!DOCTYPE html>
 
 <style>
@@ -48,7 +38,6 @@ table, th, td {
 </head>
 
 <body>
-
 <table style="width:60%;font-size: 13.5px!important">
  
   <tbody>
@@ -120,10 +109,8 @@ table, th, td {
       <td>Analog Input Status</td>
       <td><INPUT TYPE="TEXT"  id="analog_io_status" NAME="analog_io_status" SIZE="110"></td>
     </tr>
-    
-  </tbody>
-  
-</table>
+    </tbody>
+  </table>
 
  <div class="row">
     <div class="panel-body" style="width: 100%;min-height: 10%">
@@ -143,7 +130,6 @@ table, th, td {
     </div>
  </div>
 </div>
-
 </body>
 </html></div>
 </section>
