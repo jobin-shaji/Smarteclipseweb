@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="hilite-content">
-      <!-- title row -->     
+  
   <div class="row">
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
@@ -14,74 +14,15 @@
               <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
                 <label> LGN PACKET</label>  
                 <textarea rows="4"  id="packetvalue"  cols="50">
-
-                  </textarea>
+                </textarea>
                       <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
-               <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
-              </div>
+                       </div>
             </div>
-
-        <!--  <div class="col-lg-3 col-md-3"> 
-           <div  style ="margin-left: 77px"class="form-group has-feedback">        
-          <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> <i class="fa fa-search"></i> </button>
-      </div>
-        </div>  -->                       
-      </div>
+       </div>
     </div>      
   </div>
-  
+  </section>
 
-<div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
-            SET OTA
-          </button> -->
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="modal fade" id="gpsHLMDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="padding: 25px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>        
-      </div>
-      <div class="modal-body">       
-      <div class="row">
-       <table border=1 id="allHLMDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
-      <div class="modal-footer">
-        <span class="pull-center">
-        
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
@@ -101,7 +42,7 @@ table, th, td {
 
 <body>
 
-<table style="width:60%;font-size: 13.5px!important">
+<table style="width:50%;font-size: 13.5px!important">
  
   <tbody>
    <th>Packet Params</th>
@@ -157,14 +98,24 @@ table, th, td {
     </tr>
    </tbody>
   </table>
- <div data-container="button">
-   <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
-height:40px;"> Generate </button>   
-</div>        
-<br>
-<br>
- <textarea   id = "mergedvalue" style="float: right;display:none" rows="4" cols="50">
-</textarea> 
+
+ <div class="row">
+    <div class="panel-body" style="width: 100%;min-height: 10%">
+      <div class="panel-heading">
+        <div>
+          <div class="row">
+           <div class="col-lg-3 col-md-3"> 
+            <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+            <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+              height:40px;"> Generate </button>
+             </div>
+             <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+          </div>
+        </div>
+      </div>      
+    </div>
+ </div>
+</div>
 </body>
 </html>
 </div>

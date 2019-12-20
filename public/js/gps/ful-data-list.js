@@ -13,7 +13,7 @@ $(function(){
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (res) {
-                alert(res.data.header);
+               
                  $('#header').val(res.data.header);
                  $('#imei').val(res.data.imei);
                  $('#date').val(res.data.date); 

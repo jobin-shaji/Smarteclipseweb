@@ -158,15 +158,24 @@ table, th, td {
   
 </table>
 
-<div data-container="button">
-   <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
-height:40px;"> Generate </button>   
-</div>        
-<br>
-<br>
- <textarea   id = "mergedvalue" style="float: right;display:none" rows="5" cols="50">
-</textarea> 
-
+<div class="row">
+    <div class="panel-body" style="width: 100%;min-height: 10%">
+      <div class="panel-heading">
+        <div>
+          <div class="row">
+         <div class="col-lg-3 col-md-3"> 
+        <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+         <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+          height:40px;"> Generate </button>
+           
+              </div>
+              <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+            </div>
+          </div>
+      </div>      
+    </div>
+ </div>
+</div>
 
 </body>
 </html>

@@ -8,31 +8,21 @@
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
         <div>
-         
-            <div class="row">
-
-             <div class="col-lg-3 col-md-3"> 
-        <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
+         <div class="row">
+         <div class="col-lg-3 col-md-3"> 
+         <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
           <label> NRM PACKET</label>  <br>
            <p style="margin-top: 16%;margin-bottom: -3rem">Packet :-</p><textarea rows="4"  id="packetvalue"  cols="50" style="width: 70%!important;margin-left: 23%;margin-bottom: 3.5rem">
-
-                  </textarea>
-                      <button class="btn btn-info btn2 srch" id="searchclick" style="float:right;padding: 0!important;margin-right: -30%;margin-top: 10%"> SUBMIT </button>                     
-               <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
-              </div>
+             </textarea>
+               <button class="btn btn-info btn2 srch" id="searchclick" style="float:right;padding: 0!important;margin-right: -30%;margin-top: 10%"> SUBMIT </button>                     
+               </div>
             </div>
-
-                     
-      </div>
+         </div>
     </div>      
   </div>
   
-
-
-
 <table class="greyGridTable" ><!-- style="width:50%;font-size: 13.5px!important" -->
- 
-  <tbody>
+ <tbody>
    <th>Packet Params</th>
       <th>Packet Values</th>
 
@@ -133,24 +123,35 @@
     </tr>
      
       <tr>
-      <td>Vehicle Mode</td>
+      <td>Vehicle Modexx</td>
       <td ><INPUT TYPE="TEXT"  id="vehicle_mode" NAME="vehicle_mode" SIZE="40"></td>
+       
     </tr>
     
   </tbody>
   
 </table>
-   <div data-container="button">
-   <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
-height:40px;"> Generate </button>   
-</div>        
-<br>
-<br>
+</div>
+</div>
 
- <textarea   id = "mergedvalue" style="float: right;display:none" rows="4" cols="50">
-</textarea> 
-
+  <div class="row">
+       <div class="panel-body" style="width: 100%;min-height: 10%">
+         <div class="panel-heading">
+            <div>
+             <div class="row">
+             <div class="col-lg-3 col-md-3"> 
+             <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+              <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;height:40px;"> Generate </button>
+             </div>
+              <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+              </div>
+           </div>
+         </div>      
+       </div>
+    </div>
+  </div>
 </section>
+
 <div class="clearfix"></div>
 <section class="content" >
 <!-- <div class=col-md-8>           -->
@@ -192,7 +193,7 @@ table.greyGridTable thead th:first-child {
 [data-container="button"] {
   position: absolute;
   top: 160%;
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 

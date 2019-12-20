@@ -4,35 +4,23 @@
 
 <section class="hilite-content">
       <!-- title row -->     
-  <div class="row">
+   <div class="row">
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
         <div class="cover_div_search">
-         
-            <div class="row">
-
-             <div class="col-lg-3 col-md-3"> 
-        <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
-                <label>CRT PACKET</label>  
-<textarea rows="4"  id="packetvalue"  cols="50">
-
-                  </textarea>
-                      <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
-               <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
+          <div class="row">
+           <div class="col-lg-3 col-md-3"> 
+           <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
+            <label>CRT PACKET</label>  
+            <textarea rows="4"  id="packetvalue"  cols="50">
+            </textarea>
+            <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
               </div>
             </div>
-
-        <!--  <div class="col-lg-3 col-md-3"> 
-           <div  style ="margin-left: 77px"class="form-group has-feedback">        
-          <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> <i class="fa fa-search"></i> </button>
-      </div>
-        </div>  -->                       
-      </div>
-    </div>      
+          </div>
+      </div>      
   </div>
-  
-
-<div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
+  <div class="modal fade" id="gpsDataModal" tabindex="-1" role="dialog" aria-labelledby="favoritesModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" style="padding: 25px">
       <div class="modal-header">
@@ -42,16 +30,10 @@
       <div class="modal-body">       
       <div class="row">
        <table border=1 id="allDataTable" class="table table-bordered" >
-        
-      
-       </table> 
-     
-      </div>
+        </table> 
+       </div>
       <div class="modal-footer">
         <span class="pull-center">
-          <!-- <button type="button" class="btn btn-primary btn-lg btn-block">
-            SET OTA
-          </button> -->
         </span>
       </div>
     </div>
@@ -68,14 +50,10 @@
       <div class="modal-body">       
       <div class="row">
        <table border=1 id="allHLMDataTable" class="table table-bordered" >
-        
-      
        </table> 
-     
-      </div>
-      <div class="modal-footer">
+       </div>
+        <div class="modal-footer">
         <span class="pull-center">
-        
         </span>
       </div>
     </div>
@@ -110,7 +88,7 @@ table, th, td {
 
     <tr>
       <td>Header</td>
-      <td id="header"><INPUT TYPE="TEXT"  id="header" NAME="header" SIZE="110"></td>
+      <td><INPUT TYPE="TEXT"  id="headernew" NAME="header" SIZE="110"></td>
     </tr>
 
     <tr>
@@ -140,7 +118,7 @@ table, th, td {
     </tr>
     <tr>
       <td>Packet Status</td>
-      <td id="packet_status"> <INPUT TYPE="TEXT"  id="packet_status" NAME="packet_status" SIZE="110"></td>
+      <td > <INPUT TYPE="TEXT"  id="packet_status" NAME="packet_status" SIZE="110"></td>
     </tr>
     <tr>
       <td>Latitude</td>
@@ -217,14 +195,26 @@ table, th, td {
   
 </table>
 
-
-
-</body>
+<div class="row">
+          <div class="panel-body" style="width: 100%;min-height: 10%">
+            <div class="panel-heading">
+              <div>
+                 <div class="row">
+                   <div class="col-lg-3 col-md-3"> 
+                  <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+                     <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+                     height:40px;"> Generate </button>
+                     </div>
+                       <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+                    </div>
+                  </div>
+              </div>      
+         </div>
+      </div>
+    </div>
+  </body>
 </html>
-
-
-   
-  </div>
+</div>
 </section>
 
 
