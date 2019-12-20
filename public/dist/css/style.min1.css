@@ -17169,6 +17169,10 @@ padding: 15px 10px;
     background: #6A6F75;
 }
 
+.gps_non_stock_dashboard_grid {
+    background: #F37C19;
+}
+
 .dealer_dashboard_grid {
     background: #56C1EF;
 }
