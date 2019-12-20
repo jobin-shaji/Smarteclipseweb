@@ -194,26 +194,10 @@ cursor:pointer
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
      <script>
-        var hidpi               = ('devicePixelRatio' in window && devicePixelRatio > 1);
-        var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
-        var app_id              = "vvfyuslVdzP04AK3BlBq",
-            app_code            = "f63d__fBLLCuREIGNr6BjQ";
-        var mapContainer        = document.getElementById('markers');
-        var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
-        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
-        var map                 = new H.Map(mapContainer, maptypes.normal.map);
-        map.setCenter({ lat: 10.192656, lng: 76.386666 });
-        map.setZoom(14);
-        var zoomToResult = true;
-        var mapTileService = platform.getMapTileService({
-            type: 'base'
-        });
-        var parameters = {};
-        var uTurn = false;
-        new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
+      // add behavior control
 
          </script>
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script>
 <script src="{{asset('js/gps/location-track-second.js')}}"></script>
 @endsection
 

@@ -1,813 +1,211 @@
+
+
 function getUrl() {
     return $('meta[name = "domain"]').attr('content');
 }
- var vehiclePath = document.getElementById('svg_con').value;
- var start_lat = document.getElementById('lat').value;
- var start_lng = document.getElementById('lng').value;
- var vehicle_scale = document.getElementById('vehicle_scale').value;
- var opacity = document.getElementById('opacity').value;
- var strokeWeight = document.getElementById('strokeWeight').value;
- var track_vehicle_id = document.getElementById('vehicle_id_data').value;
 
-var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
-var numDeltas = 100;
-var delay = 5; //milliseconds
-var i = 0;
-var posLat = parseFloat(start_lat);
-var posLng = parseFloat(start_lng);
-var markericon;
-var deltaLat, deltaLng;
-var marker;
-var map;
-var vehicleColor = "#0C2161";
-var vehicleScale = vehicle_scale;
-
+var hidpi               = ('devicePixelRatio' in window && devicePixelRatio > 1);
+var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
+var app_id              = "vvfyuslVdzP04AK3BlBq",
+    app_code            = "f63d__fBLLCuREIGNr6BjQ";
+var mapContainer        = document.getElementById('markers');
+var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
+var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+var map                 = new H.Map(mapContainer, maptypes.normal.map);
+map.setCenter({ lat: 10.192656, lng: 76.386666 });
+map.setZoom(14);
+var zoomToResult = true;
+var mapTileService = platform.getMapTileService({
+    type: 'base'
+});
+var parameters = {};
+var uTurn = false;
+new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 var angle;
 var clickedPointRecent
 var clickedPointCurrent;
 var clickedPointCurrentlatlng;
 var locationQueue=[];
 var recentPoppedLocation;
-
 var recent_angle_latlng=null;
 var current_angle_latlng;
-var service;
-var ac;
-var battery_status;
-var connection_lost_time_motion;
-var dateTime;
-var fuel;
-var fuelquantity;
-var ign;
-var last_seen;
-var latitude;
-var longitude;
-var place;
-var power;
-var signalStrength;
-var speed;
-var vehicleStatus;
-var connection_lost_time_halt;
-var connection_lost_time_sleep;
-var connection_lost_time_minutes;
+var service,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,signalStrength,speed;
+var vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,latitude,longitude,place,power;
 
 
-$('document').ready(function(){setTimeout(getMarkers,5000);}); 
-
-$('document').ready(function(){
-  initMap();
-  setTimeout(getMarkers,5000);
-  setInterval(function() {
-        var url = 'continuous-alert';
-        var data = { 
-          vehicle_id:track_vehicle_id
-        };
-        backgroundPostData(url,data,'continuousAlert',{alert:false});
-  }, 8000);
-
-}); 
-$('document').ready(function(){setTimeout(doWork,1000);});  
-
-function continuousAlert(res){
-    if(res.status == 'success'){
-        var latitude=res.alerts[0].latitude;
-        var longitude=res.alerts[0].longitude;
-        getPlaceNameFromLatLng(latitude,longitude);
-        
-        var modal = document.getElementById('track_alert');
-        modal.style.display = "block";
-        document.getElementById("alert_id").value = res.alerts[0].alert_type_id;
-        document.getElementById("alert_vehicle_id").value = res.vehicle;
-        document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
-        $('#critical_alert_name').text(res.alerts[0].alert_type.description);
-        $('#critical_alert_time').text(res.alerts[0].device_time); 
-    }
-}
-
-function verifyCriticalAlert(){
-    var alert_id = document.getElementById("alert_id").value;
-    var vehicle_id = document.getElementById("alert_vehicle_id").value;
-    var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
-    var url = 'continuous-alert/verify';
-    var data = {
-    id : vehicle_id,
-    alert_id : alert_id
-    };
-    backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
-}
-
-function verifyCriticalAlertResponse(res){
-    if(res){
-        var modal = document.getElementById('track_alert');
-        modal.style.display = "none";
-    }
-}
+ var data_fetch_from_server   = window.setInterval(function(){
+      getMarkers();
+      console.log('fetch data from server');
+     }, 500);
+  var data_fetch_from_server   = window.setInterval(function(){
+      doWork();
+     }, 1000);
 
 
-
-// ---------------------que list--------------------------
- function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
-  {
-
-
-   var location_angle=[loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes];
-   locationQueue.push(location_angle);
-
-  }
- function popFromLocationQueue()
-  {
-   if(locationQueue.length>0)
-    {
-          return locationQueue.splice(0,1)[0];    
-    }
-      else
-      return null;
-  }
-  /*
------------------------------------------------*/
-  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
-   {
-      $.ajax({
-       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
-      crossDomain: true,
-      dataType: 'jsonp'
-       }).done(function(response) {
-      if (response.error) {
-        // alert("error" + response.error.message);
-        return;
+function getMarkers() {
+  var url            =   'vehicles/location-track';
+  var id             =   $("#vehicle_id_data").val();
+  data               = {
+                        id:id
+                      };
+  var purl           = getUrl() + '/' + url;
+  var triangleCoords = [];
+  $.ajax({
+     type  :   'POST',
+      url  :    purl,
+      data :    data,
+    async  :    true,
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function(res) {
+      if(res.hasOwnProperty('liveData')){
+        document.getElementById("user").innerHTML          = res.vehicle_name;
+        document.getElementById("vehicle_name").innerHTML  = res.vehicle_reg;
+        transition(res);
+        setTimeout(getMarkers, 5000);
       }
-      $.each(response.snappedPoints, function (i, snap_data) {
-      var loc=snap_data.location;
-      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
-      });
-     });
-   }
+    },
+    error: function(err) {
+      var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
+    }
+  });
+}
 
-/*
-   ------unsnapped points-------
-   function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
-   {
-      
-    
-      var latlng = new google.maps.LatLng(latitude,longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
-      
-   }*/
 // ---------------------que list--------------------------
 function transition(result)
-    {
-     angle=result.liveData.angle;
-     ac=result.liveData.ac;
-     battery_status=result.liveData.battery_status;
-     connection_lost_time_motion=result.liveData.connection_lost_time_motion;
-     dateTime=result.liveData.dateTime;
-     fuel=result.liveData.fuel;
-     fuelquantity=result.liveData.fuelquantity;
-     ign=result.liveData.ign;
-     last_seen=result.liveData.last_seen;
-     latitude=result.liveData.latitude;
-     longitude=result.liveData.longitude;
-     place=result.liveData.place;
-     power=result.liveData.power;
-     signalStrength=result.liveData.signalStrength;
-     speed=result.liveData.speed;
-     vehicleStatus=result.liveData.vehicleStatus;
-     connection_lost_time_halt=result.liveData.connection_lost_time_halt;
-     connection_lost_time_sleep=result.liveData.connection_lost_time_sleep;
-     connection_lost_time_minutes=result.liveData.connection_lost_time_minutes;
-
-
-     clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
-     clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
-      
-
-     if(clickedPointRecent==undefined || clickedPointRecent==null)
-     {
-        getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
-     }
-     else
-     { 
-      // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
-      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);       
-     }
-     clickedPointRecent = clickedPointCurrent;
-     clickedPointRecentlatlng=clickedPointCurrentlatlng;
-    }
-
-  // --------------------------------------------------------
-function doWork()
-    {
-      var current=popFromLocationQueue();
-
-      if(current!=null)
-       {
-        if(recentPoppedLocation==null)
-        {  
-                 
-             updateStatusData(current);
-             track(current[0],current[1]);
-            // setMarketLocation(current[0],current[1]);
-            // drawLine(current[0],current[0]); 
-            // track()           
-        }
-        else{   
-
-            updateStatusData(current);
-            track(current[0],current[1]);
-
-            
-            // drawLine(recentPoppedLocation[0],current[0]);
-            // setMarketLocation(current[0],current[1]);
-         }
-        
-        recentPoppedLocation = current[0];
-        
-     }
-     else{
-     
-     }
-
-    setTimeout(doWork,1000);
-    }
-
-
-
-function updateStatusData(current)
 {
-console.log(current);
-  var latlng=current[0];
-  var angle=current[1];
-  var ac=current[2];
-  var battery_status=current[3];
-  var connection_lost_time_motion=current[4];
-  var dateTime=current[5];
-  var fuel=current[6];
-  var fuelquantity=current[7];
-  var ign=current[8];
-  var last_seen=current[9];
-  var latitude=current[10];
-  var longitude=current[11];
-  var place=current[12];
-  var power=current[13];
-  var signalStrength=current[14];
-  var speed=current[15];
-  var vehicleStatus=current[16];
-  var connection_lost_time_halt=current[17];
-  var connection_lost_time_sleep=current[18];
-  var connection_lost_time_minutes=current[19];
-  var device_time=dateTime;
+  angle                        = result.liveData.angle;
+  ac                           = result.liveData.ac;
+  battery_status               = result.liveData.battery_status;
+  connection_lost_time_motion  = result.liveData.connection_lost_time_motion;
+  dateTime                     = result.liveData.dateTime;
+  fuel                         = result.liveData.fuel;
+  fuelquantity                 = result.liveData.fuelquantity;
+  ign                          = result.liveData.ign;
+  last_seen                    = result.liveData.last_seen;
+  latitude                     = result.liveData.latitude;
+  longitude                    = result.liveData.longitude;
+  place                        = result.liveData.place;
+  power                        = result.liveData.power;
+  signalStrength               = result.liveData.signalStrength;
+  speed                        = result.liveData.speed;
+  vehicleStatus                = result.liveData.vehicleStatus;
+  connection_lost_time_halt    = result.liveData.connection_lost_time_halt;
+  connection_lost_time_sleep   = result.liveData.connection_lost_time_sleep;
+  connection_lost_time_minutes = result.liveData.connection_lost_time_minutes;
 
+  clickedPointCurrent          = result.liveData.latitude + ',' + result.liveData.longitude;   
 
+  if(clickedPointRecent  ==  undefined || clickedPointRecent  ==  null)
+   {
+    getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+   }
+  else
+   { 
+    getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);       
+   }
+  clickedPointRecent = clickedPointCurrent;
+}
 
-
-    if (vehicleStatus == 'M' && speed != '0' && device_time >= connection_lost_time_motion)
-    {
-      $("#online").show();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#84b752";
+/*-----------------------------------------------*/
+function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+{
+  $.ajax({
+    url           : 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+    crossDomain   : true,
+    dataType      : 'jsonp'
+  }).done(function(response) {
+    if (response.error) {
+      return;
     }
-    else if (vehicleStatus == 'M' && speed != '0' && device_time <= connection_lost_time_motion)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#84b752";
-    } 
-    else if (vehicleStatus == 'M' && speed == '0' && device_time >= connection_lost_time_motion)
-    {
-      $("#zero_speed_online").show();
-      $("#halt").hide();
-      $("#online").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#84b752";
-
-    }
-    else if (vehicleStatus == 'M' && speed == '0' && device_time <= connection_lost_time_motion)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#84b752";
-    } 
-    else if (vehicleStatus == 'H' && device_time >= connection_lost_time_halt)
-    {
-      $("#halt").show();
-      $("#zero_speed_online").hide();
-      $("#online").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#69b4b9";
-
-    }
-    else if (vehicleStatus == 'H' && device_time <= connection_lost_time_halt)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#69b4b9";
-    }
-    else if (vehicleStatus == 'S' && device_time >= connection_lost_time_sleep)
-    {
-      $("#sleep").show();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#online").hide();
-      $("#offline").hide();
-      $("#connection_lost").hide();
-      vehicleColor=" #858585";
-    }
-    else if (vehicleStatus == 'S' && device_time <= connection_lost_time_sleep)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#858585";
-    }
-    else 
-    {
-      if(last_seen){
-       $('#last_seen').text(last_seen);
-      }
-      $("#offline").show();
-      $("#sleep").hide();
-      $("#halt").hide();
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#c41900";
-    }
-      if(ign == 1) {
-        document.getElementById("ignition").innerHTML = "ON";
-      }else
-      {
-        document.getElementById("ignition").innerHTML = "OFF";
-      }
-      if(power == 1) {
-        document.getElementById("car_power").innerHTML = "CONNECTED";
-      }else
-      {
-        document.getElementById("car_power").innerHTML = "DISCONNECTED";
-      }
-      if(vehicleStatus == 'M' && speed == '0') {
-        document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
-        $('#valid_speed').css('display','none');
-      }else
-      {
-        document.getElementById("car_speed").innerHTML = speed;
-        $('#valid_speed').css('display','inline-block');
-      }
-
-      if(vehicleStatus == 'M')
-      {
-        if (signalStrength >= 19 && device_time >= connection_lost_time_motion) {
-          document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_motion) {
-          document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength <= 12 && device_time >= connection_lost_time_motion) {
-          document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#lost_blink_id1').removeClass('lost1');
-        }
-        else{
-          document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
-           $('#network_status').addClass('lost1');
-        }
-      }
-      else if(vehicleStatus == 'H')
-      {
-        if (signalStrength >= 19 && device_time >= connection_lost_time_halt) {
-          document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_halt) {
-          document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength <= 12 && device_time >= connection_lost_time_halt) {
-          document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#lost_blink_id1').removeClass('lost1');
-        }
-        else{
-          document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
-           $('#network_status').addClass('lost1');
-        }
-      }
-      else if(vehicleStatus == 'S')
-      {
-        if (signalStrength >= 19 && device_time >= connection_lost_time_sleep) {
-          document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_sleep) {
-          document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength <= 12 && device_time >= connection_lost_time_sleep) {
-          document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#lost_blink_id1').removeClass('lost1');
-        }
-        else{
-          document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
-           $('#network_status').addClass('lost1');
-        }
-      }
-      else
-      {
-        document.getElementById("network_status").innerHTML = "LOST";
-        var element = document.getElementById("lost_blink_id");
-        element.classList.add("lost_blink");
-        $('#network_status').addClass('lost1');
-      }
-
-      // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-    
-      document.getElementById("car_bettary").innerHTML = battery_status;
-      document.getElementById("car_location").innerHTML = place;
-      document.getElementById("ac").innerHTML = ac;
-      document.getElementById("fuel").innerHTML = fuel;
-       // document.getElementById("odometer").innerHTML = fuel;
-      // document.getElementById("user").innerHTML = res.vehicle_name;
-
-      $("#km_live_track").html('');
-      $("#km_live_track").append(speed);
+    $.each(response.snappedPoints, function (i, snap_data) {
+      var loc     = snap_data.location;
+      var latlng  = new google.maps.LatLng(loc.latitude, loc.longitude);
+      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
+    });
+  });
 }
 
 
-function initMap(){
-  map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: parseFloat(start_lat),
-            lng: parseFloat(start_lng)
-        },
-        zoom: 17,
-        mapTypeId: 'roadmap'
-
-    });  
-
-
-    // marker = new google.maps.Marker({});
-    marker = new SlidingMarker({});
-
-    // marker = new google.maps.Marker({});
-
-
-    
-    map.setOptions({maxZoom:19,minZoom:9});
-     getMarkers(map);
-
-  service = new google.maps.places.PlacesService(map);
- }
-
-
-
-
-
-
- function getMarkers() {
-
-    var url = 'vehicles/location-track';
-    var id = $("#vehicle_id_data").val();
-    // var id=1;
-    data = {
-        id:id
-    };
-    var purl = getUrl() + '/' + url;
-    var triangleCoords = [];
-    $.ajax({
-        type: 'POST',
-        url: purl,
-        data: data,
-        async: true,
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(res) {
-
-            if(res.hasOwnProperty('liveData')){
-
-                    document.getElementById("user").innerHTML = res.vehicle_name;
-                    document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
-
-                    transition(res);
-                    // track(map, res);
-                    setTimeout(getMarkers, 5000);
-            }
-
-        },
-        error: function(err) {
-            var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-        }
-    });
-
-  }
-
-   var SameThreshold = 0.1;
-   var increment_angle=5.0;
-   var stop_angle;
-   var recent_angle_increment_value;
-   function track(latlng,angle) {
-        current_angle_latlng=latlng;
-
-        if(recent_angle_latlng== null){
-          angle=parseFloat(angle);
-        }else{
-         
-         
-        if (google.maps.geometry.spherical.computeDistanceBetween(recent_angle_latlng,current_angle_latlng) < SameThreshold){
-           if(recent_angle_increment_value==undefined){
-             recent_angle_increment_value=angle;
-           }
-           // angle=(parseFloat(recent_angle_increment_value) + parseFloat(increment_angle))%360;
-           // recent_angle_increment_value=angle;
-            angle=parseFloat(angle);
-
-         }else{
-          // angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
-            angle=parseFloat(angle);
-          
-         }
-         
-        }
-        var lat = parseFloat(latlng.lat());
-        var lng = parseFloat(latlng.lng());
-   
-
-
-        var markerLatLng = new google.maps.LatLng(latlng.lat(),latlng.lng());
-        i = 0;
-        deltaLat = (lat - posLat) / numDeltas;
-        deltaLng = (lng - posLng) / numDeltas;
-       
-        map.panTo(markerLatLng);
-        moveMarker();
-        var icon = { // car icon
-                    path:vehiclePath,
-                    scale: parseFloat(vehicleScale),
-                    fillColor: vehicleColor, //<-- Car Color, you can change it 
-                    // fillOpacity: 1,
-                    // strokeWeight: 1,
-                    fillOpacity: parseFloat(opacity),
-                    strokeWeight: parseFloat(strokeWeight),
-                    anchor: new google.maps.Point(0, 5),
-                    rotation:angle  //<-- Car angle
-                };
-              marker.setIcon(icon);
-              marker.setMap(map);
-              recent_angle_latlng=current_angle_latlng;
-
-    }
-
-    function moveMarker() {
-        // infowindow.open(map, marker);
-        posLat += deltaLat;
-        posLng += deltaLng;
-        var latlng = new google.maps.LatLng(posLat, posLng);
-        marker.setPosition(offsetCenter(latlng));
-        marker.setDuration(10);
-
-        if (i != numDeltas) {
-            i++;
-            setTimeout(moveMarker, delay);
-        }
-    }
-
- // ---------------------center on  a marker--------------------------
-function offsetCenter(latlng) 
+// ---------------------que list--------------------------
+function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+{
+  var location_angle=[
+  loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes];
+  locationQueue.push(location_angle);
+}
+function popFromLocationQueue()
+{
+  if(locationQueue.length>0)
   {
-    var offsetx=0;
-    var offsety=0;
-    // offsetx is the distance you want that point to move to the right, in pixels
-    // offsety is the distance you want that point to move upwards, in pixels
-    var scale = Math.pow(2, map.getZoom());
-    var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
-    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
-    var worldCoordinateNewCenter = new google.maps.Point(
-        worldCoordinateCenter.x - pixelOffset.x,
-        worldCoordinateCenter.y + pixelOffset.y
-    );
-    var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-    return newCenter;
-   }
-// ---------------------center on  a marker--------------------------
-  // marker.addListener('click', function() {
-  //   alert(1);
-  //   infowindow.open(map, marker);
-  // });
-
-  // var contentString = 'hiiii';
-
-  // var infowindow = new google.maps.InfoWindow({
-  //   content: contentString
-  // });
-// ----------------------------------------------------------------
-
-// -------------------------------------------------------------
-
-
-var POI_markers = [];
-var lat=posLat;
-var lng=posLng;
-
-var atm_flag=0;
-var petrol_flag=0;
-var hospital_flag=0;
+    return locationQueue.splice(0,1)[0];    
+  }
+  else
+  return null;
+}
+// --------------------------------------------------------
+function doWork()
+{
+  var current=locationQueue[0];
+  popFromLocationQueue();
+  plotLocationOnMap();
+}
+function plotLocationOnMap()
+{
+  console.log(locationQueue[0].lat);
+            console.log('Current length '+locationQueue.length);
+            if(locationQueue.length >0)
+            {
+               
+                moveMap(locationQueue[0].lat,locationQueue[0].lng);
+                // create start marker
+                if(first_point==true){
+                    
+                     var madridMarker = new H.map.Marker({lat:locationQueue[0].lat, lng:locationQueue[0].lng},{ icon: start_icon});
+                     map.addObject(madridMarker);
+                }
+                first_point=false;
+                // create start marker
 
 
-$('#poi_atm').click(function(){
-    deleteMarkersPOI();
-    if(atm_flag==0){
-        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        service.nearbySearch(
-          {location: pyrmont, radius: 1000, type:['atm']},
-           function(results, status, pagination) {
-           if (status !== 'OK') return;
-           var image="/images/ATM.svg";
-              createMarkers(results,image);
-            });
-         atm_flag=1;
-         }else{
-           deleteMarkersPOI();
-           atm_flag=0;
-         }
- 
 
- });
+                if( (startPointLatitude != null) && (startPointLongitude!=null) )
+                {
+                    endPointLatitude    = location_data_que[0].lat;
+                    endPointLongitude   = location_data_que[0].lng;
+                    vehicle_mode        = location_data_que[0].mode;
+                    // calculate the direction of movement   
+                    var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
 
+                    moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
+                    addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                }
+                startPointLatitude  = location_data_que[0].lat;
+                startPointLongitude = location_data_que[0].lng;
+                // remove the already plotted locations
+                popFromLocationQueue();
+                // want to load new set of data ?
+                if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
+                {
+                    console.log('Loading fresh set of data');
+                    getLocationData();
+                }
 
-$('#poi_petrol').click(function(){
-        deleteMarkersPOI();
-        if(petrol_flag==0){
-        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        service.nearbySearch(
-          {location: pyrmont, radius: 1000, type:['gas_station']},
-           function(results, status, pagination) {
-           if (status !== 'OK') return;
-             var image="/images/petrol-pump.svg";
-              createMarkers(results,image);
-            });
-
-          petrol_flag=1;
-         }else{
-           deleteMarkersPOI();
-           petrol_flag=0;
-         }
-  
-    });
- $('#poi_hopital').click(function(){
-        deleteMarkersPOI();
-        if(hospital_flag==0){
-          var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-          service.nearbySearch(
-            {location: pyrmont, radius: 1000, type:['hospital']},
-             function(results, status, pagination) {
-             if (status !== 'OK') return;
-             var image="/images/hospital.svg";
-                createMarkers(results,image);
-              });
-          hospital_flag=1;
-         }else{
-           deleteMarkersPOI();
-           hospital_flag=0;
+                // stop point
+                if(last_offset==true && location_data_que.length==0){
+                     
+                     var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
+                     map.addObject(flag);
+                }
+                // stop point
+                
+             }
         }
-    });
-// ---------------find nearest map points-----------------
- var infowindow = new google.maps.InfoWindow();
- function createMarkers(places,image_icon) {
-        deleteMarkersPOI();
-        var bounds = new google.maps.LatLngBounds();
-        for (var i = 0, place; place = places[i]; i++) {
-           var image = {
-            url: image_icon,
-            size: new google.maps.Size(50, 50),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(10, 20),
-            scaledSize: new google.maps.Size(30, 30)
-          };
-          var marker = new google.maps.Marker({
-            icon: image,
-            title: place.name,
-            position: place.geometry.location,
-            data:place.vicinity
-          });
-          var place_name=place.name;
 
 
 
-          POI_markers.push(marker);
-          bounds.extend(place.geometry.location);
 
-         
-        }
-        map.fitBounds(bounds);
-        setMapOnAllPOI(map); 
-        
-      }
-      function setMapOnAllPOI(map) {
-        for (var i = 0; i < POI_markers.length; i++) {
-          POI_markers[i].setMap(map);
-           google.maps.event.addListener(POI_markers[i], 'click', (function(marker, i) {
-          return function() {
-            infowindow.setContent('<i>'+POI_markers[i].title +'</i><br><span style="margin-top: 25px;">'+POI_markers[i].data+'</span>');
-            infowindow.setOptions({maxWidth: 200});
-            infowindow.open(map, POI_markers[i]);
-          }
-          }) (marker, i));
-        }
-      }
-      function clearMarkersPOI() {
-        setMapOnAllPOI(null);
-      }
-      function deleteMarkersPOI() {
-        clearMarkersPOI();
-         POI_markers = [];
-        
-      }
-     
-// ---------------find nearest map points-----------------
-// -------------------playback---------------------------
-
-
-$( "#playback_form" ).submit(function( event ) {
-  var vehicle_id=$('#vehicle_id').val();
-  var from_date=$('#fromDate').val();
-  var to_date=$('#toDate').val();
-  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
-  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
-  event.preventDefault();
-});
-
-// -------------------playback---------------------------
-var contentString = 
- '<div style="width:13%;float:left">'+
- '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
-
-
- '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
- '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">-</label> km/h</b></a>'+
- '</div>';
-
-var infowindow = new google.maps.InfoWindow({
-    content: contentString
-});
 
 
 
