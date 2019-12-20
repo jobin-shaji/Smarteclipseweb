@@ -732,8 +732,8 @@ padding: 5px 10px;
                              '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
                               '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
                               '<p><span class="place_data">'+
-                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+speed+
-                                '<p class="datetime_cover" id="date">'+date+'</p>'+
+                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
+                                ' km/h <p class="datetime_cover" id="date">'+date+'</p>'+
                                 '<div class="left-alert-time"></div>'+
                             '</div>';
              $('#location_details').remove()            

@@ -31,6 +31,11 @@ var recent_angle_latlng=null;
 var current_angle_latlng;
 var service,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,signalStrength,speed;
 var vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,latitude,longitude,place,power;
+var first_point              = true;
+var startPointLatitude       = null;
+var startPointLongitude      = null;
+var endPointLatitude         = null;
+var endPointLongitude        = null;
 
 
  var data_fetch_from_server   = window.setInterval(function(){
@@ -121,18 +126,36 @@ function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_l
     }
     $.each(response.snappedPoints, function (i, snap_data) {
       var loc     = snap_data.location;
-      var latlng  = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
+      addToLocationQueue(loc.latitude,loc.longitude,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
     });
   });
 }
 
 
 // ---------------------que list--------------------------
-function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+function addToLocationQueue(lat,lng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
 {
-  var location_angle=[
-  loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes];
+  var location_angle={
+                      'lat'                         : lat,
+                      'lng'                         : lng,
+                      'angle'                       : angle,
+                      'ac'                          : ac,
+                      'battery_status'              : battery_status,
+                      'connection_lost_time_motion' : connection_lost_time_motion,
+                      'dateTime,fuel,fuelquantity'  : dateTime,fuel,fuelquantity,
+                      'ign'                         : ign,
+                      'last_seen'                   : last_seen,
+                      'place'                       : place,
+                      'power'                       : power,
+                      'signalStrength'              : signalStrength,
+                      'speed'                       : speed,
+                      'mode'                        : vehicleStatus,
+                      'connection_lost_time_halt'   : connection_lost_time_halt,
+                      'connection_lost_time_sleep'  : connection_lost_time_sleep,
+                      'connection_lost_time_minutes': connection_lost_time_minutes
+                    };
+  
+
   locationQueue.push(location_angle);
 }
 function popFromLocationQueue()
@@ -157,24 +180,17 @@ function plotLocationOnMap()
             console.log('Current length '+locationQueue.length);
             if(locationQueue.length >0)
             {
-               
                 moveMap(locationQueue[0].lat,locationQueue[0].lng);
                 // create start marker
-                if(first_point==true){
-                    
-                     var madridMarker = new H.map.Marker({lat:locationQueue[0].lat, lng:locationQueue[0].lng},{ icon: start_icon});
-                     map.addObject(madridMarker);
-                }
-                first_point=false;
-                // create start marker
+               
 
 
 
                 if( (startPointLatitude != null) && (startPointLongitude!=null) )
                 {
-                    endPointLatitude    = location_data_que[0].lat;
-                    endPointLongitude   = location_data_que[0].lng;
-                    vehicle_mode        = location_data_que[0].mode;
+                    endPointLatitude    = locationQueue[0].lat;
+                    endPointLongitude   = locationQueue[0].lng;
+                    vehicle_mode        = locationQueue[0].mode;
                     // calculate the direction of movement   
                     var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
 
@@ -192,15 +208,37 @@ function plotLocationOnMap()
                     getLocationData();
                 }
 
-                // stop point
-                if(last_offset==true && location_data_que.length==0){
-                     
-                     var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
-                     map.addObject(flag);
-                }
+                
                 // stop point
                 
              }
+        }
+
+        function moveMap(lat,lng){
+          map.setCenter({lat:lat, lng:lng});
+        }
+
+         function calculateCarDirection(startPointLat, startPointLng, endPointLat, endPointLng)
+        {
+            return getDegree(startPointLat, startPointLng, endPointLat, endPointLng);
+        }
+
+        function getDegree(lat1, long1, lat2, long2)
+        {
+    
+            var dLon = (long2 - long1);
+            var y = Math.sin(dLon) * Math.cos(lat2);
+            var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
+                * Math.cos(lat2) * Math.cos(dLon);
+            var brng = Math.atan2(y, x);
+            brng = radianstoDegree(brng);
+            brng = (brng + 360) % 360;
+            return brng;
+        }
+
+        function radianstoDegree(x)
+        {
+            return x * 180.0 / Math.PI;
         }
 
 
