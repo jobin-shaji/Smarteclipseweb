@@ -5,7 +5,8 @@
     <title>Vehicle Live Track</title>
 
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-            <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Fonts and icons -->
@@ -23,11 +24,7 @@
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen"
      href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-
-
 </head>
-
-
     <div class="wrapper overlay-sidebar">
 <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
@@ -87,24 +84,28 @@
           </div>
           
 </div>
+        <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->online_icon}}">
+        <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->offline_icon}}">
+        <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->ideal_icon}}">
+        <input type="hidden" name="sleep_icon" id="sleep_icon" value="{{$vehicle_type->sleep_icon}}">
 
         <div class="main-panel main-pane-bg">
             <div class="content">
+              <div class="lorder-cover-bg" id="lorder-cover-bg-image">
+                <div class="lorder-cover-bg-image" >
+                   <img id="loading-image" src="{{asset('playback/assets/img/loader.gif')}}" />
+               </div>
+               </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
                 <div id="markers" style="width:100%px;height:595px; position: relative;">
+                 
                     <div class="left-alert-box">
-                    <div id="details" class="left-alert-inner">
-                          
-
+                    <div id="details" class="left-alert-inner">  
+                       <span id="location_details">
+                        <h1 data-text="It's loading…" id="location_details_text">It's loading…</h1>
+                    </span>                     
+                    </div> 
                     </div>
-
-                          
-
-                      
-
-                    </div>
-
-
                 </div>
                 <div class="page-inner mt--5">
                 </div>
@@ -114,6 +115,52 @@
     <!-- Style -->
 
     <style>
+
+
+     
+   #location_details_text {
+    position: relative;
+    color: rgba(0, 0, 0, .3);
+    font-size: 1em
+   }
+  #location_details_text:before {
+    content: attr(data-text);
+    position: absolute;
+    overflow: hidden;
+    max-width: 7em;
+    white-space: nowrap;
+    color: #dab606;
+    animation: loading 8s linear;
+  }
+@keyframes loading {
+    0% {
+        max-width: 0;
+    }
+}
+h1#location_details_text {
+    margin-left: 45px;
+}
+    .lorder-cover-bg {
+    width: 100%;
+    position: absolute;
+    z-index: 9;
+    background: #00000075;
+    height: 595px;
+    display: none;
+}
+     .lorder-cover-bg-image{
+        width: 75px;
+        margin: 0px auto;
+     }
+          .lorder-cover-bg-image img{
+       width: 100%;
+    padding-top: 280px;
+          }
+         .lorder-cover-bg-image span{
+            width: 100%;
+            float: left;
+            text-align: center;
+         }
         #cover-spin {
             position: fixed;
             width: 100%;
@@ -308,12 +355,16 @@ padding: 5px 10px;
         var first_point              = true;
         var total_offset             = 0;
         var last_offset              = false;
+        var vehicle_halt,vehicle_sleep,vehicle_offline,vehicle_online;   
+       vehicle_halt        =   '/documents/'+$('#ideal_icon').val();
+       vehicle_sleep       =   '/documents/'+$('#sleep_icon').val();
+       vehicle_offline     =   '/documents/'+$('#offline_icon').val();
+       vehicle_online      =   '/documents/'+$('#online_icon').val();
+
         var objImg                   = document.createElement('img');
-        var vehicle_online      =   '{{asset("playback/assets/img/car_online.png")}}';
-        var vehicle_halt        =   '{{asset("playback/assets/img/car_halt.png")}}';
-        var vehicle_sleep       =   '{{asset("playback/assets/img/car_sleep.png")}}';
-        var vehicle_offline     =   '{{asset("playback/assets/img/car_offline.png")}}';
-        var outerElement        = document.createElement('div')
+    
+
+             var outerElement        = document.createElement('div')
         var domIcon             = new H.map.DomIcon(outerElement);
         var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
         var stop_icon           = new H.map.Icon('{{asset("playback/assets/img/flag.png")}}');
@@ -349,6 +400,7 @@ padding: 5px 10px;
         var blacklineStyle;
         var speed_val            = 1;
         var Speed                = 600;
+        var loader               = false;
     
          
 
@@ -356,10 +408,22 @@ padding: 5px 10px;
 
          
         function startPlayBack(){
+           
+
+
+
+                loader      =   true;
                 speed_val   =   $('#speed').val();
                 speed       =   speed/speed_val;
+
+                if(loader == true){
+                 $("#lorder-cover-bg-image").css("display","block");
+                }
+
                 getLocationData();
                $('.left-alert-box').css('display','block');
+
+               
 
 
         }
@@ -374,13 +438,8 @@ padding: 5px 10px;
              dataShownOnList();
              }, 500);
             // --------2019-12-19-2:20--------------------------------------------------------
-
-
-
-
-
             isDataLoadInProgress = true;
-               var Objdata = {
+            var Objdata = {
                 vehicleid: $('#vehicle_id').val(), 
                 fromDateTime: $('#fromDate').val(),
                 toDateTime: $('#toDate').val(),
@@ -389,7 +448,7 @@ padding: 5px 10px;
 
             $.ajax({
                 type: "POST",
-                 headers: {
+               headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   },
                 //url: 'http://app.smarteclipse.com/api/v1/vehicle_playback',
@@ -477,6 +536,10 @@ padding: 5px 10px;
             console.log('Current length '+location_data_que.length);
             if(location_data_que.length >0)
             {
+                 loader = false;
+                 if(loader == false){
+                 $("#lorder-cover-bg-image").css("display","none");
+                }
                
                 moveMap(location_data_que[0].lat,location_data_que[0].lng);
                 // create start marker
@@ -612,7 +675,7 @@ padding: 5px 10px;
                 el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
             }
             outerElement.appendChild(el);
-            outerElement.style.top = "-30px";
+            outerElement.style.top = "-25px";
             outerElement.style.width = "200px";
 
             var domIcon = new H.map.DomIcon(outerElement);
@@ -659,11 +722,11 @@ padding: 5px 10px;
                              '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
                               '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
                               '<p><span class="place_data">'+
-                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+speed+
-                                '<p class="datetime_cover" id="date">'+date+'</p>'+
+                              '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
+                                ' km/h <p class="datetime_cover" id="date">'+date+'</p>'+
                                 '<div class="left-alert-time"></div>'+
                             '</div>';
-
+             $('#location_details').remove()            
              $("#details").prepend(details);
              popDetailsLocationQueue();
 
