@@ -817,13 +817,13 @@ padding: 5px 10px;
     </script>
     <script type="text/javascript">
       $('#datetimepicker_live1').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
+        format: 'yyyy-MM-dd hh:mm:ss',
    
       });
     </script>
     <script type="text/javascript">
       $('#datetimepicker_live2').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
+        format: 'yyyy-MM-dd hh:mm:ss',
       });
     </script>
 
