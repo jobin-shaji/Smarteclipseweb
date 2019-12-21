@@ -581,7 +581,7 @@
                         <p style="color: #bfeab3;">Mob: 8606330755</p>
                     </div>
                     <div class="col-md-4">
-                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MALAYIL VEHICLE TRACK SOLUTION</h4>
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MALAYIL VEHICLE TRACKING SOLUTION</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
 						
                       <p style="color: #bfeab3;">GULF TOWER M.C ROAD MATTOOR P.O KALADY ERNAKULAM-683574</p>
