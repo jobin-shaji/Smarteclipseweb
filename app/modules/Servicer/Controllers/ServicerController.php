@@ -818,22 +818,22 @@ public function serviceJobDetails(Request $request)
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
-        $servicer_job->job_complete_date = $job_completed_date;
-
-        $servicer_job->comment = $request->comment;
+            $servicer_job->job_complete_date = $job_completed_date;
+            $servicer_job->comment = $request->comment;
             $servicer_job->status = 3;
             $servicer_job->save();
-          
             // dd($servicer_job->id);
+             // dd($servicer_job->id);
             $service_job_id=Crypt::encrypt($servicer_job->id);
             $request->session()->flash('message', 'Job  completed successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect()->route('servicerjob.history.list'); 
+            // return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
        }else
        {
              $request->session()->flash('message', 'Job completion failed'); 
              $request->session()->flash('alert-class', 'alert-danger');
-             return redirect()->route('job.history.details');
+             return redirect()->route('servicerjob.history.list');
 
       }
     }
@@ -961,7 +961,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->with('vehicle:id,register_number,gps_id')
         ->orderBy('job_complete_date','desc')
-        ->get();       
+        ->get();     
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
@@ -1014,7 +1014,8 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->with('vehicle:id,register_number,gps_id')
          ->orderBy('job_complete_date','Desc')
-        ->get();       
+        ->get();     
+        // dd($servicer_job);
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
@@ -1052,13 +1053,13 @@ public function serviceJobDetails(Request $request)
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
                 return "
-                <a href=".$b_url."/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+                <a href=".$b_url."/servicer-job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
           
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
-     public function jobHistoryDetails(Request $request)
+    public function jobHistoryDetails(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
@@ -1081,6 +1082,32 @@ public function serviceJobDetails(Request $request)
            return view('Servicer::404');
         }
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
+    }
+
+
+    
+    public function serviceJobHistoryDetails(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id); 
+        $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)
+        ->with('vehicle:name,register_number,gps_id')->first();
+        $client_id=$servicer_job->client_id;
+        // $vehicle_device = Vehicle::select(
+        //     'gps_id',
+        //     'id',
+        //     'register_number',
+        //     'name',
+        //     'servicer_job_id',
+        //     'client_id'
+        // )
+        // ->where('client_id',$client_id)
+        // // ->where('servicer_job_id',$servicer_job->id)
+        // ->first();
+
+        if($servicer_job == null){
+           return view('Servicer::404');
+        }
+        return view('Servicer::service-job-history-details',['servicer_job' => $servicer_job]);
     }
     public function servicerJobHistory(Request $request)
     {
@@ -1206,11 +1233,11 @@ public function serviceJobDetails(Request $request)
             $servicer_gps[] = $servicer_job->gps_id;
         }     
         // dd($servicer_gps);
-        $devices=Gps::select('id','imei','serial_no')
-        ->whereIn('id',$stock_gps_id)
-        ->whereNotIn('id',$single_gps)
-        ->whereNotIn('id',$servicer_gps)
-        ->get();
+        // $devices=Gps::select('id','imei','serial_no')
+        // ->whereIn('id',$stock_gps_id)
+        // ->whereNotIn('id',$single_gps)
+        // ->whereNotIn('id',$servicer_gps)
+        // ->get();
 
         if($job_type==1)
         {
@@ -1219,11 +1246,14 @@ public function serviceJobDetails(Request $request)
         ->whereIn('id',$stock_gps_id)
         ->whereNotIn('id',$single_gps)
         ->whereNotIn('id',$servicer_gps)
+
         ->get();
 
         }else if($job_type==2){
             $devices=Gps::select('id','imei','serial_no')
             ->whereIn('id',$stock_gps_id)
+            ->whereIn('id',$single_gps)
+             ->whereIn('id',$servicer_gps)
             ->get();
         }else{
          $devices=[];   
