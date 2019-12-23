@@ -1478,7 +1478,7 @@ class WarehouseController extends Controller {
                 return 'Awaiting Transfer Confirmation';
             }
             else{
-                return "Not Transferred";
+                return "--";
             }
             
         })
@@ -1494,7 +1494,7 @@ class WarehouseController extends Controller {
                 return 'Awaiting Transfer Confirmation';
             }
             else{
-                return "Not Transferred";
+                return "--";
             }
         })
         ->addColumn('client',function($gps_stock){
@@ -1509,7 +1509,7 @@ class WarehouseController extends Controller {
                 return 'Awaiting Transfer Confirmation';
             }
             else{
-                return "Not Transferred";
+                return "--";
             }
         })
         ->addColumn('action', function ($gps_stock) 
