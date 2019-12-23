@@ -12,6 +12,7 @@ use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use DataTables;
 class DriverController extends Controller {
    
@@ -231,22 +232,21 @@ class DriverController extends Controller {
 
     public function performanceScoreHistoryList(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $driver_id= $request->driver_id;            
-        $from = $request->from_date;
-        $to = $request->to_date;
-        // dd($driver_id);
-        $drivers = Driver::where('client_id',$client_id)->get();
+        $client_id      = \Auth::user()->client->id;
+        $driver_id      = $request->driver_id;
+        // client drivers list
+        $drivers        = Driver::where('client_id',$client_id)->get();
         $single_drivers = [];
-        foreach($drivers as $driver){
+        foreach($drivers as $driver)
+        {
             $single_drivers[] = $driver->id;
         }
-        $vehicles = Vehicle::where('client_id',$client_id)->whereIn('driver_id',$single_drivers)->get();
-        $single_vehicle = [];
-        foreach($vehicles as $vehicle){
-            $single_vehicle[] = $vehicle->id;
-        }
-        $performance_Score = DriverBehaviour::select(
+        // $vehicles = Vehicle::where('client_id',$client_id)->whereIn('driver_id',$single_drivers)->get();
+        // $single_vehicle = [];
+        // foreach($vehicles as $vehicle){
+        //     $single_vehicle[] = $vehicle->id;
+        // }
+        $performance_score = DriverBehaviour::select(
                 'id',
                 'vehicle_id',
                 'driver_id',
@@ -258,36 +258,46 @@ class DriverController extends Controller {
             ->with('alert:id,alert_type_id')
             ->with('driver:id,name')
             ->with('vehicle:id,name,register_number')
-            ->with('gps:id,imei,serial_no'); 
-            if($driver_id==null && $from==null && $to==null)
-            {
-                 $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle);
-            }
-            else if($driver_id!=null && $from==null && $to==null)
-            {
-                $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-                ->where('driver_id',$driver_id);
-            }
-            else
-            {
-                $performance_Score = $performance_Score->whereIn('vehicle_id',$single_vehicle)
-                ->where('driver_id',$driver_id);
-                if($from){
-                  $search_from_date=date("Y-m-d", strtotime($from));
-                  $search_to_date=date("Y-m-d", strtotime($to));
-                  $performance_Score = $performance_Score->whereDate('created_at', '>=', $search_from_date)
-                  ->whereDate('created_at', '<=', $search_to_date);
-                }
-            }       
-            $performance_Score = $performance_Score->get();
-            return DataTables::of($performance_Score)
+            ->with('gps:id,imei,serial_no')
+            ->whereDate('created_at', '>=', date("Y-m-d", strtotime($request->from_date)))
+            ->whereDate('created_at', '<=', date("Y-m-d", strtotime($request->to_date)));
+
+            // if driver id is not provided, choose all drivers under that client
+            $performance_score = (( $driver_id != null ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers))->get();
+
+            // new code ends
+
+            // if($driver_id==null && $from==null && $to==null)
+            // {
+            //      $performance_score = $performance_score->whereIn('vehicle_id',$single_vehicle);
+            // }
+            // else if($driver_id!=null && $from==null && $to==null)
+            // {
+            //     $performance_score = $performance_score->whereIn('vehicle_id',$single_vehicle)
+            //     ->where('driver_id',$driver_id);
+            // }
+            // else
+            // {
+            //     $performance_score = $performance_score->whereIn('vehicle_id',$single_vehicle)
+            //     ->where('driver_id',$driver_id);
+            //     if($from){
+            //       $search_from_date=date("Y-m-d", strtotime($from));
+            //       $search_to_date=date("Y-m-d", strtotime($to));
+            //       $performance_score = $performance_score->whereDate('created_at', '>=', $search_from_date)
+            //       ->whereDate('created_at', '<=', $search_to_date);
+            //     }
+            // }
+
+            // $performance_score = $performance_score->get();
+
+            return DataTables::of($performance_score)
             ->addIndexColumn()
-            ->addColumn('description', function ($performance_Score) {
-                $description=$performance_Score->alert->alertType->description;
+            ->addColumn('description', function ($performance_score) {
+                $description=$performance_score->alert->alertType->description;
                 return $description;                    
             })  
-            ->addColumn('date', function ($performance_Score) {
-                $date=date("H:i:s d-m-y", strtotime($performance_Score->created_at));
+            ->addColumn('date', function ($performance_score) {
+                $date=date("H:i:s d-m-y", strtotime($performance_score->created_at));
                 return $date;                    
             })            
         ->rawColumns(['link', 'action'])

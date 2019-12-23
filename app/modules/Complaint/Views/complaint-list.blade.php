@@ -35,6 +35,7 @@
                     <th>Date</th>
                     <th>Status</th>
                     <th>Vehicle Type</th>
+                    <th>Vehicle </th>
                     @role('sub_dealer|root')
                       <th>Assigned To</th>
                     @endrole
