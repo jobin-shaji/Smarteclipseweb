@@ -101,6 +101,8 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
 	Route::get('/job-history/{id}/details','ServicerController@jobHistoryDetails')->name('job.history.details');
 
+Route::get('/servicer-job-history/{id}/details','ServicerController@serviceJobHistoryDetails')->name('servicer.job.history.details');
+
 	Route::post('/servicer/vehicles/history','ServicerController@servicerJobHistory')->name('servicer.vehicles.history');
 
 	
