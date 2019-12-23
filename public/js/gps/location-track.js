@@ -106,11 +106,11 @@ function verifyCriticalAlertResponse(res){
 
 
 // ---------------------que list--------------------------
- function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+ function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
   {
 
 
-   var location_angle=[loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes];
+   var location_angle=[loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer];
    locationQueue.push(location_angle);
 
   }
@@ -125,7 +125,7 @@ function verifyCriticalAlertResponse(res){
   }
   /*
 -----------------------------------------------*/
-  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
    {
       $.ajax({
        url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
@@ -139,7 +139,7 @@ function verifyCriticalAlertResponse(res){
       $.each(response.snappedPoints, function (i, snap_data) {
       var loc=snap_data.location;
       var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
+      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);
       });
      });
    }
@@ -157,6 +157,7 @@ function verifyCriticalAlertResponse(res){
 // ---------------------que list--------------------------
 function transition(result)
     {
+      console.log(result);
      angle=result.liveData.angle;
      ac=result.liveData.ac;
      battery_status=result.liveData.battery_status;
@@ -176,6 +177,7 @@ function transition(result)
      connection_lost_time_halt=result.liveData.connection_lost_time_halt;
      connection_lost_time_sleep=result.liveData.connection_lost_time_sleep;
      connection_lost_time_minutes=result.liveData.connection_lost_time_minutes;
+     odometer=result.liveData.odometer;
 
 
      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
@@ -184,12 +186,12 @@ function transition(result)
 
      if(clickedPointRecent==undefined || clickedPointRecent==null)
      {
-        getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+        getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
      }
      else
      { 
       // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
-      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);       
+      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);       
      }
      clickedPointRecent = clickedPointCurrent;
      clickedPointRecentlatlng=clickedPointCurrentlatlng;
@@ -235,7 +237,6 @@ function doWork()
 
 function updateStatusData(current)
 {
-console.log(current);
   var latlng=current[0];
   var angle=current[1];
   var ac=current[2];
@@ -256,6 +257,7 @@ console.log(current);
   var connection_lost_time_halt=current[17];
   var connection_lost_time_sleep=current[18];
   var connection_lost_time_minutes=current[19];
+   var odometer=current[20];
   var device_time=dateTime;
 
 
@@ -484,7 +486,7 @@ console.log(current);
       document.getElementById("car_location").innerHTML = place;
       document.getElementById("ac").innerHTML = ac;
       document.getElementById("fuel").innerHTML = fuel;
-       // document.getElementById("odometer").innerHTML = fuel;
+       document.getElementById("odometer").innerHTML = odometer;
       // document.getElementById("user").innerHTML = res.vehicle_name;
 
       $("#km_live_track").html('');
