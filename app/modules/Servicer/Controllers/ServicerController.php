@@ -632,7 +632,6 @@ public function serviceJobDetails(Request $request)
         ->with('clients:id,name')
         ->first();
         $client_id=$servicer_job->client_id;
-        // dd($client_id);
         $servicer_id=\Auth::user()->servicer->id;
         $vehicleTypes=VehicleType::select(
             'id','name'
@@ -927,14 +926,17 @@ public function serviceJobDetails(Request $request)
         $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client]);
         return $pdf->download('installation-certificate.pdf');
     }
+
     public function jobHistoryList()
     {
         return view('Servicer::job-history-list');
     }
-       public function serviceJobHistoryList()
+
+    public function serviceJobHistoryList()
     {
         return view('Servicer::servicejob-history-list');
     }
+
     public function getJobsHistoryList()
     {
         $user_id=\Auth::user()->servicer->id;
