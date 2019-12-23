@@ -54,7 +54,7 @@
               <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 17.8%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/odometer.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label></b></b>
+              <img src="../../assets/images/odometer.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label> <span id="odometer"> </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 11.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
