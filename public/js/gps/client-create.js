@@ -68,11 +68,11 @@ $(document).ready(function() {
 
 
 $('#name').keypress(function (e) {
-      $("#message").hide();
-     var keyCode = e.which;
+       $("#message").hide();
+       var keyCode = e.which;
      if (keyCode >= 48 && keyCode <= 57) 
      {
-       $("#message").show();
+        $("#message").show();
         e.preventDefault();
     }
      
