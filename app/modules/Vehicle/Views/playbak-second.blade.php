@@ -407,7 +407,7 @@ padding: 5px 10px;
         var previousCoorinates;
         var blacklineStyle;
         var speed_val            = 1;
-        var Speed                = 5000;
+        var Speed                = 7000;
         var loader               = false;
     
          
@@ -427,7 +427,6 @@ padding: 5px 10px;
                 if(loader == true){
                  $("#lorder-cover-bg-image").css("display","block");
                 }
-
                 getLocationData();
                $('.left-alert-box').css('display','block');
 

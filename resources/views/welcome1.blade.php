@@ -532,20 +532,28 @@
                         <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">CENTRAL I TRACK </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;PATHANAMTHITTA</h3>
 						
-                        <p style="color: #bfeab3;">ZION PURAM,MALLAPALLY WEST P.O,MALLAPALLY,PATHANAMTHITTA</p>
-                       
+                        <p style="color: #bfeab3;">ZION PURAM,MALLAPALLY WEST P.O,MALLAPALLY,PATHANAMTHITTA - 689585</p>
+                        <p style="color: #bfeab3;">Mob: 9746990803</p>
                     </div>
-                    <div class="col-md-4">
+                    <!--<div class="col-md-4">
                         <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MAAZ CARS PRIVATE LTD</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ALAPPUZHA</h3>
 						
                       <p style="color: #bfeab3;">ZION TOWER,MC ROAD,KALLISHERY P.O,CHENGANNUR</p>
+                    </div>-->
+                     <div class="col-md-4">
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">I TRACK SOLUTION</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;MALAPPURAM</h3>
+						
+                      <p style="color: #bfeab3;">TMK BUILDING NEAR ERAM MOTORS 22 MILE MANJERI MALAPPURAM-676121 </p>
+                      <p style="color: #bfeab3;">Mob: 9995964385</p>
                     </div>
 					 <div class="col-md-4">
                          <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">CENTRAL I TRACK </h4>
 						 	<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
 					
-                      <p style="color: #bfeab3;">CENTRAL ITRACK ,ST.RITAS ROAD,NEAR GOLD SOUCK,VYTILLA,KOCHI</p>
+                      <p style="color: #bfeab3;">CENTRAL ITRACK ,ST.RITAS ROAD,NEAR GOLD SOUCK,VYTILLA,KOCHI - 682019</p>
+                       <p style="color: #bfeab3;">Mob: 9188521721</p>
                     </div>
                    
                 </div>
@@ -555,36 +563,31 @@
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;PALAKKAD</h3>
 					
                         <p style="color: #bfeab3;">1st FLOOR,MADHAVA ARCADE,YAKKARA ROAD,NEAR PALAT HOSPITAL,PALAKKAD-678001</p>
-                       
+                        <p style="color: #bfeab3;">Mob: 9556098932</p>
                     </div>
                     <div class="col-md-4">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">COLOUR LAND  </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KOZHIKODE</h3>
 					
                         <p style="color: #bfeab3;">GROUND FLOOR,KP.18-507D,VELLAYIKOTT COMPLEX, KARANTHUR-WAYANAD ROAD,KARANTHUR, KOZHIKODE, KERALA - 673571</p>
+                         <p style="color: #bfeab3;">Mob: 9946489687</p>
                        
                     </div>
 					 <div class="col-md-4">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">JAIN DEVICES</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;WAYANAD</h3>
 					
-                        <p style="color: #bfeab3;">JAYAKUMARI ESTATE,MADAKKIMALA,KALPETTA,WAYANAD</p>
-                       
+                        <p style="color: #bfeab3;">JAYAKUMARI ESTATE,MADAKKIMALA,KALPETTA,WAYANAD - 673122</p>
+                        <p style="color: #bfeab3;">Mob: 8606330755</p>
                     </div>
                     <div class="col-md-4">
-                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MALAYIL VEHICLE TRACK SOLUTIONS</h4>
+                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MALAYIL VEHICLE TRACKING SOLUTION</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
 						
                       <p style="color: #bfeab3;">GULF TOWER M.C ROAD MATTOOR P.O KALADY ERNAKULAM-683574</p>
                       <p style="color: #bfeab3;"> Mob: 9744335604</p>
                     </div>
-                    <div class="col-md-4">
-                        <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">I Track Solutions</h4>
-						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;MALAPPURAM</h3>
-						
-                      <p style="color: #bfeab3;">TMK BUILDING NEAR ERAM MOTORS 22 MILE MANJERI MALAPPURAM-676121 </p>
-                      <p style="color: #bfeab3;">Mob: 9995964385</p>
-                    </div>
+                   
                     <div class="col-md-4" style="boder-color:red">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">TECTIV  </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KASARAGOD</h3>

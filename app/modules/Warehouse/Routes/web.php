@@ -56,6 +56,12 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'
 	Route::get('/gps-transfers','WarehouseController@getList')->name('gps-transfers');
 	Route::post('/gps-transfer-list','WarehouseController@getListData')->name('gps-transfer-list');
 	Route::get('/gps-transfer/{id}/view','WarehouseController@viewGpsTransfer')->name('gps-transfer.view');
+
+	Route::post('/gps-list-view','WarehouseController@viewGpsTransferList')->name('gps.list.view');
+
+
+
+
 	Route::post('/gps-transfer/user-detils','WarehouseController@userData')->name('gps-transfer.user-detils');
 	Route::post('/gps-transfer/accept','WarehouseController@AcceptGpsTransfer')->name('gps.accept');
 	Route::post('/gps-transfer/cancel','WarehouseController@cancelGpsTransfer')->name('gps.cancel');

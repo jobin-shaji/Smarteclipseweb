@@ -37,7 +37,7 @@ class ServicerController extends Controller {
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'mobile' => $request->mobile,
+            'mobile' => $request->mobile_number,
             'password' => bcrypt($request->password),
             'status' => 1,
         ]);
@@ -64,7 +64,6 @@ class ServicerController extends Controller {
                 'user_id' => $user->id
             ]);
         }
-
         $request->session()->flash('message', 'New servicer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('servicer.details',encrypt($servicer->id)));
@@ -713,8 +712,8 @@ public function serviceJobDetails(Request $request)
         $driver_id=$request->driver;
         // $path = $request->path;
         $driver = Driver::find($driver_id);
-        if($driver)
-        {
+        // if($driver)
+        // {
             
        
             $servicer_job->comment = $request->comment;
@@ -800,13 +799,13 @@ public function serviceJobDetails(Request $request)
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
         }
-    }
-    else
-    {
-        $request->session()->flash('message', 'Driver doesnot exist!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-       return view('Servicer::404');
-    }
+    // }
+    // else
+    // {
+    //     $request->session()->flash('message', 'Driver doesnot exist!'); 
+    //     $request->session()->flash('alert-class', 'alert-success'); 
+    //    return view('Servicer::404');
+    // }
 
         // return redirect(route('job.list'));  
         // return redirect(route('job-complete.certificate',$service_job_id));  
@@ -1065,7 +1064,7 @@ public function serviceJobDetails(Request $request)
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
 
         $client_id=$servicer_job->client_id;
-       
+
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
@@ -1077,7 +1076,7 @@ public function serviceJobDetails(Request $request)
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
-        
+
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -1564,7 +1563,7 @@ public function servicerProfileUpdateRules($servicer)
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
-            'mobile' => 'required|string|min:10|max:10|unique:users'  
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile'  
            
         ];
         return  $rules;
