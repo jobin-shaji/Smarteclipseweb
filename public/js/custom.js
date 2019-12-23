@@ -1107,7 +1107,7 @@ function clientAlerts(){
         for (var i = 0; i < length; i++) {
          description=res.alert[i].alert_type.description;
 
-            var alert='<div class="dropdown-item" >'+description+'</div>';  
+            var alert='<div class="dropdown-item" >'+description+vehicle_id'</div>';  
             $("#alert_notification").append(alert);       
         }  
  }
