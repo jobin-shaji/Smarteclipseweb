@@ -431,11 +431,12 @@ padding: 5px 10px;
              
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
+                alertPlotOnMap();
              }, Speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
              dataShownOnList();
-             alertPlotOnMap();
+          
              }, 500);
             // --------2019-12-19-2:20--------------------------------------------------------
             isDataLoadInProgress = true;
@@ -464,8 +465,9 @@ padding: 5px 10px;
 
                         total_offset=response.total_offset;
                         if(offset < total_offset){
-                         alertStore(response.alerts);
+                         
                          locationStore(response.playback);
+                         alertStore(response.alerts);
                          offset = offset+1;
                           if(offset==total_offset){
                             last_offset=true;
