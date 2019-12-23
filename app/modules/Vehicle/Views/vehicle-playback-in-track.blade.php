@@ -360,11 +360,8 @@ padding: 5px 10px;
        vehicle_sleep       =   '/documents/'+$('#sleep_icon').val();
        vehicle_offline     =   '/documents/'+$('#offline_icon').val();
        vehicle_online      =   '/documents/'+$('#online_icon').val();
-
         var objImg                   = document.createElement('img');
-    
-
-             var outerElement        = document.createElement('div')
+        var outerElement        = document.createElement('div')
         var domIcon             = new H.map.DomIcon(outerElement);
         var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
         var stop_icon           = new H.map.Icon('{{asset("playback/assets/img/flag.png")}}');
@@ -405,6 +402,8 @@ padding: 5px 10px;
          
 
         var locationQueue       = [];
+        var alertsQueue         = [];
+
 
          
         function startPlayBack(){
@@ -436,6 +435,7 @@ padding: 5px 10px;
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
              dataShownOnList();
+             alertPlotOnMap();
              }, 500);
             // --------2019-12-19-2:20--------------------------------------------------------
             isDataLoadInProgress = true;
@@ -464,6 +464,7 @@ padding: 5px 10px;
 
                         total_offset=response.total_offset;
                         if(offset < total_offset){
+                         alertStore(response.alerts);
                          locationStore(response.playback);
                          offset = offset+1;
                           if(offset==total_offset){
@@ -493,6 +494,21 @@ padding: 5px 10px;
             }); 
         }
 
+        function alertStore(alerts){
+          if(alerts != undefined && alerts.length > 0){
+            for (var i =0;  i < alerts.length; i++) {
+              alertsQueue.push(
+                                {
+                                  "date"  : alerts[i].device_time,
+                                  "lat"   : alerts[i].latitude,
+                                  "lng"   : alerts[i].longitude,
+                                  "alert" : alerts[i].alert_type.description
+                                }
+
+                              )
+            }
+          }
+        }
         function locationStore(data)
         {
             for (var i = 0; i < data.length; i++)
@@ -795,6 +811,18 @@ padding: 5px 10px;
                 console.log('no more map updation calls');
                 return null;
             }
+        }
+
+
+
+       function alertPlotOnMap(){
+          if(alertsQueue.length > 0){
+            for (var i=0; i <= alertsQueue.length; i++) {
+               var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
+                 map.addObject(alert_location);
+            }
+             
+          }
         }
 
 

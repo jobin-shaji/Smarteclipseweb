@@ -37,7 +37,7 @@ class ServicerController extends Controller {
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'mobile' => $request->mobile,
+            'mobile' => $request->mobile_number,
             'password' => bcrypt($request->password),
             'status' => 1,
         ]);
@@ -64,7 +64,6 @@ class ServicerController extends Controller {
                 'user_id' => $user->id
             ]);
         }
-
         $request->session()->flash('message', 'New servicer created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('servicer.details',encrypt($servicer->id)));
@@ -1566,7 +1565,7 @@ public function servicerProfileUpdateRules($servicer)
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required',
-            'mobile' => 'required|string|min:10|max:10|unique:users'  
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile'  
            
         ];
         return  $rules;
