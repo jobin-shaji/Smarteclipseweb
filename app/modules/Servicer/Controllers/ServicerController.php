@@ -1063,7 +1063,9 @@ public function serviceJobDetails(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
-        $client_id=$servicer_job->client_id;       
+
+        $client_id=$servicer_job->client_id;
+
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
@@ -1075,7 +1077,7 @@ public function serviceJobDetails(Request $request)
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
-      dd($servicer_job->id);  
+
         if($servicer_job == null){
            return view('Servicer::404');
         }

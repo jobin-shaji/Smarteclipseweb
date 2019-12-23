@@ -32,10 +32,10 @@
                   <div class="col-md-6">
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group row" style="float:none!important">
-                        <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
+                        <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Names</label> 
                         <div class="form-group has-feedback">
                           <input type="text" id="name"   class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" id="name" name="name" value="{{ old('name') }}" required autocomplete="off">
-                         <p style="color:#FF0000" id="message">only characters are allowed</p>
+                      <p style="color:#FF0000" id="message">only characters are allowed</p>
                         </div>
                         @if ($errors->has('name'))
                           <span class="help-block">
@@ -120,9 +120,9 @@
                       $eclipse_key="eclipse";
                       if (strpos($url, $rayfleet_key) == true) {  ?>
                           <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
                         <div class="form-group has-feedback">
-                          <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" required min="11111111111" max="99999999999" oninvalid="this.setCustomValidity('Mobile Number cannot be less or greater than 11 digits')" autocomplete="off">
+                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -133,9 +133,9 @@
                       <?php } 
                       else if (strpos($url, $eclipse_key) == true) { ?>
                          <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
                         <div class="form-group has-feedback">
-                          <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" required min="1111111111" max="9999999999" oninvalid="this.setCustomValidity('Mobile Number cannot be less or greater than 10 digits')" autocomplete="off">
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -146,9 +146,9 @@
                       <?php }
                       else { ?>
                            <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
                         <div class="form-group has-feedback">
-                          <input type="number" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" required min="1111111111" max="9999999999" oninvalid="this.setCustomValidity('Mobile Number cannot be less or greater than 10 digits')" autocomplete="off">
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">

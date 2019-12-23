@@ -3,9 +3,8 @@
 @section('content')
 
 <section class="hilite-content">
-      <!-- title row -->     
   <div class="row">
-    <div class="panel-body" style="width: 100%;min-height: 10%">
+     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
         <div class="cover_div_search">
          <div class="row">
@@ -13,30 +12,18 @@
            <div class="form-group" style="margin-left: 20%;margin-top: 2%;">
             <label>EPB PACKET</label>  
              <textarea rows="4"  id="packetvalue"  cols="50">
+               </textarea>
+                <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
+               </div>
+            </div> 
+          </div>
+       </div>      
+   </div>
+  </section>
 
-                  </textarea>
-                      <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> SUBMIT </button>                     
-               <!-- <input type="textarea" id="packetvalue" name="packetdata"><br> -->
-              </div>
-            </div>
-
-        <!--  <div class="col-lg-3 col-md-3"> 
-           <div  style ="margin-left: 77px"class="form-group has-feedback">        
-          <button class="btn btn-sm btn-info btn2 srch" id="searchclick"> <i class="fa fa-search"></i> </button>
-      </div>
-        </div>  -->                       
-      </div>
-    </div>      
-  </div>
-  
-
-
-
-</section>
 <div class="clearfix"></div>
 <section class="content" >
-<!-- <div class=col-md-8>           -->
-  <div class="col-md-6" style="overflow: scroll">
+ <div class="col-md-6" style="overflow: scroll">
   <!DOCTYPE html>
 
 <style>
@@ -159,36 +146,29 @@ table, th, td {
       <td>Vehicle Mode</td>
       <td><INPUT TYPE="TEXT"  id="vehicle_mode" NAME="vehicle_mode" SIZE="110"></td>
     </tr>
-    
-  </tbody>
-  
-</table>
-<div class="row">
-    <div class="panel-body" style="width: 100%;min-height: 10%">
-      <div class="panel-heading">
-        <div>
-          <div class="row">
-         <div class="col-lg-3 col-md-3"> 
-        <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
-         <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
-          height:40px;"> Generate </button>
-           
+    </tbody>
+  </table>
+
+    <div class="row">
+        <div class="panel-body" style="width: 100%;min-height: 10%">
+          <div class="panel-heading">
+            <div>
+              <div class="row">
+                <div class="col-lg-3 col-md-3"> 
+                  <div class="form-group" style="margin-left: 180%;margin-top: 2%;">
+                    <button   class="button" id="generate" style="float: right;background-color:black;color:white;text-align:center;
+                      height:40px;"> Generate </button>
+                   </div>
+                  <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
+                </div>
               </div>
-              <textarea   id = "mergedvalue" style="margin-left: 180%;margin-top: 2%;display:none" rows="4" cols="50"></textarea> 
-            </div>
-          </div>
-      </div>      
+          </div>      
+      </div>
     </div>
- </div>
-</div> 
-
-
+  </div> 
 </body>
 </html>
-
-
-   
-  </div>
+</div>
 </section>
 
 
