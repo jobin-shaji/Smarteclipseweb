@@ -24,6 +24,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: haightAshbury,
+    fullscreenControl: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
   var input1 = document.getElementById('search_place');

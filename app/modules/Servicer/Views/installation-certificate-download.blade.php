@@ -165,7 +165,7 @@
                 </span>
             </div>
 
-            <div style="position:absolute;left:500px;top:38.72px" class="cls_003">
+            <div style="position:absolute;left:520px;top:65px" class="cls_003">
                 <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
             </div>
 

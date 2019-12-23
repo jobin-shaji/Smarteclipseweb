@@ -9,7 +9,13 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/gps-transferred-root/get-from-list/','WarehouseController@getFromListRoot')->name('gps-transferred-root.get-from-list');
 	Route::post('/gps-transferred-root/get-to-list/','WarehouseController@getToListRoot')->name('gps-transferred-root.get-to-list');
 	Route::post('/gps-transfer-list-root','WarehouseController@getRootListData')->name('gps-transfer-list-root');
+	Route::post('/gps-transferred-count-root','WarehouseController@getTotalTransferredCount')->name('gps.transferred.count.root');
 	Route::post('/gps-transfer-root/cancel','WarehouseController@cancelRootGpsTransfer')->name('gps.cancel-root');
+
+	//device track in root panel
+	Route::get('/gps-device-track-root','WarehouseController@getRootDeviceTrack')->name('gps.device.track.root');
+	Route::post('/gps-device-track-list-root','WarehouseController@getRootDeviceTrackData')->name('gps-device-track-list.root');
+	Route::get('/gps-device-track-root-details/{id}/view','WarehouseController@rootDeviceTrackDetails')->name('gps.device.track.root.details');
 
 });
 Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Warehouse\Controllers' ] , function() {
@@ -50,6 +56,12 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'
 	Route::get('/gps-transfers','WarehouseController@getList')->name('gps-transfers');
 	Route::post('/gps-transfer-list','WarehouseController@getListData')->name('gps-transfer-list');
 	Route::get('/gps-transfer/{id}/view','WarehouseController@viewGpsTransfer')->name('gps-transfer.view');
+
+	Route::post('/gps-list-view','WarehouseController@viewGpsTransferList')->name('gps.list.view');
+
+
+
+
 	Route::post('/gps-transfer/user-detils','WarehouseController@userData')->name('gps-transfer.user-detils');
 	Route::post('/gps-transfer/accept','WarehouseController@AcceptGpsTransfer')->name('gps.accept');
 	Route::post('/gps-transfer/cancel','WarehouseController@cancelGpsTransfer')->name('gps.cancel');
