@@ -582,9 +582,13 @@ padding: 5px 10px;
                 // create start marker
 
 
+                $second_vehicle_mode   =   location_data_que[0].mode;
 
                 if( (startPointLatitude != null) && (startPointLongitude!=null) )
                 {
+                 if($second_vehicle_mode == "S" || $second_vehicle_mode == "H"){
+                 if($second_vehicle_mode != $first_vehicle_mode ){
+
                     endPointLatitude    = location_data_que[0].lat;
                     endPointLongitude   = location_data_que[0].lng;
                     vehicle_mode        = location_data_que[0].mode;
@@ -593,9 +597,13 @@ padding: 5px 10px;
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                  }
+                 }
+
                 }
-                startPointLatitude  = location_data_que[0].lat;
-                startPointLongitude = location_data_que[0].lng;
+                $first_vehicle_mode    = location_data_que[0].mode;
+                startPointLatitude     = location_data_que[0].lat;
+                startPointLongitude    = location_data_que[0].lng;
                 // remove the already plotted locations
                 popFromLocationQueue();
                 // want to load new set of data ?
