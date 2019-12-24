@@ -56,7 +56,7 @@
               </div>
             </div>
             <div>
-           <div class='col-sm-3'>   
+         <!--   <div class='col-sm-3'>   
             <div style="float: left;margin-left: 2%">
               <label style="font-weight:bold">Speed</label>
               <select name="speed" id="speed">
@@ -68,24 +68,25 @@
                   <option value="6">6X</option>
               </select>
             </div>
-          </div>
+          </div> -->
         </div>
 
           <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
                          
-              <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
+              <button class="btn btn-primary btn-sm start_button" onclick="startPlayBack()" id="btnPlay">Play</button>
+
 
            
           </div>
-             <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
+           <!--   <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
             <span class="contoller">                           
               <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">pause</button>
 
             </span>
-          </div>
+          </div> -->
              <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
             <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Stop</button>
+              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Stop</button>
             </span>
           </div>
       </div>
@@ -521,8 +522,7 @@ padding: 5px 10px;
          
         function startPlayBack(){
            
-
-
+               $(".start_button").css("display","none");
 
                 loader      =   true;
                 speed_val   =   $('#speed').val();
@@ -531,6 +531,8 @@ padding: 5px 10px;
                 if(loader == true){
                  $("#lorder-cover-bg-image").css("display","block");
                 }
+
+
 
                 getLocationData();
                $('.left-alert-box').css('display','block');
@@ -1066,6 +1068,10 @@ padding: 5px 10px;
 
 
        // --------2019-12-19-2:20-------------------------------------------------------
+
+       function stopPlayback(){
+        location.reload(true);
+       }
     </script>
 
 
