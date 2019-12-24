@@ -416,8 +416,9 @@ padding: 5px 10px;
         var vehicle_mode;
         var previousCoorinates;
         var blacklineStyle;
+
         var speed_val            = 1;
-        var Speed                = 1000;
+        var speed                = 1000;
         var loader               = false;
     
          
@@ -526,7 +527,7 @@ padding: 5px 10px;
 
                 loader      =   true;
                 // speed_val   =   $('#speed').val();
-                speed       =   speed/speed_val;
+                speed       =   speed/1;
 
                 if(loader == true){
                  $("#lorder-cover-bg-image").css("display","block");
