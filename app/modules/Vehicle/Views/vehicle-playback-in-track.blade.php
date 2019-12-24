@@ -523,16 +523,25 @@ padding: 5px 10px;
           }
         }
         function locationStore(data)
-        {
+        {   
+            var stop_mode = null;
             for (var i = 0; i < data.length; i++)
             {
 
-                   location_data_que.push({   
-                            "lat"   : data[i].latitude, 
-                            "lng"   : data[i].longitude,
-                            "angle" : data[i].angle,
-                            "mode"  : data[i].vehicleStatus
-                        });
+
+                   var start_mode =  data[i].vehicleStatus;
+                   if(start_mode  == "S" && stop_mode != null && start_mode == start_mode){
+                      console.log('same mode :- '+start_mode);
+                      stop_mode   = data[i].vehicleStatus;
+                   }else{
+                    location_data_que.push({   
+                              "lat"   : data[i].latitude, 
+                              "lng"   : data[i].longitude,
+                              "angle" : data[i].angle,
+                              "mode"  : data[i].vehicleStatus
+                          });
+
+                    }
                   // --------2019-12-19-2:20--------------------------------------------------------
                    location_details_que.push({
                                                 "lat"   : data[i].latitude, 
@@ -582,13 +591,9 @@ padding: 5px 10px;
                 // create start marker
 
 
-                $second_vehicle_mode   =   location_data_que[0].mode;
 
                 if( (startPointLatitude != null) && (startPointLongitude!=null) )
                 {
-                 
-                 if($second_vehicle_mode == "S" && $second_vehicle_mode != $first_vehicle_mode ){
-
                     endPointLatitude    = location_data_que[0].lat;
                     endPointLongitude   = location_data_que[0].lng;
                     vehicle_mode        = location_data_que[0].mode;
@@ -597,13 +602,9 @@ padding: 5px 10px;
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
-                  }
-                
-
                 }
-                $first_vehicle_mode    = location_data_que[0].mode;
-                startPointLatitude     = location_data_que[0].lat;
-                startPointLongitude    = location_data_que[0].lng;
+                startPointLatitude  = location_data_que[0].lat;
+                startPointLongitude = location_data_que[0].lng;
                 // remove the already plotted locations
                 popFromLocationQueue();
                 // want to load new set of data ?
