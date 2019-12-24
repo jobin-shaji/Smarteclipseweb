@@ -881,11 +881,11 @@ padding: 5px 10px;
 
           var message ='<table style="font-size: 15px;">'+
           '<tr>'+
-          '<td>Time:</td>'+
-          '<td><i class="fa fa-clock-o"></i></td>'+
+          '<td><i class="fa fa-clock-o"></i>:</td>'+
+          '<td>'+time+'</td>'+
           '</tr><tr>'+
-          '<td>Alert:</td>'+
-          '<td><i class="fa fa-bell"></i></td>'
+          '<td><i class="fa fa-bell"></i>:</td>'+
+          '<td>'+alert+'</td>'
           '</tr>'+
           '</table>'
           addMarkerToGroup(group, {lat:lat, lng:lng},
