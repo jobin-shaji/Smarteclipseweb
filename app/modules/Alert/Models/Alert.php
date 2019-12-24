@@ -29,6 +29,4 @@ class Alert extends Model
 	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_type_id');
 	}
 
-	
-
 }
