@@ -586,8 +586,8 @@ padding: 5px 10px;
 
                 if( (startPointLatitude != null) && (startPointLongitude!=null) )
                 {
-                 if($second_vehicle_mode == "S" || $second_vehicle_mode == "H"){
-                 if($second_vehicle_mode != $first_vehicle_mode ){
+                 
+                 if($second_vehicle_mode == "S" && $second_vehicle_mode != $first_vehicle_mode ){
 
                     endPointLatitude    = location_data_que[0].lat;
                     endPointLongitude   = location_data_que[0].lng;
@@ -598,7 +598,7 @@ padding: 5px 10px;
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
                   }
-                 }
+                
 
                 }
                 $first_vehicle_mode    = location_data_que[0].mode;
