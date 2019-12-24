@@ -530,8 +530,10 @@ padding: 5px 10px;
 
 
                    var start_mode =  data[i].vehicleStatus;
-                   if(start_mode  == "S" && stop_mode != null && start_mode == start_mode){
+                   if(start_mode  == "S" && stop_mode != null && start_mode == stop_mode){
+
                       console.log('same mode :- '+start_mode);
+                      debugger;
                       stop_mode   = data[i].vehicleStatus;
                    }else{
                     location_data_que.push({   
@@ -840,7 +842,7 @@ padding: 5px 10px;
        function alertPlotOnMap(){
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
-              console.log('marker latlng: '+alertsQueue[i].lat+'-'+alertsQueue[i].lat);
+              
                var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
                  map.addObject(alert_location);
             }
