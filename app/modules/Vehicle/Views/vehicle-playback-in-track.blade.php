@@ -846,9 +846,11 @@ padding: 5px 10px;
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
                if(alertsQueue[i] != undefined){
+                 var message =alertsQueue[i].alert;
                  var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
+                   alert_location.setData(message);
                    map.addObject(alert_location);
-              }
+                    
             }
              
           }
