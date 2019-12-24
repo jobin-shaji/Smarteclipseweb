@@ -846,10 +846,7 @@ padding: 5px 10px;
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
                if(alertsQueue[i] != undefined){
-                 // var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
-
-                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng)
-                   // map.addObject(alert_location);
+                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert)
               }
             }
              
@@ -863,7 +860,7 @@ padding: 5px 10px;
           group.addObject(marker);
         }
 
-        function addInfoBubble(lat,lng) {
+        function addInfoBubble(lat,lng,alert) {
           var group = new H.map.Group();
           map.addObject(group);
           group.addEventListener('tap', function (evt) {
@@ -873,7 +870,7 @@ padding: 5px 10px;
             ui.addBubble(bubble);
           }, false);
           addMarkerToGroup(group, {lat:lat, lng:lng},
-            'hiiii');
+            alert);
           }
 
 
