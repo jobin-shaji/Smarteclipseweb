@@ -846,7 +846,7 @@ padding: 5px 10px;
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
                if(alertsQueue[i] != undefined){
-                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert)
+                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
               }
             }
              
@@ -860,7 +860,7 @@ padding: 5px 10px;
           group.addObject(marker);
         }
 
-        function addInfoBubble(lat,lng,alert) {
+        function addInfoBubble(lat,lng,alert,time) {
           var group = new H.map.Group();
           map.addObject(group);
           group.addEventListener('tap', function (evt) {
@@ -869,8 +869,17 @@ padding: 5px 10px;
             });
             ui.addBubble(bubble);
           }, false);
+
+          var message ='<table>'+
+          '<tr>'+
+          '<td>Time:</td>'+
+          '<td>'+time+'</td>'+
+          '<td>Alert:</td>'+
+          '<td>'+alert+'</td>'
+          '</tr>'+
+          '</table>'
           addMarkerToGroup(group, {lat:lat, lng:lng},
-            alert);
+            message);
           }
 
 
