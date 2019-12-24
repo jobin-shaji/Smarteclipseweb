@@ -2783,6 +2783,7 @@ class VehicleController extends Controller
             $start_offset = ($offset * $limit) - $limit;
         }
         $gps_id = $get_vehicle->gps_id;
+
         $count_of_gpsdata = GpsData::select('latitude as latitude', 'longitude as longitude', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->orderBy('device_time', 'asc')
@@ -2794,37 +2795,36 @@ class VehicleController extends Controller
             ->orderBy('device_time', 'asc')
             ->get();
 
-        $alerts_list=[];
+        $alerts_list    =   [];
         if($track_data->count() > 0){
 
           $from_date_time   = $track_data->first()->dateTime;
           $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
-          $alerts_list      = Alert::where('device_time','=<',$from_date_time)
-                                    ->where('device_time','=>',$last_date_time)
+          $alerts_list      = Alert::where('device_time', '>=' ,$from_date_time)
+                                    ->where('device_time', '<=' ,$last_date_time)
                                     ->where('gps_id',$gps_id)
+                                    ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
                                     ->with('alertType')
                                     ->get();
          }
         if ($track_data->count() > 0)
         {
             $response_data = array(
-                'status' => 'success',
-                'message' => 'success',
-                'code' => 1,
-
-                'vehicle_type' => $get_vehicle
-                    ->vehicleType->name,
+                'status'       => 'success',
+                'message'      => 'success',
+                'code'         => 1,
+                'vehicle_type' => $get_vehicle->vehicleType->name,
                 'total_offset' => $total_index,
-                'playback' => $track_data,
-                'alerts'   => $alerts_list
+                'playback'     => $track_data,
+                'alerts'       => $alerts_list
             );
         }
         else
         {
             $response_data = array(
-                'status' => 'failed',
-                'message' => 'failed',
-                'code' => 0
+                'status'    => 'failed',
+                'message'   => 'failed',
+                'code'      => 0
             );
         }
         return response()->json($response_data);
