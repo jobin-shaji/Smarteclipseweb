@@ -530,7 +530,7 @@ padding: 5px 10px;
 
 
                    var start_mode =  data[i].vehicleStatus;
-                   if(start_mode  == "S" && stop_mode != null && start_mode == stop_mode){
+                   if((stop_mode != null && start_mode  == "S") && ( start_mode == stop_mode)){
 
                       console.log('same mode :- '+start_mode);
                       debugger;
