@@ -525,7 +525,7 @@ padding: 5px 10px;
                $(".start_button").css("display","none");
 
                 loader      =   true;
-                speed_val   =   $('#speed').val();
+                // speed_val   =   $('#speed').val();
                 speed       =   speed/speed_val;
 
                 if(loader == true){
