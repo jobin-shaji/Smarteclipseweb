@@ -134,6 +134,15 @@
     color: rgba(0, 0, 0, .3);
     font-size: 1em
    }
+
+   .H_ib_body {
+    background: #a03737 !important;
+    }
+
+    .H_ib {
+    background: #a03737;
+    fill: #a03737;
+}
   #location_details_text:before {
     content: attr(data-text);
     position: absolute;
@@ -870,13 +879,13 @@ padding: 5px 10px;
             ui.addBubble(bubble);
           }, false);
 
-          var message ='<table>'+
+          var message ='<table style="font-size: 15px;">'+
           '<tr>'+
           '<td>Time:</td>'+
-          '<td>'+time+'</td>'+
+          '<td><i class="fa fa-clock-o"></i></td>'+
           '</tr><tr>'+
           '<td>Alert:</td>'+
-          '<td>'+alert+'</td>'
+          '<td><i class="fa fa-bell"></i></td>'
           '</tr>'+
           '</table>'
           addMarkerToGroup(group, {lat:lat, lng:lng},
