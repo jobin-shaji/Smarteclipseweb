@@ -22,36 +22,42 @@
 
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+
 </head>
     <div class="wrapper overlay-sidebar">
 <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
-<div class="top-date">
-          <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
-            <div  style="float: left;margin-left: 2%">
-              <label style="font-weight:bold">Start Date</label>
-              <input type="text" id="fromDate" name="fromDate">
-              <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-              </span>
-            </div>
-          </div>
-          <div id="datetimepicker_live2" class="input-append date" style="margin-bottom: 0px!important">
-            <div style="float: left;margin-left: 2%">
-              <label style="font-weight:bold">End Date</label>
-              <input type="text" id="toDate" name="toDate">
-              <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-              </span>
-            </div>
-          </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="top-date">
 
+              <div class='col-sm-3'>
+              <div class="form-group">
+                <label style="font-weight:bold">Start Date</label>
+                <div class='input-group date' id='datetimepicker_live1'>
+                  <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+              <div class='col-sm-3'>
+              <div class="form-group">
+                <label style="font-weight:bold">End Date</label>
+                <div class='input-group date' id='datetimepicker_live2'>
+                  <input type="text" id="toDate" style="height: 33px;"class="form-control" name="toDate">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
             <div>
+           <div class='col-sm-3'>   
             <div style="float: left;margin-left: 2%">
-
               <label style="font-weight:bold">Speed</label>
               <select name="speed" id="speed">
                   <option value="1">1X</option>
@@ -63,6 +69,7 @@
               </select>
             </div>
           </div>
+        </div>
 
           <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
                          
@@ -79,11 +86,14 @@
              <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
             <span class="contoller">                           
               <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Stop</button>
-
             </span>
           </div>
-          
-</div>
+      </div>
+      </div>
+    </div>
+
+
+
         <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->online_icon}}">
         <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->offline_icon}}">
         <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->ideal_icon}}">
@@ -112,6 +122,7 @@
             </div>
         </div>
     </div>
+
     <!-- Style -->
 
     <style>
@@ -432,6 +443,7 @@ padding: 5px 10px;
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
                 alertPlotOnMap();
+               
              }, Speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
@@ -479,11 +491,11 @@ padding: 5px 10px;
                     {
                         if( typeof response == undefined)
                         {
-                            console.log('something went wrong with the server data');
+                            // console.log('something went wrong with the server data');
                         }
                         else
                         {
-                            console.log('No more data to display');
+                            // console.log('No more data to display');
                         }
                     }
                 },
@@ -512,16 +524,30 @@ padding: 5px 10px;
           }
         }
         function locationStore(data)
-        {
+        {   
+            var stop_mode = null;
             for (var i = 0; i < data.length; i++)
             {
 
-                   location_data_que.push({   
-                            "lat"   : data[i].latitude, 
-                            "lng"   : data[i].longitude,
-                            "angle" : data[i].angle,
-                            "mode"  : data[i].vehicleStatus
-                        });
+
+                   var start_mode =  data[i].vehicleStatus;
+                   console.log(start_mode);
+
+                 if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
+
+                      console.log('same mode :- '+start_mode);
+                      debugger;
+                     
+                   }else{
+                    location_data_que.push({   
+                              "lat"   : data[i].latitude, 
+                              "lng"   : data[i].longitude,
+                              "angle" : data[i].angle,
+                              "mode"  : data[i].vehicleStatus
+                          });
+
+                    }
+                     stop_mode   = data[i].vehicleStatus;
                   // --------2019-12-19-2:20--------------------------------------------------------
                    location_details_que.push({
                                                 "lat"   : data[i].latitude, 
@@ -539,7 +565,7 @@ padding: 5px 10px;
                 if( data.total_offset == offset)
                 {
                     dataLoadingCompleted = true;
-                    console.log('data loading completed');
+                    // console.log('data loading completed');
                 } 
 
 
@@ -552,7 +578,7 @@ padding: 5px 10px;
 
         function plotLocationOnMap()
         {
-            console.log('Current length '+location_data_que.length);
+            // console.log('Current length '+location_data_que.length);
             if(location_data_que.length >0)
             {
                  loader = false;
@@ -590,7 +616,7 @@ padding: 5px 10px;
                 // want to load new set of data ?
                 if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
                 {
-                    console.log('Loading fresh set of data');
+                    // console.log('Loading fresh set of data');
                     getLocationData();
                 }
 
@@ -618,7 +644,7 @@ padding: 5px 10px;
             else
             {
                 clearInterval(mapUpdateInterval);
-                console.log('no more map updation calls');
+                // console.log('no more map updation calls');
                 return null;
             }
         }
@@ -667,7 +693,7 @@ padding: 5px 10px;
         }
 
         function moveMarker(RotateDegree,lat,lng,vehicle_mode){
-            console.log('mode '+vehicle_mode);
+            // console.log('mode '+vehicle_mode);
             if ((bearsMarkeronStartPoint != null) && (blPlaceCaronMap == true)) {
                 map.removeObject(bearsMarkeronStartPoint);
                 blPlaceCaronMap = false;
@@ -709,9 +735,9 @@ padding: 5px 10px;
         async function dataShownOnList(){
             if(location_details_que.length >0)
             {
-                console.log(location_details_que.length);
+                // console.log(location_details_que.length);
                 // for(i=0;i<=location_details_que.length)
-               console.log(location_details_que);
+               // console.log(location_details_que);
             var lat=location_details_que[0].lat;
             var lng=location_details_que[0].lng;
             var mode=location_details_que[0].mode;
@@ -796,7 +822,7 @@ padding: 5px 10px;
             else
             {
                 clearInterval(mapUpdateInterval);
-                console.log('no more map updation calls');
+                // console.log('no more map updation calls');
                 return null;
             }
         }
@@ -810,7 +836,7 @@ padding: 5px 10px;
             }
             else
             {
-                console.log('no more map updation calls');
+                // console.log('no more map updation calls');
                 return null;
             }
         }
@@ -820,34 +846,61 @@ padding: 5px 10px;
        function alertPlotOnMap(){
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
-              console.log('marker latlng: '+alertsQueue[i].lat+'-'+alertsQueue[i].lat);
-               var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
-                 map.addObject(alert_location);
+               if(alertsQueue[i] != undefined){
+                 var message = alertsQueue[i].alert;
+                 var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
+                   alert_location.setData(message);
+                   map.addObject(alert_location);
+                   addInfoBubble();
             }
              
           }
         }
+      }
+
+  function addInfoBubble(map) {
+  var group = new H.map.Group();
+
+  map.addObject(group);
+  group.addEventListener('tap', function (evt) {
+  var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
+      content: evt.target.getData()
+    });
+    ui.addBubble(bubble);
+  }, false);
+}
 
 
        // --------2019-12-19-2:20-------------------------------------------------------
     </script>
 
 
-    <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
-    <script type="text/javascript"
-     src="{{asset('playback/assets/js/bootstrap-datetimepicker.min.js')}}">
-    </script>
-    <script type="text/javascript">
-      $('#datetimepicker_live1').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
-   
-      });
-    </script>
-    <script type="text/javascript">
-      $('#datetimepicker_live2').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
-      });
-    </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+<script type="text/javascript">
+$(function() {
+  $('#datetimepicker_live1').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss',
+  });
+
+    $('#datetimepicker_live2').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss',
+  });
+
+});
+
+
+
+</script>
 
 
 
