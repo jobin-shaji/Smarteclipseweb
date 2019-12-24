@@ -531,12 +531,12 @@ padding: 5px 10px;
 
                    var start_mode =  data[i].vehicleStatus;
                    console.log(start_mode);
-                  
+
                    if((stop_mode != null && start_mode  == "S") && ( start_mode == stop_mode)){
 
                       console.log('same mode :- '+start_mode);
                       debugger;
-                      stop_mode   = data[i].vehicleStatus;
+                     
                    }else{
                     location_data_que.push({   
                               "lat"   : data[i].latitude, 
@@ -546,6 +546,7 @@ padding: 5px 10px;
                           });
 
                     }
+                     stop_mode   = data[i].vehicleStatus;
                   // --------2019-12-19-2:20--------------------------------------------------------
                    location_details_que.push({
                                                 "lat"   : data[i].latitude, 
@@ -563,7 +564,7 @@ padding: 5px 10px;
                 if( data.total_offset == offset)
                 {
                     dataLoadingCompleted = true;
-                    console.log('data loading completed');
+                    // console.log('data loading completed');
                 } 
 
 
@@ -576,7 +577,7 @@ padding: 5px 10px;
 
         function plotLocationOnMap()
         {
-            console.log('Current length '+location_data_que.length);
+            // console.log('Current length '+location_data_que.length);
             if(location_data_que.length >0)
             {
                  loader = false;
@@ -614,7 +615,7 @@ padding: 5px 10px;
                 // want to load new set of data ?
                 if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
                 {
-                    console.log('Loading fresh set of data');
+                    // console.log('Loading fresh set of data');
                     getLocationData();
                 }
 
@@ -642,7 +643,7 @@ padding: 5px 10px;
             else
             {
                 clearInterval(mapUpdateInterval);
-                console.log('no more map updation calls');
+                // console.log('no more map updation calls');
                 return null;
             }
         }
@@ -691,7 +692,7 @@ padding: 5px 10px;
         }
 
         function moveMarker(RotateDegree,lat,lng,vehicle_mode){
-            console.log('mode '+vehicle_mode);
+            // console.log('mode '+vehicle_mode);
             if ((bearsMarkeronStartPoint != null) && (blPlaceCaronMap == true)) {
                 map.removeObject(bearsMarkeronStartPoint);
                 blPlaceCaronMap = false;
@@ -733,9 +734,9 @@ padding: 5px 10px;
         async function dataShownOnList(){
             if(location_details_que.length >0)
             {
-                console.log(location_details_que.length);
+                // console.log(location_details_que.length);
                 // for(i=0;i<=location_details_que.length)
-               console.log(location_details_que);
+               // console.log(location_details_que);
             var lat=location_details_que[0].lat;
             var lng=location_details_que[0].lng;
             var mode=location_details_que[0].mode;
@@ -820,7 +821,7 @@ padding: 5px 10px;
             else
             {
                 clearInterval(mapUpdateInterval);
-                console.log('no more map updation calls');
+                // console.log('no more map updation calls');
                 return null;
             }
         }
@@ -834,7 +835,7 @@ padding: 5px 10px;
             }
             else
             {
-                console.log('no more map updation calls');
+                // console.log('no more map updation calls');
                 return null;
             }
         }
