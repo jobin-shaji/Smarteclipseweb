@@ -858,7 +858,7 @@ padding: 5px 10px;
         }
       }
 
-  function addInfoBubble(map) {
+  function addInfoBubble() {
   var group = new H.map.Group();
   map.addObject(group);
   group.addEventListener('tap', function (evt) {
@@ -867,6 +867,7 @@ padding: 5px 10px;
     });
     ui.addBubble(bubble);
   }, false);
+}
 
 
        // --------2019-12-19-2:20-------------------------------------------------------
