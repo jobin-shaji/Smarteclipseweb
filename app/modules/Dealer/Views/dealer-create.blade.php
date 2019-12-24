@@ -59,7 +59,7 @@
                           <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" />
+                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -72,7 +72,7 @@
                          <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -85,7 +85,7 @@
                            <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -96,7 +96,7 @@
                       <?php } ?>
                  
                   <div class="form-group has-feedback">
-                    <label class="srequired">Email.</label>
+                    <label class="srequired">Email</label>
                     <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required autocomplete="off">
                     @if ($errors->has('email'))
                       <span class="help-block">
