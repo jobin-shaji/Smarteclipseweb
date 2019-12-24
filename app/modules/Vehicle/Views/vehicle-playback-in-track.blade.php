@@ -22,36 +22,42 @@
 
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+
 </head>
     <div class="wrapper overlay-sidebar">
 <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
-<div class="top-date">
-          <div id="datetimepicker_live1" class="input-append date" style="margin-bottom: 0px!important">
-            <div  style="float: left;margin-left: 2%">
-              <label style="font-weight:bold">Start Date</label>
-              <input type="text" id="fromDate" name="fromDate">
-              <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-              </span>
-            </div>
-          </div>
-          <div id="datetimepicker_live2" class="input-append date" style="margin-bottom: 0px!important">
-            <div style="float: left;margin-left: 2%">
-              <label style="font-weight:bold">End Date</label>
-              <input type="text" id="toDate" name="toDate">
-              <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-              </span>
-            </div>
-          </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="top-date">
 
+              <div class='col-sm-3'>
+              <div class="form-group">
+                <label style="font-weight:bold">Start Date</label>
+                <div class='input-group date' id='datetimepicker_live1'>
+                  <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+              <div class='col-sm-3'>
+              <div class="form-group">
+                <label style="font-weight:bold">End Date</label>
+                <div class='input-group date' id='datetimepicker_live2'>
+                  <input type="text" id="toDate" style="height: 33px;"class="form-control" name="toDate">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
             <div>
+           <div class='col-sm-3'>   
             <div style="float: left;margin-left: 2%">
-
               <label style="font-weight:bold">Speed</label>
               <select name="speed" id="speed">
                   <option value="1">1X</option>
@@ -63,6 +69,7 @@
               </select>
             </div>
           </div>
+        </div>
 
           <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
                          
@@ -79,11 +86,14 @@
              <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
             <span class="contoller">                           
               <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Stop</button>
-
             </span>
           </div>
-          
-</div>
+      </div>
+      </div>
+    </div>
+
+
+
         <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->online_icon}}">
         <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->offline_icon}}">
         <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->ideal_icon}}">
@@ -112,6 +122,7 @@
             </div>
         </div>
     </div>
+
     <!-- Style -->
 
     <style>
@@ -833,21 +844,32 @@ padding: 5px 10px;
     </script>
 
 
-    <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
-    <script type="text/javascript"
-     src="{{asset('playback/assets/js/bootstrap-datetimepicker.min.js')}}">
-    </script>
-    <script type="text/javascript">
-      $('#datetimepicker_live1').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
-   
-      });
-    </script>
-    <script type="text/javascript">
-      $('#datetimepicker_live2').datetimepicker({
-        format: 'yyyy-MM-dd HH:mm:ss',
-      });
-    </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+<script type="text/javascript">
+$(function() {
+  $('#datetimepicker_live1').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss',
+  });
+
+    $('#datetimepicker_live2').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss',
+  });
+
+});
+
+
+
+</script>
 
 
 
