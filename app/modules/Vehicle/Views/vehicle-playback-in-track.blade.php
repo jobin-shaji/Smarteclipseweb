@@ -443,7 +443,7 @@ padding: 5px 10px;
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
                 alertPlotOnMap();
-                addInfoBubble(map);
+               
              }, Speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
@@ -849,18 +849,18 @@ padding: 5px 10px;
                if(alertsQueue[i] != undefined){
                  var message = alertsQueue[i].alert;
                  var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
-
                    alert_location.setData(message);
                    map.addObject(alert_location);
-                    
+                   addInfoBubble();
             }
              
           }
         }
       }
 
-  function addInfoBubble() {
+  function addInfoBubble(map) {
   var group = new H.map.Group();
+
   map.addObject(group);
   group.addEventListener('tap', function (evt) {
   var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
