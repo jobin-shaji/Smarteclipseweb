@@ -719,8 +719,9 @@ padding: 5px 10px;
 
         function createNewCoods(lat,lng,angle,mode,distance,previous_data){
           var bearing   = angle;
-          var start     = [lat, lng];
-          var end       = [previous_data['lat'],previous_data['lng']];
+          var start     = [previous_data['lat'],previous_data['lng']];
+          var end       = [lat, lng];
+
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
           
