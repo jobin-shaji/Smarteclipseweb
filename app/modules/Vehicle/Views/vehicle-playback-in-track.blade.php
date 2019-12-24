@@ -414,8 +414,7 @@ padding: 5px 10px;
 
         var locationQueue       = [];
         var alertsQueue         = [];
-
-
+        addInfoBubble(map);
          
         function startPlayBack(){
            
@@ -851,7 +850,7 @@ padding: 5px 10px;
                  var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
                    alert_location.setData(message);
                    map.addObject(alert_location);
-                   addInfoBubble();
+                  
             }
              
           }
@@ -860,7 +859,6 @@ padding: 5px 10px;
 
   function addInfoBubble(map) {
   var group = new H.map.Group();
-
   map.addObject(group);
   group.addEventListener('tap', function (evt) {
   var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
@@ -869,8 +867,6 @@ padding: 5px 10px;
     ui.addBubble(bubble);
   }, false);
 }
-
-
        // --------2019-12-19-2:20-------------------------------------------------------
     </script>
 
