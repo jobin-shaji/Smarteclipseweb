@@ -842,7 +842,8 @@ padding: 5px 10px;
        function alertPlotOnMap(){
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
-              
+               console.log(alertsQueue[i]);
+               debugger;
                var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
                  map.addObject(alert_location);
             }
