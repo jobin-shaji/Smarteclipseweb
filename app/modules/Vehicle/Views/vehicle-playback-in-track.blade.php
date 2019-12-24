@@ -414,7 +414,8 @@ padding: 5px 10px;
 
         var locationQueue       = [];
         var alertsQueue         = [];
-        addInfoBubble(map);
+
+
          
         function startPlayBack(){
            
@@ -442,7 +443,6 @@ padding: 5px 10px;
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
                 alertPlotOnMap();
-               
              }, Speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
@@ -846,25 +846,35 @@ padding: 5px 10px;
           if(alertsQueue.length > 0){
             for (var i=0; i <= alertsQueue.length; i++) {
                if(alertsQueue[i] != undefined){
-                 var message = alertsQueue[i].alert;
-                 var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
-                   alert_location.setData(message);
-                   map.addObject(alert_location);
+                 // var alert_location = new H.map.Marker({lat:alertsQueue[i].lat, lng:alertsQueue[i].lng});
 
-                   alert_location.addEventListener('tap', function (evt) {
-                   var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
-                   content: evt.target.getData()
-                   });
-                  ui.addBubble(bubble);
-                }, false);
-
-
-                  
+                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng)
+                   // map.addObject(alert_location);
+              }
             }
              
           }
         }
-      }
+
+
+        function addMarkerToGroup(group, coordinate, html) {
+          var marker = new H.map.Marker(coordinate);
+          marker.setData(html);
+          group.addObject(marker);
+        }
+
+        function addInfoBubble(lat,lng) {
+          var group = new H.map.Group();
+          map.addObject(group);
+          group.addEventListener('tap', function (evt) {
+            var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
+              content: evt.target.getData()
+            });
+            ui.addBubble(bubble);
+          }, false);
+          addMarkerToGroup(group, {lat:lat, lng:lng},
+            'hiiii');
+          }
 
 
        // --------2019-12-19-2:20-------------------------------------------------------
