@@ -858,6 +858,16 @@ padding: 5px 10px;
         }
       }
 
+  function addInfoBubble(map) {
+  var group = new H.map.Group();
+  map.addObject(group);
+  group.addEventListener('tap', function (evt) {
+  var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
+      content: evt.target.getData()
+    });
+    ui.addBubble(bubble);
+  }, false);
+
 
        // --------2019-12-19-2:20-------------------------------------------------------
     </script>
