@@ -726,7 +726,7 @@ padding: 5px 10px;
           var pCoordinates;
           
 
-          for (var i = 0; i < distance/30; i++) {
+          for (var i = 0; i < distance/25; i++) {
 
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
