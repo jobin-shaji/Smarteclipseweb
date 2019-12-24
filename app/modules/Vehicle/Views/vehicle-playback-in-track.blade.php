@@ -416,7 +416,7 @@ padding: 5px 10px;
         var previousCoorinates;
         var blacklineStyle;
         var speed_val            = 1;
-        var Speed                = 100;
+        var Speed                = 300;
         var loader               = false;
     
          
@@ -867,7 +867,7 @@ padding: 5px 10px;
           lineString.pushPoint({lat:lat2, lng:lng2});
           map.addObject(new H.map.Polyline(
             lineString, { style: { lineWidth: 6 ,
-                                    strokeColor: 'rgb(25, 25, 25,0.8)'
+                                    strokeColor: 'rgb(25, 25, 25,1)'
                                  }}
           ));
         }
