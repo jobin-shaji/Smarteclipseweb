@@ -490,11 +490,11 @@ padding: 5px 10px;
                     {
                         if( typeof response == undefined)
                         {
-                            console.log('something went wrong with the server data');
+                            // console.log('something went wrong with the server data');
                         }
                         else
                         {
-                            console.log('No more data to display');
+                            // console.log('No more data to display');
                         }
                     }
                 },
@@ -532,7 +532,7 @@ padding: 5px 10px;
                    var start_mode =  data[i].vehicleStatus;
                    console.log(start_mode);
 
-                   if((stop_mode != null && start_mode  == "S") && ( start_mode == stop_mode)){
+                   if((stop_mode != null && start_mode  == "S") && ( start_mode === stop_mode)){
 
                       console.log('same mode :- '+start_mode);
                       debugger;
