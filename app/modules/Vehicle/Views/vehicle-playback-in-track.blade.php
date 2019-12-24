@@ -416,7 +416,7 @@ padding: 5px 10px;
         var previousCoorinates;
         var blacklineStyle;
         var speed_val            = 1;
-        var Speed                = 200;
+        var Speed                = 1000;
         var loader               = false;
     
          
