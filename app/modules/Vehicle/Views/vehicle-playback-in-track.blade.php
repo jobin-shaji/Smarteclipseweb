@@ -874,6 +874,7 @@ padding: 5px 10px;
           '<tr>'+
           '<td>Time:</td>'+
           '<td>'+time+'</td>'+
+          '</tr><tr>'+
           '<td>Alert:</td>'+
           '<td>'+alert+'</td>'
           '</tr>'+
