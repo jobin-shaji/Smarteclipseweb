@@ -418,7 +418,7 @@ padding: 5px 10px;
         var blacklineStyle;
 
         var speed_val            = 1;
-        var speed                = 1000;
+        var load_speed           = 1000;
         var loader               = false;
     
          
@@ -527,7 +527,7 @@ padding: 5px 10px;
 
                 loader      =   true;
                 // speed_val   =   $('#speed').val();
-                speed       =   speed/1;
+                load_speed       =   load_speed/1;
 
                 if(loader == true){
                  $("#lorder-cover-bg-image").css("display","block");
@@ -548,7 +548,7 @@ padding: 5px 10px;
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
                 alertPlotOnMap();
-             }, speed);
+             }, load_speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
              dataShownOnList();
@@ -787,7 +787,11 @@ padding: 5px 10px;
                     endPointLongitude   = location_data_que[0].lng;
                     vehicle_mode        = location_data_que[0].mode;
                     // calculate the direction of movement   
-                    var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                    // var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+
+                    var direction    =  location_data_que[0].angle;
+
+
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
