@@ -78,7 +78,7 @@ function refreshPage(){
 }
 
 function vehicle_details(res){
-  console.log(res);
+  //console.log(res);
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
   if(network_status=="Connection Lost"){

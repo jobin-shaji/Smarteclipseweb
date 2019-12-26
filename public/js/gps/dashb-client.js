@@ -64,8 +64,16 @@ function modecount(res) {
   $('#idle').text(res.idle);
   $('#stop').text(res.stop);
   $('#offline').text(res.offline);
+  
+  //hideRefreshButton();
 }
 
+// refresh button on the map should be hidden when the dashboard loads
+window.load = function()
+{
+  localStorage.setItem('isRefreshNeeded', false);
+  console.log('Hide refresh button');
+}
 
 function vehicleTrack(res) {
   if(res.status!="failed"){
