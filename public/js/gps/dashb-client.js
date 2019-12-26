@@ -206,13 +206,19 @@ function setMapOnAll(map) {
 }
 
 function selectVehicleTrack(res) {
+  // deleteMarkers();
+  console.log(res);
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
   map.setZoom(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
+    // 
+
   }
-  refesh_flag=1;
-  redarLocationSelectVehicle(res.lat,res.lon,0.06);
+ 
+     refesh_flag=1;
+     redarLocationSelectVehicle(res.lat,res.lon,0.06);
+  
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -277,7 +283,9 @@ function locationSearch()
 }
 
 function moving(vehicle_mode) {
-  removeCircleFromMap();
+
+  // alert(vehicle_mode);
+   // deleteMarkers();
   track_flag = 1;
   $('#vehicle_card_cover').empty();
 
@@ -293,6 +301,7 @@ function moving(vehicle_mode) {
 function selectVehicleModeTrack(res) {
  deleteMarkers();
 
+cityCircle.setMap(null);
  flag = 0;
  vehicleTrack(res);
 
