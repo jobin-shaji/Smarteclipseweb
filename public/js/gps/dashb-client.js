@@ -218,7 +218,6 @@ function selectVehicleTrack(res) {
   map.setZoom(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
-    //
 
   }
  
@@ -303,7 +302,7 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
-  cityCircle.setMap(null);
+  //cityCircle.setMap(null);
  flag = 0;
  vehicleTrack(res);
 
