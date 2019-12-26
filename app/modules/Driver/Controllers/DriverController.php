@@ -297,7 +297,7 @@ class DriverController extends Controller {
                 return $description;                    
             })  
             ->addColumn('date', function ($performance_score) {
-                $date=date("H:i:s d-m-y", strtotime($performance_score->created_at));
+                $date=date("d-m-y H:i:s ", strtotime($performance_score->created_at));
                 return $date;                    
             })            
         ->rawColumns(['link', 'action'])

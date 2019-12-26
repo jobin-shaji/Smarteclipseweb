@@ -501,6 +501,7 @@ function initMap(){
             lng: parseFloat(start_lng)
         },
         zoom: 17,
+        fullscreenControl: false,
         mapTypeId: 'roadmap'
 
     });  
