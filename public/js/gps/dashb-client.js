@@ -33,7 +33,12 @@ function initMap() {
   map_flag = 0;
   getVehicleSequence();
 
+  map.addListener('zoom_changed', function() {
+    console.log('Current zoom level '+map.getZoom());
+    localStorage.setItem('googleMapZoomLevel', map.getZoom());
+  });
 }
+
 // check each 10 sec
 window.setInterval(function() {
   if (track_flag == 0 && refesh_flag==0) {
@@ -75,7 +80,15 @@ function vehicleTrack(res) {
     var lng = JSONObject[i].lon;
     if (map_flag == 0) {
     map.panTo(new google.maps.LatLng(lat, lng));
-    map.setZoom(13);
+    // check if zoom level is already set
+    if( localStorage.getItem('googleMapZoomLevel') != null )
+    {
+      map.setZoom(localStorage.getItem('googleMapZoomLevel'));
+    }
+    else
+    {
+      map.setZoom(13);
+    }
     map.setOptions({
     minZoom: 5,
     maxZoom: 17

@@ -817,7 +817,7 @@
               @foreach ($vehicles as $vehicle)       
                 <div class="border-card">
                   <div class="card-type-icon with-border">
-                  <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">
+                  <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}}, true)" value="{{$vehicle->gps_id}}">
                   </div>
                   
                   <div class="content-wrapper">
