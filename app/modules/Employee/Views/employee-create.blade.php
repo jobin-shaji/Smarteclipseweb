@@ -66,7 +66,7 @@
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                        <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                             </span>
                           @endif
                         </div>
@@ -86,22 +86,19 @@
                       <?php }
                       else { ?>
                           <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
                           <div class="form-group has-feedback">
                             <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" /> 
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                                <strong class="error-text">{{ $errors->first('mobile')}}</strong>
                             </span>
                           @endif
                         </div>
                       <?php } ?>
                         </div>
                         @if ($errors->has('mobile'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
-                          </span>
                         @endif
                       </div> 
 
@@ -115,22 +112,9 @@
                             <strong class="error-text">{{ $errors->first('email') }}</strong>
                           </span>
                         @endif
-                      </div>                                               
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-12">
-          <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
-            <div class="row">
-              <div class="col-sm-12">                    
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="card-body_vehicle wizard-content">    
-                      <div class="form-group row" style="float:none!important">
+                      </div>  
+
+                   <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label>
                         <div class="form-group has-feedback">
                           <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username." name="username" value="{{ old('username') }}" autocomplete="off">
@@ -141,8 +125,8 @@
                           </span>
                         @endif
                       </div>     
-
-                      <div class="form-group row" style="float:none!important">
+             
+                    <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="form-group has-feedback">
                           <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password" autocomplete="off">
@@ -159,25 +143,29 @@
                             <strong class="error-text">{{ $errors->first('password') }}</strong>
                           </span>
                         @endif
-                      </div>                                                   
+                      </div> 
+
+            <div class="row">
+              <button type="submit" class="btn btn-primary address_btn">Create</button>
+            </div>
+            <br>
+            <br>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                             </div>
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-6 col-md-12">
-          <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
-            <div class="row">
-              <button type="submit" class="btn btn-primary address_btn">Create</button>
-            </div>
-          </div> 
-        </div> 
-      </div>
-    </form>
+    </div>
+  </form>
   </div>
 </section>
 

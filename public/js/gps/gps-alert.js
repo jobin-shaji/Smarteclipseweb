@@ -12,6 +12,7 @@ var longitude= parseFloat(document.getElementById('lng').value);
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 17,
+    fullscreenControl: false,
     center: {lat: latitude, lng: longitude},
     mapTypeId: 'terrain'
   });
@@ -46,7 +47,7 @@ function responseList(res){
   else{
     for(var i=0,n=Math.min(res.alerts.length); i<n;i++){
       // $('.inner').append('<div class="messages alert_color_'+res.alerts[i].id+'" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].alert_type.description+'('+res.alerts[i].gps.vehicle.name+')</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
-      $('.inner').append('<div class="messages alert_color_'+res.alerts[i].id+'" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].gps.vehicle.name+'<br>('+res.alerts[i].alert_type.description+')</br><span class="date">'+res.alerts[i].device_time+'</span></div>');
+      $('.inner').append('<div class="messages alert_color_'+res.alerts[i].id+'" onclick="gpsAlertCount('+res.alerts[i].id+')">'+res.alerts[i].gps.vehicle.name+' ('+res.alerts[i].gps.vehicle.register_number+')<br><h4 style="color:#e60606">'+res.alerts[i].alert_type.description+'</h4><span class="date">'+res.alerts[i].device_time+'</span></div>');
       
     }
   }
