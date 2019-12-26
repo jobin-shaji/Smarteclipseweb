@@ -29,14 +29,18 @@
               <div class="col-sm-12">                    
                 <div class="row">
                   <div > 
+                    
                     <div class="complaint__container">
                       <div class="container__child complaint__form">
                         <div class="form-group has-feedback">
                         <label class="srequired">Vehicle</label>
                         <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
                           <option value="" selected disabled>Vehicle</option>
+                          
                           @foreach($devices as $gps)
-                          <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle->register_number}}-({{$gps->gps->serial_no}})</option>
+                          
+
+                          <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle->register_number}}->({{$gps->gps->serial_no}})</option>
                           @endforeach
                         </select>
                         @if ($errors->has('gps_id'))
