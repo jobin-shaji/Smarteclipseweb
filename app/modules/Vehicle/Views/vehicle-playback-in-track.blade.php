@@ -56,7 +56,7 @@
               </div>
             </div>
             <div>
-           <div class='col-sm-3'>   
+         <!--   <div class='col-sm-3'>   
             <div style="float: left;margin-left: 2%">
               <label style="font-weight:bold">Speed</label>
               <select name="speed" id="speed">
@@ -68,24 +68,25 @@
                   <option value="6">6X</option>
               </select>
             </div>
-          </div>
+          </div> -->
         </div>
 
           <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
                          
-              <button class="btn btn-primary btn-sm" onclick="startPlayBack()" id="btnPlay">Play</button>
+              <button class="btn btn-primary btn-sm start_button" onclick="startPlayBack()" id="btnPlay">Play</button>
+
 
            
           </div>
-             <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
+           <!--   <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
             <span class="contoller">                           
               <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">pause</button>
 
             </span>
-          </div>
+          </div> -->
              <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
             <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">Stop</button>
+              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Stop</button>
             </span>
           </div>
       </div>
@@ -415,29 +416,124 @@ padding: 5px 10px;
         var vehicle_mode;
         var previousCoorinates;
         var blacklineStyle;
+
         var speed_val            = 1;
-        var Speed                = 600;
+        var load_speed           = 1000;
         var loader               = false;
     
          
 
         var locationQueue       = [];
         var alertsQueue         = [];
+        var previous_data       = [];
+        var first_set_data      = true;
+
+         var gis = {
+            ///**
+            //* All coordinates expected EPSG:4326
+            //* @param {Array} start Expected [lon, lat]
+            //* @param {Array} end Expected [lon, lat]
+            //* @return {number} Distance - meter.
+            //*/
+            calculateDistance: function (start, end) {
+                var lat1 = parseFloat(start[1]),
+                    lon1 = parseFloat(start[0]),
+                    lat2 = parseFloat(end[1]),
+                    lon2 = parseFloat(end[0]);
+
+                return gis.sphericalCosinus(lat1, lon1, lat2, lon2);
+            },
+
+            ///**
+            //* All coordinates expected EPSG:4326
+            //* @param {number} lat1 Start Latitude
+            //* @param {number} lon1 Start Longitude
+            //* @param {number} lat2 End Latitude
+            //* @param {number} lon2 End Longitude
+            //* @return {number} Distance - meters.
+            //*/
+            sphericalCosinus: function (lat1, lon1, lat2, lon2) {
+                var radius = 6371e3; // meters
+                var dLon = gis.toRad(lon2 - lon1),
+                    lat1 = gis.toRad(lat1),
+                    lat2 = gis.toRad(lat2),
+                    distance = Math.acos(Math.sin(lat1) * Math.sin(lat2) +
+                        Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * radius;
+
+                return distance;
+            },
+            ///**
+            //* @param {Array} coord Expected [lon, lat] EPSG:4326
+            //* @param {number} bearing Bearing in degrees
+            //* @param {number} distance Distance in meters
+            //* @return {Array} Lon-lat coordinate.
+            //*/
+            createCoord: function (coord, bearing, distance) {
+                /** http://www.movable-type.co.uk/scripts/latlong.html
+                * φ is latitude, λ is longitude,
+                * θ is the bearing (clockwise from north),
+                * δ is the angular distance d/R;
+                * d being the distance travelled, R the earth’s radius*
+                **/
+                var
+                    radius = 6371e3, // meters
+                    δ = Number(distance) / radius, // angular distance in radians
+                    θ = gis.toRad(Number(bearing));
+                φ1 = gis.toRad(coord[1]),
+                    λ1 = gis.toRad(coord[0]);
+
+                var φ2 = Math.asin(Math.sin(φ1) * Math.cos(δ) +
+                    Math.cos(φ1) * Math.sin(δ) * Math.cos(θ));
+
+                var λ2 = λ1 + Math.atan2(Math.sin(θ) * Math.sin(δ) * Math.cos(φ1),
+                    Math.cos(δ) - Math.sin(φ1) * Math.sin(φ2));
+                // normalise to -180..+180°
+                λ2 = (λ2 + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+
+                return [gis.toDeg(λ2), gis.toDeg(φ2)];
+            },
+            ///**
+            // * All coordinates expected EPSG:4326
+            // * @param {Array} start Expected [lon, lat]
+            // * @param {Array} end Expected [lon, lat]
+            // * @return {number} Bearing in degrees.
+            // */
+            getBearing: function (start, end) {
+                var
+                    startLat = gis.toRad(start[1]),
+                    startLong = gis.toRad(start[0]),
+                    endLat = gis.toRad(end[1]),
+                    endLong = gis.toRad(end[0]),
+                    dLong = endLong - startLong;
+
+                var dPhi = Math.log(Math.tan(endLat / 2.0 + Math.PI / 4.0) /
+                    Math.tan(startLat / 2.0 + Math.PI / 4.0));
+
+                if (Math.abs(dLong) > Math.PI) {
+                    dLong = (dLong > 0.0) ? -(2.0 * Math.PI - dLong) : (2.0 * Math.PI + dLong);
+                }
+
+                return (gis.toDeg(Math.atan2(dLong, dPhi)) + 360.0) % 360.0;
+            },
+            toDeg: function (n) { return n * 180 / Math.PI; },
+            toRad: function (n) { return n * Math.PI / 180; }
+        };
 
 
          
         function startPlayBack(){
            
-
-
+               $(".start_button").css("display","none");
 
                 loader      =   true;
-                speed_val   =   $('#speed').val();
-                speed       =   speed/speed_val;
+                // speed_val   =   $('#speed').val();
+                load_speed       =   load_speed/1;
 
                 if(loader == true){
                  $("#lorder-cover-bg-image").css("display","block");
                 }
+
+
 
                 getLocationData();
                $('.left-alert-box').css('display','block');
@@ -452,7 +548,7 @@ padding: 5px 10px;
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
                 alertPlotOnMap();
-             }, Speed);
+             }, load_speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
              dataShownOnList();
@@ -534,6 +630,7 @@ padding: 5px 10px;
         function locationStore(data)
         {   
             var stop_mode = null;
+
             for (var i = 0; i < data.length; i++)
             {
 
@@ -547,12 +644,43 @@ padding: 5px 10px;
                       debugger;
                      
                    }else{
-                    location_data_que.push({   
-                              "lat"   : data[i].latitude, 
-                              "lng"   : data[i].longitude,
-                              "angle" : data[i].angle,
-                              "mode"  : data[i].vehicleStatus
-                          });
+
+                    if(first_set_data==true){
+                      firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
+                      previous_data={   
+                                        "lat"   : data[i].latitude, 
+                                        "lng"   : data[i].longitude,
+                                        "angle" : data[i].angle,
+                                        "mode"  : data[i].vehicleStatus
+                                    };
+                        first_set_data = false;
+                    }else{
+
+
+                      var start = [previous_data['lat'], previous_data['lng']];
+                      var end = [data[i].latitude, data[i].longitude];
+                      var total_distance = gis.calculateDistance(start, end);
+
+                      createNewCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus,total_distance,previous_data);
+
+                      previous_data = {   
+                                        "lat"   : data[i].latitude, 
+                                        "lng"   : data[i].longitude,
+                                        "angle" : data[i].angle,
+                                        "mode"  : data[i].vehicleStatus
+                                      };
+
+
+                    // location_data_que.push({   
+                    //           "lat"   : data[i].latitude, 
+                    //           "lng"   : data[i].longitude,
+                    //           "angle" : data[i].angle,
+                    //           "mode"  : data[i].vehicleStatus
+                    //       });
+
+                    }
+                    
+                   
 
                     }
                      stop_mode   = data[i].vehicleStatus;
@@ -580,6 +708,53 @@ padding: 5px 10px;
               
                   
             }
+        }
+
+        function firstCoods(lat,lng,angle,mode){
+           location_data_que.push({   
+                              "lat"   : lat, 
+                              "lng"   : lng,
+                              "angle" : angle,
+                              "mode"  : mode
+                          });
+        }
+
+
+        function createNewCoods(lat,lng,angle,mode,distance,previous_data){
+          var bearing   = angle;
+          var start       = [previous_data['lat'],previous_data['lng']];
+          var end       = [lat, lng];
+
+          var new_coord = gis.createCoord(start, angle, distance);
+          var pCoordinates;
+          
+
+          for (var i = 0; i < distance / 50; i++) {
+
+                bearing = gis.getBearing(start, end);
+                new_coord = gis.createCoord(start, bearing, i);
+
+                if (i > 0) {
+                    if (pCoordinates != new_coord[0]) {
+                        
+                        location_data_que.push({   
+                              "lat"   : new_coord[0], 
+                              "lng"   : new_coord[1],
+                              "angle" : angle,
+                              "mode"  : mode
+                          });
+
+                        
+                    
+
+                    }
+                  
+                  
+                }
+                pCoordinates = new_coord;
+                
+            }
+      
         }
 
      
@@ -612,7 +787,11 @@ padding: 5px 10px;
                     endPointLongitude   = location_data_que[0].lng;
                     vehicle_mode        = location_data_que[0].mode;
                     // calculate the direction of movement   
-                    var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                    // var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+
+                    var direction    =  location_data_que[0].angle;
+
+
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
@@ -695,7 +874,7 @@ padding: 5px 10px;
           lineString.pushPoint({lat:lat2, lng:lng2});
           map.addObject(new H.map.Polyline(
             lineString, { style: { lineWidth: 6 ,
-                                    strokeColor: 'rgb(25, 25, 25,0.8)'
+                                    strokeColor: 'rgb(25, 25, 25,1)'
                                  }}
           ));
         }
@@ -894,6 +1073,10 @@ padding: 5px 10px;
 
 
        // --------2019-12-19-2:20-------------------------------------------------------
+
+       function stopPlayback(){
+        location.reload(true);
+       }
     </script>
 
 
