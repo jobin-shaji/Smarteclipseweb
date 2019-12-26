@@ -1109,13 +1109,10 @@ function clientAlerts(){
     if(res)
     {
         $("#alert_notification").empty();
-        length=res.alert.length;
-
-        for (var i = 0; i < length; i++) {
-         description=res.alert[i].alert_type.description;
-
-            var alert='<div class="dropdown-item" >'+description+'</div>';  
-            $("#alert_notification").append(alert);       
+        // display each alerts
+        for (var i = 0; i < res.alert.length; i++)
+        {
+            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
  }
 }
