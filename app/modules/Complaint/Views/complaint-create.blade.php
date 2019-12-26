@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Complaints</li>
-        <b>Add Complaint</b>
+        <b>Add Complaints</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -50,15 +50,9 @@
                       <option value="0">Hardware</option>
                       <option value="1">Software</option>
                     </select>
-                  </div>
+                  </div>        
                 
-                 <div class="form-group has-feedback form-group-1 mrg-rt-5">
-                  <label class="srequired">Complaint</label>
-                  <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
-                  </select>
-                </div>
-                
-                   <div class="form-group has-feedback form-group-1">
+                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Complaint Title</label>
                     <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
                    
@@ -68,6 +62,13 @@
                       </span>
                     @endif
                   </div> 
+
+                <div class="form-group has-feedback form-group-1 ">
+                  <label class="srequired">Complaint</label>
+                  <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
+                  </select>
+                </div>
+
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Description</label>
                     <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
