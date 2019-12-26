@@ -344,7 +344,8 @@ class AlertController extends Controller {
             'created_at'
         )
         ->with('alertType:id,code,description')
-        ->with('vehicle:id,name,register_number')
+        //->with('vehicle:id,name,register_number') //\
+        ->with('vehicle')
         ->with('gps:id,imei')
         ->with('client:id,name')
         ->whereIn('gps_id',$single_vehicle_gps)

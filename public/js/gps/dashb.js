@@ -68,7 +68,15 @@ function getVehicle(value)
       gps_id : value
      };
      backgroundPostData(url,data,'vehicle_details',{alert:true});
+  document.getElementById("msg").innerHTML = '<button type="submit" onclick="refreshPage()" class="srch btn-primary btn-block">'+'Clear'+'</button>';
+
+
 }
+
+function refreshPage(){
+    window.location.reload();
+}
+
 function vehicle_details(res){
   console.log(res);
   var network_status=res.network_status;
