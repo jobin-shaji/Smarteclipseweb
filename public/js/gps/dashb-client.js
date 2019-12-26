@@ -1,9 +1,7 @@
-
- var client_lat = $('#lat').val();
- var client_lng = $('#lng').val();
-// alert(client_lat);
-var latMap = parseFloat(client_lat);
-var lngMap = parseFloat(client_lng);
+var client_lat = $('#lat').val();
+var client_lng = $('#lng').val();
+var latMap = client_lat;
+var lngMap = client_lng;
 var haightAshbury = {
   lat: latMap,
   lng: lngMap
@@ -66,15 +64,13 @@ function modecount(res) {
   $('#offline').text(res.offline);
 }
 
-
 function vehicleTrack(res) {
   if(res.status!="failed"){
     var JSONObject = res.user_data;
     var marker, i;
-    // console.log(JSONObject);
     for (i = 0; i < JSONObject.length; i++) {
-    var lat = parseFloat(JSONObject[i].lat);
-    var lng = parseFloat(JSONObject[i].lon);
+    var lat = JSONObject[i].lat;
+    var lng = JSONObject[i].lon;
     if (map_flag == 0) {
     map.panTo(new google.maps.LatLng(lat, lng));
     map.setZoom(13);
@@ -108,14 +104,14 @@ function vehicleTrack(res) {
     }
 
     /*var title = '<div id="content" style="width:150px;">' +
-    '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:' 
+    '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:'
     + car_color + ';" aria-hidden="true"></i></span>' + vehicle_status +
-    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>' 
+    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>'
     + vehicle_name + '</i></span></div>' +
     '<div style="padding-top:5px; padding-left:16px;"><i class="fa fa-edit"></i><span style="margin-right:5px;">:</span>'
      + reg + ' </div>' +
-    '<a href=/vehicles/' 
-    + vehicle_id + 
+    '<a href=/vehicles/'
+    + vehicle_id +
     '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;padding-right:40px;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" title="Alerts" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>' +
     '</div>';*/
 
@@ -132,8 +128,8 @@ function vehicleTrack(res) {
 
     
     '<a href="/vehicle/'+ encrypt_gps_id +'/alert" ><button class="btn-pop type="submit" style="margin-right:2%;margin-left:3%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
-    '<a href="/vehicles/' 
-    + vehicle_id + 
+    '<a href="/vehicles/'
+    + vehicle_id +
     '/location"><button class="btn-pop type="submit" style="margin-right:1%;background-color:#f0b100;border-radius:5px"><img src="assets/images/live-track.svg" width=13 height=13>Track</button></a>'+
     '<a href="/vehicles/'+ vehicle_id +'/playback-page" target="blank">'+
     '<button class="btn-pop type="submit" style="background-color:#f0b100;border-radius:5px"><img src="assets/images/reply.svg" width=13 height=13>Replay</button></div></a>';
@@ -206,13 +202,19 @@ function setMapOnAll(map) {
 }
 
 function selectVehicleTrack(res) {
+  // deleteMarkers();
+  console.log(res);
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
   map.setZoom(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
+    //
+
   }
-  refesh_flag=1;
-  redarLocationSelectVehicle(res.lat,res.lon,0.06);
+ 
+     refesh_flag=1;
+     redarLocationSelectVehicle(res.lat,res.lon,0.06);
+ 
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -239,7 +241,7 @@ function getVehicleTrack(gps_id){
   });
 }
 
-function locationSearch() 
+function locationSearch()
 {
   var place_name = $('#search_place').val();
   radius = $('#search_radius').val();
@@ -249,6 +251,7 @@ function locationSearch()
       'address': place_name
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
+        removeCircleFromMap();
         track_flag = 1;
         $('#vehicle_card_cover').empty();
         var lat = results[0].geometry.location.lat();
@@ -276,10 +279,9 @@ function locationSearch()
 }
 
 function moving(vehicle_mode) {
-  removeCircleFromMap();
+
   track_flag = 1;
   $('#vehicle_card_cover').empty();
-
   var url = '/dashboard-track-vehicle-mode';
   var data = {
   vehicle_mode: vehicle_mode
@@ -291,7 +293,7 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
-
+  cityCircle.setMap(null);
  flag = 0;
  vehicleTrack(res);
 
@@ -352,7 +354,8 @@ function searchLocation(res) {
   setMapZoom(radius);
   alert('No vehicle found in this location');
  }
-
+  // map updated. display refresh button
+  document.getElementById('map_refresh_button').style.display="block";
 }
 
 
@@ -452,6 +455,8 @@ $('.cover_track_data').click(function(){
    $('.track_status').css('display','none');
 });
 
-function refreshPage(){
-    window.location.reload();
+function refreshPage()
+{
+  document.getElementById('refresh_button').innerHTML = "Please wait...";
+  window.location.reload(true);
 }
