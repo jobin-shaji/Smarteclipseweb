@@ -2,8 +2,8 @@
  var client_lat = $('#lat').val();
  var client_lng = $('#lng').val();
 // alert(client_lat);
-var latMap = parseFloat(client_lat);
-var lngMap = parseFloat(client_lng);
+var latMap = client_lat;
+var lngMap = client_lng;
 var haightAshbury = {
   lat: latMap,
   lng: lngMap
@@ -66,15 +66,13 @@ function modecount(res) {
   $('#offline').text(res.offline);
 }
 
-
 function vehicleTrack(res) {
   if(res.status!="failed"){
     var JSONObject = res.user_data;
     var marker, i;
-    // console.log(JSONObject);
     for (i = 0; i < JSONObject.length; i++) {
-    var lat = parseFloat(JSONObject[i].lat);
-    var lng = parseFloat(JSONObject[i].lon);
+    var lat = JSONObject[i].lat;
+    var lng = JSONObject[i].lon;
     if (map_flag == 0) {
     map.panTo(new google.maps.LatLng(lat, lng));
     map.setZoom(13);
@@ -249,7 +247,7 @@ function locationSearch()
       'address': place_name
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        // removeCircleFromMap();
+        removeCircleFromMap();
         track_flag = 1;
         $('#vehicle_card_cover').empty();
         var lat = results[0].geometry.location.lat();
@@ -277,10 +275,8 @@ function locationSearch()
 }
 
 function moving(vehicle_mode) {
-  removeCircleFromMap();
   track_flag = 1;
   $('#vehicle_card_cover').empty();
-
   var url = '/dashboard-track-vehicle-mode';
   var data = {
   vehicle_mode: vehicle_mode
@@ -292,7 +288,6 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
-
  flag = 0;
  vehicleTrack(res);
 
@@ -353,7 +348,8 @@ function searchLocation(res) {
   setMapZoom(radius);
   alert('No vehicle found in this location');
  }
-
+  // map updated. display refresh button
+  document.getElementById('map_refresh_button').style.display="block";
 }
 
 
@@ -453,6 +449,8 @@ $('.cover_track_data').click(function(){
    $('.track_status').css('display','none');
 });
 
-function refreshPage(){
-    window.location.reload();
+function refreshPage()
+{
+  document.getElementById('refresh_button').innerHTML = "Please wait...";
+  window.location.reload(true);
 }
