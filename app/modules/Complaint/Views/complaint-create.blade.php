@@ -6,7 +6,7 @@
      
 <section class="hilite-content">
   <!-- title row -->
-  <div class="page-wrapper_new">
+  <div class="page-wrapper_new mrg-top-50">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Complaints</li>
@@ -26,9 +26,9 @@
           <div class="col-sm-12">
             <form  method="POST" action="{{route('complaint.create.p')}}">
             {{csrf_field()}}
-              <div class="row">
+              <div class="row mrg-bt-10 inner-mrg">
                 <div class="col-md-6">
-                  <div class="form-group has-feedback">
+                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Vehicle</label>
                     <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
                       <option value="" selected disabled>Vehicle</option>
@@ -43,7 +43,7 @@
                     @endif
                   </div>
                  
-                  <div class="form-group has-feedback">
+                  <div class="form-group has-feedback form-group-1">
                     <label class="srequired">Complaint Category</label>
                     <select class="form-control" name="complaint_category" id="complaint_category" required>
                     <option value="">Select Complaint Category</option>
@@ -52,13 +52,13 @@
                     </select>
                   </div>
                 
-                 <div class="form-group has-feedback">
+                 <div class="form-group has-feedback form-group-1 mrg-rt-5">
                   <label class="srequired">Complaint</label>
                   <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
                   </select>
                 </div>
                 
-                   <div class="form-group has-feedback">
+                   <div class="form-group has-feedback form-group-1">
                     <label class="srequired">Complaint Title</label>
                     <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
                    
@@ -68,7 +68,7 @@
                       </span>
                     @endif
                   </div> 
-                  <div class="form-group has-feedback">
+                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Description</label>
                     <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
                     <!-- <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required> -->
@@ -97,6 +97,28 @@
 
   </div>
 </section>
+<style>
+  .form-group-1 {
+    display: block;
+margin-bottom: 1.2em;
+    width: 48.5%;
+}
+.mrg-bt-10{
+  margin-bottom: 25px;
+}
+.mrg-top-50{
+      margin-top: 50px;
+}.mrg-rt-5{
+
+  margin-right: 2.5%;
+}
+.inner-mrg{
+
+  width: 95%;
+    margin-left: 2%;
+}
+
+</style>
 
 @section('script')
     <script src="{{asset('js/gps/complaint-dependent-dropdown.js')}}"></script>
