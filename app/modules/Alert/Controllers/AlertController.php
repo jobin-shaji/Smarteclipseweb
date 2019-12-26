@@ -547,7 +547,8 @@ class AlertController extends Controller {
         $alert_id=[];
         foreach ($userAlerts as $userAlert) {
             $alert_id[]=$userAlert->alert_id;
-        }   
+        }  
+
         $alerts = Alert::select(
             'id',
             'alert_type_id',
@@ -570,7 +571,7 @@ class AlertController extends Controller {
         ->offset($offset)
         ->limit($limit)
         ->get();
-        // dd($alerts);
+        
         return response()->json([
             'alerts' => $alerts,
             'status' => 'gpsAlert'           
