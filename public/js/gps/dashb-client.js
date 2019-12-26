@@ -104,14 +104,14 @@ function vehicleTrack(res) {
     }
 
     /*var title = '<div id="content" style="width:150px;">' +
-    '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:' 
+    '<span style="margin-right:5px;"><i class="fa fa-circle" style="color:'
     + car_color + ';" aria-hidden="true"></i></span>' + vehicle_status +
-    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>' 
+    '<div style="color:#000;font-weight:600;margin-top:5px;" ><span style="padding:20px;"><i>'
     + vehicle_name + '</i></span></div>' +
     '<div style="padding-top:5px; padding-left:16px;"><i class="fa fa-edit"></i><span style="margin-right:5px;">:</span>'
      + reg + ' </div>' +
-    '<a href=/vehicles/' 
-    + vehicle_id + 
+    '<a href=/vehicles/'
+    + vehicle_id +
     '/location class="btn btn-xs btn btn-warning" title="Location" style="background-color:#fff;padding-right:40px;"><i class="fa fa-map-marker" style="color:#000;font-size: 18px;"></i></a>  <a href="/alert" class="btn btn-xs btn btn-warning" title="Alerts" style="background-color:#fff;"><i class="fa fa-warning" style="color:#000;font-size: 18px;"></i></a>' +
     '</div>';*/
 
@@ -128,8 +128,8 @@ function vehicleTrack(res) {
 
     
     '<a href="/vehicle/'+ encrypt_gps_id +'/alert" ><button class="btn-pop type="submit" style="margin-right:2%;margin-left:3%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
-    '<a href="/vehicles/' 
-    + vehicle_id + 
+    '<a href="/vehicles/'
+    + vehicle_id +
     '/location"><button class="btn-pop type="submit" style="margin-right:1%;background-color:#f0b100;border-radius:5px"><img src="assets/images/live-track.svg" width=13 height=13>Track</button></a>'+
     '<a href="/vehicles/'+ vehicle_id +'/playback-page" target="blank">'+
     '<button class="btn-pop type="submit" style="background-color:#f0b100;border-radius:5px"><img src="assets/images/reply.svg" width=13 height=13>Replay</button></div></a>';
@@ -208,13 +208,13 @@ function selectVehicleTrack(res) {
   map.setZoom(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
-    // 
+    //
 
   }
  
      refesh_flag=1;
      redarLocationSelectVehicle(res.lat,res.lon,0.06);
-  
+ 
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -241,7 +241,7 @@ function getVehicleTrack(gps_id){
   });
 }
 
-function locationSearch() 
+function locationSearch()
 {
   var place_name = $('#search_place').val();
   radius = $('#search_radius').val();

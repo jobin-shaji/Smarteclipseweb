@@ -20,85 +20,81 @@
         </div>
       @endif  
     </nav>
-    <form  method="POST" action="{{route('complaint.create.p')}}">
-      {{csrf_field()}}
-      <div class="row">
-        <div class="col-lg-6 col-md-12">
-          <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
-            <div class="row">
-              <div class="col-sm-12">                    
-                <div class="row">
-                  <div > 
-                    <div class="complaint__container">
-                      <div class="container__child complaint__form">
-                        <div class="form-group has-feedback">
-                        <label class="srequired">Vehicle</label>
-                        <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
-                          <option value="" selected disabled>Vehicle</option>
-                          @foreach($devices as $gps)
-                          <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle->register_number}}-({{$gps->gps->serial_no}})</option>
-                          @endforeach
-                        </select>
-                        @if ($errors->has('gps_id'))
-                        <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
-                        </span>
-                        @endif 
-                      </div>     
-
-                      <div class="form-group has-feedback">
-                        <label class="srequired">Complaint Category</label>
-                        <select class="form-control" name="complaint_category" id="complaint_category" required>
-                        <option value="">Select Complaint Category</option>
-                          <option value="0">Hardware</option>
-                          <option value="1">Software</option>
-                        </select>
-                      </div>
-              
-                      <div class="form-group has-feedback">
-                        <label class="srequired">Complaint</label>
-                        <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
-                        </select>
-                      </div>
-
-                      <div class="form-group has-feedback">
-                        <label class="srequired">Complaint Title</label>
-                        <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
-                        
-                        @if ($errors->has('title'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('title') }}</strong>
-                          </span>
-                        @endif
-                      </div>  
-
-                      <div class="form-group has-feedback">
-                        <label class="srequired">Description</label>
-                        <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
-                        <!-- <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required> -->
-                        @if ($errors->has('description'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('description') }}</strong>
-                          </span>
-                        @endif
-                      </div>             
-                        <div class="m-t-lg">
-                          <ul class="list-inline">
-                            <li>
-                              <input class="btn btn-primary address_btn btn btn--form" type="submit" value="Register" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+<div class="card-body">
+    <div class="table-responsive">
+      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+          <div class="col-sm-12">
+            <form  method="POST" action="{{route('complaint.create.p')}}">
+            {{csrf_field()}}
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Vehicle</label>
+                    <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
+                      <option value="" selected disabled>Vehicle</option>
+                      @foreach($devices as $gps)
+                      <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle->register_number}}-({{$gps->gps->serial_no}})</option>
+                      @endforeach
+                    </select>
+                    @if ($errors->has('gps_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                    </span>
+                    @endif 
                   </div>
+                  
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Complaint Category</label>
+                    <select class="form-control" name="complaint_category" id="complaint_category" required>
+                    <option value="">Select Complaint Category</option>
+                      <option value="0">Hardware</option>
+                      <option value="1">Software</option>
+                    </select>
+                  </div>
+                 
+                 <div class="form-group has-feedback">
+                  <label class="srequired">Complaint</label>
+                  <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
+                  </select>
                 </div>
+                 
+                   <div class="form-group has-feedback">
+                    <label class="srequired">Complaint Title</label>
+                    <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
+                    
+                    @if ($errors->has('title'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('title') }}</strong>
+                      </span>
+                    @endif
+                  </div>  
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Description</label>
+                    <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
+                    <!-- <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required> -->
+                    @if ($errors->has('description'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('description') }}</strong>
+                      </span>
+                    @endif
+                  </div> 
               </div>
-            </div>
+              <div class="row">
+                <!-- /.col -->
+                <div class="col-md-3 ">
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Register</button>
+                </div>
+                <!-- /.col -->
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </form>
+    </div>
+  </div>
+
+
+
   </div>
 </section>
 
