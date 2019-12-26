@@ -730,7 +730,7 @@ padding: 5px 10px;
           
           console.log(distance);
           for (var i = 0; i < distance; i++) {
-
+                console.log(i);
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
