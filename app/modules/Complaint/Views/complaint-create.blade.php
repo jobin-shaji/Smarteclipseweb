@@ -33,7 +33,7 @@
                     <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
                       <option value="" selected disabled>Vehicle</option>
                       @foreach($devices as $gps)
-                      <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle_register_number}}-({{$gps->gps->serial_no}})</option>
+                      <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle->register_number}}-({{$gps->gps->serial_no}})</option>
                       @endforeach
                     </select>
                     @if ($errors->has('gps_id'))
