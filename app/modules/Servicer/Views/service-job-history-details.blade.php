@@ -29,9 +29,9 @@
               $encript=Crypt::encrypt($servicer_job->id);
               
           ?> 
-          <a href="{{route('job.complete.certificate.download',$encript)}}">
+        <!--   <a href="{{route('job.complete.certificate.download',$encript)}}">
             <button class="btn btn-xs"><i class='fa fa-download'></i>Download Certificate</button>
-          </a>
+          </a> -->
 
                     <form  method="POST" action="">
                     {{csrf_field()}}
