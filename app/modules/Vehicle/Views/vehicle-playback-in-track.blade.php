@@ -418,7 +418,7 @@ padding: 5px 10px;
         var blacklineStyle;
 
         var speed_val            = 1;
-        var load_speed           = 1000;
+        var load_speed           = 500;
         var loader               = false;
     
          
@@ -728,8 +728,8 @@ padding: 5px 10px;
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
           
-
-          for (var i = 0; i < distance / 100; i++) {
+          console.log(distance);
+          for (var i = 0; i < distance; i++) {
 
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
