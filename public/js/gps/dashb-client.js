@@ -32,7 +32,6 @@ function initMap() {
   getVehicleSequence();
 
   map.addListener('zoom_changed', function() {
-    console.log('Current zoom level '+map.getZoom());
     localStorage.setItem('googleMapZoomLevel', map.getZoom());
   });
 }
@@ -79,14 +78,12 @@ function vehicleTrack(res) {
     if (map_flag == 0) {
     map.panTo(new google.maps.LatLng(lat, lng));
     // check if zoom level is already set
+    var zoom_level = 13;
     if( localStorage.getItem('googleMapZoomLevel') != null )
     {
-      map.setZoom(localStorage.getItem('googleMapZoomLevel'));
+      zoom_level = localStorage.getItem('googleMapZoomLevel') * 1;
     }
-    else
-    {
-      map.setZoom(13);
-    }
+    map.setZoom(zoom_level);
     map.setOptions({
     minZoom: 5,
     maxZoom: 17
