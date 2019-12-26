@@ -33,7 +33,7 @@ All Alerts
               <div id="alert" class="alert-bg">
             <!--Loading ANIMATION-->
               <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>        
-                <table class="container">
+                <table class="container" style="width: 120%">
                  
                   <tbody>
                     <tr class="bg-color">
