@@ -795,11 +795,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 full-height">
-      <div class="refresh_map" onclick="refreshPage()">
-        <button type="submit" class="btn btn-primary btn-block">
+
+      <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
+        <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
           <i class="fa fa-refresh"></i> Refresh
         </button>
       </div>
+
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
     <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
@@ -1071,7 +1073,10 @@
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
-
+  // refresh button on the map should be hidden when the dashboard loads
+  window.onload = function(){
+    document.getElementById('map_refresh_button').style.display="none";
+  }
 </script>
 <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
 

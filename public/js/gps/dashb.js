@@ -62,15 +62,15 @@ function dbcount(res){
 //updated all aaaaa
 function getVehicle(value)
 {  
+  var url = '/vehicle-detail';
+  var data = { 
+    gps_id : value
+  };
+  backgroundPostData(url,data,'vehicle_details',{alert:true});
 
-   var url = '/vehicle-detail';
-     var data = { 
-      gps_id : value
-     };
-     backgroundPostData(url,data,'vehicle_details',{alert:true});
-  document.getElementById("msg").innerHTML = '<button type="submit" onclick="refreshPage()" class="srch btn-primary btn-block">'+'Clear'+'</button>';
-
-
+  // map updated. display refresh button
+  document.getElementById('map_refresh_button').style.display="block";
+  //document.getElementById("msg").innerHTML = '<button type="submit" onclick="refreshPage()" class="srch btn-primary btn-block">'+'Clear'+'</button>';
 }
 
 function refreshPage(){
