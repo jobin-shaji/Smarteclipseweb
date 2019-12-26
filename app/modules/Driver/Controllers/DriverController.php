@@ -259,6 +259,7 @@ class DriverController extends Controller {
             ->with('driver:id,name')
             ->with('vehicle:id,name,register_number')
             ->with('gps:id,imei,serial_no')
+            ->orderBy('id','DESC')
             ->whereDate('created_at', '>=', date("Y-m-d", strtotime($request->from_date)))
             ->whereDate('created_at', '<=', date("Y-m-d", strtotime($request->to_date)));
 

@@ -66,7 +66,6 @@ function modecount(res) {
   $('#offline').text(res.offline);
 }
 
-
 function vehicleTrack(res) {
   if(res.status!="failed"){
     var JSONObject = res.user_data;
@@ -205,13 +204,19 @@ function setMapOnAll(map) {
 }
 
 function selectVehicleTrack(res) {
+  // deleteMarkers();
+  console.log(res);
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
   map.setZoom(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
+    // 
+
   }
-  refesh_flag=1;
-  redarLocationSelectVehicle(res.lat,res.lon,0.06);
+ 
+     refesh_flag=1;
+     redarLocationSelectVehicle(res.lat,res.lon,0.06);
+  
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -276,6 +281,7 @@ function locationSearch()
 }
 
 function moving(vehicle_mode) {
+
   track_flag = 1;
   $('#vehicle_card_cover').empty();
   var url = '/dashboard-track-vehicle-mode';
@@ -289,6 +295,7 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
+  cityCircle.setMap(null);
  flag = 0;
  vehicleTrack(res);
 
@@ -349,7 +356,8 @@ function searchLocation(res) {
   setMapZoom(radius);
   alert('No vehicle found in this location');
  }
-
+  // map updated. display refresh button
+  document.getElementById('map_refresh_button').style.display="block";
 }
 
 
@@ -449,6 +457,8 @@ $('.cover_track_data').click(function(){
    $('.track_status').css('display','none');
 });
 
-function refreshPage(){
-    window.location.reload();
+function refreshPage()
+{
+  document.getElementById('refresh_button').innerHTML = "Please wait...";
+  window.location.reload(true);
 }
