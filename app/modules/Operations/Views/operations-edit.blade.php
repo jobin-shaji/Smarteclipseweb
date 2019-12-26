@@ -66,6 +66,60 @@
                   </span>
                 @endif
                 </div>
+
+
+                 <?php
+                      $url=url()->current();
+                      $rayfleet_key="rayfleet";
+                      $eclipse_key="eclipse";
+                      if (strpos($url, $rayfleet_key) == true) {  ?>
+                          <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                             <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="phone_number" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" /> 
+                          </div>
+                          @if ($errors->has('phone_number'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php } 
+                      else if (strpos($url, $eclipse_key) == true) { ?>
+                         <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                            <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="phone_number" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" /> 
+                          </div>
+                          @if ($errors->has('phone_number'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php }
+                      else { ?>
+                          <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                            <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="phone_number" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" /> 
+                          </div>
+                          @if ($errors->has('phone_number'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php } ?>
+                        </div>
+                        @if ($errors->has('phone_number'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('phone_number') }}</strong>
+                          </span>
+                        @endif
+                      </div> 
+
+                
                 <div class="form-group has-feedback">
                     <label>Email</label>
                     <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" readonly>

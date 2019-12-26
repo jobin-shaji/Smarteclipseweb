@@ -46,19 +46,59 @@
                     @endif
                   </div>
                  
-                  <div class="form-group has-feedback">
-                    <label class="srequired">Mobile No.</label>
-                    <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" min="1" required autocomplete="off">
+                  <?php
+                      $url=url()->current();
+                      $rayfleet_key="rayfleet";
+                      $eclipse_key="eclipse";
+                      if (strpos($url, $rayfleet_key) == true) {  ?>
+                          <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                             <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" /> 
+                          </div>
+                          @if ($errors->has('mobile'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php } 
+                      else if (strpos($url, $eclipse_key) == true) { ?>
+                         <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                            <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" /> 
+                          </div>
+                          @if ($errors->has('mobile'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php }
+                      else { ?>
+                          <div class="form-group row">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
+                          <div class="form-group has-feedback">
+                            <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" /> 
+                          </div>
+                          @if ($errors->has('mobile'))
+                            <span class="help-block">
+                                <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                      <?php } ?>
+                        </div>
+                        @if ($errors->has('mobile'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
+                          </span>
+                        @endif
+                      </div> 
 
-                    @if ($errors->has('mobile'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('mobile') }}</strong>
-                      </span>
-                    @endif
-                  </div>
-                 
                   <div class="form-group has-feedback">
-                    <label class="srequired">Email.</label>
+                    <label class="srequired">Email</label>
                     <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required autocomplete="off">
                     @if ($errors->has('email'))
                       <span class="help-block">

@@ -263,7 +263,7 @@ class DriverController extends Controller {
             ->whereDate('created_at', '<=', date("Y-m-d", strtotime($request->to_date)));
 
             // if driver id is not provided, choose all drivers under that client
-            $performance_score = (( $driver_id != null ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers))->get();
+            $performance_score = (( $driver_id != 0 ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers))->get();
 
             // new code ends
 
@@ -297,7 +297,7 @@ class DriverController extends Controller {
                 return $description;                    
             })  
             ->addColumn('date', function ($performance_score) {
-                $date=date("H:i:s d-m-y", strtotime($performance_score->created_at));
+                $date=date("d-m-y H:i:s ", strtotime($performance_score->created_at));
                 return $date;                    
             })            
         ->rawColumns(['link', 'action'])

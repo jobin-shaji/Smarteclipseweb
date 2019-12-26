@@ -69,7 +69,7 @@ All Alerts
  <style type="text/css">
 
   .allert{
-    background-color: #03ea3569;
+    background-color: #bfc5c169;
   }
 
 @charset "UTF-8";
@@ -148,9 +148,9 @@ background: rgba(154, 154, 154, 0.05);
 
 .bg-color .date
 {
-  color: #3e5569;
+  color: #6e6f6f;
       line-height: 25px;
-          font-size: 14px;
+          font-size: 11px;
 }
 
 .container .bg-color td:first-child {

@@ -33,7 +33,8 @@ Performance Score History
 						                           		<div class="form-group">
 						                            	<label>Driver</label>  
 						                            	<select class="form-control" data-live-search="true" title="Select Driver" id="driver" name="driver">
-															<option value="">select</option>
+															<option selected disabled>Select Driver</option>
+															<option value = "0">All</option>
 															@foreach ($drivers as $driver)
 															<option value="{{$driver->id}}">{{$driver->name}}</option>
 															@endforeach  
