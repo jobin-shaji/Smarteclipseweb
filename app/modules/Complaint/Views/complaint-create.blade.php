@@ -2,8 +2,8 @@
 @section('title')
   Create Complaints
 @endsection
-@section('content')   
-      
+@section('content')  
+     
 <section class="hilite-content">
   <!-- title row -->
   <div class="page-wrapper_new mrg-top-50">
@@ -15,10 +15,10 @@
       @if(Session::has('message'))
         <div class="pad margin no-print">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
+          {{ Session::get('message') }} 
           </div>
         </div>
-      @endif  
+      @endif 
     </nav>
 <div class="card-body">
     <div class="table-responsive">
@@ -33,16 +33,16 @@
                     <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
                       <option value="" selected disabled>Vehicle</option>
                       @foreach($devices as $gps)
-                      <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle_register_number}}-({{$gps->gps->serial_no}})</option>
+                      <option value="{{$gps->gps->id}}">{{$gps->gps->vehicle->register_number}}-({{$gps->gps->serial_no}})</option>
                       @endforeach
                     </select>
                     @if ($errors->has('gps_id'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
                     </span>
-                    @endif 
+                    @endif
                   </div>
-                  
+                 
                   <div class="form-group has-feedback form-group-1">
                     <label class="srequired">Complaint Category</label>
                     <select class="form-control" name="complaint_category" id="complaint_category" required>
@@ -51,23 +51,23 @@
                       <option value="1">Software</option>
                     </select>
                   </div>
-                 
+                
                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                   <label class="srequired">Complaint</label>
                   <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
                   </select>
                 </div>
-                 
+                
                    <div class="form-group has-feedback form-group-1">
                     <label class="srequired">Complaint Title</label>
                     <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
-                    
+                   
                     @if ($errors->has('title'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('title') }}</strong>
                       </span>
                     @endif
-                  </div>  
+                  </div> 
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Description</label>
                     <textarea rows="5" cols="10" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
@@ -77,7 +77,7 @@
                         <strong class="error-text">{{ $errors->first('description') }}</strong>
                       </span>
                     @endif
-                  </div> 
+                  </div>
               </div>
               <div class="row">
                 <!-- /.col -->
@@ -100,7 +100,7 @@
 <style>
   .form-group-1 {
     display: block;
- margin-bottom: 1.2em;
+margin-bottom: 1.2em;
     width: 48.5%;
 }
 .mrg-bt-10{
