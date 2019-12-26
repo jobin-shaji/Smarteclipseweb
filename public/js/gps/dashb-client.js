@@ -248,7 +248,6 @@ function locationSearch()
       'address': place_name
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        removeCircleFromMap();
         track_flag = 1;
         $('#vehicle_card_cover').empty();
         var lat = results[0].geometry.location.lat();
