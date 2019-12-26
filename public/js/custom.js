@@ -390,9 +390,16 @@ function backgroundPostData(url, data, callBack, options) {
                     getConfigData(res);
 
                 }
-                 else if(callBack=='jobsComplete')
+                else if(callBack=='jobsComplete')
                 {
                     jobsComplete(res);
+
+                }
+
+                
+                else if(callBack=='vehicleModel')
+                {
+                    vehicleModel(res);
 
                 }
 
@@ -1098,20 +1105,16 @@ function clientAlerts(){
     };   
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
-
-// Display alert notifications
-function alertNotification(res)
-{
+ function alertNotification(res){
     if(res)
     {
-        // clear alert area
         $("#alert_notification").empty();
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
         {
-            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>'+res.alert[i].vehicle.register_number+'</div>');       
+            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
-    }
+ }
 }
 
 function downloadLabel(id){
@@ -1176,7 +1179,6 @@ function clientGps(res)
 
 
 function getvehicleModel(res){
-    console.log(res);
     if(res)
     {    
         var url = 'get-vehicle-models';
