@@ -1116,7 +1116,7 @@ function alertNotification(res)
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
         {
-            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>'+res.alert[i].vehicle.register_number+'</div>');       
+            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
     }
 }
