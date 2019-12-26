@@ -390,9 +390,16 @@ function backgroundPostData(url, data, callBack, options) {
                     getConfigData(res);
 
                 }
-                 else if(callBack=='jobsComplete')
+                else if(callBack=='jobsComplete')
                 {
                     jobsComplete(res);
+
+                }
+
+                
+                else if(callBack=='vehicleModel')
+                {
+                    vehicleModel(res);
 
                 }
 
@@ -1175,7 +1182,6 @@ function clientGps(res)
 
 
 function getvehicleModel(res){
-    console.log(res);
     if(res)
     {    
         var url = 'get-vehicle-models';
