@@ -194,16 +194,16 @@
 
               <div class="col-lg-3">
                 <div class="form-group has-feedback">
-                  <label class="srequired">Web ideal icon</label>
+                  <label class="srequired">Web idle icon</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_ideal_icon}}" width="50" height="50">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_idle_icon}}" width="50" height="50">
                   </div>
                   <div class="form-group has-feedback">
-                    <input type="file" class="form-control {{ $errors->has('web_ideal_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_ideal_icon" value="{{ old('web_ideal_icon') }}" > 
+                    <input type="file" class="form-control {{ $errors->has('web_idle_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_idle_icon" value="{{ old('web_idle_icon') }}" > 
                   </div>
-                  @if ($errors->has('web_ideal_icon'))
+                  @if ($errors->has('web_idle_icon'))
                     <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('web_ideal_icon') }}</strong>
+                      <strong class="error-text">{{ $errors->first('web_idle_icon') }}</strong>
                     </span>
                   @endif
                 </div>

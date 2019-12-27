@@ -873,6 +873,44 @@ class VehicleController extends Controller
         $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
         // sleep vehicle image
         }
+
+
+        ///Web online icon
+        $web_online_vehicle=$request->web_online_icon;
+        if($web_online_vehicle){              
+            $getFileExt   = $web_online_vehicle->getClientOriginalExtension();
+            $web_online_uploadedFile =   time().'_web_online_vehicle.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'documents';
+            $web_online_vehicle->move($destinationPath,$web_online_uploadedFile);
+        }
+         // offline vehicle image
+        $web_offline_vehicle=$request->web_offline_icon;
+        if($web_offline_vehicle){
+            $getFileExt   = $web_offline_vehicle->getClientOriginalExtension();
+            $web_offline_uploadedFile =   time().'_web_offline_vehicle.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'documents';
+            $web_offline_vehicle->move($destinationPath,$web_offline_uploadedFile);
+        }
+         // ideal vehicle image
+        $web_idle_vehicle=$request->web_idle_icon;
+        if($web_idle_vehicle){
+            $getFileExt   = $web_idle_vehicle->getClientOriginalExtension();
+            $web_idle_uploadedFile =   time().'_web_idle_icon.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'documents';
+            $web_idle_vehicle->move($destinationPath,$web_idle_uploadedFile);
+        }
+        // sleep vehicle image
+        $web_sleep_vehicle=$request->web_sleep_icon;
+        if($web_sleep_vehicle){
+            $getFileExt   = $web_sleep_vehicle->getClientOriginalExtension();
+            $web_sleep_uploadedFile =   time().'_web_sleep_icon.'.$getFileExt;
+            $destinationPath = 'documents';
+            $web_sleep_vehicle->move($destinationPath,$web_sleep_uploadedFile);
+            // sleep vehicle image
+        }
         // sleep vehicle image
         $name = $request->name; 
         $name = str_replace(' ', '_', $name);//replace spaces with underscore 
@@ -887,6 +925,11 @@ class VehicleController extends Controller
             'offline_icon'=>$offline_uploadedFile,
             'ideal_icon'=>$ideal_uploadedFile,
             'sleep_icon'=>$sleep_uploadedFile,
+
+            'web_online_icon'=>$web_online_uploadedFile,
+            'web_offline_icon'=>$web_offline_uploadedFile,
+            'web_idle_icon'=>$web_idle_uploadedFile,
+            'web_sleep_icon'=>$web_sleep_uploadedFile,
             'status' =>1,
            ]);
         $this->updateVehicleTypeApiResponse();
@@ -997,14 +1040,14 @@ class VehicleController extends Controller
         }
         // online vehicle image
          // ideal vehicle image
-        $web_ideal_vehicle=$request->web_ideal_icon;
-        if($web_ideal_vehicle){
-        $getFileExt   = $web_ideal_vehicle->getClientOriginalExtension();
-        $web_ideal_uploadedFile =   time().'_web_ideal_icon.'.$getFileExt;
+        $web_idle_vehicle=$request->web_idle_icon;
+        if($web_idle_vehicle){
+        $getFileExt   = $web_idle_vehicle->getClientOriginalExtension();
+        $web_idle_uploadedFile =   time().'_web_idle_icon.'.$getFileExt;
         //Move Uploaded File
         $destinationPath = 'documents';
-        $web_ideal_vehicle->move($destinationPath,$web_ideal_uploadedFile);
-        $vehicle_type->web_ideal_icon = $web_ideal_uploadedFile;
+        $web_idle_vehicle->move($destinationPath,$web_idle_uploadedFile);
+        $vehicle_type->web_idle_icon = $web_idle_uploadedFile;
         }
         // ideal vehicle image
         // sleep vehicle image
@@ -1018,10 +1061,8 @@ class VehicleController extends Controller
         // sleep vehicle image
         $vehicle_type->web_sleep_icon =$web_sleep_uploadedFile;
         }
-
         $rules = $this->vehicleTypeUpdateRules();
         $this->validate($request, $rules);
-
         $name = $request->name; 
         $name = str_replace(' ', '_', $name);//replace spaces with underscore 
         $name = strtolower($name); //convert string to lowercase
