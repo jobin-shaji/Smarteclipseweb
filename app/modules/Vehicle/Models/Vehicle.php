@@ -17,7 +17,7 @@ class Vehicle extends Model
 
     // vehicle type of vehicle
     public function vehicleType(){
-    	return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
+    return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
     }
 
 
@@ -39,8 +39,10 @@ class Vehicle extends Model
     public function gps(){
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
-     public function vehicleModels(){
-        return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id');
-    }
+     
+     public function vehicleModels()
+     {
+      return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id');
+     }
 
 }
