@@ -1019,27 +1019,6 @@ class VehicleController extends Controller
         $vehicle_type->web_sleep_icon =$web_sleep_uploadedFile;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $rules = $this->vehicleTypeUpdateRules();
         $this->validate($request, $rules);
 
