@@ -1064,9 +1064,7 @@ public function serviceJobDetails(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
-
         $client_id=$servicer_job->client_id;
-
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
@@ -1078,7 +1076,6 @@ public function serviceJobDetails(Request $request)
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
-
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -1089,6 +1086,7 @@ public function serviceJobDetails(Request $request)
     
     public function serviceJobHistoryDetails(Request $request)
     {
+
         $decrypted = Crypt::decrypt($request->id); 
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)
         ->with('vehicle:name,register_number,gps_id')->first();
@@ -1339,8 +1337,16 @@ public function serviceJobDetails(Request $request)
          }) 
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
+            if($servicer_job->job_type==1)
+            {
                 return "
                 <a href=".$b_url."/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+            }
+            else
+            {
+                return "
+                <a href=".$b_url."/servicer-job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
+            }
           
         })
         ->rawColumns(['link', 'action'])
