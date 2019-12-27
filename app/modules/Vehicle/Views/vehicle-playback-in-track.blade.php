@@ -418,7 +418,7 @@ padding: 5px 10px;
         var blacklineStyle;
 
         var speed_val            = 1;
-        var load_speed           = 500;
+        var load_speed           = 1;
         var loader               = false;
     
          
@@ -547,7 +547,6 @@ padding: 5px 10px;
              
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
-                alertPlotOnMap();
              }, load_speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
@@ -636,12 +635,12 @@ padding: 5px 10px;
 
 
                    var start_mode =  data[i].vehicleStatus;
-                   console.log(start_mode);
+                   
 
                  if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
 
                       console.log('same mode :- '+start_mode);
-                      debugger;
+                      // debugger;
                      
                    }else{
 
@@ -728,9 +727,7 @@ padding: 5px 10px;
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
           
-          console.log(distance);
-          for (var i = 0; i < distance; i++) {
-                console.log(i);
+          for (var i = 0; i < distance; i++) {   
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
@@ -915,6 +912,9 @@ padding: 5px 10px;
                 icon: domIcon
             });
             map.addObject(bearsMarkeronStartPoint);
+
+            alertPlotOnMap(lat,lng);
+            
             blPlaceCaronMap = true;
     }
         // --------2019-12-19-2:20--------------------------------------------------------
@@ -1030,15 +1030,22 @@ padding: 5px 10px;
 
 
 
-       function alertPlotOnMap(){
-          if(alertsQueue.length > 0){
-            for (var i=0; i <= alertsQueue.length; i++) {
-               if(alertsQueue[i] != undefined){
-                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
-              }
-            }
-             
-          }
+
+         function alertPlotOnMap(lat,lng){   
+                console.log('lat :'+lat+' lng: '+lng);
+                alertsQueue.find(function(x,i){
+                 var start = [lat,lng];
+                 var end   = [x.lat, x.lng];
+                 var total_distance = gis.calculateDistance(start, end);
+                 console.log(total_distance);
+                 if(total_distance < 1){
+                     if(alertsQueue[i] != undefined){
+                        addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
+                        }
+                        alertsQueue.splice(0,1)[i];
+                    
+                 }
+                },lat,lng);
         }
 
 
@@ -1077,6 +1084,10 @@ padding: 5px 10px;
        function stopPlayback(){
         location.reload(true);
        }
+
+    
+
+
     </script>
 
 

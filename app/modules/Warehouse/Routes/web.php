@@ -68,6 +68,17 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'
 	Route::get('/gps-transfer/{id}/label','WarehouseController@gpsTransferLabel')->name('gps-transfer.label');
 	// Route::post('gps-transfer-label/export','WarehouseController@exportGpsTransferLabel')->name('gps-transfer-label.export');
 	Route::get('/gps-transfer-label/{id}/export','WarehouseController@exportGpsTransferLabel')->name('gps-transfer-label.export');
+	//boxlabel view in root for manufacturer to distributor
+	Route::get('/gps-transfer-root-manufacturer-distributor/{id}/label','WarehouseController@gpsTransferLabelRootManufacturerToDistributor')->name('gps-transfer-root-manufacturer-distributor.label');
+
+	//boxlabel view in root for distributor to dealer
+	Route::get('/gps-transfer-root-distributor-dealer/{id}/label','WarehouseController@gpsTransferLabelRootDistributorToDealer')->name('gps-transfer-root-distributor-dealer.label');
+	Route::get('/gps-transfer-label-root-distributor-dealer/{id}/export','WarehouseController@exportGpsTransferLabelRootDistributorToDealer')->name('gps-transfer-label-root-distributor-dealer.export');
+
+	//boxlabel view in root for dealer to client
+	Route::get('/gps-transfer-root-dealer-client/{id}/label','WarehouseController@gpsTransferLabelRootDealerToClient')->name('gps-transfer-root-dealer-client.label');
+	Route::get('/gps-transfer-label-root-dealer-client/{id}/export','WarehouseController@exportGpsTransferLabelRootDealerToClient')->name('gps-transfer-label-root-dealer-client.export');
+
 	Route::post('/gps-scan','WarehouseController@getScannedGps')->name('gps-scan');
 
 	//gps new arrivals in dealer
