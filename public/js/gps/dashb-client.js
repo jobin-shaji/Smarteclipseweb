@@ -314,7 +314,11 @@ function selectVehicleModeTrack(res) {
  // remove green circle if already rendered
  if( typeof cityCircle != 'undefined' )
  {
+  // remove circle only for selected vehicle
+  if( cityCircle.tag == 'highligt_selected_vehicle')
+  {
     cityCircle.setMap(null);
+  }
  }
  flag = 0;
  vehicleTrack(res);
@@ -392,6 +396,7 @@ function redarLocation(lat, lng, radius) {
  var latlng = new google.maps.LatLng(lat, lng);
  var sunCircle = {
   strokeColor: "#b84930",
+  tag:'highligt_selected_location',
   strokeOpacity: 0.8,
   strokeWeight: 2,
   fillColor: "#b84930",
@@ -430,6 +435,7 @@ function redarLocationSelectVehicle(lat, lng, radius) {
  var latlng = new google.maps.LatLng(lat, lng);
  var sunCircle = {
   strokeColor: "#408753",
+  tag:'highligt_selected_vehicle',
   strokeOpacity: 0.8,
   strokeWeight: 2,
   fillColor: "#408753",
