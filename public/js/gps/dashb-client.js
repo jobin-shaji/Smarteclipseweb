@@ -301,7 +301,11 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
-  // cityCircle.setMap(null);
+ // remove green circle if already rendered
+ if( typeof cityCircle != 'undefined' )
+ {
+    cityCircle.setMap(null);
+ }
  flag = 0;
  vehicleTrack(res);
 
