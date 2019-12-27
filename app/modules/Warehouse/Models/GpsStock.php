@@ -26,17 +26,17 @@ class GpsStock extends Model
 
     public function dealer()
     {
-        return $this->hasone('App\Modules\Dealer\Models\Dealer','id','dealer_id');
+        return $this->hasone('App\Modules\Dealer\Models\Dealer','id','dealer_id')->withTrashed();
     } 
 
     public function subdealer()
     {
-        return $this->hasone('App\Modules\SubDealer\Models\SubDealer','id','subdealer_id');
+        return $this->hasone('App\Modules\SubDealer\Models\SubDealer','id','subdealer_id')->withTrashed();
     } 
 
     public function client()
     {
-        return $this->belongsTo('App\Modules\Client\Models\Client','client_id','id');
+        return $this->belongsTo('App\Modules\Client\Models\Client','client_id','id')->withTrashed();
     }
     public function user()
     {
