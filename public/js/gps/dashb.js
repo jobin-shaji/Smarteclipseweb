@@ -60,16 +60,18 @@ function dbcount(res){
 }
 
 //updated all aaaaa
-function getVehicle(value)
+function getVehicle(value, displayRefreshButton)
 {  
   var url = '/vehicle-detail';
   var data = { 
     gps_id : value
   };
   backgroundPostData(url,data,'vehicle_details',{alert:true});
-
-  // map updated. display refresh button
-  document.getElementById('map_refresh_button').style.display="block";
+  if(typeof displayRefreshButton != 'undefined')
+  {
+    // map updated. display refresh button
+    document.getElementById('map_refresh_button').style.display="block";
+  }
   //document.getElementById("msg").innerHTML = '<button type="submit" onclick="refreshPage()" class="srch btn-primary btn-block">'+'Clear'+'</button>';
 }
 

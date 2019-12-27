@@ -531,8 +531,8 @@ class AlertController extends Controller {
         ->get();      
         $single_vehicle_gps = [];
         foreach($VehicleGpss as $VehicleGps){
-            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
-             $single_vehicle_gps[] = $VehicleGps->gps_id;
+            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->where('status', 0)->update(['status'=> 1]);
+            $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
         $userAlerts = UserAlerts::select(
             'id',
@@ -546,8 +546,9 @@ class AlertController extends Controller {
         ->get();
         $alert_id=[];
         foreach ($userAlerts as $userAlert) {
-              $alert_id[]=$userAlert->alert_id;
-        }   
+            $alert_id[]=$userAlert->alert_id;
+        }  
+
         $alerts = Alert::select(
             'id',
             'alert_type_id',
@@ -570,7 +571,7 @@ class AlertController extends Controller {
         ->offset($offset)
         ->limit($limit)
         ->get();
-        // dd($alerts);
+        
         return response()->json([
             'alerts' => $alerts,
             'status' => 'gpsAlert'           
