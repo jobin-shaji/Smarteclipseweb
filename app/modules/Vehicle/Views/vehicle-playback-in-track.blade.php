@@ -577,7 +577,7 @@
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
           
-          for (var i = 0; i < distance; i++) {   
+          for (var i = 0; i < distance/2; i++) {   
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
@@ -648,7 +648,7 @@
                 // remove the already plotted locations
                 popFromLocationQueue();
                 // want to load new set of data ?
-              
+
 
                 if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
                 {

@@ -27,7 +27,7 @@ class Complaint extends Model
 
 	// client
   public function client(){
-      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
+      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id')->withTrashed();
   }
 
   // user
@@ -37,13 +37,13 @@ class Complaint extends Model
 
   // client
   public function servicer(){
-      return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id');
+      return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id')->withTrashed();
   }
    public function assignedBy(){
       return $this->hasOne('App\Modules\User\Models\User','id','assigned_by');
   }
    public function vehicle(){
-      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id');
+      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
   }
 
 }
