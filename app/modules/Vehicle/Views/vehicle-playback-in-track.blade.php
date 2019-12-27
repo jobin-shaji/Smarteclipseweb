@@ -635,7 +635,7 @@ padding: 5px 10px;
 
 
                    var start_mode =  data[i].vehicleStatus;
-                   console.log(start_mode);
+                   
 
                  if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
 
@@ -727,9 +727,7 @@ padding: 5px 10px;
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
           
-          console.log(distance);
-          for (var i = 0; i < distance; i++) {
-                console.log(i);     
+          for (var i = 0; i < distance; i++) {   
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
