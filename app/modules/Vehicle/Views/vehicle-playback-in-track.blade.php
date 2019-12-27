@@ -477,6 +477,16 @@
 
                    var start_mode =  data[i].vehicleStatus;
                    
+                  if(first_set_data==true){
+                      firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
+                      previous_data={   
+                                        "lat"   : data[i].latitude, 
+                                        "lng"   : data[i].longitude,
+                                        "angle" : data[i].angle,
+                                        "mode"  : data[i].vehicleStatus
+                                    };
+                        first_set_data = false;
+                  }
 
                  if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
 
