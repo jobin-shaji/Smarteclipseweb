@@ -60,17 +60,19 @@ function dbcount(res){
 }
 
 //updated all aaaaa
-function getVehicle(value)
+function getVehicle(value, displayRefreshButton)
 {  
-
-   var url = '/vehicle-detail';
-     var data = { 
-      gps_id : value
-     };
-     backgroundPostData(url,data,'vehicle_details',{alert:true});
-  document.getElementById("msg").innerHTML = '<button type="submit" onclick="refreshPage()" class="srch btn-primary btn-block">'+'Clear'+'</button>';
-
-
+  var url = '/vehicle-detail';
+  var data = { 
+    gps_id : value
+  };
+  backgroundPostData(url,data,'vehicle_details',{alert:true});
+  if(typeof displayRefreshButton != 'undefined')
+  {
+    // map updated. display refresh button
+    document.getElementById('map_refresh_button').style.display="block";
+  }
+  //document.getElementById("msg").innerHTML = '<button type="submit" onclick="refreshPage()" class="srch btn-primary btn-block">'+'Clear'+'</button>';
 }
 
 function refreshPage(){
@@ -78,7 +80,7 @@ function refreshPage(){
 }
 
 function vehicle_details(res){
-  console.log(res);
+  //console.log(res);
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
   if(network_status=="Connection Lost"){

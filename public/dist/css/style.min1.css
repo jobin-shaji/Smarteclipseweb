@@ -2224,7 +2224,7 @@ section.content-header.root_content_header {
     color: #4F5467;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid #e9ecef;
+    border: 1px solid #8b8f92;
     border-radius: 2px;
     -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
     transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -17821,8 +17821,8 @@ a,
     position: fixed;
     z-index: 9999;
     text-align: center;
-    margin-left: 50%;
-    margin-top: 21px;
+    margin-left: 650px;
+    margin-top: 450px;
     size: 50px;
 }
 

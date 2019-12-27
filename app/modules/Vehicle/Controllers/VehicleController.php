@@ -1097,8 +1097,22 @@ class VehicleController extends Controller
         $latitude=$snapRoute['lat'];
         $longitude=$snapRoute['lng'];
 
+        $url=url()->current();
+        $rayfleet_key="rayfleet";
+        $eclipse_key="eclipse";
+        if (strpos($url, $rayfleet_key) == true) {
+                return view('Vehicle::vehicle-tracker-rayfleet',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+        }
+        else if (strpos($url, $eclipse_key) == true) {
+            return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+        }
+        else
+        {
+            return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+        }
 
-        return view('Vehicle::vehicle-tracker',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+
+        
     }
     public function locationTrack(Request $request)
     {

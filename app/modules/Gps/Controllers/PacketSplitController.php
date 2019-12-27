@@ -20,6 +20,7 @@ class PacketSplitController extends Controller {
     
  public function packetSplitListPage()
     {
+
         return view('Gps::packet-data-list');
     }
     public function getPacketAllData(Request $request)
