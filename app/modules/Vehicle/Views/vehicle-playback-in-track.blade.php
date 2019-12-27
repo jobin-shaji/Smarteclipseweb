@@ -640,7 +640,7 @@ padding: 5px 10px;
                  if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
 
                       console.log('same mode :- '+start_mode);
-                      debugger;
+                      // debugger;
                      
                    }else{
 
