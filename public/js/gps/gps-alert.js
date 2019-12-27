@@ -1,7 +1,13 @@
-
-
-$(document).ready(function () { 
-     $("#loader-1").show();
+var j=0;
+var limit=10;
+var offset=0;
+$(document).ready(function () {
+  var url = 'gps-alert-list';
+  var data={
+    // offset:offset,
+    // limit:limit
+  }
+  backgroundPostData(url,data,'gpsAlert',{alert:true});
 });
 
 
@@ -17,20 +23,20 @@ function initMap() {
     mapTypeId: 'terrain'
   });
 }
-var j=0;
-var limit=10;
-var offset=0;
-$(document).ready(function () {
-  var url = 'gps-alert-list';
+
+function  gpsAlert(res) 
+{
+  
+  var url = 'gps-alert-list-view';
   var data={
     offset:offset,
     limit:limit
   }
-  backgroundPostData(url,data,'gpsAlert',{alert:true});
-});
-function  gpsAlert(res) 
-{
-  responseList(res);
+  backgroundPostData(url,data,'allgpsAlertList',{alert:true});
+}
+function allgpsAlertList(res){
+  // console.log(res);
+   responseList(res);
 }
 $('#alert').scroll(function() {
   if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
