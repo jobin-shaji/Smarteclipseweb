@@ -443,6 +443,7 @@ class GpsController extends Controller {
                 'deleted_at')
                 ->withTrashed()
                 ->with('gps')
+                ->with('client')
                 ->where('subdealer_id',$sub_dealer_id)
                 ->get();
         return DataTables::of($gps_stock)
