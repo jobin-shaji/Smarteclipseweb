@@ -22,7 +22,7 @@ class ServicerJob extends Model
   	}   
   	public function servicer()
    	{
-      return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id');
+      return $this->hasOne('App\Modules\Servicer\Models\Servicer','id','servicer_id')->withTrashed();
   	} 
     public function gps()
     {
