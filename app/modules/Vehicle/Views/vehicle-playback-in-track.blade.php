@@ -124,13 +124,10 @@
 
  </div>
 </div>
-
-
-
-        <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->online_icon}}">
-        <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->offline_icon}}">
-        <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->ideal_icon}}">
-        <input type="hidden" name="sleep_icon" id="sleep_icon" value="{{$vehicle_type->sleep_icon}}">
+        <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->web_online_icon}}">
+        <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->web_offline_icon}}">
+        <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->web_idle_icon}}">
+        <input type="hidden" name="sleep_icon" id="sleep_icon" value="{{$vehicle_type->web_sleep_icon}}">
 
         <div class="main-panel main-pane-bg">
             <div class="content">
