@@ -651,6 +651,10 @@
                 // remove the already plotted locations
                 popFromLocationQueue();
                 // want to load new set of data ?
+                console.log(location_data_que.length);
+                console.log(isDataLoadInProgress);
+                console.log(dataLoadingCompleted);
+
                 if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
                 {
                     // console.log('Loading fresh set of data');
