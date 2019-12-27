@@ -452,7 +452,7 @@ class GpsController extends Controller {
                 if($gps_stock->client_id==null){
                     return "Not Transferred";
                 }else{
-                    return $gps_stock->client->name;
+                    return ( is_object($gps_stock->client) ) ? $gps_stock->client->name : '';
                 }
             })
             ->addColumn('action', function ($gps_stock) {
