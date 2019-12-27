@@ -1323,7 +1323,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->orderBy('job_date','Desc')
         ->get();  
-        
+        // dd($servicer_job->gps_id);
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
