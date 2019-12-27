@@ -443,6 +443,7 @@ class GpsController extends Controller {
                 'deleted_at')
                 ->withTrashed()
                 ->with('gps')
+                ->with('client')
                 ->where('subdealer_id',$sub_dealer_id)
                 ->get();
         return DataTables::of($gps_stock)
@@ -451,7 +452,7 @@ class GpsController extends Controller {
                 if($gps_stock->client_id==null){
                     return "Not Transferred";
                 }else{
-                    return $gps_stock->client->name;
+                    return ( is_object($gps_stock->client) ) ? $gps_stock->client->name : '';
                 }
             })
             ->addColumn('action', function ($gps_stock) {
