@@ -18,6 +18,8 @@ var circleStatus=0;
 var myGoogleRadar;
 var radarStatus=0;
 
+var selected_vehicle_mode = null;
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
@@ -287,7 +289,16 @@ function locationSearch()
   return false;
 }
 
-function moving(vehicle_mode) {
+function moving(vehicle_mode)
+{
+  if(selected_vehicle_mode == vehicle_mode)
+  {
+    window.location.reload(true);
+  }
+  else
+  {
+    selected_vehicle_mode = vehicle_mode;
+  }
 
   track_flag = 1;
   $('#vehicle_card_cover').empty();
