@@ -40,7 +40,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // dd(\Auth::user()->roles());
         if(\Auth::user()->hasRole('root')){
             return view('Dashboard::dashboard');  
         }
@@ -1046,7 +1045,6 @@ class DashboardController extends Controller
         ->orderBy('expiry_date','DESC')
         ->take(3)
         ->get();    
-        // dd($single_vehicle);
         $expire_documents=Document::select([
             'id',
             'vehicle_id',
