@@ -1030,20 +1030,10 @@ padding: 5px 10px;
 
 
 
-       // function alertPlotOnMap(){
-       //    if(alertsQueue.length > 0){
-       //      for (var i=0; i <= alertsQueue.length; i++) {
-       //         if(alertsQueue[i] != undefined){
-       //              addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
-       //        }
-       //      }
-             
-       //    }
-       //  }
 
          function alertPlotOnMap(lat,lng){       
                 alertsQueue.find(function(x,i){
-                    console.log('lat '+lat+'lng '+lng);
+                    console.log('lat :'+lat+' lng: '+lng);
                  var start = [lat,lng];
                  var end   = [x.lat, x.lng];
                  var total_distance = gis.calculateDistance(start, end);
