@@ -240,4 +240,15 @@ padding: 5px 10px;
 
 }
 
+
+.back_button_image {
+    width: 25px;
+    float: left;
+    margin-top: 3%;
+    margin-left: 1%;
+}
+.back_button_image img{
+    width: 100%;
+}
+
 @media only screen and (max-width: 1400px)  {}

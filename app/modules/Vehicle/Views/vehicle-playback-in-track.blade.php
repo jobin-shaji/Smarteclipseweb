@@ -28,13 +28,24 @@
 </head>
 
 <div class="wrapper overlay-sidebar">
-<input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
+
+<input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
+    
+    <div class="back_button_image">
+        <a onclick="closePlayback()" > 
+         <img src="{{asset('playback/assets/img/back-button.png')}}">
+        </a> 
+      </div>
 
     <div class="container">
-      <div class="row">
+     
+
         <div class='col-lg-12 cover_date'>
+
           <div class="top-date">
+             <div class="row">
+                
               <div class='col-sm-4'>
               <div class="form-group">
                 <label style="font-weight:bold">Start Date</label>
@@ -882,6 +893,10 @@
 
        function stopPlayback(){
         location.reload(true);
+       }
+
+       function closePlayback(){
+        window.close();
        }
 
     
