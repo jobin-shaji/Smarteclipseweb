@@ -69,6 +69,7 @@ function modecount(res) {
 }
 
 function vehicleTrack(res) {
+
   if(res.status!="failed"){
     var JSONObject = res.user_data;
     var marker, i;
@@ -204,13 +205,11 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
   });
   markers.push(marker);
 }
-
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
-
 function selectVehicleTrack(res) {
   // deleteMarkers();
   console.log(res);
@@ -302,7 +301,7 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
-  //cityCircle.setMap(null);
+  // cityCircle.setMap(null);
  flag = 0;
  vehicleTrack(res);
 
