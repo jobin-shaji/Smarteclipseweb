@@ -547,7 +547,6 @@ padding: 5px 10px;
              
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
-                alertPlotOnMap();
              }, load_speed);
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
@@ -730,7 +729,7 @@ padding: 5px 10px;
           
           console.log(distance);
           for (var i = 0; i < distance; i++) {
-                console.log(i);
+                console.log(i);     
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
@@ -915,6 +914,9 @@ padding: 5px 10px;
                 icon: domIcon
             });
             map.addObject(bearsMarkeronStartPoint);
+
+            alertPlotOnMap(lat,lng);
+            
             blPlaceCaronMap = true;
     }
         // --------2019-12-19-2:20--------------------------------------------------------
@@ -1030,15 +1032,32 @@ padding: 5px 10px;
 
 
 
-       function alertPlotOnMap(){
-          if(alertsQueue.length > 0){
-            for (var i=0; i <= alertsQueue.length; i++) {
-               if(alertsQueue[i] != undefined){
-                    addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
-              }
-            }
+       // function alertPlotOnMap(){
+       //    if(alertsQueue.length > 0){
+       //      for (var i=0; i <= alertsQueue.length; i++) {
+       //         if(alertsQueue[i] != undefined){
+       //              addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
+       //        }
+       //      }
              
-          }
+       //    }
+       //  }
+
+         function alertPlotOnMap(lat,lng){       
+                alertsQueue.find(function(x,i){
+                    console.log('lat '+lat+'lng '+lng);
+                 var start = [lat,lng];
+                 var end   = [x.lat, x.lng];
+                 var total_distance = gis.calculateDistance(start, end);
+                 console.log(total_distance);
+                 if(total_distance < 1){
+                     if(alertsQueue[i] != undefined){
+                        addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
+                        }
+                        alertsQueue.splice(0,1)[i];
+                    
+                 }
+                },lat,lng);
         }
 
 
@@ -1077,6 +1096,10 @@ padding: 5px 10px;
        function stopPlayback(){
         location.reload(true);
        }
+
+    
+
+
     </script>
 
 

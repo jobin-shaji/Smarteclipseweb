@@ -18,6 +18,8 @@ var circleStatus=0;
 var myGoogleRadar;
 var radarStatus=0;
 
+var selected_vehicle_mode = null;
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
@@ -69,6 +71,7 @@ function modecount(res) {
 }
 
 function vehicleTrack(res) {
+
   if(res.status!="failed"){
     var JSONObject = res.user_data;
     var marker, i;
@@ -204,13 +207,11 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
   });
   markers.push(marker);
 }
-
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
-
 function selectVehicleTrack(res) {
   // deleteMarkers();
   console.log(res);
@@ -287,7 +288,16 @@ function locationSearch()
   return false;
 }
 
-function moving(vehicle_mode) {
+function moving(vehicle_mode)
+{
+  if(selected_vehicle_mode == vehicle_mode)
+  {
+    window.location.reload(true);
+  }
+  else
+  {
+    selected_vehicle_mode = vehicle_mode;
+  }
 
   track_flag = 1;
   $('#vehicle_card_cover').empty();
@@ -302,7 +312,7 @@ function moving(vehicle_mode) {
 
 function selectVehicleModeTrack(res) {
  deleteMarkers();
-  //cityCircle.setMap(null);
+  // cityCircle.setMap(null);
  flag = 0;
  vehicleTrack(res);
 

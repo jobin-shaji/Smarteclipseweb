@@ -210,47 +210,108 @@ class WarehouseController extends Controller {
         if($transfer_type == '1')
         {
             $gps_transfer = $this->manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
+            return DataTables::of($gps_transfer)
+            ->addIndexColumn()
+            ->addColumn('count', function ($gps_transfer) 
+            {
+                return $gps_transfer->gpsTransferItems->count();
+            })
+            ->addColumn('action', function ($gps_transfer) 
+            {
+                $b_url = \URL::to('/');
+                if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
+                {
+                    return "
+                    <a href=".$b_url."/gps-transfer-root-manufacturer-distributor/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                    </button>";
+                }
+                else if($gps_transfer->deleted_at != null){
+                    return "
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <b style='color:#FF0000';>Cancelled</b>";
+                }
+                else{
+                    return "
+                    <a href=".$b_url."/gps-transfer-root-manufacturer-distributor/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <b style='color:#008000';>Transferred</b>";
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
 
         }else if($transfer_type == '2')
         {
             $gps_transfer = $this->distributorToDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
+            return DataTables::of($gps_transfer)
+            ->addIndexColumn()
+            ->addColumn('count', function ($gps_transfer) 
+            {
+                return $gps_transfer->gpsTransferItems->count();
+            })
+            ->addColumn('action', function ($gps_transfer) 
+            {
+                $b_url = \URL::to('/');
+                if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
+                {
+                    return "
+                    <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                    </button>";
+                }
+                else if($gps_transfer->deleted_at != null){
+                    return "
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <b style='color:#FF0000';>Cancelled</b>";
+                }
+                else{
+                    return "
+                    <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <b style='color:#008000';>Transferred</b>";
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
         }
         else if($transfer_type == '3')
         {
             $gps_transfer = $this->dealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
-        }
-
-        return DataTables::of($gps_transfer)
-        ->addIndexColumn()
-        ->addColumn('count', function ($gps_transfer) 
-        {
-            return $gps_transfer->gpsTransferItems->count();
-        })
-        ->addColumn('action', function ($gps_transfer) 
-        {
-            $b_url = \URL::to('/');
-            if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
+            return DataTables::of($gps_transfer)
+            ->addIndexColumn()
+            ->addColumn('count', function ($gps_transfer) 
             {
-                return "
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
-                </button>";
-            }
-            else if($gps_transfer->deleted_at != null){
-                return "
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <b style='color:#FF0000';>Cancelled</b>";
-            }
-            else{
-                return "
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <b style='color:#008000';>Transferred</b>";
-            }
-        })
-        ->rawColumns(['link', 'action'])
-        ->make();
+                return $gps_transfer->gpsTransferItems->count();
+            })
+            ->addColumn('action', function ($gps_transfer) 
+            {
+                $b_url = \URL::to('/');
+                if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
+                {
+                    return "
+                    <a href=".$b_url."/gps-transfer-root-dealer-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                    </button>";
+                }
+                else if($gps_transfer->deleted_at != null){
+                    return "
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <b style='color:#FF0000';>Cancelled</b>";
+                }
+                else{
+                    return "
+                    <a href=".$b_url."/gps-transfer-root-dealer-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <b style='color:#008000';>Transferred</b>";
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+        }
     }
 
     public function manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id)
@@ -1311,6 +1372,72 @@ class WarehouseController extends Controller {
         ]);
     }
 
+    public function gpsTransferLabelRootManufacturerToDistributor(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps_transfer = GpsTransfer::find($decrypted_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$decrypted_id)
+                        ->get();
+        $role_details = Dealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        if($gps_transfer == null){
+           return view('Warehouse::404');
+        }
+       return view('Warehouse::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+    }
+
+    public function gpsTransferLabelRootDistributorToDealer(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps_transfer = GpsTransfer::find($decrypted_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$decrypted_id)
+                        ->get();
+        $role_details = SubDealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        if($gps_transfer == null){
+           return view('Warehouse::404');
+        }
+       return view('Warehouse::gps-transfer-label-root-distributor-dealer',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+    }
+
+    public function gpsTransferLabelRootDealerToClient(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $decrypted_id = Crypt::decrypt($request->id);
+        $gps_transfer = GpsTransfer::find($decrypted_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$decrypted_id)
+                        ->get();
+        $role_details = Client::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        if($gps_transfer == null){
+           return view('Warehouse::404');
+        }
+       return view('Warehouse::gps-transfer-label-root-dealer-client',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+    }
+
     //label for transferred gps
     public function gpsTransferLabel(Request $request)
     {
@@ -1364,6 +1491,66 @@ class WarehouseController extends Controller {
             }
            return view('Warehouse::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
         }
+    }
+
+    public function exportGpsTransferLabelRootDistributorToDealer(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $gps_transfer_id=$request->id;
+        $gps_transfer = GpsTransfer::find($gps_transfer_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$gps_transfer_id)
+                        ->get();
+        $from_user_details = Dealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->from_user_id)
+                            ->first();
+        $role_details = SubDealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+         $user_details_data = User::select('id', 'mobile')
+        ->where('id',$from_user_details->user_id)
+        ->first();
+        view()->share('gps_transfer',$gps_transfer);
+        $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
+        $headers = array(
+                  'Content-Type'=> 'application/pdf'
+                );
+        return $pdf->download('GPSTransferLabel.pdf',$headers);
+    }
+
+    public function exportGpsTransferLabelRootDealerToClient(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $gps_transfer_id=$request->id;
+        $gps_transfer = GpsTransfer::find($gps_transfer_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$gps_transfer_id)
+                        ->get();
+        $from_user_details = SubDealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->from_user_id)
+                            ->first();
+        $role_details = Client::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+         $user_details_data = User::select('id', 'mobile')
+        ->where('id',$from_user_details->user_id)
+        ->first();
+        view()->share('gps_transfer',$gps_transfer);
+        $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
+        $headers = array(
+                  'Content-Type'=> 'application/pdf'
+                );
+        return $pdf->download('GPSTransferLabel.pdf',$headers);
     }
 
     public function exportGpsTransferLabel(Request $request)
