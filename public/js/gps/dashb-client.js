@@ -214,7 +214,6 @@ function setMapOnAll(map) {
 }
 function selectVehicleTrack(res) {
   // deleteMarkers();
-  console.log(res);
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
   map.setZoom(18);
   if(circleStatus==1){

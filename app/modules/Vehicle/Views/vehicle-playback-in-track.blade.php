@@ -387,6 +387,10 @@ padding: 5px 10px;
         var start_icon          = new H.map.Icon('{{asset("playback/assets/img/start.png")}}');
         var stop_icon           = new H.map.Icon('{{asset("playback/assets/img/flag.png")}}');
         var hidpi               = ('devicePixelRatio' in window && devicePixelRatio > 1);
+
+        var alert_icon          = new H.map.Icon('{{asset("playback/assets/img/alert-icon.png")}}');
+
+
         var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
         var app_id              = "vvfyuslVdzP04AK3BlBq",
             app_code            = "f63d__fBLLCuREIGNr6BjQ";
@@ -1050,7 +1054,7 @@ padding: 5px 10px;
 
 
         function addMarkerToGroup(group, coordinate, html) {
-          var marker = new H.map.Marker(coordinate);
+          var marker = new H.map.Marker(coordinate,{icon: alert_icon});
           marker.setData(html);
           group.addObject(marker);
         }
