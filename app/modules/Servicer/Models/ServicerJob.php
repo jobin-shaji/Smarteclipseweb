@@ -18,7 +18,7 @@ class ServicerJob extends Model
 	  }
    	public function clients()
    	{
-      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
+      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id')->withTrashed();
   	}   
   	public function servicer()
    	{
@@ -26,7 +26,7 @@ class ServicerJob extends Model
   	} 
     public function gps()
     {
-      return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+      return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id')->withTrashed();
     }
     public function sub_dealer()
     {
@@ -34,6 +34,6 @@ class ServicerJob extends Model
     }
      public function vehicle()
     {
-      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id');
+      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
     }    
 }
