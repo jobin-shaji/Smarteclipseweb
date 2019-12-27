@@ -336,12 +336,12 @@
               
 
                 if($('#fromDate').val()== ""){
-                  alertify.alert('From Date required');
+                  alertify.alert('From Date required').setHeader('<em> PLAYBACK</em>');
                   return false;
                 }
 
                  if($('#toDate').val()== ""){
-                  alertify.alert('To Date required');
+                  alertify.alert('To Date required').setHeader('<em> PLAYBACK</em>');
                   return false;
                 }
            
