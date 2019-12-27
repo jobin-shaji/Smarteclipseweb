@@ -18,7 +18,7 @@ use App\Driver;
 use Spatie\ArrayToXml\ArrayToXml;
 use App\DailyKm;
 use App\KmUpdate;
-use App\OtaUpdate;
+use App\te;
 use App\VehicleDailyUpdate;
 
 trait GpsDataProcessorTrait {
