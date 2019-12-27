@@ -17,11 +17,9 @@ All Alerts
       </div>
     @endif 
   </nav>
-
   <div class="container-fluid">
     <div class="card-body">
-      <div class="loader-wrapper" id="loader-1">
-           
+      <div class="loader-wrapper" id="loader-1">          
               <div id="loader"></div>
             </div> 
       <div class="table-responsive">
