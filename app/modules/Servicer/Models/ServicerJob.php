@@ -18,7 +18,7 @@ class ServicerJob extends Model
 	  }
    	public function clients()
    	{
-      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
+      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id')->withTrashed();
   	}   
   	public function servicer()
    	{
