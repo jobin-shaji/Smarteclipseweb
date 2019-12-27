@@ -26,7 +26,7 @@ class ServicerJob extends Model
   	} 
     public function gps()
     {
-      return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+      return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id')->withTrashed();
     }
     public function sub_dealer()
     {
