@@ -963,6 +963,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->with('vehicle:id,register_number,gps_id')
         ->orderBy('job_complete_date','desc')
+        ->where('status',3)
         ->get();     
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1016,6 +1017,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->with('vehicle:id,register_number,gps_id')
          ->orderBy('job_complete_date','Desc')
+         ->where('status',3)
         ->get();     
         // dd($servicer_job);
         return DataTables::of($servicer_job)
@@ -1482,6 +1484,7 @@ public function serviceJobDetails(Request $request)
         ->where('job_date','<',date('Y-m-d H:i:s'))
         ->orderBy('job_date','Desc')
         ->with('vehicle:id,register_number,gps_id')
+        ->where('status',2)
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()

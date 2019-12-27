@@ -27,6 +27,11 @@ class CreateVehicleTypesTable extends Migration
             $table->text('ideal_icon');
             $table->text('sleep_icon');
 
+            $table->text('web_online_icon');
+            $table->text('web_offline_icon');
+            $table->text('web_idle_icon');
+            $table->text('web_sleep_icon');
+
 
             $table->timestamps();
         });

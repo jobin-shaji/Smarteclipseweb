@@ -9,34 +9,46 @@
 
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Fonts and icons -->
-     <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}"> -->
-    <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/atlantis.min.css')}}"> -->
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/demo.css')}}"> -->
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="{{ url('/') }}/dist/css/playback_style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{asset('alertify/css/alertify.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('alertify/css/themes/default.min.css')}}" />
 
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
      <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="{{asset('alertify/alertify.min.js')}}"></script>
 
 </head>
-    <div class="wrapper overlay-sidebar">
-<input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
 
+<div class="wrapper overlay-sidebar">
+
+
+<input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
+    
+    <div class="back_button_image">
+        <a onclick="closePlayback()" > 
+         <img src="{{asset('playback/assets/img/back-button.png')}}">
+        </a> 
+      </div>
 
     <div class="container">
-      <div class="row">
-        <div class="top-date">
+     
 
-              <div class='col-sm-3'>
+        <div class='col-lg-12 cover_date'>
+
+          <div class="top-date">
+             <div class="row">
+                
+              <div class='col-sm-4'>
               <div class="form-group">
                 <label style="font-weight:bold">Start Date</label>
                 <div class='input-group date' id='datetimepicker_live1'>
-                  <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" />
+                  <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" required />
                   <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -44,11 +56,11 @@
               </div>
             </div>
 
-              <div class='col-sm-3'>
+              <div class='col-sm-4'>
               <div class="form-group">
                 <label style="font-weight:bold">End Date</label>
                 <div class='input-group date' id='datetimepicker_live2'>
-                  <input type="text" id="toDate" style="height: 33px;"class="form-control" name="toDate">
+                  <input type="text" id="toDate" style="height: 33px;"class="form-control" name="toDate" required>
                   <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -90,8 +102,28 @@
             </span>
           </div>
       </div>
-      </div>
-    </div>
+      <div class="vehicle_details_list">
+       <div class="row">
+            <span><i class='fa fa-car'></i></span>
+            <span><span style="padding: 10px;">:</span> {{$vehicle->name}}</span>
+        </div>
+         <div class="row">
+            <span><i class='fa fa-truck'></i></span>
+            <span><span style="padding: 10px;">:</span> {{$vehicle->register_number}}</span>
+        </div>
+        <div class="row">
+             <span><i class='fa fa-user'></i></span>
+            <span><span style="padding: 15px;">:</span>{{ $vehicle->driver->name}}</span>
+        </div>
+        </div>
+
+  </div>
+  
+       
+  
+
+ </div>
+</div>
 
 
 
@@ -125,232 +157,6 @@
     </div>
 
     <!-- Style -->
-
-    <style>
-
-
-     
-   #location_details_text {
-    position: relative;
-    color: rgba(0, 0, 0, .3);
-    font-size: 1em
-   }
-
-   .H_ib_body {
-    background: #a03737 !important;
-    }
-
-    .H_ib {
-    background: #a03737;
-    fill: #a03737;
-}
-  #location_details_text:before {
-    content: attr(data-text);
-    position: absolute;
-    overflow: hidden;
-    max-width: 7em;
-    white-space: nowrap;
-    color: #dab606;
-    animation: loading 8s linear;
-  }
-@keyframes loading {
-    0% {
-        max-width: 0;
-    }
-}
-h1#location_details_text {
-    margin-left: 45px;
-}
-    .lorder-cover-bg {
-    width: 100%;
-    position: absolute;
-    z-index: 9;
-    background: #00000075;
-    height: 595px;
-    display: none;
-}
-     .lorder-cover-bg-image{
-        width: 75px;
-        margin: 0px auto;
-     }
-          .lorder-cover-bg-image img{
-       width: 100%;
-    padding-top: 280px;
-          }
-         .lorder-cover-bg-image span{
-            width: 100%;
-            float: left;
-            text-align: center;
-         }
-        #cover-spin {
-            position: fixed;
-            width: 100%;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background-color: rgba(255,255,255,0.7);
-            z-index: 9999;
-            display: none;
-        }
-
-        @-webkit-keyframes spin {
-            from {
-                -webkit-transform: rotate(0deg);
-            }
-
-            to {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        #cover-spin::after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 48%;
-            top: 40%;
-            width: 40px;
-            height: 40px;
-            border-style: solid;
-            border-color: black;
-            border-top-color: transparent;
-            border-width: 4px;
-            border-radius: 50%;
-            -webkit-animation: spin .8s linear infinite;
-            animation: spin .8s linear infinite;
-        }
-
-.place_data{
-    padding-right: 10px;
-    font-weight: bold;
-    color: #dab606;
-}
-.left-alert-box{
-           width: 20%;
-    float: left;
-    display: block;
-    max-height: 500px;
-    background-color: #fff;
-    /* border: 1px solid #dee2e6; */
-    position: absolute;
-    z-index: 99;
-    padding: 0 0px;
-    left: 0;
-    overflow-y: scroll;}
-    .left-alert-inner{
-    width: 90%;
-    float: left;
-    display: block;
-    background: #fff;
-    padding: 10px 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    margin: 10px 5%;
-
-    }
-     .left-alert-text
-     {
-    width: 94%;
-    float: left;
-    margin: 0 3% 0px;
-    padding: 0 0;
-
-     }
-     .left-alert-text p.datetime_cover{
-        text-align: right;
-        font-weight: bold;
-        margin-top: 16px;
-        font-size: 11px;
-        padding: 5px 0 0;
-        color: #86710b;
-     }
-
-   .left-alert-text h5{
-width: 100%;
-    float: left;
-    font-size: 16px;
-    display: block;
-    font-weight: normal;
-    text-transform: uppercase;
-    margin: 0;
-    padding-bottom: 10px;
-    color: #f0b102;
-    border-bottom: 1px solid #dcdcdc;
-   }
-        .left-alert-text p{
-            width: 100%;
-            float: left;
-                font-size: 15px;
-            display: block;
-            margin: 0;
-            padding: 5px 0;
-   
-        }
-.left-alert-time{
-width: 100%;
-float: right;
-display: block;
-text-align: right;
-
-}
-.alert-plus-bt{
-padding: 5px 10px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 3px;
-
-}
-.left-alert-text p a{
-    color: #fff;
-    float: right;
-    padding: 3px 7px;
-    background: #f0b101;
-    border-radius: 52%;
-    text-decoration: none;
-    /* font-weight: bold; */
-    font-size: 20px;}
-.place-div{
-    margin: 0;
-    width: 100%;
-    margin-bottom: 15px;
-    border-radius: 0;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.place-div .left-alert-text {
-    width: 88%;
-    float: left;
-    margin: 0 6% 0px;
-    padding: 5px 0;
-}
-.top-date{
-
-    width: 100%;
-    float: left;
-    display: block;
-    padding: 10px 0 20px;
-}
-.main-pane-bg{
-        width: 100%;
-    float: left;
-}
-
-
-@media only screen and (max-width: 1400px)  {}
-
-
-    </style>
     <!--   Core JS Files   -->
     <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
@@ -431,6 +237,7 @@ padding: 5px 10px;
         var alertsQueue         = [];
         var previous_data       = [];
         var first_set_data      = true;
+        var first_response      = false;
 
          var gis = {
             ///**
@@ -526,9 +333,19 @@ padding: 5px 10px;
 
          
         function startPlayBack(){
+              
+
+                if($('#fromDate').val()== ""){
+                  alertify.alert('From Date required').setHeader('<em> PLAYBACK</em>');
+                  return false;
+                }
+
+                 if($('#toDate').val()== ""){
+                  alertify.alert('To Date required').setHeader('<em> PLAYBACK</em>');
+                  return false;
+                }
            
                $(".start_button").css("display","none");
-
                 loader      =   true;
                 // speed_val   =   $('#speed').val();
                 load_speed       =   load_speed/1;
@@ -558,6 +375,8 @@ padding: 5px 10px;
           
              }, 500);
             // --------2019-12-19-2:20--------------------------------------------------------
+
+
             isDataLoadInProgress = true;
             var Objdata = {
                 vehicleid: $('#vehicle_id').val(), 
@@ -576,12 +395,21 @@ padding: 5px 10px;
                 data: Objdata,
                 async: true,
                 success: function (response) {
-                
+                    
+                    if(response.status=="failed"){
+                       if(first_response == false){
+                       $(".start_button").css("display","none");
+                       $('.left-alert-box').css('display','none');
+                       $("#lorder-cover-bg-image").css("display","none");
+                       alertify.alert('There is no data');
+                       return false;
+                      }
+                    }
+
 
                     if( typeof response.playback != undefined)
                     {
-
-
+                        first_response=true;
                         total_offset=response.total_offset;
                         if(offset < total_offset){
                          
@@ -596,14 +424,23 @@ padding: 5px 10px;
                     }
                     else
                     {
+
+
                         if( typeof response == undefined)
                         {
+
+
+                             alertify.alert('Something went wrong');
+                             return false;
                             // console.log('something went wrong with the server data');
                         }
                         else
                         {
+                             alertify.alert('There is no data');
+                             return false;
                             // console.log('No more data to display');
                         }
+                       
                     }
                 },
                 failure: function (response) {
@@ -640,6 +477,16 @@ padding: 5px 10px;
 
                    var start_mode =  data[i].vehicleStatus;
                    
+                  if(first_set_data==true){
+                      firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
+                      previous_data={   
+                                        "lat"   : data[i].latitude, 
+                                        "lng"   : data[i].longitude,
+                                        "angle" : data[i].angle,
+                                        "mode"  : data[i].vehicleStatus
+                                    };
+                        first_set_data = false;
+                  }
 
                  if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
 
@@ -720,6 +567,8 @@ padding: 5px 10px;
                               "angle" : angle,
                               "mode"  : mode
                           });
+            moveMarker(angle,lat,lng,mode);
+
         }
 
 
@@ -802,6 +651,8 @@ padding: 5px 10px;
                 // remove the already plotted locations
                 popFromLocationQueue();
                 // want to load new set of data ?
+              
+
                 if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
                 {
                     // console.log('Loading fresh set of data');
@@ -1036,12 +887,10 @@ padding: 5px 10px;
 
 
          function alertPlotOnMap(lat,lng){   
-                console.log('lat :'+lat+' lng: '+lng);
                 alertsQueue.find(function(x,i){
                  var start = [lat,lng];
                  var end   = [x.lat, x.lng];
                  var total_distance = gis.calculateDistance(start, end);
-                 console.log(total_distance);
                  if(total_distance < 1){
                      if(alertsQueue[i] != undefined){
                         addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
@@ -1089,6 +938,10 @@ padding: 5px 10px;
         location.reload(true);
        }
 
+       function closePlayback(){
+        window.close();
+       }
+
     
 
 
@@ -1110,10 +963,12 @@ padding: 5px 10px;
 $(function() {
   $('#datetimepicker_live1').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss',
+    maxDate: moment()
   });
 
     $('#datetimepicker_live2').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss',
+    maxDate: moment()
   });
 
 });
