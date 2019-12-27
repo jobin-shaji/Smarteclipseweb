@@ -530,24 +530,24 @@ class AlertController extends Controller {
         ->where('client_id',$client_id)
         ->get();      
         $single_vehicle_gps = [];
-        foreach($VehicleGpss as $VehicleGps){
-            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->where('status', 0)->update(['status'=> 1]);
+        foreach($VehicleGpss as $VehicleGps){          
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $userAlerts = UserAlerts::select(
-            'id',
-            'client_id',
-            'alert_id',
-            'status'
-        )
-        ->with('alertType:id,code,description') 
-        ->where('status',1)               
-        ->where('client_id',$client_id)           
-        ->get();
-        $alert_id=[];
-        foreach ($userAlerts as $userAlert) {
-            $alert_id[]=$userAlert->alert_id;
-        }  
+        $confirm_alerts =Alert::whereIn('gps_id', $single_vehicle_gps)->where('status', 0)->update(['status'=> 1]);
+        // $userAlerts = UserAlerts::select(
+        //     'id',
+        //     'client_id',
+        //     'alert_id',
+        //     'status'
+        // )
+        // ->with('alertType:id,code,description') 
+        // ->where('status',1)               
+        // ->where('client_id',$client_id)           
+        // ->get();
+        // $alert_id=[];
+        // foreach ($userAlerts as $userAlert) {
+        //     $alert_id[]=$userAlert->alert_id;
+        // }  
 
         $alerts = Alert::select(
             'id',
@@ -565,7 +565,7 @@ class AlertController extends Controller {
         ->with('gps:id,imei')
         ->orderBy('device_time', 'desc')
         ->whereIn('gps_id',$single_vehicle_gps)
-        ->whereIn('alert_type_id',$alert_id)
+        // ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
         ->where('status',1) 
         ->offset($offset)
