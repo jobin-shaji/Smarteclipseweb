@@ -32,7 +32,8 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Job Code</th>
-                    <th>Client</th>                      
+                    <th>Client</th>  
+                    <th>Register Number</th>                      
                     <th>Job Type</th>
                     <th>Servicer</th>
                     <th>GPS</th>
