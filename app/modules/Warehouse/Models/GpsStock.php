@@ -36,7 +36,7 @@ class GpsStock extends Model
 
     public function client()
     {
-        return $this->hasone('App\Modules\Client\Models\Client','id','client_id');
+        return $this->belongsTo('App\Modules\Client\Models\Client','client_id','id');
     }
     public function user()
     {
