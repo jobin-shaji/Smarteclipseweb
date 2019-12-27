@@ -567,6 +567,8 @@
                               "angle" : angle,
                               "mode"  : mode
                           });
+            moveMarker(angle,lat,lng,mode);
+
         }
 
 
