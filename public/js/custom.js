@@ -402,6 +402,13 @@ function backgroundPostData(url, data, callBack, options) {
                     vehicleModel(res);
 
                 }
+                else if(callBack=='allgpsAlertList')
+                {
+                    allgpsAlertList(res);
+
+                }
+
+                
 
                 
                 
