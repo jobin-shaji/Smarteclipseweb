@@ -920,15 +920,11 @@ class VehicleController extends Controller
     // update vehicle type
     public function updateVehicleType(Request $request)
     {
-
-      $vehicle_type = VehicleType::find($request->id);
-
+       $vehicle_type = VehicleType::find($request->id);
        if($vehicle_type == null){
            return view('Vehicle::404');
         }
-
         $online_vehicle=$request->online_icon;
-
         if($online_vehicle){
               
         $getFileExt   = $online_vehicle->getClientOriginalExtension();
@@ -973,6 +969,54 @@ class VehicleController extends Controller
         $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
         // sleep vehicle image
         $vehicle_type->sleep_icon =$sleep_uploadedFile;
+        }
+
+
+        $web_online_vehicle=$request->web_online_icon;
+        if($web_online_vehicle){
+              
+        $getFileExt   = $web_online_vehicle->getClientOriginalExtension();
+        $web_online_uploadedFile =   time().'_web_online_vehicle.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $web_online_vehicle->move($destinationPath,$web_online_uploadedFile);
+        $vehicle_type->web_online_icon = $web_online_uploadedFile;
+        }
+        
+       
+        // online vehicle image
+         // offline vehicle image
+        $web_offline_vehicle=$request->web_offline_icon;
+        if($web_offline_vehicle){
+        $getFileExt   = $web_offline_vehicle->getClientOriginalExtension();
+        $web_offline_uploadedFile =   time().'_web_offline_vehicle.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $web_offline_vehicle->move($destinationPath,$web_offline_uploadedFile);
+        $vehicle_type->web_offline_icon = $web_offline_uploadedFile;
+        }
+        // online vehicle image
+         // ideal vehicle image
+        $web_ideal_vehicle=$request->web_ideal_icon;
+        if($web_ideal_vehicle){
+        $getFileExt   = $web_ideal_vehicle->getClientOriginalExtension();
+        $web_ideal_uploadedFile =   time().'_web_ideal_icon.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $web_ideal_vehicle->move($destinationPath,$web_ideal_uploadedFile);
+        $vehicle_type->web_ideal_icon = $web_ideal_uploadedFile;
+        }
+        // ideal vehicle image
+        // sleep vehicle image
+        $web_sleep_vehicle=$request->web_sleep_icon;
+        if($web_sleep_vehicle){
+        $getFileExt   = $web_sleep_vehicle->getClientOriginalExtension();
+        $web_sleep_uploadedFile =   time().'_web_sleep_icon.'.$getFileExt;
+        //Move Uploaded File
+        $destinationPath = 'documents';
+        $web_sleep_vehicle->move($destinationPath,$web_sleep_uploadedFile);
+        // sleep vehicle image
+        $vehicle_type->web_sleep_icon =$web_sleep_uploadedFile;
         }
 
         $rules = $this->vehicleTypeUpdateRules();
