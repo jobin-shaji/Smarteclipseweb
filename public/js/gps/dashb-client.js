@@ -301,7 +301,7 @@ function moving(vehicle_mode)
 
   track_flag = 1;
   $('#vehicle_card_cover').empty();
-  var url = '/dashboard-track-vehicle-mode';
+  var url = 'dashboard-track-vehicle-mode';
   var data = {
   vehicle_mode: vehicle_mode
   };
