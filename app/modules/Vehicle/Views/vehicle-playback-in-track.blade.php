@@ -9,21 +9,19 @@
 
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="{{ url('/') }}/dist/css/playback_style.css" rel="stylesheet">
-    <!-- Fonts and icons -->
-     <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}"> -->
-    <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/atlantis.min.css')}}"> -->
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/demo.css')}}"> -->
+
+    <link rel="stylesheet" href="{{asset('alertify/css/alertify.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('alertify/css/themes/default.min.css')}}" />
 
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
      <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="{{asset('alertify/alertify.min.js')}}"></script>
 
 </head>
 
@@ -239,6 +237,7 @@
         var alertsQueue         = [];
         var previous_data       = [];
         var first_set_data      = true;
+        var first_response      = false;
 
          var gis = {
             ///**
@@ -334,9 +333,19 @@
 
          
         function startPlayBack(){
+              
+
+                if($('#fromDate').val()== ""){
+                  alertify.alert('From Date required').setHeader('<em> PLAYBACK</em>');
+                  return false;
+                }
+
+                 if($('#toDate').val()== ""){
+                  alertify.alert('To Date required').setHeader('<em> PLAYBACK</em>');
+                  return false;
+                }
            
                $(".start_button").css("display","none");
-
                 loader      =   true;
                 // speed_val   =   $('#speed').val();
                 load_speed       =   load_speed/1;
@@ -366,6 +375,8 @@
           
              }, 500);
             // --------2019-12-19-2:20--------------------------------------------------------
+
+
             isDataLoadInProgress = true;
             var Objdata = {
                 vehicleid: $('#vehicle_id').val(), 
@@ -384,12 +395,21 @@
                 data: Objdata,
                 async: true,
                 success: function (response) {
-                
+                    
+                    if(response.status=="failed"){
+                       if(first_response == false){
+                       $(".start_button").css("display","none");
+                       $('.left-alert-box').css('display','none');
+                       $("#lorder-cover-bg-image").css("display","none");
+                       alertify.alert('There is no data');
+                       return false;
+                      }
+                    }
+
 
                     if( typeof response.playback != undefined)
                     {
-
-
+                        first_response=true;
                         total_offset=response.total_offset;
                         if(offset < total_offset){
                          
@@ -404,14 +424,23 @@
                     }
                     else
                     {
+
+
                         if( typeof response == undefined)
                         {
+
+
+                             alertify.alert('Something went wrong');
+                             return false;
                             // console.log('something went wrong with the server data');
                         }
                         else
                         {
+                             alertify.alert('There is no data');
+                             return false;
                             // console.log('No more data to display');
                         }
+                       
                     }
                 },
                 failure: function (response) {
@@ -448,6 +477,16 @@
 
                    var start_mode =  data[i].vehicleStatus;
                    
+                  if(first_set_data==true){
+                      firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
+                      previous_data={   
+                                        "lat"   : data[i].latitude, 
+                                        "lng"   : data[i].longitude,
+                                        "angle" : data[i].angle,
+                                        "mode"  : data[i].vehicleStatus
+                                    };
+                        first_set_data = false;
+                  }
 
                  if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
 
@@ -528,6 +567,8 @@
                               "angle" : angle,
                               "mode"  : mode
                           });
+            moveMarker(angle,lat,lng,mode);
+
         }
 
 
@@ -610,6 +651,8 @@
                 // remove the already plotted locations
                 popFromLocationQueue();
                 // want to load new set of data ?
+              
+
                 if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
                 {
                     // console.log('Loading fresh set of data');
@@ -920,10 +963,12 @@
 $(function() {
   $('#datetimepicker_live1').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss',
+    maxDate: moment()
   });
 
     $('#datetimepicker_live2').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss',
+    maxDate: moment()
   });
 
 });
