@@ -10,6 +10,7 @@ var refesh_flag=0;
 var markers = [];
 var map;
 var map_flag;
+var flag=0;
 var track_flag = 0;
 var map_popup = 0;
 var radius;
@@ -35,6 +36,8 @@ function initMap() {
 
   map.addListener('zoom_changed', function() {
     localStorage.setItem('googleMapZoomLevel', map.getZoom());
+
+
   });
 }
 
@@ -78,20 +81,21 @@ function vehicleTrack(res) {
     for (i = 0; i < JSONObject.length; i++) {
     var lat = JSONObject[i].lat;
     var lng = JSONObject[i].lon;
+    // alert(flag);
     if (map_flag == 0) {
-    map.panTo(new google.maps.LatLng(lat, lng));
-    // check if zoom level is already set
-    var zoom_level = 13;
-    if( localStorage.getItem('googleMapZoomLevel') != null )
-    {
-      zoom_level = localStorage.getItem('googleMapZoomLevel') * 1;
-    }
-    map.setZoom(zoom_level);
-    map.setOptions({
-    minZoom: 5,
-    maxZoom: 17
-    });
-    // map_flag=1;
+      map.panTo(new google.maps.LatLng(lat, lng));
+      // check if zoom level is already set
+      var zoom_level = 13;
+      if( localStorage.getItem('googleMapZoomLevel') != null )
+      {
+        zoom_level = localStorage.getItem('googleMapZoomLevel') * 1;
+      }
+      map.setZoom(zoom_level);
+      map.setOptions({
+      minZoom: 5,
+      maxZoom: 17
+      });
+      // map_flag=1;
     }
     var gpsID = JSONObject[i].id;
     var reg = JSONObject[i].register_number;
@@ -213,17 +217,17 @@ function setMapOnAll(map) {
   }
 }
 function selectVehicleTrack(res) {
+  // alert(res.lat);
   // deleteMarkers();
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
-  map.setZoom(18);
+  // map.setZoom(18);
+  flag=1;
+  // map.setMax(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
-
-  }
- 
-     refesh_flag=1;
-     redarLocationSelectVehicle(res.lat,res.lon,0.06);
- 
+  } 
+  refesh_flag=1;
+  redarLocationSelectVehicle(res.lat,res.lon,0.08); 
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -442,6 +446,8 @@ function redarLocationSelectVehicle(lat, lng, radius) {
   fillOpacity: 0.35,
   map: map,
   center: latlng,
+  // minZoom: 17,
+  //   maxZoom: 17,
   radius: radius_in_meter // in meters
  };
  cityCircle = new google.maps.Circle(sunCircle);
