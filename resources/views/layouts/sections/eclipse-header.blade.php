@@ -500,7 +500,7 @@
                                 </div>
                                 @role('client')
                                     <a class="dropdown-item" href="{{url('/client/profile')}}">
-                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->client->name}}</a>
 
                                     <a class="dropdown-item" href="{{url('/client/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
@@ -524,19 +524,19 @@
                                 @endrole
                                 @role('dealer')
                                     <a class="dropdown-item" href="{{url('/dealer/profile')}}">
-                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->dealer->name}}</a>
                                     <a class="dropdown-item" href="{{url('/dealers/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('sub_dealer')
                                     <a class="dropdown-item" href="{{url('/sub-dealer/profile')}}">
-                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->subDealer->name}}</a>
                                     <a class="dropdown-item" href="{{url('/sub-dealers/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
                                 @role('servicer')
                                     <a class="dropdown-item" href="{{url('/servicer/profile')}}">
-                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
+                                        <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->servicer->name}}
                                     </a>
                                     <a class="dropdown-item" href="{{url('/servicer/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
