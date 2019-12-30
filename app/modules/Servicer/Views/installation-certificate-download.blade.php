@@ -16,6 +16,7 @@
             div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
             .lineheight {
                 line-height: 20px;
+                margin-top: 1%!important;
             }
             body{
                 margin: :0px;
@@ -153,27 +154,31 @@
         ?>
         <div style="position:fixed;margin:1%;overflow:auto">
 
-            <div style="position:absolute;left:70px;top:60px" class="cls_002">
-                <span class="cls_002 lineheight">
+            <div style="position:absolute;left:73px;top:60px;width: 65%" class="cls_002">
+                <div class="cls_002 lineheight">
                     {{$servicer_job->sub_dealer->name}}
-                    <br>
+                </div>
+                <div class="cls_002 lineheight">
                     {{$servicer_job->sub_dealer->address}}
-                    <br>
+                </div>
+                <div class="cls_002 lineheight">
+
                     {{$servicer_job->user->email}}
-                    <br>
+                </div>
+                <div class="cls_002 lineheight">
                     {{$servicer_job->user->mobile}}
-                </span>
+                </div>
             </div>
 
-            <div style="position:absolute;left:520px;top:65px" class="cls_003">
+            <div style="position:absolute;left:520px;top:105px" class="cls_003">
                 <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
             </div>
 
-            <div style="position:absolute;left:70px;top:187.32px; line-height: 21px;" class="cls_002">
+            <div style="position:absolute;left:70px;top:240px; line-height: 21px;" class="cls_002">
                 <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
             </div>
 
-            <p style="margin-top: 24%;margin-left: 70px"><b>Details of AIS 140 Device</b></p>
+            <p style="margin-top: 30%;margin-left: 70px"><b>Details of AIS 140 Device</b></p>
             <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width:100%;">
                  <tr>
                     <td class="cls_002 yellow">Device IMEI</td>
@@ -223,16 +228,16 @@
             </table>
            
             
-            <div style="position:absolute;left:70px;top:770px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:70px;top:830px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:70px;top:830px" class="cls_002">
+            <div style="position:absolute;left:70px;top:890px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:70px;top:870px" class="cls_002">
+             <div style="position:absolute;left:70px;top:920px" class="cls_002">
                 <span class="cls_002">{{$servicer_job->sub_dealer->name}}</span>
             </div>
-            <div style="position:absolute;left:70px;top:930px" class="cls_002">
+            <div style="position:absolute;left:70px;top:1000px" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
         </div>
