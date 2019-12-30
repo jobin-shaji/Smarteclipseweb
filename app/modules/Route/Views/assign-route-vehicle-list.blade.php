@@ -69,7 +69,7 @@
                       <th>SL</th>
                       <th>Route Name</th>
                       <th >Vehicle</th>
-                      <th >Register Number</th>
+                      <th >Registration Number</th>
                       <th >From Date</th>
 
                       <th >To date</th>

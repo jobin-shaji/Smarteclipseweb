@@ -119,7 +119,7 @@
 
 
                      <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Register Number</label>
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
                       <div class="form-group has-feedback">
                         <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$vehicle_device->register_number}} " required readonly="" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>

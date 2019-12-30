@@ -47,9 +47,9 @@ Add Vehicle
                                  @endif
                               </div>
                               <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Register Number</label>
+                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Registration Number</label>
                                  <div class="form-group has-feedback">
-                                    <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" >
+                                    <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" value="{{ old('register_number') }}" >
                                  </div>
                                  @if ($errors->has('register_number'))
                                  <span class="help-block">

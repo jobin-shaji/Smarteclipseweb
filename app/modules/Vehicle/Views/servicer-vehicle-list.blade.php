@@ -34,7 +34,7 @@
                             <th>Sl.No</th>
                             <th>Client</th>
                             <th>Vehicle Name</th>
-                            <th>Register Number</th>
+                            <th>Registration Number</th>
                             <th>IMEI</th>
                             <th>Driver</th>
                             <th>Vehicle Type</th>

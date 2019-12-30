@@ -86,7 +86,7 @@
                       <th>SL.No</th>
                       <th>Geofence Name</th>
                       <th>Vehicle</th>
-                      <th>Register Number</th>
+                      <th>Registration Number</th>
                       <th>Alert Type</th>
                       <!-- <th>From Date</th>
                       <th>To date</th> -->

@@ -66,7 +66,7 @@ Geofence Report
                           <tr>
                             <th>SL.No</th>
                             <th>Vehicle Name</th>
-                            <th>Register Number</th>
+                            <th>Registration Number</th>
                             <th>Geofence Type</th>
                             <th>Time</th>      
                           </tr>
