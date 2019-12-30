@@ -76,7 +76,7 @@ Daily KM Report
                             <tr>
                               <th>SL.No</th>
                               <th>Vehicle</th>
-                              <th>Register Number</th>                          
+                              <th>Registration Number</th>                          
                               <th>Daily KM</th> 
                               <th>Date</th>    
                             </tr>

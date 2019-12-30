@@ -63,7 +63,7 @@ Halt Report
                             <tr>
                               <th><b>SL.No</b></th>
                               <th><b>Vehicle</b></th>
-                              <th><b>Register Number</b></th>                         
+                              <th><b>Registration Number</b></th>                         
                               <th><b>Halt</b></th>                                                               
                             </tr>
                         </thead>

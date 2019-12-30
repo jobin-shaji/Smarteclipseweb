@@ -34,7 +34,7 @@ All Alerts
                     <th>SL.No</th>
                     <th>Alert</th>
                     <th>Vehicle Name</th>
-                    <th>Register Number</th>
+                    <th>Registration Number</th>
                     <!-- <th>Location</th> -->
                     <th>DateTime</th>                 
                   </tr>

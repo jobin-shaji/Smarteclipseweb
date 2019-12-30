@@ -34,7 +34,7 @@
                                 <tr>
                                     <th>SL.No</th>
                                     <th>Vehicle Name</th>
-                                    <th>Register Number</th>
+                                    <th>Registration Number</th>
                                     <th>From Driver</th>
                                     <th>To Driver</th>
                                     <th>Date & Time</th>
