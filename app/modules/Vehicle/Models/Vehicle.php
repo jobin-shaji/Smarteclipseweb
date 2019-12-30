@@ -45,4 +45,11 @@ class Vehicle extends Model
       return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id');
      }
 
+     public function servicerjob()
+     {
+      return $this->hasOne('App\Modules\Servicer\Models\ServicerJob','id','servicer_job_id');
+     }
+
+    
+
 }
