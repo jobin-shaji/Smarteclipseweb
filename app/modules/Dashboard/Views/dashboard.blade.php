@@ -862,6 +862,8 @@
                     <div class="col-lg-4 col-md-4 ">
                       <div class="form-group">
                         <input type="text" id="search_place" class="form-control" value="">
+
+                        
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-4 ">
@@ -888,6 +890,18 @@
               </div>
             </form>
           </div>
+          <style type="text/css">
+  .pac-container {
+position: absolute !important;
+    bottom: -53px !important;
+    margin: 0px;
+    top: inherit !important;
+}
+      .new-track-stle{
+            right: 4%;
+      }
+
+          </style>
 
           <div id="myModal" class="modal_for_dash">
             <!-- Modal content -->
@@ -909,7 +923,7 @@
       </div>
     </div>
 
-    <div class="dashboard-main-Right cover_vehicle_track_list">
+    <div class="dashboard-main-Right cover_vehicle_track_list new-track-stle">
 
 
       <div class="iconsbg1234">
