@@ -362,16 +362,18 @@
         }
 
         function getLocationData(){
-             
              var mapUpdateInterval   = window.setInterval(function(){
              plotLocationOnMap();
+
              }, load_speed);
+
+
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
              dataShownOnList();
           
              }, 500);
-            // --------2019-12-19-2:20--------------------------------------------------------
+            // --------2019-12-19-2:20-----------------------------------------
 
 
             isDataLoadInProgress = true;
@@ -381,6 +383,8 @@
                 toDateTime: $('#toDate').val(),
                  offset: offset
             }
+
+
 
             $.ajax({
                 type: "POST",
@@ -392,7 +396,7 @@
                 data: Objdata,
                 async: true,
                 success: function (response) {
-                    
+
                     if(response.status=="failed"){
                        if(first_response == false){
                        $(".start_button").css("display","none");
@@ -409,7 +413,7 @@
                         first_response=true;
                         total_offset=response.total_offset;
                         if(offset < total_offset){
-                         
+                        
                          locationStore(response.playback);
                          alertStore(response.alerts);
                          offset = offset+1;
@@ -464,15 +468,15 @@
             }
           }
         }
+        var previous_vehicle_mode = null; 
         function locationStore(data)
         {   
-            var stop_mode = null;
-
+              
             for (var i = 0; i < data.length; i++)
             {
 
 
-                   var start_mode =  data[i].vehicleStatus;
+                   var current_vehicle_mode =  data[i].vehicleStatus;
                    
                   if(first_set_data==true){
                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
@@ -485,9 +489,12 @@
                         first_set_data = false;
                   }
 
-                 if((stop_mode != null &&  start_mode === stop_mode) && (start_mode  == "S" || start_mode  == "H")){
+                  console.log("running mode"+current_vehicle_mode);
 
-                      console.log('same mode :- '+start_mode);
+                 if((previous_vehicle_mode != null && (current_vehicle_mode  == "S" || current_vehicle_mode  == "H") ) && current_vehicle_mode == previous_vehicle_mode ){
+                      console.log("current_vehicle_mode"+current_vehicle_mode);
+                      console.log("previous_vehicle_mode"+previous_vehicle_mode);
+                      console.log('same mode :- '+current_vehicle_mode);
                       // debugger;
                      
                    }else{
@@ -528,9 +535,9 @@
                     }
                     
                    
-
+                    previous_vehicle_mode = null;
                     }
-                     stop_mode   = data[i].vehicleStatus;
+                   previous_vehicle_mode  = data[i].vehicleStatus;
                   // --------2019-12-19-2:20--------------------------------------------------------
                    location_details_que.push({
                                                 "lat"   : data[i].latitude, 
@@ -608,6 +615,7 @@
 
         function plotLocationOnMap()
         {
+
             // console.log('Current length '+location_data_que.length);
             if(location_data_que.length >0)
             {
@@ -649,21 +657,36 @@
                 popFromLocationQueue();
                 // want to load new set of data ?
 
-
-                if( (location_data_que.length <= 29) && (!isDataLoadInProgress) && (!dataLoadingCompleted) )
+        
+            
+                   
+                
+                if( (location_data_que.length <= 29 ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
                 {
-                    // console.log('Loading fresh set of data');
                     getLocationData();
                 }
 
                 // stop point
-                if(last_offset==true && location_data_que.length==0){
+
+                if(last_offset==true && location_data_que.length ==0){
                      
                      var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
                      map.addObject(flag);
                 }
                 // stop point
                 
+             }else{
+                if( (location_data_que.length <= 29 ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
+                {
+                    getLocationData();
+                }
+
+                if(last_offset==true && location_data_que.length ==0){
+                     
+                     var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
+                     map.addObject(flag);
+                }
+
              }
         }
 
@@ -969,13 +992,6 @@ $(function() {
   });
 
 });
-
-
-
 </script>
-
-
-
-
 </body>
 </html>
