@@ -47,7 +47,7 @@
 
                             <div class="form-group has-feedback">
                               <label class="srequired">Registration Number</label>
-                              <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{$vehicle->register_number}}" disabled> 
+                              <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" value="{{$vehicle->register_number}}" disabled> 
                               <span class="glyphicon glyphicon-text-size form-control-feedback"></span>
                             </div>
 

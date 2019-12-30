@@ -128,7 +128,7 @@
                         <div class="form-group row" style="float:none!important">
                           <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
                           <div class="form-group has-feedback">
-                            <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Register Number" name="register_number" value="{{ old('register_number') }}" id="register_number" required>
+                            <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" value="{{ old('register_number') }}" id="register_number" required>
                          </div>
                          @if ($errors->has('register_number'))
                          <span class="help-block">
