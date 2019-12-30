@@ -3,7 +3,7 @@
     <tr>
         <th>SL.No</th>
         <th>Vehicle</th>
-        <th>Register Number</th>
+        <th>Registration Number</th>
         <th>Scheduling Route</th>
         <th>Deviating Place</th>
         <th>DateTime</th>  

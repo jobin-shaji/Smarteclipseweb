@@ -85,7 +85,7 @@ Alert Report
                             <tr style="text-align: center;">
                               <th><b>SL.No</b></th>
                               <th><b>Vehicle</b></th>
-                              <th><b>Register number</b></th>
+                              <th><b>Registration number</b></th>
                               <th><b>Alert Type</b></th>                             
                               <th><b>DateTime</b></th>  
                               <th><b>Action</b></th>                                   

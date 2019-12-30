@@ -64,7 +64,7 @@
                       <th><b>SL.No</b></th>
                       <th><b>Document Name</b></th>
                       <th><b>Vehicle Name</b></th>
-                      <th><b>Register Number</b></th>
+                      <th><b>Registration Number</b></th>
                       <th><b>Expiry Date</b></th>
                       <th><b>Status</b></th>
                       <th><b>Action</b></th>

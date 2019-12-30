@@ -29,7 +29,7 @@ All Alerts
                     <th><b>SL.No</b></th>
                     <th><b>Alert</b></th>
                     <th><b>Vehicle Name</b></th>
-                    <th><b>Register Number</b></th>
+                    <th><b>Registration Number</b></th>
                     <!-- <th>Location</th> -->
                     <th><b>Date & Time</b></th> 
                     <th><b>Action</b></th>                 

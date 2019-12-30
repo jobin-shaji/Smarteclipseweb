@@ -65,7 +65,7 @@ Performance Score History
 					                            <tr>
 					                              	<th>SL.No</th>
 													<th>Vehicle Name</th>
-													<th>Register Number</th>
+													<th>Registration Number</th>
 													<th>Driver Name</th>
 													<th>GPS-Serial Number</th>
 													<th>Alert Type</th>
