@@ -195,8 +195,8 @@
 
 
         var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
-        var app_id              = "vvfyuslVdzP04AK3BlBq",
-            app_code            = "f63d__fBLLCuREIGNr6BjQ";
+        var app_id              = "pTDh57IDvFztTZUGw15X",
+            app_code            = "673-fZdOmD_oJnCMZ_ko-g";
         var mapContainer        = document.getElementById('markers');
         var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
         var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
