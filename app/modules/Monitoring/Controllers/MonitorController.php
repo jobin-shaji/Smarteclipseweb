@@ -67,7 +67,7 @@ class MonitorController extends Controller
                     'name',
                     'servicer_job_id',
                     'gps_id',
-                    'servicer_job_id'
+                    
 
                     )
              ->with('gps')
