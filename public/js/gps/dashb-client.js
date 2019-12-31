@@ -77,6 +77,7 @@ function vehicleTrack(res) {
 
   if(res.status!="failed"){
     var JSONObject = res.user_data;
+    console.log(JSONObject);
     var marker, i;
     for (i = 0; i < JSONObject.length; i++) {
     var lat = JSONObject[i].lat;
@@ -173,16 +174,35 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
     fillColor: car_color, //<-- Car Color, you can change it
     fillOpacity: fillOpacity,
     strokeWeight: strokeWeight,
-    anchor: new google.maps.Point(0, 5)
+    anchor: new google.maps.Point(0, 5),
+    size: new google.maps.Size(60,30.26),
+    // styles: [{"stylers": [{ "saturation": -100 }]}],
     // rotation: 180 //<-- Car angle
   };
+  //  var marker = new google.maps.Marker({
+  //   position: location,
+  //   title: "",
+  //   icon: icon,
+  //   // scaledSize: new google.maps.Size(64, 64),
+  //   gpsid:gpsID
+  // });
+   // var map = new google.maps.Map(document.getElementById('map'), {
+   //        zoom: 4,
+   //        center: {lat: -25.363882, lng: 131.044922}
+   //      });
 
-  var marker = new google.maps.Marker({
-    position: location,
-    title: "",
-    icon: icon,
-    gpsid:gpsID
-  });
+ var marker = new google.maps.Marker({
+          position: map.getCenter(),
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10
+          },
+          draggable: true
+          // map: map
+        });
+
+  
+
   var infowindow = new google.maps.InfoWindow();
   google.maps.event.addListener(marker, 'mouseover', function() {
     // alert(vehicle_id);
@@ -217,10 +237,10 @@ function setMapOnAll(map) {
   }
 }
 function selectVehicleTrack(res) {
-  // alert(res.lat);
+  console.log(res);
   // deleteMarkers();
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
-  // map.setZoom(18);
+  map.setZoom(18);
   flag=1;
   // map.setMax(18);
   if(circleStatus==1){
@@ -435,8 +455,10 @@ function redarLocationSelectVehicle(lat, lng, radius) {
      myGoogleRadar.hidePolygon();
    }
  }
+ 
  var radius_in_meter = radius * 1000;
- var latlng = new google.maps.LatLng(lat, lng);
+ var latlng = new google.maps.LatLng(lat,lng);
+
  var sunCircle = {
   strokeColor: "#408753",
   tag:'highligt_selected_vehicle',
