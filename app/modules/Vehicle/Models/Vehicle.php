@@ -45,4 +45,37 @@ class Vehicle extends Model
       return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id');
      }
 
+     public function servicerjob()
+     {
+      return $this->hasOne('App\Modules\Servicer\Models\ServicerJob','id','servicer_job_id');
+     }   
+    
+    /**
+     * 
+    * 
+    */
+    public function getVehicleList()
+    {
+        return self::select(
+            'id',
+            'name',
+            'servicer_job_id',
+            'gps_id')
+        ->with('gps')
+        ->with('servicerjob')
+        ->paginate(10);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getVehicleDetails($vehicle_id)
+    {
+        return self::select(
+            'id',
+            'name',
+            'register_number')->where('id',$vehicle_id)->first();
+    }
+    
 }
