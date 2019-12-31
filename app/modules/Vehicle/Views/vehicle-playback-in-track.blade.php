@@ -534,7 +534,6 @@
 
                     }
                     
-                   
                     previous_vehicle_mode = null;
                     }
                    previous_vehicle_mode  = data[i].vehicleStatus;
