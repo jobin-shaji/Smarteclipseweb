@@ -25,9 +25,6 @@ use Config;
 
 class MonitorController extends Controller 
 {
-
-
-
     /** 
      * Response data 
      */
@@ -58,22 +55,38 @@ class MonitorController extends Controller
         $this->success  = true;
         $this->message  = '';
     }
-   
+
+    /**
+     * 
+     * 
+     */
     public function getVehicleList()
     {
-        
-        $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'servicer_job_id',
-                    'gps_id',
-                    
-
-                    )
-             ->with('gps')
-             ->with('servicerjob')
-            ->paginate(10);
-            // dd($vehicles);
-            return view('Monitoring::vehiclelist',['vehicles'=>$vehicles]); 
+        return view('Monitoring::vehiclelist',['vehicles'=> (new Vehicle())->getVehicleList()]); 
     }
+    
+    /**
+     * 
+     * 
+     */
+    public function getVehicleData(Request $request)
+    {
+        try
+        {
+            if( !isset($request->vehicle_id) )
+            {
+                throw new \Exception('Missing vehicle id');
+            }
+            $this->data = (new Vehicle())->getVehicleDetails($request->vehicle_id);
+            return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message ], $this->code);   
+
+        }
+        catch(\Exception $e)
+        {
+            $this->success = false;
+            $this->message = 'failed';
+            return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message  ], $this->code);
+        }  
+    }
+    
 }
