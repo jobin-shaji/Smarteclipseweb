@@ -313,6 +313,16 @@ function locationSearch()
 
 function moving(vehicle_mode)
 {
+
+  if(circleStatus==1)
+  {
+    cityCircle.setMap(null);
+    if(radarStatus==1)
+    {
+      myGoogleRadar.hidePolygon();
+    }
+  }
+
   if(selected_vehicle_mode == vehicle_mode)
   {
     window.location.reload(true);
