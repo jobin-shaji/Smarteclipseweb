@@ -102,6 +102,7 @@
                 <li><a class="dropdown-item" href="{{url('/traffic-rule')}}">LIST TRAFFIC RULES</a></li>
                 </ul>
             </li>
+            <a class="dropdown-item" href="{{url('/monitor')}}">MONITORING LIST<span></span></a>
         </ul>
     </li>
     <li class="nav-item dropdown">
