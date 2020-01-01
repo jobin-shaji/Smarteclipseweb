@@ -1,7 +1,7 @@
 var client_lat = $('#lat').val();
 var client_lng = $('#lng').val();
-var latMap = parseFloat(client_lat);
-var lngMap = parseFloat(client_lng);
+var latMap = client_lat;
+var lngMap = client_lng;
 var haightAshbury = {
   lat: latMap,
   lng: lngMap
@@ -176,32 +176,13 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
     strokeWeight: strokeWeight,
     anchor: new google.maps.Point(0, 5),
     size: new google.maps.Size(60,30.26),
-    // styles: [{"stylers": [{ "saturation": -100 }]}],
-    // rotation: 180 //<-- Car angle
   };
-  //  var marker = new google.maps.Marker({
-  //   position: location,
-  //   title: "",
-  //   icon: icon,
-  //   // scaledSize: new google.maps.Size(64, 64),
-  //   gpsid:gpsID
-  // });
-   // var map = new google.maps.Map(document.getElementById('map'), {
-   //        zoom: 4,
-   //        center: {lat: -25.363882, lng: 131.044922}
-   //      });
-
- var marker = new google.maps.Marker({
-          position: map.getCenter(),
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 10
-          },
-          draggable: true
-          // map: map
-        });
-
-  
+   var marker = new google.maps.Marker({
+    position: location,
+    title: "",
+    icon: icon,
+    gpsid:gpsID
+  });
 
   var infowindow = new google.maps.InfoWindow();
   google.maps.event.addListener(marker, 'mouseover', function() {
@@ -313,16 +294,6 @@ function locationSearch()
 
 function moving(vehicle_mode)
 {
-
-  if(circleStatus==1)
-  {
-    cityCircle.setMap(null);
-    if(radarStatus==1)
-    {
-      myGoogleRadar.hidePolygon();
-    }
-  }
-
   if(selected_vehicle_mode == vehicle_mode)
   {
     window.location.reload(true);

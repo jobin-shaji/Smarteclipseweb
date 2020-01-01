@@ -20,9 +20,7 @@ function check(){
 
 
 function callBackDataTable(data){
-    // var  data = {
-    
-    // }; 
+    // var  data = {}; 
 
     $("#dataTable").DataTable({
         bStateSave: true,

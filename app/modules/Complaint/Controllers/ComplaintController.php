@@ -186,7 +186,7 @@ class ComplaintController extends Controller {
                 { 
                     if($complaints->status==null||$complaints->status==0)
                     {
-                        return "not assigned";
+                        return "Not Assigned";
                     }
                     else
                     {
