@@ -37,7 +37,8 @@ return  [
        'GpsConfig',
        'Operations',
        'Configuration',
-       'Version'
+       'Version',
+       'Monitoring'
 
     ]
 ]
