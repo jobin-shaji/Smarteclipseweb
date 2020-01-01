@@ -124,8 +124,7 @@ class ComplaintController extends Controller {
         if(\Auth::user()->hasRole('client|sub_dealer|root')){
             return view('Complaint::complaint-list');
         }
-    }
-    
+    }    
     //returns complaints as json 
     public function getComplaints()
     {
