@@ -843,11 +843,13 @@
               status="<span style='color:#c41900 !important'>OFFLINE<span>";     
             }
             
-             var location_name = await getPlaceName(lat,lng).then(function(data){
-                    var location_data = JSON.stringify(data.Response.View);
-               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
+             // var location_name = await getPlaceName(lat,lng).then(function(data){
+             //        var location_data = JSON.stringify(data.Response.View);
+             //   return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
 
-             });
+             // });
+
+             var location_name = lat+","+lng;
 
 
               var details = ' <div class="left-alert-text">'+
