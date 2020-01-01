@@ -57,7 +57,7 @@ function initMap(res) {
   }
   var marker = new google.maps.Marker({
     position:  alertMap[alert].center,
-    icon: iconBase,
+    // icon: iconBase,
     map: map
   });
  

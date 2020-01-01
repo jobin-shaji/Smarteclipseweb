@@ -32,11 +32,11 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},           
-            {data: 'vehicle.name', name: 'vehicle.name'},
-            {data: 'vehicle.register_number', name: 'vehicle.register_number'},
-            {data: 'fromdriver.name', name: 'fromdriver.name'},
-            {data: 'todriver.name', name: 'todriver.name'},
-            {data: 'created_at', name: 'created_at'}
+            {data: 'vehicle.name', name: 'vehicle.name', orderable: false},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number', orderable: false},
+            {data: 'fromdriver.name', name: 'fromdriver.name', orderable: false},
+            {data: 'todriver.name', name: 'todriver.name', orderable: false},
+            {data: 'created_at', name: 'created_at', orderable: false}
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
