@@ -1,7 +1,7 @@
 var client_lat = $('#lat').val();
 var client_lng = $('#lng').val();
-var latMap = parseFloat(client_lat);
-var lngMap = parseFloat(client_lng);
+var latMap = client_lat;
+var lngMap = client_lng;
 var haightAshbury = {
   lat: latMap,
   lng: lngMap
@@ -10,6 +10,7 @@ var refesh_flag=0;
 var markers = [];
 var map;
 var map_flag;
+var flag=0;
 var track_flag = 0;
 var map_popup = 0;
 var radius;
@@ -35,6 +36,8 @@ function initMap() {
 
   map.addListener('zoom_changed', function() {
     localStorage.setItem('googleMapZoomLevel', map.getZoom());
+
+
   });
 }
 
@@ -74,24 +77,26 @@ function vehicleTrack(res) {
 
   if(res.status!="failed"){
     var JSONObject = res.user_data;
+    console.log(JSONObject);
     var marker, i;
     for (i = 0; i < JSONObject.length; i++) {
     var lat = JSONObject[i].lat;
     var lng = JSONObject[i].lon;
+    // alert(flag);
     if (map_flag == 0) {
-    map.panTo(new google.maps.LatLng(lat, lng));
-    // check if zoom level is already set
-    var zoom_level = 13;
-    if( localStorage.getItem('googleMapZoomLevel') != null )
-    {
-      zoom_level = localStorage.getItem('googleMapZoomLevel') * 1;
-    }
-    map.setZoom(zoom_level);
-    map.setOptions({
-    minZoom: 5,
-    maxZoom: 17
-    });
-    // map_flag=1;
+      map.panTo(new google.maps.LatLng(lat, lng));
+      // check if zoom level is already set
+      var zoom_level = 13;
+      if( localStorage.getItem('googleMapZoomLevel') != null )
+      {
+        zoom_level = localStorage.getItem('googleMapZoomLevel') * 1;
+      }
+      map.setZoom(zoom_level);
+      map.setOptions({
+      minZoom: 5,
+      maxZoom: 17
+      });
+      // map_flag=1;
     }
     var gpsID = JSONObject[i].id;
     var reg = JSONObject[i].register_number;
@@ -169,16 +174,16 @@ function addMarker(location, title, car_color, path, scale, fillOpacity, strokeW
     fillColor: car_color, //<-- Car Color, you can change it
     fillOpacity: fillOpacity,
     strokeWeight: strokeWeight,
-    anchor: new google.maps.Point(0, 5)
-    // rotation: 180 //<-- Car angle
+    anchor: new google.maps.Point(0, 5),
+    size: new google.maps.Size(60,30.26),
   };
-
-  var marker = new google.maps.Marker({
+   var marker = new google.maps.Marker({
     position: location,
     title: "",
     icon: icon,
     gpsid:gpsID
   });
+
   var infowindow = new google.maps.InfoWindow();
   google.maps.event.addListener(marker, 'mouseover', function() {
     // alert(vehicle_id);
@@ -213,17 +218,17 @@ function setMapOnAll(map) {
   }
 }
 function selectVehicleTrack(res) {
+  console.log(res);
   // deleteMarkers();
   map.panTo(new google.maps.LatLng(res.lat, res.lon));
   map.setZoom(18);
+  flag=1;
+  // map.setMax(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
-
-  }
- 
-     refesh_flag=1;
-     redarLocationSelectVehicle(res.lat,res.lon,0.06);
- 
+  } 
+  refesh_flag=1;
+  redarLocationSelectVehicle(res.lat,res.lon,0.08); 
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -289,16 +294,6 @@ function locationSearch()
 
 function moving(vehicle_mode)
 {
-
-  if(circleStatus==1)
-  {
-    cityCircle.setMap(null);
-    if(radarStatus==1)
-    {
-      myGoogleRadar.hidePolygon();
-    }
-  }
-
   if(selected_vehicle_mode == vehicle_mode)
   {
     window.location.reload(true);
@@ -441,8 +436,10 @@ function redarLocationSelectVehicle(lat, lng, radius) {
      myGoogleRadar.hidePolygon();
    }
  }
+ 
  var radius_in_meter = radius * 1000;
- var latlng = new google.maps.LatLng(lat, lng);
+ var latlng = new google.maps.LatLng(lat,lng);
+
  var sunCircle = {
   strokeColor: "#408753",
   tag:'highligt_selected_vehicle',
@@ -452,6 +449,8 @@ function redarLocationSelectVehicle(lat, lng, radius) {
   fillOpacity: 0.35,
   map: map,
   center: latlng,
+  // minZoom: 17,
+  //   maxZoom: 17,
   radius: radius_in_meter // in meters
  };
  cityCircle = new google.maps.Circle(sunCircle);

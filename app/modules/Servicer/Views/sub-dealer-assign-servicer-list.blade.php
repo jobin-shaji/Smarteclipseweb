@@ -33,7 +33,7 @@
                       <th>Job Code</th>
                       <th>Service Engineer</th>
                       <th>Client</th>
-                      <th>GPS</th>
+                      <th>GPS Serial Number</th>
                       <th>Job Type</th>
                       <th>Description</th>
                       <th>Job Date</th>

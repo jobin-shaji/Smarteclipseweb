@@ -121,7 +121,7 @@
 
               <div class="col-lg-3">
                 <div class="form-group has-feedback">
-                  <label class="srequired">App ideal icon</label>
+                  <label class="srequired">App idle icon</label>
                   <div class="vehicle_app_icon">
                     <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->ideal_icon}}" width="50" height="50">
                   </div>
