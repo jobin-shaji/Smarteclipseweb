@@ -44,7 +44,7 @@
           <div class="top-date">
              <div class="row">
                 
-              <div class='col-sm-4'>
+              <div class='col-sm-3'>
               <div class="form-group">
                 <label style="font-weight:bold">Start Date</label>
                 <div class='input-group date' id='datetimepicker_live1'>
@@ -56,7 +56,7 @@
               </div>
             </div>
 
-              <div class='col-sm-4'>
+              <div class='col-sm-3'>
               <div class="form-group">
                 <label style="font-weight:bold">End Date</label>
                 <div class='input-group date' id='datetimepicker_live2'>
@@ -67,40 +67,32 @@
                 </div>
               </div>
             </div>
-            <div>
-         <!--   <div class='col-sm-3'>   
+    
+           <div class='col-sm-3'>   
             <div style="float: left;margin-left: 2%">
               <label style="font-weight:bold">Speed</label>
-              <select name="speed" id="speed">
+              <select name="speed" id="speed" onchange="changePlaySpeed(this.value)">
                   <option value="1">1X</option>
                   <option value="2">2X</option>
                   <option value="3">3X</option>
                   <option value="4">4X</option>
                   <option value="5">5X</option>
-                  <option value="6">6X</option>
               </select>
             </div>
-          </div> -->
+          </div>
+        
+
+
+         <div class='col-sm-3' style="margin-top: 24px;">   
+                   
+           <button class="btn btn-primary btn-sm start_button" onclick="startPlayBack()" id="btnPlay">Play</button>  
+           <button class="btn btn-primary btn-sm start_button" style="display:none; margin-right: 6px;float: left;" onclick="startPause()" id="btnPause">Pause</button>  
+              <button class="btn btn-primary btn-sm" style="display:none; margin-right: 6px;float: left;" onclick="btnContinue()" id="btnContinue">Continue</button>
+                       
+              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Stop</button>
         </div>
 
-          <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
-                         
-              <button class="btn btn-primary btn-sm start_button" onclick="startPlayBack()" id="btnPlay">Play</button>
 
-
-           
-          </div>
-           <!--   <div class="contoller" style="float: left; margin-left: 15px;;margin-top: 25px;">
-            <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="getLocationData()" id="btnPlay">pause</button>
-
-            </span>
-          </div> -->
-             <div class="contoller" style="float: left; margin-left: 15px;margin-top: 25px;">
-            <span class="contoller">                           
-              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Stop</button>
-            </span>
-          </div>
       </div>
       <div class="vehicle_details_list">
        <div class="row">
@@ -167,6 +159,7 @@
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
       
     <script>
+        var pauseMapRendering = false;
         var bearsMarkeronStartPoint;
         var bearsMarker;
         var startPointLatitude       = null;
@@ -195,8 +188,8 @@
 
 
         var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
-        var app_id              = "pTDh57IDvFztTZUGw15X",
-            app_code            = "673-fZdOmD_oJnCMZ_ko-g";
+                                            var app_id              = "pTDh57IDvFztTZUGw15X",
+                                                app_code            = "673-fZdOmD_oJnCMZ_ko-g";
         var mapContainer        = document.getElementById('markers');
         var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
         var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
@@ -224,9 +217,18 @@
         var previousCoorinates;
         var blacklineStyle;
 
+
+        var playback_speed_rate  = 1;
         var speed_val            = 1;
         var load_speed           = 1;
+        var playback_speed_base  = 300;
+        var playback_speed       = playback_speed_base/playback_speed_rate;
+        var location_queue_lower_limit = 30;
         var loader               = false;
+
+        var mapUpdateInterval_location;
+
+
     
          
 
@@ -328,7 +330,19 @@
         };
 
 
-         
+         function startPause(){
+            $('#btnPause').css('display','none');
+            $('#btnContinue').css('display','block');
+            // clearInterval(mapUpdateInterval_location)
+            pauseMapRendering = true;
+          }
+
+         function btnContinue(){
+            $('#btnPause').css('display','block');
+            $('#btnContinue').css('display','none');
+            pauseMapRendering = false;
+         }
+
         function startPlayBack(){
               
 
@@ -361,11 +375,19 @@
 
         }
 
-        function getLocationData(){
-             var mapUpdateInterval   = window.setInterval(function(){
-             plotLocationOnMap();
+        function changePlaySpeed(speed){
+         playback_speed_rate  = speed;
+         playback_speed_base  = 1000/speed;
+         playback_speed       = playback_speed_base/playback_speed_rate;
+        }
 
-             }, load_speed);
+        function getLocationData(){
+             mapUpdateInterval_location   = window.setInterval(function(){
+              if(!pauseMapRendering)
+              {
+                plotLocationOnMap();
+              }
+             }, playback_speed);
 
 
             // --------2019-12-19-2:20--------------------------------------------------------
@@ -410,6 +432,10 @@
 
                     if( typeof response.playback != undefined)
                     {
+                         if(first_response == false ){
+                           $('#btnPause').css('display','block');
+                         }
+
                         first_response=true;
                         total_offset=response.total_offset;
                         if(offset < total_offset){
@@ -583,7 +609,7 @@
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
           
-          for (var i = 0; i < distance/2; i++) {   
+          for (var i = 0; i < distance/playback_speed_rate; i++) {   
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
@@ -660,7 +686,7 @@
             
                    
                 
-                if( (location_data_que.length <= 29 ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
+                if( (location_data_que.length < location_queue_lower_limit ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
                 {
                     getLocationData();
                 }
@@ -675,7 +701,7 @@
                 // stop point
                 
              }else{
-                if( (location_data_que.length <= 29 ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
+                if( (location_data_que.length < location_queue_lower_limit ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
                 {
                     getLocationData();
                 }
@@ -702,6 +728,7 @@
             else
             {
                 clearInterval(mapUpdateInterval);
+                clearInterval(mapUpdateInterval_location);
                 // console.log('no more map updation calls');
                 return null;
             }
@@ -778,8 +805,8 @@
                 el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
             }
             outerElement.appendChild(el);
-            outerElement.style.top = "-25px";
-            outerElement.style.width = "200px";
+            outerElement.style.top = "-20px";
+            outerElement.style.width = "150px";
 
             var domIcon = new H.map.DomIcon(outerElement);
             bearsMarkeronStartPoint = new H.map.DomMarker({ lat:lat, lng:lng }, {
@@ -815,6 +842,7 @@
             }else{
               status="<span style='color:#c41900 !important'>OFFLINE<span>";     
             }
+            
              var location_name = await getPlaceName(lat,lng).then(function(data){
                     var location_data = JSON.stringify(data.Response.View);
                return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
