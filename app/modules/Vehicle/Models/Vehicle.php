@@ -48,7 +48,17 @@ class Vehicle extends Model
      public function servicerjob()
      {
       return $this->hasOne('App\Modules\Servicer\Models\ServicerJob','id','servicer_job_id');
-     }   
+     }
+
+    public function jobs()
+    {
+      return $this->hasMany('App\Modules\Servicer\Models\ServicerJob', 'gps_id', 'gps_id');
+    }  
+
+    public function alerts()
+    {
+      return $this->hasMany('App\Modules\Alert\Models\Alert', 'gps_id', 'gps_id'); 
+    }
     
     /**
      * 
@@ -72,10 +82,34 @@ class Vehicle extends Model
      */
     public function getVehicleDetails($vehicle_id)
     {
-        return self::select(
+      return self::select(
             'id',
             'name',
-            'register_number')->where('id',$vehicle_id)->first();
+            'vehicle_type_id',
+            'model_id',
+            'client_id',
+            'driver_id',
+            'status',
+            'engine_number',
+            'chassis_number',
+            'theft_mode',
+            'towing',
+            'emergency_status',
+            'created_at',
+            'servicer_job_id',
+            'gps_id',
+            'register_number')
+        ->with('gps')
+        ->with('vehicleType')
+        ->with('vehicleModels.vehicleMake')
+        ->with('jobs', 'jobs.servicer')
+        ->with('client.state')
+        ->with('client.country')
+        ->with('client.city')
+        ->with('client.subdealer')
+        ->with('driver')
+        ->with('alerts','alerts.alertType')
+        ->where('id',$vehicle_id)->first();
     }
     
 }
