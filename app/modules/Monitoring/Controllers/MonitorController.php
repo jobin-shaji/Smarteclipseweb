@@ -77,6 +77,7 @@ class MonitorController extends Controller
             {
                 throw new \Exception('Missing vehicle id');
             }
+
             $this->data = (new Vehicle())->getVehicleDetails($request->vehicle_id);
             return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message ], $this->code);   
 
