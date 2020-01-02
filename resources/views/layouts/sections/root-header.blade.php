@@ -16,8 +16,8 @@
             <!-- <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>   -->
             <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a> 
-            <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST</a> 
-            <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK</a> 
+            <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST  <span class="badge">New</span> </a>
+            <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK  <span class="badge">New</span></a> 
         </div>
     </li>
     <li class="nav-item dropdown">
