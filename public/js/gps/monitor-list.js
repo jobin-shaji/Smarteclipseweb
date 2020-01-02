@@ -195,25 +195,25 @@ function render_devicetab(res)
 }
 function render_installationtab(res)
 {
-    var table = '<table border="1">'+
-        '<tr>'+
-            '<th>Servicer Name</th>'+
-            '<th>Job Date</th>'+
-            '<th>Job Completed Date</th>'+
-            '<th>Location</th>'+
-            '<th>Description</th>'+
-            '<th>Comments</th>'+
+    var table = '<table border="1" style="width: 100%;">'+
+        '<tr style="background: #ccc; color: #404040;">'+
+            '<th style="text-align: center; padding: 5px 0;">Servicer Name</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Job Date</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Job Completed Date</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Location</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Description</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Comments</th>'+
         '</tr>';
         res.data.jobs.forEach(function(each_job){
             if(each_job.job_type == '1')
             {
                 table +='<tr>'+
-                    '<td>'+each_job.servicer.name+'</td>'+
-                    '<td>'+each_job.job_date+'</td>'+
-                    '<td>'+each_job.job_complete_date+'</td>'+
-                    '<td>'+each_job.location+'</td>'+
-                    '<td>'+each_job.description+'</td>'+
-                    '<td>'+each_job.comment+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.servicer.name+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_date+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_complete_date+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.location+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.description+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.comment+'</td>'+
                 '</tr>';
             }
         });
@@ -223,25 +223,25 @@ function render_installationtab(res)
 
 function render_servicetab(res)
 {
-    var table = '<table border="1">'+
-        '<tr>'+
-            '<th>Servicer Name</th>'+
-            '<th>Job Date</th>'+
-            '<th>Job Completed Date</th>'+
-            '<th>Location</th>'+
-            '<th>Description</th>'+
-            '<th>Comments</th>'+
+    var table = '<table border="1" style="width: 100%;">'+
+        '<tr style="background: #ccc; color: #404040;">'+
+            '<th style="text-align: center; padding: 5px 0;">Servicer Name</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Job Date</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Job Completed Date</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Location</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Description</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Comments</th>'+
         '</tr>';
         res.data.jobs.forEach(function(each_job){
             if(each_job.job_type == '2')
             {
-                table +='<tr>'+
-                    '<td>'+each_job.servicer.name+'</td>'+
-                    '<td>'+each_job.job_date+'</td>'+
-                    '<td>'+each_job.job_complete_date+'</td>'+
-                    '<td>'+each_job.location+'</td>'+
-                    '<td>'+each_job.description+'</td>'+
-                    '<td>'+each_job.comment+'</td>'+
+                table +='<tr >'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.servicer.name+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_date+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_complete_date+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.location+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.description+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_job.comment+'</td>'+
                 '</tr>';
             }
         });
@@ -252,24 +252,24 @@ function render_servicetab(res)
 }
 function render_alerttab(res)
 {
-    var table = '<table border="1">'+
-        '<tr>'+
-            '<th>Alert</th>'+
-            '<th>Latitude</th>'+
-            '<th>Longitude</th>'+
-            '<th>Alert Status</th>'+
-            '<th>Date of Alert</th>'+
-            '<th>Device Time</th>'+
+    var table = '<table border="1" style="width: 100%;">'+
+        '<tr style="background: #ccc; color: #404040;">'+
+            '<th style="text-align: center; padding: 5px 0;">Alert</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Latitude</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Longitude</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Alert Status</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Date of Alert</th>'+
+            '<th style="text-align: center; padding: 5px 0;">Device Time</th>'+
         '</tr>';
         res.data.alerts.forEach(function(each_alert)
         {
-            table +='<tr>'+
-                    '<td>'+each_alert.alert_type.description+'</td>'+
-                    '<td>'+each_alert.latitude+'</td>'+
-                    '<td>'+each_alert.longitude+'</td>'+
-                    '<td>'+each_alert.status+'</td>'+
-                    '<td>'+each_alert.created_at+'</td>'+
-                    '<td>'+each_alert.device_time+'</td>'+
+            table +='<tr >'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_alert.alert_type.description+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_alert.latitude+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_alert.longitude+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_alert.status+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_alert.created_at+'</td>'+
+                    '<td style="text-align: center; padding:3px 0;">'+each_alert.device_time+'</td>'+
                 '</tr>';
            });
         table += '</table>';
