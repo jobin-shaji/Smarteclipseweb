@@ -1,12 +1,47 @@
 /* Style the tab */
-.tab {
+
+ 
+  .tablehighlight{
+  background-color: #FAAC58;
+}
+.vehicle_details_table_row{
+  cursor: pointer;
+}
+
+.monitoring_subtab {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
+  margin-left: 1%;
+}
+
+.h6_1{
+margin-left: 16%;
+margin-top: -1.5%;
+}
+.h6_2{
+margin-left: 16%;
+margin-top: -1.5%;
+}
+.h6_3{
+margin-left: 16%;
+margin-top: -1.5%;
+}
+.h6_4{
+margin-left: 16%;
+margin-top: -1.5%;
+}
+.h6_5{
+margin-left: 16%;
+margin-top: -1.5%;
+}
+.h6_6{
+margin-left: 16%;
+margin-top: -1.5%;
 }
 
 /* Style the buttons inside the tab */
-.tab button {
+.monitoring_subtab a {
   background-color: inherit;
   float: left;
   border:grey;
@@ -18,12 +53,12 @@
 }
 
 /* Change background color of buttons on hover */
-.tab button:hover {
+.monitoring_subtab a:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-.tab button.active {
+.monitoring_subtab a.active {
   background-color: #ccc;
 }
 
