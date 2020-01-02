@@ -36,6 +36,7 @@ use Carbon\Carbon;
 use PDF;
 use DataTables;
 use Config;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class VehicleController extends Controller 
 {
@@ -695,7 +696,8 @@ class VehicleController extends Controller
         ->where('client_id',$client_id)
         ->with('Fromdriver:id,name')
         ->with('Todriver:id,name')
-        ->with('vehicle:id,name,register_number')        
+        ->with('vehicle:id,name,register_number') 
+        ->orderBy('id','desc')       
         ->get();
 // dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
@@ -968,50 +970,64 @@ class VehicleController extends Controller
            return view('Vehicle::404');
         }
         $online_vehicle=$request->online_icon;
-        if($online_vehicle){
-              
-        $getFileExt   = $online_vehicle->getClientOriginalExtension();
-        $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents';
-        $online_vehicle->move($destinationPath,$online_uploadedFile);
-        $vehicle_type->online_icon = $online_uploadedFile;
+        if($online_vehicle){              
+            $getFileExt   = $online_vehicle->getClientOriginalExtension();
+            $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
+            $destinationPath =  public_path('/documents');
+            $online_vehicle = Image::make($online_vehicle->getRealPath());           
+            $online_vehicle->resize(250,250, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$online_uploadedFile);
+            $vehicle_type->online_icon = $online_uploadedFile;
         }
-        
-       
         // online vehicle image
          // offline vehicle image
         $offline_vehicle=$request->offline_icon;
         if($offline_vehicle){
-        $getFileExt   = $offline_vehicle->getClientOriginalExtension();
-        $offline_uploadedFile =   time().'_offline_vehicle.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents';
-        $offline_vehicle->move($destinationPath,$offline_uploadedFile);
-        $vehicle_type->offline_icon = $offline_uploadedFile;
+            $getFileExt   = $offline_vehicle->getClientOriginalExtension();
+            $offline_uploadedFile =   time().'_offline_vehicle.'.$getFileExt;
+            //Move Uploaded File
+            // $destinationPath = 'documents';
+            // $offline_vehicle->move($destinationPath,$offline_uploadedFile);
+            $destinationPath =  public_path('/documents');
+            $offline_vehicle = Image::make($offline_vehicle->getRealPath());           
+            $offline_vehicle->resize(250,250, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$offline_uploadedFile);
+            $vehicle_type->offline_icon = $offline_uploadedFile;
         }
         // online vehicle image
          // ideal vehicle image
         $ideal_vehicle=$request->ideal_icon;
         if($ideal_vehicle){
-        $getFileExt   = $ideal_vehicle->getClientOriginalExtension();
-        $ideal_uploadedFile =   time().'_ideal_icon.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents';
-        $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
-        $vehicle_type->ideal_icon = $ideal_uploadedFile;
+            $getFileExt   = $ideal_vehicle->getClientOriginalExtension();
+            $ideal_uploadedFile =   time().'_ideal_icon.'.$getFileExt;
+            //Move Uploaded File
+            // $destinationPath = 'documents';
+            // $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
+            $destinationPath =  public_path('/documents');
+            $ideal_vehicle = Image::make($ideal_vehicle->getRealPath());           
+            $ideal_vehicle->resize(250,250, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$ideal_uploadedFile);
+            $vehicle_type->ideal_icon = $ideal_uploadedFile;
         }
         // ideal vehicle image
         // sleep vehicle image
         $sleep_vehicle=$request->sleep_icon;
         if($sleep_vehicle){
-        $getFileExt   = $sleep_vehicle->getClientOriginalExtension();
-        $sleep_uploadedFile =   time().'_sleep_icon.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents';
-        $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
-        // sleep vehicle image
-        $vehicle_type->sleep_icon =$sleep_uploadedFile;
+            $getFileExt   = $sleep_vehicle->getClientOriginalExtension();
+            $sleep_uploadedFile =   time().'_sleep_icon.'.$getFileExt;
+            //Move Uploaded File
+            // $destinationPath = 'documents';
+            // $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
+            $destinationPath =  public_path('/documents');
+            $sleep_vehicle = Image::make($sleep_vehicle->getRealPath());           
+            $sleep_vehicle->resize(250,250, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$sleep_uploadedFile);
+            // sleep vehicle image
+            $vehicle_type->sleep_icon =$sleep_uploadedFile;
         }
 
 
@@ -2499,6 +2515,7 @@ class VehicleController extends Controller
     public function eclipseSingleVehicleReport(Request $request) 
     {
         $user_id = $request->user_id;
+        // dd($user_id);
         $vehicle_id = $request->vehicle_id;
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
@@ -2599,10 +2616,11 @@ class VehicleController extends Controller
 
     public function eclipseGetVehicleTravelSummary(Request $request) {
         $user_id = $request->user_id;
+
         $vehicle_id = $request->vehicle_id;
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
-        $user = Client::where('user_id', $user_id)->first();
+        $user = User::where('id', $user_id)->first();
         if ($user == null) 
         {
             $this->success=false;
@@ -2649,17 +2667,11 @@ class VehicleController extends Controller
                                    "travel_speed" => $travel_speed, 
                                    "total_alerts" => $vehicle_profile['user_alert'], 
                                    "vehicleId" => $vehicle_details->id, 
-                                   "user_name" => $user->username, 
                                    "vehicle_number" => $vehicle_details->register_number, 
                                    "vehicle_type" => $vehicle_details->vehicleType->name, 
-                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
-                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
-                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
-                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
-                                  );
+                                   );
 
             $this->data[] = [
-                            'user_name' => $user->username, 
                             'travel_summary' => $travel_data
                             ];
 
