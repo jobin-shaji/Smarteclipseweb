@@ -224,10 +224,10 @@ class DriverController extends Controller {
     {
         // $client =\Auth::user()->client;
         $client_id=\Auth::user()->client->id;
-       $drivers = Driver::select('id','name')
+        $drivers = Driver::select('id','name')
                     ->where('client_id',$client_id)
                     ->get();
-       return view('Driver::performance-score-history',['drivers' => $drivers]);
+        return view('Driver::performance-score-history',['drivers' => $drivers]);
     }
 
     public function performanceScoreHistoryList(Request $request)
