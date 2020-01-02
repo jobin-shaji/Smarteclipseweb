@@ -214,7 +214,7 @@ class DriverController extends Controller {
                     ->first();
          $alert_type_point->driver_point = $request->over_speed_gf_exit;
          $alert_type_point->save();
-        $request->session()->flash('message', 'Performance score updated successfully!'); 
+        $request->session()->flash('message', 'Alert points updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('performance-score'));  
     }
@@ -224,10 +224,10 @@ class DriverController extends Controller {
     {
         // $client =\Auth::user()->client;
         $client_id=\Auth::user()->client->id;
-       $drivers = Driver::select('id','name')
+        $drivers = Driver::select('id','name')
                     ->where('client_id',$client_id)
                     ->get();
-       return view('Driver::performance-score-history',['drivers' => $drivers]);
+        return view('Driver::performance-score-history',['drivers' => $drivers]);
     }
 
     public function performanceScoreHistoryList(Request $request)

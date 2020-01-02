@@ -1,10 +1,9 @@
-function single_vehicle_details(vehicle_id) 
-{
-    var vehicle_tab_elements = [
-        {'id' : 'tvc_vehicle_name', 'key' : 'name'},
-        {'id' : 'tvc_vehicle_registration_number', 'key' : 'register_number'}
-    ];
 
+function single_vehicle_details(vehicle_id, row_id) 
+{   
+    // highlight clicked row
+    highLightClickedRow(row_id);
+    var vehicle_tab_elements = [];
     if(vehicle_id)
     {
         var data = { vehicle_id :vehicle_id};
@@ -19,22 +18,28 @@ function single_vehicle_details(vehicle_id)
             success: function (res){
                 if(res.success)
                 {
-                    vehicle_tab_elements.forEach(function(each_element){
-                        if(typeof res.data[each_element.key])
-                        {
-                            $('#'+each_element.id).text(res.data[each_element.key]); 
-                        }
-                    });
-                    // display vehicle tab
-                    setActiveTab('vehicle');
+                    render_vehicletab(res);
+                    render_devicetab(res);
+                    render_installationtab(res);
+                    render_servicetab(res);
+                    render_alerttab(res);
+                    render_subscriptiontab(res);
                 }
             }
         });
     }
 }
-
 function setActiveTab(active_tab_id)
 {
+    // set active tab
+    $('#monitoring_details_tabs').find('li').each(function(){
+        $(this).find('a').removeClass('active show');
+        if( $(this).find('a').attr('href') == '#tab_content_'+active_tab_id )
+        {
+            $(this).find('a').addClass('active show');
+        }
+    });
+    // set active tab content
     $('#monitoring_details_tab_contents').find('.tab-pane').each(function(){
         $(this).removeClass('active show in');
         if( $(this).attr('id') == 'tab_content_'+active_tab_id )
@@ -43,6 +48,237 @@ function setActiveTab(active_tab_id)
         }
     });
 }
+function highLightClickedRow(id)
+{
+    $('#vehicle_details_table').find('.vehicle_details_table_row').each(function(){
+        $(this).removeClass('tablehighlight');
+        if( $(this).attr('id') == 'vehicle_details_table_row_'+id )
+        {
+            $(this).addClass('tablehighlight');
+        }
+    });
+}
+function traverse_it(obj){
+    if(typeof obj.key=='string'){
+        path.push('key');
+        traverse_it(obj.key);
+    }else{
+        path.push(obj);
+        return;
+    }
+}
+function render_vehicletab(res)
+{
+    [
+                        /* Vehicle Details */
+        {'id' : 'tvc_vehicle_name', 'key' : 'name'},
+        {'id' : 'tvc_vehicle_registration_number', 'key' : 'register_number'},
+        {'id' : 'tvc_vehicle_type', 'key' : ['vehicle_type','name'] },
+        {'id' : 'tvc_vehicle_model', 'key' : ['vehicle_models','name']},
+        {'id' : 'tvc_vehicle_make', 'key' : ['vehicle_models','vehicle_make','name']},
+        {'id' : 'tvc_vehicle_min_fuel', 'key' : ['vehicle_models','fuel_min']},
+        {'id' : 'tvc_vehicle_max_fuel', 'key' : ['vehicle_models','fuel_max']},
+        {'id' : 'tvc_vehicle_status', 'key' : 'status'},
+        {'id' : 'tvc_vehicle_engine_number', 'key' : 'engine_number'},
+        {'id' : 'tvc_vehicle_chassis_number', 'key' : 'chassis_number'},
+        {'id' : 'tvc_vehicle_theftmode', 'key' : 'theft_mode'},
+        {'id' : 'tvc_vehicle_towing', 'key' : 'towing'},
+        {'id' : 'tvc_vehicle_emergency_status', 'key' : 'emergency_status'},
+        {'id' : 'tvc_vehicle_created_date', 'key' : 'created_at'},
+                        /* /Vehicle Details */
+                        /* Client Details */
+        {'id' : 'tvc_client_name', 'key' : ['client','name']},
+        {'id' : 'tvc_client_address', 'key' : ['client','address']},
+        {'id' : 'tvc_client_lat', 'key' : ['client','latitude']},
+        {'id' : 'tvc_client_lng', 'key' : ['client','longitude']},
+        {'id' : 'tvc_client_logo', 'key' : ['client','logo']},
+        {'id' : 'tvc_client_country', 'key' : ['client','country','name']},
+        {'id' : 'tvc_client_state', 'key' : ['client','state','name']},
+        {'id' : 'tvc_client_city', 'key' : ['client','city','name']},
+        {'id' : 'tvc_client_sub_dealer', 'key' : ['client','subdealer','name']},
+                        /* /Client Details */
+                        /* Driver Details */
+        {'id' : 'tvc_driver_name', 'key' : ['driver','name']},
+        {'id' : 'tvc_driver_address', 'key' : ['driver','address']},
+        {'id' : 'tvc_driver_mobile', 'key' : ['driver','mobile']},
+        {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
+    ].forEach(function(each_element){
+        if(typeof each_element.key == 'string')
+        {
+            $('#'+each_element.id).text(res.data[each_element.key])
+        }
+        else if(typeof each_element.key == 'object')
+        {
+            var d = res.data;
+            each_element.key.forEach(function(key){
+                if(d[key] != null)
+                {
+                    d = d[key];
+                }
+                else
+                {
+                    d = '';
+                    return false;
+                }
+            });
+            $('#'+each_element.id).text(d)
+        }
+    });
+    // display vehicle tab
+    setActiveTab('vehicle');
+    //$('body').scrollTo('#monitoring_details_tab_contents');
+    $('html, body').animate({
+        scrollTop: $("#monitoring_details_tab_contents").offset().top
+    }, 1000);
+}
+function render_devicetab(res)
+{
+    [
+        {'id' : 'tvc_device_imei', 'key' : ['gps','imei']},
+        {'id' : 'tvc_device_serial_no', 'key' : ['gps','serial_no']},
+        {'id' : 'tvc_device_manufacturing_date', 'key' : ['gps','manufacturing_date']},
+        {'id' : 'tvc_device_icc_id', 'key' : ['gps','icc_id']},
+        {'id' : 'tvc_device_imsi', 'key' : ['gps','imsi']},
+        {'id' : 'tvc_device_e_sim_number', 'key' : ['gps','e_sim_number']},
+        {'id' : 'tvc_device_batch_number', 'key' : ['gps','batch_number']},
+        {'id' : 'tvc_device_model_name', 'key' : ['gps','model_name']},
+        {'id' : 'tvc_device_version', 'key' : ['gps','version']},
+        {'id' : 'tvc_device_employee_code', 'key' : ['gps','employee_code']},
+        {'id' : 'tvc_device_satellites', 'key' : ['gps','no_of_satellites']},
+        {'id' : 'tvc_device_emergency_status', 'key' : ['gps',' emergency_status']},
+        {'id' : 'tvc_device_gps_fix', 'key' : ['gps','gps_fix_on']},
+        {'id' : 'tvc_device_calibrated_on', 'key' : ['gps','calibrated_on']},
+        {'id' : 'tvc_device_login_on', 'key' : ['gps','login_on']},
+        {'id' : 'tvc_device_created_on', 'key' : ['gps','created_at']},
+        {'id' : 'tvc_device_mode', 'key' : ['gps','mode']},
+        {'id' : 'tvc_device_lat', 'key' : ['gps','lat']},
+        {'id' : 'tvc_device_lon', 'key' : ['gps','lon']},
+        {'id' : 'tvc_device_network_status', 'key' : ['gps','network_status']},
+        {'id' : 'tvc_device_fuel_status', 'key' : ['gps','fuel_status']},
+        {'id' : 'tvc_device_speed', 'key' : ['gps','speed']},
+        {'id' : 'tvc_device_odometer', 'key' : ['gps','odometer']},
+        {'id' : 'tvc_device_battery_status', 'key' : ['gps','battery_status']},
+        {'id' : 'tvc_device_main_power_status', 'key' : ['gps','main_power_status']},
+        {'id' : 'tvc_device_device_time', 'key' : ['gps','device_time']},
+        {'id' : 'tvc_device_ignition', 'key' : ['gps','ignition']},
+        {'id' : 'tvc_device_gsm_signal_strength', 'key' : ['gps','gsm_signal_strength']},
+        {'id' : 'tvc_device_ac_status', 'key' : ['gps','ac_status']},
+        {'id' : 'tvc_device_kilometer', 'key' : ['gps','km']},
+    ].forEach(function(each_element){
+        if(typeof each_element.key == 'string')
+        {
+            $('#'+each_element.id).text(res.data[each_element.key])
+        }
+        else if(typeof each_element.key == 'object')
+        {
+            var d = res.data;
+            each_element.key.forEach(function(key){
+                if(d[key] != null)
+                {
+                    d = d[key];
+                }
+                else
+                {
+                    d = '';
+                    return false;
+                }
+            });
+            $('#'+each_element.id).text(d)
+        }
+    });
+        // display vehicle tab
+    setActiveTab('vehicle');
+    //$('body').scrollTo('#monitoring_details_tab_contents');
+    $('html, body').animate({
+        scrollTop: $("#monitoring_details_tab_contents").offset().top
+    }, 1000);
+}
+function render_installationtab(res)
+{
+    var table = '<table border="1">'+
+        '<tr>'+
+            '<th>Servicer Name</th>'+
+            '<th>Job Date</th>'+
+            '<th>Job Completed Date</th>'+
+            '<th>Location</th>'+
+            '<th>Description</th>'+
+            '<th>Comments</th>'+
+        '</tr>';
+        res.data.jobs.forEach(function(each_job){
+            if(each_job.job_type == '1')
+            {
+                table +='<tr>'+
+                    '<td>'+each_job.servicer.name+'</td>'+
+                    '<td>'+each_job.job_date+'</td>'+
+                    '<td>'+each_job.job_complete_date+'</td>'+
+                    '<td>'+each_job.location+'</td>'+
+                    '<td>'+each_job.description+'</td>'+
+                    '<td>'+each_job.comment+'</td>'+
+                '</tr>';
+            }
+        });
+        table += '</table>';
+    $('#installation_table_wrapper').html(table);
+}
+
+function render_servicetab(res)
+{
+    var table = '<table border="1">'+
+        '<tr>'+
+            '<th>Servicer Name</th>'+
+            '<th>Job Date</th>'+
+            '<th>Job Completed Date</th>'+
+            '<th>Location</th>'+
+            '<th>Description</th>'+
+            '<th>Comments</th>'+
+        '</tr>';
+        res.data.jobs.forEach(function(each_job){
+            if(each_job.job_type == '2')
+            {
+                table +='<tr>'+
+                    '<td>'+each_job.servicer.name+'</td>'+
+                    '<td>'+each_job.job_date+'</td>'+
+                    '<td>'+each_job.job_complete_date+'</td>'+
+                    '<td>'+each_job.location+'</td>'+
+                    '<td>'+each_job.description+'</td>'+
+                    '<td>'+each_job.comment+'</td>'+
+                '</tr>';
+            }
+        });
+        table += '</table>';
+
+    $('#service_table_wrapper').html(table);
+
+}
+function render_alerttab(res)
+{
+    var table = '<table border="1">'+
+        '<tr>'+
+            '<th>Alert</th>'+
+            '<th>Latitude</th>'+
+            '<th>Longitude</th>'+
+            '<th>Alert Status</th>'+
+            '<th>Date of Alert</th>'+
+            '<th>Device Time</th>'+
+        '</tr>';
+        res.data.alerts.forEach(function(each_alert)
+        {
+            table +='<tr>'+
+                    '<td>'+each_alert.alert_type.description+'</td>'+
+                    '<td>'+each_alert.latitude+'</td>'+
+                    '<td>'+each_alert.longitude+'</td>'+
+                    '<td>'+each_alert.status+'</td>'+
+                    '<td>'+each_alert.created_at+'</td>'+
+                    '<td>'+each_alert.device_time+'</td>'+
+                '</tr>';
+           });
+        table += '</table>';
+        $('#alert_table_wrapper').html(table);
+}
 
 
+function render_subscriptiontab()
+{
+    
+}
 

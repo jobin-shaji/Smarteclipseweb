@@ -464,7 +464,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count." devices transferred to all distributors by ".$from_user_details->name;
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to all <b>distributors</b> by <b>'.$from_user_details->name.'</b>';
         }
         else
         {
@@ -476,7 +476,7 @@ class WarehouseController extends Controller {
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
             $stock_in_distributor=GpsStock::where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by '.$from_user_details->name."\n".$to_user_details->name.' has '.$stock_in_distributor.' devices in stock.';
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>'.$from_user_details->name.'</b><b>'.$to_user_details->name.'</b> has <b>'.$stock_in_distributor.'</b> devices in stock.';
         }
         return $transferred_string;
     }
@@ -509,7 +509,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count." devices transferred to dealers by distributors";
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>All Dealers</b> by <b>All Distributors</b>';
         }
         else if($from_user_id != '0' && $to_user_id == '0')
         {
@@ -525,7 +525,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to all dealers by '.$from_user_details->name;
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to all <b>dealers</b> by <b>'.$from_user_details->name . '</b>';
         }
         else if($from_user_id == '0' && $to_user_id != '0')
         {
@@ -540,7 +540,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by distributors.';
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>distributors</b>.';
         }
         else
         {
@@ -551,7 +551,7 @@ class WarehouseController extends Controller {
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
             $stock_in_dealer=GpsStock::where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by '.$from_user_details->name.'. '."\n".$to_user_details->name.' has '.$stock_in_dealer.' devices in stock.';
+            $transferred_string = '<b>'.$transferred_gps_count.'<b/> devices transferred to <b>'.$to_user_details->name.'</b> by <b>'.$from_user_details->name.'</b>. '.'<b>'.$to_user_details->name.'</b> has <b>'.$stock_in_dealer.'</b> devices in stock.';
         }
         return $transferred_string;
     }
@@ -584,7 +584,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count." devices transferred to clients by dealers";
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>clients</b> by <b>dealers</b>';
         }
         else if($from_user_id != '0' && $to_user_id == '0')
         {
@@ -599,7 +599,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to all clients by '.$from_user_details->name;
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to all <b>clients</b> by <b>'.$from_user_details->name . '</b>';
         }
         else if($from_user_id == '0' && $to_user_id != '0')
         {
@@ -614,7 +614,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by dealers.';
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>dealers</b>.';
         }
         else
         {
@@ -624,7 +624,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = $transferred_gps_count.' devices transferred to '.$to_user_details->name.' by '.$from_user_details->name.'. ';
+            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>'.$from_user_details->name.'</b>. ';
         }
         return $transferred_string;
     }
@@ -905,7 +905,7 @@ class WarehouseController extends Controller {
             if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
             {
                 return "
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                 <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <button onclick=cancelDealerGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
                 </button>";
@@ -917,7 +917,7 @@ class WarehouseController extends Controller {
             }
             else{
                 return "
-                <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                 <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                 <b style='color:#008000';>Transferred</b>";
             }
@@ -1079,7 +1079,7 @@ class WarehouseController extends Controller {
         {
             $b_url = \URL::to('/');
             return "
-            <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+            <a href=".$b_url."/gps-transfer-root-dealer-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
             <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
             <b style='color:#008000';>Transferred</b>";
         })
@@ -1445,52 +1445,20 @@ class WarehouseController extends Controller {
           ->format('png')
           ->generate(public_path('images/qrcode.png'));
         $decrypted_id = Crypt::decrypt($request->id);
-        if($request->user()->hasRole('root')){
-            $gps_transfer = GpsTransfer::find($decrypted_id);
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                            ->where('gps_transfer_id',$decrypted_id)
-                            ->get();
-            $role_details = Dealer::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->to_user_id)
-                                ->first();
-            $user_details = User::select('id', 'mobile')
-                                ->where('id',$role_details->user_id)
-                                ->first();
-            if($gps_transfer == null){
-               return view('Warehouse::404');
-            }
-           return view('Warehouse::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
-        }else if($request->user()->hasRole('dealer')){
-            $gps_transfer = GpsTransfer::find($decrypted_id);
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                            ->where('gps_transfer_id',$decrypted_id)
-                            ->get();
-            $role_details = SubDealer::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->to_user_id)
-                                ->first();
-            $user_details = User::select('id', 'mobile')
-                                ->where('id',$role_details->user_id)
-                                ->first();
-            if($gps_transfer == null){
-               return view('Warehouse::404');
-            }
-           return view('Warehouse::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
-        }else if($request->user()->hasRole('sub_dealer')){
-            $gps_transfer = GpsTransfer::find($decrypted_id);
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                            ->where('gps_transfer_id',$decrypted_id)
-                            ->get();
-            $role_details = Client::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->to_user_id)
-                                ->first();
-            $user_details = User::select('id', 'mobile')
-                                ->where('id',$role_details->user_id)
-                                ->first();
-            if($gps_transfer == null){
-               return view('Warehouse::404');
-            }
-           return view('Warehouse::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+        $gps_transfer = GpsTransfer::find($decrypted_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$decrypted_id)
+                        ->get();
+        $role_details = Dealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        if($gps_transfer == null){
+           return view('Warehouse::404');
         }
+       return view('Warehouse::gps-transfer-label',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
     }
 
     public function exportGpsTransferLabelRootDistributorToDealer(Request $request)
@@ -1559,76 +1527,28 @@ class WarehouseController extends Controller {
           ->format('png')
           ->generate(public_path('images/qrcode.png'));
         $gps_transfer_id=$request->id;
-        if($request->user()->hasRole('root')){
-            $gps_transfer = GpsTransfer::find($gps_transfer_id);
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                            ->where('gps_transfer_id',$gps_transfer_id)
-                            ->get();
-            $from_user_details = Root::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->from_user_id)
-                                ->first();
-            $role_details = Dealer::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->to_user_id)
-                                ->first();
-            $user_details = User::select('id', 'mobile')
-                                ->where('id',$role_details->user_id)
-                                ->first();
-            $user_details_data = User::select('id', 'mobile')
-            ->where('id',$from_user_details->user_id)
-            ->first();
-            view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
-            $headers = array(
-                      'Content-Type'=> 'application/pdf'
-                    );
-            return $pdf->download('GPSTransferLabel.pdf',$headers);
-        }else if($request->user()->hasRole('dealer')){
-            $gps_transfer = GpsTransfer::find($gps_transfer_id);
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                            ->where('gps_transfer_id',$gps_transfer_id)
-                            ->get();
-            $from_user_details = Dealer::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->from_user_id)
-                                ->first();
-            $role_details = SubDealer::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->to_user_id)
-                                ->first();
-            $user_details = User::select('id', 'mobile')
-                                ->where('id',$role_details->user_id)
-                                ->first();
-             $user_details_data = User::select('id', 'mobile')
-            ->where('id',$from_user_details->user_id)
-            ->first();
-            view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
-            $headers = array(
-                      'Content-Type'=> 'application/pdf'
-                    );
-            return $pdf->download('GPSTransferLabel.pdf',$headers);
-        }else if($request->user()->hasRole('sub_dealer')){
-            $gps_transfer = GpsTransfer::find($gps_transfer_id);
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                            ->where('gps_transfer_id',$gps_transfer_id)
-                            ->get();
-            $from_user_details = SubDealer::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->from_user_id)
-                                ->first();
-            $role_details = Client::select('id', 'name', 'address','user_id')
-                                ->where('user_id',$gps_transfer->to_user_id)
-                                ->first();
-            $user_details = User::select('id', 'mobile')
-                                ->where('id',$role_details->user_id)
-                                ->first();
-             $user_details_data = User::select('id', 'mobile')
-            ->where('id',$from_user_details->user_id)
-            ->first();
-            view()->share('gps_transfer',$gps_transfer);
-            $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
-            $headers = array(
-                      'Content-Type'=> 'application/pdf'
-                    );
-            return $pdf->download('GPSTransferLabel.pdf',$headers);
-        }
+        $gps_transfer = GpsTransfer::find($gps_transfer_id);
+        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+                        ->where('gps_transfer_id',$gps_transfer_id)
+                        ->get();
+        $from_user_details = Root::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->from_user_id)
+                            ->first();
+        $role_details = Dealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$gps_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        $user_details_data = User::select('id', 'mobile')
+        ->where('id',$from_user_details->user_id)
+        ->first();
+        view()->share('gps_transfer',$gps_transfer);
+        $pdf = PDF::loadView('Exports::gps-transfer-label',['gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details,'user_details_data' => $user_details_data]);
+        $headers = array(
+                  'Content-Type'=> 'application/pdf'
+                );
+        return $pdf->download('GPSTransferLabel.pdf',$headers);
     }
 
     //Device track in root panel
@@ -1704,8 +1624,11 @@ class WarehouseController extends Controller {
             $b_url = \URL::to('/');
             if($gps_stock->deleted_at == null)
             {
-                return "
-                <a href=".$b_url."/gps-device-track-root-details/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+                if($gps_stock->subdealer_id){
+                    return "
+                    <a href=".$b_url."/gps-device-track-root-details/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+                }
+                
             }
             else{
                 return "";

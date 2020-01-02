@@ -32,7 +32,7 @@
                     <div class="form-group">                    
                       <label> Type Of Transfer</label>
                       <select class="form-control select2" data-live-search="true" title="Select Transfer Type" id="transfer_type" name="transfer_type">
-                        <option selected disabled>Select Transfer Type</option>
+                        <option value="" selected disabled>Select Transfer Type</option>
                         <option value="1">Manufacturer To Distributor</option>
                         <option value="2">Distributor To Dealer</option>
                         <option value="3">Dealer To Client</option>
@@ -43,7 +43,7 @@
                     <div class="form-group">                    
                       <label id="from_label"> From </label>
                       <select class="form-control select2" id="from_id" name="from_id"  required>
-                      <option selected disabled>Please Select Previous Dropdown</option>
+                      <option value="" selected disabled>Please Select Previous Dropdown</option>
                       </select>
                     </div>
                   </div>
@@ -51,7 +51,7 @@
                     <div class="form-group">                    
                       <label id="to_label"> To </label>
                       <select class="form-control select2" id="to_id" name="to_id"  required>
-                      <option selected disabled>Please Select Previous Dropdown</option>
+                      <option value="" selected disabled>Please Select Previous Dropdown</option>
                       </select>
                     </div>
                   </div>
@@ -63,9 +63,9 @@
                   </div>                         
                 </div>
               </div>
-              <div class="cover_div_search" id = "count_section" style="display: none;">
-                <div class="row">   
-                <b id = "transferred_count_string"></b>                  
+              <div id = "count_section" style="display: none;">
+                <div class="alert alert-success">
+                  <span id = "transferred_count_string"></span> 
                 </div>
               </div>
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
