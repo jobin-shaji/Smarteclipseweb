@@ -33,6 +33,8 @@
                     <th>SL.No</th>
                     <th>Job Code</th>
                     <th>Client</th> 
+                     <th>Mobile</th> 
+                     <th>Email</th> 
                     <th>Job Type</th>
                     <th>Assignee</th>
                     <th>GPS Serial No</th>
