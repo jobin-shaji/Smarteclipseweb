@@ -124,8 +124,7 @@ class ComplaintController extends Controller {
         if(\Auth::user()->hasRole('client|sub_dealer|root')){
             return view('Complaint::complaint-list');
         }
-    }
-    
+    }    
     //returns complaints as json 
     public function getComplaints()
     {
@@ -186,7 +185,7 @@ class ComplaintController extends Controller {
                 { 
                     if($complaints->status==null||$complaints->status==0)
                     {
-                        return "not assigned";
+                        return "Not Assigned";
                     }
                     else
                     {

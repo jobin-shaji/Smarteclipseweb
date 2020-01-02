@@ -377,7 +377,7 @@ class ServicerController extends Controller {
         ->with('clients:id,name')
         ->whereNull('job_complete_date')
         ->with('servicer:id,name')
-        ->orderBy('job_date','desc')
+        ->orderBy('id','desc')
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
@@ -1322,7 +1322,7 @@ public function serviceJobDetails(Request $request)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
-        ->orderBy('job_date','Desc')
+        ->orderBy('id','Desc')
         ->get();  
         // dd($servicer_job->gps_id);
         return DataTables::of($servicer_job)

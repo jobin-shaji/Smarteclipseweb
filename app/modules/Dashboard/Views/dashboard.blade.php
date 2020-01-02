@@ -26,6 +26,13 @@
   }
   .btn-pop:hover {background:#f7b018;}
 </style>
+
+<title>PEPSized Places in Paris</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all">
+    <script src="modernizr.js"></script>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <section class="content">
@@ -1082,8 +1089,10 @@ position: absolute !important;
 
 <script src="{{asset('js/gps/mdb.js')}}"></script>
 <script src="{{asset('js/gps/dashb.js')}}"></script>
+
 @role('client')
 <script src="{{asset('js/gps/dashb-client.js')}}"></script>
+
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
