@@ -17875,3 +17875,18 @@ a,
             -webkit-animation: spin .8s linear infinite;
             animation: spin .8s linear infinite;
         }
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color:red;
+    border-radius: 10px;
+}
