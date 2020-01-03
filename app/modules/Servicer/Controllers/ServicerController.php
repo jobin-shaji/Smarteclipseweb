@@ -428,7 +428,7 @@ class ServicerController extends Controller {
         ->where('job_type',1)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
-        ->with('user:id,username')
+        ->with('user:id,username,mobile,email')
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->get();       
@@ -500,7 +500,7 @@ if($servicer_job->status==0){
         ->where('job_type',2)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
-        ->with('user:id,username')
+        ->with('user:id,username,mobile,email')
         ->with('clients:id,name')
         ->with('servicer:id,name')
       
