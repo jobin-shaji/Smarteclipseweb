@@ -42,4 +42,14 @@ class GpsTransfer extends Model
     {
         return $this->hasMany('App\Modules\Gps\Models\GpsTransferItems','gps_transfer_id','id');
     }
+
+    public function fromUserTrackView()
+    {
+        return $this->hasOne('App\Modules\User\Models\User','id','from_user_id')->withTrashed();
+    }
+
+    public function toUserTrackView()
+    {
+        return $this->hasOne('App\Modules\User\Models\User','id','to_user_id')->withTrashed();
+    }
 }
