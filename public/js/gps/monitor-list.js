@@ -3,6 +3,14 @@ function single_vehicle_details(vehicle_id, row_id)
 {   
     // highlight clicked row
     highLightClickedRow(row_id);
+
+    $('html, body').animate({
+        scrollTop: $("#monitoring_details_tab_contents").offset().top
+    }, 1000);
+
+    $('#monitoring_details_tab_contents_loading').show();
+    $('#monitoring_details_tab_contents').hide();
+
     var vehicle_tab_elements = [];
     if(vehicle_id)
     {
@@ -16,6 +24,8 @@ function single_vehicle_details(vehicle_id, row_id)
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (res){
+                $('#monitoring_details_tab_contents_loading').hide();
+                $('#monitoring_details_tab_contents').show();
                 if(res.success)
                 {
                     render_vehicletab(res);
@@ -48,6 +58,7 @@ function setActiveTab(active_tab_id)
         }
     });
 }
+
 function highLightClickedRow(id)
 {
     $('#vehicle_details_table').find('.vehicle_details_table_row').each(function(){
@@ -58,15 +69,7 @@ function highLightClickedRow(id)
         }
     });
 }
-function traverse_it(obj){
-    if(typeof obj.key=='string'){
-        path.push('key');
-        traverse_it(obj.key);
-    }else{
-        path.push(obj);
-        return;
-    }
-}
+
 function render_vehicletab(res)
 {
     [
@@ -126,11 +129,8 @@ function render_vehicletab(res)
     });
     // display vehicle tab
     setActiveTab('vehicle');
-    //$('body').scrollTo('#monitoring_details_tab_contents');
-    $('html, body').animate({
-        scrollTop: $("#monitoring_details_tab_contents").offset().top
-    }, 1000);
 }
+
 function render_devicetab(res)
 {
     [
@@ -188,11 +188,8 @@ function render_devicetab(res)
     });
         // display vehicle tab
     setActiveTab('vehicle');
-    //$('body').scrollTo('#monitoring_details_tab_contents');
-    $('html, body').animate({
-        scrollTop: $("#monitoring_details_tab_contents").offset().top
-    }, 1000);
 }
+
 function render_installationtab(res)
 {
     var table = '<table border="1">'+
@@ -250,6 +247,7 @@ function render_servicetab(res)
     $('#service_table_wrapper').html(table);
 
 }
+
 function render_alerttab(res)
 {
     var table = '<table border="1">'+
@@ -276,9 +274,7 @@ function render_alerttab(res)
         $('#alert_table_wrapper').html(table);
 }
 
-
 function render_subscriptiontab()
 {
     
 }
-

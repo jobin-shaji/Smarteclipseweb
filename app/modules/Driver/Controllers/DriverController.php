@@ -215,7 +215,7 @@ class DriverController extends Controller {
                     ->first();
          $alert_type_point->driver_point = $request->over_speed_gf_exit;
          $alert_type_point->save();
-        $request->session()->flash('message', 'Performance score updated successfully!'); 
+        $request->session()->flash('message', 'Alert points updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('performance-score'));  
     }

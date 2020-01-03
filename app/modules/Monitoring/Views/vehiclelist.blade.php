@@ -69,6 +69,9 @@
         <li class="monitoring_subtab"><a data-toggle="tab" href="#subscription">Subscription</a></li>
       </ul>
       <!-- Tab details -->
+      <div id="monitoring_details_tab_contents_loading" style="display: none;">
+        Please wait...
+      </div>
       <div id="monitoring_details_tab_contents" class="tab-content">
         <!-- Vehicle -->
         <div id="tab_content_vehicle" class="tab-pane fade in active">
