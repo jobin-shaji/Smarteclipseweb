@@ -30,7 +30,13 @@
             @endforeach             
           </select>
           <button class="btn btn-sm btn-info btn2 srch" onclick="check()" style="margin-top: 0%!important"> <i class="fa fa-search"></i> </button>
+           
         </div> 
+        <div class="col-md-4">
+          <div style ="padding-top:15px;" class="form-group has-feedback">
+            <button class="btn btn-md btn-success btn2 form-control" id="set_ota_button" data-toggle="modal" data-target="#setOtaModal" style="display: none;">SET OTA</button>
+          </div>
+        </div>
       </div>
           
   </div>
@@ -73,7 +79,71 @@
   </div>
 </section>
 
+<div class="modal fade" id="setOtaModal" tabindex="-1" role="dialog" aria-labelledby="setOtaModalLabel" style="display: none;">
 
+<div class="modal-dialog modal-lg" role="document">
+
+<div class="modal-content" style="padding: 25px">
+
+<div class="modal-header">
+
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+<span aria-hidden="true">&times;</span></button>
+
+</div>
+
+<form method="POST" id="form1">
+
+{{csrf_field()}}
+
+<div class="modal-body">
+
+<div class="row">
+
+<div class="col-md-12">
+
+<input type="text" name="set_ota_gps_id" id="set_ota_gps_id" value="">
+
+<div class="form-group row" style="float:none!important">
+
+<label for="fname" class="col-sm-3 text-right control-label col-form-label">Command:</label>
+
+<div class="form-group has-feedback">
+
+<textarea class="form-control" name="command" id="command" rows=7></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<span class="pull-center">
+
+<button type="button" class="btn btn-success btn-md btn-block" onclick="setOta(document.getElementById('set_ota_gps_id').value)">
+
+POST
+
+</button>
+
+</span>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
 @section('script')
     <script src="{{asset('js/gps/public-vltdata-list.js')}}"></script>
 @endsection

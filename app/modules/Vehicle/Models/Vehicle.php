@@ -20,8 +20,6 @@ class Vehicle extends Model
     return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
     }
 
-
-
     // driver
     public function driver(){
         return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id')->withTrashed();
@@ -30,6 +28,10 @@ class Vehicle extends Model
     // client
     public function client(){
         return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
+    }
+  public function children()
+    {
+        return $this->hasMany(Vehicle::class, 'client_id');
     }
 
     public function vehicleRoute()

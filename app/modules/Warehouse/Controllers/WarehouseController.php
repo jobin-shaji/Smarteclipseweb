@@ -1496,6 +1496,7 @@ class WarehouseController extends Controller {
         $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
                         ->where('gps_transfer_id',$decrypted_id)
                         ->get();
+                        // dd($gps_transfer);
         $role_details = Client::select('id', 'name', 'address','user_id')
                             ->where('user_id',$gps_transfer->to_user_id)
                             ->first();

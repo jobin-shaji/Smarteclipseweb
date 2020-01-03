@@ -1801,6 +1801,30 @@ class GpsController extends Controller {
          return redirect(route('set.ota.operations'));
     }
 
+     public function setOtaInUnprocessed(Request $request)
+    {
+        $imei=$request->imei; 
+        $gps=Gps::where('imei',$imei)->first(); 
+        $gps_id=$gps->id;
+        $command=$request->command;        
+        $response = OtaResponse::create([
+            'gps_id'=>$gps_id,
+            'response'=>$command
+        ]); 
+        if($response){
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
+    }
     public function operationsSetOtaListPage()
     {      
         $gps = Gps::all();

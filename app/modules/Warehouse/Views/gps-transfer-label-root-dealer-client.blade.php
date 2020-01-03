@@ -46,7 +46,9 @@
                           <p></p>
                             <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
                             <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>
+                            @role('root')
                             <p class="card-text"><b>Scanned Employee Code : </b> {{$gps_transfer->scanned_employee_code}} </p>
+                            @endrole
                             <p class="card-text"><b>Shipped : </b> {{$gps_transfer->dispatched_on}} </p>
                             <h5 class="card-title" style="text-align: inherit!important">Shipping To,</h5>
                             <p class="card-text">{{$role_details->name}} <br>{{$role_details->address}}</p>
