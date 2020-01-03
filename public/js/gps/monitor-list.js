@@ -4,12 +4,9 @@ function single_vehicle_details(vehicle_id, row_id)
     // highlight clicked row
     highLightClickedRow(row_id);
 
-    $('html, body').animate({
-        scrollTop: $("#monitoring_details_tab_contents").offset().top
-    }, 1000);
-
+    $("#sidebar-right")
     $('#monitoring_details_tab_contents_loading').show();
-    $('#monitoring_details_tab_contents').hide();
+    $('#sidebar-right').hide();
 
     var vehicle_tab_elements = [];
     if(vehicle_id)
@@ -25,7 +22,7 @@ function single_vehicle_details(vehicle_id, row_id)
             },
             success: function (res){
                 $('#monitoring_details_tab_contents_loading').hide();
-                $('#monitoring_details_tab_contents').show();
+                $('#sidebar-right').show();
                 if(res.success)
                 {
                     render_vehicletab(res);
@@ -50,7 +47,7 @@ function setActiveTab(active_tab_id)
         }
     });
     // set active tab content
-    $('#monitoring_details_tab_contents').find('.tab-pane').each(function(){
+    $('#sidebar-right').find('.tab-pane').each(function(){
         $(this).removeClass('active show in');
         if( $(this).attr('id') == 'tab_content_'+active_tab_id )
         {
