@@ -407,7 +407,10 @@ function backgroundPostData(url, data, callBack, options) {
                     allgpsAlertList(res);
 
                 }
-
+                else if(callBack=='getDeviceTransferList')
+                {
+                    getDeviceTransferList();
+                }
                 
 
                 
@@ -1172,15 +1175,24 @@ $('#gps').find('option').remove();
 }
 function clientGps(res)
 {
-    console.log(res.location);
-     $("#gps").empty();
+    $("#gps").empty();
     var expired_documents;
     length=res.devices.length;
-   // console.log(res.devices[0].imei);
- for (var i = 0; i < length; i++) {
+   if(length==0)
+   {
+        var gps='<option value="">No GPS</option>';  
+        $("#gps").append(gps);  
+   }
+   else
+   {
+        for (var i = 0; i < length; i++) {
          var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
          $("#gps").append(gps);   
-     }  
+        }   
+   }
+
+         
+    
      $('#search_place').val(res.location); 
 }
 

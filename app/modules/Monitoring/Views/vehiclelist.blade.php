@@ -62,9 +62,37 @@
       </table>
       {{ $vehicles->appends(['sort' => 'votes'])->links() }}
     </div>
+
+
+
     <!-- /Vehicle details wrapper -->
     <!-- Monitoring details -->
     <div class="monitoring_details_wrapper moni-detail-container">
+
+<button type="button" data-toggle="modal" data-target="#sidebar-right" class="btn btn-primary navbar-btn pull-left">Right Sidebar</button>
+
+ <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-sm" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+
+</div>
+<div class="modal-body">
+
+<div class="right-sider-inner">
+<div class="right-sider-inner-left">hgfjh</div>
+
+<div class="right-sider-inner-left foat-right">hgfjh</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+    <!-- Monitoring details -->
+
+
       <!-- Tabs -->
       <ul id="monitoring_details_tabs" class="nav nav-tabs">
         <li class="monitoring_subtab "><a data-toggle="tab" href="#tab_content_vehicle"class="active">Vehicle</a></li>
@@ -74,6 +102,9 @@
         <li class="monitoring_subtab"><a data-toggle="tab" href="#alerts">Alerts</a></li>
         <li class="monitoring_subtab"><a data-toggle="tab" href="#subscription">Subscription</a></li>
       </ul>
+         <div id="monitoring_details_tab_contents_loading" style="display: none;">
+        Please wait...
+      </div>
       <!-- Tab details -->
        <div class="vechile-container">
       <div id="monitoring_details_tab_contents" class="tab-content monitoring_details">
@@ -85,107 +116,113 @@
  <div class="detail-list-outer">
 
 
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Vehicle Details</h1></div>
-<div class="acc-content open">
-  <div class="acc-content-inner">
-    <div class="vechile-detail-content">Vehicle Name :-
+
+<div id="accordion">
+  <div class="button" role="button">
+  Vehicle Details
+  </div>
+  <div class="slide">
+    <div class="list-outer-bg">
+      
+    <div class="list-display"><p>Vehicle Name :-</p>
               <span id="tvc_vehicle_name"> </span>
+
             </div>
-            <div class="vechile-detail-content">Registration Number :-
+               <div class="list-display"><p>Registration Number :-</p>
               <span id="tvc_vehicle_registration_number"></span>
-            </div >
-            <div class="vechile-detail-content">Vehicle Type :-
+            </div>
+            <div class="list-display"><p>Vehicle Type :-</p>
               <span id="tvc_vehicle_type"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Model :-
+             <div class="list-display"><p>Vehicle Model :-</p>
               <span id="tvc_vehicle_model"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Make :-
+            <div class="list-display"><p>Vehicle Make :-</p>
               <span id="tvc_vehicle_make"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Min Fuel :-
+             <div class="list-display"><p>Vehicle Min Fuel :-</p>
               <span id="tvc_vehicle_min_fuel"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Max Fuel :-
+            <div class="list-display"><p>Vehicle Max Fuel :-</p>
               <span id="tvc_vehicle_max_fuel"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Status :-
+            <div class="list-display"><p>Vehicle Status :-</p>
               <span id="tvc_vehicle_status"> </span>
             </div>
-            <div class="vechile-detail-content">Engine Number :-
+             <div class="list-display"><p>Engine Number :-</p>
               <span id="tvc_vehicle_engine_number"> </span>
             </div>
-            <div class="vechile-detail-content">Chassis Number :-
+             <div class="list-display"><p>Chassis Number :-</p>
               <span id="tvc_vehicle_chassis_number"> </span>
             </div>
-            <div class="vechile-detail-content">Theft Mode :-
+           <div class="list-display"><p>Theft Mode :-</p>
               <span id="tvc_vehicle_theftmode"> </span>
             </div>
-            <div class="vechile-detail-content">Towing :-
+            <div class="list-display"><p>Towing :-</p>
               <span id="tvc_vehicle_towing"> </span>
             </div>
-            <div class="vechile-detail-content">Emergency Status :-
+             <div class="list-display"><p>Emergency Status :-</p>
               <span id="tvc_vehicle_emergency_status"> </span>
             </div>
-            <div class="vechile-detail-content">Created Date :-
+            <div class="list-display"><p>Created Date :-</p>
               <span id="tvc_vehicle_created_date"> </span>
             </div>
-  </div>
-</div>
 
-<div class="acc-btn"><h1>Owner Details</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-    <div class="vechile-detail-content">Owner Name :-
+    </div>
+  </div>
+  <div class="button" role="button">
+   Owner Details
+  </div>
+
+  <div class="slide">
+      <div class="list-outer-bg">
+       <div class="list-display"><p>Owner Name :-</p>
               <span id="tvc_client_name"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Address :-
+              <div class="list-display"><p>Owner Address :-</p>
               <span id="tvc_client_address"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Latitude :-
+            <div class="list-display"><p>Owner Latitude :-</p>
               <span id="tvc_client_lat"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Longitude :-
+            <div class="list-display"><p>Owner Longitude :-</p>
               <span id="tvc_client_lng"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Logo :-
+             <div class="list-display"><p>Owner Logo :-</p>
               <span id="tvc_client_logo"></span>
             </div>
-            <div class="vechile-detail-content">Owner Country :-
+              <div class="list-display"><p>Owner Country :-</p>
               <span id="tvc_client_country"> </span>
             </div>
-            <div class="vechile-detail-content">Owner State :-
+              <div class="list-display"><p>Owner State :-</p>
               <span id="tvc_client_state"> </span>
             </div>
-            <div class="vechile-detail-content">Owner City :-
+              <div class="list-display"><p>Owner City :-</p>
               <span id="tvc_client_city"> </span>
             </div>
-            <div class="vechile-detail-content">Sub Dealer :-
+              <div class="list-display"><p>Sub Dealer :-</p>
               <span id="tvc_client_sub_dealer"> </span>
             </div>
   </div>
-</div>
-
-<div class="acc-btn"><h1>Driver Details</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-   <div class="vechile-detail-content">Driver Name :-
+    </div>
+  <div class="button" role="button">
+ Driver Details
+  </div>
+  <div class="slide">
+         <div class="list-outer-bg">
+    <div class="list-display"><p>Driver Name :-</p>
               <span id="tvc_driver_name"> </span>
             </div>
-            <div class="vechile-detail-content">Driver Address :-
+            <div class="list-display"><p>Driver Address :-</p>
               <span id="tvc_driver_address"> </span>
             </div>
-            <div class="vechile-detail-content">Driver Mobile :-
+            <div class="list-display"><p>Driver Mobile :-</p>
               <span id="tvc_driver_mobile"> </span>
             </div>
-            <div class="vechile-detail-content">Driver Points :-
+            <div class="list-display"><p>Driver Points :-</p>
               <span id="tvc_driver_points"> </span>
             </div>
-  </div>
-</div>
-
-
+  </div></div>
 </div>
 
 
@@ -204,115 +241,110 @@
 
 
 
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Device Details</h1></div>
-<div class="acc-content open">
-  <div class="acc-content-inner">
-    <div>IMEI :-
+<div id="accordion1">
+  <div class="button" role="button">
+    Device Details
+  </div>
+  <div class="slide">
+   <div class="list-outer-bg">
+    <div class="list-display"><p>IMEI :-</p>
             <span id="tvc_device_imei"> </span>
-          </div> 
-          <div>Serial Number :-
+          </div>
+          <div class="list-display"><p>Serial Number :-</p>
             <span id="tvc_device_serial_no"> </span>
           </div>
-          <div>Manufacturing date :-
+          <div class="list-display"><p>Manufacturing date :-</p>
             <span id="tvc_device_manufacturing_date"> </span>
           </div>
-          <div>ICC Id :-
+          <div class="list-display"><p>ICC Id :-</p>
             <span id="tvc_device_icc_id"> </span>
           </div>
-          <div>IMSI :-
+           <div class="list-display"><p>IMSI :-</p>
             <span id="tvc_device_imsi"> </span>
           </div>
-          <div>E Sim Number :-
+            <div class="list-display"><p>E Sim Number :-</p>
             <span id="tvc_device_e_sim_number"> </span>
           </div>
-          <div>Batch Number :-
+            <div class="list-display"><p>Batch Number :-</p>
             <span id="tvc_device_batch_number"> </span>
           </div>
-          <div>Model Name :-
+            <div class="list-display"><p>Model Name :-</p>
             <span id="tvc_device_model_name"> </span>
           </div>
-          <div>Version :-
+            <div class="list-display"><p>Version :-</p>
             <span id="tvc_device_version"> </span>
           </div>
-          <div>Employee Code :-
+            <div class="list-display"><p>Employee Code :-</p>
             <span id="tvc_device_employee_code"> </span>
           </div>
-          <div>Number of satellites :-
+           <div class="list-display"><p>Number of satellites :-</p>
             <span id="tvc_device_satellites"> </span>
           </div>
-          <div>Emergency Status :-
+            <div class="list-display"><p>Emergency Status :-</p>
             <span id="tvc_device_emergency_status"> </span>
           </div>
-          <div>GPS Fix :-
+            <div class="list-display"><p>GPS Fix :-</p>
             <span id="tvc_device_gps_fix"> </span>
           </div>
-          <div>Calibrated on :-
+            <div class="list-display"><p>Calibrated on :-</p>
             <span id="tvc_device_calibrated_on"> </span>
           </div>
-          <div>Login on :-
+            <div class="list-display"><p>Login on :-</p>
             <span id="tvc_device_login_on"> </span>
           </div>
-          <div>Created At :-
+            <div class="list-display"><p>Created At :-</p>
             <span id="tvc_device_created_on"> </span>
           </div>
   </div>
-</div>
-
-<div class="acc-btn"><h1>Device Current Status</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-     <div>Mode:-
+    </div>
+  <div class="button" role="button">
+    Device Current Status
+  </div>
+  <div class="slide">
+      <div class="list-outer-bg">
+   <div class="list-display"><p>Mode:-</p>
             <span id="tvc_device_mode"> </span>
           </div>
-          <div>Latitude:-
+          <div class="list-display"><p>Latitude:-</p>
             <span id="tvc_device_lat"> </span>
           </div>
-          <div>Longitude:-
+          <div class="list-display"><p>Longitude:-</p>
             <span id="tvc_device_lon"> </span>
           </div>
-          <div>Network Status:-
+          <div class="list-display"><p>Network Status:-</p>
             <span id="tvc_device_network_status"> </span>
           </div>
-          <div>Fuel Status:-
+          <div class="list-display"><p>Fuel Status:-</p>
             <span id="tvc_device_fuel_status"> </span>
           </div>
-          <div>Speed:-
+          <div class="list-display"><p>Speed:-</p>
             <span id="tvc_device_speed"> </span>
           </div>
-          <div>Odometer:-
+          <div class="list-display"><p>Odometer:-</p>
             <span id="tvc_device_odometer"> </span>
           </div>
-          <div>Battery Status:-
+          <div class="list-display"><p>Battery Status:-</p>
             <span id="tvc_device_battery_status"> </span>
           </div>
-          <div>Main Power Status:-
+          <div class="list-display"><p>Main Power Status:-</p>
             <span id="tvc_device_main_power_status"> </span>
           </div>
-          <div>Device Time:-
+          <div class="list-display"><p>Device Time:-</p>
             <span id="tvc_device_device_time"> </span>
           </div>
-          <div>Ignition:-
+          <div class="list-display"><p>Ignition:-</p>
             <span id="tvc_device_ignition"> </span>
           </div>
-          <div>GSM Signal Strength:-
+          <div class="list-display"><p>GSM Signal Strength:-</p>
             <span id="tvc_device_gsm_signal_strength"> </span>
-          </div><div>AC Status:-
+          </div><div class="list-display"><p>AC Status:-</p>
             <span id="tvc_device_ac_status"> </span>
-          </div><div>Kilometer:-
+          </div><div class="list-display"><p>Kilometer:-</p>
             <span id="tvc_device_kilometer"> </span>
           </div>
   </div>
+  </div>
 </div>
-
-
-
-
-</div>
-
-
-
-
           
           <!-- /Device details-->
 
@@ -329,7 +361,9 @@
 <div class="acc-btn"><h1 class="selected">Installation</h1></div>
 <div class="acc-content open">
   <div class="acc-content-inner">
+    <div class="table-outer">
      <div id="installation_table_wrapper"></div>
+   </div>
   </div>
 </div>
 
@@ -345,7 +379,9 @@
 <div class="acc-btn"><h1 class="selected">Service</h1></div>
 <div class="acc-content">
   <div class="acc-content-inner">
+     <div class="table-outer">
      <div id="service_table_wrapper"></div>
+   </div>
   </div>
 </div>
 
@@ -358,7 +394,9 @@
 <div class="acc-btn"><h1 class="selected">Alerts</h1></div>
 <div class="acc-content ">
   <div class="acc-content-inner">
+     <div class="table-outer">
     <div id="alert_table_wrapper"></div>
+  </div>
   </div>
 </div>
 
@@ -373,7 +411,9 @@
 <div class="acc-btn"><h1 class="selected">Subscription</h1></div>
 <div class="acc-content ">
   <div class="acc-content-inner">
+     <div class="sub-div">
      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+   </div>
   </div>
 </div>
 
@@ -396,32 +436,53 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">      </script>
    <script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
 
-   <script type="text/javascript">
+<!-- accordian -->
+<script type="text/javascript">
   
-  $(document).ready(function(){
-  var animTime = 300,
-      clickPolice = false;
+  $(document).ready(function() {
   
-  $(document).on('touchstart click', '.acc-btn', function(){
-    if(!clickPolice){
-       clickPolice = true;
-      
-      var currIndex = $(this).index('.acc-btn'),
-          targetHeight = $('.acc-content-inner').eq(currIndex).outerHeight();
-   
-      $('.acc-btn h1').removeClass('selected');
-      $(this).find('h1').addClass('selected');
-      
-      $('.acc-content').stop().animate({ height: 0 }, animTime);
-      $('.acc-content').eq(currIndex).stop().animate({ height: targetHeight }, animTime);
-
-      setTimeout(function(){ clickPolice = false; }, animTime);
+  $('.slide').hide()
+ 
+  $("#accordion").find("div[role|='button']").click(function() {
+    $("#accordion").find("div[role|='button']").removeClass('active');
+    $('.slide').slideUp('fast');
+    var selected = $(this).next('.slide');
+    if (selected.is(":hidden")) {
+      $(this).next('.slide').slideDown('fast');
+      $(this).toggleClass('active');
     }
-    
   });
-  
 });
 </script>
+
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+  
+  $('.slide').hide()
+ 
+  $("#accordion1").find("div[role|='button']").click(function() {
+    $("#accordion1").find("div[role|='button']").removeClass('active');
+    $('.slide').slideUp('fast');
+    var selected = $(this).next('.slide');
+    if (selected.is(":hidden")) {
+      $(this).next('.slide').slideDown('fast');
+      $(this).toggleClass('active');
+    }
+  });
+});
+</script>
+<!-- /accordian -->
+<!-- right tab -->
+<script type="text/javascript">
+  
+  $ (document).ready (function () {
+  $ (".modal a").not (".dropdown-toggle").on ("click", function () {
+    $ (".modal").modal ("hide");
+  });
+});
+</script>
+<!-- /right tab -->
 
 @endsection
 

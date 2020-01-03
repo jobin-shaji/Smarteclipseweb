@@ -1,8 +1,17 @@
 
 function single_vehicle_details(vehicle_id, row_id) 
 {   
+    console.log(row_id);
     // highlight clicked row
     highLightClickedRow(row_id);
+
+    $('html, body').animate({
+        scrollTop: $("#monitoring_details_tab_contents").offset().top
+    }, 1000);
+
+    $('#monitoring_details_tab_contents_loading').show();
+    $('#monitoring_details_tab_contents').hide();
+
     var vehicle_tab_elements = [];
     if(vehicle_id)
     {
@@ -16,6 +25,8 @@ function single_vehicle_details(vehicle_id, row_id)
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (res){
+                $('#monitoring_details_tab_contents_loading').hide();
+                $('#monitoring_details_tab_contents').show();
                 if(res.success)
                 {
                     render_vehicletab(res);
@@ -48,6 +59,7 @@ function setActiveTab(active_tab_id)
         }
     });
 }
+
 function highLightClickedRow(id)
 {
     $('#vehicle_details_table').find('.vehicle_details_table_row').each(function(){
@@ -58,15 +70,7 @@ function highLightClickedRow(id)
         }
     });
 }
-function traverse_it(obj){
-    if(typeof obj.key=='string'){
-        path.push('key');
-        traverse_it(obj.key);
-    }else{
-        path.push(obj);
-        return;
-    }
-}
+
 function render_vehicletab(res)
 {
     [
@@ -126,11 +130,8 @@ function render_vehicletab(res)
     });
     // display vehicle tab
     setActiveTab('vehicle');
-    //$('body').scrollTo('#monitoring_details_tab_contents');
-    $('html, body').animate({
-        scrollTop: $("#monitoring_details_tab_contents").offset().top
-    }, 1000);
 }
+
 function render_devicetab(res)
 {
     [
@@ -188,32 +189,29 @@ function render_devicetab(res)
     });
         // display vehicle tab
     setActiveTab('vehicle');
-    //$('body').scrollTo('#monitoring_details_tab_contents');
-    $('html, body').animate({
-        scrollTop: $("#monitoring_details_tab_contents").offset().top
-    }, 1000);
 }
+
 function render_installationtab(res)
 {
-    var table = '<table border="1" style="width: 100%;">'+
-        '<tr style="background: #ccc; color: #404040;">'+
-            '<th style="text-align: center; padding: 5px 0;">Servicer Name</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Job Date</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Job Completed Date</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Location</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Description</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Comments</th>'+
+    var table = '<table border="1">'+
+        '<tr>'+
+            '<th>Servicer Name</th>'+
+            '<th>Job Date</th>'+
+            '<th>Job Completed Date</th>'+
+            '<th>Location</th>'+
+            '<th>Description</th>'+
+            '<th>Comments</th>'+
         '</tr>';
         res.data.jobs.forEach(function(each_job){
             if(each_job.job_type == '1')
             {
                 table +='<tr>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.servicer.name+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_date+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_complete_date+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.location+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.description+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.comment+'</td>'+
+                    '<td>'+each_job.servicer.name+'</td>'+
+                    '<td>'+each_job.job_date+'</td>'+
+                    '<td>'+each_job.job_complete_date+'</td>'+
+                    '<td>'+each_job.location+'</td>'+
+                    '<td>'+each_job.description+'</td>'+
+                    '<td>'+each_job.comment+'</td>'+
                 '</tr>';
             }
         });
@@ -223,25 +221,25 @@ function render_installationtab(res)
 
 function render_servicetab(res)
 {
-    var table = '<table border="1" style="width: 100%;">'+
-        '<tr style="background: #ccc; color: #404040;">'+
-            '<th style="text-align: center; padding: 5px 0;">Servicer Name</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Job Date</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Job Completed Date</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Location</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Description</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Comments</th>'+
+    var table = '<table border="1">'+
+        '<tr>'+
+            '<th>Servicer Name</th>'+
+            '<th>Job Date</th>'+
+            '<th>Job Completed Date</th>'+
+            '<th>Location</th>'+
+            '<th>Description</th>'+
+            '<th>Comments</th>'+
         '</tr>';
         res.data.jobs.forEach(function(each_job){
             if(each_job.job_type == '2')
             {
-                table +='<tr >'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.servicer.name+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_date+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.job_complete_date+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.location+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.description+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_job.comment+'</td>'+
+                table +='<tr>'+
+                    '<td>'+each_job.servicer.name+'</td>'+
+                    '<td>'+each_job.job_date+'</td>'+
+                    '<td>'+each_job.job_complete_date+'</td>'+
+                    '<td>'+each_job.location+'</td>'+
+                    '<td>'+each_job.description+'</td>'+
+                    '<td>'+each_job.comment+'</td>'+
                 '</tr>';
             }
         });
@@ -250,35 +248,34 @@ function render_servicetab(res)
     $('#service_table_wrapper').html(table);
 
 }
+
 function render_alerttab(res)
 {
-    var table = '<table border="1" style="width: 100%;">'+
-        '<tr style="background: #ccc; color: #404040;">'+
-            '<th style="text-align: center; padding: 5px 0;">Alert</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Latitude</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Longitude</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Alert Status</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Date of Alert</th>'+
-            '<th style="text-align: center; padding: 5px 0;">Device Time</th>'+
+    var table = '<table border="1">'+
+        '<tr>'+
+            '<th>Alert</th>'+
+            '<th>Latitude</th>'+
+            '<th>Longitude</th>'+
+            '<th>Alert Status</th>'+
+            '<th>Date of Alert</th>'+
+            '<th>Device Time</th>'+
         '</tr>';
         res.data.alerts.forEach(function(each_alert)
         {
-            table +='<tr >'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_alert.alert_type.description+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_alert.latitude+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_alert.longitude+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_alert.status+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_alert.created_at+'</td>'+
-                    '<td style="text-align: center; padding:3px 0;">'+each_alert.device_time+'</td>'+
+            table +='<tr>'+
+                    '<td>'+each_alert.alert_type.description+'</td>'+
+                    '<td>'+each_alert.latitude+'</td>'+
+                    '<td>'+each_alert.longitude+'</td>'+
+                    '<td>'+each_alert.status+'</td>'+
+                    '<td>'+each_alert.created_at+'</td>'+
+                    '<td>'+each_alert.device_time+'</td>'+
                 '</tr>';
            });
         table += '</table>';
         $('#alert_table_wrapper').html(table);
 }
 
-
 function render_subscriptiontab()
 {
     
 }
-

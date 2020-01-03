@@ -64,18 +64,30 @@ class MonitorController extends Controller
     {
         return view('Monitoring::vehiclelist',['vehicles'=> (new Vehicle())->getVehicleList()]); 
     }
-     public function getVehicleAllData(Request $request)
     
+    /**
+     * 
+     * 
+     */
+    public function getVehicleData(Request $request)
     {
-       $vehicle_id=$request->vehicle_id;
-       $vehicle_data = Vehicle::select(
-            'id',
-            'name',
-            'register_number'
-            )
-         ->where('id',$vehicle_id)->first();
-       return response()->json([ 'data' =>$vehicle_data ]);   
-  
+        try
+        {
+            if( !isset($request->vehicle_id) )
+            {
+                throw new \Exception('Missing vehicle id');
+            }
+
+            $this->data = (new Vehicle())->getVehicleDetails($request->vehicle_id);
+            return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message ], $this->code);   
+
+        }
+        catch(\Exception $e)
+        {
+            $this->success = false;
+            $this->message = 'failed';
+            return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message  ], $this->code);
+        }  
     }
     
-    }
+}

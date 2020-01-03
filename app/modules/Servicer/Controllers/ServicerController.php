@@ -302,9 +302,7 @@ class ServicerController extends Controller {
         ->where('status',0)
         ->where('type',2)
         ->get();
-        $clients = Client::select('id','name','user_id','sub_dealer_id')
-        ->where('sub_dealer_id',$sub_dealer_id)
-        ->get();
+        $clients=Client::has('vehicles')->where('sub_dealer_id',$sub_dealer_id)->get();
         return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
     }
     public function saveSubDealerAssignServicer(Request $request)
@@ -1260,8 +1258,7 @@ public function serviceJobDetails(Request $request)
         }else{
          $devices=[];   
         }
- 
-        // if($user->hasRole('sub_dealer')){
+       // if($user->hasRole('sub_dealer')){
         if($devices)
         {               
             $response_data = array(

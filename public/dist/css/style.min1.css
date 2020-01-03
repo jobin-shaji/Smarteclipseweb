@@ -17122,6 +17122,36 @@ padding: 15px 10px;
      max-width: 22%;
 }
 
+.transfer_grid{
+    font-size: 15px;
+    color:#fff;
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 13px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    max-width: 18%;
+}
+
+.stock_grid{
+    font-size: 15px;
+    color:#fff;
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 13px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    margin-left:30px !important;
+    border-radius: 5px;
+    max-width: 18%;
+}
+
+.count_section .small-box
+{
+    margin-bottom: 0px;
+}
+
 
 .dash_grid .icon {
     -webkit-transition: all .3s linear;
@@ -17187,6 +17217,14 @@ padding: 15px 10px;
 
 .new_arrival_dashboard_grid{
     background: #CE447B;
+}
+
+.transferred_device_grid {
+    background: #CE447B;
+}
+
+.instock_device_grid {
+    background: #41A659;
 }
 
 /*--------------------bredcrump-----------------------*/
