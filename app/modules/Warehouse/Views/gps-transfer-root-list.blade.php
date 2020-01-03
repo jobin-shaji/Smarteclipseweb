@@ -58,7 +58,7 @@
                   <div class="col-lg-3 col-md-2 pt-4">
 
                   <div class="form-group">          
-                    <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                    <button class="btn btn-sm btn-info btn2 srch" onclick="getDeviceTransferList()"> <i class="fa fa-search"></i> </button>
                   </div>
                   </div>                         
                 </div>
@@ -71,12 +71,12 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                 <thead>
                   <tr>
-                      <th>SL.No</th>
-                      <th>From User</th>
-                      <th>To User</th>
-                      <th>Dispatched On</th>
-                      <th>Count</th>
-                      <th>Action</th>
+                      <th><b>SL.No</b></th>
+                      <th><b>From User</b></th>
+                      <th><b>To User</b></th>
+                      <th><b>Dispatched On</b></th>
+                      <th><b>Count</b></th>
+                      <th><b>Action</b></th>
                   </tr>
                 </thead>
               </table>

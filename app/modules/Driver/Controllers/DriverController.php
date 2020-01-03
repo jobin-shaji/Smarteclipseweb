@@ -13,6 +13,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 use DataTables;
 class DriverController extends Controller {
    
@@ -231,6 +232,44 @@ class DriverController extends Controller {
     }
 
     public function performanceScoreHistoryList(Request $request)
+    {
+        
+        $client_id= \Auth::user()->client->id;
+        $driver_id= $request->driver;   
+        $from = date("Y-m-d", strtotime($request->fromDate));
+        $to = date("Y-m-d", strtotime($request->toDate));
+        // client drivers list
+        $drivers        = Driver::where('client_id',$client_id)->get();
+        $single_drivers = [];
+        foreach($drivers as $driver)
+        {
+            $single_drivers[] = $driver->id;
+        }
+        
+        $performance_score = DriverBehaviour::select(
+                'id',
+                'vehicle_id',
+                'driver_id',
+                'gps_id',
+                'alert_id',
+                'points',                
+                'created_at'
+            )               
+            ->with('alert:id,alert_type_id')
+            ->with('driver:id,name')
+            ->with('vehicle:id,name,register_number')
+            ->with('gps:id,imei,serial_no')
+            ->orderBy('id','DESC')
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to);
+            // if driver id is not provided, choose all drivers under that client
+            $performance_score = (( $driver_id != 0 ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers))
+            ->paginate(15);
+
+        return view('Driver::performance-score-history',['drivers'=>$drivers,'performance_score'=>$performance_score,'driver_id'=>$driver_id,'from'=>$from,'to'=>$to]); 
+    }
+
+    public function performanceScoreHistoryList1(Request $request)
     {
         $client_id      = \Auth::user()->client->id;
         $driver_id      = $request->driver_id;

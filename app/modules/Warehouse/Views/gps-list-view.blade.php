@@ -38,7 +38,9 @@
                                                 <th><b>IMSI</b></th>
                                                 <th><b>Version</b></th>
                                                 <th><b>Batch Number</b></th>
+                                                @role('root')
                                                 <th><b>Employee Code</b></th>
+                                                @endrole
                                                 <th><b>Model Name</b></th>
                                               </tr>
                                             </thead>
@@ -52,7 +54,9 @@
                                                 <td>{{$device->imsi}}</td>
                                                 <td>{{$device->version}}</td>
                                                 <td>{{$device->batch_number}}</td>
+                                                @role('root')
                                                 <td>{{$device->employee_code}}</td>
+                                                @endrole
                                                 <td>{{$device->model_name}}</td>
                                               </tr>
                                               @endforeach
