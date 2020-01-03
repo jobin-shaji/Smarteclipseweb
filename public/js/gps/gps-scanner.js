@@ -55,6 +55,7 @@ scanner.addListener('scan', function (content) {
 
 $(function(){
     $('#add_qr_button').click(function() {
+
         var content = $('#scanner').val();
         if(content){
           alert('Do you want to add this?');
@@ -71,8 +72,10 @@ $(function(){
                 async: true,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    
                 },
                 success: function (res) {
+
                   if(res.status == 1){
                      var position = jQuery.inArray(res.gps_id, items);
                       if(position !='-1'){
@@ -87,7 +90,13 @@ $(function(){
                           var old_device_count = $('#scanned_device_count').text();
                           var scanned_device_count = parseInt(old_device_count)+1;
                           $('#scanned_device_count').text(scanned_device_count);
-                          var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                          var role = $('#role').val();
+                          if(role=='root'){
+                             var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                           }else{
+                          var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+
+                           }
                           $("table tbody").append(markup);
                           var value = $('#gps_id').val();
                           if (value) {
