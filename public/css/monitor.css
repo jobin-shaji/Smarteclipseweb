@@ -2,7 +2,8 @@
 
  
   .tablehighlight{
-  background-color: #FAAC58;
+  background-color:#f0b101;
+  color: #fff;
 }
 .vehicle_details_table_row{
   cursor: pointer;
@@ -91,7 +92,7 @@ margin-top: -1.5%;
     font-weight: bold;
     font-size: 1.1em;
 }
-.vehicle-container tr:nth-child(even) {background-color: #f2f2f2;}
+/*.vehicle-container tr:nth-child(even) {background-color: #f2f2f2;}*/
 
 .vehicle-container .page-item.active .page-link {
     background-color: #f0b102;
