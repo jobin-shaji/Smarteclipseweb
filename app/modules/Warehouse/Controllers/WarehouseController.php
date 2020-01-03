@@ -462,7 +462,15 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to all <b>distributors</b> by <b>'.$from_user_details->name.'</b>';
+            if($transferred_gps_count > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            $transferred_data = [
+                'transferred_gps_count' => $transferred_gps_count,
+                'transferred_string' => $transferred_string,
+                ];
         }
         else
         {
@@ -474,9 +482,26 @@ class WarehouseController extends Controller {
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
             $stock_in_distributor=GpsStock::where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>'.$from_user_details->name.'</b><b>'.$to_user_details->name.'</b> has <b>'.$stock_in_distributor.'</b> devices in stock.';
+            if($stock_in_distributor > 1) {
+                $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
+            }else{
+                $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
+            }
+            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            if($transferred_gps_count > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            
+            $transferred_data = [
+                'transferred_gps_count' => $transferred_gps_count,
+                'instock_gps_count' => $stock_in_distributor,
+                'stock_string' => $stock_string,
+                'transferred_string' => $transferred_string,
+                ];
         }
-        return $transferred_string;
+        return $transferred_data;
     }
 
     public function distributorToDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
@@ -507,7 +532,15 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>All Dealers</b> by <b>All Distributors</b>';
+            if($transferred_gps_count > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            $transferred_data = [
+                'transferred_gps_count' => $transferred_gps_count,
+                'transferred_string' => $transferred_string,
+                ];
         }
         else if($from_user_id != '0' && $to_user_id == '0')
         {
@@ -523,7 +556,16 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to all <b>dealers</b> by <b>'.$from_user_details->name . '</b>';
+            
+            if($transferred_gps_count > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            $transferred_data = [
+                'transferred_gps_count' => $transferred_gps_count,
+                'transferred_string' => $transferred_string,
+                ];
         }
         else if($from_user_id == '0' && $to_user_id != '0')
         {
@@ -538,7 +580,15 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>distributors</b>.';
+            if($transferred_gps_count > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            $transferred_data = [
+                'transferred_gps_count' => $transferred_gps_count,
+                'transferred_string' => $transferred_string,
+                ];
         }
         else
         {
@@ -549,9 +599,26 @@ class WarehouseController extends Controller {
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
             $stock_in_dealer=GpsStock::where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'<b/> devices transferred to <b>'.$to_user_details->name.'</b> by <b>'.$from_user_details->name.'</b>. '.'<b>'.$to_user_details->name.'</b> has <b>'.$stock_in_dealer.'</b> devices in stock.';
+            
+            if($stock_in_dealer > 1) {
+                $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
+            }else{
+                $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
+            }
+            if($transferred_gps_count > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            
+            $transferred_data = [
+                'transferred_gps_count' => $transferred_gps_count,
+                'instock_gps_count' => $stock_in_dealer,
+                'stock_string' => $stock_string,
+                'transferred_string' => $transferred_string,
+                ];
         }
-        return $transferred_string;
+        return $transferred_data;
     }
 
     public function dealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
@@ -582,7 +649,6 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>clients</b> by <b>dealers</b>';
         }
         else if($from_user_id != '0' && $to_user_id == '0')
         {
@@ -597,7 +663,6 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to all <b>clients</b> by <b>'.$from_user_details->name . '</b>';
         }
         else if($from_user_id == '0' && $to_user_id != '0')
         {
@@ -612,7 +677,6 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>dealers</b>.';
         }
         else
         {
@@ -622,9 +686,17 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $transferred_string = '<b>'.$transferred_gps_count.'</b> devices transferred to <b>'.$to_user_details->name.'</b> by <b>'.$from_user_details->name.'</b>. ';
         }
-        return $transferred_string;
+        if($transferred_gps_count > 1) {
+            $transferred_string = 'Devices Transferred';
+        }else{
+            $transferred_string = 'Device Transferred';
+        }
+        $transferred_data = [
+            'transferred_gps_count' => $transferred_gps_count,
+            'transferred_string' => $transferred_string,
+            ];
+        return $transferred_data;
     }
 
     // create root gps transfer

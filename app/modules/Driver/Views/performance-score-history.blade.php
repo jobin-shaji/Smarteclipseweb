@@ -27,62 +27,65 @@ Performance Score History
                             <div class="cover_div_search">
                               <div class="row">
                                 <div class="col-lg-3 col-md-3">
-                                  	<div class="form-group">    
+                                  <div class="form-group">    
                                     <label>Driver</label>                      
                                     <select class="form-control" data-live-search="true" title="Select Driver" id="driver" name="driver" required>
-										<option value = "" selected disabled>Select Driver</option>
-										<option value = "0">All</option>
-										@foreach ($drivers as $driver)
-											<option value="{{$driver->id}}"   @if(isset($performance_score) && $driver->id==$driver_id){{"selected"}} @endif>{{$driver->name}}</option>
-										@endforeach  
-									</select>
-                                  	</div>
+                    									<option value = "" selected disabled>Select Driver</option>
+                    									<option value = "0">All</option>
+                    									@foreach ($drivers as $driver)
+                    										<option value="{{$driver->id}}"   @if(isset($performance_score) && $driver->id==$driver_id){{"selected"}} @endif>{{$driver->name}}</option>
+                    									@endforeach  
+                    								</select>
+                                  </div>
                                 </div>
                                 <!-- -->
                                 <div class="col-lg-3 col-md-3"> 
-                                  	<div class="form-group">                      
-	                                    <label> From Date</label>
-	                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($performance_score)) {{$from}} @endif"  autocomplete="off">
-                                  	</div>
+                                	<div class="form-group">                      
+                                    <label> From Date</label>
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($performance_score)) {{$from}} @endif"  autocomplete="off">
+                                	</div>
                                 </div>
                                 <div class="col-lg-3 col-md-3"> 
-                                  	<div class="form-group">                     
-	                                    <label> To Date</label>
-	                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($performance_score)) {{$to}} @endif"  autocomplete="off">
-                                  	</div>
+                                	<div class="form-group">                     
+                                    <label> To Date</label>
+                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($performance_score)) {{$to}} @endif"  autocomplete="off">
+                                	</div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-4">  
-                      				<div class="form-group">     
-		                            	<button type="submit" class="btn btn-sm btn-info btn2 srch"> <i class="fa fa-search"></i> </button>                 
-                      				</div>
-                      			</div>                 
+                          				<div class="form-group">     
+    		                            	<button type="submit" class="btn btn-sm btn-info btn2 srch"> <i class="fa fa-search"></i> </button>                 
+                          				</div>
+                          			</div>                 
                               </div>
                             </div>
                           </div>
                         </form> 
                               
                         @if(isset($performance_score))  
-                        <!-- <div class = "row">
-                        	<div class = "col-lg-12 col-md-12" style="margin-left: 600px;">
-                        		<div class=" col-lg-2 col-md-2">
-                        			<span class="counter" style="margin-left: 250px;"></span>
-                        		</div>
-		                        <div class=" col-lg-2 col-md-2">
-								    <input type="text" class="search form-control" placeholder="What you looking for?">
-								</div>  
-							</div>  
-						</div>  -->        
+                        <!-- <form method="get" action="{{route('performance-score-history-list')}}">
+                          {{csrf_field()}}
+                          <div class = "row">
+                          	<div class = "col-lg-12 col-md-12" style="margin-left: 600px;">
+                          		<div class=" col-lg-2 col-md-2">
+                          			<span class="counter" style="margin-left: 250px;"></span>
+                          		</div>
+  		                        <div class=" col-lg-2 col-md-2">
+          								      <input type="text" class="search form-control" placeholder="What you looking for?">
+          								    </div>  
+          							   </div>  
+          						    </div>    
+                        </form>  -->    
                         <table class="table table-hover table-bordered  table-striped results" style="width:100%;text-align: center" >
                           <thead>
                             <tr style="text-align: center;">
-                              	<th><b>SL.No</b></th>
-								<th><b>Vehicle Name</b></th>
-								<th><b>Registration Number</b></th>
-								<th><b>Driver Name</b></th>
-								<th><b>GPS-Serial Number</b></th>
-								<th><b>Alert Type</b></th>
-								<th><b>Point</b></th>
-								<th><b>Date & Time</b></th>                                   
+                            	<th><b>SL.No</b></th>
+              								<th><b>Vehicle Name</b></th>
+              								<th><b>Registration Number</b></th>
+              								<th><b>Driver Name</b></th>
+              								<th><b>GPS-Serial Number</b></th>
+              								<th><b>Alert Type</b></th>
+              								<th><b>Point</b></th>
+              								<th><b>Date & Time</b></th>                   
                             </tr>
                           </thead>
                           <tbody>
@@ -112,11 +115,11 @@ Performance Score History
                             </tr>
                             @endforeach
                             <tr class="warning no-result" style="display: none;">
-						      <td colspan="8"><i class="fa fa-warning"></i> No result</td>
-						    </tr>
+            						      <td colspan="8"><i class="fa fa-warning"></i> No result</td>
+            						    </tr>
                           </tbody>
                         </table>
-                         {{ $performance_score->appends(['sort' => 'votes','driver' =>$driver_id,'fromDate' =>$from,'toDate' => $to])->links() }}
+                        {{ $performance_score->appends(['sort' => 'votes','driver' =>$driver_id,'fromDate' =>$from,'toDate' => $to])->links() }}
                         @endif
                         
                       </div>
