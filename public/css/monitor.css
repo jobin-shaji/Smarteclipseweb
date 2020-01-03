@@ -2,7 +2,8 @@
 
  
   .tablehighlight{
-  background-color: #FAAC58;
+background-color: #f0b102;
+    color: #fff;
 }
 .vehicle_details_table_row{
   cursor: pointer;
@@ -10,9 +11,8 @@
 
 .monitoring_subtab {
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-  margin-left: 1%;
+    margin-left: 0%;
+    margin-right: 1.05em;
 }
 
 .h6_1{
@@ -50,16 +50,23 @@ margin-top: -1.5%;
   padding: 14px 16px;
   transition: 0.3s;
   font-size: 17px;
+  color: #3a3a3a;
 }
 
 /* Change background color of buttons on hover */
 .monitoring_subtab a:hover {
-  background-color: #ddd;
+     background-color: #f0b102;
+    color: #fff;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 /* Create an active/current tablink class */
 .monitoring_subtab a.active {
-  background-color: #ccc;
+    background-color: #f0b102;
+    color: #fff;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 /* Style the tab content */
@@ -69,3 +76,209 @@ margin-top: -1.5%;
   border: 1px solid #ccc;
   border-top: none;
 }
+.vehicle-container{
+    width: 98%;
+    margin: 0px auto;
+}
+
+.page-wrapper_new.page-wrapper-1 {
+    padding: 0;
+}
+.vechile-list-top{
+       background: #f0b101;
+    color: #fff;
+    border-bottom: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
+.vehicle-container .page-item.active .page-link {
+    background-color: #f0b102;
+    border-color: #f0b102;
+}
+.vehicle-container .page-link:hover {
+    z-index: 2;
+    color: #fff;;
+    text-decoration: none;
+    background-color: #f0b102;
+    border-color: #dde2e6;
+}
+.moni-detail-container{
+  width: 98%;
+    margin: 0px auto;
+    margin-top: 43px;
+}
+.monitoring_subtab li:first-child a{
+    background-color: #f0b102;
+    color: #fff;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+.vechile-container{
+       width: 100%;
+    margin: 0px auto;
+    padding-bottom: 40px;
+}
+.monitoring_details{
+    max-height: 250px;
+    overflow-y: scroll;
+  }
+.detail-list-outer{
+  width: 100%;
+  float: left;
+  display:  block;
+}
+.vechile-detail-list-inner{
+  width: 30%;
+  float: left;
+}
+.vechile-detail-list-inner h3{
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;}
+
+    .vechile-detail-content
+    {
+          width: 100%;
+    float: left;
+    font-size: 0.9em;
+    line-height: 29px;
+
+    }
+
+    .acc-container {
+  width:98%;
+  margin:30px auto 0 auto;
+  -webkit-border-radius:8px;
+  -moz-border-radius:8px;
+  -o-border-radius:8px;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.table .vehicle_details_table_row td{
+    padding: 0.6em 0;
+    font-size: 14px;}
+    tr.vechile-list-top th{
+           padding: 0.6em;
+    font-size: 16px;}
+
+    .tbody-inner {
+    height: 200px;
+    display: inline-block;
+    width: 100%;
+    overflow: auto;
+}
+#accordion {
+  margin-top: 20px;
+}
+#accordion1 {
+  margin-top: 20px;
+}
+
+.button {
+    padding: 10px 22px;
+    background-color: #f2f2f2;
+    color: #5f5f5f;
+    cursor: pointer;
+   width: 98%;
+display: block;
+float: left;
+    margin: 0 auto;
+    border-bottom: 2px solid white;
+    margin-bottom: 5px;
+
+}
+
+.button:hover {
+    background-color: #f0b102;
+    color: #fff;
+
+}
+
+.slide {
+    max-width: 96%;
+    float: left;
+    /* margin: 0 auto; */
+    margin-left: 2%;
+}
+
+.button.active {
+    background-color: #f0b102;
+    color: #fff;
+  
+}
+.list-display{
+    width: 100%;
+    float: left;
+    display: block;
+        font-size: 14px;
+    padding-bottom: 7px;
+}
+.list-display p{
+    width: 175px;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.list-display span{
+  width: auto;
+  float: left;
+padding-left: 15px;}
+.list-outer-bg{
+width: 98%;
+    padding: 15px 0%;
+    float: left;
+    margin-bottom: 8px;
+    display: block;
+    background: none;
+}
+.acc-btn{
+      padding: 8px 22px;
+    background-color: #f2f2f2;
+    color: #5f5f5f;
+    cursor: pointer;
+    width: 99%;
+    display: block;
+    float: left;
+    margin: 0 auto;
+    border-bottom: 2px solid white;
+  }
+  .acc-btn h1{
+  font-size: 18px;
+    font-weight: normal;
+    padding-top: 0px;
+    line-height: 1.5em;
+    margin-bottom: 0;
+  }
+  .table-outer{
+    padding: 0;
+    float: left;
+    width: 99%;
+    margin: 0;
+  }
+   .table-outer table{
+  width: 100%;
+    float: left;
+    margin-top: 20px;
+        border: 1px solid #ccc;
+  }
+
+  .table-outer table tr th{
+    text-align: center;
+    font-weight: normal;
+    background: #dad9d9;
+    padding: 8px 0;
+  }
+  .table-outer table tr td {
+      text-align: center;
+    padding: 5px 0;}
+    .sub-div{
+      width: 98%;
+    float: left;
+    padding-top: 10px;
+    padding-left: 20px;
+    display: block;
+    }
