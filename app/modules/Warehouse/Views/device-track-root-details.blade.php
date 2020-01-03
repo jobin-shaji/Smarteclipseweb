@@ -5,6 +5,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Device Tracking Details</li>
+      <b>GPS Device Tracking Details</b>
     </ol>
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -16,7 +17,7 @@
   </nav>
  
   <div class="container-fluid">
-    <div class="card-body"><h4>GPS Device Tracking Details</h4>
+    <div class="card-body">
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
           <div class="row">
@@ -34,11 +35,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @if($gps_transfers->count() == 0)
+                      <tr>
+                        <td colspan="5"> No Data Available</td>
+                      </tr>
+                      @endif
                       @foreach($gps_transfers as $gps_transfer)
                       <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$gps_transfer->fromUser->username}}</td>
-                        <td>{{$gps_transfer->toUser->username}}</td>
+                        <td>{{$gps_transfer->fromUserTrackView->username}}</td>
+                        <td>{{$gps_transfer->toUserTrackView->username}}</td>
                         <td>{{$gps_transfer->dispatched_on}}</td>
                         <?php
                           $accepted_on = $gps_transfer->accepted_on;

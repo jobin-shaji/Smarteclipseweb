@@ -407,7 +407,10 @@ function backgroundPostData(url, data, callBack, options) {
                     allgpsAlertList(res);
 
                 }
-
+                else if(callBack=='getDeviceTransferList')
+                {
+                    getDeviceTransferList();
+                }
                 
 
                 

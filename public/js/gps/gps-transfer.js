@@ -1,14 +1,18 @@
-
-function check()
+window.onload = function()
 {
-    console.log(document.getElementById('transfer_type').value);
+    document.getElementById('transfer_type').value = "";
+    document.getElementById('from_id').value = "";
+    document.getElementById('to_id').value = "";
+}
+function getDeviceTransferList()
+{
     if(document.getElementById('transfer_type').value == ''){
         alert('Please select transfer type');
     }else if(document.getElementById('from_id').value == ''){
-        alert('Please select from user');
+        alert('Please select From user');
     }
     else if(document.getElementById('to_id').value == ''){
-        alert('Please select to user');
+        alert('Please select To user');
     }else{
         var transfer_type = document.getElementById('transfer_type').value;
         var from_id = document.getElementById('from_id').value;
@@ -22,6 +26,8 @@ function check()
 
 function countSection(data)
 {
+    $('#stock_section').hide();
+    $('#transferred_section').hide();
     var url = 'gps-transferred-count-root';
     var purl = getUrl() + '/' + url;
     $.ajax({
@@ -33,14 +39,21 @@ function countSection(data)
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            $('#transferred_count_string').html(res);
+            if(res.instock_gps_count != undefined)
+            {
+                $('#stock_section').show();
+                $('#stock_count').html(res.instock_gps_count);
+                $('#stock_message').html(res.stock_string);
+            }
+            $('#transferred_section').show();
+            $('#transferred_count').html(res.transferred_gps_count);
+            $('#transferred_message').html(res.transferred_string);
         },
     });
 }
 
 
 function callBackDataTable(data){
-    $('#count_section').show();
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -90,7 +103,7 @@ function cancelRootGpsTransfer(gps_transfer_id){
         var data = {
             id : gps_transfer_id
         };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+        backgroundPostData(url,data,'getDeviceTransferList',{alert:true}); 
     } 
 }
 
@@ -202,7 +215,7 @@ $('#transfer_type').on('change', function() {
         if(data){
           $('#from_id').empty();
           $('#from_id').focus;
-          $('#from_id').append('<option value="" selected disabled>  Select User </option>'); 
+          $('#from_id').append('<option value="" selected disabled>  Select From User </option>'); 
           if(transfer_type != 1)
           {
             $('#from_id').append('<option value="0">  All </option>'); 
@@ -237,7 +250,7 @@ $('#from_id').on('change', function() {
         if(data){
           $('#to_id').empty();
           $('#to_id').focus;
-          $('#to_id').append('<option value="" selected disabled>  Select User </option>'); 
+          $('#to_id').append('<option value="" selected disabled>  Select To User </option>'); 
           $('#to_id').append('<option value="0">  All </option>'); 
           $.each(data, function(key, value){
             $('select[name="to_id"]').append('<option value="'+ value.user_id +'">' + value.name+ '</option>');
