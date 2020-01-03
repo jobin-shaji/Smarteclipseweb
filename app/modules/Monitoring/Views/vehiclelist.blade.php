@@ -8,7 +8,7 @@
     $perPage    = 10;
     $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;       
 ?>
-<div class="page-wrapper_new page-wrapper-1">
+<div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle List</li>
@@ -23,10 +23,10 @@
         @endif 
     </nav>
     <!-- Vehicles detail wrapper -->  
-    <div class="vehicle_details_wrapper vehicle-container">           
+    <div class="vehicle_details_wrapper">           
       <table id="vehicle_details_table" class="table table-bordered" style="text-align: center;">
         <thead>
-          <tr class="vechile-list-top">
+          <tr>
             <th>SL.No</th>
             <th>Vehicle Name</th>
             <th>IMEI</th>
@@ -34,17 +34,13 @@
              <th>Installation Date</th>
           </tr>
         </thead>
-       
-        <tbody style="max-height:200px; overflow-y: scroll;" >
-  
+        <tbody>
         @if($vehicles->count() == 0)
-
         <tr>
             <td></td>
           <td><b style="float: right;margin-right: -13px">No data</b></td>
           <td><b style="float: left;margin-left: -15px">Available</b></td>
         </tr>
-      
         @endif
 
         @foreach($vehicles as $key => $each_vehicle)                  
@@ -56,18 +52,16 @@
           <td>{{$each_vehicle->servicerjob->job_complete_date}}</td>
         </tr>
         @endforeach
-
       </tbody>
-
       </table>
       {{ $vehicles->appends(['sort' => 'votes'])->links() }}
     </div>
     <!-- /Vehicle details wrapper -->
     <!-- Monitoring details -->
-    <div class="monitoring_details_wrapper moni-detail-container">
+    <div class="monitoring_details_wrapper">
       <!-- Tabs -->
       <ul id="monitoring_details_tabs" class="nav nav-tabs">
-        <li class="monitoring_subtab "><a data-toggle="tab" href="#tab_content_vehicle"class="active">Vehicle</a></li>
+        <li class="monitoring_subtab"><a data-toggle="tab" href="#tab_content_vehicle">Vehicle</a></li>
         <li class="monitoring_subtab"><a data-toggle="tab" href="#device">Device</a></li>
         <li class="monitoring_subtab"><a data-toggle="tab" href="#installation">Installation</a></li>
         <li class="monitoring_subtab"><a data-toggle="tab" href="#service">Service</a></li>
@@ -75,140 +69,115 @@
         <li class="monitoring_subtab"><a data-toggle="tab" href="#subscription">Subscription</a></li>
       </ul>
       <!-- Tab details -->
-       <div class="vechile-container">
-      <div id="monitoring_details_tab_contents" class="tab-content monitoring_details">
-
-          
+      <div id="monitoring_details_tab_contents_loading" style="display: none;">
+        Please wait...
+      </div>
+      <div id="monitoring_details_tab_contents" class="tab-content">
         <!-- Vehicle -->
         <div id="tab_content_vehicle" class="tab-pane fade in active">
           <!-- Vehicle details -->
- <div class="detail-list-outer">
-
-
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Vehicle Details</h1></div>
-<div class="acc-content open">
-  <div class="acc-content-inner">
-    <div class="vechile-detail-content">Vehicle Name :-
+          <span>
+            <h3>Vehicle Details</h3>
+            <div>Vehicle Name :-
               <span id="tvc_vehicle_name"> </span>
             </div>
-            <div class="vechile-detail-content">Registration Number :-
+            <div>Registration Number :-
               <span id="tvc_vehicle_registration_number"></span>
-            </div >
-            <div class="vechile-detail-content">Vehicle Type :-
+            </div>
+            <div>Vehicle Type :-
               <span id="tvc_vehicle_type"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Model :-
+            <div>Vehicle Model :-
               <span id="tvc_vehicle_model"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Make :-
+            <div>Vehicle Make :-
               <span id="tvc_vehicle_make"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Min Fuel :-
+            <div>Vehicle Min Fuel :-
               <span id="tvc_vehicle_min_fuel"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Max Fuel :-
+            <div>Vehicle Max Fuel :-
               <span id="tvc_vehicle_max_fuel"> </span>
             </div>
-            <div class="vechile-detail-content">Vehicle Status :-
+            <div>Vehicle Status :-
               <span id="tvc_vehicle_status"> </span>
             </div>
-            <div class="vechile-detail-content">Engine Number :-
+            <div>Engine Number :-
               <span id="tvc_vehicle_engine_number"> </span>
             </div>
-            <div class="vechile-detail-content">Chassis Number :-
+            <div>Chassis Number :-
               <span id="tvc_vehicle_chassis_number"> </span>
             </div>
-            <div class="vechile-detail-content">Theft Mode :-
+            <div>Theft Mode :-
               <span id="tvc_vehicle_theftmode"> </span>
             </div>
-            <div class="vechile-detail-content">Towing :-
+            <div>Towing :-
               <span id="tvc_vehicle_towing"> </span>
             </div>
-            <div class="vechile-detail-content">Emergency Status :-
+            <div>Emergency Status :-
               <span id="tvc_vehicle_emergency_status"> </span>
             </div>
-            <div class="vechile-detail-content">Created Date :-
+            <div>Created Date :-
               <span id="tvc_vehicle_created_date"> </span>
             </div>
-  </div>
-</div>
+            <!-- /Vehicle details -->
 
-<div class="acc-btn"><h1>Owner Details</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-    <div class="vechile-detail-content">Owner Name :-
+            <!-- Owner details -->
+            <h3>Owner Details</h3>
+            <div>Owner Name :-
               <span id="tvc_client_name"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Address :-
+            <div>Owner Address :-
               <span id="tvc_client_address"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Latitude :-
+            <div>Owner Latitude :-
               <span id="tvc_client_lat"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Longitude :-
+            <div>Owner Longitude :-
               <span id="tvc_client_lng"> </span>
             </div>
-            <div class="vechile-detail-content">Owner Logo :-
+            <div>Owner Logo :-
               <span id="tvc_client_logo"></span>
             </div>
-            <div class="vechile-detail-content">Owner Country :-
+            <div>Owner Country :-
               <span id="tvc_client_country"> </span>
             </div>
-            <div class="vechile-detail-content">Owner State :-
+            <div>Owner State :-
               <span id="tvc_client_state"> </span>
             </div>
-            <div class="vechile-detail-content">Owner City :-
+            <div>Owner City :-
               <span id="tvc_client_city"> </span>
             </div>
-            <div class="vechile-detail-content">Sub Dealer :-
+            <div>Sub Dealer :-
               <span id="tvc_client_sub_dealer"> </span>
             </div>
-  </div>
-</div>
+          </span>
+          <!-- /Owner details -->
 
-<div class="acc-btn"><h1>Driver Details</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-   <div class="vechile-detail-content">Driver Name :-
+          <!-- Driver details -->
+          <span>
+            <h3>Driver Details</h3>
+            <div>Driver Name :-
               <span id="tvc_driver_name"> </span>
             </div>
-            <div class="vechile-detail-content">Driver Address :-
+            <div>Driver Address :-
               <span id="tvc_driver_address"> </span>
             </div>
-            <div class="vechile-detail-content">Driver Mobile :-
+            <div>Driver Mobile :-
               <span id="tvc_driver_mobile"> </span>
             </div>
-            <div class="vechile-detail-content">Driver Points :-
+            <div>Driver Points :-
               <span id="tvc_driver_points"> </span>
             </div>
-  </div>
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
+          </span>
           <!-- /Driver details -->
         </div>
-         </div>
         <!-- /Vehicle -->
         <!-- Device -->
         <div id="device" class="tab-pane fade in active">
-
-
-
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Device Details</h1></div>
-<div class="acc-content open">
-  <div class="acc-content-inner">
-    <div>IMEI :-
+          <!-- Device details-->
+          <h3>Device Details</h3>
+          <div>IMEI :-
             <span id="tvc_device_imei"> </span>
           </div> 
           <div>Serial Number :-
@@ -256,13 +225,11 @@
           <div>Created At :-
             <span id="tvc_device_created_on"> </span>
           </div>
-  </div>
-</div>
+          <!-- /Device details-->
 
-<div class="acc-btn"><h1>Device Current Status</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-     <div>Mode:-
+          <!-- Device Current status-->
+          <h3>Device Current Status</h3>
+           <div>Mode:-
             <span id="tvc_device_mode"> </span>
           </div>
           <div>Latitude:-
@@ -302,90 +269,29 @@
           </div><div>Kilometer:-
             <span id="tvc_device_kilometer"> </span>
           </div>
-  </div>
-</div>
-
-
-
-
-</div>
-
-
-
-
-          
-          <!-- /Device details-->
-
-          <!-- Device Current status-->
-       
-          
          <!-- /Device Current status-->
         </div>
         <!-- /Device -->
         <div id="installation" class="tab-pane fade">
-
-
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Installation</h1></div>
-<div class="acc-content open">
-  <div class="acc-content-inner">
-     <div id="installation_table_wrapper"></div>
-  </div>
-</div>
-
-
-</div></div>
-
-
-
-  
+          <h3>Installation</h3>
+          <div id="installation_table_wrapper"></div>
+         
+        </div>
         <div id="service" class="tab-pane fade">
-
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Service</h1></div>
-<div class="acc-content">
-  <div class="acc-content-inner">
-     <div id="service_table_wrapper"></div>
-  </div>
-</div>
-
-</div>
-
+          <h3>Service</h3>
+            <div id="service_table_wrapper"></div>
         </div>
         <div id="alerts" class="tab-pane fade">
-
-<div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Alerts</h1></div>
-<div class="acc-content ">
-  <div class="acc-content-inner">
-    <div id="alert_table_wrapper"></div>
-  </div>
-</div>
-
-
-</div>
-
-          
+          <h3>Alerts</h3>
+            <div id="alert_table_wrapper"></div>
         </div>
         <div id="subscription" class="tab-pane fade">
-
-          <div class="acc-container">
-<div class="acc-btn"><h1 class="selected">Subscription</h1></div>
-<div class="acc-content ">
-  <div class="acc-content-inner">
-     <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-  </div>
-</div>
-
-
-</div>
-
-         
-        
+          <h3>Subscription</h3>
+          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
         </div>
       </div>
       <!-- /Tab details -->
-    </div></div>
+    </div>
     <!-- /Monitoring details --> 
 </div>
 @endsection
@@ -395,33 +301,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">      </script>
    <script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
-
-   <script type="text/javascript">
-  
-  $(document).ready(function(){
-  var animTime = 300,
-      clickPolice = false;
-  
-  $(document).on('touchstart click', '.acc-btn', function(){
-    if(!clickPolice){
-       clickPolice = true;
-      
-      var currIndex = $(this).index('.acc-btn'),
-          targetHeight = $('.acc-content-inner').eq(currIndex).outerHeight();
-   
-      $('.acc-btn h1').removeClass('selected');
-      $(this).find('h1').addClass('selected');
-      
-      $('.acc-content').stop().animate({ height: 0 }, animTime);
-      $('.acc-content').eq(currIndex).stop().animate({ height: targetHeight }, animTime);
-
-      setTimeout(function(){ clickPolice = false; }, animTime);
-    }
-    
-  });
-  
-});
-</script>
-
 @endsection
 
+<style>
+
+</style>
