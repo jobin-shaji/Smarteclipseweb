@@ -6,7 +6,10 @@ function check(){
         callBackDataTable();       
 }
 function callBackDataTable(value){
-    
+     if(value){
+    $("#set_ota_button").show();
+    $("#set_ota_gps_id").val(value);
+  }
     if(value==null)
     {
         gps=document.getElementById('gps_id').value;        
@@ -47,5 +50,33 @@ function callBackDataTable(value){
         aLengthMenu: [[25, 50, 100, 1000, -1], [25, 50, 100, 1000, 'All']]
     });
 }
-
+function setOta(imei) { 
+    if(document.getElementById('command').value == ''){
+        alert('Please enter your command');
+    }
+    else{
+        var command = document.getElementById('command').value;
+        var imei = document.getElementById('gps_id').value;
+        var data = {'imei':imei, 'command':command};
+    } 
+    var url = 'unprocessed-setota';
+    var purl = getUrl() + '/' + url;
+    var triangleCoords = [];
+    $.ajax({
+        type: 'POST',
+        url: purl,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+          if(res.status==1){
+            toastr.success(res.message);
+          }else{
+            toastr.error(res.message);
+          }
+        }
+    });
+}
 

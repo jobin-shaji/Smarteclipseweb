@@ -68,6 +68,7 @@ function alldata(res){
 }
 
 function setOta(gps_id) {
+  // alert(gps_id)
   if(document.getElementById('command').value == ''){
     alert('Please enter your command');
   }
