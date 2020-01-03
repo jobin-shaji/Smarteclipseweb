@@ -860,7 +860,7 @@ class WarehouseController extends Controller {
                 }
             }
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
         }
@@ -1037,7 +1037,7 @@ class WarehouseController extends Controller {
                 }
             }
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
         }
@@ -1202,7 +1202,7 @@ class WarehouseController extends Controller {
                 }
             }
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
         }
