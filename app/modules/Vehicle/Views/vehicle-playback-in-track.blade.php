@@ -69,6 +69,7 @@
             </div>
     
            <div class='col-sm-3'>   
+            <div class="form-group">
             <div style="float: left;margin-left: 2%">
               <label style="font-weight:bold">Speed</label>
               <select name="speed" id="speed" onchange="changePlaySpeed(this.value)">
@@ -79,6 +80,7 @@
                   <option value="5">5X</option>
               </select>
             </div>
+          </div>
           </div>
         
 
@@ -188,11 +190,11 @@
 
 
         var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
-                                            var app_id              = "pTDh57IDvFztTZUGw15X",
-                                                app_code            = "673-fZdOmD_oJnCMZ_ko-g";
+       var app_id              = "RN9UIyGura2lyToc9aPg",
+           app_code            = "4YMdYfSTVVe1MOD_bDp_ZA";
         var mapContainer        = document.getElementById('markers');
         var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
-        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);  
 
         var map                 = new H.Map(mapContainer, maptypes.normal.map);
         map.setCenter({ lat: 10.192656, lng: 76.386666 });
@@ -845,9 +847,10 @@
             
              var location_name = await getPlaceName(lat,lng).then(function(data){
                     var location_data = JSON.stringify(data.Response.View);
-               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
-
+               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label; 
              });
+
+             // var location_name = lat+","+lng;
 
 
               var details = ' <div class="left-alert-text">'+

@@ -6,7 +6,7 @@
       
 <section class="hilite-content">
   <!-- title row -->
-  <div class="page-wrapper_new">
+  <div class="page-wrapper_new mrg-top-50">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading"></li>
@@ -24,18 +24,18 @@
     <form  method="POST" action="{{route('driver.create.p')}}">
       {{csrf_field()}}
       <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 col-lg-6-new">
           <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
             <div class="row">
               <div class="col-sm-12">                    
                 <div class="row">
                   <div class="col-md-6">
                    <div class="card-body_vehicle wizard-content">
-                    <div class="signup__container">
-                      <div class="container__child signup__form">
-                        <div class="form-group row">
-                          <label for="fname" class="col-sm-3 control-label col-form-label lab">Name</label>
-                          <div class="form-group has-feedback">
+                    <div class="signup__container signup-container-new">
+                      <div class="container__child signup__form signup-form-outer">
+                        <div class="form-group row form-group-driver">
+                          <label for="fname" class="col-sm-3 control-label col-form-label lab label-form-drive">Name</label>
+                          <div class="form-group has-feedback form-drive-outer">
                             <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
                           </div> 
                         </div>
@@ -50,9 +50,9 @@
                       $rayfleet_key="rayfleet";
                       $eclipse_key="eclipse";
                       if (strpos($url, $rayfleet_key) == true) {  ?>
-                          <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
-                          <div class="form-group has-feedback">
+                          <div class="form-group row form-group-driver">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile</label>
+                          <div class="form-group has-feedback form-drive-outer">
                              <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" /> 
                           </div>
                           @if ($errors->has('mobile'))
@@ -63,9 +63,9 @@
                         </div>
                       <?php } 
                       else if (strpos($url, $eclipse_key) == true) { ?>
-                         <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
-                          <div class="form-group has-feedback">
+                         <div class="form-group row form-group-driver">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile</label>
+                          <div class="form-group has-feedback form-drive-outer">
                             <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                           </div>
                           @if ($errors->has('mobile'))
@@ -76,9 +76,9 @@
                         </div>
                       <?php }
                       else { ?>
-                          <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Mobile</label>
-                          <div class="form-group has-feedback">
+                          <div class="form-group row form-group-driver">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile</label>
+                          <div class="form-group has-feedback form-drive-outer">
                             <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                           </div>
                           @if ($errors->has('mobile'))
@@ -90,9 +90,9 @@
                       <?php } ?>
 
 
-                        <div class="form-group row">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab">Address</label>
-                          <div class="form-group has-feedback">
+                        <div class="form-group row form-group-driver">
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Address</label>
+                          <div class="form-group has-feedback form-drive-outer">
                             <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5 maxlength="150"></textarea>
                           </div>
                           @if ($errors->has('address'))
@@ -101,7 +101,7 @@
                             </span>
                           @endif
                         </div>
-                        <div class="m-t-lg">
+                        <div class="m-t-lg m-t-lg-new">
                           <ul class="list-inline">
                             <li>
                               <input class="btn btn-primary address_btn btn btn--form" type="submit" value="Add" />
@@ -171,5 +171,66 @@
         </div> -->  
      
   </div>
+<style>
+  .signup-form-outer{
+  margin: 0;
+    margin: 0px 2% 30px;
+    width: 96%;
+    float: left;
+    height: auto;
+    padding: 0;
+    background: none;
+  }
+.signup-container-new{
+  width: 100%;
+    float: left;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: inherit;
+    transform: inherit;
+}
+.col-lg-6-new{
+  flex: 0 0 100%;
+    max-width: 100%;
+}
+.form-group-driver{
+width: 49.5%;
+  float: left;
+      margin-bottom: 25px;
+}
+.label-form-drive{
+  max-width: 100%;
+  float: left;
+}
+
+.form-drive-outer {
+       width: 100%;
+    float: left;
+}
+
+.form-group-driver:nth-child(even) {
+padding-left: 3%;
+}
+.m-t-lg-new{
+  width: 100%;
+  float: left;
+}
+
+.m-t-lg-new .btn--form{
+  margin: 0;
+}
+.mrg-top-50 {
+    margin-top: 50px;
+}
+
+.m-t-lg-new ul{
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+</style>
+
 </section>
  @endsection
