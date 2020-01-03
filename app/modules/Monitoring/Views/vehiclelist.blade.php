@@ -62,9 +62,37 @@
       </table>
       {{ $vehicles->appends(['sort' => 'votes'])->links() }}
     </div>
+
+
+
     <!-- /Vehicle details wrapper -->
     <!-- Monitoring details -->
     <div class="monitoring_details_wrapper moni-detail-container">
+
+<button type="button" data-toggle="modal" data-target="#sidebar-right" class="btn btn-primary navbar-btn pull-left">Right Sidebar</button>
+
+ <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-sm" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+
+</div>
+<div class="modal-body">
+
+<div class="right-sider-inner">
+<div class="right-sider-inner-left">hgfjh</div>
+
+<div class="right-sider-inner-left foat-right">hgfjh</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+    <!-- Monitoring details -->
+
+
       <!-- Tabs -->
       <ul id="monitoring_details_tabs" class="nav nav-tabs">
         <li class="monitoring_subtab "><a data-toggle="tab" href="#tab_content_vehicle"class="active">Vehicle</a></li>
@@ -408,7 +436,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">      </script>
    <script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
 
-
+<!-- accordian -->
 <script type="text/javascript">
   
   $(document).ready(function() {
@@ -444,7 +472,17 @@
   });
 });
 </script>
-
+<!-- /accordian -->
+<!-- right tab -->
+<script type="text/javascript">
+  
+  $ (document).ready (function () {
+  $ (".modal a").not (".dropdown-toggle").on ("click", function () {
+    $ (".modal").modal ("hide");
+  });
+});
+</script>
+<!-- /right tab -->
 
 @endsection
 
