@@ -25,7 +25,7 @@
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
               <div class="cover_div_search">
                 <div class="row">    
                   <div class="col-lg-3 col-md-2"> 
@@ -63,9 +63,29 @@
                   </div>                         
                 </div>
               </div>
-              <div id = "count_section" style="display: none;">
-                <div class="alert alert-success">
-                  <span id = "transferred_count_string"></span> 
+
+              <div class="row count_section">
+                <div class="col-lg-3 col-md-3 transferred_device_grid transfer_grid" id="transferred_section" style="display: none;" >
+                <!-- small box -->
+                  <div class="small-box">
+                    <div class="inner">
+                      <h3 id="transferred_count">
+                        <div class="loader"></div>
+                      </h3>
+                      <p id = "transferred_message"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 instock_device_grid stock_grid" id = "stock_section" style="display: none;">
+                  <!-- small box -->
+                  <div class="small-box">
+                    <div class="inner">
+                      <h3 id="stock_count">
+                        <div class="loader"></div>
+                      </h3>
+                      <p id = "stock_message"></p>
+                    </div>
+                  </div>
                 </div>
               </div>
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
