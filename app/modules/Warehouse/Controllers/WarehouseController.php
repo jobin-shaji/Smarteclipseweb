@@ -259,8 +259,7 @@ class WarehouseController extends Controller {
                     return "
                     <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                     <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
-                    </button>";
+                    <b style='color:#008000';>Transfer In Progress</b>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
@@ -294,8 +293,7 @@ class WarehouseController extends Controller {
                     return "
                     <a href=".$b_url."/gps-transfer-root-dealer-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                     <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                    <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
-                    </button>";
+                    <b style='color:#008000';>Transfer In Progress</b>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
@@ -860,7 +858,7 @@ class WarehouseController extends Controller {
                 }
             }
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
         }
@@ -1037,9 +1035,9 @@ class WarehouseController extends Controller {
                 }
             }
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
+            return redirect(route('gps-transfer-root-distributor-dealer.label',$encrypted_gps_transfer_id));
         }
     }
 
@@ -1202,9 +1200,9 @@ class WarehouseController extends Controller {
                 }
             }
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
-            $request->session()->flash('message', 'Gps Transfer successfully completed!');
+            $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
+            return redirect(route('gps-transfer-root-dealer-client.label',$encrypted_gps_transfer_id));
         }
     }
 
@@ -1624,10 +1622,8 @@ class WarehouseController extends Controller {
             $b_url = \URL::to('/');
             if($gps_stock->deleted_at == null)
             {
-                if($gps_stock->subdealer_id){
-                    return "
-                    <a href=".$b_url."/gps-device-track-root-details/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
-                }
+                return "
+                <a href=".$b_url."/gps-device-track-root-details/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
                 
             }
             else{
@@ -1647,8 +1643,8 @@ class WarehouseController extends Controller {
             $gps_transfer_ids[] = $gps_transfer_item->gps_transfer_id;
         }
         $gps_transfers = GpsTransfer::whereIn('id',$gps_transfer_ids)
-                            ->with('fromUser:id,username')
-                            ->with('toUser:id,username')
+                            ->with('fromUserTrackView:id,username')
+                            ->with('toUserTrackView:id,username')
                             ->withTrashed()
                             ->get();
         return view('Warehouse::device-track-root-details',['gps_transfers' => $gps_transfers]);

@@ -1,14 +1,18 @@
-
-function check()
+window.onload = function()
 {
-    console.log(document.getElementById('transfer_type').value);
+    document.getElementById('transfer_type').value = "";
+    document.getElementById('from_id').value = "";
+    document.getElementById('to_id').value = "";
+}
+function getDeviceTransferList()
+{
     if(document.getElementById('transfer_type').value == ''){
         alert('Please select transfer type');
     }else if(document.getElementById('from_id').value == ''){
-        alert('Please select from user');
+        alert('Please select From user');
     }
     else if(document.getElementById('to_id').value == ''){
-        alert('Please select to user');
+        alert('Please select To user');
     }else{
         var transfer_type = document.getElementById('transfer_type').value;
         var from_id = document.getElementById('from_id').value;
@@ -90,7 +94,7 @@ function cancelRootGpsTransfer(gps_transfer_id){
         var data = {
             id : gps_transfer_id
         };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+        backgroundPostData(url,data,'getDeviceTransferList',{alert:true}); 
     } 
 }
 
@@ -202,7 +206,7 @@ $('#transfer_type').on('change', function() {
         if(data){
           $('#from_id').empty();
           $('#from_id').focus;
-          $('#from_id').append('<option value="" selected disabled>  Select User </option>'); 
+          $('#from_id').append('<option value="" selected disabled>  Select From User </option>'); 
           if(transfer_type != 1)
           {
             $('#from_id').append('<option value="0">  All </option>'); 
@@ -237,7 +241,7 @@ $('#from_id').on('change', function() {
         if(data){
           $('#to_id').empty();
           $('#to_id').focus;
-          $('#to_id').append('<option value="" selected disabled>  Select User </option>'); 
+          $('#to_id').append('<option value="" selected disabled>  Select To User </option>'); 
           $('#to_id').append('<option value="0">  All </option>'); 
           $.each(data, function(key, value){
             $('select[name="to_id"]').append('<option value="'+ value.user_id +'">' + value.name+ '</option>');
