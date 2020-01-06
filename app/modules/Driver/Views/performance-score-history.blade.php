@@ -62,9 +62,7 @@ Performance Score History
                         </form> 
                               
                         @if(isset($performance_score))  
-                        <!-- <form method="get" action="{{route('performance-score-history-list')}}">
-                          {{csrf_field()}}
-                          <div class = "row">
+                          <!-- <div class = "row">
                           	<div class = "col-lg-12 col-md-12" style="margin-left: 600px;">
                           		<div class=" col-lg-2 col-md-2">
                           			<span class="counter" style="margin-left: 250px;"></span>
@@ -73,8 +71,7 @@ Performance Score History
           								      <input type="text" class="search form-control" placeholder="What you looking for?">
           								    </div>  
           							   </div>  
-          						    </div>    
-                        </form>  -->    
+          						    </div>     -->   
                         <table class="table table-hover table-bordered  table-striped results" style="width:100%;text-align: center" >
                           <thead>
                             <tr style="text-align: center;">
