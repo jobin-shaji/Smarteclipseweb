@@ -31,11 +31,7 @@ class Client extends Model
     {
         return $this->hasMany('App\Modules\Vehicle\Models\Vehicle', 'client_id')->whereNull('deleted_at')->orderBy('id', 'desc');
     }
-    public function children()
-    {
-        return $this->hasMany(Vehicle::class, 'client_id');
-    }
-
+   
    public function state(){
         return $this->hasOne('App\Modules\TrafficRules\Models\State','id','state_id');
     }

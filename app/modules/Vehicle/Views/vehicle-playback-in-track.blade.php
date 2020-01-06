@@ -107,7 +107,7 @@
         </div>
         <div class="row">
              <span><i class='fa fa-user'></i></span>
-            <span><span style="padding: 15px;">:</span>{{ $vehicle->driver->name}}</span>
+            <span><span style="padding: 15px;">:</span>@if($vehicle->driver){{ $vehicle->driver->name}}@endif</span>
         </div>
         </div>
 

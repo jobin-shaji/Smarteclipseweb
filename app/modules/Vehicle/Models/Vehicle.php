@@ -29,10 +29,6 @@ class Vehicle extends Model
     public function client(){
         return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
     }
-  public function children()
-    {
-        return $this->hasMany(Vehicle::class, 'client_id');
-    }
 
     public function vehicleRoute()
     {
