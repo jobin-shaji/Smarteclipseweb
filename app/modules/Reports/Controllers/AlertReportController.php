@@ -71,7 +71,6 @@ class AlertReportController extends Controller
         ->with('gps.vehicle')
         ->orderBy('device_time', 'DESC')
         ->whereNotIn('alert_type_id',[17,18,23,24]);
-        // ->whereNotIn('alert_type_id',[17,18,23,24]);
        if($alert_id==0 && $vehicle_id==0)
        {  
             $query = $query->whereIn('gps_id',$single_vehicle_gps);
@@ -84,24 +83,20 @@ class AlertReportController extends Controller
        else if($alert_id==0 && $vehicle_id!=0)
        {
             $vehicle=Vehicle::withTrashed()->find($vehicle_id);
-            $query = $query->where('gps_id',$vehicle->gps_id);
-            //->whereIn('gps_id',$single_vehicle_gps)
-            
+            $query = $query->where('gps_id',$vehicle->gps_id);            
        }
        else
        {
             $vehicle=Vehicle::withTrashed()->find($vehicle_id);
             $query = $query->where('alert_type_id',$alert_id)
             ->where('gps_id',$vehicle->gps_id);
-            //->whereIn('gps_id',$single_vehicle_gps)
        }       
         if($from){
           $search_from_date=date("Y-m-d", strtotime($from));
           $search_to_date=date("Y-m-d", strtotime($to));
           $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $alert = $query->get();//paginate(15);
-
+        $alert = $query->paginate(15);
         $user_alert = UserAlerts::select(
             'alert_id'
         )
