@@ -100,8 +100,8 @@ class AlertReportController extends Controller
           $search_to_date=date("Y-m-d", strtotime($to));
           $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $alert = $query->paginate(15);
-       // dd();
+        $alert = $query->get();//paginate(15);
+
         $user_alert = UserAlerts::select(
             'alert_id'
         )
