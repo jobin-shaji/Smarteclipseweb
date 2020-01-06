@@ -243,7 +243,7 @@ class DashboardController extends Controller
              'pending_service_jobs' => ServicerJob::whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(), 
             'completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',3)->count(),
             'service_completed_jobs' => ServicerJob::whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count(),
-            'all_pending_jobs' => ServicerJob::where('job_date','<',date('Y-m-d H:i:s'))->where('status',2)->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->count(), 
+            'all_pending_jobs' => ServicerJob::where('job_date','<',date('Y-m-d H:i:s'))->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->count(), 
 
             'status' => 'dbcount'
         ]);
@@ -474,11 +474,13 @@ class DashboardController extends Controller
     public function verifyEmergencyAlert(Request $request)
     {
         $decrypted_vehicle_id = Crypt::decrypt($request->id); 
+        
         $vehicle=Vehicle::find($decrypted_vehicle_id);
         $alerts = Alert::where('alert_type_id',21)
         ->where('status',0)
         ->where('gps_id',$vehicle->gps_id)
         ->get();
+        // dd($alerts);
         if($alerts == null){
             return response()->json([
                 'status' => 0,
