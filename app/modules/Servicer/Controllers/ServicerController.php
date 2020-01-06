@@ -1063,7 +1063,9 @@ public function serviceJobDetails(Request $request)
     public function jobHistoryDetails(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id); 
+        // dd($decrypted);
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+
         $client_id=$servicer_job->client_id;
         $vehicle_device = Vehicle::select(
             'gps_id',
