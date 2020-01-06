@@ -29,13 +29,13 @@ class GpsTransfer extends Model
 	//join user table with gps table
     public function fromUser()
     {
-    	return $this->hasOne('App\Modules\User\Models\User','id','from_user_id');
+    	return $this->hasOne('App\Modules\User\Models\User','id','from_user_id')->withTrashed();
     }
 
     //join user table with gps table
     public function toUser()
     {
-    	return $this->hasOne('App\Modules\User\Models\User','id','to_user_id');
+    	return $this->hasOne('App\Modules\User\Models\User','id','to_user_id')->withTrashed();
     }
 
     public function gpsTransferItems()
