@@ -302,7 +302,7 @@ class ServicerController extends Controller {
         ->where('status',0)
         ->where('type',2)
         ->get();
-        $clients=Client::has('vehicles')->where('sub_dealer_id',$sub_dealer_id)->get();
+        $clients=Client::where('sub_dealer_id',$sub_dealer_id)->get();
         return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
     }
     public function saveSubDealerAssignServicer(Request $request)
