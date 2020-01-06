@@ -1,6 +1,7 @@
 
 function single_vehicle_details(vehicle_id, row_id) 
 {   
+    console.log(row_id);
     // highlight clicked row
     highLightClickedRow(row_id);
 
