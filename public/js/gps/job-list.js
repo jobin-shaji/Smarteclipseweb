@@ -34,6 +34,7 @@ $(document).ready(function () {
             {data: 'clients.name', name: 'clients.name'},
             {data: 'clients.user.mobile', name: 'clients.user.mobile'},
             {data: 'clients.user.email', name: 'clients.user.email'},
+            {data: 'clients.address', name: 'clients.address'},
             {data: 'job_type', name: 'job_type'},
             {data: 'user.username', name: 'user.username'},
             {data: 'gps.serial_no', name: 'gps.serial_no'},
