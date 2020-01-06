@@ -34,12 +34,13 @@
                     <th>Job Code</th>
                     <th>Client</th> 
                     <th>Mobile</th> 
-                    <th>Email</th>                       
+                    <th>Email</th>
+                    <th>Address</th>                     
                     <th>Job Type</th>
                     <th>Assignee</th>
                     <th>GPS Serial No</th>
                     <th>Description</th>
-                    <th>Location</th>
+                    <th> Job Location</th>
                     <th>Job Date</th> 
                     <th>Status</th>
                     <th>Action</th>                      
