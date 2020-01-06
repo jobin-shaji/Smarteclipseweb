@@ -84,15 +84,16 @@ class AlertReportController extends Controller
        else if($alert_id==0 && $vehicle_id!=0)
        {
             $vehicle=Vehicle::withTrashed()->find($vehicle_id);
-            $query = $query->whereIn('gps_id',$single_vehicle_gps)
-            ->where('gps_id',$vehicle->gps_id);
+            $query = $query->where('gps_id',$vehicle->gps_id);
+            //->whereIn('gps_id',$single_vehicle_gps)
+            
        }
        else
        {
             $vehicle=Vehicle::withTrashed()->find($vehicle_id);
-            $query = $query->whereIn('gps_id',$single_vehicle_gps)
-            ->where('alert_type_id',$alert_id)
+            $query = $query->where('alert_type_id',$alert_id)
             ->where('gps_id',$vehicle->gps_id);
+            //->whereIn('gps_id',$single_vehicle_gps)
        }       
         if($from){
           $search_from_date=date("Y-m-d", strtotime($from));
@@ -100,6 +101,7 @@ class AlertReportController extends Controller
           $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
         $alert = $query->paginate(15);
+       // dd();
         $user_alert = UserAlerts::select(
             'alert_id'
         )
