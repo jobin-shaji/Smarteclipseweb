@@ -426,8 +426,8 @@ class ServicerController extends Controller {
         ->where('job_type',1)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
-        ->with('user:id,username,mobile,email')
-        ->with('clients:id,name')
+        ->with('user:id,username')
+        ->with('clients.user')
         ->with('servicer:id,name')
         ->get();       
         return DataTables::of($servicer_job)
@@ -498,11 +498,10 @@ if($servicer_job->status==0){
         ->where('job_type',2)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
-        ->with('user:id,username,mobile,email')
-        ->with('clients:id,name')
-        ->with('servicer:id,name')
-      
-        ->get();       
+        ->with('user:id,username')
+        ->with('clients.user')
+        ->with('servicer:id,name')     
+        ->get(); 
         return DataTables::of($servicer_job)
         ->addIndexColumn()
         ->addColumn('job_type', function ($servicer_job) {
@@ -1292,8 +1291,7 @@ public function serviceJobDetails(Request $request)
     {
         return view('Servicer::servicer-job-history-list');
     }
-
-     public function getServicerJobsHistoryList()
+    public function getServicerJobsHistoryList()
     {
 
         $user_id=\Auth::user()->id;
@@ -1307,7 +1305,6 @@ public function serviceJobDetails(Request $request)
             'description',
             'job_complete_date', 
              'job_date',                 
-
             'created_at',
             'gps_id',
             'status'
@@ -1481,7 +1478,7 @@ public function serviceJobDetails(Request $request)
         ->where('job_date','<',date('Y-m-d H:i:s'))
         ->orderBy('job_date','Desc')
         ->with('vehicle:id,register_number,gps_id')
-        ->where('status',2)
+        // ->where('status',2)
         ->get();       
         return DataTables::of($servicer_job)
         ->addIndexColumn()
