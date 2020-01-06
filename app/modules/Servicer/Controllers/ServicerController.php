@@ -426,8 +426,8 @@ class ServicerController extends Controller {
         ->where('job_type',1)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
-        ->with('user:id,username,mobile,email')
-        ->with('clients:id,name')
+        ->with('user:id,username')
+        ->with('clients.user')
         ->with('servicer:id,name')
         ->get();       
         return DataTables::of($servicer_job)
@@ -498,11 +498,10 @@ if($servicer_job->status==0){
         ->where('job_type',2)
         ->whereNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
-        ->with('user:id,username,mobile,email')
-        ->with('clients:id,name')
-        ->with('servicer:id,name')
-      
-        ->get();       
+        ->with('user:id,username')
+        ->with('clients.user')
+        ->with('servicer:id,name')     
+        ->get(); 
         return DataTables::of($servicer_job)
         ->addIndexColumn()
         ->addColumn('job_type', function ($servicer_job) {
