@@ -46,11 +46,11 @@
           </div>
         <?php }
         else { ?>
-          <button type="button" class="btn"><a href="#" class="js-modal-show button-primary" onclick="tgle()">Pay Now</a></button>
+          <button type="button" class="btn"><a href="#" class="js-modal-show button-primary" onclick="popup()">Pay Now</a></button>
           <div class="l-modal is-hidden--off-flow js-modal-shopify">
             <div class="l-modal__shadow js-modal-hide"></div>
             <div class="c-popup l-modal__body">
-              <a href="#" onclick="hide_tgle()">X</a>
+              <a href="#" onclick="hide_popup()">X</a>
               <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
             </div>
           </div>
@@ -141,11 +141,11 @@
 </body>
 @endsection
 <script type="text/javascript">
-function tgle()
+function popup()
 {
   $('.js-modal-shopify').toggleClass('is-shown--off-flow').toggleClass('is-hidden--off-flow');
 }
-function hide_tgle(){
+function hide_popup(){
   $('.js-modal-shopify').toggleClass('is-shown--off-flow').toggleClass('is-hidden--off-flow');
 }
 </script>

@@ -373,7 +373,7 @@
                   </div>
                   <div id="service" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-content">
+                      <div class="acc-content open">
                         <div class="acc-content-inner">
                           <div class="table-outer">
                             <div id="service_table_wrapper"></div>
@@ -384,7 +384,7 @@
                   </div>
                   <div id="alerts" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-content ">
+                      <div class="acc-content open">
                         <div class="acc-content-inner">
                           <div class="table-outer">
                             <div id="alert_table_wrapper"></div>
@@ -395,7 +395,7 @@
                   </div>
                   <div id="subscription" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-content ">
+                      <div class="acc-content open">
                         <div class="acc-content-inner">
                           <div class="sub-div">
                             Under Processing.....
@@ -460,25 +460,5 @@
 });
 </script>
 <!-- /accordian -->
-<!-- right tab -->
-<!-- <script type="text/javascript">
-  
-  $ (document).ready (function () {
-  $ (".modal a").not (".dropdown-toggle").on ("click", function () {
-    
-  });
-});
-</script> -->
-<script>
-$("#trigger").click(function() {
-  $("#menu").toggleClass("active");
-});
-
-$("#trigger").click(function() {
-  $("#trigger").toggleClass("active");
-});
-</script>
-<!-- /right tab -->
-
 @endsection
 
