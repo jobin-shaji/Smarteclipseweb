@@ -459,6 +459,7 @@ function verifyEmergency(){
 }
 
 function verifyHeaderEmergency(){
+
     var id = document.getElementById("header_alert_vehicle_id").value;
     var decrypt_id = document.getElementById("header_decrypt_vehicle_id").value;
     VerifyAlert(id,decrypt_id);
@@ -470,7 +471,6 @@ function track_vehicle(){
 }
 
 function VerifyAlert(vehicle_id,decrypt_vehicle_id){
-   
         if(typeof(Storage) !== "undefined") {
             localStorage.setItem("qwertasdfgzxcvb", decrypt_vehicle_id);
         }
@@ -483,6 +483,7 @@ function VerifyAlert(vehicle_id,decrypt_vehicle_id){
 }
 
 function verifyAlertResponse(res){
+    // console.log(res);
     if(res){
         var modal = document.getElementById('emergency');
         modal.style.display = "none";
