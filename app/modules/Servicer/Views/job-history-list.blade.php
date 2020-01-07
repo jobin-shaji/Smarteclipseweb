@@ -33,12 +33,12 @@
                     <th>SL.No</th>
                     <th>Job Code</th>
                     <th>Client</th>  
-                    <th>Vehicle Number</th>                    
+                    <th>Registration Number</th>                    
                     <th>Job Type</th>
                     <th>Assignee</th>
                     <th>GPS Serial No</th>
                     <th>Description</th>
-                    <th>Location</th>
+                    <th> Job Location</th>
                     <th>Job Date</th> 
                     <th>Job Completed Date</th> 
                     <th>Action</th>                      

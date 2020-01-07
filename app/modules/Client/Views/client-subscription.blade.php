@@ -36,7 +36,7 @@
                     <option value=" ">Select</option>
                     <option value="6">Fundamental</option>
                     <option value="7">superior</option>
-                    <option value="8">pro</option>                   
+                    <option value="8">pro</option>                  
                   </select>
                 </div>
               </div>  
