@@ -347,8 +347,6 @@ class GeofenceController extends Controller {
         foreach ($vehicle_geofences as $single_geofence) {
             $geofence_id=$single_geofence->geofence_id;
             $geofence_details=Geofence::where('id',$geofence_id)->first();
-            \Log::info('geofence_id'.$geofence_id);
-            
             if($geofence_details != null)
             {
                 $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
