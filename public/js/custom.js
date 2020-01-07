@@ -483,7 +483,7 @@ function VerifyAlert(vehicle_id,decrypt_vehicle_id){
 }
 
 function verifyAlertResponse(res){
-    console.log(res);
+    // console.log(res);
     if(res){
         var modal = document.getElementById('emergency');
         modal.style.display = "none";
