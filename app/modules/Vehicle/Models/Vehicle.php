@@ -68,9 +68,11 @@ class Vehicle extends Model
             'id',
             'name',
             'servicer_job_id',
+            'client_id',
             'gps_id')
         ->with('gps')
         ->with('servicerjob')
+        ->with('client')
         ->paginate(10);
     }
 

@@ -28,9 +28,10 @@
       <thead>
         <tr class="vechile-list-top">
           <th>SL.No</th>
+          <th>Owner Name</th>
           <th>Vehicle Name</th>
           <th>IMEI</th>
-          <th>Service engineer</th>
+          <th>Service Engineer</th>
           <th>Installation Date</th>
         </tr>
       </thead>
@@ -45,6 +46,7 @@
         @foreach($vehicles as $key => $each_vehicle)                  
           <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="single_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
             <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
+            <td>{{ $each_vehicle->client->name}}</td>
             <td>{{ $each_vehicle->name}}</td>
             <td>{{ $each_vehicle->gps->imei}}</td>
             <td>{{$each_vehicle->servicerjob->servicer->name}}</td>
@@ -86,7 +88,7 @@
                   <a data-toggle="tab" href="#alerts">Alerts</a>
                 </li>
                 <li class="monitoring_subtab">
-                  <a data-toggle="tab" href="#subscription">Subscription</a>
+                  <a data-toggle="tab" href="#subscription">Data & SMS</a>
                 </li>
               </ul>
               <div id="monitoring_details_tab_contents_loading" style="display: none;">
@@ -124,18 +126,6 @@
                             <div class="list-display">
                               <p>Vehicle Make :-</p>
                               <span id="tvc_vehicle_make"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Vehicle Min Fuel :-</p>
-                              <span id="tvc_vehicle_min_fuel"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Vehicle Max Fuel :-</p>
-                              <span id="tvc_vehicle_max_fuel"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Vehicle Status :-</p>
-                              <span id="tvc_vehicle_status"> </span>
                             </div>
                             <div class="list-display">
                               <p>Engine Number :-</p>
@@ -325,10 +315,7 @@
                             <p>Longitude:-</p>
                             <span id="tvc_device_lon"> </span>
                           </div>
-                          <div class="list-display">
-                            <p>Network Status:-</p>
-                            <span id="tvc_device_network_status"> </span>
-                          </div>
+                          
                           <div class="list-display">
                             <p>Fuel Status:-</p>
                             <span id="tvc_device_fuel_status"> </span>
@@ -365,10 +352,6 @@
                             <p>AC Status:-</p>
                             <span id="tvc_device_ac_status"> </span>
                           </div>
-                          <div class="list-display">
-                            <p>Kilometer:-</p>
-                            <span id="tvc_device_kilometer"> </span>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -379,9 +362,6 @@
                   <!-- /Device -->
                   <div id="installation" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-btn">
-                        <h1 class="selected">Installation</h1>
-                      </div>
                       <div class="acc-content open">
                         <div class="acc-content-inner">
                           <div class="table-outer">
@@ -393,9 +373,6 @@
                   </div>
                   <div id="service" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-btn">
-                        <h1 class="selected">Service</h1>
-                      </div>
                       <div class="acc-content">
                         <div class="acc-content-inner">
                           <div class="table-outer">
@@ -407,9 +384,6 @@
                   </div>
                   <div id="alerts" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-btn">
-                        <h1 class="selected">Alerts</h1>
-                      </div>
                       <div class="acc-content ">
                         <div class="acc-content-inner">
                           <div class="table-outer">
@@ -421,13 +395,10 @@
                   </div>
                   <div id="subscription" class="tab-pane fade">
                     <div class="acc-container">
-                      <div class="acc-btn">
-                        <h1 class="selected">Subscription</h1>
-                      </div>
                       <div class="acc-content ">
                         <div class="acc-content-inner">
                           <div class="sub-div">
-                            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                            Under Processing.....
                           </div>
                         </div>
                       </div>
