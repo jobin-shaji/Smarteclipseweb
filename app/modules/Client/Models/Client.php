@@ -2,6 +2,8 @@
 namespace App\Modules\Client\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+// use App\Modules\Vehicle\Models\Vehicle;
+
 class Client extends Model
 {
   use SoftDeletes;    
@@ -29,7 +31,7 @@ class Client extends Model
     {
         return $this->hasMany('App\Modules\Vehicle\Models\Vehicle', 'client_id')->whereNull('deleted_at')->orderBy('id', 'desc');
     }
-
+   
    public function state(){
         return $this->hasOne('App\Modules\TrafficRules\Models\State','id','state_id');
     }

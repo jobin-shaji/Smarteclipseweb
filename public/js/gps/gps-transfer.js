@@ -26,6 +26,8 @@ function getDeviceTransferList()
 
 function countSection(data)
 {
+    $('#stock_section').hide();
+    $('#transferred_section').hide();
     var url = 'gps-transferred-count-root';
     var purl = getUrl() + '/' + url;
     $.ajax({
@@ -37,14 +39,21 @@ function countSection(data)
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            $('#transferred_count_string').html(res);
+            if(res.instock_gps_count != undefined)
+            {
+                $('#stock_section').show();
+                $('#stock_count').html(res.instock_gps_count);
+                $('#stock_message').html(res.stock_string);
+            }
+            $('#transferred_section').show();
+            $('#transferred_count').html(res.transferred_gps_count);
+            $('#transferred_message').html(res.transferred_string);
         },
     });
 }
 
 
 function callBackDataTable(data){
-    $('#count_section').show();
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,

@@ -79,7 +79,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Date</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Mobile" name="job_date" value=" {{date('d-m-Y', strtotime($servicer_job->job_date))}}" required readonly="">
+                        <input type="text" class="form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Mobile" name="job_date" value=" {{date('d-m-Y H:i:s', strtotime($servicer_job->job_date))}}" required readonly="">
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_date'))
@@ -94,7 +94,7 @@
                      <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Job Complete Date</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{date('d-m-Y', strtotime($servicer_job->job_complete_date))}} " required readonly="" >
+                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{date('d-m-Y H:i:s', strtotime($servicer_job->job_complete_date))}} " required readonly="" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_completed_date'))
@@ -105,7 +105,7 @@
                     </div>
 
                      <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle</label>
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Name</label>
                       <div class="form-group has-feedback">
                         <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$vehicle_device->name}} " required readonly="" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>

@@ -4,7 +4,7 @@
   padding-bottom: 0px;
  }
   .tablehighlight{
-background-color: #f0b102;
+    background-color: #f0b102;
     color: #fff;
 }
 .vehicle_details_table_row{
@@ -78,6 +78,7 @@ margin-top: -1.5%;
   border: 1px solid #ccc;
   border-top: none;
 }
+
 .vehicle-container{
     width: 98%;
     margin: 0px auto;
@@ -124,8 +125,8 @@ margin-top: -1.5%;
     padding-bottom: 40px;
 }
 .monitoring_details{
-    max-height: 250px;
-    overflow-y: scroll;
+    /*max-height: 250px;
+    overflow-y: scroll;*/
   }
 .detail-list-outer{
   width: 100%;
@@ -160,6 +161,42 @@ margin-top: -1.5%;
   overflow:hidden;
 }
 
+.acc-btn { 
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px 25px;
+    cursor: pointer;
+    background: #f2f2f2;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.acc-content {
+  height:0px;
+  width:100%;
+  margin:0 auto;
+  overflow:hidden;
+  background:#f7f7f7;
+}
+
+.acc-content-inner {
+  padding:30px;
+}
+
+.open {
+  height: auto;
+}
+
+.selected {
+    color: #525252;
+    font-weight: normal;
+    font-size: 18px;
+    padding-top: 11px;
+}
+.acc-btn h1{
+    font-weight: normal;
+     font-size: 15px;    padding-top: 11px;
+}
+
 .table .vehicle_details_table_row td{
     padding: 0.6em 0;
     font-size: 14px;}
@@ -173,6 +210,7 @@ margin-top: -1.5%;
     width: 100%;
     overflow: auto;
 }
+
 #accordion {
   margin-top: 20px;
 }
@@ -185,9 +223,9 @@ margin-top: -1.5%;
     background-color: #f2f2f2;
     color: #5f5f5f;
     cursor: pointer;
-   width: 98%;
-display: block;
-float: left;
+    width: 98%;
+    display: block;
+    float: left;
     margin: 0 auto;
     border-bottom: 2px solid white;
     margin-bottom: 5px;
@@ -216,7 +254,7 @@ float: left;
     width: 100%;
     float: left;
     display: block;
-        font-size: 14px;
+    font-size: 14px;
     padding-bottom: 7px;
 }
 .list-display p{
@@ -228,9 +266,9 @@ float: left;
 .list-display span{
   width: auto;
   float: left;
-padding-left: 15px;}
+  padding-left: 15px;}
 .list-outer-bg{
-width: 98%;
+  width: 98%;
     padding: 15px 0%;
     float: left;
     margin-bottom: 8px;
@@ -275,15 +313,16 @@ width: 98%;
     padding: 8px 0;
   }
   .table-outer table tr td {
-      text-align: center;
-    padding: 5px 0;}
-    .sub-div{
-      width: 98%;
-    float: left;
-    padding-top: 10px;
-    padding-left: 20px;
-    display: block;
-    }
+    text-align: center;
+    padding: 5px 0;
+  }
+  .sub-div{
+  width: 98%;
+  float: left;
+  padding-top: 10px;
+  padding-left: 20px;
+  display: block;
+  }
 
   /* MODAL FADE LEFT RIGHT BOTTOM */
 .modal.fade:not(.in).left .modal-dialog {
@@ -343,7 +382,7 @@ body{
 .foat-right{float: right;}
 
 .close{
-.font-size: 30px;
+    font-size: 30px;
     z-index: 999;
     opacity: 1;
     float: left;

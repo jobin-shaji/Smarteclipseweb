@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Vehicle Live Track</title>
+    <title>Playback</title>
 
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,7 +107,7 @@
         </div>
         <div class="row">
              <span><i class='fa fa-user'></i></span>
-            <span><span style="padding: 15px;">:</span>{{ $vehicle->driver->name}}</span>
+            <span><span style="padding: 15px;">:</span>@if($vehicle->driver){{ $vehicle->driver->name}}@endif</span>
         </div>
         </div>
 

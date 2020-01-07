@@ -21,7 +21,7 @@
       </ol>
     </nav>
     <div class="container-fluid">
-      <div class="card-body"><h4>GPS List</h4>
+      <div class="card-body">
         <div class="table-responsive scrollmenu">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">

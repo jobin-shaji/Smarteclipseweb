@@ -186,8 +186,8 @@
                         <div class="form-group has-feedback">
                           <select class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}">
                             <option value="" selected disabled>Select Client Category</option>
-                            <option value="school">School</option>
-                            <option value="other">Others</option>
+                            <!-- <option value="school">School</option> -->
+                            <option value="other">General</option>
                           </select>
                         </div>
                         @if ($errors->has('username'))

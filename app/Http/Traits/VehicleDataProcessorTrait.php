@@ -497,7 +497,7 @@ trait VehicleDataProcessorTrait{
             'status'
         )
         ->where('gps_id',$single_vehicle_gps_id)
-        ->whereNotIn('id',[17,18,23,24])
+        ->whereNotIn('alert_type_id',[17,18,23,24])
         ->whereDate('device_time', '>=', $from_date)
         ->whereDate('device_time', '<=', $to_date)
         ->get();

@@ -20,8 +20,6 @@ class Vehicle extends Model
     return $this->hasOne('App\Modules\Vehicle\Models\VehicleType','id','vehicle_type_id');
     }
 
-
-
     // driver
     public function driver(){
         return $this->hasOne('App\Modules\Driver\Models\Driver','id','driver_id')->withTrashed();
