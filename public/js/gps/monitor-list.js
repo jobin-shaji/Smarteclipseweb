@@ -324,25 +324,15 @@ function render_alerttab(res)
             '<th>Alert</th>'+
             '<th>Latitude</th>'+
             '<th>Longitude</th>'+
-            '<th>Alert Status</th>'+
             '<th>Date of Alert</th>'+
             '<th>Device Time</th>'+
         '</tr>';
         res.data.alerts.forEach(function(each_alert)
         {
-             // custom alert status
-            if( each_alert.status == '1')
-            {
-                var alert_status = 'Active';
-            } 
-            else{
-                var alert_status = 'Inactive';
-            }
             table +='<tr>'+
                     '<td>'+each_alert.alert_type.description+'</td>'+
                     '<td>'+each_alert.latitude+'</td>'+
                     '<td>'+each_alert.longitude+'</td>'+
-                    '<td>'+alert_status+'</td>'+
                     '<td>'+each_alert.created_at+'</td>'+
                     '<td>'+each_alert.device_time+'</td>'+
                 '</tr>';
@@ -382,3 +372,24 @@ function repaint(id)
 {
     $('#'+id).text('');
 }
+
+$('#monitoring_module_search_key').keyup(function(){
+    var search_key = $(this).val();
+    if( $(this).val().length > 3 )
+    {
+        var data = { search_key :search_key};
+        $.ajax({
+            type    :'POST',
+            url     : 'monitorsearch',
+            data    : data,
+            async   : true,
+            headers : {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res){
+            //    console.log(res.data);
+            }
+        });
+    
+    }
+});
