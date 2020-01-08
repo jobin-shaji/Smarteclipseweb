@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class DailyKm extends Model
 {
   public $timestamps = false;
-    
+
    protected $fillable = [
         'gps_id','km','date'
     ];
@@ -24,8 +24,7 @@ class DailyKm extends Model
 
     public function updateDailyKilometre($gps_id, $value)
     {
-        self::where('gps_id',$gps_id)->where('date',date("Y-m-d"))->update(['km'=> $value]);
-
+       return self::where('gps_id',$gps_id)->where('date',date("Y-m-d"))->update(['km'=> $value]);
     }
 }
 
