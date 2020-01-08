@@ -26,5 +26,16 @@ class DailyKm extends Model
     {
        return self::where('gps_id',$gps_id)->where('date',date("Y-m-d"))->update(['km'=> $value]);
     }
+    /**
+     * 
+     * 
+     */
+    public function vehicleTotalKilometres($from_date, $to_date, $gps_id)
+    {
+        return self::where('gps_id', $gps_id)
+            ->where('date', '>=', $from_date)
+            ->where('date', '<=', $to_date)
+            ->sum('km');
+    }
 }
 
