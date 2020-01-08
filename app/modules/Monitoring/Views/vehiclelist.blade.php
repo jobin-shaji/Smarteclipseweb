@@ -22,6 +22,17 @@
       </div>
     @endif 
   </nav>
+
+  <!-- Search and filters -->
+  <div>
+    <form  method="POST" action="{{route('monitor.search')}}">
+       {{csrf_field()}}
+      <input type="text"  name="monitoring_module_search_key" id="monitoring_module_search_key">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <!-- /Search and filters -->
+
   <!-- Vehicles detail wrapper -->  
   <div class="vehicle_details_wrapper vehicle-container">           
     <table id="vehicle_details_table" class="table table-bordered" style="text-align: center;">
@@ -39,8 +50,11 @@
         @if($vehicles->count() == 0)
           <tr>
             <td></td>
+            <td></td>
             <td><b style="float: right;margin-right: -13px">No data</b></td>
             <td><b style="float: left;margin-left: -15px">Available</b></td>
+            <td></td>
+            <td></td>
           </tr>
         @endif
         @foreach($vehicles as $key => $each_vehicle)                  
@@ -459,6 +473,15 @@
   });
 });
 </script>
+<script type="text/javascript">
+$( document ).ready(function( ) {
+
+//Use this inside your document ready jQuery 
+
+
+});
+</script>
+
 <!-- /accordian -->
 @endsection
 
