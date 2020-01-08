@@ -815,8 +815,9 @@
                 icon: domIcon
             });
             map.addObject(bearsMarkeronStartPoint);
-
-            alertPlotOnMap(lat,lng);
+            if(lat != undefined && lng != undefined){
+              alertPlotOnMap(lat,lng);
+             }
             
             blPlaceCaronMap = true;
     }
