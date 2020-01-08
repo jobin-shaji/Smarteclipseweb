@@ -32,10 +32,10 @@
       <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">Mobile Number:{{$user_details->mobile}}
         </td>
-         @role('root')
+        
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Scanned Employee Code:{{$gps_transfer->scanned_employee_code}}
         </td>
-        @endrole
+       
       </tr>
 
       <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
