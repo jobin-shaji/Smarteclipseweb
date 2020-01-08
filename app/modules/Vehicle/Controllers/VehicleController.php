@@ -41,6 +41,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class VehicleController extends Controller 
 {
 
+    CONST DAILY_KILOMETRE_RESET_VALUE = 0;
 
 
     /** 
@@ -221,7 +222,6 @@ class VehicleController extends Controller
                 'client_id' =>$vehicle->client_id
             ]);
         }
-
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Driver updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
@@ -240,6 +240,7 @@ class VehicleController extends Controller
 
     public function odometerUpdate(Request $request)
     {
+        //dd($request->reset_daily_km);
         $vehicle = Vehicle::find($request->id);
         $encrypted_gps_id = encrypt($request->id);
         $gps = Gps::find($vehicle->gps_id);
@@ -265,11 +266,21 @@ class VehicleController extends Controller
                 'new_odometer' => $odometer_in_meter,
                 'edited_at' => date('Y-m-d H:i:s') ,
                 'updated_by' => $vehicle->client_id
-            ]);  
+            ]);
+
+            if( ($odometer_update) && ($request->reset_daily_km == '1') )
+            {
+                $this->updateVehicleDailyKilometre($vehicle->gps_id, self::DAILY_KILOMETRE_RESET_VALUE);
+            }  
         }       
         $request->session()->flash('message', 'Vehicle odometer updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicles.details',$encrypted_gps_id));
+    }
+
+    public function updateVehicleDailyKilometre($gps_id, $value)
+    {
+        return (new DailyKm())->updateDailyKilometre($gps_id, $value);
     }
 
     // details page
