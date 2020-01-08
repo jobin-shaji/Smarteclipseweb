@@ -257,12 +257,13 @@ class DriverController extends Controller {
                 'created_at'
             )               
             ->with('alert:id,alert_type_id')
-            ->with(['driver' => function($query) use ($search_key){
-                if( $search_key != null )
-                {
-                    $query->where('name', 'like', '%'.$search_key.'%');
-                }
-            }])
+            // ->with(['driver' => function($query) use ($search_key){
+            //     if( $search_key != null )
+            //     {
+            //         $query->where('name', 'like', '%'.$search_key.'%');
+            //     }
+            // }])
+            ->with('driver:id,name')
             ->with('vehicle:id,name,register_number')
             ->with('gps:id,imei,serial_no')
             ->orderBy('id','DESC')

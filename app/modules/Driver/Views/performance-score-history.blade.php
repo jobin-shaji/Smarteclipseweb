@@ -3,9 +3,7 @@
 Performance Score History
 @endsection
 @section('content')
-<?php
-  $from_date = ( isset($performance_score) ) ? $from : 'test';
-?>
+
   <div class="page-wrapper_new">
     <div class="page-breadcrumb">
       <div class="row">
