@@ -347,7 +347,10 @@ class GeofenceController extends Controller {
         foreach ($vehicle_geofences as $single_geofence) {
             $geofence_id=$single_geofence->geofence_id;
             $geofence_details=Geofence::where('id',$geofence_id)->first();
-            $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
+            if($geofence_details != null)
+            {
+                $response_string .=$geofence_details->code.'-'.$single_geofence->alert_type.'-'.$geofence_details->response.'&';
+            }
         }
         if($response_string==""){
             $response_string="CLR VGF";
@@ -368,17 +371,12 @@ class GeofenceController extends Controller {
         $vehicle_id= $request->vehicle_id;           
         $geofence = $request->geofence_id;
         $alert_type = $request->alert_type;
-        // $from_date = $request->from_date;
-        // $to_date = $request->to_date;
-        // $fromDate = date("Y-m-d", strtotime($from_date));
-        // $toDate = date("Y-m-d", strtotime($to_date));
+
         $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','alert_type')
         ->where('vehicle_id',$vehicle_id)
         ->where('geofence_id',$geofence)
         ->where('client_id',$client_id)
         ->where('alert_type',$alert_type)
-        // ->whereBetween('date_from',array($fromDate,$toDate))
-        // ->WhereBetween('date_to',array($fromDate,$toDate))
         ->get()
         ->count();
         return response()->json([
