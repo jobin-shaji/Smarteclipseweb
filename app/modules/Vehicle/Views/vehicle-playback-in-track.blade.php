@@ -940,7 +940,7 @@
          function alertPlotOnMap(lat,lng){   
                 alertsQueue.find(function(x,i){
                 console.log(x);
-               if(x.lat != undefined && x.lng != undefined)
+               if(x != undefined)
                {
                  var start = [lat,lng];
                  var end   = [x.lat, x.lng];
