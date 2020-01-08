@@ -939,6 +939,9 @@
 
          function alertPlotOnMap(lat,lng){   
                 alertsQueue.find(function(x,i){
+
+               if(x.lat != undefined && x.lng != undefined)
+               {
                  var start = [lat,lng];
                  var end   = [x.lat, x.lng];
                  var total_distance = gis.calculateDistance(start, end);
@@ -948,9 +951,10 @@
                         }
                         alertsQueue.splice(0,1)[i];
                     
+                  }
                  }
                 },lat,lng);
-        }
+            }
 
 
         function addMarkerToGroup(group, coordinate, html) {
