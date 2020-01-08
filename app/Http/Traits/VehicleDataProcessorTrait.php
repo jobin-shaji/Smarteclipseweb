@@ -438,35 +438,35 @@ trait VehicleDataProcessorTrait{
             $appDate = date('Y-m-d');
         } else if ($searchType == "2") {
             $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
-            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
+            $to_date = date('Y-m-d H:i:s', strtotime("yesterday 23:59:59"));
             $appDate = date('Y-m-d', strtotime("yesterday midnight"));
         } else if ($searchType == "3") {
             $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d', strtotime("yesterday midnight"));
+            $to_date = date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+            $appDate = date('Y-m-d', strtotime("-7 day midnight")) . " " . date('Y-m-d', strtotime("yesterday 23:59:59"));
         } else if ($searchType == "4") {
             $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
             $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
             $appDate = date('Y-m-d H:i:s', strtotime($custom_from_date)) . " " . date('Y-m-d H:i:s', strtotime($custom_to_date));
         }else if ($searchType == "5") {
             $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-30 day midnight")) . " " . date('Y-m-d');
+            $to_date = date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+            $appDate = date('Y-m-d', strtotime("-30 day midnight")) . " " . date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
         }
         else if ($searchType == "6") {
             $from_date = date('Y-m-d H:i:s', strtotime("-60 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-60 day midnight")) . " " . date('Y-m-d');
+            $to_date = date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+            $appDate = date('Y-m-d', strtotime("-60 day midnight")) . " " . date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
         }
         else if ($searchType == "7") {
             $from_date = date('Y-m-d H:i:s', strtotime("-120 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-120 day midnight")) . " " . date('Y-m-d');
+            $to_date = date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+            $appDate = date('Y-m-d', strtotime("-120 day midnight")) . " " . date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
         }
         else if ($searchType == "8") {
             $from_date = date('Y-m-d H:i:s', strtotime("-180 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-            $appDate = date('Y-m-d', strtotime("-180 day midnight")) . " " . date('Y-m-d');
+            $to_date = date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+            $appDate = date('Y-m-d', strtotime("-180 day midnight")) . " " . date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
         }
         $output_data = ["from_date" => $from_date, 
                         "to_date" => $to_date, 
