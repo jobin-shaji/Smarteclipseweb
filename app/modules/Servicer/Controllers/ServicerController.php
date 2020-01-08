@@ -1455,6 +1455,7 @@ public function serviceJobDetails(Request $request)
      public function pendingJobList()
     {
         $user_id=\Auth::user()->servicer->id;
+        // dd($user_id);
         $servicer_job = ServicerJob::select(
             'id', 
             'servicer_id',
@@ -1501,7 +1502,7 @@ public function serviceJobDetails(Request $request)
                 return "<font color='red'>Cancelled</font>";                            
             }else
             {
-                if($servicer_job->job_type==1)
+                if($servicer_job->status==1)
                 {
                     return "
                      <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
