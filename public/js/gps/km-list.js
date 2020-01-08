@@ -8,6 +8,7 @@ function check(){
     $('#sleep').empty();
     $('#moving').empty();
     $('#halt').empty();
+    $('#stop_duration').empty();
     $('#sudden_acceleration').empty();
     $('#harsh_braking').empty();
     $('#main_battery_disconnect').empty();
@@ -108,6 +109,7 @@ function kmReport(res)
     $('#sleep').text(res.sleep);
     $('#moving').text(res.motion);
     $('#halt').text(res.halt);
+    $('#stop_duration').text(res.stop_duration);
     $('#sudden_acceleration').text(sudden_acceleration);
     $('#harsh_braking').text(harsh_braking);
     $('#main_battery_disconnect').text(main_battery_disconnect);

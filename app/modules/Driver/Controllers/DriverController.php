@@ -238,6 +238,7 @@ class DriverController extends Controller {
         $driver_id= $request->driver;   
         $from = date("Y-m-d", strtotime($request->fromDate));
         $to = date("Y-m-d", strtotime($request->toDate));
+        $search_key = ( isset($request->search_key) ) ? $request->search_key : null;
         // client drivers list
         $drivers        = Driver::where('client_id',$client_id)->get();
         $single_drivers = [];
@@ -256,15 +257,30 @@ class DriverController extends Controller {
                 'created_at'
             )               
             ->with('alert:id,alert_type_id')
-            ->with('driver:id,name')
+            ->with(['driver' => function($query) use ($search_key){
+                if( $search_key != null )
+                {
+                    $query->where('name', 'like', '%'.$search_key.'%');
+                }
+            }])
             ->with('vehicle:id,name,register_number')
             ->with('gps:id,imei,serial_no')
             ->orderBy('id','DESC')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to);
+
             // if driver id is not provided, choose all drivers under that client
-            $performance_score = (( $driver_id != 0 ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers))
-            ->paginate(15);
+            $performance_score = (( $driver_id != 0 ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers));
+            // search section
+            // if( isset($request->search_item) )
+            // {
+            //     $performance_score = $performance_score->whereLike();
+            // }
+
+            // paginate
+            $performance_score = $performance_score->paginate(15);
+
+            
 
         return view('Driver::performance-score-history',['drivers'=>$drivers,'performance_score'=>$performance_score,'driver_id'=>$driver_id,'from'=>$from,'to'=>$to]); 
     }

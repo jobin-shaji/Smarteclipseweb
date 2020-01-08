@@ -183,6 +183,15 @@ Total KM Report
                         </div>
                         <div class="widthh">
                           <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/halt-duration.png" width="10%" height="60px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Stop Duration</span>
+                              <label class="info-box-number" id="stop_duration"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/zigzag-driving.png" width="10%" height="60px" class="report_img"/>
                             <div class="info-box-content">
                               <span class="info-box-text" >Zig Zag Driving</span>
@@ -268,15 +277,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="18%" height="80px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text" >no of stops</span>
-                              <label class="info-box-number" id="route_deviation"></label>
-                            </div>
-                          </div>
-                        </div>
+                       
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="18%" height="80px" class="report_img"/>

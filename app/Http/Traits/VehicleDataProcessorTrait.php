@@ -8,6 +8,7 @@ use App\Modules\Alert\Models\Alert;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\Route\Models\RouteDeviation;
 use App\Modules\Vehicle\Models\DailyKm;
+use App\Modules\Vehicle\Models\VehicleDailyUpdate;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -474,6 +475,46 @@ trait VehicleDataProcessorTrait{
         return $output_data;
     }
 
+    public function vehicleDailyUpdates($gps_id,$from_date,$to_date)
+    {
+        $vehicle_durations = VehicleDailyUpdate::select(
+                                \DB::raw('sum(ignition_on) as ignition_on'),
+                                \DB::raw('sum(ignition_off) as ignition_off'),
+                                \DB::raw('sum(moving) as moving'),
+                                \DB::raw('sum(halt) as halt'),
+                                \DB::raw('sum(sleep) as sleep'),
+                                \DB::raw('sum(stop) as stop'),
+                                \DB::raw('sum(ac_on) as ac_on'),
+                                \DB::raw('sum(ac_off) as ac_off'),
+                                \DB::raw('sum(ac_on_idle) as ac_on_idle')
+                            )
+                            ->where('date', '>=', $from_date)
+                            ->where('date', '<=', $to_date)
+                            ->where('gps_id',$gps_id)
+                            ->first();
+        $ignition_on_time = $this->timeFormate($vehicle_durations->ignition_on);
+        $ignition_off_time = $this->timeFormate($vehicle_durations->ignition_off);
+        $moving_time = $this->timeFormate($vehicle_durations->moving);
+        $halt_time = $this->timeFormate($vehicle_durations->halt);
+        $sleep_time = $this->timeFormate($vehicle_durations->sleep);
+        $stop_time = $this->timeFormate($vehicle_durations->stop);
+        $ac_on_time = $this->timeFormate($vehicle_durations->ac_on);
+        $ac_off_time = $this->timeFormate($vehicle_durations->ac_off);
+        $ac_on_idle_time = $this->timeFormate($vehicle_durations->ac_on_idle);
+        $durations = array(
+            "ignition_on_time" => $ignition_on_time,
+            "ignition_off_time" => $ignition_off_time, 
+            "moving_time" => $moving_time, 
+            "halt_time" => $halt_time,  
+            "sleep_time" => $sleep_time, 
+            "stop_time" => $stop_time, 
+            "ac_on_time" => $ac_on_time, 
+            "ac_off_time" => $ac_off_time, 
+            "ac_on_idle_time" => $ac_on_idle_time
+        );
+        return $durations;
+    }
+
     public function vehicleProfile($vehicle_id,$date_and_time,$client_id)
     {
         $single_vehicle_gps_id = [];     
@@ -482,11 +523,15 @@ trait VehicleDataProcessorTrait{
         $to_date_time = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
         $from_date = date('Y-m-d', strtotime($date_and_time['from_date']));
         $to_date = date('Y-m-d', strtotime($date_and_time['to_date']));
-        $tracking_mode = $this->trackingMode($single_vehicle_gps_id,$from_date_time,$to_date_time);
-        $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
-        $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
-        $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
+        // $tracking_mode = $this->trackingMode($single_vehicle_gps_id,$from_date_time,$to_date_time);
+        // $engine_status=$this->engineStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
+        // $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
+        // $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
+        
+        //getting durations from vehicle daily update table
+        $vehicle_daily_updates = $this->vehicleDailyUpdates($single_vehicle_gps_id,$from_date,$to_date);
+        
         $alerts =Alert::select(
             'id',
             'alert_type_id', 
@@ -514,14 +559,15 @@ trait VehicleDataProcessorTrait{
         ->count();
         $vehicle_profile = array();
         $vehicle_profile = array(
-            'engine_on_duration' => $engine_status['engine_on_time'],
-            'engine_off_duration' => $engine_status['engine_off_time'],
-            'ac_on_duration' => $ac_status['ac_on_time'],
-            'ac_off_duration' => $ac_status['ac_off_time'],
-            'ac_halt_on_duration' => "00:00:00",
-            'sleep' => $tracking_mode['total_sleep'],  
-            'motion' => $tracking_mode['total_moving'],   
-            'halt' => $tracking_mode['total_halt'], 
+            'engine_on_duration' => $vehicle_daily_updates['ignition_on_time'],
+            'engine_off_duration' => $vehicle_daily_updates['ignition_off_time'],
+            'ac_on_duration' => $vehicle_daily_updates['ac_on_time'],
+            'ac_off_duration' => $vehicle_daily_updates['ac_off_time'],
+            'ac_halt_on_duration' => $vehicle_daily_updates['ac_on_idle_time'],
+            'sleep' => $vehicle_daily_updates['sleep_time'],  
+            'motion' => $vehicle_daily_updates['moving_time'],   
+            'halt' => $vehicle_daily_updates['halt_time'], 
+            'stop_duration' => $vehicle_daily_updates['stop_time'], 
             'sudden_acceleration' => $alerts->where('alert_type_id',2)->count(), 
             'harsh_braking' => $alerts->where('alert_type_id',1)->count(),               
             'main_battery_disconnect' => $alerts->where('alert_type_id',11)->count(),               
