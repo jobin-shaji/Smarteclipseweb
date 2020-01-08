@@ -1,6 +1,8 @@
 $(document).ready(function () {
-    callBackDataTable();
-    
+    var from_date = document.getElementById('fromDate').value;
+    var to_date = document.getElementById('toDate').value;
+    var data = {'from_date':from_date , 'to_date':to_date};
+    callBackDataTable(data);
 });
 
 
