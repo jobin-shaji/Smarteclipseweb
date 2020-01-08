@@ -4,5 +4,6 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 Route::get('/monitor','MonitorController@getVehicleList')->name('monitor_vehicle');
 Route::post('/allvehicle-list','MonitorController@getVehicleData')->name('allvehicle.list');
+Route::post('/monitorsearch','MonitorController@getVehicleList')->name('monitor.search');
 });
 
