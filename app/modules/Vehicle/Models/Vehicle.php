@@ -70,19 +70,20 @@ class Vehicle extends Model
             'servicer_job_id',
             'client_id',
             'gps_id')
-       /* ->with(['gps' => function ($query) {
-            $query->where('gps.imei','like','%'.$key.'%');
-        }])*/
-        // ->with('gps', function ($query) use ($key) {
-        //     $query; //->where('imei','like','%'.$key.'%');
-        // })
+        ->with('gps')
         ->with('servicerjob')
         ->with('client');
 
         if( $key != null )
         {
-            $vehicles = $vehicles->where('name','like','%'.$key.'%'); //->orWhere('gps.imei','like','%'.$key.'%');
+           $vehicles = $vehicles->where('name','like','%'.$key.'%');
+           $vehicles = $vehicles->gps->orWhere('imei','like','%'.$key.'%');
+            //->orWhere('gps.imei','like','%'.$key.'%');
         }
+
+
+      //  $vehicle = Gps::where('imei','like',$imei)->with('vehicle');
+
         return $vehicles->paginate(10);
     }
 
