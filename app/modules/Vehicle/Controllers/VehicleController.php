@@ -2908,12 +2908,14 @@ class VehicleController extends Controller
 
         $count_of_gpsdata = GpsData::select('latitude as latitude', 'longitude as longitude', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->whereNotNull('latitude')
             ->whereNotNull('longitude')
+            ->where('gps_fix',1)
             ->orderBy('device_time', 'asc')
             ->count();
         $total_index = round($count_of_gpsdata / 30);
        
         $track_data = GpsData::select('id', 'latitude as latitude', 'longitude as longitude', 'lat_dir as latitude_dir', 'lon_dir as longitude_dir', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->offset($start_offset)->limit($limit)->whereNotNull('latitude')
             ->whereNotNull('longitude')
+            ->where('gps_fix',1)
             ->orderBy('device_time', 'asc')
             ->get();
 
