@@ -199,6 +199,42 @@ Total KM Report
                             </div>
                           </div>
                         </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="10%" height="60px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >Total KM</span>
+                              <label class="info-box-number" id="total_km"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="10%" height="60px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text">over speed count</span>
+                              <label class="info-box-number" id="overspeed_count"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="10%" height="60px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text" >total Alerts</span>
+                              <label class="info-box-number" id="alerts"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="widthh">
+                          <div class="info-box">
+                            <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="10%" height="60px" class="report_img"/>
+                            <div class="info-box-content">
+                              <span class="info-box-text">Main Battery Disconnect</span>
+                              <label class="info-box-number" id="main_battery_disconnect"></label>
+                            </div>
+                          </div>
+                        </div>
                         @if(\Auth::user()->hasRole('fundamental|superior|pro'))
                         <div class="widthh">
                           <div class="info-box">
@@ -209,17 +245,6 @@ Total KM Report
                             </div>
                           </div>
                         </div>
-                        @endif
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/harsh-braking.png" width="10%" height="60px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text">over speed count</span>
-                              <label class="info-box-number" id="overspeed_count"></label>
-                            </div>
-                          </div>
-                        </div>
-                        @if(\Auth::user()->hasRole('fundamental|superior|pro'))
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/ac.png" width="10%" height="60px" class="report_img"/>
@@ -229,17 +254,6 @@ Total KM Report
                             </div>
                           </div>
                         </div>
-                         @endif
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/alerts.png" width="10%" height="60px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text" >total Alerts</span>
-                              <label class="info-box-number" id="alerts"></label>
-                            </div>
-                          </div>
-                        </div>
-                        @if(\Auth::user()->hasRole('fundamental|superior|pro'))
                         <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/ac.png" width="10%" height="60px" class="report_img"/>
@@ -259,15 +273,7 @@ Total KM Report
                             </div>
                           </div>
                         </div> -->
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/main-battery-disconnect.png" width="10%" height="60px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text">Main Battery Disconnect</span>
-                              <label class="info-box-number" id="main_battery_disconnect"></label>
-                            </div>
-                          </div>
-                        </div>
+                       
                         <!-- <div class="widthh">
                           <div class="info-box">
                             <img src="{{ url('/') }}/SVG-Icons/route-deviation.png" width="18%" height="80px" class="report_img"/>
@@ -277,16 +283,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
-                       
-                        <div class="widthh">
-                          <div class="info-box">
-                            <img src="{{ url('/') }}/SVG-Icons/total-KM.png" width="18%" height="80px" class="report_img"/>
-                            <div class="info-box-content">
-                              <span class="info-box-text" >Total KM</span>
-                              <label class="info-box-number" id="total_km"></label>
-                            </div>
-                          </div>
-                        </div> -->
+                        -->
                       </div>
                     </div>
                   </div>
