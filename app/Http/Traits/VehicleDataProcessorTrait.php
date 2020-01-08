@@ -528,7 +528,9 @@ trait VehicleDataProcessorTrait{
         // $ac_status=$this->acStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         // $halt_status=$this->haltAcStatus($single_vehicle_gps_id,$from_date_time,$to_date_time);
         $km_report =  $this->dailyKmReport($client_id,$vehicle_id,$from_date,$to_date,$single_vehicle_gps_id);       
-        
+        //convert meter to kilometer
+        $total_km_in_meter = (int)$km_report->km;
+        $total_km_in_kilometer = $total_km_in_meter/1000;
         //getting durations from vehicle daily update table
         $vehicle_daily_updates = $this->vehicleDailyUpdates($single_vehicle_gps_id,$from_date,$to_date);
         
@@ -580,7 +582,7 @@ trait VehicleDataProcessorTrait{
             'geofence_entry_overspeed' => $alerts->where('alert_type_id',15)->count(),
             'geofence_exit_overspeed' => $alerts->where('alert_type_id',16)->count(),
             'route_deviation' => $route_deviation,    
-            'dailykm' => strval($km_report->km),          
+            'dailykm' => strval($total_km_in_kilometer),          
             'status' => 'kmReport'           
         );
 
