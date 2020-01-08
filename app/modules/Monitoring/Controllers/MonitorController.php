@@ -60,9 +60,19 @@ class MonitorController extends Controller
      * 
      * 
      */
-    public function getVehicleList()
+    public function getVehicleList(Request $request)
     {
-        return view('Monitoring::vehiclelist',['vehicles'=> (new Vehicle())->getVehicleList()]); 
+        $key = ( isset($request->monitoring_module_search_key) ) ? $request->monitoring_module_search_key : null;
+        return view('Monitoring::vehiclelist',['vehicles'=> (new Vehicle())->getVehicleList($key)]); 
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function filterVehicleList(Request $request)
+    {
+       return view('Monitoring::vehiclelist',['vehicles'=> (new Vehicle())->getVehicleList($request)]); 
     }
     
     /**
@@ -88,6 +98,16 @@ class MonitorController extends Controller
             $this->message = 'failed';
             return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message  ], $this->code);
         }  
+    }
+
+    public function search(Request $request){
+      
+        $monitor_search_key=$request->search_key;
+         if(!empty($monitor_search_key)){
+            return view('Monitoring::vehiclelist',['vehicles'=>(new Vehicle())->search($monitor_search_key)]);
+        }else{
+            return view('Monitoring::vehiclelist');
+        }
     }
     
 }
