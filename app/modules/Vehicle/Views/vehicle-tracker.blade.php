@@ -40,7 +40,7 @@
 
 
             <span id="connection_lost" style="display: none;font-size: 13px;">
-              Connection lost: <span id="connection_lost_last_seen"></span>
+              Device connection lost: <span id="connection_lost_last_seen"></span>
             </span>
           </div>
           <div class="col-sm-12 social-buttons" style="margin-left: 2.5%!important;">
