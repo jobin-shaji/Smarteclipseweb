@@ -40,7 +40,7 @@
 
 
             <span id="connection_lost" style="display: none;font-size: 13px;">
-              Connection lost: <span id="connection_lost_last_seen"></span>
+            Device connection lost: <span id="connection_lost_last_seen"></span>
             </span>
           </div>
           <div class="col-sm-12 social-buttons" style="margin-left: 2.5%!important;">
@@ -54,7 +54,7 @@
               <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 17.8%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <img src="../../assets/images/odometer.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label> <span id="odometer"> </span></b></b>
+              <img src="../../assets/images/odo.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label> <span id="odometer"> </span></b></b>
             </a>
             <a class="btn btn-block btn-social btn-bitbucket track_item">
               <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 11.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
