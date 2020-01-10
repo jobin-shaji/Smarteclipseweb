@@ -2597,11 +2597,11 @@ class VehicleController extends Controller
 
 
                                    "total_alerts" => $vehicle_profile['user_alert'],
-                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
-                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
-                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
-                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
-                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
+                                   "vehicle_type" => $vehicle_details->vehicleType->name 
+                                   // "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
+                                   // "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
+                                   // "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   // "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
             $this->data[] = ['vehicle_value' => $statics];
             $response_data = array(
