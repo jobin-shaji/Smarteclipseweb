@@ -53,7 +53,7 @@ function check(){
 function kmReport(res)
 {
     $("#loader-1").hide();
-    var km =0;
+    var km =res.dailykm;
     var sudden_acceleration=res.sudden_acceleration;
     var harsh_braking=res.harsh_braking;
     var main_battery_disconnect=res.main_battery_disconnect;
@@ -105,7 +105,6 @@ function kmReport(res)
     }
 
     $('#total_km').text(km);
-    // $('#speed').text(res.dailykm.gps.speed);
     $('#sleep').text(res.sleep);
     $('#moving').text(res.motion);
     $('#halt').text(res.halt);

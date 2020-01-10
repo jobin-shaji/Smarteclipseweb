@@ -157,7 +157,6 @@ function verifyCriticalAlertResponse(res){
 // ---------------------que list--------------------------
 function transition(result)
     {
-      console.log(result);
      angle=result.liveData.angle;
      ac=result.liveData.ac;
      battery_status=result.liveData.battery_status;
