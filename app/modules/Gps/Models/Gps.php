@@ -54,4 +54,13 @@ class Gps extends Model
     {
         return $this->hasOne('App\Modules\Warehouse\Models\GpsStock','gps_id','id');
     }
+
+     public function getEmergencyalerts()
+    {
+      return self::select('emergency_status','tilt_status','id','lat','lon')
+                    ->with('vehicle')
+                    ->where('emergency_status',1)
+                    ->orWhere('tilt_status',1)
+                    ->get();
+    }
 }

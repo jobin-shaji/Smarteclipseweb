@@ -6,14 +6,36 @@
 
 <?php
     $perPage    = 10;
-    $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;       
+    $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $key        = ( isset($_GET['monitoring_module_search_key']) ) ? $_GET['monitoring_module_search_key'] : '';  
 ?>
+<div class="modal fade show in" id="emergeny_alert_modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" >
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title">Alert</h5>
+        <button type="button" class="close" onclick="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- /Header -->
+      <!-- Body -->
+      <div class="modal-body" id="eam_body">
+        
+      </div>
+
+    </div>
+  </div>
+</div>
 <div class="page-wrapper_new page-wrapper-1">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle List</li>
-      <b>Vehicle List</b>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Monitoring</li>
+      <b>Monitoring</b>
     </ol>
+
+
     @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -23,422 +45,461 @@
     @endif 
   </nav>
 
-  <!-- Search and filters -->
-  <div>
-    <form  method="POST" action="{{route('monitor.search')}}" class="search-top">
+  <ul class="monitor_tab_for_map">
+    <li class="mlt" value="list" id="mlt_list">Monitoring</li>
+    <li class="mlt" value="map" id="mlt_map">Map</li>
+    <li class="mlt" value="alert" id="mlt_alert">Alert</li>
+
+  </ul>
+   
+
+
+  <div class="mlt-list">
+
+    <!-- Search and filters -->
+  <div align="right">
+    <form  method="GET" action="{{route('monitor_vehicle')}}" class="search-top">
        {{csrf_field()}}
-      <input type="text"  name="monitoring_module_search_key" id="monitoring_module_search_key">
-      <button type="submit">Search</button>
+      <input type="text" placeholder=" Search for Vehicle" name="monitoring_module_search_key" id="monitoring_module_search_key" value="{{ $key }}">
+      <button type="submit" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
   </div>
   <!-- /Search and filters -->
 
-  <!-- Vehicles detail wrapper -->  
-  <div class="vehicle_details_wrapper vehicle-container">           
-    <table id="vehicle_details_table" class="table table-bordered" style="text-align: center;">
-      <thead>
-        <tr class="vechile-list-top">
-          <th>SL.No</th>
-          <th>Owner Name</th>
-          <th>Vehicle Name</th>
-          <th>IMEI</th>
-          <th>Service Engineer</th>
-          <th>Installation Date</th>
-        </tr>
-      </thead>
-      <tbody style="max-height:200px; overflow-y: scroll;" >
-        @if($vehicles->count() == 0)
-          <tr>
-            <td></td>
-            <td></td>
-            <td><b style="float: right;margin-right: -13px">No data</b></td>
-            <td><b style="float: left;margin-left: -15px">Available</b></td>
-            <td></td>
-            <td></td>
-          </tr>
-        @endif
-        @foreach($vehicles as $key => $each_vehicle)                  
-          <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="single_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
-            <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
-            <td>{{ $each_vehicle->client->name}}</td>
-            <td>{{ $each_vehicle->name}}</td>
-            <td>{{ $each_vehicle->gps->imei}}</td>
-            <td>{{$each_vehicle->servicerjob->servicer->name}}</td>
-            <td>{{$each_vehicle->servicerjob->job_complete_date}}</td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-    {{ $vehicles->appends(['sort' => 'votes'])->links() }}
-  </div>
-  
-  <!-- /Vehicle details wrapper -->
-    <!-- Monitoring details -->
-  <div class="monitoring_details_wrapper moni-detail-container">
-    <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-          <div class="close-bt">
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="right-sider-inner">
-            <!-- Monitoring details -->
-              <!-- Tabs -->
-              <ul id="monitoring_details_tabs" class="nav nav-tabs">
-                <li class="monitoring_subtab ">
-                  <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
-                </li>
-                <li class="monitoring_subtab">
-                  <a data-toggle="tab" href="#device">Device</a>
-                </li>
-                <li class="monitoring_subtab">
-                  <a data-toggle="tab" href="#installation">Installation</a>
-                </li>
-                <li class="monitoring_subtab">
-                  <a data-toggle="tab" href="#service">Service</a>
-                </li>
-                <li class="monitoring_subtab">
-                  <a data-toggle="tab" href="#alerts">Alerts</a>
-                </li>
-                <li class="monitoring_subtab">
-                  <a data-toggle="tab" href="#subscription">Data & SMS</a>
-                </li>
-              </ul>
-              <div id="monitoring_details_tab_contents_loading" style="display: none;">
-                Please wait...
-              </div>
-              <!-- Tab details -->
-              <div class="vechile-container">
-                <div id="monitoring_details_tab_contents" class="tab-content monitoring_details">
-                  <!-- Vehicle -->
-                  <div id="tab_content_vehicle" class="tab-pane fade in active">
-                    <!-- Vehicle details -->
-                    <div class="detail-list-outer">
-                      <div id="accordion">
-                        <div class="button" role="button">
-                          Vehicle Details
-                        </div>
-                        <div class="slide">
-                          <div class="list-outer-bg">
-                            <div class="list-display">
-                              <p>Vehicle Name <span>:-</span></p>
-                              <span id="tvc_vehicle_name"></span>
-                            </div>
-                            <div class="list-display">
-                              <p>Registration Number <span>:-</span></p>
-                              <span id="tvc_vehicle_registration_number"></span>
-                            </div>    
-                            <div class="list-display">
-                              <p>Vehicle Type <span>:-</span></p>
-                              <span id="tvc_vehicle_type"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Vehicle Model <span>:-</span></p>
-                              <span id="tvc_vehicle_model"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Vehicle Make <span>:-</span></p>
-                              <span id="tvc_vehicle_make"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Engine Number <span>:-</span></p>
-                              <span id="tvc_vehicle_engine_number"> </span>
-                            </div>
-                             <div class="list-display">
-                              <p>Chassis Number <span>:-</span></p>
-                              <span id="tvc_vehicle_chassis_number"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Theft Mode <span>:-</span></p>
-                              <span id="tvc_vehicle_theftmode"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Towing <span>:-</span></p>
-                              <span id="tvc_vehicle_towing"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Emergency Status <span>:-</span></p>
-                              <span id="tvc_vehicle_emergency_status"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Created Date <span>:-</span></p>
-                              <span id="tvc_vehicle_created_date"> </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="button" role="button">
-                         Owner Details
-                        </div>
-                        <div class="slide">
-                          <div class="list-outer-bg">
-                            <div class="list-display">
-                              <p>Owner Name <span>:-</span></p>
-                              <span id="tvc_client_name"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner Address <span>:-</span></p>
-                              <span id="tvc_client_address"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner Latitude <span>:-</span></p>
-                              <span id="tvc_client_lat"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner Longitude <span>:-</span></p>
-                              <span id="tvc_client_lng"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner Logo <span>:-</span></p>
-                              <span id="tvc_client_logo"></span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner Country <span>:-</span></p>
-                              <span id="tvc_client_country"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner State <span>:-</span></p>
-                              <span id="tvc_client_state"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Owner City <span>:-</span></p>
-                              <span id="tvc_client_city"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Sub Dealer <span>:-</span></p>
-                              <span id="tvc_client_sub_dealer"> </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="button" role="button">
-                          Driver Details
-                        </div>
-                        <div class="slide">
-                          <div class="list-outer-bg">
-                            <div class="list-display">
-                              <p>Driver Name <span>:-</span></p>
-                              <span id="tvc_driver_name"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Driver Address <span>:-</span></p>
-                              <span id="tvc_driver_address"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Driver Mobile <span>:-</span></p>
-                              <span id="tvc_driver_mobile"> </span>
-                            </div>
-                            <div class="list-display">
-                              <p>Driver Points <span>:-</span></p>
-                              <span id="tvc_driver_points"> </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- /Driver details -->
-                    </div>
-                  </div>
-                  <!-- /Vehicle -->
-                  <!-- Device -->
-                  <div id="device" class="tab-pane fade in active">
-                    <div id="accordion1">
-                      <div class="button" role="button">
-                        Device Details
-                      </div>
-                      <div class="slide">
-                        <div class="list-outer-bg">
-                          <div class="list-display">
-                            <p>IMEI <span>:-</span></p>
-                            <span id="tvc_device_imei"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Serial Number <span>:-</span></p>
-                            <span id="tvc_device_serial_no"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Manufacturing date <span>:-</span></p>
-                            <span id="tvc_device_manufacturing_date"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>ICC Id <span>:-</span></p>
-                            <span id="tvc_device_icc_id"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>IMSI <span>:-</span></p>
-                            <span id="tvc_device_imsi"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>E Sim Number <span>:-</span></p>
-                            <span id="tvc_device_e_sim_number"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Batch Number <span>:-</span></p>
-                            <span id="tvc_device_batch_number"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Model Name <span>:-</span></p>
-                            <span id="tvc_device_model_name"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Version <span>:-</span></p>
-                            <span id="tvc_device_version"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Employee Code <span>:-</span></p>
-                            <span id="tvc_device_employee_code"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Number of satellites <span>:-</span></p>
-                            <span id="tvc_device_satellites"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Emergency Status <span>:-</span></p>
-                            <span id="tvc_device_emergency_status"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>GPS Fix <span>:-</span></p>
-                            <span id="tvc_device_gps_fix"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Calibrated on <span>:-</span></p>
-                            <span id="tvc_device_calibrated_on"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Login on <span>:-</span></p>
-                            <span id="tvc_device_login_on"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Created At <span>:-</span></p>
-                            <span id="tvc_device_created_on"> </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="button" role="button">
-                        Device Current Status
-                      </div>
-                      <div class="slide">
-                        <div class="list-outer-bg">
-                          <div class="list-display">
-                            <p>Mode<span>:-</span></p>
-                            <span id="tvc_device_mode"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Latitude<span>:-</span></p>
-                            <span id="tvc_device_lat"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Longitude<span>:-</span></p>
-                            <span id="tvc_device_lon"> </span>
-                          </div>
-                          
-                          <div class="list-display">
-                            <p>Fuel Status<span>:-</span></p>
-                            <span id="tvc_device_fuel_status"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Speed<span>:-</span></p>
-                            <span id="tvc_device_speed"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Odometer<span>:-</span></p>
-                            <span id="tvc_device_odometer"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Battery Status<span>:-</span></p>
-                            <span id="tvc_device_battery_status"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Main Power Status<span>:-</span></p>
-                            <span id="tvc_device_main_power_status"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Device Time<span>:-</span></p>
-                            <span id="tvc_device_device_time"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>Ignition<span>:-</span></p>
-                            <span id="tvc_device_ignition"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>GSM Signal Strength<span>:-</span></p>
-                            <span id="tvc_device_gsm_signal_strength"> </span>
-                          </div>
-                          <div class="list-display">
-                            <p>AC Status<span>:-</span></p>
-                            <span id="tvc_device_ac_status"> </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /Device details-->
-                    <!-- Device Current status-->
-                   <!-- /Device Current status-->
-                  </div>
-                  <!-- /Device -->
-                  <div id="installation" class="tab-pane fade">
-                    <div class="acc-container">
-                      <div class="acc-content open">
-                        <div class="acc-content-inner">
-                          <div class="table-outer">
-                            <div id="installation_table_wrapper"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="service" class="tab-pane fade">
-                    <div class="acc-container">
-                      <div class="acc-content open">
-                        <div class="acc-content-inner">
-                          <div class="table-outer">
-                            <div id="service_table_wrapper"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="alerts" class="tab-pane fade">
-                    <div class="acc-container">
-                      <div class="acc-content open">
-                        <div class="acc-content-inner">
-                          <div class="table-outer">
-                            <div id="alert_table_wrapper"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="subscription" class="tab-pane fade">
-                    <div class="acc-container">
-                      <div class="acc-content open">
-                        <div class="acc-content-inner">
-                          <div class="sub-div">
-                            Under Processing.....
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+  <!-- Vehicles detail wrapper --> 
+        <div class="vehicle_details_wrapper vehicle-container">           
+          <table id="vehicle_details_table" class="table table-bordered" style="text-align: center;">
+            <thead>
+              <tr class="vechile-list-top">
+                <th>SL.No</th>
+                <th>Owner Name</th>
+                <th>Mobile Number</th>
+                <th>Vehicle Name</th>
+                <th>IMEI</th>
+                <th>Distributor</th>
+                <th>Dealer</th>
+                <th>Service Engineer</th>
+                <th>Installation Date</th>
+              </tr>
+            </thead>
+            <tbody style="max-height:200px; overflow-y: scroll;" >
+              @if($vehicles->count() == 0)
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><b style="float: right;margin-right: -13px">No data</b></td>
+                  <td><b style="float: left;margin-left: -15px">Available</b></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              @endif
+
+              @foreach($vehicles as $key => $each_vehicle)   
+                <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
+                  <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
+                  <td>{{ $each_vehicle->client_name }}</td>
+                  <td>{{ $each_vehicle->mobile_number}}</td>
+                  <td>{{ $each_vehicle->vehicle_name }}</td>
+                  <td>{{ $each_vehicle->imei }}</td>
+                  <td>{{ $each_vehicle->dealer }}</td>
+                  <td>{{ $each_vehicle->sub_dealer }}</td>
+                  <td>{{$each_vehicle->servicer_name }}</td>
+                  <td>{{$each_vehicle->job_complete_date}}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+          {{ $vehicles->appends(Request::all())->links() }}
+        </div>
+
+        <!-- /Vehicle details wrapper -->
+          <!-- Monitoring details -->
+        <div class="monitoring_details_wrapper moni-detail-container">
+          <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="close-bt">
+                  <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <!-- /Tab details -->
+                <div class="modal-body">
+                  <div class="right-sider-inner">
+                  <!-- Monitoring details -->
+                    <!-- Tabs -->
+                    <ul id="monitoring_details_tabs" class="nav nav-tabs">
+                      <li class="monitoring_subtab ">
+                        <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
+                      </li>
+                      <li class="monitoring_subtab">
+                        <a data-toggle="tab" href="#device">Device</a>
+                      </li>
+                      <li class="monitoring_subtab">
+                        <a data-toggle="tab" href="#installation">Installation</a>
+                      </li>
+                      <li class="monitoring_subtab">
+                        <a data-toggle="tab" href="#service">Service</a>
+                      </li>
+                      <li class="monitoring_subtab">
+                        <a data-toggle="tab" href="#alerts">Alerts</a>
+                      </li>
+                      <li class="monitoring_subtab">
+                        <a data-toggle="tab" href="#subscription">Data & SMS</a>
+                      </li>
+                    </ul>
+                    <div id="monitoring_details_tab_contents_loading" style="display: none;">
+                      Please wait...
+                    </div>
+                    <!-- Tab details -->
+                    <div class="vechile-container">
+                      <div id="monitoring_details_tab_contents" class="tab-content monitoring_details">
+                        <!-- Vehicle -->
+                        <div id="tab_content_vehicle" class="tab-pane fade in active">
+                          <!-- Vehicle details -->
+                          <div class="detail-list-outer">
+                            <div id="accordion">
+                              <div class="button" role="button">
+                                Vehicle Details
+                              </div>
+                              <div class="slide">
+                                <div class="list-outer-bg">
+                                  <div class="list-display">
+                                    <p>Vehicle Name <span>:-</span></p>
+                                    <span id="tvc_vehicle_name"></span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Registration Number <span>:-</span></p>
+                                    <span id="tvc_vehicle_registration_number"></span>
+                                  </div>    
+                                  <div class="list-display">
+                                    <p>Vehicle Type <span>:-</span></p>
+                                    <span id="tvc_vehicle_type"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Vehicle Model <span>:-</span></p>
+                                    <span id="tvc_vehicle_model"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Vehicle Make <span>:-</span></p>
+                                    <span id="tvc_vehicle_make"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Engine Number <span>:-</span></p>
+                                    <span id="tvc_vehicle_engine_number"> </span>
+                                  </div>
+                                   <div class="list-display">
+                                    <p>Chassis Number <span>:-</span></p>
+                                    <span id="tvc_vehicle_chassis_number"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Theft Mode <span>:-</span></p>
+                                    <span id="tvc_vehicle_theftmode"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Towing <span>:-</span></p>
+                                    <span id="tvc_vehicle_towing"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Emergency Status <span>:-</span></p>
+                                    <span id="tvc_vehicle_emergency_status"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Created Date <span>:-</span></p>
+                                    <span id="tvc_vehicle_created_date"> </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="button" role="button">
+                               Owner Details
+                              </div>
+                              <div class="slide">
+                                <div class="list-outer-bg">
+                                  <div class="list-display">
+                                    <p>Owner Name <span>:-</span></p>
+                                    <span id="tvc_client_name"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Address <span>:-</span></p>
+                                    <span id="tvc_client_address"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Latitude <span>:-</span></p>
+                                    <span id="tvc_client_lat"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Longitude <span>:-</span></p>
+                                    <span id="tvc_client_lng"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Logo <span>:-</span></p>
+                                    <span id="tvc_client_logo"></span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Country <span>:-</span></p>
+                                    <span id="tvc_client_country"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner State <span>:-</span></p>
+                                    <span id="tvc_client_state"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner City <span>:-</span></p>
+                                    <span id="tvc_client_city"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Dealer <span>:-</span></p>
+                                    <span id="tvc_client_sub_dealer"> </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="button" role="button">
+                                Driver Details
+                              </div>
+                              <div class="slide">
+                                <div class="list-outer-bg">
+                                  <div class="list-display">
+                                    <p>Driver Name <span>:-</span></p>
+                                    <span id="tvc_driver_name"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Driver Address <span>:-</span></p>
+                                    <span id="tvc_driver_address"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Driver Mobile <span>:-</span></p>
+                                    <span id="tvc_driver_mobile"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Driver Points <span>:-</span></p>
+                                    <span id="tvc_driver_points"> </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- /Driver details -->
+                          </div>
+                        </div>
+                        <!-- /Vehicle -->
+                        <!-- Device -->
+                        <div id="device" class="tab-pane fade in active">
+                          <div id="accordion1">
+                            <div class="button" role="button">
+                              Device Details
+                            </div>
+                            <div class="slide">
+                              <div class="list-outer-bg">
+                                <div class="list-display">
+                                  <p>IMEI <span>:-</span></p>
+                                  <span id="tvc_device_imei"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Serial Number <span>:-</span></p>
+                                  <span id="tvc_device_serial_no"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Manufacturing date <span>:-</span></p>
+                                  <span id="tvc_device_manufacturing_date"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>ICC Id <span>:-</span></p>
+                                  <span id="tvc_device_icc_id"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>IMSI <span>:-</span></p>
+                                  <span id="tvc_device_imsi"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>E Sim Number <span>:-</span></p>
+                                  <span id="tvc_device_e_sim_number"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Batch Number <span>:-</span></p>
+                                  <span id="tvc_device_batch_number"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Model Name <span>:-</span></p>
+                                  <span id="tvc_device_model_name"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Version <span>:-</span></p>
+                                  <span id="tvc_device_version"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Employee Code <span>:-</span></p>
+                                  <span id="tvc_device_employee_code"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Number of satellites <span>:-</span></p>
+                                  <span id="tvc_device_satellites"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Emergency Status <span>:-</span></p>
+                                  <span id="tvc_device_emergency_status"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>GPS Fix <span>:-</span></p>
+                                  <span id="tvc_device_gps_fix"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Calibrated on <span>:-</span></p>
+                                  <span id="tvc_device_calibrated_on"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Login on <span>:-</span></p>
+                                  <span id="tvc_device_login_on"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Created At <span>:-</span></p>
+                                  <span id="tvc_device_created_on"> </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="button" role="button">
+                              Device Current Status
+                            </div>
+                            <div class="slide">
+                              <div class="list-outer-bg">
+                                <div class="list-display">
+                                  <p>Mode<span>:-</span></p>
+                                  <span id="tvc_device_mode"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Latitude<span>:-</span></p>
+                                  <span id="tvc_device_lat"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Longitude<span>:-</span></p>
+                                  <span id="tvc_device_lon"> </span>
+                                </div>
+                                
+                                <div class="list-display">
+                                  <p>Fuel Status<span>:-</span></p>
+                                  <span id="tvc_device_fuel_status"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Speed<span>:-</span></p>
+                                  <span id="tvc_device_speed"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Odometer<span>:-</span></p>
+                                  <span id="tvc_device_odometer"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Battery Status<span>:-</span></p>
+                                  <span id="tvc_device_battery_status"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Main Power Status<span>:-</span></p>
+                                  <span id="tvc_device_main_power_status"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Device Time<span>:-</span></p>
+                                  <span id="tvc_device_device_time"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>Ignition<span>:-</span></p>
+                                  <span id="tvc_device_ignition"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>GSM Signal Strength<span>:-</span></p>
+                                  <span id="tvc_device_gsm_signal_strength"> </span>
+                                </div>
+                                <div class="list-display">
+                                  <p>AC Status<span>:-</span></p>
+                                  <span id="tvc_device_ac_status"> </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- /Device details-->
+                          <!-- Device Current status-->
+                         <!-- /Device Current status-->
+                        </div>
+                        <!-- /Device -->
+                        <div id="installation" class="tab-pane fade">
+                          <div class="acc-container">
+                            <div class="acc-content open">
+                              <div class="acc-content-inner">
+                                <div class="table-outer">
+                                  <div id="installation_table_wrapper"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="service" class="tab-pane fade">
+                          <div class="acc-container">
+                            <div class="acc-content open">
+                              <div class="acc-content-inner">
+                                <div class="table-outer">
+                                  <div id="service_table_wrapper"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="alerts" class="tab-pane fade">
+                          <div class="acc-container">
+                            <div class="acc-content open">
+                              <div class="acc-content-inner">
+                                <div class="table-outer">
+                                  <div id="alert_table_wrapper"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="subscription" class="tab-pane fade">
+                          <div class="acc-container">
+                            <div class="acc-content open">
+                              <div class="acc-content-inner">
+                                <div class="sub-div">
+                                  Under Processing.....
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /Tab details -->
+                    </div>
+                  </div>
+                  <!-- /Monitoring details --> 
+                </div>
               </div>
             </div>
-            <!-- /Monitoring details --> 
           </div>
         </div>
       </div>
-    </div>
+    <div class="mlt-map">
+       <div style="width: 100%; height: 100%" id="markers"></div>
+    </div>   
+    <div id="critical_alerts_table" class="mlt-alert">
+      
+    </div>   
   </div>
-</div>
+<audio id="myAudio">
+  <source src="../assets/sounds/alerts.mp3" type="audio/ogg">
+  <source src="../assets/sounds/alerts.mp3" type="audio/mpeg">
+</audio>
+
+
 @endsection
 <link rel="stylesheet" type="text/css" href="{{asset('css/monitor.css')}}">
 <style type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></style>
 @section('script')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">      </script>
-   <script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
 
+    <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
+    <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{asset('playback_assets/assets/js/core/popper.min.js')}}"></script>
+    
+   <script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
+   <script type="text/javascript">
+
+
+   </script>
 <!-- accordian -->
 <script type="text/javascript">
   
@@ -456,9 +517,6 @@
     }
   });
 });
-</script>
-
-<script type="text/javascript">
   
   $(document).ready(function() {
   
@@ -474,16 +532,96 @@
     }
   });
 });
+
+function closeModal()
+{
+  $('#emergeny_alert_modal').hide();
+  audio.pause();
+}
 </script>
-<script type="text/javascript">
-$( document ).ready(function( ) {
+<style type="text/css">
+  .is-hidden--off-flow {
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+  z-index: -10;   /* *1* */
+  visibility: hidden;   /* *1* */
+}
 
-//Use this inside your document ready jQuery 
 
+.l-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  margin: 0 auto;
+  z-index: 2;
+  text-align: center;
+}
 
-});
-</script>
+.l-modal__shadow {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: block;
+  background: #161616;
+  opacity: 0.92;
+  z-index: -1;
+  cursor: pointer;
+}
 
+.l-modal__body {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.c-popup {
+    display: inline-block;
+    text-align: center;
+    background: white;
+    max-width: 400px;
+    width: 90%;
+    line-height: 1.48;
+
+    border-radius: 7px;
+    background: #ccc;
+}
+.l-modal .l-modal__shadow {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: block;
+    background: #0000008f;
+    opacity: 0.92;
+    z-index: -1;
+    cursor: pointer;
+}
+.l-modal__body a{
+    background: #b9b9b9;
+    width: 100%;
+    float: left;
+    padding: 6px 0;
+    color: #fff;
+    font-weight: bold;
+    text-align: right;
+        font-size: 20px;
+      border-top-left-radius: 7px;
+    padding-right: 4%;
+      border-top-right-radius:7px;
+  }
+.l-modal__body a:hover{
+color: #000;
+  }
+.l-modal__body p{
+float: left;
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    padding: 22px 0;}
+
+</style>
 <!-- /accordian -->
 @endsection
 

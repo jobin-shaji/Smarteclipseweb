@@ -3,6 +3,7 @@
 namespace App\Modules\Vehicle\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -57,6 +58,11 @@ class Vehicle extends Model
     {
       return $this->hasMany('App\Modules\Alert\Models\Alert', 'gps_id', 'gps_id'); 
     }
+
+    public function gpsStock()
+    {
+      return $this->hasOne('App\Modules\Warehouse\Models\GpsStock', 'gps_id', 'gps_id'); 
+    }
     
     /**
      * 
@@ -64,29 +70,35 @@ class Vehicle extends Model
     */
     public function getVehicleList($key = null)
     {
-        $vehicles = self::select(
-            'id',
-            'name',
-            'servicer_job_id',
-            'client_id',
-            'gps_id')
-        ->with('gps')
-        ->with('servicerjob')
-        ->with('client');
-
+        $query = DB::table('vehicles')
+        ->join('gps', 'vehicles.gps_id', '=', 'gps.id')
+        ->join('clients', 'vehicles.client_id', '=', 'clients.id')
+        ->join('users', 'users.id', '=', 'clients.user_id')
+        ->join('servicer_jobs', 'vehicles.servicer_job_id', '=', 'servicer_jobs.id')
+        ->join('servicers', 'servicer_jobs.servicer_id', '=', 'servicers.id')
+        ->join('gps_stocks','vehicles.gps_id', '=', 'gps_stocks.gps_id')
+        ->join('dealers','gps_stocks.dealer_id', '=', 'dealers.id')
+        ->join('sub_dealers','gps_stocks.subdealer_id', '=', 'sub_dealers.id')
+        ->select('vehicles.name as vehicle_name', 
+          'vehicles.id', 'gps.imei', 
+          'servicer_jobs.job_complete_date', 
+          'clients.name as client_name', 
+          'users.mobile as mobile_number', 
+          'servicers.name as servicer_name','dealers.name as dealer','sub_dealers.name as sub_dealer');
+        // search filters
         if( $key != null )
         {
-           $vehicles = $vehicles->where('name','like','%'.$key.'%');
-           $vehicles = $vehicles->gps->orWhere('imei','like','%'.$key.'%');
-            //->orWhere('gps.imei','like','%'.$key.'%');
+            $query = $query->where('vehicles.name','like','%'.$key.'%')
+                ->orWhere('clients.name','like','%'.$key.'%')
+                ->orWhere('gps.imei','like','%'.$key.'%')
+                ->orWhere('dealers.name','like','%'.$key.'%')
+                ->orWhere('sub_dealers.name','like','%'.$key.'%')
+                ->orWhere('servicers.name','like','%'.$key.'%')
+                ->orWhere('users.mobile','like','%'.$key.'%');
         }
-
-
-      //  $vehicle = Gps::where('imei','like',$imei)->with('vehicle');
-
-        return $vehicles->paginate(10);
+        // response
+        return $query->orderBy('servicer_jobs.job_complete_date', 'desc')->paginate(10);
     }
-
     /**
      * 
      * 
@@ -119,23 +131,27 @@ class Vehicle extends Model
         ->with('client.city')
         ->with('client.subdealer')
         ->with('driver')
+        ->with('gpsStock','gpsStock.subdealer')
         ->with('alerts','alerts.alertType')
         ->where('id',$vehicle_id)->first();
     }
-    
-    public function search($monitor_search_key)
+    public function getAlertList()
     {
-        return self::select(
-            'id',
-            'name',
-            'servicer_job_id',
-            'client_id',
-            'gps_id')
-        ->with('gps')
-        ->with('servicerjob')
-        ->with('client')
-        ->where('name','like','%'.$monitor_search_key.'%')
-        ->first()
-        ;
+      $query = DB::table('vehicles')
+        ->join('gps', 'vehicles.gps_id', '=', 'gps.id')
+        ->join('alerts', 'vehicles.gps_id', '=', 'alerts.gps_id')
+        ->join('alert_types', 'alerts.alert_type_id', '=', 'alert_types.id')
+        ->select('alert_types.description as alert',
+                 'vehicles.name as vehicle_name',
+                 'vehicles.register_number as register_number',
+                 'gps.imei as imei',
+                 'alerts.latitude as lat',
+                 'alerts.longitude as lon',
+                 'alerts.created_at as date'
+          );
+        
+        // response
+        return $query->orderBy('alerts.created_at', 'desc')->paginate(10);
+      
     }
 }
