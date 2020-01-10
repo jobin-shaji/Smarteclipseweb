@@ -32,19 +32,21 @@
         $eclipse_key="eclipse";
         $encryption_id=encrypt(4);
         if (strpos($url, $rayfleet_key) == true) {  ?>
-          <button type="button" class="btn"><a href="#" class="js-modal-show button-primary">Pay Now</a></button>
+          <button type="button" class="btn"><a href="#" class="js-modal-show button-primary" onclick="popup()">Pay Now</a></button>
           <div class="l-modal is-hidden--off-flow js-modal-shopify">
             <div class="l-modal__shadow js-modal-hide"></div>
             <div class="c-popup l-modal__body">
+              <a href="#" onclick="hide_popup()">X</a>
               <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
             </div>
           </div>
         <?php } 
         else if (strpos($url, $eclipse_key) == true) { ?>
-          <button type="button" class="btn"><a href="#" class="js-modal-show button-primary">Pay Now</a></button>
+           <button type="button" class="btn"><a href="#" class="js-modal-show button-primary" onclick="popup()">Pay Now</a></button>
           <div class="l-modal is-hidden--off-flow js-modal-shopify">
             <div class="l-modal__shadow js-modal-hide"></div>
             <div class="c-popup l-modal__body">
+              <a href="#" onclick="hide_popup()">X</a>
               <p class="blink_me" style="color: red">Contact your distributor for upgradation</p>
             </div>
           </div>
