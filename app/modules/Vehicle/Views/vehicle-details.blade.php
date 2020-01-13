@@ -89,9 +89,9 @@
                           <div class="form-group has-feedback">
                             <label class="srequired">Driver</label>
                             <select class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}"  name="driver_id" value="{{ old('driver_id') }}" required>
-                              <option value="" disabled="disabled">Select Driver</option>
+                              <option value="" disabled="disabled" selected="selected">Select Driver</option>
                               @foreach($drivers as $driver)
-                              <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif>{{$driver->name}}</option>
+                              <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif  >{{$driver->name}}</option>
                               @endforeach
                             </select>
                           </div>
