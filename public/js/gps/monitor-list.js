@@ -1,15 +1,18 @@
 
-function single_vehicle_details(vehicle_id, row_id) 
+var current_active_tab  = 'list';
+var alerts_list         = [];
+var audio               = document.getElementById("myAudio");
+var critical_alerts     = [];
+
+
+function clicked_vehicle_details(vehicle_id, row_id) 
 {   
-    console.log(row_id);
     // highlight clicked row
     highLightClickedRow(row_id);
 
-    $("#sidebar-right")
     $('#monitoring_details_tab_contents_loading').show();
     $('#sidebar-right').hide();
 
-    var vehicle_tab_elements = [];
     if(vehicle_id)
     {
         var data = { vehicle_id :vehicle_id};
@@ -37,6 +40,7 @@ function single_vehicle_details(vehicle_id, row_id)
         });
     }
 }
+
 function setActiveTab(active_tab_id)
 {
     // set active tab
@@ -71,7 +75,7 @@ function highLightClickedRow(id)
 function render_vehicletab(res)
 {
     [
-                        /* Vehicle Details */
+        /* Vehicle Details */
         {'id' : 'tvc_vehicle_name', 'key' : 'name'},
         {'id' : 'tvc_vehicle_registration_number', 'key' : 'register_number'},
         {'id' : 'tvc_vehicle_type', 'key' : ['vehicle_type','name'] },
@@ -83,9 +87,8 @@ function render_vehicletab(res)
         {'id' : 'tvc_vehicle_towing', 'key' : 'towing'},
         {'id' : 'tvc_vehicle_emergency_status', 'key' : 'emergency_status'},
         {'id' : 'tvc_vehicle_created_date', 'key' : 'created_at'},
-                        /* /Vehicle Details */
-
-                        /* Client Details */
+        /* /Vehicle Details */
+        /* Client Details */
         {'id' : 'tvc_client_name', 'key' : ['client','name']},
         {'id' : 'tvc_client_address', 'key' : ['client','address']},
         {'id' : 'tvc_client_lat', 'key' : ['client','latitude']},
@@ -94,17 +97,15 @@ function render_vehicletab(res)
         {'id' : 'tvc_client_country', 'key' : ['client','country','name']},
         {'id' : 'tvc_client_state', 'key' : ['client','state','name']},
         {'id' : 'tvc_client_city', 'key' : ['client','city','name']},
-        {'id' : 'tvc_client_sub_dealer', 'key' : ['client','subdealer','name']},
-                        /* /Client Details */
-                        /* Driver Details */
+        {'id' : 'tvc_client_sub_dealer', 'key' : ['gps_stock','subdealer','name']},
+        /* /Client Details */
+        /* Driver Details */
         {'id' : 'tvc_driver_name', 'key' : ['driver','name']},
         {'id' : 'tvc_driver_address', 'key' : ['driver','address']},
         {'id' : 'tvc_driver_mobile', 'key' : ['driver','mobile']},
         {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
     ].forEach(function(each_element){
         repaint(each_element.id);
-        //console.log('HERE');
-       // $('#tvc_vehicle_theftmode').text('TISMON');
         if(typeof each_element.key == 'string')
         {
             if( each_element.id == 'tvc_vehicle_theftmode')
@@ -270,20 +271,20 @@ function render_installationtab(res)
             '<th>Description</th>'+
             '<th>Comments</th>'+
         '</tr>';
-        res.data.jobs.forEach(function(each_job){
-            if(each_job.job_type == '1')
-            {
-                table +='<tr>'+
-                    '<td>'+each_job.servicer.name+'</td>'+
-                    '<td>'+each_job.job_date+'</td>'+
-                    '<td>'+each_job.job_complete_date+'</td>'+
-                    '<td>'+each_job.location+'</td>'+
-                    '<td>'+each_job.description+'</td>'+
-                    '<td>'+each_job.comment+'</td>'+
-                '</tr>';
-            }
-        });
-        table += '</table>';
+    res.data.jobs.forEach(function(each_job){
+        if(each_job.job_type == '1')
+        {
+            table +='<tr>'+
+                '<td>'+each_job.servicer.name+'</td>'+
+                '<td>'+each_job.job_date+'</td>'+
+                '<td>'+each_job.job_complete_date+'</td>'+
+                '<td>'+each_job.location+'</td>'+
+                '<td>'+each_job.description+'</td>'+
+                '<td>'+each_job.comment+'</td>'+
+            '</tr>';
+        }
+    });
+    table += '</table>';
     $('#installation_table_wrapper').html(table);
 }
 
@@ -298,23 +299,21 @@ function render_servicetab(res)
             '<th>Description</th>'+
             '<th>Comments</th>'+
         '</tr>';
-        res.data.jobs.forEach(function(each_job){
-            if(each_job.job_type == '2')
-            {
-                table +='<tr>'+
-                    '<td>'+each_job.servicer.name+'</td>'+
-                    '<td>'+each_job.job_date+'</td>'+
-                    '<td>'+each_job.job_complete_date+'</td>'+
-                    '<td>'+each_job.location+'</td>'+
-                    '<td>'+each_job.description+'</td>'+
-                    '<td>'+each_job.comment+'</td>'+
-                '</tr>';
-            }
-        });
-        table += '</table>';
-
+    res.data.jobs.forEach(function(each_job){
+        if(each_job.job_type == '2')
+        {
+            table +='<tr>'+
+                '<td>'+each_job.servicer.name+'</td>'+
+                '<td>'+each_job.job_date+'</td>'+
+                '<td>'+each_job.job_complete_date+'</td>'+
+                '<td>'+each_job.location+'</td>'+
+                '<td>'+each_job.description+'</td>'+
+                '<td>'+each_job.comment+'</td>'+
+            '</tr>';
+        }
+    });
+    table += '</table>';
     $('#service_table_wrapper').html(table);
-
 }
 
 function render_alerttab(res)
@@ -327,69 +326,206 @@ function render_alerttab(res)
             '<th>Date of Alert</th>'+
             '<th>Device Time</th>'+
         '</tr>';
-        res.data.alerts.forEach(function(each_alert)
-        {
-            table +='<tr>'+
-                    '<td>'+each_alert.alert_type.description+'</td>'+
-                    '<td>'+each_alert.latitude+'</td>'+
-                    '<td>'+each_alert.longitude+'</td>'+
-                    '<td>'+each_alert.created_at+'</td>'+
-                    '<td>'+each_alert.device_time+'</td>'+
-                '</tr>';
-           });
-        table += '</table>';
-        $('#alert_table_wrapper').html(table);
+    res.data.alerts.forEach(function(each_alert)
+    {
+        table +='<tr>'+
+            '<td>'+each_alert.alert_type.description+'</td>'+
+            '<td>'+each_alert.latitude+'</td>'+
+            '<td>'+each_alert.longitude+'</td>'+
+            '<td>'+each_alert.created_at+'</td>'+
+            '<td>'+each_alert.device_time+'</td>'+
+        '</tr>';
+   });
+    table += '</table>';
+    $('#alert_table_wrapper').html(table);
 }
 
 function render_subscriptiontab()
 {
-    
+    return true;
 }
 
 round = function(val, precision) {
-    if (precision == null) {
-      precision = 0;
+    if (precision == null)
+    {
+        precision = 0;
     }
-    if (!precision) {
-      return Math.round(val);
+    if (!precision) 
+    {
+        return Math.round(val);
     }
     val *= Math.pow(10, precision);
     val += 0.5;
     val = Math.floor(val);
     return val /= Math.pow(10, precision);
-  };
+};
+
 function calculate_fuel_reading(fuel_min,fuel_max,fuel_status)
 {
-    console.log('min', fuel_min);
-    console.log('max', fuel_max);
-    console.log('stat', fuel_status);
-    console.log(( (fuel_min - fuel_status) / (fuel_min - fuel_max) ) * 100);
     return round( ( (fuel_min - fuel_status) / (fuel_min - fuel_max) ) * 100 );
 }
-
 
 function repaint(id)
 {
     $('#'+id).text('');
 }
 
-$('#monitoring_module_search_key').keyup(function(){
-    var search_key = $(this).val();
-    if( $(this).val().length > 3 )
-    {
-        var data = { search_key :search_key};
+$(document).ready(function(){
+    $('.mlt').click(function(){
+        current_active_tab = $(this).attr('value');
+    });
+    setInterval(function(){
         $.ajax({
             type    :'POST',
-            url     : 'monitorsearch',
-            data    : data,
+            url     : 'check-emergency-alerts',
+            data    : {},
             async   : true,
             headers : {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (res){
-            //    console.log(res.data);
+                // prepare content
+                if(res.data.length > 0)
+                {                 
+                    audio.play();
+                    var html = '';
+                    res.data.forEach(function(alert)
+                    {
+                        var need_to_append          = true;
+                        var critical_alerts_html    = '';
+                        console.log(critical_alerts);
+
+                        critical_alerts.forEach(function(critical_alert){
+                            if(alert.id == critical_alert.id)
+                            {
+                                need_to_append = false;
+                                return false;
+                               // critical_alerts.push(alert);
+                            }
+                        }); 
+
+                        if(alert.vehicle == null)
+                        {
+                            return;
+                        }
+                        var alert_title = '';
+                        if( alert.emergency_status == 1 )
+                        {
+                            alert_title = 'Emergency Alert';
+                        }
+                        else if( alert.tilt_status == 1 )
+                        {
+                            alert_title = 'Tilt Alert';
+                        }
+                        else
+                        {
+                            alert_title = 'Alert';
+                        }
+
+
+                        html += '<div class="eam-each_alert">'
+                        +'<p>'+alert_title+'</p>'
+                        +'<p>'+alert.vehicle.name+'</p>'
+                        +'<p>'+alert.vehicle.register_number+'</p>'
+                        +'<p>'+alert.lat+'°,'+alert.lon+'°</p>'
+                        +'<p> <button><a href="/monitor-map" target="_blank">View map</a></button> </p>'
+                        +'</div>';
+                        critical_alerts_html = '<div class="eam-each_alert" id="'+alert.id+'">'
+                        +'<p>'+alert_title+'</p>'
+                        +'<p>'+alert.vehicle.name+'</p>'
+                        +'<p>'+alert.vehicle.register_number+'</p>'
+                        +'<p>'+alert.lat+'°,'+alert.lon+'°</p>'
+                        +'<p> <button><a href="/monitor-map" target="_blank">View map</a></button> </p>'
+                        +'<p> <button onclick="clearAlert('+alert.id+')">Clear</button> </p>'
+                        +'</div>';
+
+                        if(need_to_append)
+                        {
+                            critical_alerts.push(alert);
+                            // append to alerts tab
+                            $('#critical_alerts_table').prepend(critical_alerts_html);
+                        }
+
+                       // alertAddonqueue(alert.id,alert.lat,alert.lon,html);
+                    });
+
+                    
+                    $('#eam_body').html(html);
+
+                    if(current_active_tab != 'map')
+                    {
+                        // trigger modal
+                        $('#emergeny_alert_modal').show();
+                    }
+                }
+                else
+                {
+
+                    $('#emergeny_alert_modal').hide();
+                }
             }
         });
-    
-    }
+
+    }, 5000); 
 });
+
+function alertAddonqueue(alert_id,lat,lng,html)
+    {
+     if(alerts_list.length > 0)
+      {
+           alerts_list.find(function(x,i){  
+                                                                                                                                                                                                                                                                              if(x != undefined)
+           {
+            
+            if(alerts_list['id'] != alert_id){
+              var alert_data ={
+                "id":alert_id,
+                "lat":lat,
+                "lng":lng,
+                "html":html,
+              }  
+              alerts_list.push(alert_data);
+             }
+            }
+           },alert_id);
+
+      }else{
+        var alert_data ={
+            "id":alert_id,
+            "lat":lat,
+            "lng":lng,
+            "html":html,
+         }
+        alerts_list.push(alert_data);
+      }
+
+    }
+        
+
+function clearAlert(alert_id)
+{
+    $("#"+alert_id).remove();
+    critical_alerts.splice(critical_alerts.findIndex(function(i){
+        return i.id == alert_id;
+    }), 1);
+}
+
+
+
+$('.mlt-map, .mlt-alert').css('display','none');
+
+$('#mlt_list').click(function(){
+    $('.mlt-list').css('display','block');
+    $('.mlt-map, .mlt-alert').css('display','none');
+});
+
+$('#mlt_map').click(function(){
+    $('.mlt-map').css('display','block');
+    $('.mlt-list, .mlt-alert').css('display','none');
+});
+
+$('#mlt_alert').click(function(){
+    $('.mlt-alert').css('display','block');
+    $('.mlt-list, .mlt-map').css('display','none');
+});
+
