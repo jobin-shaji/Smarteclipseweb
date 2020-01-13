@@ -13,7 +13,6 @@ $(document).ready(function () {
             bProcessing: true,
             serverSide: true,
             deferRender: true,
-            order: [[1, 'desc']],
             ajax: {
                 url: 'get-trader-root-list',
                 type: 'POST',
