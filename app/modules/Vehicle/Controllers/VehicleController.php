@@ -1155,12 +1155,14 @@ class VehicleController extends Controller
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                return $vehicle->client->subDealer->dealer->name;
+                return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->dealer->name : '';
+               // return $vehicle->client->subdealer->dealer->name;
                 
             })
             ->addColumn('sub_dealer',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
-               return $vehicle->client->subDealer->name;
+               return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->name : '';
+               //return $vehicle->client->subdealer->name;
                 
             })
             ->addColumn('action', function ($vehicles) {
