@@ -100,7 +100,7 @@
           success:function(data){
              $("#data_tbody").empty();
              $("#pagination_links").empty();
-            console.log(data.links.data);
+            // console.log(data.links.data);
             var gps;
             for(var i=0;i < data.links.data.length;i++){
               var j=i+1;

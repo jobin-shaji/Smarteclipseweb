@@ -1295,10 +1295,9 @@ class WarehouseController extends Controller {
         // $devices=array();
         $single_gps=[];
         foreach($gps_items as $gps_item){
-            $single_gps[]= $gps_item->gps_id;
-           
+            $single_gps[]= $gps_item->gps_id;           
         }
-         $devices=Gps::select('id','imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name')
+        $devices=Gps::select('id','imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name')
                         ->whereIn('id',$single_gps)
                         ->paginate(10);
                         // ->get();
@@ -1745,7 +1744,7 @@ class WarehouseController extends Controller {
             }
             $gps=Gps::where('imei','LIKE','%'.$request->search."%")
             // ->orwhere('serial_no','LIKE','%'.$request->search."%")
-            // ->whereIn('id',$single_gps)
+            ->whereIn('id',$single_gps)
             ->paginate(10);
             if($gps)
             {
