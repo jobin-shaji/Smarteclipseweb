@@ -1,0 +1,23 @@
+<?php
+
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => 'App\Modules\Trader\Controllers' ] , function () {
+
+    //for listing
+	Route::get('/trader','TraderController@traderList')->name('trader');
+	Route::post('/trader-list','TraderController@getTraderList')->name('trader-list');
+    //for create new sub dealer
+	Route::get('/trader/create','TraderController@createTrader')->name('trader.create');
+    Route::post('/trader/save','TraderController@saveTrader')->name('trader.create.p');
+    //sub dealer details
+    Route::get('/trader/{id}/details','TraderController@detailsTrader')->name('trader.details');
+    //sub dealer updation
+	Route::get('/trader/{id}/edit','TraderController@editTrader')->name('trader.edit');
+    Route::post('/trader/{id}/edit','TraderController@updateTrader')->name('trader.update.p');
+    //sub dealer password updation
+	Route::get('/trader/{id}/change-password','TraderController@changeTraderPassword')->name('trader.change.password');
+    Route::post('/trader/{id}/change-password','TraderController@updateTraderPassword')->name('trader.change.password.p');
+    //sub dealer activate/deactivate
+	Route::post('/trader/deactivate','TraderController@deactivateTrader')->name('trader.deactivate');
+	Route::post('/trader/activate','TraderController@activateTrader')->name('trader.activate');
+});
+
