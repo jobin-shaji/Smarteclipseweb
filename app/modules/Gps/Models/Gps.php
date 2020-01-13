@@ -46,6 +46,7 @@ class Gps extends Model
     public function vehicle(){
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id')->withTrashed();
     }
+
      public function employee(){
         return $this->hasOne('App\Modules\Employee\Models\Employee','id','employee_code')->withTrashed();
     }
@@ -53,5 +54,14 @@ class Gps extends Model
     public function gpsStock()
     {
         return $this->hasOne('App\Modules\Warehouse\Models\GpsStock','gps_id','id');
+    }
+
+     public function getEmergencyalerts()
+    {
+      return self::select('emergency_status','tilt_status','id','lat','lon','imei','serial_no','e_sim_number')
+                    ->with('vehicle','vehicle.client')
+                    ->where('emergency_status',1)
+                    ->orWhere('tilt_status',1)
+                    ->get();
     }
 }

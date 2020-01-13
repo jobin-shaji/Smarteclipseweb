@@ -64,7 +64,7 @@
                   </div> 
 
                 <div class="form-group has-feedback form-group-1 ">
-                  <label class="srequired">Complaint</label>
+                  <label class="srequired">Complaint Reason</label>
                   <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
                   </select>
                 </div>
