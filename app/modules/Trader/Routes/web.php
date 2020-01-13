@@ -1,0 +1,32 @@
+<?php 
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+// //for dealers
+Route::get('/sub-dealers','SubDealerController@subdealerListPage')->name('sub-dealers');
+Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-dealer-list');
+Route::post('/sub-dealer/disable','SubDealerController@disableSubDealer')->name('sub-dealer.disable');
+Route::post('/sub-dealer/enable','SubDealerController@enableSubDealer')->name('sub-dealer.enable');
+});
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+// //for dealers
+Route::get('/subdealers','SubDealerController@subdealerList')->name('subdealers');
+Route::post('/subdealer-list','SubDealerController@getSubDealerlist')->name('subdealer-list');
+Route::get('/sub-dealer/create','SubDealerController@create')->name('sub.dealer.create');
+Route::post('/sub-dealer/create','SubDealerController@save')->name('sub.dealer.create.p');
+Route::get('/sub-dealers/{id}/edit','SubDealerController@edit')->name('sub.dealers.edit');
+Route::post('/sub-dealers/{id}/edit','SubDealerController@update')->name('sub.dealers.update.p'); 
+ 
+Route::get('/sub-dealers/{id}/details','SubDealerController@details')->name('sub.dealer.details');
+Route::post('/sub-dealer/delete','SubDealerController@deleteSubDealer')->name('dealer.delete');
+Route::post('/sub-dealer/activate','SubDealerController@activateSubDealer')->name('dealer.activate');
+});
+
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+	Route::get('/sub-dealer/profile','SubDealerController@subDealerProfile')->name('sub-dealer.profile');
+});
+
+Route::group(['middleware' => ['web','auth','role:dealer|sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+
+	Route::get('/sub-dealers/{id}/change-password','SubDealerController@changePassword')->name('sub.dealers.change-password');
+	Route::post('/sub-dealer/{id}/update-password','SubDealerController@updatePassword')->name('sub.dealer.update-password.p');
+});
+
