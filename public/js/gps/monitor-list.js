@@ -411,11 +411,11 @@ $(document).ready(function(){
                         var alert_title = '';
                         if( alert.emergency_status == 1 )
                         {
-                            alert_title = 'Emergency alert';
+                            alert_title = 'Emergency Alert';
                         }
                         else if( alert.tilt_status == 1 )
                         {
-                            alert_title = 'Tilt alert';
+                            alert_title = 'Tilt Alert';
                         }
                         else
                         {
@@ -428,14 +428,14 @@ $(document).ready(function(){
                         +'<p>'+alert.vehicle.name+'</p>'
                         +'<p>'+alert.vehicle.register_number+'</p>'
                         +'<p>'+alert.lat+'°,'+alert.lon+'°</p>'
-                        +'<p> <button>View map</button> </p>'
+                        +'<p> <button><a href="/monitor-map" target="_blank">View map</a></button> </p>'
                         +'</div>';
                         critical_alerts_html = '<div class="eam-each_alert" id="'+alert.id+'">'
                         +'<p>'+alert_title+'</p>'
                         +'<p>'+alert.vehicle.name+'</p>'
                         +'<p>'+alert.vehicle.register_number+'</p>'
                         +'<p>'+alert.lat+'°,'+alert.lon+'°</p>'
-                        +'<p> <button>View map</button> </p>'
+                        +'<p> <button><a href="/monitor-map" target="_blank">View map</a></button> </p>'
                         +'<p> <button onclick="clearAlert('+alert.id+')">Clear</button> </p>'
                         +'</div>';
 
@@ -509,6 +509,8 @@ function clearAlert(alert_id)
         return i.id == alert_id;
     }), 1);
 }
+
+
 
 $('.mlt-map, .mlt-alert').css('display','none');
 

@@ -41,9 +41,9 @@
   </nav>
 
   <ul class="monitor_tab_for_map">
-    <li class="mlt" value="list" id="mlt_list">Monitoring</li>
-    <li class="mlt" value="map" id="mlt_map"> <a  target="_blank"href="{{url('/monitor-map')}}">Map</a></li>
-    <li class="mlt" value="alert" id="mlt_alert">Alert</li>
+    <li class="mlt" value="list" id="mlt_list"><a href="#">Monitoring</a></li>
+    <li><a target="_blank" href="{{url('/monitor-map')}}">Map</a></li>
+    <li class="mlt" value="alert" id="mlt_alert"><a href="#">Alert</a></li>
 
 
   </ul>
@@ -73,7 +73,7 @@
                 <th>Distributor</th>
                 <th>Dealer</th>
                 <th>Service Engineer</th>
-                <th>Installation Date</th>
+                <th>Installation Date & Time</th>
               </tr>
             </thead>
             <tbody style="max-height:200px; overflow-y: scroll;" >
@@ -467,14 +467,6 @@
           </div>
         </div>
       </div>
-
-
-    <div class="mlt-map">
-       <div style="width: 100%; height: 100%" id="markers"></div>
-    </div>   
-
-
-
     <div id="critical_alerts_table" class="mlt-alert">
       
     </div> 
@@ -541,7 +533,36 @@
     var ui = H.ui.UI.createDefault(map, maptypes); // add UI
     
 
+
+
     var locationQueue=[];
+
+
+    window.setInterval(function(){
+        addToLocationQueue();
+    }, 2000);
+
+
+    function addToLocationQueue()
+     {
+       
+        console.log(location_data[1]);
+        var marker_location = new H.map.Marker({lat:location_data[1].latitude, lng:location_data[1].longitude});
+        map.addObject(marker_location);
+
+        popFromLocationQueue();
+     }
+
+    function popFromLocationQueue(){
+     if(location_data.length>0)
+     {
+          return location_data.splice(0,1)[0];    
+     }
+      else
+      return null;
+    }
+    function addMarkersToMap(){
+    }
 
 </script>
 
