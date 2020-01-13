@@ -61,9 +61,9 @@
                         <div class="form-group has-feedback">
                           <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" />
                         </div>
-                        @if ($errors->has('mobile_number'))
+                        @if ($errors->has('mobile'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
                       </div>

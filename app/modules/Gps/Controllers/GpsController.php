@@ -238,7 +238,7 @@ class GpsController extends Controller {
         $gps->save();
 
         $encrypted_gps_id = encrypt($gps->id);
-        $request->session()->flash('message', ' Gps updated successfully!'); 
+        $request->session()->flash('message', ' GPS updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('gps.details',$encrypted_gps_id));  
     }

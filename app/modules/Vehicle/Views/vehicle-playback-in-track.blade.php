@@ -517,12 +517,12 @@
                         first_set_data = false;
                   }
 
-                  console.log("running mode"+current_vehicle_mode);
+                  // console.log("running mode"+current_vehicle_mode);
 
                  if((previous_vehicle_mode != null && (current_vehicle_mode  == "S" || current_vehicle_mode  == "H") ) && current_vehicle_mode == previous_vehicle_mode ){
-                      console.log("current_vehicle_mode"+current_vehicle_mode);
-                      console.log("previous_vehicle_mode"+previous_vehicle_mode);
-                      console.log('same mode :- '+current_vehicle_mode);
+                      // console.log("current_vehicle_mode"+current_vehicle_mode);
+                      // console.log("previous_vehicle_mode"+previous_vehicle_mode);
+                      // console.log('same mode :- '+current_vehicle_mode);
                       // debugger;
                      
                    }else{
@@ -815,8 +815,9 @@
                 icon: domIcon
             });
             map.addObject(bearsMarkeronStartPoint);
-
-            alertPlotOnMap(lat,lng);
+            if(lat != undefined && lng != undefined){
+              alertPlotOnMap(lat,lng);
+             }
             
             blPlaceCaronMap = true;
     }
@@ -937,7 +938,9 @@
 
 
          function alertPlotOnMap(lat,lng){   
-                alertsQueue.find(function(x,i){
+                alertsQueue.find(function(x,i){  
+               if(x != undefined)
+               {
                  var start = [lat,lng];
                  var end   = [x.lat, x.lng];
                  var total_distance = gis.calculateDistance(start, end);
@@ -947,9 +950,10 @@
                         }
                         alertsQueue.splice(0,1)[i];
                     
+                  }
                  }
                 },lat,lng);
-        }
+            }
 
 
         function addMarkerToGroup(group, coordinate, html) {

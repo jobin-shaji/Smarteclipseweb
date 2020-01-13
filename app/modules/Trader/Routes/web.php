@@ -1,32 +1,32 @@
+
 <?php 
+
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
-// //for dealers
-Route::get('/sub-dealers','SubDealerController@subdealerListPage')->name('sub-dealers');
-Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-dealer-list');
-Route::post('/sub-dealer/disable','SubDealerController@disableSubDealer')->name('sub-dealer.disable');
-Route::post('/sub-dealer/enable','SubDealerController@enableSubDealer')->name('sub-dealer.enable');
-});
-Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
-// //for dealers
-Route::get('/subdealers','SubDealerController@subdealerList')->name('subdealers');
-Route::post('/subdealer-list','SubDealerController@getSubDealerlist')->name('subdealer-list');
-Route::get('/sub-dealer/create','SubDealerController@create')->name('sub.dealer.create');
-Route::post('/sub-dealer/create','SubDealerController@save')->name('sub.dealer.create.p');
-Route::get('/sub-dealers/{id}/edit','SubDealerController@edit')->name('sub.dealers.edit');
-Route::post('/sub-dealers/{id}/edit','SubDealerController@update')->name('sub.dealers.update.p'); 
- 
-Route::get('/sub-dealers/{id}/details','SubDealerController@details')->name('sub.dealer.details');
-Route::post('/sub-dealer/delete','SubDealerController@deleteSubDealer')->name('dealer.delete');
-Route::post('/sub-dealer/activate','SubDealerController@activateSubDealer')->name('dealer.activate');
+	// //for dealers
+	Route::get('/sub-dealers','SubDealerController@subdealerListPage')->name('sub-dealers');
+	Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-dealer-list');
+	Route::post('/sub-dealer/disable','SubDealerController@disableSubDealer')->name('sub-dealer.disable');
+	Route::post('/sub-dealer/enable','SubDealerController@enableSubDealer')->name('sub-dealer.enable');
 });
 
-Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
-	Route::get('/sub-dealer/profile','SubDealerController@subDealerProfile')->name('sub-dealer.profile');
-});
 
-Route::group(['middleware' => ['web','auth','role:dealer|sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
-
-	Route::get('/sub-dealers/{id}/change-password','SubDealerController@changePassword')->name('sub.dealers.change-password');
-	Route::post('/sub-dealer/{id}/update-password','SubDealerController@updatePassword')->name('sub.dealer.update-password.p');
+Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => 'App\Modules\Trader\Controllers' ] , function () {
+    //for listing
+	Route::get('/trader','TraderController@traderList')->name('trader');
+	Route::post('/trader-list','TraderController@getTraderList')->name('trader-list');
+    //for create new sub dealer
+	Route::get('/trader/create','TraderController@createTrader')->name('trader.create');
+    Route::post('/trader/save','TraderController@saveTrader')->name('trader.create.p');
+    //sub dealer details
+    Route::get('/trader/{id}/details','TraderController@detailsTrader')->name('trader.details');
+    //sub dealer updation
+	Route::get('/trader/{id}/edit','TraderController@editTrader')->name('trader.edit');
+    Route::post('/trader/{id}/edit','TraderController@updateTrader')->name('trader.update.p');
+    //sub dealer password updation
+	Route::get('/trader/{id}/change-password','TraderController@changeTraderPassword')->name('trader.change.password');
+    Route::post('/trader/{id}/change-password','TraderController@updateTraderPassword')->name('trader.change.password.p');
+    //sub dealer activate/deactivate
+	Route::post('/trader/deactivate','TraderController@deactivateTrader')->name('trader.deactivate');
+	Route::post('/trader/activate','TraderController@activateTrader')->name('trader.activate');
 });
 

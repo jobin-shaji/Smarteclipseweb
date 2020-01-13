@@ -62,16 +62,29 @@ class Vehicle extends Model
      * 
     * 
     */
-    public function getVehicleList()
+    public function getVehicleList($key = null)
     {
-        return self::select(
+        $vehicles = self::select(
             'id',
             'name',
             'servicer_job_id',
+            'client_id',
             'gps_id')
         ->with('gps')
         ->with('servicerjob')
-        ->paginate(10);
+        ->with('client');
+
+        if( $key != null )
+        {
+           $vehicles = $vehicles->where('name','like','%'.$key.'%');
+           $vehicles = $vehicles->gps->orWhere('imei','like','%'.$key.'%');
+            //->orWhere('gps.imei','like','%'.$key.'%');
+        }
+
+
+      //  $vehicle = Gps::where('imei','like',$imei)->with('vehicle');
+
+        return $vehicles->paginate(10);
     }
 
     /**
@@ -110,4 +123,19 @@ class Vehicle extends Model
         ->where('id',$vehicle_id)->first();
     }
     
+    public function search($monitor_search_key)
+    {
+        return self::select(
+            'id',
+            'name',
+            'servicer_job_id',
+            'client_id',
+            'gps_id')
+        ->with('gps')
+        ->with('servicerjob')
+        ->with('client')
+        ->where('name','like','%'.$monitor_search_key.'%')
+        ->first()
+        ;
+    }
 }

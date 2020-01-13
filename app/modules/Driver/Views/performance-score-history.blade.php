@@ -3,6 +3,7 @@
 Performance Score History
 @endsection
 @section('content')
+
   <div class="page-wrapper_new">
     <div class="page-breadcrumb">
       <div class="row">
@@ -33,7 +34,7 @@ Performance Score History
                     									<option value = "" selected disabled>Select Driver</option>
                     									<option value = "0">All</option>
                     									@foreach ($drivers as $driver)
-                    										<option value="{{$driver->id}}"   @if(isset($performance_score) && $driver->id==$driver_id){{"selected"}} @endif>{{$driver->name}}</option>
+                    										<option value="{{$driver->id}}" @if(isset($performance_score) && $driver->id==$driver_id){{"selected"}} @endif>{{$driver->name}}</option>
                     									@endforeach  
                     								</select>
                                   </div>
@@ -42,14 +43,16 @@ Performance Score History
                                 <div class="col-lg-3 col-md-3"> 
                                 	<div class="form-group">                      
                                     <label> From Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($performance_score)) {{$from}} @endif"  autocomplete="off">
+                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off">
+                                    <!-- @if(isset($performance_score))<input type ="hidden" id="from_date" value ={{$from}} > @endif -->
                                 	</div>
                                 </div>
                                 <div class="col-lg-3 col-md-3"> 
                                 	<div class="form-group">                     
                                     <label> To Date</label>
-                                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" value="@if(isset($performance_score)) {{$to}} @endif"  autocomplete="off">
-                                	</div>
+                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">
+                                	  <!-- @if(isset($performance_score))<input type ="hidden" id="to_date"  value ={{$to}}> @endif -->
+                                  </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-4">  
                           				<div class="form-group">     
@@ -71,7 +74,7 @@ Performance Score History
           								      <input type="text" class="search form-control" placeholder="What you looking for?">
           								    </div>  
           							   </div>  
-          						    </div>     -->   
+          						    </div>   -->
                         <table class="table table-hover table-bordered  table-striped results" style="width:100%;text-align: center" >
                           <thead>
                             <tr style="text-align: center;">
@@ -111,9 +114,6 @@ Performance Score History
                               <td>{{ date("d-m-y H:i:s ", strtotime($score->created_at))}}</td>  
                             </tr>
                             @endforeach
-                            <tr class="warning no-result" style="display: none;">
-            						      <td colspan="8"><i class="fa fa-warning"></i> No result</td>
-            						    </tr>
                           </tbody>
                         </table>
                         {{ $performance_score->appends(['sort' => 'votes','driver' =>$driver_id,'fromDate' =>$from,'toDate' => $to])->links() }}

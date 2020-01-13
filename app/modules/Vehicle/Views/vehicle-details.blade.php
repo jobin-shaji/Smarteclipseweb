@@ -89,9 +89,9 @@
                           <div class="form-group has-feedback">
                             <label class="srequired">Driver</label>
                             <select class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}"  name="driver_id" value="{{ old('driver_id') }}" required>
-                              <option value="" disabled="disabled">Select Driver</option>
+                              <option value="" disabled="disabled" selected="selected">Select Driver</option>
                               @foreach($drivers as $driver)
-                              <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif>{{$driver->name}}</option>
+                              <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif  >{{$driver->name}}</option>
                               @endforeach
                             </select>
                           </div>
@@ -116,7 +116,6 @@
                         <h3 class="page-header">
                           <i class="fa fa-user"> Odometer Update</i> 
                         </h3>
-                        
                       </div>
                     </div>
 
@@ -128,6 +127,8 @@
                                 $odometer_in_km=round($odometer_in_meter/1000);
                           ?>
                           <div class="form-group has-feedback">
+                            
+                            
                             <label class="srequired">Odometer(in km)</label>
                             <input type="text" class="form-control {{ $errors->has('odometer') ? ' has-error' : '' }}"  name="odometer" id="odometer" value="{{$odometer_in_km}}" minlength="1" maxlength="7" oninvalid="this.setCustomValidity('Odometer reading should not be more than 7 digits')">
                           </div>                        
@@ -137,6 +138,9 @@
                                 <strong class="error-text">{{ $errors->first('odometer') }}</strong>
                             </span>
                           @endif
+                      </div>
+                      <div style="margin: 10px 0px">
+                        <span><input type="checkbox" name="reset_daily_km" id="reset_daily_km" value="1"></span>&nbsp;Reset the daily kilometer value to zero.
                       </div>
                       <div class="row">
                         <div class="col-lg-10 col-md-12">

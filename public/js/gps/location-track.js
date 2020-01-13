@@ -136,11 +136,16 @@ function verifyCriticalAlertResponse(res){
         // alert("error" + response.error.message);
         return;
       }
-      $.each(response.snappedPoints, function (i, snap_data) {
-      var loc=snap_data.location;
-      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);
-      });
+      if(response.snappedPoints == undefined){
+           var latlng = new google.maps.LatLng(latitude,longitude);
+           addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);
+      }else{
+         $.each(response.snappedPoints, function (i, snap_data) {
+           var loc=snap_data.location;
+           var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
+           addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);
+        });
+      }
      });
    }
 
@@ -157,7 +162,6 @@ function verifyCriticalAlertResponse(res){
 // ---------------------que list--------------------------
 function transition(result)
     {
-      console.log(result);
      angle=result.liveData.angle;
      ac=result.liveData.ac;
      battery_status=result.liveData.battery_status;

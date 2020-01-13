@@ -8,6 +8,7 @@ function check(){
     $('#sleep').empty();
     $('#moving').empty();
     $('#halt').empty();
+    $('#stop_duration').empty();
     $('#sudden_acceleration').empty();
     $('#harsh_braking').empty();
     $('#main_battery_disconnect').empty();
@@ -52,7 +53,7 @@ function check(){
 function kmReport(res)
 {
     $("#loader-1").hide();
-    var km =0;
+    var km =res.dailykm;
     var sudden_acceleration=res.sudden_acceleration;
     var harsh_braking=res.harsh_braking;
     var main_battery_disconnect=res.main_battery_disconnect;
@@ -104,10 +105,10 @@ function kmReport(res)
     }
 
     $('#total_km').text(km);
-    // $('#speed').text(res.dailykm.gps.speed);
     $('#sleep').text(res.sleep);
     $('#moving').text(res.motion);
     $('#halt').text(res.halt);
+    $('#stop_duration').text(res.stop_duration);
     $('#sudden_acceleration').text(sudden_acceleration);
     $('#harsh_braking').text(harsh_braking);
     $('#main_battery_disconnect').text(main_battery_disconnect);

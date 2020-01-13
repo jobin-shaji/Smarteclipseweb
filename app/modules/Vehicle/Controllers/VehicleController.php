@@ -41,6 +41,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class VehicleController extends Controller 
 {
 
+    CONST DAILY_KILOMETRE_RESET_VALUE = 0;
 
 
     /** 
@@ -221,7 +222,6 @@ class VehicleController extends Controller
                 'client_id' =>$vehicle->client_id
             ]);
         }
-
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Driver updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
@@ -240,6 +240,7 @@ class VehicleController extends Controller
 
     public function odometerUpdate(Request $request)
     {
+        //dd($request->reset_daily_km);
         $vehicle = Vehicle::find($request->id);
         $encrypted_gps_id = encrypt($request->id);
         $gps = Gps::find($vehicle->gps_id);
@@ -265,11 +266,21 @@ class VehicleController extends Controller
                 'new_odometer' => $odometer_in_meter,
                 'edited_at' => date('Y-m-d H:i:s') ,
                 'updated_by' => $vehicle->client_id
-            ]);  
+            ]);
+
+            if( ($odometer_update) && ($request->reset_daily_km == '1') )
+            {
+                $this->updateVehicleDailyKilometre($vehicle->gps_id, self::DAILY_KILOMETRE_RESET_VALUE);
+            }  
         }       
         $request->session()->flash('message', 'Vehicle odometer updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('vehicles.details',$encrypted_gps_id));
+    }
+
+    public function updateVehicleDailyKilometre($gps_id, $value)
+    {
+        return (new DailyKm())->updateDailyKilometre($gps_id, $value);
     }
 
     // details page
@@ -1144,12 +1155,14 @@ class VehicleController extends Controller
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                return $vehicle->client->subDealer->dealer->name;
+                return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->dealer->name : '';
+               // return $vehicle->client->subdealer->dealer->name;
                 
             })
             ->addColumn('sub_dealer',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
-               return $vehicle->client->subDealer->name;
+               return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->name : '';
+               //return $vehicle->client->subdealer->name;
                 
             })
             ->addColumn('action', function ($vehicles) {
@@ -2586,11 +2599,11 @@ class VehicleController extends Controller
 
 
                                    "total_alerts" => $vehicle_profile['user_alert'],
-                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
-                                   "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
-                                   "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
-                                   "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
-                                   "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
+                                   "vehicle_type" => $vehicle_details->vehicleType->name 
+                                   // "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
+                                   // "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
+                                   // "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   // "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
             $this->data[] = ['vehicle_value' => $statics];
             $response_data = array(
@@ -2897,12 +2910,14 @@ class VehicleController extends Controller
 
         $count_of_gpsdata = GpsData::select('latitude as latitude', 'longitude as longitude', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->whereNotNull('latitude')
             ->whereNotNull('longitude')
+            ->where('gps_fix',1)
             ->orderBy('device_time', 'asc')
             ->count();
         $total_index = round($count_of_gpsdata / 30);
        
         $track_data = GpsData::select('id', 'latitude as latitude', 'longitude as longitude', 'lat_dir as latitude_dir', 'lon_dir as longitude_dir', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->offset($start_offset)->limit($limit)->whereNotNull('latitude')
             ->whereNotNull('longitude')
+            ->where('gps_fix',1)
             ->orderBy('device_time', 'asc')
             ->get();
 

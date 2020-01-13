@@ -5,12 +5,9 @@ function single_vehicle_details(vehicle_id, row_id)
     // highlight clicked row
     highLightClickedRow(row_id);
 
-    $('html, body').animate({
-        scrollTop: $("#monitoring_details_tab_contents").offset().top
-    }, 1000);
-
+    $("#sidebar-right")
     $('#monitoring_details_tab_contents_loading').show();
-    $('#monitoring_details_tab_contents').hide();
+    $('#sidebar-right').hide();
 
     var vehicle_tab_elements = [];
     if(vehicle_id)
@@ -26,7 +23,7 @@ function single_vehicle_details(vehicle_id, row_id)
             },
             success: function (res){
                 $('#monitoring_details_tab_contents_loading').hide();
-                $('#monitoring_details_tab_contents').show();
+                $('#sidebar-right').show();
                 if(res.success)
                 {
                     render_vehicletab(res);
@@ -51,7 +48,7 @@ function setActiveTab(active_tab_id)
         }
     });
     // set active tab content
-    $('#monitoring_details_tab_contents').find('.tab-pane').each(function(){
+    $('#sidebar-right').find('.tab-pane').each(function(){
         $(this).removeClass('active show in');
         if( $(this).attr('id') == 'tab_content_'+active_tab_id )
         {
@@ -80,9 +77,6 @@ function render_vehicletab(res)
         {'id' : 'tvc_vehicle_type', 'key' : ['vehicle_type','name'] },
         {'id' : 'tvc_vehicle_model', 'key' : ['vehicle_models','name']},
         {'id' : 'tvc_vehicle_make', 'key' : ['vehicle_models','vehicle_make','name']},
-        {'id' : 'tvc_vehicle_min_fuel', 'key' : ['vehicle_models','fuel_min']},
-        {'id' : 'tvc_vehicle_max_fuel', 'key' : ['vehicle_models','fuel_max']},
-        {'id' : 'tvc_vehicle_status', 'key' : 'status'},
         {'id' : 'tvc_vehicle_engine_number', 'key' : 'engine_number'},
         {'id' : 'tvc_vehicle_chassis_number', 'key' : 'chassis_number'},
         {'id' : 'tvc_vehicle_theftmode', 'key' : 'theft_mode'},
@@ -90,6 +84,7 @@ function render_vehicletab(res)
         {'id' : 'tvc_vehicle_emergency_status', 'key' : 'emergency_status'},
         {'id' : 'tvc_vehicle_created_date', 'key' : 'created_at'},
                         /* /Vehicle Details */
+
                         /* Client Details */
         {'id' : 'tvc_client_name', 'key' : ['client','name']},
         {'id' : 'tvc_client_address', 'key' : ['client','address']},
@@ -107,25 +102,44 @@ function render_vehicletab(res)
         {'id' : 'tvc_driver_mobile', 'key' : ['driver','mobile']},
         {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
     ].forEach(function(each_element){
+        repaint(each_element.id);
+        //console.log('HERE');
+       // $('#tvc_vehicle_theftmode').text('TISMON');
         if(typeof each_element.key == 'string')
         {
-            $('#'+each_element.id).text(res.data[each_element.key])
+            if( each_element.id == 'tvc_vehicle_theftmode')
+            {
+                $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'Enabled' : 'Disabled');
+            }
+            else if( each_element.id == 'tvc_vehicle_towing')
+            {
+                $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On Towing' : 'Not Towing');
+            }
+            else if( each_element.id == 'tvc_vehicle_emergency_status')
+            {
+                $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On' : 'Off');
+            }  
+            else
+            {
+                 $('#'+each_element.id).text(res.data[each_element.key]);
+            } 
         }
         else if(typeof each_element.key == 'object')
         {
-            var d = res.data;
+           
+            var detail = res.data;
             each_element.key.forEach(function(key){
-                if(d[key] != null)
+                if(detail[key] != null)
                 {
-                    d = d[key];
+                    detail = detail[key];
                 }
                 else
                 {
-                    d = '';
+                    detail = '';
                     return false;
                 }
             });
-            $('#'+each_element.id).text(d)
+            $('#'+each_element.id).text(detail);
         }
     });
     // display vehicle tab
@@ -146,7 +160,7 @@ function render_devicetab(res)
         {'id' : 'tvc_device_version', 'key' : ['gps','version']},
         {'id' : 'tvc_device_employee_code', 'key' : ['gps','employee_code']},
         {'id' : 'tvc_device_satellites', 'key' : ['gps','no_of_satellites']},
-        {'id' : 'tvc_device_emergency_status', 'key' : ['gps',' emergency_status']},
+        {'id' : 'tvc_device_emergency_status', 'key' : ['gps','emergency_status']},
         {'id' : 'tvc_device_gps_fix', 'key' : ['gps','gps_fix_on']},
         {'id' : 'tvc_device_calibrated_on', 'key' : ['gps','calibrated_on']},
         {'id' : 'tvc_device_login_on', 'key' : ['gps','login_on']},
@@ -154,7 +168,6 @@ function render_devicetab(res)
         {'id' : 'tvc_device_mode', 'key' : ['gps','mode']},
         {'id' : 'tvc_device_lat', 'key' : ['gps','lat']},
         {'id' : 'tvc_device_lon', 'key' : ['gps','lon']},
-        {'id' : 'tvc_device_network_status', 'key' : ['gps','network_status']},
         {'id' : 'tvc_device_fuel_status', 'key' : ['gps','fuel_status']},
         {'id' : 'tvc_device_speed', 'key' : ['gps','speed']},
         {'id' : 'tvc_device_odometer', 'key' : ['gps','odometer']},
@@ -164,27 +177,82 @@ function render_devicetab(res)
         {'id' : 'tvc_device_ignition', 'key' : ['gps','ignition']},
         {'id' : 'tvc_device_gsm_signal_strength', 'key' : ['gps','gsm_signal_strength']},
         {'id' : 'tvc_device_ac_status', 'key' : ['gps','ac_status']},
-        {'id' : 'tvc_device_kilometer', 'key' : ['gps','km']},
     ].forEach(function(each_element){
+        repaint(each_element.id);
         if(typeof each_element.key == 'string')
         {
-            $('#'+each_element.id).text(res.data[each_element.key])
+            $('#'+each_element.id).text(res.data[each_element.key]);
         }
         else if(typeof each_element.key == 'object')
         {
-            var d = res.data;
+            var detail = res.data;
             each_element.key.forEach(function(key){
-                if(d[key] != null)
+                if(detail[key] != null)
                 {
-                    d = d[key];
+                    detail = detail[key];
                 }
                 else
                 {
-                    d = '';
+                    detail = '';
                     return false;
                 }
             });
-            $('#'+each_element.id).text(d)
+            
+             // custom ignition status
+            if( each_element.id == 'tvc_device_ignition')
+            {
+                $('#'+each_element.id).text((detail == '1') ? 'On' : 'Off');
+            } 
+            else if( each_element.id == 'tvc_device_emergency_status')
+            {
+                $('#'+each_element.id).text((detail == '1') ? 'On' : 'Off');
+              
+            } 
+            else if( each_element.id == 'tvc_device_gps_fix')
+            {
+                $('#'+each_element.id).text((detail == '1') ? 'GPS Valid' : 'GPS Invalid');
+               
+            } 
+            else if( (each_element.id == 'tvc_device_fuel_status') )
+            {
+                if( (res.data.vehicle_models != null) )
+                {
+                    $('#'+each_element.id).text( calculate_fuel_reading(res.data.vehicle_models.fuel_min, res.data.vehicle_models.fuel_max, res.data.gps.fuel_status)+' %');
+                }
+            } 
+            else if( each_element.id == 'tvc_device_speed')
+            {
+                $('#'+each_element.id).text(round(res.data.gps.speed)+'km/h');
+            }
+            else if( each_element.id == 'tvc_device_odometer')
+            {
+                $('#'+each_element.id).text(round(res.data.gps.km));
+            }
+            else if( each_element.id == 'tvc_device_battery_status')
+            {
+                $('#'+each_element.id).text(round(res.data.gps.battery_status)+'%');
+            } 
+            else if( each_element.id == 'tvc_device_mode')
+            {
+                var vehicle_modes = { 
+                    "M": "Moving",
+                    "S": "Sleep", 
+                    "H": "Halt" 
+                };
+                $('#'+each_element.id).text(vehicle_modes[detail]);
+            } 
+            else if( each_element.id == 'tvc_device_ac_status')
+            {
+              $('#'+each_element.id).text((detail == '1') ? 'Ac On' : 'Ac Off');
+            }
+            else if( each_element.id == 'tvc_device_main_power_status')
+            {
+                $('#'+each_element.id).text( (detail == '1') ? 'Connected' : 'Disconnected');
+            }
+            else 
+            {
+                $('#'+each_element.id).text(detail);
+            } 
         }
     });
         // display vehicle tab
@@ -256,7 +324,6 @@ function render_alerttab(res)
             '<th>Alert</th>'+
             '<th>Latitude</th>'+
             '<th>Longitude</th>'+
-            '<th>Alert Status</th>'+
             '<th>Date of Alert</th>'+
             '<th>Device Time</th>'+
         '</tr>';
@@ -266,7 +333,6 @@ function render_alerttab(res)
                     '<td>'+each_alert.alert_type.description+'</td>'+
                     '<td>'+each_alert.latitude+'</td>'+
                     '<td>'+each_alert.longitude+'</td>'+
-                    '<td>'+each_alert.status+'</td>'+
                     '<td>'+each_alert.created_at+'</td>'+
                     '<td>'+each_alert.device_time+'</td>'+
                 '</tr>';
@@ -279,3 +345,51 @@ function render_subscriptiontab()
 {
     
 }
+
+round = function(val, precision) {
+    if (precision == null) {
+      precision = 0;
+    }
+    if (!precision) {
+      return Math.round(val);
+    }
+    val *= Math.pow(10, precision);
+    val += 0.5;
+    val = Math.floor(val);
+    return val /= Math.pow(10, precision);
+  };
+function calculate_fuel_reading(fuel_min,fuel_max,fuel_status)
+{
+    console.log('min', fuel_min);
+    console.log('max', fuel_max);
+    console.log('stat', fuel_status);
+    console.log(( (fuel_min - fuel_status) / (fuel_min - fuel_max) ) * 100);
+    return round( ( (fuel_min - fuel_status) / (fuel_min - fuel_max) ) * 100 );
+}
+
+
+function repaint(id)
+{
+    $('#'+id).text('');
+}
+
+$('#monitoring_module_search_key').keyup(function(){
+    var search_key = $(this).val();
+    if( $(this).val().length > 3 )
+    {
+        var data = { search_key :search_key};
+        $.ajax({
+            type    :'POST',
+            url     : 'monitorsearch',
+            data    : data,
+            async   : true,
+            headers : {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res){
+            //    console.log(res.data);
+            }
+        });
+    
+    }
+});
