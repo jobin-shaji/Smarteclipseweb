@@ -24,6 +24,10 @@
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
+                          <div class="form-group">
+                            <input type="text" class="form-controller" id="search" name="search" placeholder="search"></input>
+                             <input type="hidden" class="form-controller" id="gps_transfer_id" name="gps_transfer_id" value="{{$gps_transfer_id}}"></input>
+                          </div>
                               <!-- <div class="col-md-10 col-md-offset-1">
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
@@ -44,7 +48,7 @@
                                                 <th><b>Model Name</b></th>
                                               </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="data_tbody">
                                               @foreach($devices as $device)
                                               <tr>
                                                 <td>{{$loop->iteration}}</td>
@@ -62,6 +66,9 @@
                                               @endforeach
                                             </tbody>
                                           </table>
+                                          <span id="pagination_links">
+                                            {{ $devices->appends(['sort' => 'votes'])->links() }}
+                                          </span>
                                       <!-- </div>
                                     </div>
                                   </div>
@@ -76,6 +83,45 @@
         </div>
       </div>           
     </div>
-
-
+    @section('script')
+    <script type="text/javascript">
+      $('#search').on('keyup',function(){
+        $value=$(this).val();
+       
+        
+        $gps_transfer_id=$('#gps_transfer_id').val();
+        $.ajax({
+          type : 'get',
+          url : '{{URL::to('search')}}',
+          data:{
+            'search':$value,
+            'gps_transfer_id':$gps_transfer_id
+          },
+          success:function(data){
+             $("#data_tbody").empty();
+             $("#pagination_links").empty();
+            console.log(data.links.data);
+            var gps;
+            for(var i=0;i < data.links.data.length;i++){
+              var j=i+1;
+              gps += '<tr><td>'+j+'</td>'+
+                '<td>'+data.links.data[i].imei+'</td>'+
+                '<td>'+data.links.data[i].serial_no+'</td>'+
+                '<td>'+data.links.data[i].icc_id+'</td>'+
+                '<td>'+data.links.data[i].imsi+'</td>'+
+                '<td>'+data.links.data[i].version+'</td>'+
+                '<td>'+data.links.data[i].batch_number+'</td>'+
+                '<td>'+data.links.data[i].model_name+'</td>'+
+              '</tr>';
+            }
+            $("tbody").append(gps);
+            // $('#pagination_links').html(data.links);
+          }
+        });
+      })
+    </script>
+<script type="text/javascript">
+$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script>
+@endsection
 @endsection
