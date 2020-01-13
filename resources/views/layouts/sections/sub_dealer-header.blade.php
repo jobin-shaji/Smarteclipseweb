@@ -8,16 +8,28 @@
                                 <i class="fa fa-home" aria-hidden="true"></i>
                             </a>
                         </li>
+ 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-subdealer-new')}}">NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/gps-sub-dealer')}}">ALL DEVICES </a>  
-                                <a class="dropdown-item" href="{{url('/gps-transfer-sub-dealer/create')}}">TRANSFER DEVICE</a> 
-                                <a class="dropdown-item" href="{{url('/gps-transfers-subdealer')}}">DEVICE TRANSFER LIST </a>                          
-                            </div>
+                            <ul class="dropdown-menu multi-level">
+                                <a class="dropdown-item" href="{{url('/gps-subdealer-new')}}">NEW ARRIVALS<span></span></a>
+                                <a class="dropdown-item" href="{{url('/gps-sub-dealer')}}">ALL DEVICES<span></span></a>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUB DEALER</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/gps-transfer-sub-dealer-trader/create')}}">TRANSFER DEVICE</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/gps-transfers-subdealer-to-trader')}}">DEVICE TRANSFER LIST</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/gps-transfer-sub-dealer/create')}}">TRANSFER DEVICE</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/gps-transfers-subdealer')}}">DEVICE TRANSFER LIST</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item dropdown">
