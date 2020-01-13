@@ -114,5 +114,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
+    <script src="{{asset('js/gps/gps-transferred-root-list.js')}}"></script>
   @endsection

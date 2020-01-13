@@ -122,7 +122,7 @@
                       <video id="preview" style="height:100%; width: 100%;"></video>
                     </div> -->
                     <div style="position: absolute; bottom: 0;">
-                      <textarea id="scanner" autofocus="autofocus" style="height:50%;width: 100%;" placeholder="Please click here for scanning.."></textarea>
+                      <textarea id="scanner" autofocus="autofocus" style="height: 150px!important;width: 100%;" placeholder="Please click here for scanning.."></textarea>
                       <input type="hidden" id="role"name="role" value="{{\Auth::user()->roles->first()->name}}">
                       <button type="button" class="btn btn-primary" id="add_qr_button" >ADD</button>
                       <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>

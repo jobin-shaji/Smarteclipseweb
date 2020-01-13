@@ -21,7 +21,11 @@ use App\Modules\Root\Models\Root;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\Paginator;
+
 use Carbon\Carbon;
+use DB;
+
 use PDF;
 use Auth;
 use DataTables;
@@ -1288,14 +1292,18 @@ class WarehouseController extends Controller {
         if($gps_items == null){
            return view('Warehouse::404');
         }
-        $devices=array();
+        // $devices=array();
+        $single_gps=[];
         foreach($gps_items as $gps_item){
-            $single_gps= $gps_item->gps_id;
-            $devices[]=Gps::select('id','imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name')
-                        ->where('id',$single_gps)
-                        ->first();
+            $single_gps[]= $gps_item->gps_id;
+           
         }
-       return view('Warehouse::gps-list-view',['devices' => $devices]);
+         $devices=Gps::select('id','imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name')
+                        ->whereIn('id',$single_gps)
+                        ->paginate(10);
+                        // ->get();
+
+       return view('Warehouse::gps-list-view',['devices' => $devices,'gps_transfer_id'=>$decrypted_id]);
     }
 
     //accept transferred gps in dealer
@@ -1722,7 +1730,31 @@ class WarehouseController extends Controller {
                             ->get();
         return view('Warehouse::device-track-root-details',['gps_transfers' => $gps_transfers]);
     }
-
+    public function search(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output ="";
+            $result = [];
+            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
+            ->where('gps_transfer_id',$request->gps_transfer_id)
+            ->get();
+            $single_gps=[];
+            foreach($gps_items as $gps_item){
+                $single_gps[]= $gps_item->gps_id;                
+            }
+            $gps=Gps::where('imei','LIKE','%'.$request->search."%")
+            // ->orwhere('serial_no','LIKE','%'.$request->search."%")
+            // ->whereIn('id',$single_gps)
+            ->paginate(10);
+            if($gps)
+            {
+                $result['links'] = $gps->appends(['sort' => 'votes']);
+                // $result['links'] = $gps;
+                return Response($result);
+            }
+        }
+    }
     // root gps transfer rule
     public function gpsRootTransferRule(){
         $rules = [
