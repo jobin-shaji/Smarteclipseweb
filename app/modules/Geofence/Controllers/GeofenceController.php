@@ -91,7 +91,10 @@ class GeofenceController extends Controller {
                     'name' => $request->name,
                     'cordinates' => $polygon,
                     'response' => $response,
-                    'code' => $code
+                    'code' => $code,
+                    'created_at'=> date('Y-m-d H:i:s'),
+                    'updated_at'=> date('Y-m-d H:i:s')
+
                 ]);
             }
             $response = [
@@ -156,7 +159,7 @@ class GeofenceController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $geofence=Geofence::find($decrypted);
+        $geofence=Geofence::find($decrypted);         
         if($geofence == null)
         {
            return view('Geofence::404');
@@ -528,6 +531,8 @@ class GeofenceController extends Controller {
         $geofence  =  Geofence::where('id',$geofence_id)->first(); 
         $old_geofence_response=$geofence->response;
         $geofence->name=$name;
+        $geofence->updated_at=date('Y-m-d H:i:s');
+
         if($request->polygons!=null){
         foreach ($request->polygons as $polygon) {
                 $response="";

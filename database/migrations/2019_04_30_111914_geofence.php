@@ -20,7 +20,9 @@ class Geofence extends Migration
             $table->text('cordinates');
             $table->text('response');
             $table->string('code');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
+            // $table->timestamps();
             $table->softDeletes();
         });
     }
