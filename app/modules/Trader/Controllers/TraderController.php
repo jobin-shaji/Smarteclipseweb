@@ -28,11 +28,12 @@ class TraderController extends Controller
         'user_id',
         'sub_dealer_id',                      
         'name',                   
-        'address',                                       
+        'address','created_at',                                       
         'deleted_at')
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
         ->where('sub_dealer_id',$sub_dealer_id)
+        ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($traders)
         ->addIndexColumn()
@@ -245,12 +246,13 @@ class TraderController extends Controller
                 'user_id',
                 'sub_dealer_id',                      
                 'name',                   
-                'address',                               
+                'address','created_at',                              
                 'deleted_at'
                 )
             ->withTrashed()
             ->with('subDealer:id,user_id,name')
             ->with('user:id,email,mobile,deleted_at')
+            ->orderBy('created_at','DESC')
             ->get();
       
              return DataTables::of($trader_root)
