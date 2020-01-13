@@ -213,13 +213,14 @@ class TraderController extends Controller
      public function activateTrader(Request $request)
      {
          $trader = Trader::withTrashed()->find($request->trader_id);
-         if($trader==null){
+            if($trader==null)
+            {
               return response()->json([
                  'status' => 0,
                  'title' => 'Error',
                  'message' => 'Dealer does not exist'
               ]);
-         }
+          }
  
          $trader->user->restore();
          $trader->restore();
@@ -229,7 +230,93 @@ class TraderController extends Controller
              'message' => 'Dealer activated successfully'
          ]);
      }
+
+    //traders under root
+      public function traderRootList()
+         {
+          return view('Trader::trader-root-list');
+         }
     
+    public function getTraderRootList()
+        
+        {
+                $trader_root = Trader::select(
+                'id', 
+                'user_id',
+                'sub_dealer_id',                      
+                'name',                   
+                'address',                               
+                'deleted_at'
+                )
+            ->withTrashed()
+            ->with('subDealer:id,user_id,name')
+            ->with('user:id,email,mobile,deleted_at')
+            ->get();
+      
+             return DataTables::of($trader_root)
+             ->addIndexColumn()      
+             ->addColumn('working_status', function ($trader_root) {
+            if($trader_root->user->deleted_at == null && $trader_root->deleted_at == null)
+            { 
+            return "
+                <b style='color:#008000';>Enabled</b>
+                <button onclick=disableTrader(".$trader_root->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
+            ";
+            }
+            else
+            { 
+            return "
+                <b style='color:#FF0000';>Disabled</b>
+                <button onclick=enableTrader(".$trader_root->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
+            ";
+            }
+         })
+        ->rawColumns(['link','working_status'])     
+        ->make();
+   }
+
+//Disable Trader
+    public function disableTrader(Request $request)
+    {
+        $trader_user = User::withTrashed()->find($request->id);
+        $trader = Trader::withTrashed()->where('user_id',$request->id)->first();
+        if($trader_user == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Sub Dealer does not exist'
+            ]);
+        }
+        $trader_user->delete();
+        $trader->delete();
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Sub Dealer disabled successfully'
+        ]);
+    }
+
+ //Enable Trader
+    public function enableTrader(Request $request)
+    {
+        $trader_user = User::withTrashed()->find($request->id);
+        $trader = Trader::withTrashed()->where('user_id',$request->id)->first();
+         if($trader_user==null){
+                return response()->json([
+                    'status' => 0,
+                    'title' => 'Error',
+                    'message' => 'Sub Dealer does not exist'
+                ]);
+         }
+         $trader_user->restore();
+         $trader->restore();
+         return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Sub Dealer enabled successfully'
+        ]);
+    }
+
     public function traderCreateRules(){
         $rules = [
             'name' => 'required',
