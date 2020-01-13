@@ -3,12 +3,12 @@
   All Vehicle
 @endsection
 @section('content')
-
 <?php
     $perPage    = 10;
     $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $key        = ( isset($_GET['monitoring_module_search_key']) ) ? $_GET['monitoring_module_search_key'] : '';  
 ?>
+
 <div class="modal fade show in" id="emergeny_alert_modal" aria-hidden="true">
   <div class="modal-dialog modal-lg" >
     <div class="modal-content">
@@ -22,20 +22,15 @@
       <!-- /Header -->
       <!-- Body -->
       <div class="modal-body" id="eam_body">
-        
       </div>
-
     </div>
   </div>
 </div>
 <div class="page-wrapper_new page-wrapper-1">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Monitoring</li>
       <b>Monitoring</b>
     </ol>
-
-
     @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -47,13 +42,12 @@
 
   <ul class="monitor_tab_for_map">
     <li class="mlt" value="list" id="mlt_list">Monitoring</li>
-    <li class="mlt" value="map" id="mlt_map">Map</li>
+    <li class="mlt" value="map" id="mlt_map"> <a  target="_blank"href="{{url('/monitor-map')}}">Map</a></li>
     <li class="mlt" value="alert" id="mlt_alert">Alert</li>
 
+
   </ul>
-   
-
-
+  
   <div class="mlt-list">
 
     <!-- Search and filters -->
@@ -473,13 +467,21 @@
           </div>
         </div>
       </div>
+
+
     <div class="mlt-map">
        <div style="width: 100%; height: 100%" id="markers"></div>
     </div>   
+
+
+
     <div id="critical_alerts_table" class="mlt-alert">
       
-    </div>   
+    </div> 
+
+
   </div>
+
 <audio id="myAudio">
   <source src="../assets/sounds/alerts.mp3" type="audio/ogg">
   <source src="../assets/sounds/alerts.mp3" type="audio/mpeg">
@@ -489,19 +491,69 @@
 @endsection
 <link rel="stylesheet" type="text/css" href="{{asset('css/monitor.css')}}">
 <style type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></style>
+
+
+ 
+
+
 @section('script')
 
-    <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
-    <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
-    <script src="{{asset('playback_assets/assets/js/core/popper.min.js')}}"></script>
+
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+<script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
+
+<script type="text/javascript">
+
+
+  // alerts on map
+    var parisMarker = new H.map.Marker({ lat: 10.192656, lng: 76.386666 });
+    var objImg = document.createElement('img');
+    objImg.src = '';
+    var outerElement = document.createElement('div')
+    var domIcon = new H.map.DomIcon(outerElement);
+    var bearsMarker = new H.map.DomMarker({ lat: 10.192656, lng: 76.386666 }, {
+        icon: domIcon
+    });
+
+    var hidpi = ('devicePixelRatio' in window && devicePixelRatio > 1);
+    var secure = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
+    var app_id = "vvfyuslVdzP04AK3BlBq",
+        app_code = "f63d__fBLLCuREIGNr6BjQ";
+
+    var mapContainer = document.getElementById('markers');
+    var platform = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
+    var maptypes = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+
+    var map = new H.Map(mapContainer, maptypes.normal.map);
+    map.setCenter({ lat: 10.192656, lng: 76.386666 });
+    map.setZoom(14);
+    var zoomToResult = true;
+    var mapTileService = platform.getMapTileService({
+        type: 'base'
+    });
+    var parameters = {};
+    var uTurn = false;
+
+    new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
+    var ui = H.ui.UI.createDefault(map, maptypes); // add UI
     
-   <script type="text/javascript" src="{{asset('js/gps/monitor-list.js')}}"></script>
-   <script type="text/javascript">
+
+    var locationQueue=[];
+
+</script>
+
+  
 
 
-   </script>
+
+   
 <!-- accordian -->
 <script type="text/javascript">
+
+
   
   $(document).ready(function() {
   
@@ -539,89 +591,7 @@ function closeModal()
   audio.pause();
 }
 </script>
-<style type="text/css">
-  .is-hidden--off-flow {
-  opacity: 0;
-  transition: all 0.2s ease-in-out;
-  z-index: -10;   /* *1* */
-  visibility: hidden;   /* *1* */
-}
 
-
-.l-modal {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  margin: 0 auto;
-  z-index: 2;
-  text-align: center;
-}
-
-.l-modal__shadow {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  display: block;
-  background: #161616;
-  opacity: 0.92;
-  z-index: -1;
-  cursor: pointer;
-}
-
-.l-modal__body {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.c-popup {
-    display: inline-block;
-    text-align: center;
-    background: white;
-    max-width: 400px;
-    width: 90%;
-    line-height: 1.48;
-
-    border-radius: 7px;
-    background: #ccc;
-}
-.l-modal .l-modal__shadow {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    display: block;
-    background: #0000008f;
-    opacity: 0.92;
-    z-index: -1;
-    cursor: pointer;
-}
-.l-modal__body a{
-    background: #b9b9b9;
-    width: 100%;
-    float: left;
-    padding: 6px 0;
-    color: #fff;
-    font-weight: bold;
-    text-align: right;
-        font-size: 20px;
-      border-top-left-radius: 7px;
-    padding-right: 4%;
-      border-top-right-radius:7px;
-  }
-.l-modal__body a:hover{
-color: #000;
-  }
-.l-modal__body p{
-float: left;
-    text-align: center;
-    width: 100%;
-    font-size: 18px;
-    padding: 22px 0;}
-
-</style>
 <!-- /accordian -->
 @endsection
 

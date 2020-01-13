@@ -56,6 +56,12 @@ class MonitorController extends Controller
         $this->message  = '';
     }
 
+    public function dashboard()
+    {
+        return view('Monitoring::monitor'); 
+    }
+
+
     /**
      * 
      * 
@@ -120,6 +126,11 @@ class MonitorController extends Controller
             return response()->json([ 'data' => $this->alert, 'success' => $this->success, 'message' => $this->message  ]);
         }  
         
+    }
+
+    public function getAlertMap()
+    {
+       return view('Monitoring::map-monitoring',['alerts'=> (new Vehicle())->getAlertList(),'vehicles'=> null]);  
     }
     
     

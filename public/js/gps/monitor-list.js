@@ -449,38 +449,7 @@ $(document).ready(function(){
                        // alertAddonqueue(alert.id,alert.lat,alert.lon,html);
                     });
 
-                    // function alertAddonqueue(alert_id,lat,lng,html)
-                    // {
-                    //  if(alerts_list.length > 0)
-                    //   {
-                    //        alerts_list.find(function(x,i){  
-                    //                                                                                                                                                                                                                                                                           if(x != undefined)
-                    //        {
-                            
-                    //         if(alerts_list['id'] != alert_id){
-                    //           var alert_data ={
-                    //             "id":alert_id,
-                    //             "lat":lat,
-                    //             "lng":lng,
-                    //             "html":html,
-                    //           }  
-                    //           alerts_list.push(alert_data);
-                    //          }
-                    //         }
-                    //        },alert_id);
-
-                    //   }else{
-                    //     var alert_data ={
-                    //         "id":alert_id,
-                    //         "lat":lat,
-                    //         "lng":lng,
-                    //         "html":html,
-                    //      }
-                    //     alerts_list.push(alert_data);
-                    //   }
-
-                    // }
-        
+                    
                     $('#eam_body').html(html);
 
                     if(current_active_tab != 'map')
@@ -499,6 +468,39 @@ $(document).ready(function(){
 
     }, 5000); 
 });
+
+function alertAddonqueue(alert_id,lat,lng,html)
+    {
+     if(alerts_list.length > 0)
+      {
+           alerts_list.find(function(x,i){  
+                                                                                                                                                                                                                                                                              if(x != undefined)
+           {
+            
+            if(alerts_list['id'] != alert_id){
+              var alert_data ={
+                "id":alert_id,
+                "lat":lat,
+                "lng":lng,
+                "html":html,
+              }  
+              alerts_list.push(alert_data);
+             }
+            }
+           },alert_id);
+
+      }else{
+        var alert_data ={
+            "id":alert_id,
+            "lat":lat,
+            "lng":lng,
+            "html":html,
+         }
+        alerts_list.push(alert_data);
+      }
+
+    }
+        
 
 function clearAlert(alert_id)
 {
@@ -524,25 +526,4 @@ $('#mlt_alert').click(function(){
     $('.mlt-alert').css('display','block');
     $('.mlt-list, .mlt-map').css('display','none');
 });
-
-// alerts on map
-
-var hidpi               = ('devicePixelRatio' in window && devicePixelRatio > 1);
-var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
-var app_id              = "RN9UIyGura2lyToc9aPg",
-   app_code             = "4YMdYfSTVVe1MOD_bDp_ZA";
-var mapContainer        = document.getElementById('markers');
-var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
-var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);  
-var map                 = new H.Map(mapContainer, maptypes.normal.map);
-map.setCenter({ lat: 10.192656, lng: 76.386666 });
-map.setZoom(14);
-var zoomToResult = true;
-var mapTileService = platform.getMapTileService({
-    type: 'base'
-});
-var parameters = {};
-var uTurn = false;
-new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
-var ui = H.ui.UI.createDefault(map, maptypes); // add UI
 
