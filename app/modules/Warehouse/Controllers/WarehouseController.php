@@ -1119,13 +1119,13 @@ class WarehouseController extends Controller {
     }
 
     // gps transfer list - sub dealer to trader
-    public function getSubDealerToTraderTransferredList()
+    public function getSubDealerToTraderTransferredList() 
     {
         return view('Warehouse::gps-transfer-subdealer-to trader-list');
     }
 
     //gps transfer list data - sub dealer to trader
-    public function getSubDealerToTraderTransferredListData()
+    public function getSubDealerToTraderTransferredListData() 
     {
         $user_id            = \Auth::user()->id;
         $subdealer_id       = \Auth::user()->subdealer->id;
@@ -1138,13 +1138,13 @@ class WarehouseController extends Controller {
         }
 
         $gps_transfer = GpsTransfer::select(
-            'id',
-            'from_user_id',
+            'id', 
+            'from_user_id', 
             'to_user_id',
             'dispatched_on',
             'accepted_on',
             'deleted_at'
-            // \DB::raw('count(id) as count')
+            // \DB::raw('count(id) as count') 
         )
         ->with('fromUser:id,username')
         ->with('toUser:id,username')
@@ -1156,11 +1156,11 @@ class WarehouseController extends Controller {
         ->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
-        ->addColumn('count', function ($gps_transfer)
+        ->addColumn('count', function ($gps_transfer) 
         {
             return $gps_transfer->gpsTransferItems->count();
         })
-        ->addColumn('action', function ($gps_transfer)
+        ->addColumn('action', function ($gps_transfer) 
         {
             $b_url = \URL::to('/');
             if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
@@ -1188,7 +1188,7 @@ class WarehouseController extends Controller {
     }
 
     // create dealer to sub dealer (sub dealer to trader) gps transfer
-    public function createSubDealerToTraderGpsTransfer(Request $request)
+    public function createSubDealerToTraderGpsTransfer(Request $request) 
     {
         $user = \Auth::user();
         $sub_dealer=$user->subdealer;
@@ -1200,7 +1200,7 @@ class WarehouseController extends Controller {
                         ->where('trader_id',null)
                         ->get();
         $entities = $sub_dealer->traders()->with('user')->get();
-       
+        
         $entities = $entities->where('user.deleted_at',null);
 
         return view('Warehouse::sub-dealer-to-trader-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
@@ -1222,11 +1222,11 @@ class WarehouseController extends Controller {
               'trader_name' => $trader_name,
               'trader_address' => $trader_address,
               'trader_mobile' => $trader_mobile
-        ));
+        )); 
     }
 
     // proceed gps transfer for confirmation
-    public function proceedSubDealerToTraderGpsTransfer(Request $request)
+    public function proceedSubDealerToTraderGpsTransfer(Request $request) 
     {
         if($request->gps_id[0]==null){
             $rules = $this->gpsSubDealerToTraderTransferRule();
@@ -1253,7 +1253,7 @@ class WarehouseController extends Controller {
     }
 
     // save sub dealer gps transfer/transfer gps from dealer(sub dealer) to sub dealer(trader)
-    public function proceedConfirmSubDealerToTraderGpsTransfer(Request $request)
+    public function proceedConfirmSubDealerToTraderGpsTransfer(Request $request) 
     {
         $subdealer_id=\Auth::user()->subdealer->id;
         $from_user_id = \Auth::user()->id;
@@ -1283,7 +1283,7 @@ class WarehouseController extends Controller {
             $order_number=$uniqid.date("Y-m-d h:i:s");
             if($gps_array){
                 $gps_transfer = GpsTransfer::create([
-                  "from_user_id" => $from_user_id,
+                  "from_user_id" => $from_user_id, 
                   "to_user_id" => $to_user_id,
                   "order_number" => $order_number,
                   "scanned_employee_code" => $scanned_employee_code,
@@ -1295,7 +1295,7 @@ class WarehouseController extends Controller {
             if($last_id_in_gps_transfer){
                 foreach ($gps_array as $gps_id) {
                     $gps_transfer_item = GpsTransferItems::create([
-                      "gps_id" => $gps_id,
+                      "gps_id" => $gps_id, 
                       "gps_transfer_id" => $last_id_in_gps_transfer
                     ]);
                     if($gps_transfer_item){
