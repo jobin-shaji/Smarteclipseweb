@@ -70,7 +70,7 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'
 
 	Route::post('/gps-list-view','WarehouseController@viewGpsTransferList')->name('gps.list.view');
 
-
+Route::get('/search','WarehouseController@search');
 
 
 	Route::post('/gps-transfer/user-detils','WarehouseController@userData')->name('gps-transfer.user-detils');

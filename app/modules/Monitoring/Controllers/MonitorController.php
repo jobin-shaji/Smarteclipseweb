@@ -56,6 +56,12 @@ class MonitorController extends Controller
         $this->message  = '';
     }
 
+    public function dashboard()
+    {
+        return view('Monitoring::monitor'); 
+    }
+
+
     /**
      * 
      * 
@@ -64,6 +70,12 @@ class MonitorController extends Controller
     {
         $key = ( isset($request->monitoring_module_search_key) ) ? $request->monitoring_module_search_key : null;
         return view('Monitoring::vehiclelist',['vehicles'=> (new Vehicle())->getVehicleList($key)]); 
+    }
+
+    public function getVehicleAlertData(Request $request)
+    {
+
+        return view('Monitoring::vehiclelist',['alerts'=> (new Vehicle())->getAlertList(),'vehicles'=> null]); 
     }
 
     /**
@@ -90,7 +102,6 @@ class MonitorController extends Controller
 
             $this->data = (new Vehicle())->getVehicleDetails($request->vehicle_id);
             return response()->json([ 'data' => $this->data, 'success' => $this->success, 'message' => $this->message ], $this->code);   
-
         }
         catch(\Exception $e)
         {
@@ -100,14 +111,27 @@ class MonitorController extends Controller
         }  
     }
 
-    public function search(Request $request){
-      
-        $monitor_search_key=$request->search_key;
-         if(!empty($monitor_search_key)){
-            return view('Monitoring::vehiclelist',['vehicles'=>(new Vehicle())->search($monitor_search_key)]);
-        }else{
-            return view('Monitoring::vehiclelist');
+    public function getEmergencyalerts()
+    {
+
+     try
+        {
+            $this->alert = (new Gps())->getEmergencyalerts();
+            return response()->json([ 'data' => $this->alert, 'success' => $this->success, 'message' => $this->message ], $this->code);   
         }
+        catch(\Exception $e)
+        {
+            $this->success = false;
+            $this->message = 'failed';
+            return response()->json([ 'data' => $this->alert, 'success' => $this->success, 'message' => $this->message  ]);
+        }  
+        
     }
+
+    public function getAlertMap()
+    {
+       return view('Monitoring::map-monitoring',['alerts'=> (new Vehicle())->getAlertList(),'vehicles'=> null]);  
+    }
+    
     
 }

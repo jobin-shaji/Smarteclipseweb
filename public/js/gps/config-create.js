@@ -192,14 +192,14 @@ function getConfiguration(data,name,version)
     var plan='<tr><td>Ac Status</td><td>'+ac_input+'</td></tr>'+
             '<tr><td>Theft Mode</td><td >'+theft_input+'</td></tr>'+
             '<tr><td> Api Access</td><td>'+api_access_input+'</td></tr>'+
-            '<tr><td>Packet Status</td><td>'+client_domain_input+'</td></tr>'+
-            '<tr><td>Client Domain</td><td>'+client_logo_input+'</td></tr>'+
+            '<tr><td>Client Domain</td><td>'+client_domain_input+'</td></tr>'+
+            '<tr><td>Client Logo</td><td>'+client_logo_input+'</td></tr>'+
             '<tr><td>Custom Feature</td><td>'+custom_feature_input+'</td></tr>'+
             '<tr><td>Daily Report as sms </td><td>'+daily_report_as_sms_input+'</td></tr>'+
             '<tr><td>Daily Report Summary to reg email</td><td>'+daily_report_summary_to_reg_mail_input+'</td></tr>'+
             '<tr><td> Database Backup</td><td>'+database_backup_input+'</td></tr>'+
             '<tr><td>Driver Score </td><td>'+driver_score_input+'</td></tr>'+
-            '<tr><td>Employee Alerts </td><td>'+emergency_alerts_input+'</td></tr>'+
+            '<tr><td>Emergency Alerts </td><td>'+emergency_alerts_input+'</td></tr>'+
             '<tr><td>Fuel </td><td>'+fuel_input+'</td></tr>'+
             '<tr><td>Geofence Count </td><td>'+geofence_count_input+'</td></tr>'+
             '<tr><td>Immobilizer</td><td>'+immobilizer_input+'</td></tr>'+

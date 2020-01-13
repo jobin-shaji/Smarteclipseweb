@@ -3,6 +3,10 @@
 Alert Report
 @endsection
 @section('content')
+<?php
+    $perPage    = 15;
+    $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;       
+?>
   <div class="page-wrapper_new">
     <div class="page-breadcrumb">
       <div class="row">
@@ -104,7 +108,7 @@ Alert Report
 
                             @foreach($alertReports as $alertReport)                  
                             <tr> 
-                              <td>{{ $loop->iteration }}</td>
+                              <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                               <td>{{ $alertReport->gps->vehicle->name}}</td>
                               <td>{{ $alertReport->gps->vehicle->register_number }}</td>
                               <td>{{ $alertReport->alertType->description }}</td>                                      
