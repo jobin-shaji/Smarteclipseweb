@@ -11,7 +11,6 @@ function callBackDataTable(){
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
         ajax: {
             url: 'trader-list',
             type: 'POST',

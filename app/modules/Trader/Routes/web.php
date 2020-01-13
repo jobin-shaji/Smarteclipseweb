@@ -20,4 +20,10 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => '
 	Route::post('/trader/deactivate','TraderController@deactivateTrader')->name('trader.deactivate');
 	Route::post('/trader/activate','TraderController@activateTrader')->name('trader.activate');
 });
-
+// trader root
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Trader\Controllers' ] , function() {
+    Route::get('/trader-root-list','TraderController@traderRootList')->name('trader.root.list');
+    Route::post('/get-trader-root-list','TraderController@getTraderRootList')->name('get.trader.root.list');
+    Route::post('/trader/disable','TraderController@disableTrader')->name('trader.disable');
+    Route::post('/trader/enable','TraderController@enableTrader')->name('trader.enable');
+});

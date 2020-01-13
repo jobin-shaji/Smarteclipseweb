@@ -50,7 +50,13 @@
                 <li><a class="dropdown-item" href="{{url('/sub-dealers')}}">LIST DEALERS</a></li>
                 </ul>
             </li>
-            <li class="dropdown-submenu">
+          <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">SUB DEALERS</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/trader-root-list')}}">LIST SUB DEALERS</a></li>
+                </ul>
+            </li>
+         <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">END USERS</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{url('/root/client/create')}}">ADD END USER</a></li>
