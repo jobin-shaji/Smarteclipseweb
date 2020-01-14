@@ -198,7 +198,7 @@ class TraderController extends Controller
              return response()->json([
                  'status' => 0,
                  'title' => 'Error',
-                 'message' => 'Dealer does not exist'
+                 'message' => 'Sub dealer does not exist'
              ]);
          }
          $trader->user->delete();
@@ -206,7 +206,7 @@ class TraderController extends Controller
          return response()->json([
              'status' => 1,
              'title' => 'Success',
-             'message' => 'Dealer deactivated successfully'
+             'message' => 'Sub dealer deactivated successfully'
          ]);
      }
  
@@ -219,7 +219,7 @@ class TraderController extends Controller
               return response()->json([
                  'status' => 0,
                  'title' => 'Error',
-                 'message' => 'Dealer does not exist'
+                 'message' => 'Sub dealer does not exist'
               ]);
           }
  
@@ -228,7 +228,7 @@ class TraderController extends Controller
          return response()->json([
              'status' => 1,
              'title' => 'Success',
-             'message' => 'Dealer activated successfully'
+             'message' => 'Sub dealer activated successfully'
          ]);
      }
 

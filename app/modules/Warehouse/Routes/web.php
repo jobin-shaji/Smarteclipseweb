@@ -48,6 +48,17 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::post('/gps-transfer-sub-dealer-dropdown','WarehouseController@getClientDetailsFromSubDealer')->name('gps-transfer-sub-dealer-dropdown');
 	Route::post('/gps-transfer-sub-dealer','WarehouseController@proceedSubDealerGpsTransfer')->name('gps-transfer-sub-dealer.transfer.p');
 	Route::post('/gps-transfer-sub-dealer-proceed','WarehouseController@proceedConfirmSubDealerGpsTransfer')->name('gps-transfer-sub-dealer-proceed.create.p');
+
+	//gps transfer from dealer to sub dealer(backend:sub dealer to trader)
+	Route::get('/gps-transfer-sub-dealer-trader/create','WarehouseController@createSubDealerToTraderGpsTransfer')->name('gps-transfer-sub-dealer-trader.create');
+	Route::post('/gps-transfer-sub-dealer-trader-dropdown','WarehouseController@getTraderDetailsFromSubDealer')->name('gps-transfer-sub-dealer-trader-dropdown');
+	Route::post('/gps-transfer-sub-dealer-trader','WarehouseController@proceedSubDealerToTraderGpsTransfer')->name('gps-transfer-sub-dealer-trader.transfer.p');
+	Route::post('/gps-transfer-sub-dealer-trader-proceed','WarehouseController@proceedConfirmSubDealerToTraderGpsTransfer')->name('gps-transfer-sub-dealer-trader-proceed.create.p');
+
+	Route::get('/gps-transfers-subdealer-to-trader','WarehouseController@getSubDealerToTraderTransferredList')->name('gps-transfers-subdealer-to-trader');
+	Route::post('/gps-transfer-list-subdealer-to-trader','WarehouseController@getSubDealerToTraderTransferredListData')->name('gps-transfer-list-subdealer-to-trader');
+	Route::post('/gps-transfer-subdealer-to-trader/accept','WarehouseController@AcceptGpsSubDealerToTraderTransfer')->name('gps-subdealer-to-trader.accept');
+	Route::post('/gps-transfer-subdealer-to-trader/cancel','WarehouseController@cancelSubDealerToTraderGpsTransfer')->name('gps-subdealer-to-trader.cancel');
 });
 
 Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] , 'namespace' => 'App\Modules\Warehouse\Controllers' ] , function() {
@@ -78,6 +89,10 @@ Route::get('/search','WarehouseController@search');
 	//boxlabel view in root for dealer to client
 	Route::get('/gps-transfer-root-dealer-client/{id}/label','WarehouseController@gpsTransferLabelRootDealerToClient')->name('gps-transfer-root-dealer-client.label');
 	Route::get('/gps-transfer-label-root-dealer-client/{id}/export','WarehouseController@exportGpsTransferLabelRootDealerToClient')->name('gps-transfer-label-root-dealer-client.export');
+
+	//boxlabel view  for sub dealer(dealer) to trader(sub dealer)
+	Route::get('/gps-transfer-root-sub-dealer-trader/{id}/label','WarehouseController@gpsTransferLabelRootSubDealerToTrader')->name('gps-transfer-root-sub-dealer-trader.label');
+	Route::get('/gps-transfer-label-root-sub-dealer-trader/{id}/export','WarehouseController@exportGpsTransferLabelRootSubDealerToTrader')->name('gps-transfer-label-root-sub-dealer-trader.export');
 
 	Route::post('/gps-scan','WarehouseController@getScannedGps')->name('gps-scan');
 

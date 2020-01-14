@@ -27,7 +27,7 @@
   .btn-pop:hover {background:#f7b018;}
 </style>
 
-<title>PEPSized Places in Paris</title>
+<title></title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link href='https://fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
@@ -447,6 +447,85 @@
 </div>
 @endrole
 <!-- SUB DEALER ROLE-END -->
+
+<!-- TRADER ROLE-START -->
+@role('trader')
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <div class="row">
+      <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_new_arrival_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>New Arrivals</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-subdealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+      <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="total_gps_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>Total GPS </p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="transferred_gps_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>Transferred GPS</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-transfers-subdealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="subdealer_client">
+              <div class="loader"></div>
+            </h3>
+            <p>Active Clients</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="/clients" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
+      </div>
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
+      </div>
+    </div>
+  </div>
+</div>
+@endrole
+<!-- TRADER ROLE-END -->
 
 <!-- SERVICER ROLE-START -->
 @role('servicer')

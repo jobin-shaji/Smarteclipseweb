@@ -28,5 +28,9 @@ class SubDealer extends Model
   public function clients(){
       return $this->hasMany('App\Modules\Client\Models\Client')->withTrashed();
   }
+
+  public function traders(){
+    return $this->hasMany('App\Modules\Trader\Models\Trader')->withTrashed();
+  }
 }
 
