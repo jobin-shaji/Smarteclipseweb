@@ -6,6 +6,15 @@
 <style type="text/css">
   .pac-container { position: relative !important;top: -290px !important;margin:0px }
 </style>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <section class="hilite-content">
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
