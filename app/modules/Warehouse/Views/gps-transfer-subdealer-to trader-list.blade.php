@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  GPS Transfer List (Dealers To End Users)
+  GPS Transfer List 
 @endsection
 @section('content')
 
@@ -8,8 +8,8 @@
   <div class="page-wrapper-root1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer List (Dealers To End Users)</li>
-        <b>GPS Transfer List (Dealers To End Users)</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer List (Dealers To Sub Dealers) </li>
+        <b>GPS Transfer List (Dealers To Sub Dealers)</b>
         @if(Session::has('message'))
           <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -50,5 +50,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/gps-transfer-subdealer.js')}}"></script>
+    <script src="{{asset('js/gps/gps-transfer-subdealer-to-trader.js')}}"></script>
   @endsection
