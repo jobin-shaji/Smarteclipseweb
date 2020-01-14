@@ -1,7 +1,16 @@
-<?php
+
+<?php 
+
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
+	// //for dealers
+	Route::get('/sub-dealers','SubDealerController@subdealerListPage')->name('sub-dealers');
+	Route::post('/sub-dealer-list','SubDealerController@getSubDealers')->name('sub-dealer-list');
+	Route::post('/sub-dealer/disable','SubDealerController@disableSubDealer')->name('sub-dealer.disable');
+	Route::post('/sub-dealer/enable','SubDealerController@enableSubDealer')->name('sub-dealer.enable');
+});
+
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => 'App\Modules\Trader\Controllers' ] , function () {
-
     //for listing
 	Route::get('/trader','TraderController@traderList')->name('trader');
 	Route::post('/trader-list','TraderController@getTraderList')->name('trader-list');

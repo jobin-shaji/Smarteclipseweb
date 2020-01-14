@@ -1,25 +1,23 @@
 @extends('layouts.eclipse')
 @section('title')
-  GPS Transfer List (Dealers To End Users)
+  View Dealer
 @endsection
 @section('content')
-
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer List (Dealers To End Users)</li>
-        <b>GPS Transfer List (Dealers To End Users)</b>
-        @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}  
-            </div>
-          </div>
-        @endif
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Dealer List</li>
+        <b>Dealer List</b>
       </ol>
-    </nav>
-
+      @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+          </div>
+        </div>
+      @endif 
+    </nav>  
     <div class="container-fluid">
       <div class="card-body">
         <div class="table-responsive">
@@ -29,12 +27,12 @@
                 <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                   <thead>
                     <tr>
-                        <th>SL.No</th>
-                        <th>From User</th>
-                        <th>To User</th>
-                        <th>Dispatched On</th>
-                        <th>Count</th>
-                        <th>Action</th>
+                        <th>SL.No</th>                              
+                        <th>Name</th>                            
+                        <th>Address</th>                              
+                        <th>Mobile</th>                            
+                        <th>email</th>
+                        <th style="width:0px!important;">Action</th>
                     </tr>
                   </thead>
                 </table>
@@ -42,7 +40,7 @@
             </div>
           </div>
         </div>
-      </div>          
+      </div>      
     </div>
   </div>
 </div>
@@ -50,5 +48,5 @@
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/gps-transfer-subdealer.js')}}"></script>
+     <script src="{{asset('js/gps/subdealer-list.js')}}"></script>
   @endsection

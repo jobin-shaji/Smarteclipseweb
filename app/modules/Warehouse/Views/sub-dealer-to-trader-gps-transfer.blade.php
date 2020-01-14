@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-   GPS Transfer To End User
+   GPS Transfer To Sub Dealer
 @endsection
 @section('content')
 
@@ -10,8 +10,8 @@
   <div class="page-wrapper-root1"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer To End User</li>
-        <b>GPS Transfer To End User</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer To Sub Dealer</li>
+        <b>GPS Transfer To Sub Dealer</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -25,21 +25,21 @@
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('gps-transfer-sub-dealer.transfer.p')}}">
+        <form  method="POST" action="{{route('gps-transfer-sub-dealer-trader.transfer.p')}}">
                 {{csrf_field()}}
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
-                      <label class="srequired">Client Name</label>
-                      <select class="form-control select2 clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
-                        <option value="">Select Client</option>
+                      <label class="srequired">Sub Dealer Name</label>
+                      <select class="form-control select2 traderData" id="to_user" name="trader_user_id" data-live-search="true" title="Select Sub Dealer" required>
+                        <option value="">Select Sub Dealer</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                         @endforeach
                       </select>
-                      @if ($errors->has('client_user_id'))
+                      @if ($errors->has('trader_user_id'))
                         <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('client_user_id') }}</strong>
+                            <strong class="error-text">{{ $errors->first('trader_user_id') }}</strong>
                         </span>
                       @endif 
                   </div>     
@@ -48,7 +48,7 @@
                   <div class="form-group has-feedback">
                     <label class="srequired">Address</label>
                     <input type="text" name="address"  id="address"  value="" class="form-control" placeholder="Address" readonly>
-                    <input type="hidden" name="client_name"  id="client_name"  value="" class="form-control">
+                    <input type="hidden" name="trader_name"  id="trader_name"  value="" class="form-control">
                      @if ($errors->has('address'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('address') }}</strong>
