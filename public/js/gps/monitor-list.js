@@ -412,32 +412,32 @@ $(document).ready(function(){
                         if( alert.emergency_status == 1 )
                         {
                             alert_title = 'Emergency Alert';
+                            alert_icon  =  'E';
                         }
                         else if( alert.tilt_status == 1 )
                         {
                             alert_title = 'Tilt Alert';
+                            alert_icon  =  'T';
                         }
                         else
                         {
                             alert_title = 'Alert';
+                            alert_icon  =  'A';
                         }
 
 
-                        html += '<div class="eam-each_alert">'
-                        +'<p>'+alert_title+'</p>'
-                        +'<p>'+alert.vehicle.name+'</p>'
-                        +'<p>'+alert.vehicle.register_number+'</p>'
-                        +'<p>'+alert.lat+'°,'+alert.lon+'°</p>'
-                        +'<p> <button><a href="/monitor-map" target="_blank">View map</a></button> </p>'
+                        html += '<div class="eam-each_alert eam-each_alert-1">'
+                        +'<p style="background:#f00; padding:6px 0;  color:#fff; font-weight:700;font-size:18px;border-top-left-radius: 7px;border-top-right-radius: 7px; ">'+alert_title+'</p>'
+                        +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
+                        +'<p style="margin-top:7px;"> <button style="border-radius: 5px;padding: 5px 8px;"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
                         +'</div>';
-                        critical_alerts_html = '<div class="eam-each_alert" id="'+alert.id+'">'
-                        +'<p>'+alert_title+'</p>'
-                        +'<p>'+alert.vehicle.name+'</p>'
-                        +'<p>'+alert.vehicle.register_number+'</p>'
-                        +'<p>'+alert.lat+'°,'+alert.lon+'°</p>'
-                        +'<p> <button><a href="/monitor-map" target="_blank">View map</a></button> </p>'
-                        +'<p> <button onclick="clearAlert('+alert.id+')">Clear</button> </p>'
-                        +'</div>';
+                        critical_alerts_html = '<div class="alert-page-dispaly">'
+                        +'<div class="eam-each_alert" id="'+alert.id+'">'
+                        +'<p class="t-alert">'+alert_icon+'</p>'
+                        +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
+                        +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
+                        +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
+                        +'</div></div>';
 
                         if(need_to_append)
                         {
