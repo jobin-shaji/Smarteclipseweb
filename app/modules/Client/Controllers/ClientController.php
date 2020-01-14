@@ -12,6 +12,7 @@ use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\User\Models\User;
+use App\Modules\Trader\Models\Trader;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\TrafficRules\Models\Country;
 use App\Modules\TrafficRules\Models\State;
@@ -61,8 +62,8 @@ class ClientController extends Controller {
     }
     //upload employee details to database table
     public function save(Request $request)
-    {    
-        $subdealer_id = \Auth::user()->subdealer->id;
+    {   
+
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
         if($placeLatLng==null){
@@ -76,6 +77,7 @@ class ClientController extends Controller {
         
         if($request->user()->hasRole('sub_dealer'))
         {
+            $subdealer_id = \Auth::user()->subdealer->id;
             $url=url()->current();
             $rayfleet_key="rayfleet";
             $eclipse_key="eclipse";
@@ -95,7 +97,7 @@ class ClientController extends Controller {
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
                 'role' => 0,
@@ -131,7 +133,68 @@ class ClientController extends Controller {
                     ]);
                 }
             }
+        }else if($request->user()->hasRole('trader')){
+
+            $trader_id = \Auth::user()->trader->id;
+
+            $url=url()->current();
+            $rayfleet_key="rayfleet";
+            $eclipse_key="eclipse";
+
+            if (strpos($url, $rayfleet_key) == true) {
+                 $rules = $this->rafleet_user_create_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) {
+                 $rules = $this->user_create_rules();
+            }
+            else
+            {
+               $rules = $this->user_create_rules();
+            }
+            
+            $this->validate($request, $rules);
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'mobile' => $request->mobile_number,
+                'status' => 1,
+                'password' => bcrypt($request->password),
+                'role' => 0,
+            ]);
+
+            $client = Client::create([            
+                'user_id' => $user->id,
+                'trader_id' => $trader_id,
+                'name' => strtoupper($request->name),            
+                'address' => $request->address, 
+                'latitude'=>$location_lat,
+                'longitude'=>$location_lng,
+                'country_id'=>$request->country_id,
+                'state_id'=>$request->state_id,
+                'city_id'=>$request->city_id        
+            ]);
+            if($request->client_category=="school"){
+                User::where('username', $request->username)->first()->assignRole('school');
+            }else{
+                User::where('username', $request->username)->first()->assignRole('client');
+            }         
+            $alert_types = AlertType::all(); 
+            if($client){
+                foreach ($alert_types as $alert_type) {
+                    $user_alerts = UserAlerts::create([
+                      "alert_id" => $alert_type->id, 
+                      "client_id" => $client->id, 
+                      "status" => 1
+                    ]);
+                    $client_alert_point = ClientAlertPoint::create([
+                      "alert_type_id" => $alert_type->id, 
+                      "driver_point" => $alert_type->driver_point, 
+                      "client_id" => $client->id
+                    ]);
+                }
+            }
         }
+
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New client created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
@@ -145,19 +208,36 @@ class ClientController extends Controller {
    
     public function getClientlist(Request $request)
     {
-        $subdealer=$request->user()->subdealer->id;
-        $client = Client::select(
-        'id', 
-        'user_id',
-        'sub_dealer_id',                      
-        'name',                   
-        'address',                                       
-        'deleted_at'
-        )
-        ->withTrashed()
-        ->with('user:id,email,mobile,deleted_at')
-        ->where('sub_dealer_id',$subdealer)
-        ->get();
+        if($request->user()->hasRole('trader')){
+            $trader=$request->user()->trader->id;
+            $client = Client::select(
+            'id', 
+            'user_id',
+            'sub_dealer_id',                      
+            'name',                   
+            'address',                                       
+            'deleted_at'
+            )
+            ->withTrashed()
+            ->with('user:id,email,mobile,deleted_at')
+            ->where('trader_id',$trader)
+            ->get();
+        }else{
+            $subdealer=$request->user()->subdealer->id;
+            $client = Client::select(
+            'id', 
+            'user_id',
+            'sub_dealer_id',                      
+            'name',                   
+            'address',                                       
+            'deleted_at'
+            )
+            ->withTrashed()
+            ->with('user:id,email,mobile,deleted_at')
+            ->where('sub_dealer_id',$subdealer)
+            ->get();
+        }
+       
         return DataTables::of($client)
         ->addIndexColumn()
         ->addColumn('action', function ($client) {
@@ -1046,7 +1126,7 @@ class ClientController extends Controller {
             'state_id' => 'required',
             'city_id' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|max:10|unique:users,mobile',
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];

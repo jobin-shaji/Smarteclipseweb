@@ -98,6 +98,29 @@ $('.clientData').on('change', function() {
     });
 });
 
+$('.clientDataInTrader').on('change', function() {
+    var clientUserID=this.value;
+    var purl = getUrl() + '/'+'gps-transfer-trader-client-dropdown' ;
+    var data = { client_user_id : clientUserID };
+    $.ajax({
+        type:'POST',
+        url: purl,
+        data:data ,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            var client_name=res.client_name;
+            var client_address=res.client_address;
+            var client_mobile=res.client_mobile;
+            $("#client_name").val(client_name);
+            $("#address").val(client_address);
+            $("#mobile").val(client_mobile); 
+        }
+    });
+});
+
 
 
 

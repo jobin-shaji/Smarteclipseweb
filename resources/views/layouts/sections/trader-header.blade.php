@@ -13,10 +13,10 @@
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/gps-subdealer-new')}}">NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/gps-sub-dealer')}}">ALL DEVICES </a>  
-                                <a class="dropdown-item" href="{{url('/gps-transfer-sub-dealer/create')}}">TRANSFER DEVICE</a> 
-                                <a class="dropdown-item" href="{{url('/gps-transfers-subdealer')}}">DEVICE TRANSFER LIST </a>                          
+                                <a class="dropdown-item" href="{{url('/gps-trader-new')}}">NEW ARRIVALS</a>
+                                <a class="dropdown-item" href="{{url('/gps-trader-all-devices')}}">ALL DEVICES </a>  
+                                <a class="dropdown-item" href="{{url('/gps-transfer-trader-client/create')}}">TRANSFER DEVICE</a> 
+                                <a class="dropdown-item" href="{{url('/gps-transferred-trader-to-client')}}">DEVICE TRANSFER LIST </a>                          
                             </div>
                         </li>
 
@@ -36,14 +36,7 @@
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
                             </a>
                             <ul class="dropdown-menu multi-level">
-                                <!-- sub dealer option in header,created by 10-1-2020 by christeena-start  -->
-                                <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUB DEALER</a>
-                                    <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('/trader/create')}}">ADD SUB DEALER</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/trader')}}">LIST SUB DEALER</a></li>
-                                    </ul>
-                                </li>
+                            
                                 <!-- sub dealer option in header,created by 10-1-2020 by christeena-end  -->
                                 <li class="dropdown-submenu">
                                     <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>

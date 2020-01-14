@@ -439,20 +439,36 @@ class GpsController extends Controller {
                 'gps_id',
                 'dealer_id',
                 'subdealer_id',
+                'trader_id',
                 'client_id',
                 'deleted_at')
                 ->withTrashed()
                 ->with('gps')
                 ->with('client')
+                ->with('trader')
                 ->where('subdealer_id',$sub_dealer_id)
                 ->get();
         return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('trader', function ($gps_stock) {
+                if($gps_stock->trader_id==null){
+                    return "--";
+                }else{
+                    return ( is_object($gps_stock->trader) ) ? $gps_stock->trader->name : '';
+                }
+            })
             ->addColumn('client', function ($gps_stock) {
                 if($gps_stock->client_id==null){
-                    return "Not Transferred";
+                    return "--";
                 }else{
                     return ( is_object($gps_stock->client) ) ? $gps_stock->client->name : '';
+                }
+            })
+            ->addColumn('status', function ($gps_stock) {
+                if($gps_stock->client_id==null && $gps_stock->trader_id==null){
+                    return "Not Transferred";
+                }else{
+                    return "Transferred";;
                 }
             })
             ->addColumn('action', function ($gps_stock) {
@@ -551,6 +567,146 @@ class GpsController extends Controller {
     }
 
     //////////////////////////GPS SUB DEALER///////////////////////////////////
+
+    /////////////////////////GPS TRADER-START//////////////////////////////////
+
+    //All devices list in trader
+    public function gpsTraderListPage()
+    {
+        return view('Gps::gps-trader-list');
+    } 
+
+    //returns gps list as json 
+    public function getTraderGps()
+    {
+        $trader_id=\Auth::user()->trader->id;
+        $gps_stock = GpsStock::select(
+                'id',
+                'gps_id',
+                'dealer_id',
+                'subdealer_id',
+                'trader_id',
+                'client_id',
+                'deleted_at')
+                ->withTrashed()
+                ->with('gps')
+                ->with('client')
+                ->where('trader_id',$trader_id)
+                ->get();
+        return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('client', function ($gps_stock) {
+                if($gps_stock->client_id==null){
+                    return "--";
+                }else{
+                    return ( is_object($gps_stock->client) ) ? $gps_stock->client->name : '';
+                }
+            })
+            ->addColumn('status', function ($gps_stock) {
+                if($gps_stock->client_id==null){
+                    return "Not Transferred";
+                }else{
+                    return "Transferred";;
+                }
+            })
+            ->addColumn('action', function ($gps_stock) {
+                $b_url = \URL::to('/');
+                if($gps_stock->deleted_at == null){
+                    if($gps_stock->gps->status == 1){ 
+                        return "
+                            <b style='color:#008000';>Active</b>
+                            <a href=".$b_url."/gps-trader/".Crypt::encrypt($gps_stock->gps_id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                            <button onclick=deactivateGpsStatusFromTrader(".$gps_stock->gps_id.") class='btn btn-xs btn-danger'></i>Deactivate</button>
+                        ";
+                        }else{ 
+                        return "
+                            <b style='color:#FF0000';>Inactive</b>
+                            <a href=".$b_url."/gps-trader/".Crypt::encrypt($gps_stock->gps_id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <button onclick=activateGpsStatusFromTrader(".$gps_stock->gps_id.") class='btn btn-xs btn-success'> Activate </button>
+                        ";
+                        }
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
+    //deactivate gps from trader
+    public function gpsInTraderStatusDeactivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+            ]);
+        }
+        $gps->status=0;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 0,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps deactivated successfully'
+        ]);
+    }
+    // activate gps from trader
+    public function gpsInTraderStatusActivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Gps does not exist'
+            ]);
+        }
+        $gps->status=1;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 1,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Gps activated successfully'
+        ]);
+    }
+
+    public function viewTraderStatusLog(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $user_id=\Auth::user()->id;
+        $gps_logs = GpsLog::select(
+                'id',
+                'gps_id',
+                'status',
+                'user_id',
+                'created_at')
+                ->where('gps_id',$decrypted_id)
+                ->where('user_id',$user_id)
+                ->with('gps:id,imei')
+                ->get();
+        return view('Gps::gps-status-log-view',['gps_logs' => $gps_logs]);
+    }
+
+    /////////////////////////GPS TRADER-END////////////////////////////////////
 
     //Display all dealer gps
     public function gpsClientListPage()

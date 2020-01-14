@@ -12,6 +12,7 @@ use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Geofence\Models\Geofence;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Trader\Models\Trader;
 use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Alert\Models\UserAlerts;
 use App\Modules\Alert\Models\Alert;
@@ -184,6 +185,9 @@ class DashboardController extends Controller
         else if($user->hasRole('sub_dealer')){
             return $this->subDealerDashboardView($user);           
         }
+        else if($user->hasRole('trader')){
+            return $this->traderDashboardView($user);           
+        }
         else if($user->hasRole('servicer')){
             return $this->servicerDashboardView($user);           
         }
@@ -253,7 +257,7 @@ class DashboardController extends Controller
         $dealer_user_id=$user->id;
         $dealer_id=$user->dealer->id;
         $total_gps=GpsStock::where('dealer_id',$dealer_id)->whereNull('subdealer_id')->count();
-        $sub_dealers_of_dealers=SubDealer::select('id')->where('dealer_id',$dealer_id)->get();
+        $sub_dealers_of_dealers=SubDealer::select('id')->where('dealer_id',$dealer_id)->withTrashed()->get();
         $single_sub_dealers_array=[];
         foreach($sub_dealers_of_dealers as $sub_dealers_array){
             $single_sub_dealers_array[] = $sub_dealers_array->id;
@@ -286,14 +290,20 @@ class DashboardController extends Controller
         $sub_dealer_user_id=$user->id;
         $sub_dealer_id=$user->subdealer->id;
         $total_gps=GpsStock::where('subdealer_id',$sub_dealer_id)->count();
-        $clients_of_subdealers=Client::select('id')->where('sub_dealer_id',$sub_dealer_id)->get();
+        $gps_in_stock=GpsStock::where('subdealer_id',$sub_dealer_id)->whereNull('trader_id')->whereNull('client_id')->count();
+        $clients_of_subdealers=Client::select('id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
+        $traders_of_subdealers=Trader::select('id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $single_clients_array=[];
         foreach($clients_of_subdealers as $clients_array){
             $single_clients_array[] = $clients_array->id;
         }
-        $transferred_gps_count=GpsStock::whereIn('client_id',$single_clients_array)->where('subdealer_id',$sub_dealer_id)->count(); 
-
-
+        $single_traders_array=[];
+        foreach($traders_of_subdealers as $traders_array){
+            $single_traders_array[] = $traders_array->id;
+        }
+        $dealer_to_trader_transferred_gps_count=GpsStock::whereIn('trader_id',$single_traders_array)->where('subdealer_id',$sub_dealer_id)->count(); 
+        $dealer_to_client_transferred_gps_count=GpsStock::whereIn('client_id',$single_clients_array)->where('subdealer_id',$sub_dealer_id)->count(); 
+        
         $single_new_transfer_ids=[];
         $new_arrival_gps_count=0;
         $new_arrival_gps=GpsTransfer::where('to_user_id',$sub_dealer_user_id)->whereNull('accepted_on')->get();
@@ -306,12 +316,45 @@ class DashboardController extends Controller
 
         return response()->json([
             'clients' => Client::where('sub_dealer_id',$sub_dealer_id)->count(),
+            'traders' => Trader::where('sub_dealer_id',$sub_dealer_id)->count(),
             'new_arrivals' => $new_arrival_gps_count,
             'total_gps' => $total_gps,
-            'transferred_gps' => $transferred_gps_count,
+            'gps_in_stock' => $gps_in_stock,
+            'dealer_to_trader_transferred_gps_count' => $dealer_to_trader_transferred_gps_count,
+            'dealer_to_client_transferred_gps_count' => $dealer_to_client_transferred_gps_count,
             'status' => 'dbcount'           
         ]);
-    }  
+    } 
+    
+    function traderDashboardView($user){
+        $trader_user_id=$user->id;
+        $trader_id=$user->trader->id;
+        $total_gps=GpsStock::where('trader_id',$trader_id)->count();
+        $clients_of_traders=Client::select('id')->where('trader_id',$trader_id)->withTrashed()->get();
+        $single_clients_array=[];
+        foreach($clients_of_traders as $clients_array){
+            $single_clients_array[] = $clients_array->id;
+        }
+        $trader_to_client_transferred_gps_count=GpsStock::whereIn('client_id',$single_clients_array)->where('trader_id',$trader_id)->count(); 
+        
+        $single_new_transfer_ids=[];
+        $new_arrival_gps_count=0;
+        $new_arrival_gps=GpsTransfer::where('to_user_id',$trader_user_id)->whereNull('accepted_on')->get();
+        if($new_arrival_gps){
+            foreach ($new_arrival_gps as $new_gps) {
+               $single_new_transfer_ids[] = $new_gps->id;
+            }
+            $new_arrival_gps_count=GpsTransferItems::whereIn('gps_transfer_id',$single_new_transfer_ids)->count();
+        }
+
+        return response()->json([
+            'clients' => Client::where('trader_id',$trader_id)->count(),
+            'new_arrivals' => $new_arrival_gps_count,
+            'total_gps' => $total_gps,
+            'trader_to_client_transferred_gps_count' => $trader_to_client_transferred_gps_count,
+            'status' => 'dbcount'           
+        ]);
+    } 
 
     function getVehicleGps($client_id,$user_id){
         $VehicleGpss=Vehicle::select(
