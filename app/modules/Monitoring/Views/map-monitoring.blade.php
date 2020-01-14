@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Alert Listing</title>
+    <title>Smart Eclipse Monitoring Panel</title>
 
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset('smart/assets/img/allicons/favicon.ico')}}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -33,11 +33,19 @@
       
 
         <div class="main-panel main-pane-bg">
-            <div class="content">
+            <div class="content map-outer">
               <div class="lorder-cover-bg" id="lorder-cover-bg-image">
                 <div class="lorder-cover-bg-image" >
                    <img id="loading-image" src="{{asset('playback/assets/img/loader.gif')}}" />
                </div>
+               </div>
+               <div class ="cover_bell_icon">
+                 <div class ="bell_icon_image">
+                  <img src="{{asset('images/bell.png')}}">
+                  <span id ="cover_alert_count" class="alert_count_bell">
+                    0
+                  </span>
+                 </div>
                </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
                 <div id="markers" style="width:100%;height:100vh; position: relative;">
@@ -47,6 +55,43 @@
             </div>
         </div>
     </div>
+    <style type="text/css">
+      .map-outer{
+        position: relative;
+      }
+      .cover_bell_icon
+      {
+        position: absolute;
+    z-index: 9;
+    display: block;
+      }
+      .bell_icon_image{
+        position: relative;
+        width: 80px;
+        float: left;
+      }
+      .bell_icon_image img
+      {margin-top: 12px;}
+       .bell_icon_image span
+      {
+    
+    position: absolute;
+    top: 5px;
+    background: #f00;
+    color: #fff;
+    border-radius: 50%;
+    line-height: 23px;
+    width: auto;
+    height: auto;
+    padding-top: 2px;
+    top: 12px;
+    right: 16px;
+    padding: 5px 8px;
+    font-size: 19px;
+    text-align: center;
+      }
+    
+    </style>
 
     <audio id="myAudio">
       <source src="../assets/sounds/alerts.mp3" type="audio/ogg">
@@ -68,6 +113,9 @@
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
       
     <script>
+        var remove_marker_flag = false;
+        var map_markers;
+        
         var audio               = document.getElementById("myAudio");
         var pauseMapRendering = false;
         var bearsMarkeronStartPoint;
@@ -98,8 +146,8 @@
         var location_alert_ids = [];
 
         var first_set_data = 1;
-          var alert_icon          = new H.map.Icon('{{asset("playback/assets/img/alert-icon.png")}}');
-
+          var alert_icon          = new H.map.Icon('{{asset("playback/assets/img/red-alert-icon.png")}}');
+        var  group = new H.map.Group();
 
 
   $(document).ready(function(){
@@ -119,7 +167,17 @@
             success: function (res){
                 // prepare content
                 if(res.data.length > 0)
-                {       
+                {    
+                  remove_marker_flag =true;
+                  if(res.data.length < location_data.length)
+                   {
+                    
+                    map.removeObject(group);
+                    group.removeObject(map_markers);
+                    console.log("data -- data");
+                    // group = new H.map.Group();
+                    location_data  = [];
+                   }   
                    res.data.forEach(function(vehicle_alerts)
                     {
                       if(vehicle_alerts.emergency_status == 1)
@@ -134,7 +192,7 @@
                       {
                         alert_title = "Alert";
                       }
-                      console.log(vehicle_alerts);
+                      // console.log(vehicle_alerts);
                       var need_to_append   = true;
                       
                       location_data.forEach(function(location_alerts){
@@ -159,21 +217,35 @@
                         "longitude": vehicle_alerts.lon
                         } ;
                        location_data.push(location_alerts); 
-
+                       $('#cover_alert_count').text(location_data.length);
                         addInfoBubble(vehicle_alerts.lat,
                                       vehicle_alerts.lon,
+                                      vehicle_alerts.id,
                                       alert_title,
                                       vehicle_alerts.vehicle.client.name,
                                       vehicle_alerts.vehicle.name,
                                       vehicle_alerts.vehicle.register_number,
                                       vehicle_alerts.imei,
-                                      vehicle_alerts.serial_no);
-                        audio.play();
+                                      vehicle_alerts.serial_no
+                                      );
+                        
                       }
                 
                          
 
                 });     
+            }else{
+              if(remove_marker_flag==true)
+              {
+                console.log("last data");
+               location_data  = [];
+               map.removeObject(group);
+               group.removeObject(map_markers);
+                
+
+                $('#cover_alert_count').text(location_data.length);
+                remove_marker_flag = false;
+              }
             }
         }
          });
@@ -182,15 +254,22 @@
          });
 
 
-        function addMarkerToGroup(group, coordinate, html) {
-          var marker = new H.map.Marker(coordinate,{icon: alert_icon});
-          marker.setData(html);
-          group.addObject(marker);
+        function addMarkerToGroup(group, coordinate, html,alert_id) {
+          map_markers = new H.map.DomMarker(coordinate);
+          map_markers.setData(html);
+          group.addObject(map_markers);
+           map.addObject(group);
+
         }
 
-        function addInfoBubble(lat,lng,alert,owner_name,vehicle_name,vehicle_regno,imei,serial_no) {
-          var group = new H.map.Group();
-          map.addObject(group);
+        // bearsMarkeronStartPoint = new H.map.DomMarker({ lat:lat, lng:lng }, {
+        //         icon: domIcon
+        //     });
+        //     map.addObject(bearsMarkeronStartPoint);
+
+        function addInfoBubble(lat,lng,alert_id,alert,owner_name,vehicle_name,vehicle_regno,imei,serial_no) {
+       
+       
           group.addEventListener('tap', function (evt) {
             var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
               content: evt.target.getData()
@@ -220,7 +299,11 @@
           '</tr>'
           '</table>'
           addMarkerToGroup(group, {lat:lat, lng:lng},
-            message);
+            message,alert_id);
+
+          map.setZoom(12);
+          map.setCenter({lat:lat, lng:lng});
+          // audio.play();
           }
 
 
