@@ -303,7 +303,7 @@
 
           map.setZoom(12);
           map.setCenter({lat:lat, lng:lng});
-          // audio.play();
+          audio.play();
           }
 
 
