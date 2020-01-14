@@ -40,7 +40,7 @@
                </div>
                </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
-                <div id="markers" style="width:100%px;height:595px; position: relative;">
+                <div id="markers" style="width:100%;height:100vh; position: relative;">
       
                 </div>
                
