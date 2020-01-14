@@ -13,7 +13,7 @@
   <div class="modal-dialog modal-lg" >
     <div class="modal-content">
       <!-- Header -->
-      <div class="modal-header">
+      <div class="modal-header"  style="margin-bottom: 5px;">
         <h5 class="modal-title">Alert</h5>
         <button type="button" class="close" onclick="closeModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -51,7 +51,7 @@
   <div class="mlt-list">
 
     <!-- Search and filters -->
-  <div align="right">
+  <div align="right" class="search-1">
     <form  method="GET" action="{{route('monitor_vehicle')}}" class="search-top">
        {{csrf_field()}}
       <input type="text" placeholder=" Search for Vehicle" name="monitoring_module_search_key" id="monitoring_module_search_key" value="{{ $key }}">
@@ -65,42 +65,43 @@
           <table id="vehicle_details_table" class="table table-bordered" style="text-align: center;">
             <thead>
               <tr class="vechile-list-top">
-                <th>SL.No</th>
-                <th>Owner Name</th>
-                <th>Mobile Number</th>
-                <th>Vehicle Name</th>
-                <th>IMEI</th>
-                <th>Distributor</th>
-                <th>Dealer</th>
-                <th>Service Engineer</th>
-                <th>Installation Date & Time</th>
+                <th style="width:4%;">SL.No</th>
+                <th style="width:17%;">Owner Name</th>
+                <th style="width:8%;">Mobile Number</th>
+                <th style="width:17%;">Vehicle Name</th>
+                <th style="width:8%;">IMEI</th>
+                <th style="width:12%;">Distributor</th>
+                <th style="width:12%;">Dealer</th>
+                <th style="width:12%;">Service Engineer</th>
+                <th style="width:10%;">Installation Date & Time</th>
               </tr>
             </thead>
             <tbody style="max-height:200px; overflow-y: scroll;" >
               @if($vehicles->count() == 0)
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><b style="float: right;margin-right: -13px">No data</b></td>
-                  <td><b style="float: left;margin-left: -15px">Available</b></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td style="width:4%;"></td>
+                  <td style="width:17%;"></td>
+                  <td style="width:8%;"></td>
+                  <td style="width:17%;"><b style="float: right;margin-right: -13px">No data</b></td>
+                  <td style="width:8%;"><b style="float: left;margin-left: -15px">Available</b></td>
+                  <td style="width:12%;"></td>
+                  <td style="width:12%;"></td>
+                  <td style="width:12%;"></td>
+                   <td style="width:10%;"></td>
                 </tr>
               @endif
 
               @foreach($vehicles as $key => $each_vehicle)   
                 <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
-                  <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
-                  <td>{{ $each_vehicle->client_name }}</td>
-                  <td>{{ $each_vehicle->mobile_number}}</td>
-                  <td>{{ $each_vehicle->vehicle_name }}</td>
-                  <td>{{ $each_vehicle->imei }}</td>
-                  <td>{{ $each_vehicle->dealer }}</td>
-                  <td>{{ $each_vehicle->sub_dealer }}</td>
-                  <td>{{$each_vehicle->servicer_name }}</td>
-                  <td>{{$each_vehicle->job_complete_date}}</td>
+                  <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
+                  <td style="width:17%;">{{ $each_vehicle->client_name }}</td>
+                  <td style="width:8%;">{{ $each_vehicle->mobile_number}}</td>
+                  <td style="width:17%;">{{ $each_vehicle->vehicle_name }}</td>
+                  <td style="width:8%;">{{ $each_vehicle->imei }}</td>
+                  <td style="width:12%;">{{ $each_vehicle->dealer }}</td>
+                  <td style="width:12%;">{{ $each_vehicle->sub_dealer }}</td>
+                  <td style="width:12%;">{{$each_vehicle->servicer_name }}</td>
+                  <td style="width:10%;">{{$each_vehicle->job_complete_date}}</td>
                 </tr>
               @endforeach
             </tbody>

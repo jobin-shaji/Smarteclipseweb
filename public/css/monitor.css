@@ -620,3 +620,201 @@ float: left;
     font-size: 18px;
     padding: 22px 0;}
 
+.modal {
+    background:#4e4e4ec7;
+}
+.modal-dialog .modal-content {
+      height: auto;
+    margin-top: 15%;
+    overflow-y: scroll;
+    max-height: 70%;
+}
+
+.modal-dialog .modal-body {
+    padding: 0 0 1rem 0;
+}
+.eam-each_alert-1{
+  width:100%;
+    float: left;
+padding: 0px 0 7px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 7px;
+}
+.modal-title
+{
+      width: 100%;
+    float: left;
+    text-align: center;
+    color: #f00;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.eam-each_alert-1:nth-child(odd){
+      background: #fdc9c9;
+}
+.eam-each_alert-1:nth-child(even){
+    background:#e6e5e5;
+}
+.eam-each_alert-1 button{
+  border:0;
+     background: #0ea4d2;
+  outline: none;
+  padding: 4px 7px;
+
+  font-size: 14px;
+
+}
+.eam-each_alert-1 button a{
+  color: #fff;
+    border-radius: 7px;
+}
+.eam-each_alert-1 button:hover{
+  background: #f00;
+  color: #fff;
+}
+.eam-each_alert-1 button a:hover{
+  color: #fff;
+}.eam-each_alert-1 p{
+  margin-bottom: 7px;
+}
+ul.monitor_tab_for_map {
+   width: 45%;
+    float: left;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding-left: 1%;
+}
+ul.monitor_tab_for_map li{
+     width: 100px;
+    float: left;
+    display: inline-block;
+    background: #13a3d2;
+    margin-right: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px 0;
+    color: #fff;
+    }
+    ul.monitor_tab_for_map li a{
+      color: #fff;
+
+    }
+    .search-1{
+          float: right;
+    width: 300px;
+    }
+    .alert-page-dispaly{
+    width: 100%;
+    padding: 5px 1% 0;
+    float: left;
+    margin-top: 5px;
+    }
+ .alert-page-dispaly .eam-each_alert{
+    width: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    padding: 0px 0 0px;
+  }
+  .bt-1{
+    border: 0; padding: 6px 8px;border-radius: 5px;
+
+background: #17a3d2; /* Old browsers */
+  }
+  .bt-1 a
+  {
+        color: #fff;
+    font-size: 14px;
+  }
+    .bt-1 a:hover{
+      color: #fff;
+    }
+
+    .bt-2{
+    border: 0; padding: 5px 8px;border-radius: 5px;
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#17a3d2+0,f70303+0,f48181+100 */
+background: #17a3d2; /* Old browsers */
+background: -moz-linear-gradient(left,  #17a3d2 0%, #f70303 0%, #f48181 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left,  #17a3d2 0%,#f70303 0%,#f48181 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right,  #17a3d2 0%,#f70303 0%,#f48181 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#17a3d2', endColorstr='#f48181',GradientType=1 ); /* IE6-9 */
+color: #fff;
+  }
+  .bt-2 a
+  {
+        color: #fff;
+    font-size: 14px;
+  }
+    .bt-2 a:hover{
+      color: #fff;
+    }
+    .search-1 .search-top [type="submit"]
+    {
+border: 0px;
+    padding: 5px 8px;
+    background: #13a3d2;
+    COLOR: #FFF;
+    }
+    .search-1 .search-top input {
+    background: none;
+    font-size: 14px;
+    padding: 3px 1px;
+    border: 1px solid #cacaca;
+}
+.mlt-alert{
+  width: 100%;
+  float: left;
+
+}
+.alert-page-dispaly .eam-each_alert p
+{
+       padding: 10px 0 10px;
+    color: #4c4c4c;
+    font-size: 16px;
+    width: 88%;
+    float: left;
+    text-align: left;
+    padding-left: 15px;
+    margin-bottom: 0;}
+
+   .alert-page-dispaly:nth-child(odd){
+      background: #ffe9e9;
+}
+.alert-page-dispaly:nth-child(even){
+    background:#efe9e9;
+  
+}
+.alert-page-dispaly:first-child{
+  margin-top: 30px;
+}
+.alert-page-dispaly .eam-each_alert p.t-alert{
+      width: auto;
+    float: left;
+      background: #f62020;
+    text-align: center;
+    padding: 5px 10px 3px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+#eam_body{
+  font-size: 15px;
+      padding: 5px;
+  float: left;
+}
+.p-padding{
+  padding: 5px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+#critical_alerts_table{
+  height: auto;
+  max-height: 400px;
+  overflow-y: scroll;
+}
