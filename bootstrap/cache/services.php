@@ -27,7 +27,6 @@
     23 => 'Barryvdh\\DomPDF\\ServiceProvider',
     24 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
     25 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-<<<<<<< HEAD
     26 => 'Intervention\\Image\\ImageServiceProvider',
     27 => 'Clockwork\\Support\\Laravel\\ClockworkServiceProvider',
     28 => 'Illuminate\\Notifications\\NexmoChannelServiceProvider',
@@ -49,25 +48,6 @@
     44 => 'App\\Providers\\RouteServiceProvider',
     45 => 'Barryvdh\\DomPDF\\ServiceProvider',
     46 => 'Barryvdh\\Cors\\ServiceProvider',
-=======
-    26 => 'Clockwork\\Support\\Laravel\\ClockworkServiceProvider',
-    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    28 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
-    29 => 'Carbon\\Laravel\\ServiceProvider',
-    30 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    31 => 'Kamaln7\\Toastr\\ToastrServiceProvider',
-    32 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    33 => 'Spatie\\Permission\\PermissionServiceProvider',
-    34 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-    35 => 'App\\Modules\\ModulesServiceProvider',
-    36 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    37 => 'App\\Providers\\AppServiceProvider',
-    38 => 'App\\Providers\\AuthServiceProvider',
-    39 => 'App\\Providers\\EventServiceProvider',
-    40 => 'App\\Providers\\RouteServiceProvider',
-    41 => 'Barryvdh\\DomPDF\\ServiceProvider',
-    42 => 'Barryvdh\\Cors\\ServiceProvider',
->>>>>>> c64e0ca839d42775a25f7c4710389b4950d39304
   ),
   'eager' => 
   array (
@@ -85,7 +65,6 @@
     11 => 'Barryvdh\\DomPDF\\ServiceProvider',
     12 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
     13 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-<<<<<<< HEAD
     14 => 'Intervention\\Image\\ImageServiceProvider',
     15 => 'Clockwork\\Support\\Laravel\\ClockworkServiceProvider',
     16 => 'Illuminate\\Notifications\\NexmoChannelServiceProvider',
@@ -103,21 +82,6 @@
     28 => 'App\\Providers\\RouteServiceProvider',
     29 => 'Barryvdh\\DomPDF\\ServiceProvider',
     30 => 'Barryvdh\\Cors\\ServiceProvider',
-=======
-    14 => 'Clockwork\\Support\\Laravel\\ClockworkServiceProvider',
-    15 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
-    16 => 'Carbon\\Laravel\\ServiceProvider',
-    17 => 'Kamaln7\\Toastr\\ToastrServiceProvider',
-    18 => 'Spatie\\Permission\\PermissionServiceProvider',
-    19 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-    20 => 'App\\Modules\\ModulesServiceProvider',
-    21 => 'App\\Providers\\AppServiceProvider',
-    22 => 'App\\Providers\\AuthServiceProvider',
-    23 => 'App\\Providers\\EventServiceProvider',
-    24 => 'App\\Providers\\RouteServiceProvider',
-    25 => 'Barryvdh\\DomPDF\\ServiceProvider',
-    26 => 'Barryvdh\\Cors\\ServiceProvider',
->>>>>>> c64e0ca839d42775a25f7c4710389b4950d39304
   ),
   'deferred' => 
   array (
