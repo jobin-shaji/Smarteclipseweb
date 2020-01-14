@@ -53,7 +53,7 @@ class ServicerController extends Controller {
                 'status' => 0,
                 'user_id' => $user->id
             ]);
-        }else{ 
+        }else if($request->user()->hasRole('sub_dealer')){ 
             $sub_dealer_id=\Auth::user()->subdealer->id;
              $servicer = Servicer::create([
                 'name' => $request->name,
@@ -61,6 +61,16 @@ class ServicerController extends Controller {
                 'type' => 2,
                 'status' => 0,
                 'sub_dealer_id' => $sub_dealer_id,
+                'user_id' => $user->id
+            ]);
+        }else{
+             $trader_id=\Auth::user()->trader->id;
+             $servicer = Servicer::create([
+                'name' => $request->name,
+                'address' => $request->address,
+                'type' => 3,
+                'status' => 0,
+                'trader_id' => $trader_id,
                 'user_id' => $user->id
             ]);
         }
@@ -165,9 +175,12 @@ class ServicerController extends Controller {
             ->withTrashed();
         if($request->user()->hasRole('root')){
             $servicer = $servicer->where('type',1);
-        }else{
+        }elseif($request->user()->hasRole('sub_dealer')){
             // \Auth::user()->subdealer->id
             $servicer = $servicer->where('type',2)->where('sub_dealer_id',$request->user()->subdealer->id);
+        }else{
+               // \Auth::user()->subdealer->id
+            $servicer = $servicer->where('type',3)->where('trader_id',$request->user()->trader->id);
         }
         $servicer->get();
         return DataTables::of($servicer)
@@ -294,15 +307,27 @@ class ServicerController extends Controller {
         ->rawColumns(['link'])
         ->make();
     }
-    public function subDealerAssignServicer()
+    public function subDealerAssignServicer(Request $request)
     {
-        $sub_dealer_id=\Auth::user()->subDealer->id;  
-        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
-        ->where('sub_dealer_id',$sub_dealer_id)
-        ->where('status',0)
-        ->where('type',2)
-        ->get();
-        $clients=Client::where('sub_dealer_id',$sub_dealer_id)->get();
+        if($request->user()->hasRole('sub_dealer')){
+            $sub_dealer_id=\Auth::user()->subDealer->id;  
+            $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
+            ->where('sub_dealer_id',$sub_dealer_id)
+            ->where('status',0)
+            ->where('type',2)
+            ->get();
+            $clients=Client::where('sub_dealer_id',$sub_dealer_id)->get();
+        }
+        else{
+            $trader_id=\Auth::user()->trader->id;  
+            $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','trader_id')
+            ->where('trader_id',$trader_id)
+            ->where('status',0)
+            ->where('type',3)
+            ->get();
+            $clients=Client::where('trader_id',$trader_id)->get();
+        }
+
         return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
     }
     public function saveSubDealerAssignServicer(Request $request)
@@ -343,7 +368,7 @@ class ServicerController extends Controller {
                 // 'latitude'=>$location_lat,
                 // 'longitude'=>$location_lng           
             ]); 
-            $request->session()->flash('message', 'Assign  servicer successfully!'); 
+            $request->session()->flash('message', 'Assigned Job successfully!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             
             return redirect(route('sub-dealer.assign.servicer'));  
@@ -919,8 +944,18 @@ public function serviceJobDetails(Request $request)
         if($servicer_job == null){
            return view('Servicer::404');
         }
+
+        if($request->user()->hasRole('sub_dealer'))
+        {
         $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client]);
+
         return $pdf->download('installation-certificate.pdf');
+    }
+    else{
+        $pdf = PDF::loadView('Servicer::installation-certificate-trader-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client]);
+
+        return $pdf->download('installation-certificate-sub_dealer.pdf');
+    }
     }
 
     public function jobHistoryList()

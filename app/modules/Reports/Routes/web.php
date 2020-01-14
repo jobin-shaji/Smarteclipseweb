@@ -104,7 +104,7 @@ Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectRepor
 	Route::post('/duration-report-list','DurationReportController@durationReportList')->name('duration-report-list');
 });
 
-Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:sub_dealer|trader'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
 
 	Route::get('/log-report','DeviceLogReportController@logReport')->name('log-report');
 	Route::post('/log-report-list','DeviceLogReportController@logReportList')->name('log-report-list');

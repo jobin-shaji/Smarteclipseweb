@@ -8,12 +8,18 @@ class Client extends Model
 {
   use SoftDeletes;    
 	protected $fillable=[
-		'user_id','sub_dealer_id','name','address','latitude','longitude','created_by','deleted_by','deleted_at','country_id','state_id','city_id'
+		'user_id','sub_dealer_id','name','address','latitude','longitude','created_by','deleted_by','deleted_at','country_id','state_id','city_id','trader_id'
   ];
   public function subdealer()
   {
     return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id')->withTrashed();
   } 
+
+  public function trader()
+  {
+    return $this->belongsTo('App\Modules\Trader\Models\Trader','trader_id','id')->withTrashed();
+  } 
+
   public function user()
   {
     return $this->belongsTo('App\Modules\User\Models\User')->withTrashed();

@@ -80,6 +80,7 @@ class TraderController extends Controller
            $rules = $this->traderCreateRules();
         }
         $this->validate($request, $rules);
+      
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
