@@ -30,8 +30,7 @@
                     <th style="width: 10%!important">Serial Number</th>
                     <th style="width: 10%!important">Batch Number</th>
                     <th style="width: 10%!important">Model Name</th>
-                    <th style="width: 10%!important">Sub Dealer</th>
-                    <th style="width: 10%!important">End User</th>
+                    <th style="width: 10%!important">User</th>
                     <th style="width: 10%!important">Status</th>
                     <th style="width: 0px!important">Action</th>
                   </tr>
@@ -45,6 +44,6 @@
   </div>
 </div>
 @section('script')
-    <script src="{{asset('js/gps/gps-sub-dealer-list.js')}}"></script>
+    <script src="{{asset('js/gps/gps-trader-list.js')}}"></script>
 @endsection
 @endsection
