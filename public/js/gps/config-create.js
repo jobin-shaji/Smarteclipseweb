@@ -113,10 +113,7 @@ function getConfiguration(data,name,version)
     else{
         fuel_input="<input type='checkbox' id='fuel' name='fuel' value='true'>";
     }
-    if(geofence_count){
-      geofence_count_input="<input type='text' id='geofence_count' name='geofence_count' value='"+geofence_count+"'>";
-    }
- 
+      geofence_count_input="<input type='text' id='geofence_count' name='geofence_count' value='"+geofence_count+"'>"; 
     if(immobilizer===true){
       immobilizer_input="<input type='checkbox' id='immobilizer' name='immobilizer' value='true' checked>";
     }
@@ -162,11 +159,7 @@ function getConfiguration(data,name,version)
     else{
         radar="<input type='checkbox' id='radar' name='radar' value='true'>";
     }
-
-    if(route_deviation_count){
-      route_deviation_count="<input type='text' id='route_deviation_count' name='route_deviation_count' value='"+route_deviation_count+"'>";
-    }
-   
+    route_deviation_count="<input type='text' id='route_deviation_count' name='route_deviation_count' value='"+route_deviation_count+"'>";
     if(share_in_web_app===true){
       share_in_web_app="<input type='checkbox' id='share_in_web_app' name='share_in_web_app' value='true' checked>";
     }
@@ -185,10 +178,7 @@ function getConfiguration(data,name,version)
     else{
         white_list="<input type='checkbox' id='white_list' name='white_list' value='true'>";
     }
-    if(route_playback_history_month){
-      route_playback_history_month="<input type='text' id='route_playback_history_month' name='route_playback_history_month' value='"+route_playback_history_month+"'>";
-    }
-   
+    route_playback_history_month="<input type='text' id='route_playback_history_month' name='route_playback_history_month' value='"+route_playback_history_month+"'>";
     var plan='<tr><td>Ac Status</td><td>'+ac_input+'</td></tr>'+
             '<tr><td>Theft Mode</td><td >'+theft_input+'</td></tr>'+
             '<tr><td> Api Access</td><td>'+api_access_input+'</td></tr>'+
