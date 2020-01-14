@@ -31,4 +31,9 @@ class Trader extends Model
       return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','id','sub_dealer_id')->withTrashed();
     }
 
+    public function clients()
+    {
+      return $this->hasMany('App\Modules\Client\Models\Client')->withTrashed();
+    }
+
 }
