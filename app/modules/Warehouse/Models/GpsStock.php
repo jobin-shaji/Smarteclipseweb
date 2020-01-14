@@ -38,6 +38,12 @@ class GpsStock extends Model
     {
         return $this->belongsTo('App\Modules\Client\Models\Client','client_id','id')->withTrashed();
     }
+
+    public function trader()
+    {
+        return $this->belongsTo('App\Modules\Trader\Models\Trader','trader_id','id')->withTrashed();
+    }
+
     public function user()
     {
         return $this->hasone('App\Modules\User\Models\User','id','inserted_by');

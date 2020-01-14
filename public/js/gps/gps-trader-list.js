@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-sub-dealer-list',
+            url: 'gps-trader-list',
             type: 'POST',
             data: {
                 'data': data
@@ -40,7 +40,6 @@ function callBackDataTable(){
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
             {data: 'gps.model_name', name: 'gps.model_name', orderable: false},
-            {data: 'trader', name: 'trader', orderable: false},
             {data: 'client', name: 'client', orderable: false},
             {data: 'status', name: 'status', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},  
@@ -50,18 +49,18 @@ function callBackDataTable(){
     });
 }
 
-function deactivateGpsStatus(gps_id){
+function deactivateGpsStatusFromTrader(gps_id){
     if(confirm('Are you sure to deactivate this device?')){
-        var url = 'gps-status/deactivate';
+        var url = 'gps-trader-status/deactivate';
         var data = {
             id : gps_id
         };
         backgroundPostData(url,data,'callBackDataTables',{alert:true});  
     }
 }
-function activateGpsStatus(gps_id){
+function activateGpsStatusFromTrader(gps_id){
     if(confirm('Are you sure to activate this device?')){
-        var url = 'gps-status/activate';
+        var url = 'gps-trader-status/activate';
         var data = {
             id : gps_id
         };
