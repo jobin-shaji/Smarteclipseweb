@@ -11,6 +11,7 @@ use App\Modules\Sos\Models\SosTransferItems;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Trader\Models\Trader;
 use App\Modules\Client\Models\Client;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -475,7 +476,9 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->get();
-        $entities = $root->dealers;
+        $entities = $root->dealers()->with('user')->get();
+
+        $entities = $entities->where('user.deleted_at',null);
 
         return view('Sos::root-sos-transfer', ['devices' => $devices,'entities' => $entities]);
     }
@@ -613,7 +616,9 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->get();
-        $entities = $dealer->subDealers;
+        $entities = $dealer->subDealers()->with('user')->get();
+
+        $entities = $entities->where('user.deleted_at',null);
 
         return view('Sos::dealer-sos-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
@@ -725,7 +730,9 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei','user_id')
                         ->where('user_id',$user->id)
                         ->get();
-        $entities = $sub_dealer->clients;
+        $entities = $sub_dealer->clients()->with('user')->get();
+
+        $entities = $entities->where('user.deleted_at',null);
 
         return view('Sos::sub-dealer-sos-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
@@ -833,6 +840,123 @@ class SosController extends Controller {
             $request->session()->flash('message', 'SOS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
+        }
+    }
+
+    // create sub dealer to trader sos transfer
+    public function createSubDealerToTraderSosTransfer(Request $request) 
+    {
+        $user = \Auth::user();
+        $sub_dealer=$user->subdealer;
+        $devices = Sos::select('id', 'imei','user_id')
+                        ->where('user_id',$user->id)
+                        ->get();
+        $entities = $sub_dealer->traders()->with('user')->get();
+
+        $entities = $entities->where('user.deleted_at',null);
+
+        return view('Sos::sub-dealer-to-trader-sos-transfer', ['devices' => $devices, 'entities' => $entities]);
+    }
+
+    //get address and mobile details based on client selection
+    public function getClientDetailsForSubDealer(Request $request)
+    {
+        $trader_user_id=$request->trader_user_id;
+        $trader_user_detalis=User::find($trader_user_id);
+        $trader_details = Trader::select('id', 'name', 'address','user_id')
+                        ->where('user_id',$trader_user_id)
+                        ->first();
+        $trader_name=$trader_details->name;
+        $trader_address=$trader_details->address;
+        $trader_mobile=$trader_user_detalis->mobile;
+        return response()->json(array(
+              'response' => 'success',
+              'trader_name' => $trader_name,
+              'trader_address' => $trader_address,
+              'trader_mobile' => $trader_mobile
+        )); 
+    }
+
+    // proceed sos transfer for confirmation
+    public function proceedSubDealerToTraderSosTransfer(Request $request) 
+    {
+        if($request->sos_id[0]==null){
+            $rules = $this->sosSubDealerToTraderTransferRule();
+        }else{
+            $rules = $this->sosSubDealerToTraderTransferNullRule();
+        }
+        $this->validate($request, $rules,['sos_id.min' => 'Please scan at least one QR code']);
+        $this->validate($request, $rules);
+        $trader_user_id=$request->trader_user_id;
+        $trader_name=$request->trader_name;
+        $address=$request->address;
+        $mobile=$request->mobile;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
+        $sos_array_list = $request->sos_id;
+        $sos_array=explode(",",$sos_array_list[0]);
+        $sos_list=[];
+        foreach ($sos_array as $sos_id) {
+            $sos_list[]=$sos_id;
+        }
+        $devices = Sos::select('id', 'imei')
+                        ->whereIn('id',$sos_list)
+                        ->get();
+        return view('Sos::sub-dealer-to-trader-sos-transfer_proceed', ['trader_user_id' => $trader_user_id,'trader_name' => $trader_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+    }
+
+    // save dealer sos transfer/transfer sos from sub dealer to client
+    public function proceedConfirmSubDealerToTraderSosTransfer(Request $request) 
+    {
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $tradersOfSubdealer=Trader::select('user_id')->where('sub_dealer_id',$sub_dealer_id)->get();
+        $singleTradersOfSubdealer=[];
+        foreach ($tradersOfSubdealer as $trader) {
+            $singleTradersOfSubdealer[]=$trader->user_id;
+        }
+        $from_user_id = \Auth::user()->id;
+        $sos_array = $request->sos_id;
+        $to_user_id = $request->trader_user_id;
+        $scanned_employee_code=$request->scanned_employee_code;
+        $invoice_number=$request->invoice_number;
+        $transferred_devices = Sos::select('id')->whereIn('user_id',$singleTradersOfSubdealer)->whereIn('id',$sos_array)->count();
+        if($transferred_devices >= 1){
+            $request->session()->flash('message', 'Sorry!! This transaction is cancelled, SOS list contains already transferred devices');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer-sub-dealer-to-trader.create'));
+        }else{
+            $uniqid=uniqid();
+            $order_number=$uniqid.date("Y-m-d h:i:s");
+            if($sos_array){
+                $sos_transfer = SosTransfer::create([
+                  "from_user_id" => $from_user_id, 
+                  "to_user_id" => $to_user_id,
+                  "order_number" => $order_number,
+                  "scanned_employee_code" => $scanned_employee_code,
+                  "invoice_number" => $invoice_number,
+                  "dispatched_on" => date('Y-m-d H:i:s'),
+                  "accepted_on" => date('Y-m-d H:i:s')
+                ]);
+                $last_id_in_sos_transfer=$sos_transfer->id;
+            }
+            if($last_id_in_sos_transfer){
+                foreach ($sos_array as $sos_id) {
+                    $sos_transfer_item = SosTransferItems::create([
+                      "sos_id" => $sos_id, 
+                      "sos_transfer_id" => $last_id_in_sos_transfer
+                    ]);
+                    if($sos_transfer_item){
+                        //update sos table
+                        $sos = Sos::find($sos_id);
+                        $sos->user_id =$to_user_id;
+                        $sos->save();
+                    }
+                }
+            }
+            $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
+            $request->session()->flash('message', 'SOS Transfer successfully completed!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('sos-transfer-sub-dealer-to-trader.label',$encrypted_sos_transfer_id));
         }
     }
 
@@ -1052,6 +1176,58 @@ class SosController extends Controller {
         }
     }
 
+    //label for transferred sos from sub dealer to trader
+    public function sosTransferSubDealerToTraderLabel(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $decrypted_id = Crypt::decrypt($request->id);
+        $sos_transfer = SosTransfer::find($decrypted_id);
+        $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
+                        ->where('sos_transfer_id',$decrypted_id)
+                        ->get();
+        $role_details = Trader::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$sos_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        if($sos_transfer == null){
+            return view('Sos::404');
+        }
+        return view('Sos::sos-transfer-from-sub-dealer-to-trader-label',['sos_transfer' => $sos_transfer,'sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details]);
+        
+    }
+
+    //download label for transferred sos from sub dealer to trader
+    public function exportSosTransferSubDealerToTraderLabel(Request $request)
+    {
+        \QrCode::size(500)
+          ->format('png')
+          ->generate(public_path('images/qrcode.png'));
+        $sos_transfer_id=$request->id;
+        $sos_transfer = SosTransfer::find($sos_transfer_id);
+        $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
+                        ->where('sos_transfer_id',$sos_transfer_id)
+                        ->get();
+        $from_user_details = SubDealer::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$sos_transfer->from_user_id)
+                            ->first();
+        $role_details = Trader::select('id', 'name', 'address','user_id')
+                            ->where('user_id',$sos_transfer->to_user_id)
+                            ->first();
+        $user_details = User::select('id', 'mobile')
+                            ->where('id',$role_details->user_id)
+                            ->first();
+        view()->share('sos_transfer',$sos_transfer);
+        $pdf = PDF::loadView('Exports::sos-transfer-label',['sos_items' => $sos_items,'role_details' => $role_details,'user_details' => $user_details,'from_user_details' => $from_user_details]);
+        $headers = array(
+                    'Content-Type'=> 'application/pdf'
+                );
+        return $pdf->download('SOSTransferLabel.pdf',$headers);
+    }
+
     public function downloadSosDataTransfer(Request $request){
 
         \QrCode::size(500)
@@ -1130,6 +1306,28 @@ class SosController extends Controller {
         $rules = [
             'sos_id' => 'required',
             'client_user_id' => 'required',
+            'scanned_employee_code' => 'required',
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+        ];
+        return $rules;
+    }
+
+    // sub dealer to trader sos transfer rule
+    public function sosSubDealerToTraderTransferRule(){
+        $rules = [
+          'sos_id' => 'required|min:2',
+          'trader_user_id' => 'required',
+          'scanned_employee_code' => 'required',
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+      ];
+        return $rules;
+    }
+
+    // sub dealer to trader sos transfer rule with null gps_id array
+    public function sosSubDealerToTraderTransferNullRule(){
+        $rules = [
+            'sos_id' => 'required',
+            'trader_user_id' => 'required',
             'scanned_employee_code' => 'required',
             'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
         ];

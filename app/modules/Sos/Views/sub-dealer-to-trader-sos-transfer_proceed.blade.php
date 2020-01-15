@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-  SOS Transfer (Dealer To End User)
+  SOS Transfer (Dealer To Sub Dealer)
 @endsection
 @section('content')
 
@@ -10,8 +10,8 @@
   <div class="page-wrapper-root1"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer Confirmation Form (Dealer To End User)</li>
-        <b>SOS Transfer Confirmation Form (Dealer To End User)</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer Confirmation Form (Dealer To Sub Dealer)</li>
+        <b>SOS Transfer Confirmation Form (Dealer To Sub Dealer)</b>
         @if(Session::has('message'))
         <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -24,19 +24,19 @@
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('sos-transfer-sub-dealer-proceed.create.p')}}">
+        <form  method="POST" action="{{route('sos-transfer-sub-dealer-to-trader-proceed.create.p')}}">
         {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
               <div class="form-group has-feedback">
-                <label>Client Name</label>
-                <select class="form-control"  name="client_user_id" readonly>
-                  <option value="{{$client_user_id}}">{{$client_name}}</option>
+                <label>Sub Dealer Name</label>
+                <select class="form-control"  name="trader_user_id" readonly>
+                  <option value="{{$trader_user_id}}">{{$trader_name}}</option>
                 </select>
               </div>
 
               <div class="form-group has-feedback">
-                <label>Client Address</label>
+                <label>Sub Dealer Address</label>
                 <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
               </div>
 
@@ -71,7 +71,7 @@
                 <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
               </div>
               <div class="col-md-1 ">
-                <a href="{{ route('sos-transfer-sub-dealer.create') }}">
+                <a href="{{ route('sos-transfer-sub-dealer-to-trader.create') }}">
                   <button type="button" class="btn btn-md ">Cancel</button>
                 </a>
             </div>
