@@ -25,7 +25,9 @@
                       <section class="content">
                         <div class="row">
                           <div class="form-group">
-                            <input type="text" class="form-controller" id="search" name="search" placeholder="search">
+                            <div style="margin-left:10px;padding:10px;">
+                              <input type="text" class="form-controller" id="search" name="search" placeholder="Search IMEI">
+                            </div>
                              <input type="hidden" class="form-controller" id="gps_transfer_id" name="gps_transfer_id" value="{{$gps_transfer_id}}">
                           </div>
                               <!-- <div class="col-md-10 col-md-offset-1">
