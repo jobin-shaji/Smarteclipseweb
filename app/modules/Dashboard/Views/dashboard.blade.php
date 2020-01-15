@@ -138,7 +138,7 @@
               <h3 id="client">
                 <div class="loader"></div>
               </h3>
-              <p>Active Clients</p>
+              <p>Active End Users</p>
             </div>
             <div class="icon">
               <i class="fa fa-user"></i>
@@ -238,7 +238,7 @@
                         <h3 id="dealer_client">
                           <div class="loader"></div>
                         </h3>
-                        <p>Active Clients</p>
+                        <p>Active End Users</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-user"></i>
@@ -528,7 +528,7 @@
             <h3 id="subdealer_client">
               <div class="loader"></div>
             </h3>
-            <p>Active Clients</p>
+            <p>Active End Users</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>
@@ -608,7 +608,7 @@
             <h3 id="clients_under_traders">
               <div class="loader"></div>
             </h3>
-            <p>Active Clients</p>
+            <p>Active End Users</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>
