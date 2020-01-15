@@ -465,11 +465,11 @@ class GpsController extends Controller {
                 }
             })
             ->addColumn('status', function ($gps_stock) {
-                if($gps_stock->client_id==null && $gps_stock->trader_id==null){
+                if($gps_stock->client_id===null && $gps_stock->trader_id===null){
                     return "Not Transferred";
-                }else if($gps_stock->client_id==null && $gps_stock->trader_id==0){
+                }else if($gps_stock->client_id===null && $gps_stock->trader_id===0){
                     return "Awaiting Confirmation";
-                }else if($gps_stock->client_id==0 && $gps_stock->trader_id==null){
+                }else if($gps_stock->client_id===0 && $gps_stock->trader_id===null){
                     return "Awaiting Confirmation";
                 }else{
                     return "Transferred";;
@@ -607,9 +607,9 @@ class GpsController extends Controller {
                 }
             })
             ->addColumn('status', function ($gps_stock) {
-                if($gps_stock->client_id==null){
+                if($gps_stock->client_id===null){
                     return "Not Transferred";
-                }else if($gps_stock->client_id==0){
+                }else if($gps_stock->client_id===0){
                     return "Awaiting Confirmation";
                 }else{
                     return "Transferred";;
