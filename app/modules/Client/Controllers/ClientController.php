@@ -991,7 +991,7 @@ class ClientController extends Controller {
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile_number' => $request->mobile,
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
@@ -1165,7 +1165,7 @@ class ClientController extends Controller {
             'state_id' => 'required',
             'city_id' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|unique:users',
+            'mobile_number' => 'required|string|min:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
@@ -1182,7 +1182,7 @@ class ClientController extends Controller {
             'state_id' => 'required',
             'city_id' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string||min:11|max:11unique:users',
+            'mobile_number' => 'required|string||min:11|max:11unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
