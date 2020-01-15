@@ -884,7 +884,6 @@
         $( document ).ready(function() {
             $('.left-alert-box').css('display','none');
         });
-
     function getPlaceName(lat,lng){
         var location_name = "";
         return $.ajax({
@@ -899,9 +898,7 @@
             gen: '9',
             app_id: app_id,
             app_code: app_code
-        }
-  
-
+         }
         });
          // return location_name;
         }

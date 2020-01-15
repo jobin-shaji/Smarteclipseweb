@@ -557,10 +557,10 @@
                                 @endrole
 
                                 @role('trader')
-                                    <a class="dropdown-item" href="{{url('/operations/profile')}}">
+                                    <a class="dropdown-item" href="{{url('/trader/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
                                     </a>
-                                    <a class="dropdown-item" href="{{url('/operations/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                    <a class="dropdown-item" href="{{url('/trader_profile_change_password/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
 

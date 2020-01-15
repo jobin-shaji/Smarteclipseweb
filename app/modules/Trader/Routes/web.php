@@ -30,9 +30,16 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] ,'namespace' => '
 	Route::post('/trader/activate','TraderController@activateTrader')->name('trader.activate');
 });
 // trader root
-Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Trader\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:root|trader'] , 'namespace' => 'App\Modules\Trader\Controllers' ] , function() {
     Route::get('/trader-root-list','TraderController@traderRootList')->name('trader.root.list');
     Route::post('/get-trader-root-list','TraderController@getTraderRootList')->name('get.trader.root.list');
     Route::post('/trader/disable','TraderController@disableTrader')->name('trader.disable');
     Route::post('/trader/enable','TraderController@enableTrader')->name('trader.enable');
+     Route::get('/trader/profile','TraderController@traderProfile')->name('trader.profile');
+});
+// trader root
+Route::group(['middleware' => ['web','auth','role:trader'] , 'namespace' => 'App\Modules\Trader\Controllers' ] , function() {
+       Route::get('/trader/profile','TraderController@traderProfile')->name('trader.profile');
+       Route::get('/trader_profile_change_password/{id}/change-password','TraderController@changeProfilePassword')->name('trader.profile.change.password');
+       Route::post('/trader_profile_update_password/{id}/update-password','TraderController@updateProfilePassword')->name('trader.profile.update.password.p');
 });

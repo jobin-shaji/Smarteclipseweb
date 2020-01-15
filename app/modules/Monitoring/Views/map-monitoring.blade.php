@@ -121,7 +121,7 @@
         var bearsMarkeronStartPoint;
         var bearsMarker;
         var hidpi = ('devicePixelRatio' in window && devicePixelRatio > 1);
-        var alert_icon = new H.map.Icon('{{asset("playback/assets/img/alert-icon.png")}}');
+      
         var secure              = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
         var app_id              = "RN9UIyGura2lyToc9aPg",
            app_code            = "4YMdYfSTVVe1MOD_bDp_ZA";
@@ -146,8 +146,26 @@
         var location_alert_ids = [];
 
         var first_set_data = 1;
-          var alert_icon          = new H.map.Icon('{{asset("playback/assets/img/red-alert-icon.png")}}');
+          var alert_icon          = '{{asset("playback/assets/img/red-alert-icon.png")}}';
         var  group = new H.map.Group();
+        
+
+
+        var outerElement = document.createElement('div'),
+         objImg  = document.createElement('img');
+         innerElement = document.createElement('div');
+   
+  
+
+         objImg.src = alert_icon;
+         el = objImg;
+          outerElement.appendChild(el);
+           outerElement.style.top = "-12px";
+           outerElement.style.left = "-12px";
+           outerElement.style.width = "150px";
+
+       
+        var domIcon = new H.map.DomIcon(outerElement);
 
 
   $(document).ready(function(){
@@ -255,7 +273,7 @@
 
 
         function addMarkerToGroup(group, coordinate, html,alert_id) {
-          map_markers = new H.map.DomMarker(coordinate);
+          map_markers = new H.map.DomMarker(coordinate,{icon: domIcon});
           map_markers.setData(html);
           group.addObject(map_markers);
            map.addObject(group);
