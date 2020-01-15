@@ -447,7 +447,7 @@
                             <div class="acc-content open">
                               <div class="acc-content-inner">
                                 <div class="">
-                                  Please refer <a href="https://portal.tatacommunications.com/">
+                                  Please refer <a href="https://portal.tatacommunications.com/" target="_blank">
                                   https://portal.tatacommunications.com/</a>
                                 </div>
                               </div>
