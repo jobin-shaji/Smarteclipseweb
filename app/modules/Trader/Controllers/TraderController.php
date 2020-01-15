@@ -330,31 +330,31 @@ class TraderController extends Controller
         }
         return view('Trader::trader-profile',['trader' => $trader,'user' => $user]);
     }
-     //for edit page of subdealer password
+     //for edit page of  trader profile password
     public function changeProfilePassword(Request $request)
-    {
-          $decrypted = Crypt::decrypt($request->id);
-          $trader = Trader::where('user_id', $decrypted)->first();
-          if($trader == null){
-           return view('Trader::404');
-          }
-          return view('Trader::trader-profile-change-password',['trader' => $trader]);
-    }
-     //update password
+        {
+              $decrypted = Crypt::decrypt($request->id);
+              $trader = Trader::where('user_id', $decrypted)->first();
+              if($trader == null){
+               return view('Trader::404');
+              }
+              return view('Trader::trader-profile-change-password',['trader' => $trader]);
+        }
+     //update trader profile password
     public function updateProfilePassword(Request $request)
     {
-        $trader=User::find($request->id);
-        if($trader== null){
-            return view('Trader::404');
-        }
-        $did=encrypt($trader->id);
-        $rules=$this->updatePasswordRule();
-        $this->validate($request,$rules);
-        $trader->password=bcrypt($request->password);
-        $trader->save();
-        $request->session()->flash('message','Password updated successfully!');
-        $request->session()->flash('alert-class','alert-success');
-        return  redirect(route('trader.profile.change.password',$did));
+            $trader=User::find($request->id);
+            if($trader== null){
+                return view('Trader::404');
+            }
+            $did=encrypt($trader->id);
+            $rules=$this->updatePasswordRule();
+            $this->validate($request,$rules);
+            $trader->password=bcrypt($request->password);
+            $trader->save();
+            $request->session()->flash('message','Password updated successfully!');
+            $request->session()->flash('alert-class','alert-success');
+            return  redirect(route('trader.profile.change.password',$did));
     }
     
 

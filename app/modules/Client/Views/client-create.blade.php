@@ -153,7 +153,7 @@
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number_number') }}</strong>
+                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
                           </span>
                         @endif
                       </div>
