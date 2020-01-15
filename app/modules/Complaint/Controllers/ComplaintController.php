@@ -121,7 +121,7 @@ class ComplaintController extends Controller {
     //Display complaints details 
     public function complaintListPage()
     {
-        if(\Auth::user()->hasRole('client|sub_dealer|root')){
+        if(\Auth::user()->hasRole('client|sub_dealer|root|trader')){
             return view('Complaint::complaint-list');
         }
     }    
@@ -162,6 +162,14 @@ class ComplaintController extends Controller {
                     $client_id[] = $client->id;
                 }
                 $complaints = $complaints->whereIn('client_id',$client_id);
+            }else{
+                $trader_id=\Auth::user()->trader->id;
+                $clients= Client::select('id', 'name','trader_id')->where('trader_id',$trader_id)->get();
+                $client_id = [];
+                foreach($clients as $client){
+                    $client_id[] = $client->id;
+                }
+                $complaints = $complaints->whereIn('client_id',$client_id);  
             }
             $complaints = $complaints->get();
             
@@ -173,7 +181,7 @@ class ComplaintController extends Controller {
                     return "
                         <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>";
                 }
-                else if(\Auth::user()->hasRole('sub_dealer|root'))
+                else if(\Auth::user()->hasRole('sub_dealer|root|trader'))
                 {
                     return "
                     <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>
@@ -181,7 +189,7 @@ class ComplaintController extends Controller {
                 }
             })           
             ->addColumn('assigned_to', function ($complaints) { 
-                if(\Auth::user()->hasRole('sub_dealer|root'))
+                if(\Auth::user()->hasRole('sub_dealer|root|trader'))
                 { 
                     if($complaints->status==null||$complaints->status==0)
                     {
@@ -338,7 +346,6 @@ class ComplaintController extends Controller {
     public function assignComplaint(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-
         $complaint=Complaint::find($decrypted); 
         $complaint_comments=Comment::get();
         $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
@@ -353,6 +360,11 @@ class ComplaintController extends Controller {
         else  if(\Auth::user()->hasRole('root'))
         {
             $servicer =$servicer->where('type',1);
+        }else
+        {
+             $trader_id=\Auth::user()->trader->id;
+             $servicer =$servicer->where('trader_id',$trader_id)
+             ->where('type',3); 
         }
         $servicer =$servicer->get();
         if($complaint == null){
@@ -458,7 +470,6 @@ class ComplaintController extends Controller {
         // dd($request->id)
         $rules = $this->complaintcompleteRules();
         $this->validate($request,$rules);      
-
         $complaint_completed_date=date("Y-m-d"); 
         $complaint = Complaint::find($request->id);
         $complaint->closed_on = $complaint_completed_date;

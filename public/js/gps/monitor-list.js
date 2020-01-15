@@ -431,8 +431,8 @@ $(document).ready(function(){
                         +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
                         +'<p style="margin-top:7px;"> <button style="border-radius: 5px;padding: 5px 8px;"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
                         +'</div>';
-                        critical_alerts_html = '<div class="alert-page-dispaly">'
-                        +'<div class="eam-each_alert" id="'+alert.id+'">'
+                        critical_alerts_html = '<div class="alert-page-dispaly" id="'+alert.id+'">'
+                        +'<div class="eam-each_alert">'
                         +'<p class="t-alert">'+alert_icon+'</p>'
                         +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
                         +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
