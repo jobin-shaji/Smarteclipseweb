@@ -114,6 +114,29 @@ $('.subDealerData').on('change', function() {
     });
 });
 
+$('.traderData').on('change', function() {
+    var traderUserID=this.value;
+    var purl = getUrl() + '/'+'sos-transfer-sub-dealer-to-trader-dropdown' ;
+    var data = { trader_user_id : traderUserID };
+    $.ajax({
+        type:'POST',
+        url: purl,
+        data:data ,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            var trader_name=res.trader_name;
+            var trader_address=res.trader_address;
+            var trader_mobile=res.trader_mobile;
+            $("#trader_name").val(trader_name);
+            $("#address").val(trader_address);
+            $("#mobile").val(trader_mobile);  
+        }
+    });
+});
+
 $('.clientData').on('change', function() {
     var clientUserID=this.value;
     var purl = getUrl() + '/'+'sos-transfer-sub-dealer-dropdown' ;

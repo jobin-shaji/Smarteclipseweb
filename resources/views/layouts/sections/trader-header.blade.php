@@ -19,8 +19,8 @@
                                 <a class="dropdown-item" href="{{url('/gps-transferred-trader-to-client')}}">DEVICE TRANSFER LIST </a>                          
                             </div>
                         </li>
-
-                        <li class="nav-item dropdown">
+                    
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOS
                             </a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -30,7 +30,7 @@
                                 <a class="dropdown-item" href="{{url('/sos-transfer-sub-dealer/create')}}">TRANSFER SOS</a> 
                                 <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST </a>                          
                             </div>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
