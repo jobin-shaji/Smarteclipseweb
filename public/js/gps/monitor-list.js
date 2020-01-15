@@ -93,7 +93,6 @@ function render_vehicletab(res)
         {'id' : 'tvc_client_address', 'key' : ['client','address']},
         {'id' : 'tvc_client_lat', 'key' : ['client','latitude']},
         {'id' : 'tvc_client_lng', 'key' : ['client','longitude']},
-        {'id' : 'tvc_client_logo', 'key' : ['client','logo']},
         {'id' : 'tvc_client_country', 'key' : ['client','country','name']},
         {'id' : 'tvc_client_state', 'key' : ['client','state','name']},
         {'id' : 'tvc_client_city', 'key' : ['client','city','name']},
@@ -262,6 +261,7 @@ function render_devicetab(res)
 
 function render_installationtab(res)
 {
+    var no_data_found = true;
     var table = '<table border="1">'+
         '<tr>'+
             '<th>Servicer Name</th>'+
@@ -274,6 +274,7 @@ function render_installationtab(res)
     res.data.jobs.forEach(function(each_job){
         if(each_job.job_type == '1')
         {
+            no_data_found = false;
             table +='<tr>'+
                 '<td>'+each_job.servicer.name+'</td>'+
                 '<td>'+each_job.job_date+'</td>'+
@@ -285,11 +286,21 @@ function render_installationtab(res)
         }
     });
     table += '</table>';
-    $('#installation_table_wrapper').html(table);
+
+    if( no_data_found )
+    {
+        $('#installation_table_wrapper').html('<p>No installation found</p>');
+    }
+    else
+    {
+        $('#installation_table_wrapper').html(table);
+    }
+    
 }
 
 function render_servicetab(res)
 {
+    var no_data_found = true;
     var table = '<table border="1">'+
         '<tr>'+
             '<th>Servicer Name</th>'+
@@ -302,6 +313,7 @@ function render_servicetab(res)
     res.data.jobs.forEach(function(each_job){
         if(each_job.job_type == '2')
         {
+            no_data_found = false;
             table +='<tr>'+
                 '<td>'+each_job.servicer.name+'</td>'+
                 '<td>'+each_job.job_date+'</td>'+
@@ -313,30 +325,46 @@ function render_servicetab(res)
         }
     });
     table += '</table>';
-    $('#service_table_wrapper').html(table);
+    if( no_data_found )
+    {
+        $('#service_table_wrapper').html('<p>No service(s) found</p>');
+    }
+    else
+    {
+        $('#service_table_wrapper').html(table);
+    }
+    
 }
 
 function render_alerttab(res)
 {
-    var table = '<table border="1">'+
+    if(res.data.alerts.length == 0)
+    {
+        table = '<p>No alerts found</p>';
+    }
+    else
+    {
+       var table = '<table border="1">'+
         '<tr>'+
             '<th>Alert</th>'+
             '<th>Latitude</th>'+
             '<th>Longitude</th>'+
-            '<th>Date of Alert</th>'+
-            '<th>Device Time</th>'+
+            '<th>Date & Time of Alert</th>'+
+            '<th>Device Date & Time</th>'+
         '</tr>';
-    res.data.alerts.forEach(function(each_alert)
-    {
-        table +='<tr>'+
-            '<td>'+each_alert.alert_type.description+'</td>'+
-            '<td>'+each_alert.latitude+'</td>'+
-            '<td>'+each_alert.longitude+'</td>'+
-            '<td>'+each_alert.created_at+'</td>'+
-            '<td>'+each_alert.device_time+'</td>'+
-        '</tr>';
-   });
-    table += '</table>';
+        res.data.alerts.forEach(function(each_alert)
+        {
+            table +='<tr>'+
+                '<td>'+each_alert.alert_type.description+'</td>'+
+                '<td>'+each_alert.latitude+'</td>'+
+                '<td>'+each_alert.longitude+'</td>'+
+                '<td>'+each_alert.created_at+'</td>'+
+                '<td>'+each_alert.device_time+'</td>'+
+            '</tr>';
+        });
+        table += '</table>'; 
+    }
+    
     $('#alert_table_wrapper').html(table);
 }
 
@@ -373,7 +401,11 @@ function repaint(id)
 $(document).ready(function(){
     $('.mlt').click(function(){
         current_active_tab = $(this).attr('value');
+        // set color
+        $('.mlt').removeClass('vst-theme-color'); //.addClass('vst-theme-color');
+        $(this).addClass('vst-theme-color');
     });
+
     setInterval(function(){
         $.ajax({
             type    :'POST',
@@ -460,7 +492,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-
+                    $('#critical_alerts_table').html('<p>No alerts found</p>');
                     $('#emergeny_alert_modal').hide();
                 }
             }

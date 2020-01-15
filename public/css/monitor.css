@@ -4,7 +4,7 @@
   padding-bottom: 0px;
  }
   .tablehighlight{
-    background-color: #59caa0;
+    background-color: #f0b102;
     color: #040404;
 }
 .vehicle_details_table_row{
@@ -88,11 +88,11 @@ margin-top: -1.5%;
     padding: 0;
 }
 .vechile-list-top{
-    background: #0ea4d2;
-    color: #fff;
+   /* background: #0ea4d2;
+    color: #fff;*/
     border-bottom: 0;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 700!important;
     font-size: 1.1em;
 }
 
@@ -181,6 +181,7 @@ margin-top: -1.5%;
 .acc-content-inner {
      padding: 6px 0 24px 17px;
     float: left;
+    width:100%;
 }
 
 .open {
@@ -200,10 +201,17 @@ margin-top: -1.5%;
 
 .table .vehicle_details_table_row td{
     padding: 0.6em 0;
-    font-size: 14px;}
+    font-size: 14px;
+    border: 1px solid grey;
+  }
     tr.vechile-list-top th{
-           padding: 0.6em;
-    font-size: 16px;}
+     padding: 0.6em;
+    font-size: 18px;
+    font-weight: 800!important;
+    border: 1px solid grey;
+    border-bottom: 1px solid grey!important;
+
+  }
 
     .tbody-inner {
     height: 200px;
@@ -212,10 +220,10 @@ margin-top: -1.5%;
     overflow: auto;
 }
 
-.table tr.vehicle_details_table_row:nth-child(even) {background-color: #e0e0e0;}
+.table tr.vehicle_details_table_row:nth-child(even) {background-color: #aba8a857;}
 
 .table tr.vehicle_details_table_row:nth-child(even).tablehighlight {
-    background-color: #59caa0;
+    background-color: #f0b102;
     color: #040404;
 }
 
@@ -536,7 +544,7 @@ body{
   }
   .table-outer{
         max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
    .is-hidden--off-flow {
@@ -625,7 +633,7 @@ float: left;
 }
 .modal-dialog .modal-content {
       height: auto;
-    margin-top: 15%;
+   /* margin-top: 15%;*/
     overflow-y: scroll;
     max-height: 70%;
 }
@@ -691,7 +699,6 @@ ul.monitor_tab_for_map li{
      width: 100px;
     float: left;
     display: inline-block;
-    background: #13a3d2;
     margin-right: 15px;
     border-radius: 5px;
     text-align: center;
@@ -703,15 +710,19 @@ ul.monitor_tab_for_map li{
       color: #fff;
 
     }
+    .vst-theme-color{
+      background: #f0b102 !important;
+    }
     .search-1{
           float: right;
     width: 300px;
     }
     .alert-page-dispaly{
-    width: 100%;
+    width: 98%;
     padding: 5px 1% 0;
     float: left;
     margin-top: 5px;
+    margin-left: 1%;
     }
  .alert-page-dispaly .eam-each_alert{
     width: 100%;
@@ -756,8 +767,8 @@ color: #fff;
     {
 border: 0px;
     padding: 5px 8px;
-    background: #13a3d2;
-    COLOR: #FFF;
+    background: #f0b102;
+    color: #FFF;
     }
     .search-1 .search-top input {
     background: none;
@@ -768,7 +779,13 @@ border: 0px;
 .mlt-alert{
   width: 100%;
   float: left;
-
+}
+.mlt-alert p{
+  margin: 15px;
+}
+.mlt{
+  cursor: pointer;
+  background-color: grey;
 }
 .alert-page-dispaly .eam-each_alert p
 {
@@ -817,4 +834,8 @@ border: 0px;
   height: auto;
   max-height: 400px;
   overflow-y: scroll;
+}
+table
+{
+  text-align: center;
 }

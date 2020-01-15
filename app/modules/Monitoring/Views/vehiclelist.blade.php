@@ -41,8 +41,8 @@
   </nav>
 
   <ul class="monitor_tab_for_map">
-    <li class="mlt" value="list" id="mlt_list"><a href="#">Monitoring</a></li>
-    <li><a target="_blank" href="{{url('/monitor-map')}}">Map</a></li>
+    <li class="mlt vst-theme-color" value="list" id="mlt_list"><a href="#">Monitoring</a></li>
+    <a target="_blank" href="{{url('/monitor-map')}}"><li class="mlt ">Map</li></a>
     <li class="mlt" value="alert" id="mlt_alert"><a href="#">Alert</a></li>
 
 
@@ -62,7 +62,7 @@
 
   <!-- Vehicles detail wrapper --> 
         <div class="vehicle_details_wrapper vehicle-container">           
-          <table id="vehicle_details_table" class="table table-bordered" style="text-align: center;">
+          <table id="vehicle_details_table" class="table table-bordered">
             <thead>
               <tr class="vechile-list-top">
                 <th style="width:4%;">SL.No</th>
@@ -201,7 +201,7 @@
                                     <span id="tvc_vehicle_emergency_status"> </span>
                                   </div>
                                   <div class="list-display">
-                                    <p>Created Date <span>:-</span></p>
+                                    <p>Created At <span>:-</span></p>
                                     <span id="tvc_vehicle_created_date"> </span>
                                   </div>
                                 </div>
@@ -226,10 +226,6 @@
                                   <div class="list-display">
                                     <p>Owner Longitude <span>:-</span></p>
                                     <span id="tvc_client_lng"> </span>
-                                  </div>
-                                  <div class="list-display">
-                                    <p>Owner Logo <span>:-</span></p>
-                                    <span id="tvc_client_logo"></span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Country <span>:-</span></p>
@@ -390,7 +386,7 @@
                                   <span id="tvc_device_main_power_status"> </span>
                                 </div>
                                 <div class="list-display">
-                                  <p>Device Time<span>:-</span></p>
+                                  <p>Device Date & Time<span>:-</span></p>
                                   <span id="tvc_device_device_time"> </span>
                                 </div>
                                 <div class="list-display">
@@ -450,8 +446,9 @@
                           <div class="acc-container">
                             <div class="acc-content open">
                               <div class="acc-content-inner">
-                                <div class="sub-div">
-                                  Under Processing.....
+                                <div class="">
+                                  Please refer <a href="https://portal.tatacommunications.com/">
+                                  https://portal.tatacommunications.com/</a>
                                 </div>
                               </div>
                             </div>
@@ -469,7 +466,7 @@
         </div>
       </div>
     <div id="critical_alerts_table" class="mlt-alert">
-      
+      <p>Please wait...</p>
     </div> 
 
 
