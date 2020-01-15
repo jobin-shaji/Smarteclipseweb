@@ -42,6 +42,19 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::get('/gps/{id}/status-log','GpsController@viewStatusLog')->name('gps.status-log');
 });
 
+Route::group(['middleware' => ['web','auth','role:trader'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+	//all gps list in trader 
+	Route::get('/gps-trader-all-devices','GpsController@gpsTraderListPage')->name('gps-trader-all-devices');
+	Route::post('/gps-trader-list','GpsController@getTraderGps')->name('gps-trader-list');
+
+	//gps activate-deactivate
+	Route::post('/gps-trader-status/deactivate','GpsController@gpsInTraderStatusDeactivate')->name('gps-trader-status.deactivate');
+	Route::post('/gps-trader-status/activate','GpsController@gpsInTraderStatusActivate')->name('gps-trader-status.activate');
+	//view log
+	Route::get('/gps-trader/{id}/status-log','GpsController@viewTraderStatusLog')->name('gps.trader.status-log');
+});
+
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 	//gps client list
@@ -49,13 +62,14 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/gps-client-list','GpsController@getClientGps')->name('gps-client-list');
 	Route::get('/subscription-success','GpsController@subscriptionSuccess')->name('subscription.success');
 	});
-	Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+	
+Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root|trader'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 	Route::get('/gps/{id}/details','GpsController@details')->name('gps.details');
 	Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
-	});
+});
 
-	Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 	Route::get('/operation-gps-data','GpsController@allgpsListPage')->name('operation-gps-data');
 	Route::post('/operators-alldata-list','GpsController@getAllData')->name('operators-alldata-list');

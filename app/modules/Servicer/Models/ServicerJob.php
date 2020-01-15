@@ -32,6 +32,11 @@ class ServicerJob extends Model
     {
       return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','user_id','user_id');
     }
+    // added line
+     public function trader()
+    {
+      return $this->hasOne('App\Modules\Trader\Models\Trader','user_id','user_id');
+    }
      public function vehicle()
     {
       return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();

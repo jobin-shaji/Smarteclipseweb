@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasone('App\Modules\SubDealer\Models\SubDealer','user_id','id');
     } 
 
+    public function trader()
+    {
+        return $this->hasone('App\Modules\Trader\Models\Trader','user_id','id');
+
+    } 
     public function client()
     {
         return $this->hasone('App\Modules\Client\Models\Client','user_id','id');
