@@ -245,6 +245,18 @@ class OperationsController extends Controller {
         }
         return view('Operations::operations-profile',['operations' => $operations,'user' => $user]);
     }
+
+    public function changeProfilePassword(Request $request)
+    {
+         $decrypted = Crypt::decrypt($request->id);
+          $trader = Trader::where('user_id', $decrypted)->first();
+         
+        if($trader == null){
+           return view('Trader::404');
+        }
+        return view('Trader::trader-profile-change-password',['trader' => $trader]);
+    }
+
     //for edit page of operations profile
     public function editOperationsProfile()
     {

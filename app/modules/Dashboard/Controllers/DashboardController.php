@@ -291,6 +291,8 @@ class DashboardController extends Controller
         $sub_dealer_id=$user->subdealer->id;
         $total_gps=GpsStock::where('subdealer_id',$sub_dealer_id)->count();
         $gps_in_stock=GpsStock::where('subdealer_id',$sub_dealer_id)->whereNull('trader_id')->whereNull('client_id')->count();
+        $gps_awaiting_confirmation_from_trader=GpsStock::where('subdealer_id',$sub_dealer_id)->where('trader_id',0)->whereNull('client_id')->count();
+        $gps_awaiting_confirmation_from_client=GpsStock::where('subdealer_id',$sub_dealer_id)->where('client_id',0)->whereNull('trader_id')->count();
         $clients_of_subdealers=Client::select('id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $traders_of_subdealers=Trader::select('id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $single_clients_array=[];
@@ -320,6 +322,8 @@ class DashboardController extends Controller
             'new_arrivals' => $new_arrival_gps_count,
             'total_gps' => $total_gps,
             'gps_in_stock' => $gps_in_stock,
+            'gps_awaiting_confirmation_from_trader' => $gps_awaiting_confirmation_from_trader,
+            'gps_awaiting_confirmation_from_client' => $gps_awaiting_confirmation_from_client,
             'dealer_to_trader_transferred_gps_count' => $dealer_to_trader_transferred_gps_count,
             'dealer_to_client_transferred_gps_count' => $dealer_to_client_transferred_gps_count,
             'status' => 'dbcount'           
