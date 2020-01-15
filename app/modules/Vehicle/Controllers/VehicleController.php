@@ -2929,7 +2929,7 @@ class VehicleController extends Controller
           $alerts_list      = Alert::where('device_time', '>=' ,$from_date_time)
                                     ->where('device_time', '<=' ,$last_date_time)
                                     ->where('gps_id',$gps_id)
-                                    ->whereNotIn('alert_type_id',[17,18,23,24,13,10])
+                                    ->whereNotIn('alert_type_id',[17,18,23,24])
                                     ->with('alertType')
                                     ->get();
          }

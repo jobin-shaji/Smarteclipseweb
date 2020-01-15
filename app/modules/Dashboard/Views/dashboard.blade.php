@@ -388,7 +388,7 @@
           <a href="/gps-subdealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
       <!-- small box -->
         <div class="small-box bg-green bxs">
           <div class="inner">
@@ -403,14 +403,45 @@
           <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
+      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_in_stock_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS In Stock</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
       <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-green bxs">
           <div class="inner">
-            <h3 id="transferred_gps_subdealer">
+            <h3 id="transferred_gps_from_dealer_to_trader">
               <div class="loader"></div>
             </h3>
-            <p>Transferred GPS</p>
+            <p>Transferred GPS To Sub Dealer</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-transfers-subdealer-to-trader" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="transferred_gps_from_dealer_to_client">
+              <div class="loader"></div>
+            </h3>
+            <p>Transferred GPS To End User</p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
@@ -418,7 +449,21 @@
           <a href="/gps-transfers-subdealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="subdealer_trader">
+              <div class="loader"></div>
+            </h3>
+            <p>Active Sub Dealers</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="/trader" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
       <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-blue bxs">
@@ -435,6 +480,7 @@
         </div>
       </div>
     </div>
+      
     <div class="row">
       <div class="col-lg-6 col-xs-6">
         <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
@@ -456,7 +502,7 @@
       <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
         <div class="small-box bg-green bxs">
           <div class="inner">
-            <h3 id="gps_new_arrival_subdealer">
+            <h3 id="gps_new_arrival_trader">
               <div class="loader"></div>
             </h3>
             <p>New Arrivals</p>
@@ -464,14 +510,14 @@
           <div class="icon">
             <i class="fa fa-tablet"></i>
           </div>
-          <a href="/gps-subdealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/gps-trader-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
       <!-- small box -->
         <div class="small-box bg-green bxs">
           <div class="inner">
-            <h3 id="total_gps_subdealer">
+            <h3 id="total_gps_trader">
               <div class="loader"></div>
             </h3>
             <p>Total GPS </p>
@@ -479,14 +525,14 @@
           <div class="icon">
             <i class="fa fa-tablet"></i>
           </div>
-          <a href="/gps-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/gps-trader-all-devices" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-green bxs">
           <div class="inner">
-            <h3 id="transferred_gps_subdealer">
+            <h3 id="transferred_gps_trader">
               <div class="loader"></div>
             </h3>
             <p>Transferred GPS</p>
@@ -494,7 +540,7 @@
           <div class="icon">
             <i class="fa fa-tablet"></i>
           </div>
-          <a href="/gps-transfers-subdealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/gps-transferred-trader-to-client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -502,7 +548,7 @@
         <!-- small box -->
         <div class="small-box bg-blue bxs">
           <div class="inner">
-            <h3 id="subdealer_client">
+            <h3 id="clients_under_traders">
               <div class="loader"></div>
             </h3>
             <p>Active Clients</p>

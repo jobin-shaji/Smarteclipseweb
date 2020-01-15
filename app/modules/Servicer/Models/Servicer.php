@@ -15,7 +15,7 @@ class Servicer extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'address','status','type','user_id','sub_dealer_id'
+        'name', 'address','status','type','user_id','sub_dealer_id','trader_id'
     ];
 
     public function user()
