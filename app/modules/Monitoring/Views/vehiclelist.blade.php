@@ -201,7 +201,7 @@
                                     <span id="tvc_vehicle_emergency_status"> </span>
                                   </div>
                                   <div class="list-display">
-                                    <p>Created Date <span>:-</span></p>
+                                    <p>Created At   <span>:-</span></p>
                                     <span id="tvc_vehicle_created_date"> </span>
                                   </div>
                                 </div>
