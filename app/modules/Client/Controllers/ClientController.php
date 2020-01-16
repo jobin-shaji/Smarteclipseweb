@@ -1200,7 +1200,7 @@ class ClientController extends Controller {
         $data = urlencode($address);
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
-        echo $data;
+     
         // dd($geocode_stats);
         $output_deals = json_decode($geocode_stats);
       //  dd($output_deals);
