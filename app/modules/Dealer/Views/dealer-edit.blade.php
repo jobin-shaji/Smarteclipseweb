@@ -25,16 +25,6 @@
             
   <div class="card-body">
     <div class="table-responsive">
-      
-          <?php 
-            $password=$user->password;
-            if($user){
-              $encript=Crypt::encrypt($user->id)
-          ?>
-          <a href="{{route('dealers.change-password',$encript)}}">
-            <button class="btn btn-xs">Password Change</button>
-          </a><?php } ?>
-        
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
             <form  method="POST" action="{{route('dealers.update.p',$user->id)}}">
@@ -62,9 +52,9 @@
                         <div class="form-group has-feedback">
                           <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ $user->mobile}}" title="Mobile number should be exactly 11 digits" />
                         </div>
-                        @if ($errors->has('mobile_number'))
+                        @if ($errors->has('mobile'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
                       </div>
@@ -75,9 +65,9 @@
                         <div class="form-group has-feedback">
                           <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ $user->mobile}}" title="Mobile number should be exactly 10 digits" />
                         </div>
-                        @if ($errors->has('mobile_number'))
+                        @if ($errors->has('mobile'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
                       </div>
@@ -88,13 +78,34 @@
                         <div class="form-group has-feedback">
                           <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ $user->mobile}}" title="Mobile number should be exactly 10 digits" />
                         </div>
-                        @if ($errors->has('mobile_number'))
+                        @if ($errors->has('mobile'))
                           <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                            <strong class="error-text">{{ $errors->first('mobile') }}</strong>
                           </span>
                         @endif
                       </div>
                       <?php } ?>
+                       <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                        <div class="form-group has-feedback">
+                          <input type="text" required class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" />
+                        </div>
+                        @if ($errors->has('email'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('email') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                      <div class="form-group has-feedback">
+                        <label class="srequired">Address</label>
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" value="{{ $dealers->address}}"> 
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                          @if ($errors->has('address'))
+                        <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('address') }}</strong>
+                        </span>
+                      @endif
+                      </div>
 
               </div>
             </div>

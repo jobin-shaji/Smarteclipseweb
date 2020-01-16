@@ -26,7 +26,10 @@ class CreateComplaintsTable extends Migration
             $table->integer('assigned_by')->nullable();
             $table->text('servicer_comment')->nullable();
             $table->date('closed_on')->nullable();             
-            $table->timestamps();
+            // $table->timestamps();
+            $table->dateTime('created_at');             
+            $table->dateTime('updated_at');             
+
         });
     }
 

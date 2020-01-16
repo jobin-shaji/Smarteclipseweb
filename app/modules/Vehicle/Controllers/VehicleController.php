@@ -326,23 +326,32 @@ class VehicleController extends Controller
             $rules = $this->customDocCreateRules();
             $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
         }
-     
-        $this->validate($request, $rules, $custom_messages);
-        $file=$request->path;
-        $getFileExt   = $file->getClientOriginalExtension();
-        $uploadedFile =   time().'.'.$getFileExt;
-        //Move Uploaded File
-        $destinationPath = 'documents/vehicledocs';
-        $file->move($destinationPath,$uploadedFile);
-        $documents = Document::create([
-            'vehicle_id' => $request->vehicle_id,
-            'document_type_id' => $request->document_type_id,
-            'expiry_date' => $expiry_date,
-            'path' => $uploadedFile,
-        ]);
+        $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get()->count();
+        if($documents_count<2)
+        {
+            $this->validate($request, $rules, $custom_messages);
+            $file=$request->path;
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            //Move Uploaded File
+            $destinationPath = 'documents/vehicledocs';
+            $file->move($destinationPath,$uploadedFile);
+            $documents = Document::create([
+                'vehicle_id' => $request->vehicle_id,
+                'document_type_id' => $request->document_type_id,
+                'expiry_date' => $expiry_date,
+                'path' => $uploadedFile,
+            ]);
+            $request->session()->flash('message', 'Document stored successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success');  
+        }
+        else
+        {
+            $request->session()->flash('message', 'Already updated this document!'); 
+            $request->session()->flash('alert-class', 'alert-success');
+        }
         $encrypted_vehicle_id = encrypt($request->vehicle_id);
-        $request->session()->flash('message', 'Document stored successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+            
         $user=\Auth::user();
         $user_role=$user->roles->first()->name;
         if($user_role=='client')
@@ -353,6 +362,7 @@ class VehicleController extends Controller
         {
             return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
         }
+       
        
     }
 

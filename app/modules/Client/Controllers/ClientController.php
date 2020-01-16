@@ -550,6 +550,14 @@ class ClientController extends Controller {
             ";
             }
         })
+        ->addColumn('subdealer', function ($client) {
+            $b_url = \URL::to('/');
+            if($client->sub_dealer_id){ 
+            return $client->subdealer->name;
+            }else{ 
+            return " ";
+            }
+        })
         ->rawColumns(['link','working_status'])             
         ->make();
     }
