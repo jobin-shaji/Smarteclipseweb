@@ -54,7 +54,7 @@
                       @endif
                     </div>
                       <div class="form-group row" style="float:none!important">
-                      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Role</label> 
+                      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Plan</label> 
                       <div class="form-group has-feedback">
 
                        <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role">
