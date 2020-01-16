@@ -77,10 +77,14 @@
                 <input type="text" class="form-control" value="{{ $gps->batch_number}}" disabled> 
               </div>
 
+              
+              @role('root|dealer|sub_dealer')
                <div class="form-group has-feedback">
                 <label>Employee Code</label>
                 <input type="text" class="form-control" value="{{ $gps->employee_code}}" disabled> 
               </div>
+               @endrole
+
 
               <div class="form-group has-feedback">
                 <label>Model Name</label>
