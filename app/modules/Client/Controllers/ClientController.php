@@ -308,6 +308,7 @@ class ClientController extends Controller {
         $this->validate($request, $rules);   
         $client->name = $request->name;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        
         if($placeLatLng==null){
             $request->session()->flash('message', 'Enter correct location'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
