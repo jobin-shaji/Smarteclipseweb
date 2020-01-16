@@ -103,7 +103,7 @@
 
 <div class="col-md-12">
 
-<input type="text" name="set_ota_gps_id" id="set_ota_gps_id" value="">
+<input type="hidden" name="set_ota_gps_id" id="set_ota_gps_id" value="">
 
 <div class="form-group row" style="float:none!important">
 

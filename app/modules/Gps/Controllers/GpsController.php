@@ -880,18 +880,17 @@ class GpsController extends Controller {
 
     public function getPublicVltData(Request $request)
     {    
-        if($request->gps && $request->header){
-            
-         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->limit(500);  
+        if($request->gps && $request->header){           
+         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->orderBy('id','desc')->limit(500);  
         }
         else if($request->gps){
-         $items = VltData::where('imei',$request->gps)->limit(500);  
+         $items = VltData::where('imei',$request->gps)->orderBy('id','desc')->limit(500);  
         }
         else if($request->header){
-            $items = VltData::where('header',$request->header)->limit(500); 
+            $items = VltData::where('header',$request->header)->orderBy('id','desc')->limit(500); 
         }
         else{
-         $items = VltData::limit(500);  
+         $items = VltData::orderBy('id','desc')->limit(500);  
         }
 
          // $items = VltData::all();                
@@ -1744,16 +1743,16 @@ class GpsController extends Controller {
     {
         if($request->gps && $request->header){
             
-         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->limit(500);  
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->orderBy('id','desc')->limit(500);  
         }
         else if($request->gps){
-         $items = GpsData::where('gps_id',$request->gps)->limit(500);  
+         $items = GpsData::where('gps_id',$request->gps)->orderBy('id','desc')->limit(500);  
         }
         else if($request->header){
-            $items = GpsData::where('header',$request->header)->limit(500); 
+            $items = GpsData::where('header',$request->header)->orderBy('id','desc')->limit(500); 
         }
         else{
-         $items = GpsData::limit(500);  
+         $items = GpsData::orderBy('id','desc')->limit(500);  
         }
         return DataTables::of($items)
         ->addIndexColumn()
