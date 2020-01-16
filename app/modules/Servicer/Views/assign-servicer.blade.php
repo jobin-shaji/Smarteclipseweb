@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+  @extends('layouts.eclipse')
 @section('title')
     Assign Servicer
 @endsection
@@ -52,6 +52,19 @@
                       <strong class="error-text">{{ $errors->first('servicer') }}</strong>
                       </span>
                       @endif
+                    </div>
+                      <div class="form-group row" style="float:none!important">
+                      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Role</label> 
+                      <div class="form-group has-feedback">
+
+                       <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role">
+                          <option value="1">Freebies</option>
+                          <option value="2">Fundamental</option>
+                          <option value="3">Superior</option>
+                          <option value="4">Pro</option>
+                        </select>
+                      </div>
+          
                     </div>
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
