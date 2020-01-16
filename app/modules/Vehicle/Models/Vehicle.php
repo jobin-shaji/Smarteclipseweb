@@ -122,7 +122,7 @@ class Vehicle extends Model
             'servicer_job_id',
             'gps_id',
             'register_number')
-        ->with('gps')
+        ->with('gps.ota')
         ->with('vehicleType')
         ->with('vehicleModels.vehicleMake')
         ->with('jobs', 'jobs.servicer')
