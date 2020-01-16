@@ -35,6 +35,8 @@ function dbcount(res){
       $('#gps_in_stock_subdealer').text(res.gps_in_stock);
       $('#transferred_gps_from_dealer_to_trader').text(res.dealer_to_trader_transferred_gps_count);
       $('#transferred_gps_from_dealer_to_client').text(res.dealer_to_client_transferred_gps_count);
+      $('#transferred_gps_from_dealer_to_trader_awaiting').text(res.gps_awaiting_confirmation_from_trader);
+      $('#transferred_gps_from_dealer_to_client_awaiting').text(res.gps_awaiting_confirmation_from_client);
       $('#subdealer_client').text(res.clients);
       $('#subdealer_trader').text(res.traders);
 

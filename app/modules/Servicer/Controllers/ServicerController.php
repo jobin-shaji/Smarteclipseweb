@@ -245,7 +245,8 @@ class ServicerController extends Controller {
             'user_id' => $user_id,
             'description' => $request->description,
             'gps_id' => $request->gps, 
-            'job_date' => $job_date,                
+            'job_date' => $job_date,   
+            'role'      =>  $request->role,    
             'status' => 1, //ASSIGNED STATUS
             'location'=>$request->search_place
             // 'latitude'=>$location_lat,
@@ -361,6 +362,7 @@ class ServicerController extends Controller {
                 'job_type' => $request->job_type,
                 'user_id' => $user_id,
                 'description' => $request->description,
+                'role' => $request->role,
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
                 'status' => 1, //ASSIGN STATUS

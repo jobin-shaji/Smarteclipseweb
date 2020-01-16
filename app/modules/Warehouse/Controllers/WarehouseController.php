@@ -1207,7 +1207,7 @@ class WarehouseController extends Controller {
     {
         $user_id            = \Auth::user()->id;
         $subdealer_id       = \Auth::user()->subdealer->id;
-        $traders            = Trader::select('user_id')->where('sub_dealer_id',$subdealer_id)->get();
+        $traders            = Trader::select('user_id')->where('sub_dealer_id',$subdealer_id)->withTrashed()->get();
         $trader_user_ids    = [];
 
         foreach($traders as $trader)
@@ -1402,7 +1402,7 @@ class WarehouseController extends Controller {
     {
         $user_id            = \Auth::user()->id;
         $subdealer_id       = \Auth::user()->subdealer->id;
-        $clients            = Client::select('user_id')->where('sub_dealer_id',$subdealer_id)->get();
+        $clients            = Client::select('user_id')->where('sub_dealer_id',$subdealer_id)->withTrashed()->get();
         $client_user_ids    = [];
 
         foreach($clients as $client)
