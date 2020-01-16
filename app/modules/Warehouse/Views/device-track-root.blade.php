@@ -36,7 +36,8 @@
                       <th>Manufacturer</th>
                       <th>Distributor</th>
                       <th>Dealer</th>
-                      <th>Client</th>
+                      <th>Sub Dealer</th>
+                      <th>End User</th>
                       <th style="width:160px;">Action</th>
                   </tr>
                 </thead>
