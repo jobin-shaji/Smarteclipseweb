@@ -43,7 +43,7 @@ class BatchController extends Controller {
     public function batchPacketSplitting($imei,$balance_packet)
     {
         $alert_id = substr($balance_packet,0,2);
-        if($alert_id == "01") //NRM
+        if($alert_id == "01" || $alert_id == "02") //NRM
         {
             $nrm_alert_id_to_mode = substr($balance_packet,0,78);
             $normal_packet="NRM".$imei.$nrm_alert_id_to_mode;
@@ -103,6 +103,17 @@ class BatchController extends Controller {
             $alert_alert_id_to_mode = substr($balance_packet,0,83);
             $alert_packet="ALT".$imei.$alert_alert_id_to_mode;
             $balance_packet=substr($balance_packet,83);
+            $return_array=[
+                    'packet' => $alert_packet,
+                    'balance_packet' => $balance_packet
+                    ];
+            return $return_array;
+        }
+        else if($alert_id == "25") //FUL
+        {
+            $alert_alert_id_to_mode = substr($balance_packet,0,210);
+            $alert_packet="FUL".$imei.$alert_alert_id_to_mode;
+            $balance_packet=substr($balance_packet,210);
             $return_array=[
                     'packet' => $alert_packet,
                     'balance_packet' => $balance_packet

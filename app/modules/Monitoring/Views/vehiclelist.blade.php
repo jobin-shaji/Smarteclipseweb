@@ -403,6 +403,16 @@
                                 </div>
                               </div>
                             </div>
+                            <div class="button" role="button">
+                              Device Configuration
+                            </div>
+                            <div class="slide">
+                              <div class="list-outer-bg">
+                                <div class="list-display">
+                                  <p>Configuration</p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <!-- /Device details-->
                           <!-- Device Current status-->
@@ -466,7 +476,7 @@
         </div>
       </div>
     <div id="critical_alerts_table" class="mlt-alert">
-      <p>Please wait...</p>
+     <!--  <p>Please wait...</p> -->
     </div> 
 
 

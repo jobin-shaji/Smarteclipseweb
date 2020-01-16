@@ -33,11 +33,53 @@
                   <b>IMEI:</b> {{ $complaint->gps->imei}}
                 </li>
                 <li class="list-group-item">
+                  <b>Serial Number:</b> {{ $complaint->gps->serial_no}}
+                </li>
+                <li class="list-group-item">
+                  <b>Complaint Category:</b> 
+                  @if($complaint->complaintType->complaint_category==0) 
+                 {{'Hardware'}}
+                 @endif
+                 @if($complaint->complaintType->complaint_category==1) 
+                 {{'Software'}}
+                 @endif
+                </li>
+                <li class="list-group-item">
                   <b>Complaint Type:</b> {{ $complaint->complaintType->name}}
                 </li>
                 <li class="list-group-item">
                   <b>Description:</b> {{ $complaint->description}}
                 </li>
+
+                <li class="list-group-item">
+                  <b>Date:</b> {{ $complaint->created_at}}
+                </li>
+                <li class="list-group-item">
+                  <b>Status:</b> 
+                  @if($complaint->status==0)
+                     {{'Not Assigned'}}               
+                  @elseif($complaint->status==1)
+                     {{'Assigned'}}                
+                  @elseif($complaint->status==2)
+                     {{'Closed'}}
+                  @endif
+                </li>
+                @role('root|sub_dealer')
+                <li class="list-group-item">
+                  <b>Assigned To:</b> 
+                  @if($complaint->status==null||$complaint->status==0)
+                    {{"Not Assigned"}}
+                    
+                    @else {{$complaint->servicer->name}}
+                    @endif 
+                </li>
+                @endrole
+                <li class="list-group-item">
+                  <b>Vehicle Type:</b> {{ $complaint->vehicle->vehicleType->name}}
+                </li>
+                <li class="list-group-item">
+                  <b>Vehicle:</b> {{ $complaint->vehicle->name}}
+                </li>               
               </ul>
             </div>
           </div>

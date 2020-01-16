@@ -151,8 +151,11 @@ class DealerController extends Controller {
         }
         $this->validate($request, $rules);   
         $dealer->name = $request->name;
+        $dealer->address = $request->address;
         $dealer->save();
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+
         $user->save();
         $did = encrypt($user->id);
         $request->session()->flash('message', 'Distributor details updated successfully!');
@@ -341,7 +344,9 @@ class DealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
+            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id, 
+            'address' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
     }
@@ -349,7 +354,9 @@ class DealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
+            'mobile' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'address' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,       
         ];
         return  $rules;
     }

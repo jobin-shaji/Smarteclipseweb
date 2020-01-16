@@ -295,6 +295,7 @@ class ClientController extends Controller {
         if($client == null){
            return view('Client::404');
         } 
+
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
@@ -539,6 +540,14 @@ class ClientController extends Controller {
                 <b style='color:#FF0000';>Disabled</b>
                 <button onclick=enableEndUser(".$client->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
             ";
+            }
+        })
+        ->addColumn('subdealer', function ($client) {
+            $b_url = \URL::to('/');
+            if($client->sub_dealer_id){ 
+            return $client->subdealer->name;
+            }else{ 
+            return " ";
             }
         })
         ->rawColumns(['link','working_status'])             
@@ -851,7 +860,7 @@ class ClientController extends Controller {
         $client->address = $request->address;
         $client->save();
         $user = User::find($request->id);
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile_number;
         $user->email = $request->email;
         $user->save();
         $did = encrypt($user->id);
@@ -1214,7 +1223,7 @@ class ClientController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',            
-            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
             'email' => 'required|string|unique:users,email,'.$client->user_id
            
             
@@ -1226,7 +1235,7 @@ class ClientController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required',            
-            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$client->user_id,
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$client->user_id,
             'email' => 'required|string|unique:users,email,'.$client->user_id
            
             
