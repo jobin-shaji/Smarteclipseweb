@@ -10,6 +10,9 @@ function callBackDataTable(value){
     $("#set_ota_button").show();
     $("#set_ota_gps_id").val(value);
   }
+  else{
+    $("#set_ota_button").hide();
+  }
     if(value==null)
     {
         gps=document.getElementById('gps_id').value;        
