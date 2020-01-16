@@ -425,6 +425,7 @@
                                     <i class="mdi mdi-bell font-24" ></i>
                                 </div>
                             </span>
+                        </a>
 
 
 <!-- style="padding: 18% 0 0 56%" -->

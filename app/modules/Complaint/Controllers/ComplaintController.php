@@ -10,6 +10,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -234,7 +235,8 @@ class ComplaintController extends Controller {
     public function create()
     {
         $client_id=\Auth::user()->client->id;
-        $devices=GpsStock::with('gps')->where('client_id',$client_id)->get();
+        // $devices=GpsStock::with('gps')->where('client_id',$client_id)->get();
+        $devices=Vehicle::with('gps')->where('client_id',$client_id)->get();
 
         $complaint_type=ComplaintType::select('id','name')
                 ->get();
@@ -264,7 +266,9 @@ class ComplaintController extends Controller {
                 'complaint_type_id' => $request->complaint_type_id,
                 'title' => $request->title,
                 'description' => $request->description,
-                'client_id' => $client_id
+                'client_id' => $client_id,
+                'created_at'=> date('Y-m-d H:i:s'),
+                'updated_at'=> date('Y-m-d H:i:s')
             ]);
         }
         $request->session()->flash('message', 'New Complaint registered successfully!'); 

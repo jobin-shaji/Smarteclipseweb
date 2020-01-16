@@ -767,6 +767,9 @@ public function serviceJobDetails(Request $request)
                 'driver_id' => $driver_id,
                 'status' => 1
             ]);
+            $client=Client::find($client_id);
+            $client->latest_vehicle_updates=date('Y-m-d H:i:s');
+            $client->save();
             // $this->validate($request, $rules, $custom_messages);
             $file=$request->file;
             $installation_photo=$request->installation_photo;
