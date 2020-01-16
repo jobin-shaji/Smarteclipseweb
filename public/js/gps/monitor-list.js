@@ -3,7 +3,7 @@ var current_active_tab  = 'list';
 var alerts_list         = [];
 var audio               = document.getElementById("myAudio");
 var critical_alerts     = [];
-
+var read_alerts         = [];
 
 function clicked_vehicle_details(vehicle_id, row_id) 
 {   
@@ -398,6 +398,22 @@ function repaint(id)
     $('#'+id).text('');
 }
 
+function markAlertAsRead(id)
+{
+    if($.inArray(id, read_alerts) == -1)
+    {
+        read_alerts.push(id);
+        // remove the read alert
+        $('.eam-body > eam-each_alert-'+id).remove();
+        // if there is only on alert in the modal and that too read
+        // remove that alert and close the modal
+        if( (read_alerts.length - critical_alerts.length) == 0 )
+        {
+            $('#emergeny_alert_modal').hide();
+        }
+    }
+}
+
 $(document).ready(function(){
     $('.mlt').click(function(){
         current_active_tab = $(this).attr('value');
@@ -417,77 +433,43 @@ $(document).ready(function(){
             },
             success: function (res){
                 // prepare content
-
                 if(res.data.length > 0)
-                {   /*              
-                    audio.play();*/
+                {                           
                     var html = '';
                     res.data.forEach(function(alert)
                     {
+                        if( !isAlertNeedsToDisplay(alert) )
+                        {
+                            return false;
+                        }
+
                         var need_to_append          = true;
                         var critical_alerts_html    = '';
-                        console.log(critical_alerts);
 
                         critical_alerts.forEach(function(critical_alert){
                             if(alert.id == critical_alert.id)
                             {
                                 need_to_append = false;
                                 return false;
-                               // critical_alerts.push(alert);
                             }
                         }); 
-
-                        if(alert.vehicle == null)
-                        {
-                            return;
-                        }
-                        var alert_title = '';
-                        if( alert.emergency_status == 1 )
-                        {
-                            alert_title = 'Emergency Alert';
-                            alert_icon  =  'E';
-                        }
-                        else if( alert.tilt_status == 1 )
-                        {
-                            alert_title = 'Tilt Alert';
-                            alert_icon  =  'T';
-                        }
-                        else
-                        {
-                            alert_title = 'Alert';
-                            alert_icon  =  'A';
-                        }
-
-
-                        html += '<div class="eam-each_alert eam-each_alert-1">'
-                        +'<p style="background:#f00; padding:6px 0;  color:#fff; font-weight:700;font-size:18px;border-top-left-radius: 7px;border-top-right-radius: 7px; ">'+alert_title+'</p>'
-                        +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
-                        +'<p style="margin-top:7px;font-size:12px;font-weight:10"> <button style="border-radius: 5px;padding: 5px 5px;"><a href="/monitor-map" target="_blank">View map</a></button> <input type="checkbox" name="alert_read_check" style="margin-left:15%;margin-top:5%"> Mark as read </p>'
-                        +'</div>';
-                        critical_alerts_html = '<div class="alert-page-dispaly" id="'+alert.id+'">'
-                        +'<div class="eam-each_alert">'
-                        +'<p class="t-alert">'+alert_icon+'</p>'
-                        +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
-                        +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
-                        +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
-                        +'</div></div>';
-
+                        // modal contents
+                        html += prepareAlertModalContent(alert);
+                        // alert tab contents
+                        critical_alerts_html = prepareAlertTabContent(alert);
+                        // append to alerts tab
                         if(need_to_append)
                         {
-                            critical_alerts.push(alert);
-                            // append to alerts tab
+                            critical_alerts.push(alert);  
                             $('#critical_alerts_table').prepend(critical_alerts_html);
                         }
-
-                       // alertAddonqueue(alert.id,alert.lat,alert.lon,html);
                     });
 
-                    
-                    $('#eam_body').html(html);
-
-                    if(current_active_tab != 'map')
+                    // trigger alert modal
+                    if( (html != '') && (current_active_tab != 'map'))
                     {
-                        // trigger modal
+                        audio.play();
+                        $('#eam_body').html(html);
                         $('#emergeny_alert_modal').show();
                     }
                 }
@@ -502,12 +484,55 @@ $(document).ready(function(){
     }, 5000); 
 });
 
+function isAlertNeedsToDisplay(alert)
+{
+   return ( (alert.vehicle != null) && ($.inArray(alert.id, read_alerts) == -1) ) ? true : false;
+}
+
+function prepareAlertModalContent(alert)
+{
+    var alert_title = getAlertTitle(alert);
+    return '<div class="eam-each_alert each_popup_alert eam-each_alert-'+alert.id+'">'
+        +'<p style="background:#f00; padding:6px 0;  color:#fff; font-weight:700;font-size:18px;border-top-left-radius: 7px;border-top-right-radius: 7px; ">'+alert_title+'</p>'
+        +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
+        +'<p style="margin-top:7px;font-size:12px;font-weight:10"> <button style="border-radius: 5px;padding: 5px 5px;"><a href="/monitor-map" target="_blank">View map</a></button>'
+        +' <button style="border-radius: 5px;padding: 5px 5px;" onclick="markAlertAsRead('+alert.id+')">Mark as read</button> </p>'
+        +'<h6></h6>'
+        +'</div>';
+}
+
+function prepareAlertTabContent(alert)
+{
+    var alert_title = getAlertTitle(alert);
+    return '<div class="alert-page-dispaly" id="'+alert.id+'">'
+        +'<div class="eam-each_alert">'
+        +'<p class="t-alert">'+alert_title.charAt(0).toUpperCase()+'</p>'
+        +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
+        +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
+        +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
+        +'</div></div>';
+}
+
+function getAlertTitle(alert)
+{
+    var title = 'Alert';
+    if(alert.emergency_status == '1')
+    {
+        title = 'Emergency Alert';
+    }
+    else if(alert.tilt_status == '1')
+    {
+        title = 'Tilt Alert';
+    }
+    return title;
+}
+
 function alertAddonqueue(alert_id,lat,lng,html)
     {
      if(alerts_list.length > 0)
       {
            alerts_list.find(function(x,i){  
-                                                                                                                                                                                                                                                                              if(x != undefined)
+            if(x != undefined)
            {
             
             if(alerts_list['id'] != alert_id){
