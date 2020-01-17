@@ -100,7 +100,7 @@
                         <table class="table table-bordered  table-striped " style="width:100%">
                           <thead>
                             <tr>
-                              <th><b>Serial NO</b></th>
+                              <th><b>Serial Number</b></th>
                               <th><b>Action</b></th>
                             </tr>
                           </thead>
