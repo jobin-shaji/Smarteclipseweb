@@ -18,13 +18,14 @@ class ClientsTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->integer('user_id');
-            $table->integer('sub_dealer_id');
+            $table->integer('sub_dealer_id')->nullable();
+            $table->integer('trader_id')->nullable();
             $table->text('logo')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->string('location')->nullable();
+            $table->text('location')->nullable();
             $table->integer('country_id');
-            $table->dateTime('latest_vehicle_updates')
+            $table->dateTime('latest_vehicle_updates');
             $table->integer('state_id');
             $table->integer('city_id');
             $table->timestamps();

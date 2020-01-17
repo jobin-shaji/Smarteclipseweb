@@ -87,12 +87,12 @@
             <div class="row pt-3">
               <div class="col-lg-3">
                 <div class="form-group has-feedback">
-                  <label class="srequired">App Online icon</label>
+                  <label class="srequired">App Online icon(250*250)</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->online_icon}}" id="mobile_online_icon">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->online_icon}}" id="mobile_online_icon" style="height: 75px;width: 75px;">
                   </div>
                   <div class="form-group has-feedback">
-                    <input type="file" class="form-control {{ $errors->has('online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="online_icon" value="{{ old('online_icon') }}" onchange="readURL(this,'mobile_online_icon');" > 
+                    <input type="file" class="form-control {{ $errors->has('online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="online_icon" value="{{ old('online_icon') }}" onchange="readURL(this,'mobile_online_icon');"  > 
                   </div>
                   @if ($errors->has('online_icon'))
                     <span class="help-block">
@@ -104,9 +104,9 @@
 
               <div class="col-lg-3">
                 <div class="form-group has-feedback">
-                  <label class="srequired">App offline icon</label>
+                  <label class="srequired">App offline icon (250*250)</label>
                   <div class="vehicle_app_icon">
-                   <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->offline_icon}}" id="mobile_offline_icon">
+                   <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->offline_icon}}" id="mobile_offline_icon" style="height: 75px;width: 75px;">
                   </div>
                   <div class="form-group has-feedback">
                     <input type="file" class="form-control {{ $errors->has('offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="offline_icon" value="{{ old('offline_icon') }}" onchange="readURL(this,'mobile_offline_icon');" > 
@@ -121,9 +121,9 @@
 
               <div class="col-lg-3">
                 <div class="form-group has-feedback">
-                  <label class="srequired">App idle icon</label>
+                  <label class="srequired">App idle icon (250*250)</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->ideal_icon}}" id="mobile_idle_icon">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->ideal_icon}}" id="mobile_idle_icon" style="height: 75px;width: 75px;">
                   </div>
                   <div class="form-group has-feedback">
                     <input type="file" class="form-control {{ $errors->has('ideal_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="ideal_icon" value="{{ old('ideal_icon') }}" onchange="readURL(this,'mobile_idle_icon');"  > 
@@ -135,12 +135,11 @@
                   @endif
                 </div>
               </div>
-
               <div class="col-lg-3">
                 <div class="form-group has-feedback">
-                  <label class="srequired">App sleep icon</label>
+                  <label class="srequired">App sleep icon (250*250)</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->sleep_icon}}" id="mobile_sleep_icon">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->sleep_icon}}" id="mobile_sleep_icon" style="height: 75px;width: 75px;">
                   </div>
 
                   <div class="form-group has-feedback">
@@ -162,7 +161,7 @@
                 <div class="form-group has-feedback">
                   <label class="srequired">Web Online icon</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_online_icon}}" id="web_online_icon">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_online_icon}}" id="web_online_icon" style="height: 75px;width: 75px;">
                   </div>
                   <div class="form-group has-feedback">
                     <input type="file" class="form-control {{ $errors->has('web_online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_online_icon" value="{{ old('web_online_icon') }}" onchange="readURL(this,'web_online_icon');" > 
@@ -179,7 +178,7 @@
                 <div class="form-group has-feedback">
                   <label class="srequired">Web offline icon</label>
                   <div class="vehicle_app_icon">
-                   <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_offline_icon}}" id="web_offline_icon">
+                   <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_offline_icon}}" id="web_offline_icon" style="height: 75px;width: 75px;">
                   </div>
                   <div class="form-group has-feedback">
                     <input type="file" class="form-control {{ $errors->has('web_offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_offline_icon" value="{{ old('web_offline_icon') }}" onchange="readURL(this,'web_offline_icon');" > 
@@ -196,7 +195,7 @@
                 <div class="form-group has-feedback">
                   <label class="srequired">Web idle icon</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_idle_icon}}" id="web_idle_icon" >
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_idle_icon}}" id="web_idle_icon" style="height: 75px;width: 75px;">
                   </div>
                   <div class="form-group has-feedback">
                     <input type="file" class="form-control {{ $errors->has('web_idle_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_idle_icon" value="{{ old('web_idle_icon') }}" onchange="readURL(this,'web_idle_icon');" > 
@@ -213,7 +212,7 @@
                 <div class="form-group has-feedback">
                   <label class="srequired">Web sleep icon</label>
                   <div class="vehicle_app_icon">
-                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_sleep_icon}}" id="web_sleep_icon">
+                    <img class="cover_vehicle_icon" src="/documents/{{ $vehicle_type->web_sleep_icon}}" id="web_sleep_icon" style="height: 75px;width: 75px;">
                   </div>
 
                   <div class="form-group has-feedback">
