@@ -513,13 +513,15 @@ class ClientController extends Controller {
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_id',                      
+            'sub_dealer_id',
+            'trader_id',                     
             'name',                   
             'address',                               
             'deleted_at'
         )
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
+        ->with('trader:id,name')
         ->with('user:id,email,mobile,deleted_at')
         ->get();
         return DataTables::of($client)
@@ -551,6 +553,16 @@ class ClientController extends Controller {
             return " ";
             }
         })
+        ->addColumn('trader', function ($client) {
+        
+            if($client->trader_id)
+            { 
+            return $client->trader->name;
+            }else{ 
+            return " ";
+            }
+        })
+
         ->rawColumns(['link','working_status'])             
         ->make();
     }
