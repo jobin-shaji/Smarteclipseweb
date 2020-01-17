@@ -255,6 +255,157 @@ function render_devicetab(res)
             } 
         }
     });
+    /***** */
+    if(res.data.gps.ota.length == 0)
+    {
+        table = '<p>No OTA Responses</p>';
+    }
+    else
+    {
+       table = '<table border="1">'+
+        '<tr>'+
+            '<th>Header</th>'+
+            '<th>Value</th>'+
+            '<th>Updated At</th>'+
+        '</tr>';
+        res.data.gps.ota.forEach(function(each_ota)
+        {
+            var header = 'Null';
+            if(each_ota.header == 'PU')
+            {
+                header = 'Primary/Regulatory Purpose URL';
+            }
+            else if(each_ota.header == 'EU')
+            {
+                header = 'Emergency Response System URl';
+            }
+            else if(each_ota.header == 'EM')
+            {
+                header = 'Emergency response SMS Number';
+            }
+            else if(each_ota.header == 'EO')
+            {
+                header = 'Emergency State OFF';
+            }
+            else if(each_ota.header == 'ED')
+            {
+                header = 'Emergency State Time Duration';
+            }
+            else if(each_ota.header == 'APN')
+            {
+                header = 'Access Point Name';
+            }
+            else if(each_ota.header == 'TA')
+            {
+                header = 'Tilt Angle';
+            }
+            else if(each_ota.header == 'ST')
+            {
+                header = 'Sleep Time';
+            }
+            else if(each_ota.header == 'SL')
+            {
+                header = 'Speed Limit';
+            }
+            else if(each_ota.header == 'HBT')
+            {
+                header = 'Harsh Breaking Threshold';
+            }
+            else if(each_ota.header == 'HAT')
+            {
+                header = 'Harsh Acceleration Threshold';
+            }
+            else if(each_ota.header == 'RTT')
+            {
+                header = 'Rash Turning Threshold';
+            }
+            else if(each_ota.header == 'LBT')
+            {
+                header = 'Low Battery Threshold';
+            }
+            else if(each_ota.header == 'VN')
+            {
+                header = 'Vehicle Registration Number';
+            }
+            else if(each_ota.header == 'UR')
+            {
+                header = 'Data Update Rate in IGN ON Mode';
+            }
+            else if(each_ota.header == 'URT')
+            {
+                header = 'Data Update Rate in Halt Mode';
+            }
+            else if(each_ota.header == 'URS')
+            {
+                header = 'Data Update Rate in IGN OFF/Sleep Mode';
+            }
+            else if(each_ota.header == 'URE')
+            {
+                header = 'Data Updation Rate in Emergency Mode';
+            }
+            else if(each_ota.header == 'URF')
+            {
+                header = 'Data Update Rate of Full Packet';
+            }
+            else if(each_ota.header == 'URH')
+            {
+                header = 'Data Update Rate of Health Packets';
+            }
+            else if(each_ota.header == 'VID')
+            {
+                header = 'Vendor ID';
+            }
+            else if(each_ota.header == 'FV')
+            {
+                header = 'Firmware Version';
+            }
+            else if(each_ota.header == 'DSL')
+            {
+                header = 'Default Speed Limit';
+            }
+            else if(each_ota.header == 'HT')
+            {
+                header = 'Halt Time';
+            }
+            else if(each_ota.header == 'M1')
+            {
+                header = 'Contact Mobile Number';
+            }
+            else if(each_ota.header == 'M2')
+            {
+                header = 'Contact Mobile Number 2';
+            }
+            else if(each_ota.header == 'M3')
+            {
+                header = 'Contact Mobile Number 3';
+            }
+            else if(each_ota.header == 'GF')
+            {
+                header = 'Geofence';
+            }
+            else if(each_ota.header == 'OM')
+            {
+                header = 'OTA Updated Mobile';
+            }
+            else if(each_ota.header == 'OU')
+            {
+                header = 'OTA Updated URL';
+            }
+            else
+            {
+                header = each_ota.header;
+            }
+            table +='<tr>'+
+                '<td>'+header+'</td>'+
+                '<td>'+each_ota.value+'</td>'+
+                '<td>'+each_ota.updated_at+'</td>'+
+            '</tr>';
+        });
+        table += '</table>'; 
+    }
+    
+    $('#ota').html(table);
+    /**** */
         // display vehicle tab
     setActiveTab('vehicle');
 }
