@@ -66,6 +66,7 @@ class ClientController extends Controller {
 
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
+
         if($placeLatLng==null){
             $request->session()->flash('message', 'Enter correct location'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
@@ -74,7 +75,8 @@ class ClientController extends Controller {
 
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
-        
+        $location=$request->search_place;
+
         if($request->user()->hasRole('sub_dealer'))
         {
             $subdealer_id = \Auth::user()->subdealer->id;
@@ -109,6 +111,7 @@ class ClientController extends Controller {
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
+
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id        
@@ -169,6 +172,7 @@ class ClientController extends Controller {
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
+                'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id        
@@ -260,20 +264,16 @@ class ClientController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id); 
         $client = Client::withTrashed()->where('user_id', $decrypted)->first();
-
         $latitude= $client->latitude;
         $longitude=$client->longitude;          
-        if(!empty($latitude) && !empty($longitude)){
+        if(!empty($latitude) && !empty($longitude))
+        {
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-            $output = json_decode($geocodeFromLatLong);         
-            $status = $output->status;
-            //Get address from json data
-            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-            //Return address of the given latitude and longitude            
-                 $location=$address;
-                 // dd($location);
-        }
+
+            $output = json_decode($geocodeFromLatLong, true);
+            $location = $client->location;
+         }
         else
         {
               $location="";
@@ -309,23 +309,16 @@ class ClientController extends Controller {
         $this->validate($request, $rules);   
         $client->name = $request->name;
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
-        if($placeLatLng==null){
-            $request->session()->flash('message', 'Enter correct location'); 
-            $request->session()->flash('alert-class', 'alert-danger'); 
-            return redirect(route('client.edit',encrypt($client->user_id)));        
-        }
-
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
         $client->latitude= $location_lat;
         $client->longitude=$location_lng;
+        $client->location=$request->search_place;
         $client->save();
         $user = User::find($request->id);
         $user->mobile = $request->mobile_number;
         $user->save();
         $did = encrypt($user->id);
-        // $subdealer->phone_number = $request->phone_number;       
-        // $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'Client details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.details',$did));  
@@ -486,23 +479,22 @@ class ClientController extends Controller {
         $client = Client::withTrashed()->where('user_id', $decrypted)->first();
         $user=User::find($decrypted); 
         $latitude= $client->latitude;
-        $longitude=$client->longitude;          
-        if(!empty($latitude) && !empty($longitude)){
+        $longitude=$client->longitude; 
+        if(!empty($latitude) && !empty($longitude))
+        {
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-            $output = json_decode($geocodeFromLatLong);         
-            $status = $output->status;
-            //Get address from json data
-            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-            //Return address of the given latitude and longitude            
-                 $location=$address;
-                 // dd($location);
+            $output = json_decode($geocodeFromLatLong, true);         
+           // $status = $output->status;
+            $location = $client->location;
+            
         }
         else
         {
             $location="";
         }
-        if($client == null){
+        if($client == null)
+        {
            return view('Client::404');
         }
         return view('Client::client-details',['client' => $client,'user' => $user,'location' => $location]);
@@ -1129,7 +1121,8 @@ class ClientController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            'search_place'=>'required',
+            'address' => 'required|string|max:150',
             'client_category' => 'required',
             'country_id' => 'required',
             'state_id' => 'required',
@@ -1146,7 +1139,8 @@ class ClientController extends Controller {
         {
             $rules = [
                 'name' => 'required',
-                'address' => 'required',
+                'search_place'=>'required',
+                'address' => 'required|string|max:150',
                 'client_category' => 'required',
                 'country_id' => 'required',
                 'state_id' => 'required',
@@ -1168,7 +1162,7 @@ class ClientController extends Controller {
         $rules = [
             'sub_dealer' => 'required',
             'name' => 'required',
-            'address' => 'required',
+            'address' => 'required|string|max:150',
             'client_category' => 'required',
             'country_id' => 'required',
             'state_id' => 'required',
@@ -1206,12 +1200,16 @@ class ClientController extends Controller {
         $data = urlencode($address);
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
+     
+        // dd($geocode_stats);
         $output_deals = json_decode($geocode_stats);
+      //  dd($output_deals);
         if ($output_deals->status != "OK") {
             return null;
         }
         if ($output_deals) {
             $latLng = $output_deals->results[0]->geometry->location;
+
             $lat = $latLng->lat;
             $lng = $latLng->lng;
             $locationData = ["latitude" => $lat, "longitude" => $lng];

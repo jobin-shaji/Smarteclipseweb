@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-  use SoftDeletes;    
+  use SoftDeletes; 
+
 	protected $fillable=[
-		'user_id','sub_dealer_id','name','address','latitude','longitude','created_by','deleted_by','deleted_at','country_id','state_id','city_id','trader_id'
-  ];
+		'user_id','sub_dealer_id','name','address','latitude','longitude','created_by','deleted_by','deleted_at','country_id','state_id','city_id','trader_id',
+    'location'];
+    
   public function subdealer()
   {
     return $this->belongsTo('App\Modules\SubDealer\Models\SubDealer','sub_dealer_id','id')->withTrashed();
