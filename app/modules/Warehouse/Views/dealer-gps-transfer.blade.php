@@ -99,10 +99,10 @@
                       <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;display: none;">
                         <thead>
                           <tr>
-                            <th>Serial Number</th>
-                            <th>Batch Number</th>
-                            <!-- <th>Employee Code</th> -->
-                            <th>Action</th>
+                              <th><b>Serial Number</b></th>
+                              <th><b>Batch Number</b></th>
+                              <!-- <th><b>Employee Code</b></th> -->
+                              <th><b>Action</b></th>
                           </tr>
                         </thead>
                         <tbody>
