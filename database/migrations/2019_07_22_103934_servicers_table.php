@@ -20,7 +20,8 @@ class ServicersTable extends Migration
             $table->text('address');
             $table->integer('status');
             $table->integer('user_id');
-            $table->integer('sub_dealer_id');
+            $table->integer('sub_dealer_id')->nullable();
+            $table->integer('trader_id')->nullable();
             $table->integer('deleted_by');
             $table->timestamps();
             $table->softDeletes();  
