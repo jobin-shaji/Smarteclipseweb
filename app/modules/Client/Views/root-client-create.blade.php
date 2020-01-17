@@ -33,12 +33,13 @@
                       <i class="fa fa-user-plus"></i> 
                     </h2>
                   </div>
+                   <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>USER INFO</h4>
                 </div>
                 <form  method="POST" action="{{route('root.client.create.p')}}">
                 {{csrf_field()}}
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>USER INFO</h4>
+                     
                       <div class="form-group row" style="float:none!important">
                         <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Dealer</label> 
                         <div class="form-group has-feedback">
@@ -107,8 +108,9 @@
                           </span>
                         @endif
                       </div>
+                          <div class="form-group row" style="float:none!important">
                       <div class="form-group has-feedback">
-                      <label class="srequired">State</label>
+                      <label class="srequired col-sm-3 text-right control-label col-form-label">State</label>
                         <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
                         <option selected disabled>Select Country First</option>
                         </select>
@@ -118,10 +120,11 @@
                           </span>
                         @endif
                       </div> 
-
+                    </div></div>
+  <div class="form-group row" style="float:none!important">
                        <div class="form-group has-feedback">
                       <label class="srequired">City</label>
-                        <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
+                        <select class="form-control select2 selct-bx1  {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
                         <option selected disabled>Select Country and state First</option>
                         </select>
                         @if ($errors->has('city_id'))
@@ -130,7 +133,7 @@
                           </span>
                         @endif
                       </div>                     
-                        
+                        </div>
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">User Location</label>
@@ -246,6 +249,15 @@
 </div>
 
 <div class="clearfix"></div>
+<style type="text/css">
+  .drop-arow-rt{
+       margin-right: 12px; 
+  }
+  .selct-bx1{
+    float: left;
+    width: 98.6%;
+  }
+</style>
 @section('script')
   <script>
     function initMap()
