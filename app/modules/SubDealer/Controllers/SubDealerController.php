@@ -331,7 +331,7 @@ class SubDealerController extends Controller {
 
     public function subdealerCreateRules(){
         $rules = [
-            'name' => 'required',
+            'name' => 'required|max:50',
             'address' => 'required',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
@@ -343,7 +343,7 @@ class SubDealerController extends Controller {
 
     public function subdealerCreateRulesRayfleet(){
         $rules = [
-            'name' => 'required',
+            'name' => 'required|max:50',
             'address' => 'required',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
