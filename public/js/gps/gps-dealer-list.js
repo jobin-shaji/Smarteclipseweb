@@ -40,7 +40,6 @@ function callBackDataTable(){
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false },
             {data: 'gps.version', name: 'gps.version', orderable: false},
             {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
-            {data: 'gps.employee_code', name: 'gps.employee_code', orderable: false},
             {data: 'gps.model_name', name: 'gps.model_name', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],

@@ -30,7 +30,6 @@
                     <th>Serial Number</th>
                     <th>Version</th>
                     <th>Batch Number</th>
-                    <th>Employee Code</th>
                     <th>Model Name</th>
                     <th style="width: 0px!important">Action</th>
                   </tr>

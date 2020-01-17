@@ -74,7 +74,7 @@
               </div>
 
               
-              @role('root|dealer|sub_dealer')
+              @role('root')
                <div class="form-group has-feedback">
                 <label>Employee Code</label>
                 <input type="text" class="form-control" value="{{ $gps->employee_code}}" disabled> 
