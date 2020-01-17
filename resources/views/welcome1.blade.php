@@ -843,10 +843,10 @@ function showSlides() {
                                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerala, India 683503</span>
                                 </li>
 								<li>
-                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;0484-40 007 47</span>
+                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;9947900005</span>
                                 </li>
                                 <li>
-                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@vstmobility.com</span>
+                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@smarteclipse.com</span>
                                 </li>
                             </ul>
                                 </div>
