@@ -29,9 +29,6 @@
 <div class="page-wrapper_new page-wrapper-1">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <?php 
-     $a = config("module.modules");
-      ?>
       <b>Monitoring 123<?php echo config('ota'); ?> </b>
     </ol>
     @if(Session::has('message'))
