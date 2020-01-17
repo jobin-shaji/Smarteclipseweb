@@ -29,7 +29,7 @@
 <div class="page-wrapper_new page-wrapper-1">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <b>Monitoring 123</b>
+      <b>Monitoring</b>
     </ol>
     @if(Session::has('message'))
       <div class="pad margin no-print">
