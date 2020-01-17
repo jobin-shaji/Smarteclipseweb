@@ -156,10 +156,10 @@
 
             <div style="position:absolute;left:73px;top:60px;width: 65%" class="cls_002">
                 <div class="cls_002 lineheight">
-                    {{$servicer_job->sub_dealer->name}}
+                    {{$dealer_trader->name}}
                 </div>
                 <div class="cls_002 lineheight">
-                    {{$servicer_job->sub_dealer->address}}
+                    {{$dealer_trader->address}}
                 </div>
                 <div class="cls_002 lineheight">
 
@@ -235,7 +235,7 @@
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
              <div style="position:absolute;left:70px;top:920px" class="cls_002">
-                <span class="cls_002">{{$servicer_job->sub_dealer->name}}</span>
+                <span class="cls_002">{{$dealer_trader->name}}</span>
             </div>
             <div style="position:absolute;left:70px;top:1000px" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>

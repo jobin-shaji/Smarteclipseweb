@@ -19,6 +19,7 @@ class CreateGpsStocksTable extends Migration
             $table->integer('inserted_by');
             $table->integer('dealer_id')->nullable();
             $table->integer('subdealer_id')->nullable();
+            $table->integer('trader_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('deleted_by')->nullable();
             $table->timestamps();
