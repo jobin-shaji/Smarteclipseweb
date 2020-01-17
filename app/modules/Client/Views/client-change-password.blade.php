@@ -34,7 +34,7 @@
                             <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
                         </div>
                         <div class="form-group has-feedback">
-                          <label class="srequired">Confirm password</label>
+                          <label class="srequired">Confirm Password</label>
                             <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                             @if ($errors->has('password'))
                               <span class="help-block">

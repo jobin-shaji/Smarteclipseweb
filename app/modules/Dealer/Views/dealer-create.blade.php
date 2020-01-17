@@ -122,7 +122,7 @@
                   </div>
 
                   <div class="form-group has-feedback">
-                    <label>Confirm password</label>
+                    <label>Confirm Password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation">
                     @if ($errors->has('password'))
                       <span class="help-block">
