@@ -521,7 +521,7 @@ class ClientController extends Controller {
         )
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
-        ->with('trader:id,name')
+        ->with('trader')
         ->with('user:id,email,mobile,deleted_at')
         ->get();
         return DataTables::of($client)
@@ -545,22 +545,25 @@ class ClientController extends Controller {
             ";
             }
         })
-        ->addColumn('subdealer', function ($client) {
-            $b_url = \URL::to('/');
-            if($client->sub_dealer_id){ 
-            return $client->subdealer->name;
-            }else{ 
-            return " ";
-            }
+        ->addColumn('subdealer', function ($client) 
+        {
+              if($client->trader_id)
+                {
+                    return $client->trader->subDealer->name;
+                }
+                else{
+                    return $client->subdealer->name;
+                }
         })
-        ->addColumn('trader', function ($client) {
+        ->addColumn('trader', function ($client) 
+        {
         
-            if($client->trader_id)
-            { 
-            return $client->trader->name;
-            }else{ 
-            return " ";
-            }
+                if($client->trader_id)
+                { 
+                    return $client->trader->name;
+                }else{ 
+                    return "--";
+                }
         })
 
         ->rawColumns(['link','working_status'])             
