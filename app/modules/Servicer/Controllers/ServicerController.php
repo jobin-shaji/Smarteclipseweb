@@ -7,12 +7,11 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Warehouse\Models\GpsStock;
-
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Operations\Models\VehicleModels;
 use App\Modules\Operations\Models\VehicleMake;
-
-
+use App\Modules\SubDealer\Models\SubDealer;
+use App\Modules\Trader\Models\Trader;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Vehicle\Models\Document;
@@ -928,6 +927,16 @@ public function serviceJobDetails(Request $request)
 
         $servicer_job_id = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::find($servicer_job_id);
+        $user_id=$servicer_job->user_id;
+        $dealer=SubDealer::where('user_id',$user_id)->first();
+        $trader=Trader::where('user_id',$user_id)->first();
+        if($dealer){
+            $dealer_trader=$dealer;
+        }
+        else
+        {
+            $dealer_trader=$trader;
+        }
         $client_id=$servicer_job->client_id;
         $client = Client::find($client_id);
          $vehicle = Vehicle::select(
@@ -945,22 +954,11 @@ public function serviceJobDetails(Request $request)
         ->where('servicer_job_id',$servicer_job_id)
         // ->where('id',$vehicle_id)
         ->first();
-        // dd($vehicle);
         if($servicer_job == null){
            return view('Servicer::404');
         }
-
-        if($request->user()->hasRole('sub_dealer'))
-        {
-        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client]);
-
+        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client,'dealer_trader'=>$dealer_trader]);
         return $pdf->download('installation-certificate.pdf');
-    }
-    else{
-        $pdf = PDF::loadView('Servicer::installation-certificate-trader-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client]);
-
-        return $pdf->download('installation-certificate-sub_dealer.pdf');
-    }
     }
 
     public function jobHistoryList()
