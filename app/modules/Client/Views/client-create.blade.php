@@ -219,8 +219,8 @@
                         </div>
                       </div>
 
-                      <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label> 
+           <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label font-size-14">Confirm Password</label> 
                         <div class="form-group has-feedback">
                           <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                         </div>
@@ -251,6 +251,17 @@
   </div>
 </section>
 
+  <style>
+    .font-size-14
+    {
+    font-size: 16px;
+    display: inline-block;
+    width: 100%;
+    float: left;
+    flex: inherit;
+    }
+  </style>
+           
 @section('script')
    <script>
      function initMap()

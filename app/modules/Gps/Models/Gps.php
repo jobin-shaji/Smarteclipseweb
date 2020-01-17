@@ -56,6 +56,11 @@ class Gps extends Model
         return $this->hasOne('App\Modules\Warehouse\Models\GpsStock','gps_id','id');
     }
 
+    public function ota()
+    {
+        return $this->hasMany('App\Modules\Ota\Models\OtaUpdates','gps_id','id');
+    }
+
      public function getEmergencyalerts()
     {
       return self::select('emergency_status','tilt_status','id','lat','lon','imei','serial_no','e_sim_number')
