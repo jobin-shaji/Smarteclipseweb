@@ -604,33 +604,63 @@ class ClientController extends Controller {
     //returns employees as json 
     public function getDealerClient()
     {
-         $dealer_id=\Auth::user()->dealer->id;
+        $dealer_id=\Auth::user()->dealer->id;
         $sub_dealers = SubDealer::select(
                 'id'
                 )
+                ->withTrashed()
                 ->where('dealer_id',$dealer_id)
                 ->get();
         $single_sub_dealers = [];
         foreach($sub_dealers as $sub_dealer){
             $single_sub_dealers[] = $sub_dealer->id;
         }
-       
+        $traders = Trader::select(
+            'id'
+            )
+            ->withTrashed()
+            ->whereIn('sub_dealer_id',$single_sub_dealers)
+            ->get();
+        $single_traders = [];
+        foreach($traders as $trader){
+            $single_traders[] = $trader->id;
+        }
 
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_id',                      
+            'sub_dealer_id',  
+            'trader_id',                 
             'name',                   
             'address',                               
             'deleted_at'
         )
-        ->withTrashed()
         ->with('subdealer:id,user_id,name')
-         ->with('user:id,email,mobile')
-        ->whereIn('sub_dealer_id',$single_sub_dealers)
+        ->with('trader')
+        ->with('user:id,email,mobile')
+        ->where(function ($query) use($single_traders, $single_sub_dealers) {
+            $query->whereIn('trader_id', $single_traders)
+            ->orWhereIn('sub_dealer_id', $single_sub_dealers);
+        })
         ->get();
         return DataTables::of($client)
-        ->addIndexColumn()           
+        ->addColumn('dealer', function ($client) {
+            if($client->trader_id)
+            {
+                return $client->trader->subDealer->name;
+            }
+            else{
+                return $client->subdealer->name;
+            }
+        }) 
+        ->addColumn('sub_dealer', function ($client) {
+            if($client->trader_id){ 
+                return $client->trader->name;
+            }else{ 
+                return '--';
+            }
+        })  
+        ->addIndexColumn()         
         ->make();
     }
 //////////////////////////////////////subscription/////////////////////////////////////

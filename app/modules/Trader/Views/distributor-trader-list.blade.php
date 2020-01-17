@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-    End User List
+    Sub Dealer List
 @endsection
 @section('content')
 
@@ -8,8 +8,8 @@
   <div class="page-wrapper-root1"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/End User List</li>
-        <b>End User List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Sub Dealer List</li>
+        <b>Sub Dealer List</b>
       </ol>
       @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -34,8 +34,6 @@
                         <th>Mobile</th>                            
                         <th>Email</th>
                         <th>Dealer</th>
-                        <th>Sub Dealer</th>
-                        <!-- <th style="width:160px;">Action</th> -->
                       </tr>
                   </thead>
                 </table>
@@ -48,7 +46,7 @@
   </div>
 </div>
 @section('script')
-    <script src="{{asset('js/gps/dealer-client-list.js')}}"></script>
+    <script src="{{asset('js/gps/distributor-sub-dealer-list.js')}}"></script>
 @endsection
 @endsection
 
