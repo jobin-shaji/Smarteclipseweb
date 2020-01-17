@@ -767,6 +767,9 @@ public function serviceJobDetails(Request $request)
                 'driver_id' => $driver_id,
                 'status' => 1
             ]);
+            $client=Client::find($client_id);
+            $client->latest_vehicle_updates=date('Y-m-d H:i:s');
+            $client->save();
             // $this->validate($request, $rules, $custom_messages);
             $file=$request->file;
             $installation_photo=$request->installation_photo;
@@ -1102,8 +1105,8 @@ public function serviceJobDetails(Request $request)
         $decrypted = Crypt::decrypt($request->id); 
         // dd($decrypted);
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
-
         $client_id=$servicer_job->client_id;
+
         $vehicle_device = Vehicle::select(
             'gps_id',
             'id',
@@ -1115,6 +1118,8 @@ public function serviceJobDetails(Request $request)
         ->where('client_id',$client_id)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
+
+        
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -1334,6 +1339,7 @@ public function serviceJobDetails(Request $request)
     {
 
         $user_id=\Auth::user()->id;
+        
         $servicer_job = ServicerJob::select(
             'id', 
             'servicer_id',
@@ -1357,7 +1363,7 @@ public function serviceJobDetails(Request $request)
         ->with('servicer:id,name')
         ->orderBy('id','Desc')
         ->get();  
-        // dd($servicer_job->gps_id);
+        
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {

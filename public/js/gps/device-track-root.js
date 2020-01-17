@@ -42,6 +42,7 @@ function callBackDataTable(){
             {data: 'manufacturer', name: 'manufacturer', orderable: false},
             {data: 'distributor', name: 'distributor', orderable: false},
             {data: 'dealer', name: 'dealer', orderable: false},
+            {data: 'sub_dealer', name: 'sub_dealer', orderable: false},
             {data: 'client', name: 'client', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],

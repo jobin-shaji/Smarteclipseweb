@@ -119,10 +119,20 @@ $('#transfer_type').on('change', function() {
         $('#from_label').text("Distributor");
         $('#to_label').text("Dealer");
     }
+    else if(transfer_type == 4)
+    {
+        $('#from_label').text("Dealer");
+        $('#to_label').text("Sub Dealer");
+    }
+    else if(transfer_type == 5)
+    {
+        $('#from_label').text("Sub Dealer");
+        $('#to_label').text("End User");
+    }
     else
     {
         $('#from_label').text("Dealer");
-        $('#to_label').text("Client");
+        $('#to_label').text("End User");
     }
     
     var data={ transfer_type : transfer_type };
