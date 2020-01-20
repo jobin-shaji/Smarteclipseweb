@@ -33,7 +33,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{$servicer->name}}" > 
+                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength="50" required value="{{$servicer->name}}" > 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                       </div>
                         @if ($errors->has('name'))
@@ -45,7 +45,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $servicer->address }}" >
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $servicer->address }}" maxlength="150" required >
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
                         @if ($errors->has('address'))
@@ -100,7 +100,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label> 
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="email" name="email" value="{{ $servicer->user->email }}" >
+                        <input type="text" class="form-control" placeholder="email" name="email" value="{{ $servicer->user->email }}" required>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('email'))
