@@ -82,7 +82,7 @@
 
                     <div class="form-group has-feedback">
                       <label class="srequired">Invoice Number</label>
-                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" autocomplete="off" required> 
+                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" pattern="[A-Za-z0-9]+" title="letters and numbers only, no punctuation or special characters" autocomplete="off" required> 
                        @if ($errors->has('invoice_number'))
                         <span class="help-block">
                           <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
