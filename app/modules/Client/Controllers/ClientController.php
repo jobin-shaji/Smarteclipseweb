@@ -226,6 +226,7 @@ class ClientController extends Controller {
             ->withTrashed()
             ->with('user:id,email,mobile,deleted_at')
             ->where('trader_id',$trader)
+            ->orderBy('created_at','DESC')
             ->get();
         }else{
             $subdealer=$request->user()->subdealer->id;
@@ -234,12 +235,14 @@ class ClientController extends Controller {
             'user_id',
             'sub_dealer_id',                      
             'name',                   
-            'address',                                       
+            'address',    
+            'created_at',                                    
             'deleted_at'
             )
             ->withTrashed()
             ->with('user:id,email,mobile,deleted_at')
             ->where('sub_dealer_id',$subdealer)
+            ->orderBy('created_at','DESC')
             ->get();
         }
        
@@ -308,44 +311,31 @@ class ClientController extends Controller {
         {
            $rules = $this->clientUpdateRules($client);
         }
-        $this->validate($request, $rules);   
-        $client->name = $request->name;
+        $this->validate($request, $rules); 
+        $user = User::find($request->id);  
+        $did = encrypt($user->id);
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        if($placeLatLng==null){
+            $request->session()->flash('message', 'Enter correct location'); 
+            $request->session()->flash('alert-class', 'alert-danger'); 
+            return redirect(route('client.edit',$did));        
+        }
+
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
+        $client->name = $request->name;
         $client->latitude= $location_lat;
         $client->longitude=$location_lng;
         $client->location=$request->search_place;
+        $client->address=$request->address;
         $client->save();
-        $user = User::find($request->id);
         $user->mobile = $request->mobile_number;
         $user->save();
-        $did = encrypt($user->id);
+        
         $request->session()->flash('message', 'Client details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.details',$did));  
     }
-
-    //validation for employee updation
-    public function clientUpdateRules($subdealer)
-    {
-        $rules = [
-            'name' => 'required',
-            'mobile_number' => 'required|digits:10|unique:users,mobile,'.$subdealer->user_id
-              ];
-        return  $rules;
-    }
-
-    public function rayfleetClientUpdateRules($subdealer)
-    {
-        $rules = [
-            'name' => 'required',
-            'mobile_number' => 'required|numeric|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
-            
-        ];
-        return  $rules;
-    }
-    
 
     //for edit page of subdealer password
     public function changePassword(Request $request)
@@ -1236,6 +1226,29 @@ class ClientController extends Controller {
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
+        return  $rules;
+    }
+
+    //validation for client updation
+    public function clientUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'search_place'=>'required',
+            'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
+              ];
+        return  $rules;
+    }
+
+    public function rayfleetClientUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'search_place'=>'required',
+            'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
+              ];
         return  $rules;
     }
 
