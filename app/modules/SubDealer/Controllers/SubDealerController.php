@@ -254,7 +254,8 @@ class SubDealerController extends Controller {
         $subdealer->save();
         $request->session()->flash('message','Password updated successfully!');
         $request->session()->flash('alert-class','alert-success');
-        return  redirect(route('sub.dealers.change-password',$did));
+         return redirect(route('subdealers'));   
+        // return  redirect(route('sub.dealers.change-password',$did));
     }
     
 
@@ -332,7 +333,7 @@ class SubDealerController extends Controller {
     public function subdealerCreateRules(){
         $rules = [
             'name' => 'required|max:50',
-            'address' => 'required',
+            'address' => 'required|max:150',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
@@ -344,7 +345,7 @@ class SubDealerController extends Controller {
     public function subdealerCreateRulesRayfleet(){
         $rules = [
             'name' => 'required|max:50',
-            'address' => 'required',
+            'address' => 'required|max:150',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
@@ -357,10 +358,10 @@ class SubDealerController extends Controller {
     public function subdealersUpdateRules($user)
     {
         $rules = [
-            'name' => 'required',
+            'name' => 'required|50',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'address' => 'required'
+            'address' => 'required|150'
 
             
         ];
@@ -371,10 +372,10 @@ class SubDealerController extends Controller {
     public function subdealersUpdateRulesRayfleet($user)
     {
         $rules = [
-            'name' => 'required',
+            'name' => 'required|50',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'address' => 'required'
+            'address' => 'required|150'
 
 
             
