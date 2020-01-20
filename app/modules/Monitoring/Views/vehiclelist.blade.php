@@ -56,6 +56,7 @@
        {{csrf_field()}}
       <input type="text" placeholder=" Search for Vehicle" name="monitoring_module_search_key" id="monitoring_module_search_key" value="{{ $key }}">
       <button type="submit" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name"><i class="fa fa-search" aria-hidden="true"></i></button>
+      <button onclick="clearSearch()">Clear</button>
     </form>
   </div>
   <!-- /Search and filters -->
@@ -73,7 +74,7 @@
                 <th style="width:12%;">Distributor</th>
                 <th style="width:12%;">Dealer</th>
                 <th style="width:12%;">Service Engineer</th>
-                <th style="width:10%;">Installation Date & Time</th>
+                <th style="width:10%;">Installation Date</th>
               </tr>
             </thead>
             <tbody style="max-height:200px; overflow-y: scroll;" >
@@ -95,7 +96,7 @@
                 <?php $date = explode(' ', $each_vehicle->job_complete_date); ?>
                 <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
                   <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
-                  <td style="width:17%;">{{ $each_vehicle->client_name }}</td>
+                  <td style="width:17%;">{{ $each_vehicle->client_name }} ({{ $each_vehicle->user_name }})</td>
                   <td style="width:8%;">{{ $each_vehicle->mobile_number}}</td>
                   <td style="width:17%;">{{ $each_vehicle->vehicle_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->imei }}</td>
@@ -217,8 +218,20 @@
                                     <span id="tvc_client_name"> </span>
                                   </div>
                                   <div class="list-display">
+                                    <p>Owner Username <span>:-</span></p>
+                                    <span id="tvc_client_username"> </span>
+                                  </div>
+                                  <div class="list-display">
                                     <p>Owner Address <span>:-</span></p>
                                     <span id="tvc_client_address"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Mobile <span>:-</span></p>
+                                    <span id="tvc_client_mobile"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Email <span>:-</span></p>
+                                    <span id="tvc_client_email"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Latitude <span>:-</span></p>
@@ -243,6 +256,10 @@
                                   <div class="list-display">
                                     <p>Dealer <span>:-</span></p>
                                     <span id="tvc_client_sub_dealer"> </span>
+                                  </div>
+                                  <div class="list-display">
+                                    <p>Owner Package <span>:-</span></p>
+                                    <span id="tvc_client_package"> </span>
                                   </div>
                                 </div>
                               </div>
