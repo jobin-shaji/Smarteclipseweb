@@ -255,7 +255,7 @@ class SubDealerController extends Controller {
         $request->session()->flash('message','Password updated successfully!');
         $request->session()->flash('alert-class','alert-success');
          return redirect(route('subdealers'));   
-        // return  redirect(route('sub.dealers.change-password',$did));
+     
     }
     
 
