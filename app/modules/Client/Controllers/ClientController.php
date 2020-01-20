@@ -219,7 +219,8 @@ class ClientController extends Controller {
             'user_id',
             'sub_dealer_id',                      
             'name',                   
-            'address',                                       
+            'address',
+            'created_at',                                     
             'deleted_at'
             )
             ->withTrashed()
@@ -349,7 +350,7 @@ class ClientController extends Controller {
     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
-       
+
         $decrypted = Crypt::decrypt($request->id);
         $client = Client::where('user_id', $decrypted)->first();
          
