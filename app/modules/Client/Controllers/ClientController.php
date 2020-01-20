@@ -111,7 +111,7 @@ class ClientController extends Controller {
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
-
+                'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id        
@@ -262,6 +262,7 @@ class ClientController extends Controller {
     }
     public function edit(Request $request)
     {
+
         $decrypted = Crypt::decrypt($request->id); 
         $client = Client::withTrashed()->where('user_id', $decrypted)->first();
         $latitude= $client->latitude;
@@ -512,13 +513,15 @@ class ClientController extends Controller {
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_id',                      
+            'sub_dealer_id',
+            'trader_id',                     
             'name',                   
             'address',                               
             'deleted_at'
         )
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
+        ->with('trader')
         ->with('user:id,email,mobile,deleted_at')
         ->get();
         return DataTables::of($client)
@@ -542,14 +545,27 @@ class ClientController extends Controller {
             ";
             }
         })
-        ->addColumn('subdealer', function ($client) {
-            $b_url = \URL::to('/');
-            if($client->sub_dealer_id){ 
-            return $client->subdealer->name;
-            }else{ 
-            return " ";
-            }
+        ->addColumn('subdealer', function ($client) 
+        {
+              if($client->trader_id)
+                {
+                    return $client->trader->subDealer->name;
+                }
+                else{
+                    return $client->subdealer->name;
+                }
         })
+        ->addColumn('trader', function ($client) 
+        {
+        
+                if($client->trader_id)
+                { 
+                    return $client->trader->name;
+                }else{ 
+                    return "--";
+                }
+        })
+
         ->rawColumns(['link','working_status'])             
         ->make();
     }
@@ -604,33 +620,63 @@ class ClientController extends Controller {
     //returns employees as json 
     public function getDealerClient()
     {
-         $dealer_id=\Auth::user()->dealer->id;
+        $dealer_id=\Auth::user()->dealer->id;
         $sub_dealers = SubDealer::select(
                 'id'
                 )
+                ->withTrashed()
                 ->where('dealer_id',$dealer_id)
                 ->get();
         $single_sub_dealers = [];
         foreach($sub_dealers as $sub_dealer){
             $single_sub_dealers[] = $sub_dealer->id;
         }
-       
+        $traders = Trader::select(
+            'id'
+            )
+            ->withTrashed()
+            ->whereIn('sub_dealer_id',$single_sub_dealers)
+            ->get();
+        $single_traders = [];
+        foreach($traders as $trader){
+            $single_traders[] = $trader->id;
+        }
 
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_id',                      
+            'sub_dealer_id',  
+            'trader_id',                 
             'name',                   
             'address',                               
             'deleted_at'
         )
-        ->withTrashed()
         ->with('subdealer:id,user_id,name')
-         ->with('user:id,email,mobile')
-        ->whereIn('sub_dealer_id',$single_sub_dealers)
+        ->with('trader')
+        ->with('user:id,email,mobile')
+        ->where(function ($query) use($single_traders, $single_sub_dealers) {
+            $query->whereIn('trader_id', $single_traders)
+            ->orWhereIn('sub_dealer_id', $single_sub_dealers);
+        })
         ->get();
         return DataTables::of($client)
-        ->addIndexColumn()           
+        ->addColumn('dealer', function ($client) {
+            if($client->trader_id)
+            {
+                return $client->trader->subDealer->name;
+            }
+            else{
+                return $client->subdealer->name;
+            }
+        }) 
+        ->addColumn('sub_dealer', function ($client) {
+            if($client->trader_id){ 
+                return $client->trader->name;
+            }else{ 
+                return '--';
+            }
+        })  
+        ->addIndexColumn()         
         ->make();
     }
 //////////////////////////////////////subscription/////////////////////////////////////
@@ -981,12 +1027,8 @@ class ClientController extends Controller {
            
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
+            $location=$request->search_place;
             $placeLatLng=$this->getPlaceLatLng($request->search_place);
-            if($placeLatLng==null){
-                $request->session()->flash('message', 'Enter correct location'); 
-                $request->session()->flash('alert-class', 'alert-danger'); 
-                return redirect(route('client.create'));        
-            }
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];           
             $user = User::create([
@@ -1003,6 +1045,7 @@ class ClientController extends Controller {
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
+                'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id          
@@ -1167,6 +1210,7 @@ class ClientController extends Controller {
             'country_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
+            'search_place'=>'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string|min:10|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -1184,6 +1228,7 @@ class ClientController extends Controller {
             'country_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
+            'search_place'=>'required',
             'username' => 'required|unique:users',
             'mobile' => 'required|string||min:11|max:11unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -1201,6 +1246,7 @@ class ClientController extends Controller {
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
      
+
         // dd($geocode_stats);
         $output_deals = json_decode($geocode_stats);
       //  dd($output_deals);

@@ -1,13 +1,9 @@
 $(document).ready(function () {
     callBackDataTable();
 });
-
-
 function callBackDataTable(){
-    var  data = {
-    
+    var  data = {    
     }; 
-
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -16,7 +12,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-dealer-list',
+            url: 'distributor-sub-dealer-list',
             type: 'POST',
             data: {
                 'data': data
@@ -36,18 +32,15 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
-            {data: 'gps.imei', name: 'gps.imei', orderable: false },
-            {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false },
-            {data: 'gps.version', name: 'gps.version', orderable: false},
-            {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
-            {data: 'gps.model_name', name: 'gps.model_name', orderable: false},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'name', name: 'name' },            
+            {data: 'address', name: 'address', orderable: false,searchable: false},           
+            {data: 'user.mobile', name: 'user.mobile', orderable: false},
+            {data: 'user.email', name: 'user.email',orderable: false},          
+            {data: 'sub_dealer', name: 'sub_dealer',orderable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+
 }
-
-
-
 

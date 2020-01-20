@@ -101,8 +101,8 @@
                       <table class="table table-bordered  table-striped " style="width:100%">
                         <thead>
                           <tr>
-                            <th>Serial No</th>
-                            <th>Action</th>
+                              <th><b>Serial Number</b></th>
+                              <th><b>Action</b></th>
                           </tr>
                         </thead>
                         <tbody>

@@ -647,7 +647,7 @@ class VehicleController extends Controller
         ->with('gps.vehicle')
         ->with('alertType')
         ->where('gps_id',$vehicle->gps_id)
-        ->where('device_time','>=',$last_alert_time)
+        //->where('device_time','>=',$last_alert_time)
         ->whereIn('alert_type_id',[10,13])
         ->where('status',0)
         ->get();

@@ -35,8 +35,9 @@ function callBackDataTable(){
             {data: 'name', name: 'name' },            
             {data: 'address', name: 'address', orderable: false,searchable: false},           
             {data: 'user.mobile', name: 'user.mobile', orderable: false},
-            {data: 'user.email', name: 'user.email',orderable: false},          
-            {data: 'subdealer.name', name: 'subdealer.name',orderable: false},        
+            {data: 'user.email', name: 'user.email',orderable: false}, 
+            {data: 'dealer', name: 'dealer',orderable: false},          
+            {data: 'sub_dealer', name: 'sub_dealer',orderable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
