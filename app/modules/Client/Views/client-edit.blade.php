@@ -32,7 +32,7 @@
                   <div class="col-md-6">
                     <div class="form-group has-feedback">
                       <label class="srequired">Name</label>
-                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" maxlength="25" name="name" value="{{ $client->name}}"> 
+                        <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" maxlength="50" name="name" required value="{{ $client->name}}"> 
                         @if ($errors->has('name'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('name') }}</strong>
