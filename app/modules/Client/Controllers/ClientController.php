@@ -85,7 +85,7 @@ class ClientController extends Controller {
             $eclipse_key="eclipse";
 
             if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rafleet_user_create_rules();
+                 $rules = $this->rayfleet_user_create_rules();
             }
             else if (strpos($url, $eclipse_key) == true) {
                  $rules = $this->user_create_rules();
@@ -145,7 +145,7 @@ class ClientController extends Controller {
             $eclipse_key="eclipse";
 
             if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rafleet_user_create_rules();
+                 $rules = $this->rayfleet_user_create_rules();
             }
             else if (strpos($url, $eclipse_key) == true) {
                  $rules = $this->user_create_rules();
@@ -1170,7 +1170,7 @@ class ClientController extends Controller {
         return  $rules;
     }
 
-     public function rafleet_user_create_rules()
+     public function rayfleet_user_create_rules()
         {
             $rules = [
                 'name' => 'required',
