@@ -545,7 +545,7 @@ function render_devicetab(res)
             '</tr>';
         });
         table += '</table>'; 
-    }value
+    }
     
     $('#ota').html(table);
     /**** */
