@@ -82,7 +82,8 @@ class Vehicle extends Model
         ->select('vehicles.name as vehicle_name', 
           'vehicles.id', 'gps.imei', 
           'servicer_jobs.job_complete_date', 
-          'clients.name as client_name', 
+          'clients.name as client_name',
+          'users.username as user_name', 
           'users.mobile as mobile_number', 
           'servicers.name as servicer_name','dealers.name as dealer','sub_dealers.name as sub_dealer');
         // search filters
@@ -128,6 +129,7 @@ class Vehicle extends Model
         ->with('jobs', 'jobs.servicer')
         ->with('client.state')
         ->with('client.country')
+        ->with('client.user')
         ->with('client.city')
         ->with('client.subdealer')
         ->with('driver')

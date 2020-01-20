@@ -191,7 +191,7 @@
                 <tr>
                     <td class="cls_002 yellow">Manufacturer</td>
                     <td>
-                        B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam 
+                       VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam 
                     </td>
                 </tr>
                 <tr>
