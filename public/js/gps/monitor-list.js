@@ -736,23 +736,16 @@ $(document).ready(function(){
                     var html = '';
                     res.data.forEach(function(alert)
                     {
-                        if( !isAlertNeedsToDisplay(alert) )
-                        {
-                            return false;
-                        }
-
                         var need_to_append          = true;
                         var critical_alerts_html    = '';
-
+                        // critical alerts tab
                         critical_alerts.forEach(function(critical_alert){
                             if(alert.id == critical_alert.id)
                             {
                                 need_to_append = false;
                                 return false;
                             }
-                        }); 
-                        // modal contents
-                        html += prepareAlertModalContent(alert);
+                        });
                         // alert tab contents
                         critical_alerts_html = prepareAlertTabContent(alert);
                         // append to alerts tab
@@ -761,6 +754,13 @@ $(document).ready(function(){
                             critical_alerts.push(alert);  
                             $('#critical_alerts_table').prepend(critical_alerts_html);
                         }
+
+                        if( !isAlertNeedsToDisplay(alert) )
+                        {
+                            return false;
+                        }
+                        // modal contents
+                        html += prepareAlertModalContent(alert);
                     });
 
                     // trigger alert modal
