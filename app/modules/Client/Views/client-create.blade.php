@@ -162,7 +162,7 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label> 
                         <div class="form-group has-feedback">
-                          <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" maxlength="50" value="{{ old('email') }}" autocomplete="off" required>
+                          <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" maxlength="50" value="{{ old('email') }}" autocomplete="off">
                         </div>
                         @if ($errors->has('email'))
                           <span class="help-block">

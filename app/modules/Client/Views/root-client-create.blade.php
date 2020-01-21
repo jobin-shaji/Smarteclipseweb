@@ -206,7 +206,7 @@
                       <div class="form-group row" style="float:none!important">         
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email.</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}">
+                          <input type="email" maxlength='50' class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}">
                           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                         </div>
                         @if ($errors->has('email'))
