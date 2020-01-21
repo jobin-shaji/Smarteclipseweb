@@ -2,6 +2,8 @@
 
 namespace App\Modules\Monitoring\Controllers;
 use App\Exports\MonitoringReportExport;
+use App\Exports\NewMonitoringReportExport;
+
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Response;
@@ -135,7 +137,10 @@ class MonitorController extends Controller
     public function export(Request $request)
     {
         return Excel::download(new MonitoringReportExport($request->id), 'monitoring-report.xlsx');
-    } 
-    
-    
+    }  
+    public function newExport(Request $request)
+    {
+        return Excel::download(new NewMonitoringReportExport($request->id), 'new-monitoring-report.xlsx');
+    }   
+
 }

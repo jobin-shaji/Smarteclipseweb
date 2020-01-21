@@ -429,7 +429,6 @@ class DriverController extends Controller {
                 );
         return response()->json($score); 
     }
-
     //driver score alerts
     public function driverScoreAlerts(Request $request)
     {
