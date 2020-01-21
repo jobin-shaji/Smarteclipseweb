@@ -15,7 +15,9 @@ else
 }
 
 function clicked_vehicle_details(vehicle_id, row_id) 
-{   
+{
+    // clear previous modal data
+    clearPreviousModalData();  
     // highlight clicked row
     highLightClickedRow(row_id);
 
@@ -48,6 +50,11 @@ function clicked_vehicle_details(vehicle_id, row_id)
             }
         });
     }
+}
+
+function clearPreviousModalData()
+{
+    $('.vehicle-details-value').html('');
 }
 
 function setActiveTab(active_tab_id)
@@ -779,7 +786,7 @@ $(document).ready(function(){
             }
         });
 
-    }, 5000); 
+    }, 5000);
 });
 
 function isAlertNeedsToDisplay(alert)

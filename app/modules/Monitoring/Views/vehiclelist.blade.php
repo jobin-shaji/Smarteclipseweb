@@ -164,47 +164,47 @@
                                 <div class="list-outer-bg">
                                   <div class="list-display">
                                     <p>Vehicle Name <span>:-</span></p>
-                                    <span id="tvc_vehicle_name"></span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_name"></span>
                                   </div>
                                   <div class="list-display">
                                     <p>Registration Number <span>:-</span></p>
-                                    <span id="tvc_vehicle_registration_number"></span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_registration_number"></span>
                                   </div>    
                                   <div class="list-display">
                                     <p>Vehicle Type <span>:-</span></p>
-                                    <span id="tvc_vehicle_type"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_type"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Vehicle Model <span>:-</span></p>
-                                    <span id="tvc_vehicle_model"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_model"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Vehicle Make <span>:-</span></p>
-                                    <span id="tvc_vehicle_make"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_make"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Engine Number <span>:-</span></p>
-                                    <span id="tvc_vehicle_engine_number"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_engine_number"> </span>
                                   </div>
                                    <div class="list-display">
                                     <p>Chassis Number <span>:-</span></p>
-                                    <span id="tvc_vehicle_chassis_number"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_chassis_number"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Theft Mode <span>:-</span></p>
-                                    <span id="tvc_vehicle_theftmode"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_theftmode"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Towing <span>:-</span></p>
-                                    <span id="tvc_vehicle_towing"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_towing"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Emergency Status <span>:-</span></p>
-                                    <span id="tvc_vehicle_emergency_status"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_emergency_status"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Created At <span>:-</span></p>
-                                    <span id="tvc_vehicle_created_date"> </span>
+                                    <span class="vehicle-details-value" id="tvc_vehicle_created_date"> </span>
                                   </div>
                                 </div>
                               </div>
@@ -215,51 +215,51 @@
                                 <div class="list-outer-bg">
                                   <div class="list-display">
                                     <p>Owner Name <span>:-</span></p>
-                                    <span id="tvc_client_name"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_name"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Username <span>:-</span></p>
-                                    <span id="tvc_client_username"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_username"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Address <span>:-</span></p>
-                                    <span id="tvc_client_address"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_address"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Mobile <span>:-</span></p>
-                                    <span id="tvc_client_mobile"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_mobile"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Email <span>:-</span></p>
-                                    <span id="tvc_client_email"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_client_email"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Latitude <span>:-</span></p>
-                                    <span id="tvc_client_lat"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_client_lat"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Longitude <span>:-</span></p>
-                                    <span id="tvc_client_lng"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_lng"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Country <span>:-</span></p>
-                                    <span id="tvc_client_country"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_client_country"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner State <span>:-</span></p>
-                                    <span id="tvc_client_state"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_state"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner City <span>:-</span></p>
-                                    <span id="tvc_client_city"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_city"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Dealer <span>:-</span></p>
-                                    <span id="tvc_client_sub_dealer"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_sub_dealer"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Package <span>:-</span></p>
-                                    <span id="tvc_client_package"> </span>
+                                    <span class="vehicle-details-value" id="tvc_client_package"> </span>
                                   </div>
                                 </div>
                               </div>
@@ -270,19 +270,19 @@
                                 <div class="list-outer-bg">
                                   <div class="list-display">
                                     <p>Driver Name <span>:-</span></p>
-                                    <span id="tvc_driver_name"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_driver_name"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Driver Address <span>:-</span></p>
-                                    <span id="tvc_driver_address"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_driver_address"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Driver Mobile <span>:-</span></p>
-                                    <span id="tvc_driver_mobile"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_driver_mobile"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Driver Points <span>:-</span></p>
-                                    <span id="tvc_driver_points"> </span>
+                                    <span  class="vehicle-details-value" id="tvc_driver_points"> </span>
                                   </div>
                                 </div>
                               </div>
@@ -301,67 +301,67 @@
                               <div class="list-outer-bg">
                                 <div class="list-display">
                                   <p>IMEI <span>:-</span></p>
-                                  <span id="tvc_device_imei"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_imei"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Serial Number <span>:-</span></p>
-                                  <span id="tvc_device_serial_no"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_serial_no"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Manufacturing date <span>:-</span></p>
-                                  <span id="tvc_device_manufacturing_date"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_manufacturing_date"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>ICC Id <span>:-</span></p>
-                                  <span id="tvc_device_icc_id"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_icc_id"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>IMSI <span>:-</span></p>
-                                  <span id="tvc_device_imsi"> </span>
+                                  <span class="vehicle-details-value"  id="tvc_device_imsi"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>E Sim Number <span>:-</span></p>
-                                  <span id="tvc_device_e_sim_number"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_e_sim_number"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Batch Number <span>:-</span></p>
-                                  <span id="tvc_device_batch_number"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_batch_number"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Model Name <span>:-</span></p>
-                                  <span id="tvc_device_model_name"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_model_name"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Version <span>:-</span></p>
-                                  <span id="tvc_device_version"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_version"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Employee Code <span>:-</span></p>
-                                  <span id="tvc_device_employee_code"> </span>
+                                  <span class="vehicle-details-value"  id="tvc_device_employee_code"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Number of satellites <span>:-</span></p>
-                                  <span id="tvc_device_satellites"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_satellites"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Emergency Status <span>:-</span></p>
-                                  <span id="tvc_device_emergency_status"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_emergency_status"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>GPS Fix <span>:-</span></p>
-                                  <span id="tvc_device_gps_fix"> </span>
+                                  <span class="vehicle-details-value"  id="tvc_device_gps_fix"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Calibrated on <span>:-</span></p>
-                                  <span id="tvc_device_calibrated_on"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_calibrated_on"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Login on <span>:-</span></p>
-                                  <span id="tvc_device_login_on"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_login_on"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Created At <span>:-</span></p>
-                                  <span id="tvc_device_created_on"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_created_on"> </span>
                                 </div>
                               </div>
                             </div>
@@ -372,52 +372,52 @@
                               <div class="list-outer-bg">
                                 <div class="list-display">
                                   <p>Mode<span>:-</span></p>
-                                  <span id="tvc_device_mode"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_mode"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Latitude<span>:-</span></p>
-                                  <span id="tvc_device_lat"> </span>
+                                  <span class="vehicle-details-value"  id="tvc_device_lat"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Longitude<span>:-</span></p>
-                                  <span id="tvc_device_lon"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_lon"> </span>
                                 </div>
                                 
                                 <div class="list-display">
                                   <p>Fuel Status<span>:-</span></p>
-                                  <span id="tvc_device_fuel_status"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_fuel_status"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Speed<span>:-</span></p>
-                                  <span id="tvc_device_speed"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_speed"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Odometer<span>:-</span></p>
-                                  <span id="tvc_device_odometer"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_odometer"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Battery Status<span>:-</span></p>
-                                  <span id="tvc_device_battery_status"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_battery_status"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Main Power Status<span>:-</span></p>
-                                  <span id="tvc_device_main_power_status"> </span>
+                                  <span class="vehicle-details-value" id="tvc_device_main_power_status"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Device Date & Time<span>:-</span></p>
-                                  <span id="tvc_device_device_time"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_device_time"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Ignition<span>:-</span></p>
-                                  <span id="tvc_device_ignition"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_ignition"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>GSM Signal Strength<span>:-</span></p>
-                                  <span id="tvc_device_gsm_signal_strength"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_gsm_signal_strength"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>AC Status<span>:-</span></p>
-                                  <span id="tvc_device_ac_status"> </span>
+                                  <span  class="vehicle-details-value" id="tvc_device_ac_status"> </span>
                                 </div>
                               </div>
                             </div>
