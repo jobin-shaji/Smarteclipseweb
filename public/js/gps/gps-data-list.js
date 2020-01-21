@@ -55,7 +55,7 @@ function callBackDataTable(value){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             // {data: 'client.name', name: 'client.name', searchable: false},
             {data: 'gps.name', name: 'gps.name'},
             // {data: 'vehicle.name', name: 'vehicle.name'},
