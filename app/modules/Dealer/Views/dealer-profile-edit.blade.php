@@ -30,7 +30,7 @@
                   <div class="col-md-6">
                     <div class="form-group has-feedback">
                       <label class="srequired">Name</label>
-                      <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $dealer->name}}"> 
+                      <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength='50' required value="{{ $dealer->name}}"> 
                     @if ($errors->has('name'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('name') }}</strong>
@@ -40,7 +40,7 @@
 
                     <div class="form-group has-feedback">
                       <label class="srequired">Address</label>
-                      <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ $dealer->address}}"> 
+                      <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" maxlength='150' required value="{{ $dealer->address}}"> 
                     @if ($errors->has('address'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('address') }}</strong>
@@ -88,7 +88,7 @@
 
                     <div class="form-group has-feedback">
                       <label class="srequired">Email</label>
-                      <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $dealer->user->email}}"> 
+                      <input type="email" maxlength='50' required class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $dealer->user->email}}"> 
                     @if ($errors->has('email'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('email') }}</strong>

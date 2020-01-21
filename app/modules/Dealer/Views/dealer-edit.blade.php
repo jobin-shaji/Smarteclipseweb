@@ -96,7 +96,7 @@
                       <?php } ?>
                         <div class="form-group has-feedback">
                           <label class="srequired">Email</label>
-                          <input type="text" required class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" />
+                          <input type="email" required maxlength='50' class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" />
                         </div>
                         @if ($errors->has('email'))
                           <span class="help-block">
