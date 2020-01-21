@@ -48,7 +48,7 @@ function callBackDataTable(data=null){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},         
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},         
             {data: 'gps.imei', name: 'gps.imei',searchable: false},           
             {data: 'status', name: 'status', orderable: false},
             {data: 'user.username', name: 'user.username',searchable: false},

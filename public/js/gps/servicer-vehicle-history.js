@@ -59,7 +59,7 @@ function create_vehicle(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'register_number', name: 'register_number'} ,
             // {data: 'gps.imei', name: 'gps.imei'} ,    
