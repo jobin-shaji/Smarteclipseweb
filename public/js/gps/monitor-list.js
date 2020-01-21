@@ -119,6 +119,7 @@ function render_vehicletab(res)
         {'id' : 'tvc_client_sub_dealer', 'key' : ['gps_stock','subdealer','name']},
         {'id' : 'tvc_client_package', 'key' : ['client','user','role']},
         /* /Client Details */
+
         /* Driver Details */
         {'id' : 'tvc_driver_name', 'key' : ['driver','name']},
         {'id' : 'tvc_driver_address', 'key' : ['driver','address']},
@@ -126,8 +127,10 @@ function render_vehicletab(res)
         {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
     ].forEach(function(each_element){
         repaint(each_element.id);
+        
         if(typeof each_element.key == 'string')
         {
+            // console.log(each_element.id);
             if( each_element.id == 'tvc_vehicle_theftmode')
             {
                 $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'Enabled' : 'Disabled');
@@ -139,8 +142,8 @@ function render_vehicletab(res)
             else if( each_element.id == 'tvc_vehicle_emergency_status')
             {
                 $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On' : 'Off');
-            }  
-           
+            }            
+
             else
             {
                  $('#'+each_element.id).text(res.data[each_element.key]);
@@ -148,20 +151,27 @@ function render_vehicletab(res)
         }
         else if(typeof each_element.key == 'object')
         {
-           
-            var detail = res.data;
-            each_element.key.forEach(function(key){
-                if(detail[key] != null)
-                {
-                    detail = detail[key];
-                }
-                else
-                {
-                    detail = '';
-                    return false;
-                }
-            });
-            $('#'+each_element.id).text(detail);
+
+            var detail = res.data;                
+            if( each_element.id == 'tvc_driver_points')
+            {
+                $('#'+each_element.id).text( (res.data.driver.points <= 0) ? 0 : res.data.driver.points);
+            }
+            else
+            {
+                each_element.key.forEach(function(key){
+                    if(detail[key] != null)
+                    {
+                        detail = detail[key];
+                    }
+                    else
+                    {
+                        detail = '';
+                        return false;
+                    }                     
+                });
+                $('#'+each_element.id).text(detail);
+            }            
             if( each_element.id == 'tvc_client_package')
             {
                 var client_package = { 

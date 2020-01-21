@@ -225,9 +225,7 @@
                     <td class="cls_002 grey">Date of Installation</td>
                     <td>{{$date}}</td>
                 </tr>
-            </table>
-           
-            
+            </table>           
             <div style="position:absolute;left:70px;top:830px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
@@ -240,7 +238,6 @@
             <div style="position:absolute;left:70px;top:1000px" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
-        </div>
-        
+        </div>        
     </body>
 </html>
