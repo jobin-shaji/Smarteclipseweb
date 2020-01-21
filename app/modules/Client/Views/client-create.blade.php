@@ -86,7 +86,7 @@
                         @endif
                       </div> 
 
-                       <div class="form-group has-feedback">
+                       <div class="form-group row">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
@@ -259,6 +259,7 @@
     width: 100%;
     float: left;
     flex: inherit;
+  max-width: 100%;
     }
   </style>
            
