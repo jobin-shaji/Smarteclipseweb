@@ -33,19 +33,19 @@
               {{csrf_field()}}
               <div class="form-group has-feedback">
                 <label>Name</label>
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $servicer->name}}" >
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength='50' value="{{ $servicer->name}}" required >
               </div>
               <div class="form-group has-feedback">
                 <label>Address</label>
-                <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$servicer->address}}" >
+                <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" maxlength='150' value="{{$servicer->address}}" required>
               </div>
               <div class="form-group has-feedback">
                 <label>Mobile No.</label>
-                <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}" >
+                <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}" required>
               </div>
              <div class="form-group has-feedback">
                 <label>Email</label>
-                <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" >
+                <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" maxlength='50' value="{{ $user->email}}" required>
               </div>
               <div class="form-group has-feedback">
               <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
