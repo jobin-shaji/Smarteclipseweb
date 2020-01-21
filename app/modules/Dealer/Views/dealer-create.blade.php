@@ -94,7 +94,7 @@
                  
                   <div class="form-group has-feedback">
                     <label class="srequired">Email</label>
-                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required autocomplete="off">
+                    <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" maxlength='50' required autocomplete="off">
                     @if ($errors->has('email'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('email') }}</strong>

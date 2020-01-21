@@ -72,7 +72,7 @@ class UsersTableSeeder extends Seeder
         User::where('username','vst')->first()->assignRole('root');
 
         $user = DB::table('users')->insert([
-            'username' => 'dealer',
+            'username' => 'distributor',
             'mobile' => 123453,
             'email' => 'phpdeveloper02@vehiclest.in',
             'password' => bcrypt('123456'),
@@ -81,7 +81,7 @@ class UsersTableSeeder extends Seeder
 
         DB::table('dealers')->insert([
             'address' => 'vst',
-            'name' => 'dealer',
+            'name' => 'vst_distributor',
             'user_id'=>2,
             'root_id' => 1
         ]);
@@ -91,7 +91,7 @@ class UsersTableSeeder extends Seeder
 
        
         $user = DB::table('users')->insert([
-            'username' => 'sub_dealer',
+            'username' => 'dealer',
             'mobile' => 123453,
             'email' => 'phpdeveloper03@vehiclest.in',
             'password' => bcrypt('123456'),
@@ -100,7 +100,7 @@ class UsersTableSeeder extends Seeder
 
         DB::table('sub_dealers')->insert([
             'address' => 'vst',
-            'name' => 'sub_dealer',
+            'name' => 'vst_dealer',
             'user_id'=>3,
             'dealer_id' => 1
         ]);
@@ -118,7 +118,7 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('clients')->insert([
             'address' => 'vst',
-            'name' => 'client',
+            'name' => 'client_vst',
             'user_id'=>4,
             'sub_dealer_id' => 1
         ]);

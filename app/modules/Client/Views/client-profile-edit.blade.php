@@ -51,7 +51,7 @@
               </div>
               <div class="form-group has-feedback">
                 <label>Email</label>
-                <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" >
+                <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" maxlength='50' >
                 @if ($errors->has('email'))
                   <span class="help-block">
                     <strong class="error-text">{{ $errors->first('email') }}</strong>
