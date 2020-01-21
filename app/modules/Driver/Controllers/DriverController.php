@@ -417,6 +417,10 @@ class DriverController extends Controller {
         $single_driver_point = [];
         foreach($drivers as $driver){
             $single_driver_name[] = $driver->name;
+            if($driver->points<=0)
+            {
+                $driver->points=0;
+            }
             $single_driver_point[] = $driver->points;
         }
         $score=array(
