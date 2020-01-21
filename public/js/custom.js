@@ -493,9 +493,8 @@ function verifyAlertResponse(res){
 
 
 function downloadFile(url,data){
-
     var purl = getUrl() + '/'+url ;
-// console.log(data);
+
     $.ajax({
             cache: false,
             type: 'POST',
@@ -509,7 +508,7 @@ function downloadFile(url,data){
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response, status, xhr) {
-
+                console.log(response);
                 var filename = "";                   
                 var disposition = xhr.getResponseHeader('Content-Disposition');
 
@@ -519,8 +518,12 @@ function downloadFile(url,data){
                     if (matches !== null && matches[1]) filename = matches[1].replace(/['"]/g, '');
                 }
                 var linkelem = document.createElement('a');
-                try {
-                                           var blob = new Blob([response], { type: 'application/octet-stream' });                        
+                try 
+                {
+                    // var BOM = "\uFEFF";
+                    // var  response = BOM + response;
+                    // console.log(response);
+                    var blob = new Blob([response], { type: 'application/octet-stream' });                        
 
                     if (typeof window.navigator.msSaveBlob !== 'undefined') {
                         //   IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
@@ -1495,7 +1498,14 @@ function getdataHLMList(id){
 //         }  
 //     }   
 // }
+function downloadMonitoringReport(){  
+    var url = 'monitoring-report/export';
+    var data = {
+    id : $('meta[name = "client"]').attr('content')
+    };
 
+    downloadFile(url,data);
+}
 
 
 

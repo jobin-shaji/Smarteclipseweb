@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Modules\Monitoring\Controllers;
+use App\Exports\MonitoringReportExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
@@ -124,14 +126,16 @@ class MonitorController extends Controller
             $this->success = false;
             $this->message = 'failed';
             return response()->json([ 'data' => $this->alert, 'success' => $this->success, 'message' => $this->message  ]);
-        }  
-        
+        }         
     }
-
     public function getAlertMap()
     {
        return view('Monitoring::map-monitoring',['alerts'=> (new Vehicle())->getAlertList(),'vehicles'=> null]);  
     }
+    public function export(Request $request)
+    {
+        return Excel::download(new MonitoringReportExport($request->id), 'monitoring-report.xlsx');
+    } 
     
     
 }

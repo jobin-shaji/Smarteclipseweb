@@ -125,6 +125,8 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
+                     <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadMonitoringReport()">
+                              <i class="fa fa-file"></i>Download Excel</button>
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
                       <li class="monitoring_subtab ">
                         <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
