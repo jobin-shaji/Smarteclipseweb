@@ -1,13 +1,9 @@
 $(document).ready(function () {
     callBackDataTable();
 });
-
-
 function callBackDataTable(){
-    var  data = {
-    
+    var  data = {    
     }; 
-
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -16,7 +12,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-client-list',
+            url: 'distributor-sub-dealer-list',
             type: 'POST',
             data: {
                 'data': data
@@ -35,15 +31,16 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'imei', name: 'imei'},
-            {data: 'version', name: 'version'},
-            {data: 'brand', name: 'brand'},
-            {data: 'model_name', name: 'model_name'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'name', name: 'name' },            
+            {data: 'address', name: 'address', orderable: false,searchable: false},           
+            {data: 'user.mobile', name: 'user.mobile', orderable: false},
+            {data: 'user.email', name: 'user.email',orderable: false},          
+            {data: 'sub_dealer', name: 'sub_dealer',orderable: false},        
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-}
 
+}
 

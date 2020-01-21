@@ -30,7 +30,7 @@ function callBackDataTable(){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'route_batch.name', name: 'route_batch.name' }, 
             {data: 'route.name', name: 'route.name' }, 
             {data: 'vehicle.register_number', name: 'vehicle.register_number' }, 

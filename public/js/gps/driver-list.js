@@ -30,7 +30,7 @@ function callBackDataTable(){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name', orderable: false },            
             {data: 'address', name: 'address', orderable: false, searchable: false},           
             {data: 'mobile', name: 'mobile', orderable: false},             

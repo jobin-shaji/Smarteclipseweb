@@ -29,7 +29,7 @@
             <div class="form-group row" style="float:none!important">
               <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
               <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" required> 
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" maxlength="50" required> 
               </div>
               @if ($errors->has('name'))
                 <span class="help-block">
@@ -40,7 +40,7 @@
             <div class="form-group row" style="float:none!important">
               <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
               <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" required>
+                <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}" maxlength="150" required>
               </div>
               @if ($errors->has('address'))
                 <span class="help-block">
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="form-group row" style="float:none!important">
-                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm password</label> 
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label> 
                 <div class="form-group has-feedback">
                 <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                 </div>

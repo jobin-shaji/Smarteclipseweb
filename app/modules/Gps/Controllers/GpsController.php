@@ -649,7 +649,7 @@ class GpsController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Gps does not exist'
+                'message' => 'GPS does not exist'
             ]);
         }
         $gps->status=0;
@@ -664,7 +664,7 @@ class GpsController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps deactivated successfully'
+            'message' => 'GPS deactivated successfully'
         ]);
     }
     // activate gps from trader
@@ -676,7 +676,7 @@ class GpsController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Gps does not exist'
+                'message' => 'GPS does not exist'
             ]);
         }
         $gps->status=1;
@@ -691,7 +691,7 @@ class GpsController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps activated successfully'
+            'message' => 'GPS activated successfully'
         ]);
     }
 

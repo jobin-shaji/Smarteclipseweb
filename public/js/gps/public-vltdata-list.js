@@ -43,7 +43,7 @@ function callBackDataTable(value){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'vltdata', name: 'vltdata', orderable: false, searchable: true},
             {data: 'created_at', name: 'created_at' ,orderable: true, searchable: false},
             {data: 'forhuman', name: 'forhuman' ,orderable: false, searchable: false},

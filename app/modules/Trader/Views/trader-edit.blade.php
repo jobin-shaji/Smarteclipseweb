@@ -27,7 +27,7 @@
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
                 <div class="form-group has-feedback">
-                  <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $trader->name}}"> 
+                  <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" maxlength="50" required name="name" value="{{ $trader->name}}"> 
                 </div>
                 @if ($errors->has('name'))
                   <span class="help-block">
@@ -81,7 +81,7 @@
                        <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" value="{{ $trader->address}}"> 
+                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" required maxlength="150" value="{{ $trader->address}}"> 
                         </div>
                         @if ($errors->has('address'))
                           <span class="help-block">

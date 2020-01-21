@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="form-group row" style="float:none!important">
-                <label for="fname" class="text-right control-label col-form-label">Confirm password</label> 
+                <label for="fname" class="text-right control-label col-form-label">Confirm Password</label> 
                 <div class="form-group has-feedback">
                   <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                 </div>
