@@ -22,6 +22,8 @@ function clicked_vehicle_details(vehicle_id, row_id)
     highLightClickedRow(row_id);
 
     $('#monitoring_details_tab_contents_loading').show();
+    //added code
+    $('#monitoring_details_tab_contents').hide();
     $('#sidebar-right').hide();
 
     if(vehicle_id)
@@ -37,6 +39,7 @@ function clicked_vehicle_details(vehicle_id, row_id)
             },
             success: function (res){
                 $('#monitoring_details_tab_contents_loading').hide();
+                $('#monitoring_details_tab_contents').show();
                 $('#sidebar-right').show();
                 if(res.success)
                 {
@@ -155,7 +158,10 @@ function render_vehicletab(res)
             var detail = res.data;                
             if( each_element.id == 'tvc_driver_points')
             {
+                if(res.data.driver != null)
+                {
                 $('#'+each_element.id).text( (res.data.driver.points <= 0) ? 0 : res.data.driver.points);
+                }
             }
             else
             {
