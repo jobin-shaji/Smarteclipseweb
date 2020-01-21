@@ -833,7 +833,7 @@ class ClientController extends Controller {
         $file=$request->file('logo');
         if($file){
             $old_file = $client->logo;
-            if("logo/".$old_file){
+            if(file_exists("logo/".$old_file)){
                 $myFile = "logo/".$old_file;
                 $delete_file=unlink($myFile);
             }
@@ -938,7 +938,7 @@ class ClientController extends Controller {
         $file=$request->file('logo');
         if($file){
             $old_file = $client->logo;
-            if("logo/".$old_file){
+            if(file_exists("logo/".$old_file)){
                 $myFile = "logo/".$old_file;
                 $delete_file=unlink($myFile);
             }
