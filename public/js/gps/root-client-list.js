@@ -10,7 +10,7 @@ function callBackDataTable(){
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
+        // order: [[1, 'desc']],
         ajax: {
             url: 'root-client-list',
             type: 'POST',
@@ -31,14 +31,14 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'name', name: 'name' },            
-            {data: 'address', name: 'address',searchable: false},           
-            {data: 'user.mobile', name: 'user.mobile'},
-            {data: 'user.email', name: 'user.email',searchable: false},          
-            {data: 'subdealer', name: 'subdealer',searchable: false}, 
-            {data: 'trader', name: 'trader',searchable: false},
-            {data: 'working_status', name: 'working_status',searchable: false},       
+            {data: 'DT_RowIndex', name: 'DT_Row_Index', searchable: false},
+            {data: 'name', name: 'name', orderable: false },            
+            {data: 'address', name: 'address', orderable: false,searchable: false},           
+            {data: 'user.mobile', name: 'user.mobile', orderable: false},
+            {data: 'user.email', name: 'user.email', orderable: false},          
+            {data: 'subdealer', name: 'subdealer', orderable: false}, 
+            {data: 'trader', name: 'trader', orderable: false},
+            {data: 'working_status', name: 'working_status', orderable: false},       
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
