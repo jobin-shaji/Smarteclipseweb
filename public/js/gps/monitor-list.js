@@ -155,7 +155,10 @@ function render_vehicletab(res)
             var detail = res.data;                
             if( each_element.id == 'tvc_driver_points')
             {
+                if(res.data.driver != null)
+                {
                 $('#'+each_element.id).text( (res.data.driver.points <= 0) ? 0 : res.data.driver.points);
+                }
             }
             else
             {
