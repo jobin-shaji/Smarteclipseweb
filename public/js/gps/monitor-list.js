@@ -15,11 +15,15 @@ else
 }
 
 function clicked_vehicle_details(vehicle_id, row_id) 
-{   
+{
+    // clear previous modal data
+    clearPreviousModalData();  
     // highlight clicked row
     highLightClickedRow(row_id);
 
     $('#monitoring_details_tab_contents_loading').show();
+    //added code
+    $('#monitoring_details_tab_contents').hide();
     $('#sidebar-right').hide();
 
     if(vehicle_id)
@@ -35,6 +39,7 @@ function clicked_vehicle_details(vehicle_id, row_id)
             },
             success: function (res){
                 $('#monitoring_details_tab_contents_loading').hide();
+                $('#monitoring_details_tab_contents').show();
                 $('#sidebar-right').show();
                 if(res.success)
                 {
@@ -48,6 +53,11 @@ function clicked_vehicle_details(vehicle_id, row_id)
             }
         });
     }
+}
+
+function clearPreviousModalData()
+{
+    $('.vehicle-details-value').html('');
 }
 
 function setActiveTab(active_tab_id)
@@ -112,6 +122,7 @@ function render_vehicletab(res)
         {'id' : 'tvc_client_sub_dealer', 'key' : ['gps_stock','subdealer','name']},
         {'id' : 'tvc_client_package', 'key' : ['client','user','role']},
         /* /Client Details */
+
         /* Driver Details */
         {'id' : 'tvc_driver_name', 'key' : ['driver','name']},
         {'id' : 'tvc_driver_address', 'key' : ['driver','address']},
@@ -119,8 +130,10 @@ function render_vehicletab(res)
         {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
     ].forEach(function(each_element){
         repaint(each_element.id);
+        
         if(typeof each_element.key == 'string')
         {
+            // console.log(each_element.id);
             if( each_element.id == 'tvc_vehicle_theftmode')
             {
                 $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'Enabled' : 'Disabled');
@@ -132,8 +145,8 @@ function render_vehicletab(res)
             else if( each_element.id == 'tvc_vehicle_emergency_status')
             {
                 $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On' : 'Off');
-            }  
-           
+            }            
+
             else
             {
                  $('#'+each_element.id).text(res.data[each_element.key]);
@@ -141,20 +154,30 @@ function render_vehicletab(res)
         }
         else if(typeof each_element.key == 'object')
         {
-           
-            var detail = res.data;
-            each_element.key.forEach(function(key){
-                if(detail[key] != null)
+
+            var detail = res.data;                
+            if( each_element.id == 'tvc_driver_points')
+            {
+                if(res.data.driver != null)
                 {
-                    detail = detail[key];
+                $('#'+each_element.id).text( (res.data.driver.points <= 0) ? 0 : res.data.driver.points);
                 }
-                else
-                {
-                    detail = '';
-                    return false;
-                }
-            });
-            $('#'+each_element.id).text(detail);
+            }
+            else
+            {
+                each_element.key.forEach(function(key){
+                    if(detail[key] != null)
+                    {
+                        detail = detail[key];
+                    }
+                    else
+                    {
+                        detail = '';
+                        return false;
+                    }                     
+                });
+                $('#'+each_element.id).text(detail);
+            }            
             if( each_element.id == 'tvc_client_package')
             {
                 var client_package = { 
@@ -783,7 +806,7 @@ $(document).ready(function(){
             }
         });
 
-    }, 5000); 
+    }, 5000);
 });
 
 function isAlertNeedsToDisplay(alert)

@@ -40,7 +40,7 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                   <div class="form-group has-feedback">
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
+                    <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength="50" value="{{ old('name') }}"> 
                   </div>
                   @if ($errors->has('name'))
                   <span class="help-block">
@@ -51,7 +51,7 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
                   <div class="form-group has-feedback">
-                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{ old('address') }}">
+                    <input type="text"  required class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" maxlength="150" value="{{ old('address') }}">
                   </div>
                   @if ($errors->has('address'))
                   <span class="help-block">
@@ -59,53 +59,53 @@
                   </span>
                   @endif
                 </div>
-                 <?php
-                      $url=url()->current();
-                      $rayfleet_key="rayfleet";
-                      $eclipse_key="eclipse";
-                      if (strpos($url, $rayfleet_key) == true) {  ?>
-                          <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
-                        <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" />
-                        </div>
-                        @if ($errors->has('mobile_number'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
-                          </span>
-                        @endif
-                      </div>
-                      <?php } 
-                      else if (strpos($url, $eclipse_key) == true) { ?>
-                         <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
-                        <div class="form-group has-feedback">
-                         <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
-                        </div>
-                        @if ($errors->has('mobile_number'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
-                          </span>
-                        @endif
-                      </div>
-                      <?php }
-                      else { ?>
-                           <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
-                        <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
-                        </div>
-                        @if ($errors->has('mobile_number'))
-                          <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
-                          </span>
-                        @endif
-                      </div>
-                      <?php } ?>
+                <?php
+                  $url=url()->current();
+                  $rayfleet_key="rayfleet";
+                  $eclipse_key="eclipse";
+                  if (strpos($url, $rayfleet_key) == true) {  ?>
+                      <div class="form-group row" style="float:none!important">
+                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" />
+                    </div>
+                    @if ($errors->has('mobile_number'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                  <?php } 
+                  else if (strpos($url, $eclipse_key) == true) { ?>
+                      <div class="form-group row" style="float:none!important">
+                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
+                    </div>
+                    @if ($errors->has('mobile_number'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                  <?php }
+                  else { ?>
+                        <div class="form-group row" style="float:none!important">
+                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
+                    <div class="form-group has-feedback">
+                      <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
+                    </div>
+                    @if ($errors->has('mobile_number'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                <?php } ?>
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                   <div class="form-group has-feedback">
-                    <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}">
+                    <input type="email" maxlength='50' required class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}">
                   </div>
                   @if ($errors->has('email'))
                   <span class="help-block">
@@ -116,7 +116,7 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label>
                   <div class="form-group has-feedback">
-                    <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}">
+                    <input type="text" required class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}">
                   </div>
                   @if ($errors->has('username'))
                   <span class="help-block">
@@ -127,13 +127,13 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                   <div class="form-group has-feedback">
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
+                    <input type="password"  required class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
                   </div>
                 </div>
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>  
                   <div class="form-group has-feedback">
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation">
+                    <input type="password" required class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation">
                   </div>
                   @if ($errors->has('password'))
                   <span class="help-block">

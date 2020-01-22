@@ -163,7 +163,7 @@ class ComplaintController extends Controller {
                     $client_id[] = $client->id;
                 }
                 $complaints = $complaints->whereIn('client_id',$client_id);
-            }else{
+            }else if(\Auth::user()->hasRole('trader')){
                 $trader_id=\Auth::user()->trader->id;
                 $clients= Client::select('id', 'name','trader_id')->where('trader_id',$trader_id)->get();
                 $client_id = [];

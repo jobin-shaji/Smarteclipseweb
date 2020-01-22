@@ -34,7 +34,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: true, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
             // {data: 'imei', name: 'imei', orderable: false},                   
             // {data: 'serial_no', name: 'serial_no', searchable: false},
             // {data: 'e_sim_number', name: 'e_sim_number', orderable: false},

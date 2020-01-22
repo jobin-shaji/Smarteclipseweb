@@ -27,7 +27,7 @@
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
                 <div class="form-group has-feedback">
-                  <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $subdealers->name}}"> 
+                  <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength="50" value="{{ $subdealers->name}}" required> 
                 </div>
                 @if ($errors->has('name'))
                   <span class="help-block">
@@ -81,7 +81,7 @@
                        <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" value="{{ $subdealers->address}}"> 
+                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" maxlength="150" value="{{ $subdealers->address}}" required> 
                         </div>
                         @if ($errors->has('address'))
                           <span class="help-block">
@@ -92,7 +92,7 @@
                        <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                         <div class="form-group has-feedback">
-                          <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" value="{{ $user->email}}" placeholder="email" name="email" value="{{ old('email') }}" required  autocomplete="off">
+                          <input type="email" maxlength='50' class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" value="{{ $user->email}}" placeholder="email" name="email" value="{{ old('email') }}" required  autocomplete="off">
                         </div>
                         @if ($errors->has('email'))
                           <span class="help-block">

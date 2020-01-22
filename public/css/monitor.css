@@ -852,3 +852,10 @@ table
 {
   text-align: center;
 }
+   .please-w8{
+        width: 80%;
+    margin: 0px auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #636363;
+   }
