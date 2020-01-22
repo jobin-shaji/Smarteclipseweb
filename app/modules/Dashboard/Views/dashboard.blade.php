@@ -549,23 +549,17 @@
       </div>
       <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
-        <div class="small-box bg-green bxs">
-          <div class="inner inner-left">
-            <div class="box-2">
-              <div style="float:left; width:50%">
-                <h3 id="transferred_gps_from_dealer_to_client_awaiting"></h3>
-                <p class="mrg-bt-0">Awaiting Confirmation</p>
-              </div>
-              <div style="float:left; width:50%">
-                <h3 id="transferred_gps_from_dealer_to_client"></h3>
-                <p class="mrg-bt-0">Transferred GPS To End User</p>
-              </div>
-            </div>
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="transferred_gps_from_dealer_to_client">
+              <div class="loader"></div>
+            </h3>
+            <p>Transferred GPS To End User</p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
           </div>
-          <a href="/gps-transfers-subdealer" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/gps-transfers-subdealer" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
