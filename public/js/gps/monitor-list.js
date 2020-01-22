@@ -156,28 +156,19 @@ function render_vehicletab(res)
         {
 
             var detail = res.data;                
-            if( each_element.id == 'tvc_driver_points')
-            {
-                if(res.data.driver != null)
+
+            each_element.key.forEach(function(key){
+                if(detail[key] != null)
                 {
-                $('#'+each_element.id).text( (res.data.driver.points <= 0) ? 0 : res.data.driver.points);
+                    detail = detail[key];
                 }
-            }
-            else
-            {
-                each_element.key.forEach(function(key){
-                    if(detail[key] != null)
-                    {
-                        detail = detail[key];
-                    }
-                    else
-                    {
-                        detail = '';
-                        return false;
-                    }                     
-                });
-                $('#'+each_element.id).text(detail);
-            }            
+                else
+                {
+                    detail = '';
+                    return false;
+                }                     
+            });
+           
             if( each_element.id == 'tvc_client_package')
             {
                 var client_package = { 
@@ -231,8 +222,12 @@ function render_vehicletab(res)
             }
             else if( each_element.id == 'tvc_driver_points')
             {
-                $('#'+each_element.id).text((detail == '') ? 'Not available' :detail);
+                $('#'+each_element.id).text( (detail > 0) ? detail : 0 );
             }
+            else
+            {
+                $('#'+each_element.id).text(detail);
+            } 
         }
     });
     // display vehicle tab
