@@ -181,7 +181,7 @@ function render_vehicletab(res)
             if( each_element.id == 'tvc_client_package')
             {
                 var client_package = { 
-                    "0":"Not assigned",
+                    "0":"Freebies",
                     "1":"Admin",
                     "2":"Distributor",
                     "3":"Dealer",
