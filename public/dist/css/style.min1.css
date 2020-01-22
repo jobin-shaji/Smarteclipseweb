@@ -17949,3 +17949,10 @@ a,
     color: white;
     margin-left: 4%;
 }
+
+input:required {
+    box-shadow:none;
+}
+input:invalid {
+    box-shadow:0 0 3px none;
+}

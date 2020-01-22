@@ -659,7 +659,7 @@ function getPolygonData(url, data, callBack, options) {
 
 
 function downloadAlertReport(){
-    
+    alert("entered");
     var url = 'alert-report/export';
     var  vehicles=$('#vehicle').val();
     var  alerts=$('#alert').val();
