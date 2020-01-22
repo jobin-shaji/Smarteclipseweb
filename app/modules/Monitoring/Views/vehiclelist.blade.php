@@ -146,7 +146,7 @@
                         <a data-toggle="tab" href="#subscription">Data & SMS</a>
                       </li>
                     </ul>
-                    <div id="monitoring_details_tab_contents_loading" style="display: none;">
+                    <div id="monitoring_details_tab_contents_loading" class="please-w8" style="display: none;">
                       Please wait...
                     </div>
                     <!-- Tab details -->
@@ -155,6 +155,8 @@
                         <!-- Vehicle -->
                         <div id="tab_content_vehicle" class="tab-pane fade in active">
                           <!-- Vehicle details -->
+                         
+
                           <div class="detail-list-outer">
                             <div id="accordion">
                               <div class="button" role="button">
@@ -510,7 +512,7 @@
 <style type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></style>
 
 
- 
+
 
 
 @section('script')
