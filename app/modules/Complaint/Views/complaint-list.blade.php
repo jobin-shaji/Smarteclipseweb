@@ -27,16 +27,16 @@
                 <thead>
                   <tr>
                     <th>SL.No</th>
-                    <th>Ticket Code</th>   
-                    <th>Serial Number</th>                              
+                    <th>Ticket Code</th>
+                    <th>Register Number </th>   
+                    <th>Serial Number</th>
+                    <th>Vehicle Type</th>                              
                     <th>Complaint Category</th>                      
                     <th>Complaint Type</th>                         
                     <th>Complaint Title</th>
                     <th>Date</th>
                     <th>Status</th>
-                    <th>Vehicle Type</th>
-                    <th>Vehicle </th>
-                    @role('sub_dealer|root|trader')
+                   @role('sub_dealer|root|trader')
                       <th>Assigned To</th>
                     @endrole
                     <th>Action</th>

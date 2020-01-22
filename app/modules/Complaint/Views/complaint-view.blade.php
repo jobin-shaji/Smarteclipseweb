@@ -8,8 +8,8 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Complaint Details</li>
-        <b>{{$complaint->title}}</b>
-      </ol>
+       <b> Complaint Details View</b>
+       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -32,8 +32,14 @@
                 <li class="list-group-item">
                   <b>IMEI:</b> {{ $complaint->gps->imei}}
                 </li>
+                    <li class="list-group-item">
+                  <b>Register Number:</b> {{ $complaint->vehicle->register_number}}
+                </li>   
                 <li class="list-group-item">
                   <b>Serial Number:</b> {{ $complaint->gps->serial_no}}
+                </li>
+                  <li class="list-group-item">
+                  <b>Vehicle Type:</b> {{ $complaint->vehicle->vehicleType->name}}
                 </li>
                 <li class="list-group-item">
                   <b>Complaint Category:</b> 
@@ -46,6 +52,10 @@
                 </li>
                 <li class="list-group-item">
                   <b>Complaint Type:</b> {{ $complaint->complaintType->name}}
+                </li>
+                 </li>
+                <li class="list-group-item">
+                  <b>Complaint Title:</b> {{$complaint->title}}
                 </li>
                 <li class="list-group-item">
                   <b>Description:</b> {{ $complaint->description}}
@@ -74,12 +84,9 @@
                     @endif 
                 </li>
                 @endrole
-                <li class="list-group-item">
-                  <b>Vehicle Type:</b> {{ $complaint->vehicle->vehicleType->name}}
-                </li>
-                <li class="list-group-item">
-                  <b>Vehicle:</b> {{ $complaint->vehicle->name}}
-                </li>               
+            
+              
+                            
               </ul>
             </div>
           </div>
