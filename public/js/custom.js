@@ -1559,10 +1559,12 @@ function getdataHLMList(id){
 //         }  
 //     }   
 // }
-function downloadMonitoringReport(){  
+function downloadMonitoringReport(){ 
+    var vehicle_id=$('#vehicle_id').val(); 
     var url = 'monitoring-report/export';
     var data = {
-    id : $('meta[name = "client"]').attr('content')
+        id : $('meta[name = "client"]').attr('content'),
+        vehicle_id:vehicle_id
     };
 
     downloadFile(url,data);

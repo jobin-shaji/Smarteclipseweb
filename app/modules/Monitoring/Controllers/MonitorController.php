@@ -136,11 +136,6 @@ class MonitorController extends Controller
     }
     public function export(Request $request)
     {
-        return Excel::download(new MonitoringReportExport($request->id), 'monitoring-report.xlsx');
+        return Excel::download(new MonitoringReportExport($request->id,$request->vehicle_id), 'monitoring-report.xlsx');
     }  
-    public function newExport(Request $request)
-    {
-        return Excel::download(new NewMonitoringReportExport($request->id), 'new-monitoring-report.xlsx');
-    }   
-
 }
