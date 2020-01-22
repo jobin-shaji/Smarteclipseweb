@@ -181,7 +181,7 @@ function render_vehicletab(res)
             if( each_element.id == 'tvc_client_package')
             {
                 var client_package = { 
-                    "0":"Not assigned",
+                    "0":"Freebies",
                     "1":"Admin",
                     "2":"Distributor",
                     "3":"Dealer",
@@ -199,23 +199,23 @@ function render_vehicletab(res)
             } 
             else if( each_element.id == 'tvc_client_lat')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             } 
             else if( each_element.id == 'tvc_client_lng')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             } 
             else if( each_element.id == 'tvc_client_country')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             } 
             else if( each_element.id == 'tvc_client_state')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_client_city')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_driver_name')
             {
@@ -303,27 +303,27 @@ function render_devicetab(res)
             } 
             else if( each_element.id == 'tvc_device_gps_fix')
             {
-                $('#'+each_element.id).text((detail == '1') ? '✓' : '✗');
+                $('#'+each_element.id).text((detail == '1') ? 'Received' : 'Not received');
                
             } 
             else if( (each_element.id == 'tvc_device_fuel_status') )
             {
                 if( (res.data.vehicle_models != null) )
                 {
-                    $('#'+each_element.id).text((detail == '') ? 'No data' : calculate_fuel_reading(res.data.vehicle_models.fuel_min, res.data.vehicle_models.fuel_max, res.data.gps.fuel_status)+' %');
+                    $('#'+each_element.id).text((detail == '' ) ? 'No data available' : calculate_fuel_reading(res.data.vehicle_models.fuel_min, res.data.vehicle_models.fuel_max, res.data.gps.fuel_status)+' %');
                 }
             } 
             else if( each_element.id == 'tvc_device_speed')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :round(res.data.gps.speed)+'km/h');
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :round(res.data.gps.speed)+'km/h');
             }
             else if( each_element.id == 'tvc_device_odometer')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :round(res.data.gps.km));
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :round(res.data.gps.km));
             }
             else if( each_element.id == 'tvc_device_battery_status')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :round(res.data.gps.battery_status)+'%');
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :round(res.data.gps.battery_status)+'%');
             } 
             else if( each_element.id == 'tvc_device_mode')
             {
@@ -332,7 +332,7 @@ function render_devicetab(res)
                     "S": "Sleep", 
                     "H": "Halt" 
                 };
-                $('#'+each_element.id).text((detail == '') ? 'No data' : vehicle_modes[detail]);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' : vehicle_modes[detail]);
             } 
             else if( each_element.id == 'tvc_device_ac_status')
             {
@@ -344,75 +344,75 @@ function render_devicetab(res)
             }
             else if( each_element.id == 'tvc_device_imei')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_serial_no')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_manufacturing_date')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_icc_id')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_imsi')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_e_sim_number')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_batch_number')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_model_name')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_version')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_employee_code')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_satellites')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_calibrated_on')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_login_on')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_created_on')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_lat')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_lon')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_device_time')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else if( each_element.id == 'tvc_device_gsm_signal_strength')
             {
-                $('#'+each_element.id).text((detail == '') ? 'No data' :detail);
+                $('#'+each_element.id).text((detail == '') ? 'No data available' :detail);
             }
             else 
             {
@@ -759,6 +759,10 @@ $(document).ready(function(){
                     var html = '';
                     res.data.forEach(function(alert)
                     {
+                        if(alert.vehicle == null)
+                        {
+                            return false;
+                        }
                         var need_to_append          = true;
                         var critical_alerts_html    = '';
                         // critical alerts tab
