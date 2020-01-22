@@ -39,7 +39,7 @@
       </div>
     @endif 
   </nav>
-
+  
   <ul class="monitor_tab_for_map">
     <li class="mlt vst-theme-color" value="list" id="mlt_list"><a href="#">Monitoring</a></li>
     <a target="_blank" href="{{url('/monitor-map')}}"><li class="mlt ">Map</li></a>
@@ -126,11 +126,6 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
-                  <!--    <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadMonitoringReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>
-
-                    <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadNewMonitoringReport()">
-                              <i class="fa fa-file"></i>Download Excel New</button> -->
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
                       <li class="monitoring_subtab ">
                         <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
@@ -151,7 +146,7 @@
                         <a data-toggle="tab" href="#subscription">Data & SMS</a>
                       </li>
                     </ul>
-                    <div id="monitoring_details_tab_contents_loading" style="display: none;">
+                    <div id="monitoring_details_tab_contents_loading" class="please-w8" style="display: none;">
                       Please wait...
                     </div>
                     <!-- Tab details -->
@@ -160,6 +155,8 @@
                         <!-- Vehicle -->
                         <div id="tab_content_vehicle" class="tab-pane fade in active">
                           <!-- Vehicle details -->
+                         
+
                           <div class="detail-list-outer">
                             <div id="accordion">
                               <div class="button" role="button">
@@ -515,7 +512,7 @@
 <style type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></style>
 
 
- 
+
 
 
 @section('script')
