@@ -146,7 +146,7 @@
         var location_alert_ids = [];
 
         var first_set_data = 1;
-          var alert_icon          = '{{asset("playback/assets/img/red-alert-icon.png")}}';
+          var alert_icon          = '{{asset("playback/assets/img/alert-icon.gif")}}';
         var  group = new H.map.Group();
         
 
@@ -160,8 +160,8 @@
          objImg.src = alert_icon;
          el = objImg;
           outerElement.appendChild(el);
-           outerElement.style.top = "-12px";
-           outerElement.style.left = "-12px";
+           outerElement.style.top = "-25px";
+           outerElement.style.left = "-25px";
            outerElement.style.width = "150px";
 
        

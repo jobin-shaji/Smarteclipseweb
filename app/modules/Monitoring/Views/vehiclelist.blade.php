@@ -39,7 +39,7 @@
       </div>
     @endif 
   </nav>
-
+  
   <ul class="monitor_tab_for_map">
     <li class="mlt vst-theme-color" value="list" id="mlt_list"><a href="#">Monitoring</a></li>
     <a target="_blank" href="{{url('/monitor-map')}}"><li class="mlt ">Map</li></a>
@@ -55,8 +55,8 @@
     <form  method="GET" action="{{route('monitor_vehicle')}}" class="search-top">
        {{csrf_field()}}
       <input type="text" placeholder=" Search for Vehicle" name="monitoring_module_search_key" id="monitoring_module_search_key" value="{{ $key }}">
-      <button type="submit" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name"><i class="fa fa-search" aria-hidden="true"></i></button>
-      <button onclick="clearSearch()">Clear</button>
+      <button type="submit" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button>
+      <button class=".search-1 clear-bt-new" onclick="clearSearch()">Clear</button>
     </form>
   </div>
   <!-- /Search and filters -->
@@ -91,8 +91,8 @@
                    <td style="width:10%;"></td>
                 </tr>
               @endif
-
-              @foreach($vehicles as $key => $each_vehicle)   
+              
+              @foreach($vehicles as $key => $each_vehicle)  
                 <?php $date = explode(' ', $each_vehicle->job_complete_date); ?>
                 <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
                   <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
@@ -100,9 +100,9 @@
                   <td style="width:8%;">{{ $each_vehicle->mobile_number}}</td>
                   <td style="width:17%;">{{ $each_vehicle->vehicle_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->imei }}</td>
-                  <td style="width:12%;">{{ $each_vehicle->dealer }}</td>
-                  <td style="width:12%;">{{ $each_vehicle->sub_dealer }}</td>
-                  <td style="width:12%;">{{$each_vehicle->servicer_name }}</td>
+                  <td style="width:12%;">{{ $each_vehicle->distributor_name }} ({{ $each_vehicle->distributor_mobile }})</td>
+                  <td style="width:12%;">{{ $each_vehicle->dealer_name }} ({{ $each_vehicle->dealer_mobile }})</td>
+                  <td style="width:12%;">{{$each_vehicle->servicer_name }} ({{ $each_vehicle->servicer_mobile }})</td>
                   <td style="width:10%;">{{ $date[0] }}</td>
                 </tr>
               @endforeach
@@ -126,11 +126,6 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
-                  <!--    <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadMonitoringReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>
-
-                    <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadNewMonitoringReport()">
-                              <i class="fa fa-file"></i>Download Excel New</button> -->
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
                       <li class="monitoring_subtab ">
                         <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
@@ -151,7 +146,7 @@
                         <a data-toggle="tab" href="#subscription">Data & SMS</a>
                       </li>
                     </ul>
-                    <div id="monitoring_details_tab_contents_loading" style="display: none;">
+                    <div id="monitoring_details_tab_contents_loading" class="please-w8" style="display: none;">
                       Please wait...
                     </div>
                     <!-- Tab details -->
@@ -160,6 +155,8 @@
                         <!-- Vehicle -->
                         <div id="tab_content_vehicle" class="tab-pane fade in active">
                           <!-- Vehicle details -->
+                         
+
                           <div class="detail-list-outer">
                             <div id="accordion">
                               <div class="button" role="button">
@@ -515,7 +512,7 @@
 <style type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></style>
 
 
- 
+
 
 
 @section('script')

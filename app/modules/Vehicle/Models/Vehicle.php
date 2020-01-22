@@ -79,13 +79,22 @@ class Vehicle extends Model
         ->join('gps_stocks','vehicles.gps_id', '=', 'gps_stocks.gps_id')
         ->join('dealers','gps_stocks.dealer_id', '=', 'dealers.id')
         ->join('sub_dealers','gps_stocks.subdealer_id', '=', 'sub_dealers.id')
+        ->join('users as distributor', 'distributor.id', '=', 'dealers.user_id')
+        ->join('users as dealer', 'dealer.id', '=', 'sub_dealers.user_id')
+        ->join('users as servicer', 'servicer.id', '=', 'servicers.user_id')
         ->select('vehicles.name as vehicle_name', 
           'vehicles.id', 'gps.imei', 
           'servicer_jobs.job_complete_date', 
           'clients.name as client_name',
           'users.username as user_name', 
           'users.mobile as mobile_number', 
-          'servicers.name as servicer_name','dealers.name as dealer','sub_dealers.name as sub_dealer');
+          'servicers.name as servicer_name',
+          'dealers.name as distributor_name', 
+          'sub_dealers.name as dealer_name',
+          'distributor.mobile as distributor_mobile',
+          'dealer.mobile as dealer_mobile',
+          'servicer.mobile as servicer_mobile'
+        );
         // search filters
         if( $key != null )
         {
@@ -135,6 +144,9 @@ class Vehicle extends Model
         ->with('driver')
         ->with('gpsStock','gpsStock.subdealer')
         ->with('alerts','alerts.alertType')
+        ->with(['alerts' => function($q){
+          return $q->orderBy('alerts.device_time', 'desc');
+        }])
         ->where('id',$vehicle_id)->first();
     }
     public function getAlertList()
