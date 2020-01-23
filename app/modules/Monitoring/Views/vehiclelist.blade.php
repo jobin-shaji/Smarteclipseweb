@@ -126,6 +126,9 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
+                    <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download</button> -->
+                  <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
+
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
                       <li class="monitoring_subtab ">
                         <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
@@ -505,15 +508,43 @@
   <source src="../assets/sounds/alerts.mp3" type="audio/ogg">
   <source src="../assets/sounds/alerts.mp3" type="audio/mpeg">
 </audio>
-
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Report Type</h4>
+        </div>
+        <div class="modal-body">
+           <div id="report_type">
+            <input type="checkbox" id="report_type1" value="1">Vehicle Details</br>
+            <input type="checkbox" id="report_type2"  value="2">Owner Details</br>
+            <input type="checkbox" id="report_type3"  value="3">Driver Details</br>
+            <input type="checkbox" id="report_type4"  value="4">Device Details</br>
+            <input type="checkbox" id="report_type5"  value="5">Device Current Status</br>
+            <input type="checkbox" id="report_type6"  value="6">Device Configuration</br>
+            <input type="checkbox" id="report_type7"  value="7">Installation</br>
+            <input type="checkbox" id="report_type8"  value="8">Service</br>
+            <input type="checkbox" id="report_type9"  value="9">Alerts</br>
+          </p>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()" >Download Excel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 @endsection
 <link rel="stylesheet" type="text/css" href="{{asset('css/monitor.css')}}">
 <style type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></style>
 
 
-
-
+ 
 
 @section('script')
 
