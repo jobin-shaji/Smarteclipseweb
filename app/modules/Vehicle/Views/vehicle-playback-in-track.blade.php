@@ -95,6 +95,8 @@
         </div>
 
 
+
+
       </div>
       <div class="vehicle_details_list">
        <div class="row">
@@ -109,6 +111,13 @@
              <span><i class='fa fa-user'></i></span>
             <span><span style="padding: 15px;">:</span>@if($vehicle->driver){{ $vehicle->driver->name}}@endif</span>
         </div>
+
+        <div class="row">
+             <span><i class='fa fa-tachometer'></i></span>
+            <span><span style="padding: 15px;">:</span><span id="km_data">0.0</span> KM
+        </div>
+
+
         </div>
 
   </div>
@@ -161,6 +170,7 @@
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
       
     <script>
+        var km_data           = 0;
         var pauseMapRendering = false;
         var bearsMarkeronStartPoint;
         var bearsMarker;
@@ -677,6 +687,7 @@
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                    kmCalculation(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
                 }
                 startPointLatitude  = location_data_que[0].lat;
                 startPointLongitude = location_data_que[0].lng;
@@ -984,6 +995,16 @@
 
 
        // --------2019-12-19-2:20-------------------------------------------------------
+
+
+       function kmCalculation(lat1,lng1,lat2,lng2) {
+          var start          = [lat1 ,lng1];
+          var end            = [lat2 ,lng2];
+          var total_distance = gis.calculateDistance(start, end);
+          km_data            = km_data+total_distance;
+          $('#km_data').text((km_data/1000).toFixed(2));
+
+        }
 
        function stopPlayback(){
         location.reload(true);
