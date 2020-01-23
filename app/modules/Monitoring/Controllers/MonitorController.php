@@ -147,9 +147,10 @@ class MonitorController extends Controller
             return $pdf->download('monitoring-report.pdf');
         }
         else{
-            $request->session()->flash('message', 'Please select Report Type!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-             return back();
+            $request->session()->flash('message', 'Please select any report!'); 
+            $request->session()->flash('alert-class', 'alert-danger'); 
+            return back();
+            
         }
     } 
 }
