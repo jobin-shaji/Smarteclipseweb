@@ -79,9 +79,11 @@ class Vehicle extends Model
         ->join('gps_stocks','vehicles.gps_id', '=', 'gps_stocks.gps_id')
         ->join('dealers','gps_stocks.dealer_id', '=', 'dealers.id')
         ->join('sub_dealers','gps_stocks.subdealer_id', '=', 'sub_dealers.id')
+        ->leftJoin('traders','gps_stocks.trader_id', '=', 'traders.id')
         ->join('users as distributor', 'distributor.id', '=', 'dealers.user_id')
         ->join('users as dealer', 'dealer.id', '=', 'sub_dealers.user_id')
         ->join('users as servicer', 'servicer.id', '=', 'servicers.user_id')
+        ->leftJoin('users as trader', 'trader.id', '=', 'traders.user_id')
         ->select('vehicles.name as vehicle_name', 
           'vehicles.id', 'gps.imei', 
           'servicer_jobs.job_complete_date', 
@@ -91,8 +93,10 @@ class Vehicle extends Model
           'servicers.name as servicer_name',
           'dealers.name as distributor_name', 
           'sub_dealers.name as dealer_name',
+          'traders.name as sub_dealer_name',
           'distributor.mobile as distributor_mobile',
           'dealer.mobile as dealer_mobile',
+          'trader.mobile as sub_dealer_mobile',
           'servicer.mobile as servicer_mobile'
         );
         // search filters
@@ -106,6 +110,7 @@ class Vehicle extends Model
                 ->orWhere('servicers.name','like','%'.$key.'%')
                 ->orWhere('users.mobile','like','%'.$key.'%');
         }
+       // dd($query->toSql());
         // response
         return $query->orderBy('servicer_jobs.job_complete_date', 'desc')->paginate(10);
     }

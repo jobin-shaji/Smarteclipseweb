@@ -62,19 +62,21 @@
   <!-- /Search and filters -->
 
   <!-- Vehicles detail wrapper --> 
-        <div class="vehicle_details_wrapper vehicle-container">           
+        <div class="vehicle_details_wrapper vehicle-container">  
+        <!-- <div class="loader"></div>          -->
           <table id="vehicle_details_table" class="table table-bordered">
             <thead>
               <tr class="vechile-list-top">
                 <th style="width:4%;">SL.No</th>
                 <th style="width:17%;">Owner Name</th>
-                <th style="width:8%;">Mobile Number</th>
-                <th style="width:17%;">Vehicle Name</th>
+                <th style="width:8%;">Owner Mobile</th>
+                <th style="width:15%;">Vehicle Name</th>
                 <th style="width:8%;">IMEI</th>
-                <th style="width:12%;">Distributor</th>
-                <th style="width:12%;">Dealer</th>
-                <th style="width:12%;">Service Engineer</th>
-                <th style="width:10%;">Installation Date</th>
+                <th style="width:11%;">Distributor</th>
+                <th style="width:11%;">Dealer</th>
+                <th style="width:11%;">Sub-Dealer</th>
+                <th style="width:11%;">Service Engineer</th>
+                <th style="width:4%;">Installation Date</th>
               </tr>
             </thead>
             <tbody style="max-height:200px; overflow-y: scroll;" >
@@ -83,27 +85,31 @@
                   <td style="width:4%;"></td>
                   <td style="width:17%;"></td>
                   <td style="width:8%;"></td>
-                  <td style="width:17%;"><b style="float: right;margin-right: -13px">No data</b></td>
+                  <td style="width:15%;"><b style="float: right;margin-right: -13px">No data</b></td>
                   <td style="width:8%;"><b style="float: left;margin-left: -15px">Available</b></td>
-                  <td style="width:12%;"></td>
-                  <td style="width:12%;"></td>
-                  <td style="width:12%;"></td>
-                   <td style="width:10%;"></td>
+                  <td style="width:11%;"></td>
+                  <td style="width:11%;"></td>
+                  <td style="width:11%;"></td>
+                  <td style="width:11%;"></td>
+                  <td style="width:4%;"></td>
                 </tr>
               @endif
+              <?php
               
-              @foreach($vehicles as $key => $each_vehicle)  
+              ?>
+              @foreach($vehicles as $key => $each_vehicle) 
                 <?php $date = explode(' ', $each_vehicle->job_complete_date); ?>
                 <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
                   <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
-                  <td style="width:17%;">{{ $each_vehicle->client_name }} ({{ $each_vehicle->user_name }})</td>
+                  <td style="width:17%;">{{ $each_vehicle->client_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->mobile_number}}</td>
-                  <td style="width:17%;">{{ $each_vehicle->vehicle_name }}</td>
+                  <td style="width:15%;">{{ $each_vehicle->vehicle_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->imei }}</td>
-                  <td style="width:12%;">{{ $each_vehicle->distributor_name }} ({{ $each_vehicle->distributor_mobile }})</td>
-                  <td style="width:12%;">{{ $each_vehicle->dealer_name }} ({{ $each_vehicle->dealer_mobile }})</td>
-                  <td style="width:12%;">{{$each_vehicle->servicer_name }} ({{ $each_vehicle->servicer_mobile }})</td>
-                  <td style="width:10%;">{{ $date[0] }}</td>
+                  <td style="width:11%;">{{ $each_vehicle->distributor_name }} ({{ $each_vehicle->distributor_mobile }})</td>
+                  <td style="width:11%;"><?php if( isset($each_vehicle->sub_dealer_name) ){ echo '--'; } else { echo $each_vehicle->dealer_name.'('.$each_vehicle->dealer_mobile.')'; } ?></td>
+                  <td style="width:11%;"><?php echo (isset($each_vehicle->sub_dealer_name)) ? $each_vehicle->sub_dealer_name.'('.$each_vehicle->sub_dealer_mobile.')' : '--'; ?></td>
+                  <td style="width:11%;">{{$each_vehicle->servicer_name }} ({{ $each_vehicle->servicer_mobile }})</td>
+                  <td style="width:4%;">{{ $date[0] }}</td>
                 </tr>
               @endforeach
             </tbody>
@@ -218,10 +224,6 @@
                                   <div class="list-display">
                                     <p>Owner Name <span>:-</span></p>
                                     <span class="vehicle-details-value" id="tvc_client_name"> </span>
-                                  </div>
-                                  <div class="list-display">
-                                    <p>Owner Username <span>:-</span></p>
-                                    <span class="vehicle-details-value" id="tvc_client_username"> </span>
                                   </div>
                                   <div class="list-display">
                                     <p>Owner Address <span>:-</span></p>
