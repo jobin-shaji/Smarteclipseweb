@@ -33,7 +33,7 @@
     </ol>
     @if(Session::has('message'))
       <div class="pad margin no-print">
-        <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+        <div class="alert callout {{ Session::get('callout-class', 'callout-success') }}">
           {{ Session::get('message') }}  
         </div>
       </div>
@@ -132,7 +132,7 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download</button>
+                    <button type="button" class="pdf btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download Certificate</button>
                  
 
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
@@ -523,21 +523,21 @@
         </div>
          <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
         <div class="modal-body">
-           <div id="report_type">
-            <input type="checkbox" id="report_type1" name="report[]" value="1">Vehicle Details</br>
-            <input type="checkbox" id="report_type2"  name="report[]" value="2">Owner Details</br>
-            <input type="checkbox" id="report_type3" name="report[]" value="3">Driver Details</br>
-            <input type="checkbox" id="report_type4" name="report[]" value="4">Device Details</br>
-            <input type="checkbox" id="report_type5" name="report[]" value="5">Device Current Status</br>
-            <input type="checkbox" id="report_type6" name="report[]" value="6">Device Configuration</br>
-            <input type="checkbox" id="report_type7" name="report[]" value="7">Installation</br>
-            <input type="checkbox" id="report_type8" name="report[]" value="8">Service</br>
-            <input type="checkbox" id="report_type9" name="report[]" value="9">Alerts</br>         
+           <div id="report_type" class="report_type">
+            <input type="checkbox" id="report_type1" name="report[]" value="1"> Vehicle Details</br>
+            <input type="checkbox" id="report_type2"  name="report[]" value="2"> Owner Details</br>
+            <input type="checkbox" id="report_type3" name="report[]" value="3"> Driver Details</br>
+            <input type="checkbox" id="report_type4" name="report[]" value="4"> Device Details</br>
+            <input type="checkbox" id="report_type5" name="report[]" value="5"> Device Current Status</br>
+            <input type="checkbox" id="report_type6" name="report[]" value="6"> Device Configuration</br>
+            <input type="checkbox" id="report_type7" name="report[]" value="7"> Installation</br>
+            <input type="checkbox" id="report_type8" name="report[]" value="8"> Service</br>
+            <input type="checkbox" id="report_type9" name="report[]" value="9"> Alerts</br>         
         </div>         
         </div>     
         <div class="modal-footer">
-          <button type="submit" class="btn btn-default"><i class='fa fa-download'></i>Download Certificate</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()" >Download Excel</button>        
+          <button type="submit" class="btn-download btn btn-default"><i class='fa fa-download'></i> Download PDF</button>
+          <button type="button" class="btn-download btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()"><i class='fa fa-download'></i> Download Excel</button>        
         </div>
          </form>
       </div>
@@ -627,6 +627,7 @@
     }
     function addMarkersToMap(){
     }
+    
 
 </script>
 
@@ -641,7 +642,11 @@
 
   
   $(document).ready(function() {
-  
+    $(function(){
+        setTimeout(function() {
+            $('.no-print').remove();
+        }, 2500);
+    });
   $('.slide').hide()
  
   $("#accordion").find("div[role|='button']").click(function() {
