@@ -523,7 +523,7 @@
         </div>
          <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
         <div class="modal-body">
-          <div id="report_type">
+          <div id="report_type" class="report">
             <input type="checkbox" id="report_type1" name="report[]" value="1" checked>Vehicle Details</br>
             <input type="checkbox" id="report_type2"  name="report[]" value="2" checked>Owner Details</br>
             <input type="checkbox" id="report_type3" name="report[]" value="3" checked>Driver Details</br>
