@@ -1590,6 +1590,30 @@ function downloadNewMonitoringReport(){
 }
 
 
+function downloadPDFMonitoringReport(){ 
+    // alert(1);
+    var selected = [];
+    var report = document.getElementById("report_type");
+    var chks = report.getElementsByTagName("INPUT");
+    for (var i = 0; i < chks.length; i++) {
+        if (chks[i].checked) {
+            selected.push(chks[i].value);
+        }
+    }
+    // dd(selected);
+    // console.log(selected);
+   // var report_type= $('#report_type').val();
+    var vehicle_id=$('#vehicle_id').val(); 
+    // alert(vehicle_id);
+    var url = '/monitoring-report-pdf-downloads';
+    var data = {
+        id : $('meta[name = "client"]').attr('content'),
+        vehicle_id:vehicle_id,
+        report_type:selected
+    };
+    backgroundPostData(url,data,{alert:false});
+}
+
 
 
 

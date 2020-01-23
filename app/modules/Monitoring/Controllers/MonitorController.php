@@ -26,7 +26,7 @@ use App\Http\Traits\VehicleDataProcessorTrait;
 use Carbon\Carbon;
 use DataTables;
 use Config;
-
+use PDF;
 class MonitorController extends Controller 
 {
     /** 
@@ -137,5 +137,19 @@ class MonitorController extends Controller
     public function export(Request $request)
     {
         return Excel::download(new MonitoringReportExport($request->id,$request->vehicle_id,$request->report_type), 'monitoring-report.xlsx');
-    }  
+    } 
+    public function downloadPdfCertificate(Request $request){  
+        if($request->report)
+        {
+            $this->report_type=$request->report;
+            $this->data = (new Vehicle())->getVehicleDetails($request->vehicle_id);  
+            $pdf = PDF::loadView('Monitoring::device-certificate-download',['report_type' => $this->report_type,'monitoringReport'=> $this->data]);
+            return $pdf->download('monitoring-report.pdf');
+        }
+        else{
+            $request->session()->flash('message', 'Please select Report Type!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+             return back();
+        }
+    } 
 }

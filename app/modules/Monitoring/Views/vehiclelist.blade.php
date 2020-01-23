@@ -126,8 +126,8 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
-                    <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download</button> -->
-                  <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download</button>
+                 
 
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
                       <li class="monitoring_subtab ">
@@ -513,27 +513,31 @@
     
       <!-- Modal content-->
       <div class="modal-content">
+         <form  method="POST" action="{{route('monitoring.report.pdf.downloads')}}">
+            {{csrf_field()}}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Report Type</h4>
         </div>
+         <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
         <div class="modal-body">
            <div id="report_type">
-            <input type="checkbox" id="report_type1" value="1">Vehicle Details</br>
-            <input type="checkbox" id="report_type2"  value="2">Owner Details</br>
-            <input type="checkbox" id="report_type3"  value="3">Driver Details</br>
-            <input type="checkbox" id="report_type4"  value="4">Device Details</br>
-            <input type="checkbox" id="report_type5"  value="5">Device Current Status</br>
-            <input type="checkbox" id="report_type6"  value="6">Device Configuration</br>
-            <input type="checkbox" id="report_type7"  value="7">Installation</br>
-            <input type="checkbox" id="report_type8"  value="8">Service</br>
-            <input type="checkbox" id="report_type9"  value="9">Alerts</br>
-          </p>
-        </div>
-        </div>
+            <input type="checkbox" id="report_type1" name="report[]" value="1">Vehicle Details</br>
+            <input type="checkbox" id="report_type2"  name="report[]" value="2">Owner Details</br>
+            <input type="checkbox" id="report_type3" name="report[]" value="3">Driver Details</br>
+            <input type="checkbox" id="report_type4" name="report[]" value="4">Device Details</br>
+            <input type="checkbox" id="report_type5" name="report[]" value="5">Device Current Status</br>
+            <input type="checkbox" id="report_type6" name="report[]" value="6">Device Configuration</br>
+            <input type="checkbox" id="report_type7" name="report[]" value="7">Installation</br>
+            <input type="checkbox" id="report_type8" name="report[]" value="8">Service</br>
+            <input type="checkbox" id="report_type9" name="report[]" value="9">Alerts</br>         
+        </div>         
+        </div>     
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()" >Download Excel</button>
+          <button type="submit" class="btn btn-default"><i class='fa fa-download'></i>Download Certificate</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()" >Download Excel</button>        
         </div>
+         </form>
       </div>
       
     </div>
