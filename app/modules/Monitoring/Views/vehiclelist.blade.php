@@ -522,15 +522,15 @@
          <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
         <div class="modal-body">
            <div id="report_type">
-            <input type="checkbox" id="report_type1" name="report[]" value="1">Vehicle Details</br>
-            <input type="checkbox" id="report_type2"  name="report[]" value="2">Owner Details</br>
-            <input type="checkbox" id="report_type3" name="report[]" value="3">Driver Details</br>
-            <input type="checkbox" id="report_type4" name="report[]" value="4">Device Details</br>
-            <input type="checkbox" id="report_type5" name="report[]" value="5">Device Current Status</br>
-            <input type="checkbox" id="report_type6" name="report[]" value="6">Device Configuration</br>
-            <input type="checkbox" id="report_type7" name="report[]" value="7">Installation</br>
-            <input type="checkbox" id="report_type8" name="report[]" value="8">Service</br>
-            <input type="checkbox" id="report_type9" name="report[]" value="9">Alerts</br>         
+            <input type="checkbox" id="report_type1" name="report[]" value="1" checked>Vehicle Details</br>
+            <input type="checkbox" id="report_type2"  name="report[]" value="2" checked>Owner Details</br>
+            <input type="checkbox" id="report_type3" name="report[]" value="3" checked>Driver Details</br>
+            <input type="checkbox" id="report_type4" name="report[]" value="4" checked>Device Details</br>
+            <input type="checkbox" id="report_type5" name="report[]" value="5" checked>Device Current Status</br>
+            <input type="checkbox" id="report_type6" name="report[]" value="6" checked>Device Configuration</br>
+            <input type="checkbox" id="report_type7" name="report[]" value="7" checked>Installation</br>
+            <input type="checkbox" id="report_type8" name="report[]" value="8" checked>Service</br>
+            <input type="checkbox" id="report_type9" name="report[]" value="9" checked>Alerts</br>         
         </div>         
         </div>     
         <div class="modal-footer">
