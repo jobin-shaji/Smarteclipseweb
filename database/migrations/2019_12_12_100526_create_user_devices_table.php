@@ -16,6 +16,8 @@ class CreateUserDevicesTable extends Migration
         Schema::create('user_devices', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('client_id')->nullable();
+            $table->integer('servicer_id')->nullable();
             $table->string('device_id');
             $table->string('firebase_token');
             $table->json('device_details');
