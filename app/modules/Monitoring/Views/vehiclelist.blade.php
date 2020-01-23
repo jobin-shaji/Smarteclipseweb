@@ -39,7 +39,7 @@
       </div>
     @endif 
   </nav>
-
+  
   <ul class="monitor_tab_for_map">
     <li class="mlt vst-theme-color" value="list" id="mlt_list"><a href="#">Monitoring</a></li>
     <a target="_blank" href="{{url('/monitor-map')}}"><li class="mlt ">Map</li></a>
@@ -55,8 +55,8 @@
     <form  method="GET" action="{{route('monitor_vehicle')}}" class="search-top">
        {{csrf_field()}}
       <input type="text" placeholder=" Search for Vehicle" name="monitoring_module_search_key" id="monitoring_module_search_key" value="{{ $key }}">
-      <button type="submit" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name"><i class="fa fa-search" aria-hidden="true"></i></button>
-      <button onclick="clearSearch()">Clear</button>
+      <button type="submit" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button>
+      <button class=".search-1 clear-bt-new" onclick="clearSearch()">Clear</button>
     </form>
   </div>
   <!-- /Search and filters -->
@@ -91,8 +91,8 @@
                    <td style="width:10%;"></td>
                 </tr>
               @endif
-
-              @foreach($vehicles as $key => $each_vehicle)   
+              
+              @foreach($vehicles as $key => $each_vehicle)  
                 <?php $date = explode(' ', $each_vehicle->job_complete_date); ?>
                 <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
                   <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
@@ -100,9 +100,9 @@
                   <td style="width:8%;">{{ $each_vehicle->mobile_number}}</td>
                   <td style="width:17%;">{{ $each_vehicle->vehicle_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->imei }}</td>
-                  <td style="width:12%;">{{ $each_vehicle->dealer }}</td>
-                  <td style="width:12%;">{{ $each_vehicle->sub_dealer }}</td>
-                  <td style="width:12%;">{{$each_vehicle->servicer_name }}</td>
+                  <td style="width:12%;">{{ $each_vehicle->distributor_name }} ({{ $each_vehicle->distributor_mobile }})</td>
+                  <td style="width:12%;">{{ $each_vehicle->dealer_name }} ({{ $each_vehicle->dealer_mobile }})</td>
+                  <td style="width:12%;">{{$each_vehicle->servicer_name }} ({{ $each_vehicle->servicer_mobile }})</td>
                   <td style="width:10%;">{{ $date[0] }}</td>
                 </tr>
               @endforeach
@@ -126,9 +126,9 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
-                     <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadMonitoringReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>
-                  <input type="text" name="vehicle_id" id="vehicle_id" value="">
+                    <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download</button> -->
+                  <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
+
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
                       <li class="monitoring_subtab ">
                         <a data-toggle="tab" href="#tab_content_vehicle" class="active">Vehicle</a>
@@ -149,7 +149,7 @@
                         <a data-toggle="tab" href="#subscription">Data & SMS</a>
                       </li>
                     </ul>
-                    <div id="monitoring_details_tab_contents_loading" style="display: none;">
+                    <div id="monitoring_details_tab_contents_loading" class="please-w8" style="display: none;">
                       Please wait...
                     </div>
                     <!-- Tab details -->
@@ -158,6 +158,8 @@
                         <!-- Vehicle -->
                         <div id="tab_content_vehicle" class="tab-pane fade in active">
                           <!-- Vehicle details -->
+                         
+
                           <div class="detail-list-outer">
                             <div id="accordion">
                               <div class="button" role="button">
@@ -506,7 +508,36 @@
   <source src="../assets/sounds/alerts.mp3" type="audio/ogg">
   <source src="../assets/sounds/alerts.mp3" type="audio/mpeg">
 </audio>
-
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Report Type</h4>
+        </div>
+        <div class="modal-body">
+           <div id="report_type">
+            <input type="checkbox" id="report_type1" value="1">Vehicle Details</br>
+            <input type="checkbox" id="report_type2"  value="2">Owner Details</br>
+            <input type="checkbox" id="report_type3"  value="3">Driver Details</br>
+            <input type="checkbox" id="report_type4"  value="4">Device Details</br>
+            <input type="checkbox" id="report_type5"  value="5">Device Current Status</br>
+            <input type="checkbox" id="report_type6"  value="6">Device Configuration</br>
+            <input type="checkbox" id="report_type7"  value="7">Installation</br>
+            <input type="checkbox" id="report_type8"  value="8">Service</br>
+            <input type="checkbox" id="report_type9"  value="9">Alerts</br>
+          </p>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()" >Download Excel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 @endsection
 <link rel="stylesheet" type="text/css" href="{{asset('css/monitor.css')}}">
@@ -514,7 +545,6 @@
 
 
  
-
 
 @section('script')
 
