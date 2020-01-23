@@ -327,18 +327,18 @@ margin-top: -1.5%;
     margin: 0;
   }
    .table-outer table{
-  width: 100%;
+    width: 100%;
     float: left;
     margin-top: 20px;
-        border: 1px solid #ccc;
+    border: 1px solid #ccc;
   }
 
   .table-outer table tr th{
     text-align: center;
     font-weight: normal;
     background: #dad9d9;
- padding: 3px 5px;
-     font-size: 15px;
+    padding: 3px 5px;
+    font-size: 15px;
   }
   .table-outer table tr td {
     text-align: center;

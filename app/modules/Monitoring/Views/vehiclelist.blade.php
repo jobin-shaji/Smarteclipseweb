@@ -92,6 +92,7 @@
               @endif
 
               @foreach($vehicles as $key => $each_vehicle)   
+                <?php $date = explode(' ', $each_vehicle->job_complete_date); ?>
                 <tr id="vehicle_details_table_row_<?php echo $key; ?>" class="vehicle_details_table_row" onclick="clicked_vehicle_details('{{$each_vehicle->id}}', <?php echo $key; ?>)" data-target="#sidebar-right" data-toggle="modal">
                   <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                   <td style="width:17%;">{{ $each_vehicle->client_name }}</td>
@@ -101,7 +102,7 @@
                   <td style="width:12%;">{{ $each_vehicle->dealer }}</td>
                   <td style="width:12%;">{{ $each_vehicle->sub_dealer }}</td>
                   <td style="width:12%;">{{$each_vehicle->servicer_name }}</td>
-                  <td style="width:10%;">{{$each_vehicle->job_complete_date}}</td>
+                  <td style="width:10%;">{{ $date[0] }}</td>
                 </tr>
               @endforeach
             </tbody>
@@ -408,8 +409,7 @@
                             </div>
                             <div class="slide">
                               <div class="list-outer-bg">
-                                <div class="list-display">
-                                  <p>Configuration</p>
+                                <div class="list-display" id="ota">
                                 </div>
                               </div>
                             </div>
