@@ -38,8 +38,7 @@ return  [
        'Operations',
        'Configuration',
        'Version',
-       'Monitoring',
-       'Trader'
+       'Monitoring'
 
     ]
 ]
