@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'sos-sub-dealer-list',
+            url: 'sos-trader-list',
             type: 'POST',
             data: {
                 'data': data
