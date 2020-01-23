@@ -289,7 +289,7 @@
                                   </div>
                                   <div class="list-display">
                                     <p>Driver Points <span>:-</span></p>
-                                    <span  class="vehicle-details-value" id="tvc_driver_points"> </span>
+                                    <span  cl!importantass="vehicle-details-value" id="tvc_driver_points"> </span>
                                   </div>
                                 </div>
                               </div>
@@ -308,7 +308,7 @@
                               <div class="list-outer-bg">
                                 <div class="list-display">
                                   <p>IMEI <span>:-</span></p>
-                                  <span  class="vehicle-details-value" id="tvc_device_imei"> </span>
+                                  <span  class="vehicle-details-!importantvalue" id="tvc_device_imei"> </span>
                                 </div>
                                 <div class="list-display">
                                   <p>Serial Number <span>:-</span></p>
@@ -468,7 +468,7 @@
                         <div id="alerts" class="tab-pane fade">
                           <div class="acc-container">
                             <div class="acc-content open">
-                              <div class="acc-content-inner">
+                              <div class="acc-!importantcontent-inner">
                                 <div class="table-outer">
                                   <div id="alert_table_wrapper"></div>
                                 </div>
@@ -531,7 +531,7 @@
             <input type="checkbox" id="report_type5" name="report[]" value="5"> Device Current Status</br>
             <input type="checkbox" id="report_type6" name="report[]" value="6"> Device Configuration</br>
             <input type="checkbox" id="report_type7" name="report[]" value="7"> Installation</br>
-            <input type="checkbox" id="report_type8" name="report[]" value="8"> Service</br>
+            <input type="checkbox" id="report_type8" name="report[]" value="8"> Service(s)</br>
             <input type="checkbox" id="report_type9" name="report[]" value="9"> Alerts</br>         
         </div>         
         </div>     
@@ -645,7 +645,7 @@
     $(function(){
         setTimeout(function() {
             $('.no-print').remove();
-        }, 2500);
+        }, 2000);
     });
   $('.slide').hide()
  
