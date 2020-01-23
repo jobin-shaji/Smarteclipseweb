@@ -174,18 +174,9 @@ function render_vehicletab(res)
             {
                 var client_package = { 
                     "0":"Freebies",
-                    "1":"Admin",
-                    "2":"Distributor",
-                    "3":"Dealer",
-                    "4": "Freebies",
-                    "5":"Servicer",
-                    "6": "Fundamental", 
-                    "7": "Superior",
-                    "8": "Pro",
-                    "9":"School",
-                    "10":"School-Premium",
-                    "11":"Operations",
-                    "12":"Trader"
+                    "1": "Fundamental", 
+                    "2": "Superior",
+                    "3": "Pro"
                 };
                 $('#'+each_element.id).text(client_package[detail]);
             } 
@@ -829,10 +820,11 @@ function isAlertNeedsToDisplay(alert)
 function prepareAlertModalContent(alert)
 {
     var alert_title = getAlertTitle(alert);
+    var map_url     = '/monitor-map?&latitude='+alert.lat+'&longitude='+alert.lon;
     return '<div class="eam-each_alert each_popup_alert eam-each_alert-'+alert.id+'">'
         +'<p style="background:#f00; padding:6px 0;  color:#fff; font-weight:700;font-size:18px;border-top-left-radius: 7px;border-top-right-radius: 7px; ">'+alert_title+'</p>'
         +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
-        +'<p style="margin-top:7px;font-size:12px;font-weight:10"> <button style="border-radius: 5px;padding: 5px 5px;"><a href="/monitor-map" target="_blank">View map</a></button>'
+        +'<p style="margin-top:7px;font-size:12px;font-weight:10"> <button style="border-radius: 5px;padding: 5px 5px;"><a href="'+map_url+'" target="_blank">View map</a></button>'
         +' <button style="border-radius: 5px;padding: 5px 5px;" onclick="markAlertAsRead('+alert.id+')">Mark as read</button> </p>'
         +'<h6></h6>'
         +'</div>';
@@ -841,11 +833,12 @@ function prepareAlertModalContent(alert)
 function prepareAlertTabContent(alert)
 {
     var alert_title = getAlertTitle(alert);
+    var map_url     = '/monitor-map?&latitude='+alert.lat+'&longitude='+alert.lon;
     return '<div class="alert-page-dispaly" id="'+alert.id+'">'
         +'<div class="eam-each_alert">'
         +'<p class="t-alert">'+alert_title.charAt(0).toUpperCase()+'</p>'
         +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
-        +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="/monitor-map" target="_blank">View map</a></button> </p>'
+        +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="'+map_url+'" target="_blank">View map</a></button> </p>'
         +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
         +'</div></div>';
 }
