@@ -1511,7 +1511,7 @@ function getdataHLMList(id){
   }
 
 
-  function gpsDataHlm(res)
+function gpsDataHlm(res)
 {
 // console.log(res.gpsData.header);
     $("#allHLMDataTable tr").remove();
