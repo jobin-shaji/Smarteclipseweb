@@ -1221,16 +1221,19 @@ $('#gps').find('option').remove();
  
 }
 
-    function getClientServicerGps(res){
-    if(res)
+function getClientServicerGps(client_id){
+    if(client_id)
     {    
         var job_type = $("#job_type option:selected").val();
         if(job_type==""||job_type==undefined){
-         alert('select job type!');   
+            alert('Please select job type!'); 
+            client_id=0;
+            // $("#gps option[value='']").remove();
+            // $("#gps").append(new Option("Select GPS", ""));
         }
         var url = 'servicer-client-gps';
         var data = {
-             client_id : res,
+             client_id : client_id,
              job_type:job_type
         };   
         backgroundPostData(url,data,'clientGps',{alert:false});   
@@ -1240,25 +1243,41 @@ $('#gps').find('option').remove();
 }
 function clientGps(res)
 {
-    $("#gps").empty();
-    var expired_documents;
-    length=res.devices.length;
-   if(length==0)
-   {
-        var gps='<option value="">No GPS</option>';  
+    if(res.code == 1)
+    {
+        $("#gps").empty();
+        var expired_documents;
+        length=res.devices.length;
+        if(length==0)
+        {
+            var gps='<option value=" ">No GPS</option>';  
+            $("#gps").append(gps);  
+        }
+        else
+        {
+            for (var i = 0; i < length; i++) {
+             var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
+             $("#gps").append(gps);   
+            }   
+        }  
+        
+        $('#search_place').val(res.location);
+    } 
+    else if(res.code == 2)
+    {
+        $("#gps").empty();
+        var gps='<option value=" ">No GPS</option>';  
         $("#gps").append(gps);  
-   }
-   else
-   {
-        for (var i = 0; i < length; i++) {
-         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
-         $("#gps").append(gps);   
-        }   
-   }
+        $('#search_place').val(res.location);
+    }else
+    {
+        $("#search_place").val('');
+        $("#gps").val('');
+        $('#client option').prop('selected', function() {
+            return this.defaultSelected;
+        });
 
-         
-    
-     $('#search_place').val(res.location); 
+    }
 }
 
 
