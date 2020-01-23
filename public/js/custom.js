@@ -1511,7 +1511,7 @@ function getdataHLMList(id){
   }
 
 
-  function gpsDataHlm(res)
+function gpsDataHlm(res)
 {
 // console.log(res.gpsData.header);
     $("#allHLMDataTable tr").remove();
@@ -1559,28 +1559,26 @@ function getdataHLMList(id){
 //         }  
 //     }   
 // }
-function downloadMonitoringReport(){  
-    var url = 'monitoring-report/export';
-    var data = {
-    id : $('meta[name = "client"]').attr('content')
-    };
-
-    downloadFile(url,data);
+function downloadMonitoringReport(){ 
+    var selected = [];
+    var report = document.getElementById("report_type");
+    var chks = report.getElementsByTagName("INPUT");
+    for (var i = 0; i < chks.length; i++) {
+        if (chks[i].checked) {
+            selected.push(chks[i].value);
+        }
+    }
+    if(selected.length!=0){
+        var vehicle_id=$('#vehicle_id').val(); 
+        var url = 'monitoring-report/export';
+        var data = {
+            id : $('meta[name = "client"]').attr('content'),
+            vehicle_id:vehicle_id,
+            report_type:selected
+        };
+        downloadFile(url,data);
+    }
+    else{         
+        alert("Please select report type");
+    }    
 }
-function downloadNewMonitoringReport(){  
-    var url = 'new-monitoring-report/export';
-    var data = {
-    id : $('meta[name = "client"]').attr('content')
-    };
-
-    downloadFile(url,data);
-}
-
-
-
-
-
-
-
-
-

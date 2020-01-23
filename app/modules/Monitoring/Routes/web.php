@@ -11,7 +11,7 @@ Route::get('/monitor-map','MonitorController@getAlertMap')->name('alert-map');
 
 
 Route::post('/monitoring-report/export','MonitorController@export')->name('monitoring.report.export');
-
-Route::post('/new-monitoring-report/export','MonitorController@newExport')->name('new.monitoring.report.export');
+    
+	Route::post('/monitoring-report-pdf-downloads','MonitorController@downloadPdfCertificate')->name('monitoring.report.pdf.downloads');
 });
 

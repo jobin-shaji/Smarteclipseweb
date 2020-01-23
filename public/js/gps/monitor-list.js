@@ -16,6 +16,7 @@ else
 
 function clicked_vehicle_details(vehicle_id, row_id) 
 {
+    $('#vehicle_id').val(vehicle_id);
     // clear previous modal data
     clearPreviousModalData();  
     // highlight clicked row
