@@ -1191,6 +1191,8 @@ class VehicleController extends Controller
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function location(Request $request)
     {
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
         $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
@@ -1202,14 +1204,26 @@ class VehicleController extends Controller
         if($track_data==null)
         {
             $request->session()->flash('message', 'No Data Received From GPS!!!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect(route('vehicle'));
+            $request->session()->flash('alert-class', 'alert-success');
+            if($user_role=='client')
+            { 
+                return redirect(route('vehicle'));
+            }
+            else if($user_role=='root'){
+                return redirect(route('vehicle-root'));
+            }
         }
         else if($track_data->latitude==null || $track_data->longitude==null)
         {
             $request->session()->flash('message', 'No Data Received From GPS!!!'); 
             $request->session()->flash('alert-class', 'alert-success'); 
-            return redirect(route('vehicle'));
+             if($user_role=='client')
+            { 
+                return redirect(route('vehicle'));
+            }
+            else if($user_role=='root'){
+                return redirect(route('vehicle-root'));
+            }
         }
         else
         {
