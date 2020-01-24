@@ -132,7 +132,7 @@
                   <div class="right-sider-inner">
                   <!-- Monitoring details -->
                     <!-- Tabs -->
-                    <button type="button" class="pdf btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download Certificate</button>
+                    <button type="button" class="pdf btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Download</button>
                  
 
                     <ul id="monitoring_details_tabs" class="nav nav-tabs">
