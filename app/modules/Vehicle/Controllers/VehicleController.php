@@ -2303,12 +2303,7 @@ class VehicleController extends Controller
                 {
                   // for get single date km
                   $to_date=$from_date;
-                }
-
-                $total_km = DailyKm::where('gps_id',$single_vehicle_details->gps->id)
-                                     ->whereDate('date','>=',$from_date)
-                                     ->whereDate('date','<=',$to_date)
-                                     ->sum('km');                   
+                }                  
                 $statics[] = array("vehicle_number" => $single_vehicle_details->register_number, 
                                    "vehicle_id" => $single_vehicle_details->id, 
                                    "total_distance" => 0, 
@@ -2318,7 +2313,7 @@ class VehicleController extends Controller
                                    "ac_on_time_idle" => 0, 
                                    "ac_on_time_running" =>0, 
                                    "driver_behaviour" => $driver_points, 
-                                   "total_km" => $total_km, 
+                                   "total_km" => $vehicle_profile['dailykm'], 
                                    "max_speed" => $maximum_speed ?$maximum_speed:"", 
                                    "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
                                    "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
@@ -2400,18 +2395,13 @@ class VehicleController extends Controller
               // for get single date km
                 $to_date=$from_date;
             }
-
-            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
-                                 ->whereDate('date','>=',$from_date)
-                                 ->whereDate('date','<=',$to_date)
-                                 ->sum('km');
             $travel_duration = array("idle" =>$vehicle_profile['halt'],
                                   "running" => $vehicle_profile['motion'],
                                   "stop" => $vehicle_profile['sleep'],
                                   "inactive" => 0
                                  );
             $travel_speed = array("speed" =>0,
-                                  "total_km" => strval($total_km),
+                                  "total_km" => $vehicle_profile['dailykm'],
                                   "avg_speed" => number_format($avg_speed, 2),
                                   "max_speed" => $max_speed ?$max_speed:""
                                  );
@@ -2485,21 +2475,16 @@ class VehicleController extends Controller
               // for get single date km
               $to_date=$from_date;
             }
-
-            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
-                                 ->whereDate('date','>=',$from_date)
-                                 ->whereDate('date','<=',$to_date)
-                                 ->sum('km');
             $statics[] = array("vehicle_number" => $vehicle_details->register_number,
                                    "vehicle_id" => $vehicle_details->id,
-                                   "total_distance" => strval($total_km),
+                                   "total_distance" => $vehicle_profile['dailykm'],
                                    "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'],
                                    "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'],
                                    "total_number_of_stops" =>0,
                                    "ac_on_time_idle" => $vehicle_profile['ac_halt_on_duration'],
                                    "ac_on_time_running" =>$vehicle_profile['ac_on_duration'],
                                    "driver_behaviour" => strval($driver_points),
-                                   "total_km" => strval($total_km),
+                                   "total_km" => $vehicle_profile['dailykm'],
                                    "max_speed" => $maximum_speed ?$maximum_speed:"",
                                    "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
                                    "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
@@ -2589,21 +2574,16 @@ class VehicleController extends Controller
                                ->get();
                            
             $maximum_speed=$gps_data->max('speed');   
-
-            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
-                                 ->whereDate('date','>=',$from_date)
-                                 ->whereDate('date','<=',$to_date)
-                                 ->sum('km'); 
             $statics[] = array("vehicle_number" => $vehicle_details->register_number, 
                                    "vehicle_id" => $vehicle_details->id, 
-                                   "total_distance" => strval($total_km), 
+                                   "total_distance" => $vehicle_profile['dailykm'], 
                                    "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
                                    "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
                                    "total_number_of_stops" =>0, 
                                    "ac_on_time_idle" => $vehicle_profile['ac_halt_on_duration'], 
                                    "ac_on_time_running" =>$vehicle_profile['ac_on_duration'], 
                                    "driver_behaviour" => strval($driver_points), 
-                                   "total_km" => strval($total_km), 
+                                   "total_km" => $vehicle_profile['dailykm'], 
                                    "max_speed" => $maximum_speed ?$maximum_speed:"", 
                                    "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
                                    "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
@@ -2685,18 +2665,13 @@ class VehicleController extends Controller
                                ->get();
             $avg_speed = $gps_data->avg('speed');
             $max_speed = $gps_data->max('speed');
-
-            $total_km = DailyKm::where('gps_id',$vehicle_details->gps->id)
-                                 ->whereDate('date','>=',$from_date)
-                                 ->whereDate('date','<=',$to_date)
-                                 ->sum('km');
             $travel_duration = array("idle" =>$vehicle_profile['halt'], 
                                   "running" => $vehicle_profile['motion'],
                                   "stop" => $vehicle_profile['sleep'], 
                                   "inactive" => 0
                                  );
             $travel_speed = array("speed" =>0, 
-                                  "total_km" => strval($total_km),
+                                  "total_km" => $vehicle_profile['dailykm'],
                                   "avg_speed" => number_format($avg_speed, 2), 
                                   "max_speed" => $max_speed ?$max_speed:""
                                  );
@@ -2769,11 +2744,6 @@ class VehicleController extends Controller
                   // for get single date km
                     $to_date=$from_date;
                 }
-
-                $total_km = DailyKm::where('gps_id',$get_vehicle->gps->id)
-                                     ->whereDate('date','>=',$from_date)
-                                     ->whereDate('date','<=',$to_date)
-                                     ->sum('km');
                 // km dummy
 
                 $travel_duration = array("idle" =>$vehicle_profile['halt'], 
@@ -2782,7 +2752,7 @@ class VehicleController extends Controller
                                       "inactive" => 0
                                      );
                 $travel_speed = array("speed" =>0, 
-                                      "total_km" => $total_km,
+                                      "total_km" => $vehicle_profile['dailykm'],
                                       "avg_speed" => number_format($avg_speed, 2), 
                                       "max_speed" => $max_speed ?$max_speed:""
                                      );

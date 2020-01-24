@@ -53,10 +53,27 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
     Route::get('/sos-transfer-sub-dealer-to-trader/{id}/label','SosController@sosTransferSubDealerToTraderLabel')->name('sos-transfer-sub-dealer-to-trader.label');
     Route::get('/sos-transfer-sub-dealer-to-trader-label/{id}/export','SosController@exportSosTransferSubDealerToTraderLabel')->name('sos-transfer-sub-dealer-to-trader-label.export');
 
-    //transferred sos list for sub dealer to trader   ------STOP HERE
-    // Route::get('/sos-transfers','SosController@getList')->name('sos-transfers');
-    // Route::post('/sos-transfer-list','SosController@getListData')->name('sos-transfer-list');
+    //transferred sos list for sub dealer to trader   
+    Route::get('/sos-transferred-from-sub-dealer-to-trader','SosController@getTransferredSosListFromSubDealerToTrader')->name('sos-transferred-from-sub-dealer-to-trader');
+    Route::post('/sos-transferred-from-sub-dealer-to-trader-list','SosController@getTransferredSosListFromSubDealerToTraderData')->name('sos-transferred-from-sub-dealer-to-trader-list');
 
+    //transferred sos list for sub dealer to client   
+    Route::get('/sos-transferred-from-sub-dealer-to-client','SosController@getTransferredSosListFromSubDealerToClient')->name('sos-transferred-from-sub-dealer-to-client');
+    Route::post('/sos-transferred-from-sub-dealer-to-client-list','SosController@getTransferredSosListFromSubDealerToClientData')->name('sos-transferred-from-sub-dealer-to-client-list');
+
+});
+
+Route::group(['middleware' => ['web','auth','role:trader'] , 'namespace' => 'App\Modules\Sos\Controllers' ] , function() {
+
+    //sos trader list
+    Route::get('/sos-trader','SosController@sosTraderListPage')->name('sos-trader');
+    Route::post('/sos-trader-list','SosController@getTraderSos')->name('sos-trader-list');
+
+    //SOS TRANSFER from trader to client
+    Route::get('/sos-transfer-trader-to-client/create','SosController@createTraderToClientSosTransfer')->name('sos-transfer-trader-to-client.create');
+    Route::post('/sos-transfer-trader-to-client-dropdown','SosController@getClientDetailsForTraderToClientTransfer')->name('sos-transfer-trader-to-client-dropdown');
+    Route::post('/sos-transfer-trader-to-client','SosController@proceedTraderToClientSosTransfer')->name('sos-transfer-trader-to-client.transfer.p');
+    Route::post('/sos-transfer-trader-to-client-proceed','SosController@proceedConfirmTraderToClientSosTransfer')->name('sos-transfer-trader-to-client-proceed.create.p');
 });
 
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Sos\Controllers' ] , function() {
