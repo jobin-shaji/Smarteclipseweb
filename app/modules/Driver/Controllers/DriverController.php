@@ -62,7 +62,7 @@ class DriverController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            'address' => 'required|max:150',
             'mobile' => 'required|numeric|unique:drivers',
             
         ];
@@ -72,7 +72,7 @@ class DriverController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            'address' => 'required|max:150',
             'mobile' => 'required|numeric|unique:drivers',
             
         ];
@@ -558,7 +558,7 @@ class DriverController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            'address' => 'required|max:150',
             'mobile' => 'required|numeric|unique:drivers,mobile,'.$driver->id
             
         ];
@@ -569,7 +569,7 @@ class DriverController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            'address' => 'required|max:150',
             'mobile' => 'required|numeric|unique:drivers,mobile,'.$driver->id
             
         ];

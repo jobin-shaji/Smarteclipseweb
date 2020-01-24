@@ -17961,3 +17961,10 @@ display: block;
     margin-bottom: 9px;
     margin-right: 8px;
   }
+
+input:required {
+    box-shadow:none;
+}
+input:invalid {
+    box-shadow:0 0 3px none;
+}

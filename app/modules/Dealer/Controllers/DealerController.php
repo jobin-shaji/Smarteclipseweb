@@ -20,11 +20,13 @@ class DealerController extends Controller {
             'id', 
             'user_id',                      
             'name',                   
-            'address',                                        
+            'address',
+            'created_at',                                        
             'deleted_at'
         )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
+        ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($dealers)
         ->addIndexColumn()
