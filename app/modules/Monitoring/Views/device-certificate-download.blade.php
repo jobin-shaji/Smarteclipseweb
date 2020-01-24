@@ -1,0 +1,703 @@
+<html>
+<head><meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+
+<style type="text/css">
+span.cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+span.cls_003{font-family:Times,serif;font-size:21.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+div.cls_003{font-family:Times,serif;font-size:21.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+span.cls_004{font-family:Times,serif;font-size:30.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+div.cls_004{font-family:Times,serif;font-size:30.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+span.cls_005{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+div.cls_005{font-family:Times,serif;font-size:11.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+span.cls_006{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_006{font-family:Times,serif;font-size:12px!important;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+span.cls_007{font-family:Times,serif;font-size:10px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_007{font-family:Times,serif;font-size:7.0px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+.lineheight {
+line-height: 20px;
+margin-top: 1%!important;
+}
+body{
+margin: :0px;
+padding: :0px;
+}
+-->
+.border{
+width: 570px;
+float: left;
+display: block;
+border: 1px solid #000;
+padding:30px 0 50px;
+}
+.clear{clear:both;
+}
+.same-width{width:100%;
+float:left;
+padding-bottom:10px;
+}
+.top-bg-left{
+width:70%;
+float:left;
+}
+.top-bg-right{
+width:30%;
+float:left;
+}
+
+.logo{
+width:100%;float:left;display:block;
+}.logo img{
+width:150px;
+float:right;}
+.marg-auto{
+width:540px;margin:30px auto;
+}
+.top-text{
+width:100%;float:left;display:block; margin-top:10px;
+font-size:16px;
+}
+.top-text-left{
+width:50%;float:left;
+}.top-text-right{
+width:50%;float:left;
+margin-left: -1px;
+}
+
+.top-text span.cls_006 {
+font-size: 12px;
+}
+.mrg-left-5{margin-left:5px;
+}
+
+.mrg-top-70{margin-top:60px;
+}.mrg-top-50{margin-top:50px;
+}
+.officeal-txt{
+width: 200px;
+float: right;
+margin-top: 50px;}
+.top-text-left-1 {
+width: 100%;
+float: left;
+}
+.mrg-30{
+margin-top:30px;
+}
+
+.inner-bg-left{
+width:510px;
+margin:0px auto;
+}
+.inner-border{
+margin: 0;
+border: 1px solid #000;
+border-bottom: 0px solid #000;
+}.boderder-bottom{
+border-bottom:1px solid #000;
+}
+.inner-left{
+width: 42%;
+float: left;
+border-right: 1px solid #000;
+padding: 10px 0;
+padding-left: 5px;
+min-height: 30px;
+
+}
+.inner-right{
+width:53%;
+float:left;
+min-height: 30px;
+border-right: 1px solid #000;
+padding:10px 0;
+padding-left: 5px;
+}
+.yellow{
+background:#f5bb14;
+}
+.border-0{
+border:0px;
+}
+.gray{
+background:#bebdbc;
+}
+.br-bt{
+border-bottom:1px solid #000;}
+.mrg-40
+{margin-top:40px;
+}
+.yellow{background: #f5bb14;}
+.grey{background: #bebdbc;}
+.cls_002{font-family:Times,serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+td{
+vertical-align: text-top;
+}
+</style>
+
+<script type="text/javascript" src="wz_jsgraphics.js"></script>
+
+</head>
+<body>
+<div>
+<p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:-7px ">
+<b>Monitoring Panel</b>
+</p></div>
+@if(in_array(1, $report_type))
+<p style="margin-left: 70px"><b>Vehicle Details</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+    <?php
+    if( $monitoringReport->theft_mode==0){
+        $theft_mode='Disabled';
+    }
+    else{
+        $theft_mode='Enabled';
+    }
+    if( $monitoringReport->towing==0){
+        $towing='Not Towing';
+    }
+    else{
+        $towing='Towing';
+    }
+    if( $monitoringReport->emergency_status==0){
+        $emergency_status='Off';
+    }
+    else{
+        $emergency_status='On';
+    }
+    ?>
+
+    <tr>
+        <th>Vehicle Name</th>
+        <td>{{ $monitoringReport->name }}</td>
+    </tr>
+    <tr>
+        <th>Registration Number</th>
+        <td>{{ $monitoringReport->register_number}}</td>
+    </tr>
+    <tr>
+        <th>Vehicle Type</th>
+        <td>{{ $monitoringReport->vehicleType->name}}</td>
+    </tr>
+    <tr>
+        <th>Vehicle Model </th>
+        <td>{{ $monitoringReport->vehicleModels->name}}</td>
+    </tr>
+    <tr>
+        <th>Vehicle Make</th>
+        <td>{{ $monitoringReport->vehicleModels->vehicleMake->name}}</td>
+    </tr>
+    <tr> 
+        <th>Engine Number</th>
+        <td>{{ $monitoringReport->engine_number}}</td>
+    </tr>
+    <tr>  
+        <th>Chassis Number</th>
+        <td>{{ $monitoringReport->chassis_number}}</td>
+    </tr>
+    <tr> 
+        <th>Theft Mode </th>
+        <td>{{ $theft_mode}}</td> 
+    </tr>
+    <tr> 
+        <th>Towing </th>
+        <td>{{ $towing}}</td> 
+    </tr>
+    <tr>
+        <th>Emergency Status  </th>
+        <td>{{ $emergency_status}}</td> 
+    </tr>
+    <tr> 
+        <th>Created At </th>
+        <td>{{ $monitoringReport->created_at}}</td> 
+    </tr>
+</table>
+@endif
+@if(in_array(2, $report_type))
+<p style="margin-left: 70px"><b>Owner Details</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+    <?php
+$role=$monitoringReport->client->user->role;
+if($role==0||$role==4)
+ { 
+    $user_role="Freebies";
+ }else if($role==6){
+    $user_role="Fundamental";
+ }else if($role==7){
+    $user_role="Superior";
+ }else if($role==8){
+    $user_role="Pro";
+ }
+ else{
+    $user_role="No data Available";
+ }
+ if($monitoringReport->client->subdealer){
+    $dealer_trader=$monitoringReport->client->subdealer->name;
+ }
+ else if($monitoringReport->client->trader){
+    $dealer_trader=$monitoringReport->client->trader->name;
+ }
+ else{
+    $dealer_trader="Not Assigned";
+ }                
+?>
+<tr>
+        <th>Owner Name </th>
+        <td>{{ $monitoringReport->client->name }}</td> 
+    </tr>
+    <tr>
+        <th>Owner Username</th>
+        <td>{{ $monitoringReport->client->user->username}}</td> 
+    </tr>
+    <tr>
+        <th>Owner Address</th>
+        <td>{{ $monitoringReport->client->address}}</td>
+    </tr>
+    <tr>
+        <th>Owner Mobile</th>
+        <td>{{ $monitoringReport->client->user->mobile}}</td> 
+    </tr>
+    <tr>
+        <th>Owner Email</th>
+        <td>{{ $monitoringReport->client->user->email}}</td>                  
+    </tr>
+    <tr>
+        <th>Owner Latitude </th> 
+        <td>{{ $monitoringReport->client->latitude}}</td>                  
+    </tr> 
+    <tr>
+        <th>Owner Longitude</th>
+        <td>{{ $monitoringReport->client->longitude}}</td>
+    </tr>
+    <tr> 
+        <th>Owner Country</th>
+        <td>{{ $monitoringReport->client->country->name}}</td>
+    </tr>
+    <tr> 
+        <th>Owner State</th>
+        <td>{{ $monitoringReport->client->state->name}}</td>
+    </tr> 
+    <tr>
+        <th>Owner City </th> 
+        <td>{{ $monitoringReport->client->city->name}}</td>
+    </tr>
+    <tr>
+        <th>Dealer </th>
+        <td>{{ $dealer_trader}}</td> 
+    </tr> 
+    <tr>
+        <th>Owner Package </th>
+        <td>{{ $user_role}}</td>  
+    </tr>
+</table>
+@endif
+@if(in_array(3, $report_type))
+@if($monitoringReport->driver)
+<p style="margin-left: 70px"><b>Driver Details</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+    <?php
+        if($monitoringReport->driver->points<=0){
+            $points=0;
+        }
+        else{
+            $points=$monitoringReport->driver->points;
+        }
+    ?>
+    <tr>
+        <th>Driver Name </th>
+        <td>{{ $monitoringReport->driver->name }}</td>
+    </tr>
+    <tr>
+        <th>Driver Address</th>
+        <td>{{ $monitoringReport->driver->address}}</td>
+    </tr>
+    <tr>
+        <th>Driver Mobile</th>
+        <td>{{ $monitoringReport->driver->mobile}}</td>
+    </tr>
+    <tr>
+        <th>Driver Points</th>
+        <td>{{ $points}}</td>
+    </tr>
+</table>
+@endif
+@endif
+@if(in_array(4, $report_type))
+<p style="margin-left: 70px"><b>Device Details</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+    <?php
+        if($monitoringReport->gps->emergency_status ==0){
+            $emergency_status="Off";
+        }
+        else{
+            $emergency_status="On";
+        }
+        if($monitoringReport->gps->gps_fix_on ==0){
+            $gps_fix="Not Received";
+        }
+        else{
+            $gps_fix="Received";
+        }
+        if($monitoringReport->gps->calibrated_on){
+            $calibrated_on=$monitoringReport->gps->calibrated_on;
+        }
+        else{
+            $calibrated_on="No Data available";
+        }
+        if($monitoringReport->gps->login_on){
+            $login_on=$monitoringReport->gps->login_on;
+        }
+        else{
+            $login_on="No Data available";
+        }
+        if($monitoringReport->gps->no_of_satellites){
+            $no_of_satellites=$monitoringReport->gps->no_of_satellites;
+        }
+        else{
+            $no_of_satellites="No Data available";
+        }
+        if($monitoringReport->gps->e_sim_number){
+            $e_sim_number=$monitoringReport->gps->e_sim_number;
+        }
+        else{
+            $e_sim_number="No Data available";
+        }
+        ?>
+<tr>
+        <th>IMEI </th>
+        <td>{{ $monitoringReport->gps->imei }}</td>
+    </tr>
+    <tr>
+        <th>Serial Number</th>
+        <td>{{ $monitoringReport->gps->serial_no}}</td>
+    </tr>
+    <tr>
+        <th>Manufacturing date</th>
+        <td>{{ $monitoringReport->gps->manufacturing_date}}</td>
+    </tr>
+    <tr>
+        <th>ICC Id</th>
+        <td>{{ $monitoringReport->gps->icc_id}}</td>
+    </tr>
+    <tr>
+        <th>IMSI </th>
+        <td>{{ $monitoringReport->gps->imsi}}</td>
+    </tr>
+    <tr> 
+        <th>E Sim Number</th>
+        <td>{{ $e_sim_number}}</td>
+    </tr>
+    <tr>  
+        <th>Batch Number</th>
+        <td>{{ $monitoringReport->gps->batch_number}}</td>
+    </tr>
+    <tr> 
+        <th>Model Name</th>
+        <td>{{ $monitoringReport->gps->model_name}}</td>                      
+    </tr>
+    <tr> 
+        <th>Version </th>
+        <td>{{ $monitoringReport->gps->version}}</td>  
+    </tr>
+    <tr>
+        <th>Employee Code</th>
+        <td>{{ $monitoringReport->gps->employee_code}}</td>
+    </tr>
+    <tr> 
+        <th>Number of satellites </th>
+        <td>{{ $no_of_satellites}}</td> 
+    </tr>
+    <tr> 
+        <th>Emergency Status</th>
+        <td>{{ $emergency_status}}</td>
+    </tr>
+    <tr> 
+        <th>GPS Fix</th>
+        <td>{{ $gps_fix}}</td>
+    </tr>
+    <tr>
+        <th>Calibrated on</th>
+        <td>{{ $calibrated_on}}</td>
+    </tr>
+    <tr> 
+        <th>Login on </th>
+        <td>@if($monitoringReport->gps->login_on){{ $monitoringReport->gps->login_on }}@else {{'NO Data Available'}}@endif</td>
+    </tr>
+    <tr> 
+        <th>Created At </th>
+        <td>{{ $monitoringReport->gps->created_at}}</td>
+    </tr>
+</table>
+@endif
+@if(in_array(5, $report_type))
+<p style="margin-left: 70px"><b>Device Current Status</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+<tr>
+            <th>Mode</th>
+            <td>@if($monitoringReport->gps->mode){{ $monitoringReport->gps->mode }}@else {{'NO Data Available'}}@endif</td> 
+        </tr>   
+        <tr>
+            <th>Latitude</th>
+            <td>@if($monitoringReport->gps->lat){{ $monitoringReport->gps->lat }}@else {{'NO Data Available'}}@endif</td>
+        </tr>   
+        <tr>
+            <th>Longitude</th>
+            <td>@if($monitoringReport->gps->lon){{ $monitoringReport->gps->lon }}@else {{'NO Data Available'}}@endif</td>
+        </tr>   
+        <tr>
+            <th>Fuel Status</th>
+            <td>@if($monitoringReport->gps->fuel_status){{ $monitoringReport->gps->fuel_status }}@else {{'NO Data Available'}}@endif</td>
+        </tr>   
+        <tr>
+            <th>Speed</th>
+            <td>@if($monitoringReport->gps->speed){{ $monitoringReport->gps->speed }}@else {{'NO Data Available'}}@endif</td> 
+        </tr>   
+        <tr>
+            <th>Odometer</th>
+            <td>@if($monitoringReport->gps->odometer){{ $monitoringReport->gps->odometer }}@else {{'NO Data Available'}}@endif</td> 
+        </tr>   
+        <tr>
+            <th>Battery Status</th> 
+            <td>@if($monitoringReport->gps->battery_status){{ $monitoringReport->gps->battery_status }}@else {{'NO Data Available'}}@endif</td> 
+        </tr>
+        <tr>
+            <th>Main Power Status</th>  
+            <td>
+                @if($monitoringReport->gps->main_power_status==0)
+                {{'Disconnected'}}@else {{'Connected'}}@endif</td> 
+        </tr>
+        <tr>
+            <th>Device Date and Time</th>   
+            <td>@if($monitoringReport->gps->device_time){{ $monitoringReport->gps->device_time }}@else {{'NO Data Available'}}@endif</td> 
+        </tr>
+        <tr>
+            <th>Ignition</th>   
+            <td>@if($monitoringReport->gps->ignition){{ $monitoringReport->gps->ignition }}@else {{'NO Data Available'}}@endif</td> 
+        </tr>
+        <tr>
+            <th>Ignition</th>   
+            <td>@if($monitoringReport->gps->ignition==1){{'On'}}@else {{'Off'}}@endif</td> 
+        </tr>
+        <tr>
+            <th>GSM Signal Strength</th>    
+            <td>@if($monitoringReport->gps->gsm_signal_strength){{ $monitoringReport->gps->gsm_signal_strength }}@else {{'No data Available'}}@endif</td> 
+        </tr>
+        <tr>
+            <th>AC Status</th>  
+            <td>@if($monitoringReport->gps->ac_status==0){{'Off'  }}@else {{'On'}}@endif</td> 
+        </tr>       
+</table>
+@endif
+@if(in_array(6, $report_type))
+<p style="margin-left: 70px"><b>Device Configuration</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+    <thead>
+    <tr>
+        <th>Header</th>
+        <th>Value</th>
+        <th>Update At</th>
+        </tr>
+    </thead>
+     @foreach($monitoringReport->gps->ota as $ota)
+          <?php
+           $header = 'Null'; 
+            if($ota->header == 'PU'){
+                $header = 'Primary/Reguvaluelatory Purpose URL';
+            }
+            else if($ota->header == 'EU')
+            {
+                $header = 'Emergency Response System URl';
+            }
+            else if($ota->header == 'EM')
+            {
+                $header = 'Emergency response SMS Number';
+            }
+            else if($ota->header == 'EO')
+            {
+                $header = 'Emergency State OFF';
+            }
+            else if($ota->header == 'ED')
+            {
+                $header = 'Emergency State Time Duration';
+            }
+            else if($ota->header == 'APN')
+            {
+                $header = 'Access Point Name';
+            }
+            else if($ota->header == 'TA')
+            {
+                $header = 'Tilt Angle';
+            }
+            else if($ota->header == 'ST')
+            {
+                $header = 'Sleep Time';
+            }
+            else if($ota->header == 'SL')
+            {
+                $header = 'Speed Limit';
+            }
+            else if($ota->header == 'HBT')
+            {
+                $header = 'Harsh Breaking Threshold';
+            }
+            else if($ota->header == 'HAT')
+            {
+                $header = 'Harsh Acceleration Threshold';
+            }
+            else if($ota->header == 'RTT')
+            {
+                $header = 'Rash Turning Threshold';
+            }
+            else if($ota->header == 'LBT')
+            {
+                $header = 'Low Battery Threshold';
+            }
+            else if($ota->header == 'VN')
+            {
+                $header = 'Vehicle Registration Number';
+            }
+            else if($ota->header == 'UR')
+            {
+                $header = 'Data Update Rate in IGN ON Mode';
+            }
+            else if($ota->header == 'URT')
+            {
+                $header = 'Data Update Rate in Halt Mode';
+            }
+            else if($ota->header == 'URS')
+            {
+                $header = 'Data Update Rate in IGN OFF/Sleep Mode';
+            }
+            else if($ota->header == 'URE')
+            {
+                $header = 'Data Updation Rate in Emergency Mode';
+            }
+            else if($ota->header == 'URF')
+            {
+                $header = 'Data Update Rate of Full Packet';
+            }
+            else if($ota->header == 'URH')
+            {
+                $header = 'Data Update Rate of Health Packets';
+            }
+            else if($ota->header == 'VID')
+            {
+                $header = 'Vendor ID';
+            }
+            else if($ota->header == 'FV')
+            {
+                $header = 'Firmware Version';
+            }
+            else if($ota->header == 'DSL')
+            {
+                $header = 'Default Speed Limit';
+            }
+            else if($ota->header == 'HT')
+            {
+                $header = 'Halt Time';
+            }
+            else if($ota->header == 'M1')
+            {
+                $header = 'Contact Mobile Number';
+            }
+            else if($ota->header == 'M2')
+            {
+                $header = 'Contact Mobile Number 2';
+            }
+            else if($ota->header == 'M3')
+            {
+                $header = 'Contact Mobile Number 3';
+            }
+            else if($ota->header == 'GF')
+            {
+                $header = 'Geofence';
+            }
+            else if($ota->header == 'OM')
+            {
+                $header = 'OTA Updated Mobile';
+            }
+            else if($ota->header == 'OU')
+            {
+                $header = 'OTA Updated URL';
+            }
+            else
+            {
+                $header = $ota->header;
+            }
+            
+          ?>
+    <tr>
+        <td>{{$header}}</td>
+        <td>{{$ota->value}}</td>
+        <td>{{$ota->updated_at}}</td>
+    </tr>  
+    @endforeach 
+</table>
+@endif
+@if(in_array(7, $report_type))
+<p style="margin-left: 70px"><b>Installation</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+<tr>
+<th>Servicer Name</th>
+<th>Job Date</th>
+<th>Job Completed Date</th>
+<th>Location</th>
+<th>Description</th>
+<th>Comments</th>
+</tr>
+ @foreach($monitoringReport->jobs as $jobs)
+         @if($jobs->job_type==1)
+        <tr>
+            <td>{{$jobs->servicer->name}}</td>
+            <td>{{$jobs->job_date}}</td>
+            <td>{{$jobs->job_complete_date}}</td>
+            <td>{{$jobs->location}}</td>
+            <td>{{$jobs->description}}</td>
+            <td>{{$jobs->comment}}</td>
+        </tr>
+        @endif
+        @endforeach
+</table>
+@endif
+@if(in_array(8, $report_type))
+<p style="margin-left: 70px"><b>Service(S)</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+<tr>
+<th>Servicer Name</th>
+<th>Job Date</th>
+<th>Job Completed Date</th>
+<th>Location</th>
+<th>Description</th>
+<th>Comments</th>
+</tr>
+ @foreach($monitoringReport->jobs as $service_jobs)
+         @if($service_jobs->job_type==2)
+        <tr>
+            <td>{{$service_jobs->servicer->name}}</td>
+            <td>{{$service_jobs->job_date}}</td>
+            <td>{{$service_jobs->job_complete_date}}</td>
+            <td>{{$service_jobs->location}}</td>
+            <td>{{$service_jobs->description}}</td>
+            <td>{{$service_jobs->comment}}</td>
+        </tr>
+        @endif
+        @endforeach
+</table>
+@endif
+@if(in_array(9, $report_type))
+<p style="margin-left: 70px"><b>Alerts</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 50%">
+    <tr>
+        <th >Alert</th>
+        <th >Date and Time of alert</th>                            
+    </tr>
+    @foreach($monitoringReport->alerts as $alert)
+            <tr>
+                <td>{{$alert->alertType->description}}</td>
+                <td>{{$alert->device_time}}</td>
+            </tr>
+        @endforeach
+</table>
+@endif
+</body>
+</html>
