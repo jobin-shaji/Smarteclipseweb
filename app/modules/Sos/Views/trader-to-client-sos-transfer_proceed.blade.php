@@ -1,17 +1,15 @@
 @extends('layouts.eclipse') 
 @section('title')
-  SOS Transfer (Dealer To End User)
+  SOS Transfer
 @endsection
 @section('content')
-
-     
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer Confirmation Form (Dealer To End User)</li>
-        <b>SOS Transfer Confirmation Form (Dealer To End User)</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer Confirmation Form</li>
+        <b>SOS Transfer Confirmation Form </b>
         @if(Session::has('message'))
         <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -24,7 +22,7 @@
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('sos-transfer-sub-dealer-proceed.create.p')}}">
+        <form  method="POST" action="{{route('sos-transfer-trader-to-client-proceed.create.p')}}">
         {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
@@ -71,7 +69,7 @@
                 <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
               </div>
               <div class="col-md-1 ">
-                <a href="{{ route('sos-transfer-sub-dealer.create') }}">
+                <a href="{{ route('sos-transfer-trader-to-client.create') }}">
                   <button type="button" class="btn btn-md ">Cancel</button>
                 </a>
             </div>

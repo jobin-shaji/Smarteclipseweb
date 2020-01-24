@@ -40,7 +40,7 @@ function callBackDataTable(){
             {data: 'version', name: 'version', orderable: false},
             {data: 'brand', name: 'brand', orderable: false},
             {data: 'model_name', name: 'model_name', orderable: false},
-            {data: 'user.username', name: 'user.username', orderable: false},
+            // {data: 'user', name: 'user', orderable: false},
             
         ],
         

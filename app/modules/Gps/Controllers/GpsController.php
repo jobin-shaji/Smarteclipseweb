@@ -472,7 +472,7 @@ class GpsController extends Controller {
                 }else if($gps_stock->client_id===0 && $gps_stock->trader_id===null){
                     return "Awaiting Confirmation";
                 }else{
-                    return "Transferred";;
+                    return "Transferred";
                 }
             })
             ->addColumn('action', function ($gps_stock) {

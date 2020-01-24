@@ -66,7 +66,7 @@
                 if (strpos($url, $rayfleet_key) == true) {  ?>
                   <div class="form-group has-feedback">
                     <label>Mobile Number</label>
-                    <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}" title="Mobile number should be exactly 11 digits" />
+                    <input type="text" required pattern="[0-9]{11}" maxlength='11' class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}" title="Mobile number should be exactly 11 digits" />
                   @if ($errors->has('mobile_number'))
                     <span class="help-block">
                       <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
@@ -77,7 +77,7 @@
                 else if (strpos($url, $eclipse_key) == true) { ?>
                   <div class="form-group has-feedback">
                     <label>Mobile Number</label>
-                    <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}" title="Mobile number should be exactly 10 digits" />
+                    <input type="text" required pattern="[0-9]{10}" maxlength='10' class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}" title="Mobile number should be exactly 10 digits" />
                   @if ($errors->has('mobile_number'))
                     <span class="help-block">
                       <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
@@ -88,7 +88,7 @@
                 else { ?>
                   <div class="form-group has-feedback">
                     <label>Mobile Number</label>
-                    <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}" title="Mobile number should be exactly 10 digits" />
+                    <input type="text" required pattern="[0-9]{10}" maxlength='10' class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile}}" title="Mobile number should be exactly 10 digits" />
                   @if ($errors->has('mobile_number'))
                     <span class="help-block">
                       <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
