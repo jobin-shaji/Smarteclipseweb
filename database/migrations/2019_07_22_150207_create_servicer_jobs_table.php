@@ -32,6 +32,7 @@ class CreateServicerJobsTable extends Migration
             $table->text('comment')->nullable();
             $table->json('unboxing_checklist')->nullable();
             $table->string('device_command')->nullable();
+            $table->integer('job_status');            
             $table->timestamps();
             $table->softDeletes();
         });
