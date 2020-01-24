@@ -146,7 +146,7 @@ vertical-align: text-top;
      <div style="position:absolute;left:53px;top:90px;" >
         <span class="cls_002">Date:{{date('d-m-Y')}}</span>
     </div>
-<p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:40%px ">
+<p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:40px">
 <b> Report</b>
 </p></div>
 @if(in_array(1, $report_type))
