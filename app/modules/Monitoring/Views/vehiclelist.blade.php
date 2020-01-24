@@ -537,18 +537,7 @@
 
         </div>     
 <style type="text/css">
-  .modal-out
-  {
-    width: 90%;
-float: left;
-margin: 20px;
-margin-top: 20px;
-display: block;
-  }
-  .modal-out input[type="checkbox"], .modal-out input[type="radio"] .modal-out label{
-    margin-bottom: 9px;
-    margin-right: 8px;
-  }
+ 
 
 </style>
 

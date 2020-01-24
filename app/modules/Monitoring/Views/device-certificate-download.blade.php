@@ -140,13 +140,13 @@ vertical-align: text-top;
 </head>
 <body>
 <div>
-    <div style="position:absolute;left:520px;top:90px" class="cls_003">
+    <div style="position:absolute;left:520px;top:40px" class="cls_003">
         <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
     </div>
      <div style="position:absolute;left:53px;top:90px;" >
         <span class="cls_002">Date:{{date('d-m-Y')}}</span>
     </div>
-<p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:40px">
+<p style="text-align: center;font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:50px">
 <b> Report</b>
 </p></div>
 @if(in_array(1, $report_type))
