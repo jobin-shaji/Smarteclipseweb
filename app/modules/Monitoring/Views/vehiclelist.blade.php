@@ -521,18 +521,34 @@
         </div>
          <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
         <div class="modal-body">
-           <div id="report_type">
-            <input type="checkbox" id="report_type1" name="report[]" value="1" checked>Vehicle Details</br>
-            <input type="checkbox" id="report_type2"  name="report[]" value="2" checked>Owner Details</br>
-            <input type="checkbox" id="report_type3" name="report[]" value="3" checked>Driver Details</br>
-            <input type="checkbox" id="report_type4" name="report[]" value="4" checked>Device Details</br>
-            <input type="checkbox" id="report_type5" name="report[]" value="5" checked>Device Current Status</br>
-            <input type="checkbox" id="report_type6" name="report[]" value="6" checked>Device Configuration</br>
-            <input type="checkbox" id="report_type7" name="report[]" value="7" checked>Installation</br>
-            <input type="checkbox" id="report_type8" name="report[]" value="8" checked>Service</br>
-            <input type="checkbox" id="report_type9" name="report[]" value="9" checked>Alerts</br>         
+           <div id="report_type" class="modal-out">
+            <input type="checkbox" id="report_type1" name="report[]" value="1" checked><label>Vehicle Details</label></br>
+            <input type="checkbox" id="report_type2"  name="report[]" value="2" checked><label>Owner Details</label></br>
+            <input type="checkbox" id="report_type3" name="report[]" value="3" checked><label>Driver Details</label></br>
+            <input type="checkbox" id="report_type4" name="report[]" value="4" checked><label>Device Details</label></br>
+            <input type="checkbox" id="report_type5" name="report[]" value="5" checked><label>Device Current Status</label></br>
+            <input type="checkbox" id="report_type6" name="report[]" value="6" checked><label>Device Configuration</label></br>
+            <input type="checkbox" id="report_type7" name="report[]" value="7" checked><label>Installation</label></br>
+            <input type="checkbox" id="report_type8" name="report[]" value="8" checked><label>Service</label></br>
+            <input type="checkbox" id="report_type9" name="report[]" value="9" checked><label>Alerts</label></br>         
         </div>         
         </div>     
+<style type="text/css">
+  .modal-out
+  {
+    width: 90%;
+float: left;
+margin: 20px;
+margin-top: 20px;
+display: block;
+  }
+  .modal-out input[type="checkbox"], .modal-out input[type="radio"] .modal-out label{
+    margin-bottom: 9px;
+    margin-right: 8px;
+  }
+
+</style>
+
         <div class="modal-footer">
           <button type="submit" class="btn btn-default"><i class='fa fa-download'></i>Download Certificate</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" onclick="downloadMonitoringReport()" >Download Excel</button>        
