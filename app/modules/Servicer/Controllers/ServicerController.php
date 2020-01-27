@@ -247,8 +247,8 @@ class ServicerController extends Controller {
             'job_date' => $job_date,   
             'role'      =>  $request->role,    
             'status' => 1, //ASSIGNED STATUS
-            'location'=>$request->search_place
-            // 'latitude'=>$location_lat,
+            'location'=>$request->search_place,
+            'job_status'=>0
             // 'longitude'=>$location_lng              
         ]); 
         // $gps = Gps::find($request->gps);
@@ -365,8 +365,8 @@ class ServicerController extends Controller {
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
                 'status' => 1, //ASSIGN STATUS
-                'location'=>$location 
-                // 'latitude'=>$location_lat,
+                'location'=>$location,
+                'job_status'=>0
                 // 'longitude'=>$location_lng           
             ]); 
             $request->session()->flash('message', 'Assigned Job successfully!'); 
@@ -1207,125 +1207,139 @@ public function serviceJobDetails(Request $request)
 ################################################################################
 
 
-//Alert Notification
+    //device details based on client selection in assign job page
     public function clientGpsList(Request $request)
     {
         $user = $request->user();
         $client_id=$request->client_id;
-        $job_type=$request->job_type;        
-        $client = Client::find($client_id);
-        $latitude=$client->latitude;
-        $longitude=$client->longitude; 
-        if(!empty($latitude) && !empty($longitude)){
-            //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-            $output = json_decode($geocodeFromLatLong);         
-            $status = $output->status;
-            //Get address from json data
-            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-            //Return address of the given latitude and longitude
-            if(!empty($address)){
-                $location=$address;
-                                                
-            }        
-        }
-        else
+        if($client_id != 0)
         {
-            $location= "No Address";
-        }
+            $job_type=$request->job_type;        
+            $client = Client::find($client_id);
+            $latitude=$client->latitude;
+            $longitude=$client->longitude; 
 
+            if(!empty($latitude) && !empty($longitude)){
+                //Send request and receive json data by address
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
+                $output = json_decode($geocodeFromLatLong);         
+                $status = $output->status;
+                //Get address from json data
+                $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+                //Return address of the given latitude and longitude
+                if(!empty($address)){
+                    $location=$address;
+                                                    
+                }        
+            }
+            else
+            {
+                $location= "No Address";
+            }
 
-        $gps_stocks = GpsStock::select(
-            'gps_id',
-            'client_id'
-        )
-        ->where('client_id',$client_id)
-        ->get();
-
-        $stock_gps_id = [];
-        foreach($gps_stocks as $stock_gps){
-            $stock_gps_id[] = $stock_gps->gps_id;
-        }       
-        if($stock_gps_id)
-        {        
-            $vehicle_device = Vehicle::select(
-            'gps_id',
-            'id',
-            'register_number',
-            'name'
-        )
-        ->where('client_id',$client_id)
-        ->get();
-        $single_gps = [];
-        foreach($vehicle_device as $device){
-            $single_gps[] = $device->gps_id;
-        }
-        
-        $servicer_jobs = ServicerJob::select(
-            'gps_id',
-            'servicer_id',
-            'user_id',
-            'client_id'
-        )
-        ->where('client_id',$client_id)
-        ->get();
-        $servicer_gps = [];
-        foreach($servicer_jobs as $servicer_job){
-            $servicer_gps[] = $servicer_job->gps_id;
-        }     
-        // dd($servicer_gps);
-        // $devices=Gps::select('id','imei','serial_no')
-        // ->whereIn('id',$stock_gps_id)
-        // ->whereNotIn('id',$single_gps)
-        // ->whereNotIn('id',$servicer_gps)
-        // ->get();
-
-        if($job_type==1)
-        {
-
-        $devices=Gps::select('id','imei','serial_no')
-        ->whereIn('id',$stock_gps_id)
-        ->whereNotIn('id',$single_gps)
-        ->whereNotIn('id',$servicer_gps)
-
-        ->get();
-
-        }else if($job_type==2){
-            $devices=Gps::select('id','imei','serial_no')
-            ->whereIn('id',$stock_gps_id)
-            ->whereIn('id',$single_gps)
-             ->whereIn('id',$servicer_gps)
+            $gps_stocks = GpsStock::select(
+                'gps_id',
+                'client_id'
+            )
+            ->where('client_id',$client_id)
             ->get();
-        }else{
-         $devices=[];   
-        }
-       // if($user->hasRole('sub_dealer')){
-        if($devices)
-        {               
+
+            $stock_gps_id = [];
+            foreach($gps_stocks as $stock_gps){
+                $stock_gps_id[] = $stock_gps->gps_id;
+            }  
+
+            if($stock_gps_id)
+            {        
+                $vehicle_device = Vehicle::select(
+                    'gps_id',
+                    'id',
+                    'register_number',
+                    'name'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+                $single_gps = [];
+                foreach($vehicle_device as $device){
+                    $single_gps[] = $device->gps_id;
+                }
+                
+                $servicer_jobs = ServicerJob::select(
+                    'gps_id',
+                    'servicer_id',
+                    'user_id',
+                    'client_id'
+                )
+                ->where('client_id',$client_id)
+                ->get();
+                $servicer_gps = [];
+                foreach($servicer_jobs as $servicer_job){
+                    $servicer_gps[] = $servicer_job->gps_id;
+                }     
+                // dd($servicer_gps);
+                // $devices=Gps::select('id','imei','serial_no')
+                // ->whereIn('id',$stock_gps_id)
+                // ->whereNotIn('id',$single_gps)
+                // ->whereNotIn('id',$servicer_gps)
+                // ->get();
+
+                if($job_type==1)
+                {
+                    $devices=Gps::select('id','imei','serial_no')
+                                ->whereIn('id',$stock_gps_id)
+                                ->whereNotIn('id',$single_gps)
+                                ->whereNotIn('id',$servicer_gps)
+                                ->get();
+
+                }
+                else if($job_type==2)
+                {
+                    $devices=Gps::select('id','imei','serial_no')
+                                ->whereIn('id',$stock_gps_id)
+                                ->whereIn('id',$single_gps)
+                                ->whereIn('id',$servicer_gps)
+                                ->get();
+                }else{
+                 $devices=[];   
+                }
+                // if($user->hasRole('sub_dealer')){
+                if($devices)
+                {               
+                    $response_data = array(
+                        'status'    => 'client-gps',
+                        'devices'   => $devices,
+                        'location'  => $location,
+                        'code'      => 1
+                    );
+                }
+                else{
+                    $response_data = array(
+                        'status'  => 'failed',
+                        'message' => 'no devices are waiting for installation',
+                        'location'  => $location,
+                        'code'    =>2
+                    );
+                }
+            }
+            else
+            {
+                $response_data = array(
+                        'status'  => 'failed',
+                        'message' => 'no gps transferred to this client',
+                        'location'  => $location,
+                        'code'    =>2
+                    );
+            }
+        }else
+        {
             $response_data = array(
-                'status'  => 'client-gps',
-                'devices' => $devices,
-                'location' => $location
-            );
+                        'status'  => 'failed',
+                        'message' => 'failed',
+                        'code'    =>0
+                        );
         }
-        else{
-            $response_data = array(
-                'status'  => 'failed',
-                'message' => 'failed',
-                'code'    =>0
-            );
-        }
-    }
-    else
-    {
-         $response_data = array(
-                'status'  => 'failed',
-                'message' => 'failed',
-                'code'    =>0
-            );
-    }
         return response()->json($response_data); 
-        // }
+        
     }
     ##############################################
 
