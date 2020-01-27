@@ -21,14 +21,14 @@
 
   <div class="row">
     <div class="col-lg-12 col-md-12">
-      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4" style="width: 56%!important">  <div class="row">
+      <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">  <div class="row">
         <div class="col-sm-12">
           <h2 class="page-header">
             <i class="fa fa-user"></i> 
           </h2>
           <div class="row">
             <div class="col-lg-6">
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <a href="{{url('/client/profile/edit')}}"><button class="btn btn-sm btn-info form-control" >EDIT</button></a>
               </div>
               <div class="form-group has-feedback">
@@ -69,7 +69,7 @@
   @if(\Auth::user()->hasRole('superior|pro'))
   
   <div class="col-lg-6 col-md-12">
-    <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image" style="width: 14%!important">  
+    <div id="zero_config_wrapper" class=" container-fluid dt-bootstrap4 profile_image">  
       <div class="row">
         <div class="col-sm-12">
           <h2 class="page-header">
@@ -78,12 +78,12 @@
           <form enctype="multipart/form-data"  method="POST" action="{{route('client.profile.p',$client->id)}}">
           {{csrf_field()}}
             <div class="row">
-              <div class="col-md-6">
-                <div class="form-group has-feedback" style="width: 100px!important">
-                  <label class="srequired" style="width: 100%!important">Upload Logo</label>
+              <div class="col-lg-6">
+                <div class="form-group has-feedback">
+                  <label class="srequired">Upload Logo</label>
                   <div class="row">
-                    <div class="col-md-6" style="width: 215%!important">
-                      <p style="font-size: 11px!important;color: green">Image Dimension should be <b>150(w) X 40(h)</b> <br>Image types allowed: <b>PNG</b><br>Image size should be not more than <b>2mb</b></p>
+                    <div class="col-md-6">
+                      <p style="font-size: 11px!important;color: green">Image Dimension should be <b>150(w) X 40(h)</b> <br>Image types allowed: <b>PNG</b><br>Image size should not be more than <b>2mb</b></p>
                       <input type="file" name="logo" value="{{$client->logo }}">
                     </div>
                     <?php if(!empty($response)) { ?>
@@ -94,18 +94,18 @@
                     <?php }?>
                     <div class="col-md-6">
                       @if($client->logo)
-                        <img width="150" height="40" src="/logo/{{ $client->logo }}" />
+                        <img style='width:150px;height:100px;' src="/logo/{{ $client->logo }}" />
                       @else
                       
+                      @endif
+                      @if ($errors->has('logo'))
+                        <div>
+                            <strong class="error-text">{{ $errors->first('logo') }}</strong>
+                        </div>
                       @endif
                     </div>
                   </div>
                 </div>
-                @if ($errors->has('logo'))
-                  <div style="width: 141%">
-                      <strong class="error-text">{{ $errors->first('logo') }}</strong>
-                  </div>
-                @endif
               </div>
             </div>
             <div class="row">
