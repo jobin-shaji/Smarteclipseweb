@@ -2169,7 +2169,7 @@ class VehicleController extends Controller
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'nullable',
-            'path' => 'required|mimes:jpeg,png|max:4096'
+            'path' => 'required|mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2180,7 +2180,7 @@ class VehicleController extends Controller
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'required',
-            'path' => 'required|mimes:jpeg,png|max:4096'
+            'path' => 'required|mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2192,7 +2192,7 @@ class VehicleController extends Controller
         $rules = [
             'vehicle_id' => 'required',
             'expiry_date' => 'nullable',
-            'path'=>'mimes:jpeg,png|max:4096'
+            'path'=>'mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;

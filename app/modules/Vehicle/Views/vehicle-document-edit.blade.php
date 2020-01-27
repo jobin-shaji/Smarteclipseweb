@@ -43,7 +43,7 @@
                   <div class="form-group has-feedback">
                     
                     <label>Expiry Date</label>
-                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}"> 
+                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}"> 
                   </div>
                   @if ($errors->has('expiry_date'))
                     <span class="help-block">
@@ -52,7 +52,7 @@
                   @endif
 
                   <div class="form-group has-feedback"><br>
-                    <label class="srequired">Upload File</label>
+                    <label class="srequired">Upload File</label>&nbsp;&nbsp;&nbsp;<span style='color:#f29a0e;'>Size: max 2MB, Format: jpg,png</span>
                     <div class="row">
                       <div class="col-md-6">
                         <input type="file" id="choose_image" name="path" value="{{$vehicle_doc->path }}">
@@ -101,19 +101,19 @@
     $("#choose_image").change(function() {
       displaySelectedImage(this);
     });
-  function displaySelectedImage(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      
-      reader.onload = function(e) {
-        $('.selected_image').show();
-        $('.uploaded_image').hide();
-        $('.selected_image').attr('src', e.target.result);
+    function displaySelectedImage(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('.selected_image').show();
+          $('.uploaded_image').hide();
+          $('.selected_image').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]);
       }
-      
-      reader.readAsDataURL(input.files[0]);
     }
-  }
   </script>
 @endsection
 

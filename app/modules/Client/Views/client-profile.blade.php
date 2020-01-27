@@ -84,7 +84,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <p style="font-size: 11px!important;color: green">Image Dimension should be <b>150(w) X 40(h)</b> <br>Image types allowed: <b>PNG</b><br>Image size should not be more than <b>2mb</b></p>
-                      <input type="file" name="logo" value="{{$client->logo }}">
+                      <input type="file" id="choose_image" name="logo" value="{{$client->logo }}">
                     </div>
                     <?php if(!empty($response)) { ?>
                     <div class="response <?php echo $response["type"]; ?>
@@ -94,9 +94,10 @@
                     <?php }?>
                     <div class="col-md-6">
                       @if($client->logo)
-                        <img style='width:150px;height:100px;' src="/logo/{{ $client->logo }}" />
+                        <img style='width:150px;height:100px;' class='uploaded_image' src="/logo/{{ $client->logo }}" />
+                        <img style='width:150px;height:100px;display:none;' class='selected_image' src="#"  />
                       @else
-                      
+                        <img style='width:150px;height:100px;display:none;' class='selected_image' src="#"  />
                       @endif
                       @if ($errors->has('logo'))
                         <div>
@@ -123,15 +124,32 @@
 </div>
 </div>
  @if(\Auth::user()->roles->first()->name=='school' && !empty(\Auth::user()->geofence))
-    
-
   @section('script')
     <script src="{{asset('js/gps/school-geofence-details.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap"
          async defer></script>
   @endsection
-
-    @endif
+@endif
+@section('script')
+  <script>
+    $("#choose_image").change(function() {
+      displaySelectedImage(this);
+    });
+    function displaySelectedImage(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('.selected_image').show();
+          $('.uploaded_image').hide();
+          $('.selected_image').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+@endsection
 
 @endsection
 

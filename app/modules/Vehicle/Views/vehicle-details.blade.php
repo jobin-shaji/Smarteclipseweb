@@ -245,8 +245,10 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Upload File</label>
                           <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" > 
+                          <span style='color:#f29a0e;'>Size: max 2MB, Format: jpg,png</span>
+                            <input type="file" id="choose_image" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}"
                           </div>
+                          <img width="150" height="100" class='selected_image' style='display:none;' src="#"  />
                           @if ($errors->has('path'))
                             <span class="help-block">
                                 <strong class="error-text">{{ $errors->first('path') }}</strong>
@@ -297,7 +299,7 @@
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
                                         <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' id ="delete_button" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                                       </td>
                                     @else
                                       <td>
