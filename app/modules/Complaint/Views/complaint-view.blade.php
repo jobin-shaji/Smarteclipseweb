@@ -67,9 +67,9 @@
                 <li class="list-group-item">
                   <b>Status:</b> 
                   @if($complaint->status==0)
-                     {{'Not Assigned'}}               
+                     {{'Open'}}               
                   @elseif($complaint->status==1)
-                     {{'Assigned'}}                
+                     {{'In Progress'}}                
                   @elseif($complaint->status==2)
                      {{'Closed'}}
                   @endif
