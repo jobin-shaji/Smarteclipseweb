@@ -247,8 +247,8 @@ class ServicerController extends Controller {
             'job_date' => $job_date,   
             'role'      =>  $request->role,    
             'status' => 1, //ASSIGNED STATUS
-            'location'=>$request->search_place
-            // 'latitude'=>$location_lat,
+            'location'=>$request->search_place,
+            'job_status'=>0
             // 'longitude'=>$location_lng              
         ]); 
         // $gps = Gps::find($request->gps);
@@ -365,8 +365,8 @@ class ServicerController extends Controller {
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
                 'status' => 1, //ASSIGN STATUS
-                'location'=>$location 
-                // 'latitude'=>$location_lat,
+                'location'=>$location,
+                'job_status'=>0
                 // 'longitude'=>$location_lng           
             ]); 
             $request->session()->flash('message', 'Assigned Job successfully!'); 
