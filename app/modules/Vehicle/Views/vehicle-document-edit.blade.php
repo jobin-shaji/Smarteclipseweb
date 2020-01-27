@@ -51,24 +51,26 @@
                     </span>
                   @endif
 
-                  <div class="form-group has-feedback">
+                  <div class="form-group has-feedback"><br>
                     <label class="srequired">Upload File</label>
                     <div class="row">
                       <div class="col-md-6">
-                        <input type="file" name="path" value="{{$vehicle_doc->path }}">
+                        <input type="file" id="choose_image" name="path" value="{{$vehicle_doc->path }}">
                       </div>
                       <div class="col-md-6">
                         @if($vehicle_doc->path)
-                          <img width="150" height="100" src="/documents/vehicledocs/{{ $vehicle_doc->path }}" />
+                          <img width="150" height="100" class='uploaded_image' src="/documents/vehicledocs/{{ $vehicle_doc->path }}" />
+                          <img width="150" height="100" class='selected_image' style='display:none;' src="#"  />
                         @else
                         <p>No image found</p>
+                        <img width="150" height="100" class='selected_image' style='display:none;' src="#"  />
                         @endif
                       </div>
-                       @if ($errors->has('path'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('path') }}</strong>
-                    </span>
-                  @endif
+                      @if ($errors->has('path'))
+                        <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('path') }}</strong>
+                        </span>
+                      @endif
                     </div>
                   </div>
                  
@@ -94,5 +96,25 @@
  
 <div class="clearfix"></div>
 
+@section('script')
+  <script>
+    $("#choose_image").change(function() {
+      displaySelectedImage(this);
+    });
+  function displaySelectedImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function(e) {
+        $('.selected_image').show();
+        $('.uploaded_image').hide();
+        $('.selected_image').attr('src', e.target.result);
+      }
+      
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  </script>
+@endsection
 
 @endsection
