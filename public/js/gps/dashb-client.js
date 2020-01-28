@@ -1,7 +1,7 @@
 var client_lat = $('#lat').val();
 var client_lng = $('#lng').val();
-var latMap = client_lat;
-var lngMap = client_lng;
+var latMap = parseFloat(client_lat);
+var lngMap = parseFloat(client_lng);
 var haightAshbury = {
   lat: latMap,
   lng: lngMap

@@ -33,7 +33,7 @@
                   <b>IMEI:</b> {{ $complaint->gps->imei}}
                 </li>
                     <li class="list-group-item">
-                  <b>Register Number:</b> {{ $complaint->vehicle->register_number}}
+                  <b>Vehicle No:</b> {{ $complaint->vehicle->register_number}}
                 </li>   
                 <li class="list-group-item">
                   <b>Serial Number:</b> {{ $complaint->gps->serial_no}}
@@ -41,8 +41,10 @@
                   <li class="list-group-item">
                   <b>Vehicle Type:</b> {{ $complaint->vehicle->vehicleType->name}}
                 </li>
-                <li class="list-group-item">
-                  <b>Complaint Category:</b> 
+              
+             
+                  <li class="list-group-item">
+                  <b>Complaint Type:</b> 
                   @if($complaint->complaintType->complaint_category==0) 
                  {{'Hardware'}}
                  @endif
@@ -50,15 +52,15 @@
                  {{'Software'}}
                  @endif
                 </li>
-                <li class="list-group-item">
-                  <b>Complaint Type:</b> {{ $complaint->complaintType->name}}
+                   <li class="list-group-item">
+                  <b>Complaint Reason:</b> {{ $complaint->complaintType->name}}
                 </li>
                  </li>
                 <li class="list-group-item">
                   <b>Complaint Title:</b> {{$complaint->title}}
                 </li>
                 <li class="list-group-item">
-                  <b>Description:</b> {{ $complaint->description}}
+                  <b> Complaint Description:</b> {{ $complaint->description}}
                 </li>
 
                 <li class="list-group-item">

@@ -28,11 +28,11 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Ticket Code</th>
-                    <th>Register Number </th>   
+                    <th>Vehicle No </th>   
                     <th>Serial Number</th>
                     <th>Vehicle Type</th>                              
-                    <th>Complaint Category</th>                      
-                    <th>Complaint Type</th>                         
+                    <th>Complaint Type</th>                      
+                    <th>Complaint Reason</th>                         
                     <th>Complaint Title</th>
                     <th>Date</th>
                     <th>Status</th>

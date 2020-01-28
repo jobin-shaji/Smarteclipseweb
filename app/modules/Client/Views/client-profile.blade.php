@@ -83,7 +83,7 @@
                   <label class="srequired">Upload Logo</label>
                   <div class="row">
                     <div class="col-md-6">
-                      <p style="font-size: 11px!important;color: green">Image Dimension should be <b>150(w) X 40(h)</b> <br>Image types allowed: <b>PNG</b><br>Image size should not be more than <b>2mb</b></p>
+                      <p style="font-size: 11px!important;color: green">Image types allowed: <b>PNG</b><br>Image size should not be more than <b>2mb</b></p>
                       <input type="file" id="choose_image" name="logo" value="{{$client->logo }}">
                     </div>
                     <?php if(!empty($response)) { ?>
