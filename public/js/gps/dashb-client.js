@@ -77,7 +77,7 @@ function vehicleTrack(res) {
 
   if(res.status!="failed"){
     var JSONObject = res.user_data;
-    console.log(JSONObject);
+    //console.log(JSONObject);
     var marker, i;
     for (i = 0; i < JSONObject.length; i++) {
     var lat = JSONObject[i].lat;
