@@ -1,4 +1,4 @@
-  @extends('layouts.eclipse')
+  <!-- @extends('layouts.eclipse') -->
 @section('title')
     Assign Servicer
 @endsection
@@ -72,7 +72,7 @@
                         <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type" required>
                           <option value="">Select Job Type</option>
                           <option value="1">Installation</option>
-                          <!-- <option value="2">Service</option>                          -->
+                          <option value="2">Service</option>                         
                         </select>
                       </div>
                       @if ($errors->has('job_type'))

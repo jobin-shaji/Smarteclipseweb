@@ -411,6 +411,14 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     getDeviceTransferList();
                 }
+                else if(callBack=='getUploadDocs')
+                {
+                    getUploadDocs(res);
+                }
+                else if(callBack=='getUploads'){
+                    getUploads(res);
+                }
+                
                 
 
                 
@@ -659,7 +667,6 @@ function getPolygonData(url, data, callBack, options) {
 
 
 function downloadAlertReport(){
-    
     var url = 'alert-report/export';
     var  vehicles=$('#vehicle').val();
     var  alerts=$('#alert').val();
@@ -1600,4 +1607,33 @@ function downloadMonitoringReport(){
     else{         
         alert("Please select report type");
     }    
+}
+function getUploadDocs(res)
+{
+    // console.log(res);
+    if(res.count==3){
+        if (confirm('Do you want to delete')){
+            var url = '/delete-already-existing';
+            var data = {
+                expiry_date:res.data.expiry_date,
+                document_type_id:res.data.document_type_id,
+                // path:res.data.path,
+                vehicle_id:res.data.vehicle_id
+            };
+            backgroundPostData(url,data,'getUploads',{alert:true}); 
+        }else{
+            alert("Please delete the document manually");
+            location.reload();            
+        } 
+    }
+    else if(res.count==4){
+        alert("Expiry date mismatch");
+    }
+    else{
+        alert("Successfully Created"); 
+        location.reload(); 
+    }
+}
+function getUploads(res){
+    location.reload(); 
 }

@@ -17968,3 +17968,6 @@ input:required {
 input:invalid {
     box-shadow:0 0 3px none;
 }
+.download-icon{
+  padding-right: 5px;
+}
