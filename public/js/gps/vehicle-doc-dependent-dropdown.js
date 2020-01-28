@@ -34,9 +34,8 @@ $(document).ready(function() {
             }
         });
     });
-$('#delete_button').click(function () {
-    alert('Are you sure to delete this document?');
-});
+
+
 $('#upload_form').on('submit', function(event){
       event.preventDefault();
       var data_val=new FormData(this);
@@ -87,3 +86,21 @@ function deleteDocuments(data_val){
        }
   })
 }
+
+
+$("#choose_image").change(function() {
+    displaySelectedImage(this);
+  });
+function displaySelectedImage(input) {
+if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+    $('.selected_image').show();
+    $('.selected_image').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]);
+}
+}
+

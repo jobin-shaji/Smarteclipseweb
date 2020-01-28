@@ -699,29 +699,31 @@ class VehicleController extends Controller
     // critical alert verification
     public function verifyContinuousAlert(Request $request)
     {
-        $decrypted_vehicle_id = Crypt::decrypt($request->id); 
-        $alert_id = $request->alert_id; 
-        $vehicle=Vehicle::find($decrypted_vehicle_id);
-        $alerts = Alert::where('alert_type_id',$alert_id)
-                        ->where('status',0)
-                        ->where('gps_id',$vehicle->gps_id)
-                        ->get();
-        if($alerts == null){
-            return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Alert does not exist'
-            ]);
+        $data = [
+            'status'    => 0,
+            'title'     => 'Failed',
+            'message'   => 'Alert does not exist'
+        ];
+        $decrypted_vehicle_id   = Crypt::decrypt($request->id); 
+        $alert_id               = $request->alert_id; 
+        $vehicle                = Vehicle::find($decrypted_vehicle_id);
+        $alerts                 = Alert::where('alert_type_id',$alert_id)
+            ->where('status',0)
+            ->where('gps_id',$vehicle->gps_id)
+            ->count();
+        if($alerts > 0)
+        {
+            $updated = DB::statement("UPDATE alerts SET STATUS = 1 WHERE alert_type_id ='$alert_id' AND gps_id='$vehicle->gps_id' AND status=0");
+            if($updated)
+            {
+                $data = [
+                    'status'    => 1,
+                    'title'     => 'Success',
+                    'message'   => 'Alert verified successfully'
+                ];
+            }  
         }
-        foreach ($alerts as $alert) {
-            $alert->status = 1;
-            $alert->save();
-        }
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Alert verified successfully'
-        ]);
+        return response()->json($data);
      }
 
     // vehicle drivers list
@@ -2197,7 +2199,7 @@ class VehicleController extends Controller
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'nullable',
-            'path' => 'required|mimes:jpeg,png|max:4096'
+            'path' => 'required|mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2208,7 +2210,7 @@ class VehicleController extends Controller
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'required',
-            'path' => 'required|mimes:jpeg,png|max:4096'
+            'path' => 'required|mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2220,7 +2222,7 @@ class VehicleController extends Controller
         $rules = [
             'vehicle_id' => 'required',
             'expiry_date' => 'nullable',
-            'path'=>'mimes:jpeg,png|max:4096'
+            'path'=>'mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;

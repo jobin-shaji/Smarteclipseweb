@@ -13,4 +13,9 @@ class Driver extends Model
 	public function alerts(){
 		return $this->hasMany('App\Modules\Driver\Models\DriverBehaviour');
 	}
+
+	public function validateDriver($driver_id)
+	{
+		return self::where('id',$driver_id)->first();
+	}
 }
