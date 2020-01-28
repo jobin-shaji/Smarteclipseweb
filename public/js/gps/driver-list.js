@@ -60,7 +60,7 @@ function activateDriver(driver){
     }
 }
 
-function driverTest(driver_id)
+function validate_driver(driver_id)
 {
     var proceed = false;
     if(typeof driver_id == 'undefined')
