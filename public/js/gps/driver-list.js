@@ -60,3 +60,46 @@ function activateDriver(driver){
     }
 }
 
+function driverTest(driver_id)
+{
+    var proceed = false;
+    if(typeof driver_id == 'undefined')
+    {
+        toastr.error( 'Invalid request', 'Error');
+        return false;
+    }
+    $.ajax({
+        type: 'POST',
+        url: 'driver/validate_driver',
+        data: {
+            id: driver_id
+        },
+        async: false,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            if(res.driver_exists == false)
+            {
+                toastr.error( 'Driver not exists', 'Error');
+                reloadPageWithAdelay(1000);
+            }
+            else
+            {
+                proceed = true;
+            }
+        }
+    });
+    return proceed;
+}
+
+function reloadPageWithAdelay(delay)
+{
+    if(typeof delay != 'undefined')
+    {
+        setTimeout(function(){
+            window.location.reload();
+          }, delay); 
+    }
+}
+
