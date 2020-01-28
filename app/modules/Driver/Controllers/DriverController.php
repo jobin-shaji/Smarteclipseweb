@@ -111,7 +111,7 @@ class DriverController extends Controller {
             }
             else{ // 
                 return "
-                <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit</a>
+                <a onclick=\"return validate_driver(".$driver->id.")\" href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit</a>
                 <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
             }
             
