@@ -414,10 +414,13 @@ class VehicleController extends Controller
     // vehicle doc delete
     public function vehicleDocumentDelete(Request $request)
     { 
-        $decrypted_id = Crypt::decrypt($request->id);
-        $vehicle_doc=Document::find($decrypted_id);
+        $vehicle_doc=Document::find($request->id);
         if($vehicle_doc == null){
-           return view('Vehicle::404');
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Document does not exist'
+            ]);
         }
         $file=$vehicle_doc->path;
         if($file){
@@ -426,20 +429,11 @@ class VehicleController extends Controller
             // $delete_file=unlink($myFile);
             $vehicle_doc->delete(); 
         }
-        $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
-        $request->session()->flash('message', 'Document deleted successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        $user=\Auth::user();
-        $user_role=$user->roles->first()->name;
-        if($user_role=='client')
-        {
-            return redirect()->back();
-            // return redirect(route('vehicles.details',$encrypted_vehicle_id));
-        }
-        else
-        {
-            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
-        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Document deleted successfully!'
+        ]);
          
     }
 
@@ -807,8 +801,7 @@ class VehicleController extends Controller
                 $b_url = \URL::to('/');
                 $path = url($b_url.'/documents/vehicledocs').'/'.$vehicle_documents->path;
                 return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
-               
-               <a href=".$b_url."/vehicle-doc/".Crypt::encrypt($vehicle_documents->id)."/delete class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'>Delete </a>";
+                     <button onclick=deleteDocumentFromAllDocumentList(".$vehicle_documents->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete </button>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
