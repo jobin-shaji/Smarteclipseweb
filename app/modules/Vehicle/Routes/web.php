@@ -111,6 +111,8 @@ Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')-
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
 Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
+Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
+Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
 
 
 

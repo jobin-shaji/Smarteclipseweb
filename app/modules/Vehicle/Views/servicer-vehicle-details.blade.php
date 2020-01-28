@@ -85,7 +85,7 @@
                       </div>
                       <!-- /.col -->
                     </div>
-                    <form  method="POST" action="{{route('vehicles.doc.p')}}" enctype="multipart/form-data">
+                     <form  method="POST" id="upload_form" enctype="multipart/form-data">
                     {{csrf_field()}}
                       <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
                       <div class="form-group row" style="float:none!important">
