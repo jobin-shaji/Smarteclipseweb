@@ -35,7 +35,18 @@ $(document).ready(function() {
         });
     });
 
-
-$('#delete_button').click(function () {
-    alert('Are you sure to delete this document?');
-});
+$("#choose_image").change(function() {
+    displaySelectedImage(this);
+  });
+function displaySelectedImage(input) {
+if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+    $('.selected_image').show();
+    $('.selected_image').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]);
+}
+}
