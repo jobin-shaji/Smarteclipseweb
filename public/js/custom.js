@@ -1414,23 +1414,35 @@ function rootSubdealer(res)
             var longitude=res.emergency_response.alerts[0].longitude;
             getPlaceNameFromLatLng(latitude,longitude);
             var vehicle_id=res.emergency_response.alerts[0].gps.vehicle.id;
+            var alert_id=res.emergency_response.alerts[0].id;
+            var encrypted_vehicle_id=res.emergency_response.vehicle;
+            if(res.emergency_response.alerts[0].gps.vehicle.driver != null)
+            {
+                var driver_name = res.emergency_response.alerts[0].gps.vehicle.driver.name;
+            }
+            else
+            {
+                var driver_name = 'Not Assigned';
+            }
+            var register_number = res.emergency_response.alerts[0].gps.vehicle.register_number;
+            var alert_time = res.emergency_response.alerts[0].device_time;
             if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
                 $("#header-emergency").show();
-                document.getElementById("header_em_id").value = res.emergency_response.alerts[0].id;
-                document.getElementById("header_alert_vehicle_id").value = res.emergency_response.vehicle;
+                document.getElementById("header_em_id").value = alert_id;
+                document.getElementById("header_alert_vehicle_id").value = encrypted_vehicle_id;
                 document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
-                $('#header_emergency_vehicle_driver').text(res.emergency_response.alerts[0].gps.vehicle.driver.name);
-                $('#header_emergency_vehicle_number').text(res.emergency_response.alerts[0].gps.vehicle.register_number);
-                $('#header_emergency_vehicle_time').text(res.emergency_response.alerts[0].device_time);
+                $('#header_emergency_vehicle_driver').text(driver_name);
+                $('#header_emergency_vehicle_number').text(register_number);
+                $('#header_emergency_vehicle_time').text(alert_time);
             }else{
                 var modal = document.getElementById('emergency');
                 modal.style.display = "block";
-                document.getElementById("em_id").value = res.emergency_response.alerts[0].id;
-                document.getElementById("alert_vehicle_id").value = res.emergency_response.vehicle;
+                document.getElementById("em_id").value = alert_id;
+                document.getElementById("alert_vehicle_id").value = encrypted_vehicle_id;
                 document.getElementById("decrypt_vehicle_id").value = vehicle_id;
-                $('#emergency_vehicle_driver').text(res.emergency_response.alerts[0].gps.vehicle.driver.name);
-                $('#emergency_vehicle_number').text(res.emergency_response.alerts[0].gps.vehicle.register_number);
-                $('#emergency_vehicle_time').text(res.emergency_response.alerts[0].device_time);
+                $('#emergency_vehicle_driver').text(driver_name);
+                $('#emergency_vehicle_number').text(register_number);
+                $('#emergency_vehicle_time').text(alert_time);
             }
         }
     }
