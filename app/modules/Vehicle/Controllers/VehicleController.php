@@ -312,55 +312,7 @@ class VehicleController extends Controller
         return response()->json($docTypeID);
     }
 
-    // save documents
-    public function saveDocuments(Request $request)
-    {
-        $custom_messages = [
-        'path.required' => 'File cannot be blank'
-        ];
-        if($request->document_type_id == 1 || $request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8){
-            $rules = $this->documentCreateRules();
-            $expiry_date=null;
-        }else{
-            $rules = $this->customDocCreateRules();
-            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
-        }
-        $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();     
-               $this->validate($request, $rules, $custom_messages);
-                $file=$request->path;
-                $getFileExt   = $file->getClientOriginalExtension();
-                $uploadedFile =   time().'.'.$getFileExt;
-                //Move Uploaded File
-                $destinationPath = 'documents/vehicledocs';
-                $file->move($destinationPath,$uploadedFile);
-                $documents = Document::create([
-                    'vehicle_id' => $request->vehicle_id,
-                    'document_type_id' => $request->document_type_id,
-                    'expiry_date' => $expiry_date,
-                    'path' => $uploadedFile,
-                ]);
-                $request->session()->flash('message', 'Document stored successfully!'); 
-                $request->session()->flash('alert-class', 'alert-success');         
-        $encrypted_vehicle_id = encrypt($request->vehicle_id);
-            
-        $user=\Auth::user();
-        $user_role=$user->roles->first()->name;
-        if($user_role=='client')
-        {
-            return redirect(route('vehicles.details',$encrypted_vehicle_id));
-        }
-        else
-        {
-            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
-        }
-       
-       
-    }
-
-
-
-
-
+    
     // edit vehicle doc
     public function vehicleDocumentEdit(Request $request)
     {
