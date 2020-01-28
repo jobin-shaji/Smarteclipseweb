@@ -776,21 +776,21 @@ public function serviceJobDetails(Request $request)
             $vehicle_photo=$request->vehicle_photo;
            
             $getFileExt   = $file->getClientOriginalExtension();
-            $uploadedFile =   time().'.'.$getFileExt;
+            $uploadedFile =   'rcbook'.time().'.'.$getFileExt;
             //Move Uploaded File
             $destinationPath = 'documents/vehicledocs';
             $file->move($destinationPath,$uploadedFile);
 
             $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
-            $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
+            $uploadedInstallationFile =   'installation'.time().'.'.$getInstallationFileExt;
             $installation_photo->move($destinationPath,$uploadedInstallationFile);
 
             $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
-            $uploadedActivationFile =   time().'.'.$getActivationFileExt;
+            $uploadedActivationFile =   'activation'.time().'.'.$getActivationFileExt;
             $activation_photo->move($destinationPath,$uploadedActivationFile);
 
             $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
-            $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
+            $uploadedVehicleFile =   'vehicle_photo'.time().'.'.$getVehicleFileExt;
             $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
 
 
