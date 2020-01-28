@@ -325,10 +325,7 @@ class VehicleController extends Controller
             $rules = $this->customDocCreateRules();
             $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
         }
-        $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
-        if($documents_count->count()<2)
-        {
-            if($documents_count->count()==0){
+        $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();     
                $this->validate($request, $rules, $custom_messages);
                 $file=$request->path;
                 $getFileExt   = $file->getClientOriginalExtension();
@@ -343,37 +340,7 @@ class VehicleController extends Controller
                     'path' => $uploadedFile,
                 ]);
                 $request->session()->flash('message', 'Document stored successfully!'); 
-                $request->session()->flash('alert-class', 'alert-success'); 
-            }
-            else if($documents_count->first()->expiry_date==$expiry_date)
-            {
-                $this->validate($request, $rules, $custom_messages);
-                $file=$request->path;
-                $getFileExt   = $file->getClientOriginalExtension();
-                $uploadedFile =   time().'.'.$getFileExt;
-                //Move Uploaded File
-                $destinationPath = 'documents/vehicledocs';
-                $file->move($destinationPath,$uploadedFile);
-                $documents = Document::create([
-                    'vehicle_id' => $request->vehicle_id,
-                    'document_type_id' => $request->document_type_id,
-                    'expiry_date' => $expiry_date,
-                    'path' => $uploadedFile,
-                ]);
-                $request->session()->flash('message', 'Document stored successfully!'); 
-                $request->session()->flash('alert-class', 'alert-success'); 
-            }
-             else
-            {
-                $request->session()->flash('message', 'Mismatch document expire date!'); 
-                $request->session()->flash('alert-class', 'alert-success');
-            }             
-        }
-        else 
-        {            
-            $request->session()->flash('message', 'Already updated this document! Please Delete the exising one'); 
-            $request->session()->flash('alert-class', 'alert-success');
-        }
+                $request->session()->flash('alert-class', 'alert-success');         
         $encrypted_vehicle_id = encrypt($request->vehicle_id);
             
         $user=\Auth::user();
