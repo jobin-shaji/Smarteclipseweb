@@ -205,10 +205,10 @@ class ComplaintController extends Controller {
             })
             ->addColumn('status', function ($complaints) { 
                 if($complaints->status==0){
-                    return "Not Assigned";
+                    return "Open";
                 }
                 else if($complaints->status==1){
-                    return "Assigned";
+                    return "In Progress";
                 }
                  else if($complaints->status==2){
                     return "Closed";
