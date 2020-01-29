@@ -182,13 +182,13 @@
             <div class="row">
               <div class="col-sm-12">                    
                 <div class="row">
-                  <div class="col-md-6">
+                   <div class="col-md-6">
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client Category</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label max-width-lb">End User Category</label> 
                         <div class="form-group has-feedback">
                           <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
-                            <option value="" selected disabled>Select Client Category</option>
+                            <option value="" selected disabled>Select End User Category</option>
                             <!-- <option value="school">School</option> -->
                             <option value="other">General</option>
                           </select>
@@ -203,7 +203,8 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" maxlength="20" value="{{ old('username') }}" required autocomplete="off">
+                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" title="spaces not allowed" name="username" id="trader_username" required autocomplete="off">
+                            <p style="color:#FF0000" id="user_message"> Spaces Not  allowed for Username</p>
                         </div>
                         @if ($errors->has('username'))
                           <span class="help-block">
@@ -262,7 +263,15 @@
   max-width: 100%;
     }
   </style>
-           
+  <style type="text/css">
+     .max-width-lb
+        {
+         max-width: 100%;
+         float: left;
+         width: 100%;
+         flex: auto;
+       }
+  </style>      
 @section('script')
    <script>
      function initMap()
