@@ -1245,7 +1245,8 @@ class VehicleController extends Controller
         }
  
         if($track_data){
-            $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+            //$connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+            $connection_lost_time_minutes = date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
