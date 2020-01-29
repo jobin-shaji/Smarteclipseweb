@@ -31,9 +31,9 @@
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
-                      <label class="srequired">Client Name</label>
+                      <label class="srequired">End User Name</label>
                       <select class="form-control select2 clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
-                        <option value="">Select Client</option>
+                        <option value="">Select End User</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                         @endforeach
