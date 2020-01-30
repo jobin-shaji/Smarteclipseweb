@@ -40,8 +40,8 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                   <div class="form-group has-feedback">
-                    <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength="50" value="{{ old('name') }}"> 
-                  </div>
+                    <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name"  name="name" maxlength="50" id="dealer_name" title="only Characters are allowed" value="{{ old('name') }}"></div>
+                    <p style="color:#FF0000" id="message">only characters are allowed</p>
                   @if ($errors->has('name'))
                   <span class="help-block">
                   <strong class="error-text">{{ $errors->first('name') }}</strong>
@@ -157,3 +157,23 @@
 </section> 
 <div class="clearfix"></div>                    
 @endsection
+<!-- for name only allow characters -->
+@section('script')
+  <script>
+
+  $(document).ready(function() 
+   {
+      $("#message").hide();
+      $('#dealer_name').keypress(function (e) 
+        {
+            $("#message").hide();
+             var keyCode = e.which;
+             if (keyCode >= 48 && keyCode <= 57) 
+              {
+              $("#message").show();
+              e.preventDefault();
+              }
+        }); 
+   });
+    </script>
+    @endsection

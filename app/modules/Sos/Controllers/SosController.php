@@ -1633,7 +1633,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
       ];
         return $rules;
     }
@@ -1644,7 +1644,7 @@ class SosController extends Controller {
           'sos_id' => 'required',
           'dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
         ];
         return $rules;
     }
@@ -1655,7 +1655,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'sub_dealer_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
       ];
         return $rules;
     }
@@ -1666,7 +1666,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'sub_dealer_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
         ];
         return $rules;
     }
@@ -1677,7 +1677,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
       ];
         return $rules;
     }
@@ -1688,7 +1688,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
         ];
         return $rules;
     }
@@ -1699,7 +1699,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'trader_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
       ];
         return $rules;
     }
@@ -1710,7 +1710,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'trader_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
         ];
         return $rules;
     }
@@ -1721,7 +1721,7 @@ class SosController extends Controller {
           'sos_id' => 'required|min:2',
           'client_user_id' => 'required',
           'scanned_employee_code' => 'required',
-          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+          'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
       ];
         return $rules;
     }
@@ -1732,7 +1732,7 @@ class SosController extends Controller {
             'sos_id' => 'required',
             'client_user_id' => 'required',
             'scanned_employee_code' => 'required',
-            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u|unique:sos_transfers'
+            'invoice_number' => 'required|regex:/^[a-zA-Z0-9]+$/u'
         ];
         return $rules;
     }

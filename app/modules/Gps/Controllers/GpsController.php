@@ -2070,7 +2070,7 @@ class GpsController extends Controller {
             'manufacturing_date' => 'required',
             'icc_id' => 'required',
             'imsi' => 'required',
-            'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
+            // 'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
             'batch_number' => 'required',
             'employee_code' => 'required',
             'model_name' => 'required',

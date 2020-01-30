@@ -287,7 +287,7 @@ class WarehouseController extends Controller {
         ->with('fromUser:id,username')
         ->with('toUser:id,username')
         ->with('gpsTransferItems')
-        ->orderBy('id','DESC')
+        ->orderBy('created_at','DESC')
         ->withTrashed();
         if($transfer_type == '1')
         {
