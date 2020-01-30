@@ -728,7 +728,7 @@ public function serviceJobDetails(Request $request)
         
 
         // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
-        $job_completed_date=date("Y-m-d"); 
+        $job_completed_date = date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
         $driver_id=$request->driver;
@@ -839,7 +839,7 @@ public function serviceJobDetails(Request $request)
     public function jobSave(Request $request)
     { 
 
-        $job_completed_date=date("Y-m-d"); 
+        $job_completed_date = date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -865,7 +865,7 @@ public function serviceJobDetails(Request $request)
 
     public function jobstatuscomplete(Request $request)
     { 
-      $job_completed_date=date("Y-m-d"); 
+      $job_completed_date=date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
