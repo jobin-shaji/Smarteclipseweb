@@ -1,4 +1,4 @@
-<header class="topbar" data-navbarbg="skin5">
+<header class="topbar" data-navbarbg="skin5" style="position: absolute; top: 0; width: 100%;">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                
                 <div class="navbar-header" data-logobg="skin5">
@@ -427,33 +427,15 @@
                             </span>
                         </a>
 
-
-<!-- style="padding: 18% 0 0 56%" -->
-                        <!--     <span class="cover_bell">
-                                <span class="bell_value" >0</span>
-                            </span><i class="mdi mdi-bell font-24" style="padding: 18% 0 0 56%"></i>
-                            </a>
-                            <span class="notification-box"> -->
-                                <!-- <span class="notification-count">
-                                   <a class="dropdown-item" href="{{url('/alert')}}" id="bell_notification_count" title="Alerts">1000</a>
-                                </span> -->
-                                <!-- <div class="notification-bell">
-                                  <span class="bell-top"></span>
-                                  <span class="bell-middle"></span>
-                                  <span class="bell-bottom"></span>
-                                  <span class="bell-rad"></span>
-                                  <i class='fas fa-car'></i>
-                                  <img src="../../assets/images/arc.png" width="50" height="20">
-                                </div> -->
-                               
-                            <!-- </span> -->
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
                             </div>
                                 <a class="dropdown-item" href="{{url('/gps-alert')}}">VIEW ALL ALERTS</a>
                             </div>
-                        </li>                     
+                        </li> 
+                            
+
                         <li class="nav-item dropdown">
                             <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>
                             </a>
