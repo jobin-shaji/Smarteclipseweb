@@ -42,7 +42,7 @@ function notificationAlertsList(res){
       if(res.alerts[i].status==0){
         var notification=' <div class="item active-read" data-toggle="modal" data-target="#myModal2" style="background-color:#30c2bb" onclick="gpsAlertCount('+res.alerts[i].id+')">'+  
          '<div class="not-icon-bg" >'+
-        '<img src="images/bell.svg"/>'+
+        '<img src="/images/bell.svg"/>'+
         '</div>'+
         '<div class="deatils-bx-rt">'+
         '<div class="vech-no">'+

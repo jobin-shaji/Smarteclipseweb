@@ -38,11 +38,12 @@
 			</div>
 			</div>			
 			<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="myModalLabel2">Heading</h4>
+				<div class="modal-dialog model-class-new" role="document">
+					<div class="modal-content modal-content-new">
+						<div class="modal-header modal-header-new">
+								<h4 class="modal-title" id="myModalLabel2">Heading 2</h4>
+							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					
 						</div>
 						<div class="modal-body">
 							<p>
@@ -55,9 +56,9 @@
 			<!-- modal-dialog -->
 			</div>		
 			<div class="modal right fade" id="myModal-3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-3">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog " role="document">
 					<div class="modal-content">
-						<div class="modal-header">
+						<div class="modal-header ">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							<h4 class="modal-title" id="myModalLabel2">Heading 2</h4>
 						</div>
@@ -90,23 +91,38 @@
 		    }
 		}, false);
 		</script>		
-		<script>
-		$(function() {
 
-      // Dropdown toggle
-      $('.dropdown-toggle').click(function() {
-        $(this).next('.dropdown').toggle( 400 );
-      });
-
-      $(document).click(function(e) {
-        var target = e.target;
-        if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
-          $('.dropdown').hide() ;
-        }
-      });
-
-});
-		</script/>
+<style>
+	
+	.model-class-new{
+		position: fixed !important;
+right: 0 !important;
+width: 400px !important;
+margin: 0px !important;
+height: 100% !important;
+padding: 0 !important;
+min-height: 400px !important;
+overflow: scroll;
+background:#fff;
+	}
+	.modal-content-new{
+box-shadow: none;
+border: 0;
+	}
+	.modal-header-new{
+		background:#f0b100;
+color:#fff;
+	}
+	.modal-close-new{
+		border: 0;
+opacity: 1 !important;
+outline: 0px;
+margin-top: -3px;
+	}
+	.modal-close-new span{
+		 color:#fff;
+	}
+</style>
 	
 
 
