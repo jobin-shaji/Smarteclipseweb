@@ -29,5 +29,20 @@ class Sos extends Model
     {
     	return $this->hasMany('App\Modules\Sos\Models\SosTransfer');
     }
+
+    /**
+     * 
+     * 
+     * 
+     */
+    public function getTransferredSosDetails($transferred_sos_device_ids, $search_key = '')
+    {
+        $query = self::select('imei','version','brand','model_name');
+        if($search_key != '')
+        {
+            $query = $query->where('imei','LIKE','%'.$search_key."%");
+        }
+        return $query->whereIn('id',$transferred_sos_device_ids)->paginate(10);
+    }
     
 }

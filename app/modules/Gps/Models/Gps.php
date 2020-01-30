@@ -69,4 +69,19 @@ class Gps extends Model
                     ->orWhere('tilt_status',1)
                     ->get();
     }
+
+    /**
+     * 
+     * 
+     * 
+     */
+    public function getTransferredGpsDetails($transferred_gps_device_ids, $search_key = '')
+    {
+        $query = self::select('imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name');
+        if($search_key != '')
+        {
+            $query = $query->where('imei','LIKE','%'.$search_key."%");
+        }
+        return $query->whereIn('id',$transferred_gps_device_ids)->paginate(10);
+    }
 }
