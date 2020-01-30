@@ -94,6 +94,8 @@ class MainBatteryDisconnectReportController extends Controller
     } 
     public function export(Request $request)
     {
-       return Excel::download(new MainBatteryDisconnectReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Main-Battery-Disconnect-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new MainBatteryDisconnectReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Main-Battery-Disconnect-report.xlsx');
     } 
 }

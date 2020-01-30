@@ -92,7 +92,9 @@ class ZigZagDrivingReportController extends Controller
     } 
     public function export(Request $request)
     {
-       return Excel::download(new ZigZagDrivingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'zigzag-driving-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new ZigZagDrivingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'zigzag-driving-report.xlsx');
     } 
    
 }
