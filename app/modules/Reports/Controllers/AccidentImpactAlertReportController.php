@@ -104,7 +104,9 @@ class AccidentImpactAlertReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new AccidentImpactAlertReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Accident-Impact-Alert-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new AccidentImpactAlertReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Accident-Impact-Alert-report.xlsx');
     } 
 
    

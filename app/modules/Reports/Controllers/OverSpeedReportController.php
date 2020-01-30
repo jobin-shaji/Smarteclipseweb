@@ -71,8 +71,9 @@ class OverSpeedReportController extends Controller
     } 
     public function export(Request $request)
     {
-
-       return Excel::download(new OverSpeedReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'over-speed-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new OverSpeedReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'over-speed-report.xlsx');
     } 
 
 
