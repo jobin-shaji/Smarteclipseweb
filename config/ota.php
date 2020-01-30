@@ -1,6 +1,6 @@
 <?php
 return  [
-    'ota_configs'   => [
+    'otaconfigs'   => [
         'PU'        => 'Primary/Regulatory Purpose URL',
         'EU'        => 'Emergency Response System URl',
         'EM'        => 'Emergency response SMS Number',

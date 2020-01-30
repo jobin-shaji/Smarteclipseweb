@@ -37,19 +37,19 @@
                             </a>
                             <ul class="dropdown-menu multi-level">
                                 <a class="dropdown-item" href="{{url('/sos-new')}}">NEW ARRIVALS<span></span></a>
-                                <a class="dropdown-item" href="{{url('/sos-sub-dealer')}}">SOS LIST<span></span></a>
+                                <a class="dropdown-item" href="{{url('/sos-sub-dealer')}}">IN STOCK<span></span></a>
                                 <li class="dropdown-submenu">
                                     <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUB DEALER</a>
                                     <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('sos-transfer-sub-dealer-to-trader/create')}}">TRANSFER SOS</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/sos-transferred-from-sub-dealer-to-trader')}}">SOS TRANSFER LIST</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu">
                                     <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>
                                     <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('/sos-transfer-sub-dealer/create')}}">TRANSFER SOS</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/sos-transferred-from-sub-dealer-to-client')}}">SOS TRANSFER LIST</a></li>
                                     </ul>
                                 </li>
                             </ul>

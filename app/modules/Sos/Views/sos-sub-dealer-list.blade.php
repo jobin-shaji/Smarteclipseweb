@@ -30,7 +30,7 @@
                     <th>Version</th>
                     <th>Brand</th>
                     <th>Model Name</th>
-                    <th>User</th>
+                    <!-- <th>User</th> -->
                   </tr>
                 </thead>
               </table>

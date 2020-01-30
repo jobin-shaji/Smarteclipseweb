@@ -51,28 +51,28 @@ scanner.addListener('scan', function (content) {
         }
       }
   });
-  
+
 });
 
-function deleteValueArray(sos_id){
+function deleteValueArray(sos_id)
+{
   var item_data = items.indexOf(sos_id)
   if (item_data > -1) {
-      items.splice(item_data, 1);
-      $('.cover_imei_'+sos_id).remove();
-      var old_device_count = $('#scanned_device_count').text();
-      var scanned_device_count = parseInt(old_device_count)-1;
-      $('#scanned_device_count').text(scanned_device_count);
-      $('#sos_id').val(items);
-      var value = $('#sos_id').val();
-      if (value) {
-        $("#sos_table").show();
-        $("#transfer_button").show();
-      }else{
-        $("#sos_table").hide();
-        $("#transfer_button").hide();
-      }
+    items.splice(item_data, 1);
+    $('.cover_imei_'+sos_id).remove();
+    var old_device_count = $('#scanned_device_count').text();
+    var scanned_device_count = parseInt(old_device_count)-1;
+    $('#scanned_device_count').text(scanned_device_count);
+    $('#sos_id').val(items);
+    var value = $('#sos_id').val();
+    if (value) {
+      $("#sos_table").show();
+      $("#transfer_button").show();
+    }else{
+      $("#sos_table").hide();
+      $("#transfer_button").hide();
     }
-
+  }
 }
 
 $(function() {

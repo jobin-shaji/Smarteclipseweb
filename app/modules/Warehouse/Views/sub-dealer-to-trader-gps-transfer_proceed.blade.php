@@ -5,9 +5,8 @@
 @section('content')
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
-<div class="page-wrapper-root1"> 
-
-  <nav aria-label="breadcrumb">
+  <div class="page-wrapper-root1"> 
+    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer Confirmation Form (Dealers To Sub Dealers)</li>
         <b>GPS Transfer Confirmation (Dealers To Sub Dealers)</b>
@@ -18,17 +17,14 @@
               </div>
           </div>
         @endif
-        
       </ol>
     </nav>
-    
-        <div class="card-body">
-          <section class="hilite-content">
-       
-<form  method="POST" action="{{route('gps-transfer-sub-dealer-trader-proceed.create.p')}}">
+    <div class="card-body">
+      <section class="hilite-content">     
+        <form  method="POST" action="{{route('gps-transfer-sub-dealer-trader-proceed.create.p')}}">
         {{csrf_field()}}
-      <div class="row">
-        <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
           <div class="form-group has-feedback">
             <label>Sub Dealer Name</label>
             <select class="form-control"  name="trader_user_id" readonly>
@@ -58,33 +54,30 @@
         </div>
       </div>
       <div class="form-group has-feedback">
-        <label class="srequired">GPS List (serial numbers)</label>
-        <div class="row">
-
-               @foreach  ($devices as $device )
-                <div class="col-md-3">
-                    <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->serial_no}}
-                </div>
-              @endforeach
-
+        <label class="srequired mt-2">GPS List (serial numbers)</label>
+          <div class="row">
+            @foreach  ($devices as $device )
+              <div class="col-md-3">
+                  <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">&nbsp;&nbsp;{{$device->serial_no}}
+              </div>
+            @endforeach
+          </div>
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-md-3 ">
+              <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
+            </div>
+            <div class="col-md-1 ">
+              <a href="{{ route('gps-transfer-sub-dealer-trader.create') }}">
+                <button type="button" class="btn btn-md ">Cancel</button>
+              </a>
+            </div>
+            <!-- /.col -->
+          </div>
         </div>
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
-        </div>
-        <div class="col-md-1 ">
-          <a href="{{ route('gps-transfer-sub-dealer-trader.create') }}">
-            <button type="button" class="btn btn-md ">Cancel</button>
-          </a>
-        </div>
-        <!-- /.col -->
-      </div>
-    </div>
-    </form>
-</section>
- 
-</div>
+      </form>
+    </section>
+  </div>
 </div>
 </div>
 

@@ -62,7 +62,7 @@
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'mobile', name: 'mobile'},
             {data: 'message', name: 'message'},
             {data: 'date', name: 'date'}         

@@ -256,15 +256,28 @@ class DashboardController extends Controller
     function dealerDashboardView($user){
         $dealer_user_id=$user->id;
         $dealer_id=$user->dealer->id;
-        $total_gps=GpsStock::where('dealer_id',$dealer_id)->whereNull('subdealer_id')->count();
+        $in_stock_gps_dealer=GpsStock::where('dealer_id',$dealer_id)->whereNull('subdealer_id')->count();
         $sub_dealers_of_dealers=SubDealer::select('id')->where('dealer_id',$dealer_id)->withTrashed()->get();
         $single_sub_dealers_array=[];
         foreach($sub_dealers_of_dealers as $sub_dealers_array){
             $single_sub_dealers_array[] = $sub_dealers_array->id;
         }
+        $traders_of_sub_dealers = Trader::select(
+            'id'
+            )
+            ->withTrashed()
+            ->whereIn('sub_dealer_id',$single_sub_dealers_array)
+            ->get();
+        $single_traders = [];
+        foreach($traders_of_sub_dealers as $trader){
+            $single_traders[] = $trader->id;
+        }
+        $end_users_count = Client::where(function ($query) use($single_traders, $single_sub_dealers_array) {
+                                $query->whereIn('trader_id', $single_traders)
+                                ->orWhereIn('sub_dealer_id', $single_sub_dealers_array);
+                            })->count();
         $transferred_accepted_gps_count=GpsStock::whereIn('subdealer_id',$single_sub_dealers_array)->where('dealer_id',$dealer_id)->count();
-        $transferred_gps_count=GpsStock::where('dealer_id',$dealer_id)->where('subdealer_id',0)->count();  
-        $total_transferred_gps=$transferred_accepted_gps_count+$transferred_gps_count;
+        $transferred_gps_awaiting=GpsStock::where('dealer_id',$dealer_id)->where('subdealer_id',0)->count();  
 
         $single_new_transfer_ids=[];
         $new_arrival_gps_count=0;
@@ -279,10 +292,12 @@ class DashboardController extends Controller
 
         return response()->json([
             'subdealers' => SubDealer::where('dealer_id',$dealer_id)->count(),
-            'clients' => Client::whereIn('sub_dealer_id',$single_sub_dealers_array)->count(),
+            'clients' => $end_users_count,
+            'traders' => Trader::whereIn('sub_dealer_id',$single_sub_dealers_array)->count(),
             'new_arrivals' => $new_arrival_gps_count,
-            'total_gps' => $total_gps,
-            'transferred_gps' => $total_transferred_gps,
+            'in_stock_gps_dealer' => $in_stock_gps_dealer,
+            'transferred_gps' => $transferred_accepted_gps_count,
+            'transferred_gps_awaiting' => $transferred_gps_awaiting,
             'status' => 'dbcount'           
         ]);
     }
@@ -292,7 +307,6 @@ class DashboardController extends Controller
         $total_gps=GpsStock::where('subdealer_id',$sub_dealer_id)->count();
         $gps_in_stock=GpsStock::where('subdealer_id',$sub_dealer_id)->whereNull('trader_id')->whereNull('client_id')->count();
         $gps_awaiting_confirmation_from_trader=GpsStock::where('subdealer_id',$sub_dealer_id)->where('trader_id',0)->whereNull('client_id')->count();
-        $gps_awaiting_confirmation_from_client=GpsStock::where('subdealer_id',$sub_dealer_id)->where('client_id',0)->whereNull('trader_id')->count();
         $clients_of_subdealers=Client::select('id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $traders_of_subdealers=Trader::select('id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $single_clients_array=[];
@@ -323,7 +337,6 @@ class DashboardController extends Controller
             'total_gps' => $total_gps,
             'gps_in_stock' => $gps_in_stock,
             'gps_awaiting_confirmation_from_trader' => $gps_awaiting_confirmation_from_trader,
-            'gps_awaiting_confirmation_from_client' => $gps_awaiting_confirmation_from_client,
             'dealer_to_trader_transferred_gps_count' => $dealer_to_trader_transferred_gps_count,
             'dealer_to_client_transferred_gps_count' => $dealer_to_client_transferred_gps_count,
             'status' => 'dbcount'           
@@ -1204,18 +1217,30 @@ class DashboardController extends Controller
         
         $dealer_id=\Auth::user()->dealer->id; 
         $sub_dealers = SubDealer::select('id','name')
-        ->where('dealer_id',$dealer_id)
-        ->get();
+            ->withTrashed()
+            ->where('dealer_id',$dealer_id)
+            ->get();
         $single_sub_dealer = [];
         foreach($sub_dealers as $sub_dealer){
             $single_sub_dealer[] = $sub_dealer->id;
         }
-        $client = Client::select('id','name')
-        ->whereIn('sub_dealer_id',$single_sub_dealer)
-        ->count();         
+        $traders = Trader::select(
+            'id'
+            )
+            ->withTrashed()
+            ->whereIn('sub_dealer_id',$single_sub_dealer)
+            ->get();
+        $single_traders = [];
+        foreach($traders as $trader){
+            $single_traders[] = $trader->id;
+        }
+        $client = Client::where(function ($query) use($single_traders, $single_sub_dealer) {
+            $query->whereIn('trader_id', $single_traders)
+            ->orWhereIn('sub_dealer_id', $single_sub_dealer);
+        })->count();         
         $dealer_gps_user=array(
-                   
-                    "sub_dealer"=>$sub_dealers->count(),
+                    "sub_dealer"=>SubDealer::where('dealer_id',$dealer_id)->count(),
+                    "trader"=>Trader::whereIn('sub_dealer_id',$single_sub_dealer)->count(),
                     "client"=>$client                   
                 );
         return response()->json($dealer_gps_user); 

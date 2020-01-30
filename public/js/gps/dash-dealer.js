@@ -51,16 +51,18 @@ function dealerGpsUser(res){
   var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ["Active Dealers","Active Clients"],
+      labels: ["Active Dealers","Active Sub Dealers","Active Clients"],
       datasets: [{
         label: '#:',
-       data:[res.sub_dealer,res.client],
+       data:[res.sub_dealer,res.trader,res.client],
          backgroundColor: [
                 'rgba(246, 156, 53, 1)',
+                'rgba( 109, 193, 241, 1)',
                 'rgba(241, 62, 38 , 1)'
             ],
             borderColor: [
                 'rgba(246, 156, 53, 2)',
+                'rgba( 109, 193, 241, 1)',
                 'rgba(241, 62, 38 , 2)'
             ],
         borderWidth: 1

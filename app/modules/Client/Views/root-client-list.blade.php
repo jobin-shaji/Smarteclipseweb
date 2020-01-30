@@ -21,7 +21,7 @@
     </nav>          
     <div class="container-fluid">
       <div class="card-body"><h4>End User List</h4>
-        <div class="table-responsive">
+        <div class="table-responsive scrollmenu">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">
               <div class="col-sm-12">
@@ -34,6 +34,7 @@
                       <th>Mobile</th>                            
                       <th>Email</th>
                       <th>Dealer</th>
+                      <th>Sub Dealer</th>
                       <th style="width:0px!important;">Working Status</th>
                     </tr>
                   </thead>

@@ -10610,7 +10610,7 @@ html[dir=ltr] body .p-l-0 {
 
 #main-wrapper .topbar .navbar-collapse[data-navbarbg=skin5],
 #main-wrapper .topbar[data-navbarbg=skin5] {
-    background: #fff
+    background: #fff!important;
 }
 
 #main-wrapper .left-sidebar[data-sidebarbg=skin5],
@@ -11330,11 +11330,11 @@ ul.list-style-none li a:hover {
     margin-right: 5px
 }
 
-.topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
+/* .topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
     padding: 0px 15px;
     font-size: 0.875rem;
     line-height: 64px;
-}
+} */
 
 .topbar .top-navbar .navbar-nav>.nav-item:hover {
     background: rgba(0, 0, 0, 0.05)
@@ -16427,5 +16427,16 @@ p {
   line-height: 1.48;
 }
 
-
+ .modal-out
+  {
+    width: 90%;
+float: left;
+margin: 20px;
+margin-top: 20px;
+display: block;
+  }
+  .modal-out input[type="checkbox"], .modal-out input[type="radio"] .modal-out label{
+    margin-bottom: 9px;
+    margin-right: 8px;
+  }
 

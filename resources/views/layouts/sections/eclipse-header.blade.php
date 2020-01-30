@@ -1,3 +1,6 @@
+<?php 
+    header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0');
+?>
 <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                
@@ -111,7 +114,7 @@
                         </li> -->
                          <li class="nav-item">
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
-                                <i class="fa fa-home i.fa.fa-home" aria-hidden="true" style="font-size: 2em!important;padding: 35% 0 0 0;margin-top: 10px"></i>
+                                <i class="fa fa-home i.fa.fa-home" aria-hidden="true" style="font-size: 2em!important;padding: 35% 0 0 0;margin-top: 2px"></i>
                             </a>
                         </li>
                         <!-- <li class="nav-item dropdown">
@@ -566,7 +569,7 @@
                                 @endrole
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
+                                onclick="return clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
                                
                             </div>
                         </li>

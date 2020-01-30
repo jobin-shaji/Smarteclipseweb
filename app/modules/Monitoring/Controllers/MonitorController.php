@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Modules\Monitoring\Controllers;
+use App\Exports\MonitoringReportExport;
+use App\Exports\NewMonitoringReportExport;
+
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Modules\Route\Models\Route;
@@ -22,7 +26,7 @@ use App\Http\Traits\VehicleDataProcessorTrait;
 use Carbon\Carbon;
 use DataTables;
 use Config;
-
+use PDF;
 class MonitorController extends Controller 
 {
     /** 
@@ -124,14 +128,29 @@ class MonitorController extends Controller
             $this->success = false;
             $this->message = 'failed';
             return response()->json([ 'data' => $this->alert, 'success' => $this->success, 'message' => $this->message  ]);
-        }  
-        
+        }         
     }
-
     public function getAlertMap()
     {
        return view('Monitoring::map-monitoring',['alerts'=> (new Vehicle())->getAlertList(),'vehicles'=> null]);  
     }
-    
-    
+    public function export(Request $request)
+    {
+        return Excel::download(new MonitoringReportExport($request->id,$request->vehicle_id,$request->report_type), 'monitoring-report.xlsx');
+    } 
+    public function downloadPdfCertificate(Request $request){  
+        if($request->report)
+        {
+            $this->report_type=$request->report;
+            $this->data = (new Vehicle())->getVehicleDetails($request->vehicle_id);  
+            $pdf = PDF::loadView('Monitoring::device-certificate-download',['report_type' => $this->report_type,'monitoringReport'=> $this->data]);
+            return $pdf->download('monitoring-report.pdf');
+        }
+        else{
+            $request->session()->flash('message', 'Please select any report!'); 
+            $request->session()->flash('alert-class', 'alert-danger'); 
+            return back();
+            
+        }
+    } 
 }

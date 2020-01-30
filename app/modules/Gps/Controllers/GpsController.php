@@ -22,11 +22,10 @@ use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Ota\Models\OtaUpdates;
 use App\Modules\Gps\Models\GpsConfiguration;
-
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 use DB;
 use Config;
@@ -472,7 +471,7 @@ class GpsController extends Controller {
                 }else if($gps_stock->client_id===0 && $gps_stock->trader_id===null){
                     return "Awaiting Confirmation";
                 }else{
-                    return "Transferred";;
+                    return "Transferred";
                 }
             })
             ->addColumn('action', function ($gps_stock) {
@@ -649,7 +648,7 @@ class GpsController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Gps does not exist'
+                'message' => 'GPS does not exist'
             ]);
         }
         $gps->status=0;
@@ -664,7 +663,7 @@ class GpsController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps deactivated successfully'
+            'message' => 'GPS deactivated successfully'
         ]);
     }
     // activate gps from trader
@@ -676,7 +675,7 @@ class GpsController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Gps does not exist'
+                'message' => 'GPS does not exist'
             ]);
         }
         $gps->status=1;
@@ -691,7 +690,7 @@ class GpsController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Gps activated successfully'
+            'message' => 'GPS activated successfully'
         ]);
     }
 
@@ -1731,8 +1730,9 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
-    public function allpublicgpsListPage()
+    public function allpublicgpsListPage(Request $request)
     {
+        
         $ota = OtaType::all();
         $gps = Gps::all();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();
@@ -2070,7 +2070,7 @@ class GpsController extends Controller {
             'manufacturing_date' => 'required',
             'icc_id' => 'required',
             'imsi' => 'required',
-            'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
+            // 'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
             'batch_number' => 'required',
             'employee_code' => 'required',
             'model_name' => 'required',
