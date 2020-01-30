@@ -302,7 +302,7 @@ function render_devicetab(res)
             } 
             else if( each_element.id == 'tvc_device_gps_fix')
             {
-                $('#'+each_element.id).text((detail == '1') ? 'Received' : 'Not received');
+                $('#'+each_element.id).text((detail == '') ? 'Not received' : detail);
                
             } 
             else if( (each_element.id == 'tvc_device_fuel_status') )
