@@ -26,7 +26,7 @@
                         <div class="row">
                           <div class="form-group">
                             <div style="padding:10px;text-align:right;">
-                              <input type="text" class="form-controller" id="search" name="search" placeholder="Search IMEI">
+                              <input type="text" class="form-controller" id="search" name="search" placeholder="Search Serial No">
                             </div>
                              <input type="hidden" class="form-controller" id="sos_transfer_id" name="sos_transfer_id" value="{{$sos_transfer_id}}">
                           </div>
