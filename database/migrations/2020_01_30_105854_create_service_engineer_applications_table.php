@@ -15,10 +15,14 @@ class CreateServiceEngineerApplicationsTable extends Migration
     {
         Schema::create('service_engineer_applications', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->text('description');
+            $table->string('version ');
+            $table->integer('priority');
+            $table->text('file');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

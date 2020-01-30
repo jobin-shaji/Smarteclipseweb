@@ -193,7 +193,7 @@ margin-top: 60px;
 	width: 25%;
 float: left;
 display: inline-block;
-height: 470px;
+height: 100vh;
 }
 .notification-bar{
 	width:100%;
@@ -481,7 +481,7 @@ margin: 0px;
 
 .mp-outer-bg{
     width: 75%;
-height: 500px;
+height: 100%;
 border: 0px solid rgb(197, 199, 199);
 position: relative;
 overflow: hidden;
@@ -490,6 +490,8 @@ float: right;
     
     .mp-outer-bg #map{
         border: 0px solid rgb(197, 199, 199) !important;
+
+    height: 80vh;
     }    
 /*Right*/
 	.content-wrapper .modal.right.fade .modal-dialog {
