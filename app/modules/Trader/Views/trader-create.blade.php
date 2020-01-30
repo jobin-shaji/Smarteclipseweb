@@ -116,8 +116,9 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label>
                   <div class="form-group has-feedback">
-                    <input type="text" required class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}">
-                  </div>
+                    <input type="text" required class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" id="username" value="{{ old('username') }}">
+                    </div>
+                     <p style="color:#FF0000" id="user_message"> Spaces not  allowed for Username</p>
                   @if ($errors->has('username'))
                   <span class="help-block">
                   <strong class="error-text">{{ $errors->first('username') }}</strong>
@@ -161,9 +162,22 @@
 @section('script')
   <script>
 
+$('#username').keypress(function (e) {
+       $("#user_message").hide();
+      
+      if(e.which === 32) 
+      {
+        $("#user_message").show();
+        e.preventDefault();
+      }
+     
+    });
+
+
   $(document).ready(function() 
    {
-      $("#message").hide();
+     $("#user_message").hide();
+     $("#message").hide();
       $('#dealer_name').keypress(function (e) 
         {
             $("#message").hide();
