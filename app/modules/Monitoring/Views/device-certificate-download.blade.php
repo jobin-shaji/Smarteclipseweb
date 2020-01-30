@@ -136,6 +136,22 @@ vertical-align: text-top;
 </style>
 
 <script type="text/javascript" src="wz_jsgraphics.js"></script>
+<script>
+    round = function(val, precision) {
+        if (precision == null)
+        {
+            precision = 0;
+        }
+        if (!precision) 
+        {
+            return Math.round(val);
+        }
+        val *= Math.pow(10, precision);
+        val += 0.5;
+        val = Math.floor(val);
+        return val /= Math.pow(10, precision);
+    };
+</script>
 
 </head>
 <body>
@@ -151,6 +167,10 @@ vertical-align: text-top;
 </p></div>
 @if(in_array(1, $report_type))
 <p style="margin-left: 53px"><b>Vehicle Details</b></p>
+<?php
+if($monitoringReport)
+{
+?>
 <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
     <?php
     if( $monitoringReport->theft_mode==0){
@@ -218,118 +238,145 @@ vertical-align: text-top;
         <td>{{ $monitoringReport->created_at}}</td> 
     </tr>
 </table>
+<?php 
+}
+else
+{
+?>
+    <div style="text-align:center">No Vehicle details found.</div>
+<?php } ?>
 @endif
 @if(in_array(2, $report_type))
 <p style="margin-left: 53px"><b>Owner Details</b></p>
-<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
-    <?php
-$role=$monitoringReport->client->user->role;
-if($role==0||$role==4)
- { 
-    $user_role="Freebies";
- }else if($role==6){
-    $user_role="Fundamental";
- }else if($role==7){
-    $user_role="Superior";
- }else if($role==8){
-    $user_role="Pro";
- }
- else{
-    $user_role="No data Available";
- }
- if($monitoringReport->client->subdealer){
-    $dealer_trader=$monitoringReport->client->subdealer->name;
- }
- else if($monitoringReport->client->trader){
-    $dealer_trader=$monitoringReport->client->trader->name;
- }
- else{
-    $dealer_trader="Not Assigned";
- }                
+<?php
+if($monitoringReport->client)
+{
 ?>
-<tr>
-        <th style="width: 30%">Owner Name </th>
-        <td>@if($monitoringReport->client->name){{ $monitoringReport->client->name }}@else{{'No data available'}} @endif</td> 
-    </tr>
-    <tr>
-        <th>Owner Username</th>
-        <td>@if($monitoringReport->client->user->username){{ $monitoringReport->client->user->username}}@else{{'No data available'}} @endif</td> 
-    </tr>
-    <tr>
-        <th>Owner Address</th>
-        <td>@if($monitoringReport->client->address){{ $monitoringReport->client->address}}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr>
-        <th>Owner Mobile</th>
-        <td>@if($monitoringReport->client->user->mobile){{ $monitoringReport->client->user->mobile}}@else{{'No data available'}} @endif</td> 
-    </tr>
-    <tr>
-        <th>Owner Email</th>
-        <td>@if($monitoringReport->client->user->email){{ $monitoringReport->client->user->email}}@else{{'No data available'}} @endif</td>                  
-    </tr>
-    <tr>
-        <th>Owner Latitude </th> 
-        <td>@if($monitoringReport->client->latitude){{ $monitoringReport->client->latitude}}@else{{'No data available'}} @endif</td>                  
-    </tr> 
-    <tr>
-        <th>Owner Longitude</th>
-        <td>@if($monitoringReport->client->longitude){{ $monitoringReport->client->longitude}}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr> 
-        <th>Owner Country</th>
-        <td>@if($monitoringReport->client->country){{ $monitoringReport->client->country->name}}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr> 
-        <th>Owner State</th>
-        <td>@if($monitoringReport->client->state){{ $monitoringReport->client->state->name}}@else{{'No data available'}} @endif</td>
-    </tr> 
-    <tr>
-        <th>Owner City </th> 
-        <td>@if($monitoringReport->client->city){{ $monitoringReport->client->city->name}}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr>
-        <th>Dealer </th>
-        <td>@if($dealer_trader){{ $dealer_trader}}@else{{'No data available'}} @endif</td> 
-    </tr> 
-    <tr>
-        <th>Owner Package </th>
-        <td>@if($user_role){{ $user_role}}@else{{'No data available'}} @endif</td>  
-    </tr>
-</table>
-@endif
-@if(in_array(3, $report_type))
-@if($monitoringReport->driver)
-<p style="margin-left: 53px"><b>Driver Details</b></p>
-<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
-    <?php
-        if($monitoringReport->driver->points<=0){
-            $points=0;
-        }
-        else{
-            $points=$monitoringReport->driver->points;
-        }
+    <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
+        <?php
+    $role=$monitoringReport->client->user->role;
+    if($role==0)
+    { 
+        $user_role="Freebies";
+    }else if($role==1){
+        $user_role="Fundamental";
+    }else if($role==2){
+        $user_role="Superior";
+    }else if($role==3){
+        $user_role="Pro";
+    }
+    else{
+        $user_role="No data Available";
+    }
+    if($monitoringReport->client->subdealer){
+        $dealer_trader=$monitoringReport->client->subdealer->name;
+    }
+    else if($monitoringReport->client->trader){
+        $dealer_trader=$monitoringReport->client->trader->name;
+    }
+    else{
+        $dealer_trader="Not Assigned";
+    }                
     ?>
     <tr>
-        <th style="width: 30%">Driver Name </th>
-        <td>@if($monitoringReport->driver->name){{ $monitoringReport->driver->name }}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr>
-        <th>Driver Address</th>
-        <td>@if($monitoringReport->driver->address){{ $monitoringReport->driver->address}}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr>
-        <th>Driver Mobile</th>
-        <td>@if($monitoringReport->driver->mobile){{ $monitoringReport->driver->mobile}}@else{{'No data available'}} @endif</td>
-    </tr>
-    <tr>
-        <th>Driver Points</th>
-        <td>@if($points){{ $points}} @else {{'No data available'}} @endif</td>
-    </tr>
-</table>
+            <th style="width: 30%">Owner Name </th>
+            <td>@if($monitoringReport->client->name){{ $monitoringReport->client->name }}@else{{'No data available'}} @endif</td> 
+        </tr>
+        <tr>
+            <th>Owner Address</th>
+            <td>@if($monitoringReport->client->address){{ $monitoringReport->client->address}}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr>
+            <th>Owner Mobile</th>
+            <td>@if($monitoringReport->client->user->mobile){{ $monitoringReport->client->user->mobile}}@else{{'No data available'}} @endif</td> 
+        </tr>
+        <tr>
+            <th>Owner Email</th>
+            <td>@if($monitoringReport->client->user->email){{ $monitoringReport->client->user->email}}@else{{'No data available'}} @endif</td>                  
+        </tr>
+        <tr>
+            <th>Owner Latitude </th> 
+            <td>@if($monitoringReport->client->latitude){{ $monitoringReport->client->latitude}}@else{{'No data available'}} @endif</td>                  
+        </tr> 
+        <tr>
+            <th>Owner Longitude</th>
+            <td>@if($monitoringReport->client->longitude){{ $monitoringReport->client->longitude}}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr> 
+            <th>Owner Country</th>
+            <td>@if($monitoringReport->client->country){{ $monitoringReport->client->country->name}}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr> 
+            <th>Owner State</th>
+            <td>@if($monitoringReport->client->state){{ $monitoringReport->client->state->name}}@else{{'No data available'}} @endif</td>
+        </tr> 
+        <tr>
+            <th>Owner City </th> 
+            <td>@if($monitoringReport->client->city){{ $monitoringReport->client->city->name}}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr>
+            <th>Dealer </th>
+            <td>@if($dealer_trader){{ $dealer_trader}}@else{{'No data available'}} @endif</td> 
+        </tr> 
+        <tr>
+            <th>Owner Package </th>
+            <td>@if($user_role){{ $user_role}}@else{{'No data available'}} @endif</td>  
+        </tr>
+    </table>
+<?php 
+}
+else
+{
+?>
+    <div style="text-align:center">No Owner details found.</div>
+<?php } ?>
 @endif
+@if(in_array(3, $report_type))
+<p style="margin-left: 53px"><b>Driver Details</b></p>
+<?php
+if($monitoringReport->driver)
+{
+?>
+    <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
+        <?php
+            if($monitoringReport->driver->points<=0){
+                $points=0;
+            }
+            else{
+                $points=$monitoringReport->driver->points;
+            }
+        ?>
+        <tr>
+            <th style="width: 30%">Driver Name </th>
+            <td>@if($monitoringReport->driver->name){{ $monitoringReport->driver->name }}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr>
+            <th>Driver Address</th>
+            <td>@if($monitoringReport->driver->address){{ $monitoringReport->driver->address}}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr>
+            <th>Driver Mobile</th>
+            <td>@if($monitoringReport->driver->mobile){{ $monitoringReport->driver->mobile}}@else{{'No data available'}} @endif</td>
+        </tr>
+        <tr>
+            <th>Driver Points</th>
+            <td>@if($points){{ $points}} @else {{'No data available'}} @endif</td>
+        </tr>
+    </table>
+<?php 
+}
+else
+{
+?>
+    <div style="text-align:center">No Driver details found.</div>
+<?php } ?>
 @endif
 @if(in_array(4, $report_type))
 <p style="margin-left: 53px"><b>Device Details</b></p>
+<?php
+if($monitoringReport->gps)
+{
+?>
 <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
     <?php
         if($monitoringReport->gps->emergency_status ==0){
@@ -434,13 +481,41 @@ if($role==0||$role==4)
         <td>{{ $monitoringReport->gps->created_at}}</td>
     </tr>
 </table>
+<?php 
+}
+else
+{
+?>
+    <div style="text-align:center">No Device details found.</div>
+<?php } ?>
 @endif
 @if(in_array(5, $report_type))
 <p style="margin-left: 53px"><b>Device Current Status</b></p>
+<?php
+if($monitoringReport->gps)
+{
+?>
 <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
+<?php
+    $fuel_status    =   round( ( ($monitoringReport->vehicleModels->fuel_min - $monitoringReport->gps->fuel_status) / ($monitoringReport->vehicleModels->fuel_min - $monitoringReport->vehicleModels->fuel_max) ) * 100 ).'%';
+    $speed_status   =   round($monitoringReport->gps->speed).' km/h';
+    $odometer       =   round($monitoringReport->gps->odometer);
+    $battery_status =   round($monitoringReport->gps->battery_status).'%';
+    $mode           =   $monitoringReport->gps->mode;
+    if($mode = 'S')
+     { 
+        $device_mode="Sleep";
+     }else if($mode='M'){
+        $device_mode="Moving";
+     }else if($mode='H'){
+        $device_mode="Halt";
+     }else{
+        $device_mode="No data Available";
+     }
+?>
 <tr>
             <th style="width: 30%">Mode</th>
-            <td>@if($monitoringReport->gps->mode){{ $monitoringReport->gps->mode }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($device_mode){{$device_mode}}@else {{'NO Data Available'}}@endif</td> 
         </tr>   
         <tr>
             <th>Latitude</th>
@@ -452,19 +527,19 @@ if($role==0||$role==4)
         </tr>   
         <tr>
             <th>Fuel Status</th>
-            <td>@if($monitoringReport->gps->fuel_status){{ $monitoringReport->gps->fuel_status }}@else {{'NO Data Available'}}@endif</td>
+            <td>@if($fuel_status){{ $fuel_status }}@else {{'NO Data Available'}}@endif</td>
         </tr>   
         <tr>
             <th>Speed</th>
-            <td>@if($monitoringReport->gps->speed){{ $monitoringReport->gps->speed }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($speed_status){{ $speed_status }}@else {{'NO Data Available'}}@endif</td> 
         </tr>   
         <tr>
             <th>Odometer</th>
-            <td>@if($monitoringReport->gps->odometer){{ $monitoringReport->gps->odometer }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($odometer){{ $odometer }}@else {{'NO Data Available'}}@endif</td> 
         </tr>   
         <tr>
             <th>Battery Status</th> 
-            <td>@if($monitoringReport->gps->battery_status){{ $monitoringReport->gps->battery_status }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($battery_status){{ $battery_status }}@else {{'NO Data Available'}}@endif</td> 
         </tr>
         <tr>
             <th>Main Power Status</th>  
@@ -475,10 +550,6 @@ if($role==0||$role==4)
         <tr>
             <th>Device Date and Time</th>   
             <td>@if($monitoringReport->gps->device_time){{ $monitoringReport->gps->device_time }}@else {{'NO Data Available'}}@endif</td> 
-        </tr>
-        <tr>
-            <th>Ignition</th>   
-            <td>@if($monitoringReport->gps->ignition){{ $monitoringReport->gps->ignition }}@else {{'NO Data Available'}}@endif</td> 
         </tr>
         <tr>
             <th>Ignition</th>   
@@ -493,9 +564,20 @@ if($role==0||$role==4)
             <td>@if($monitoringReport->gps->ac_status==0){{'Off'  }}@else {{'On'}}@endif</td> 
         </tr>       
 </table>
+<?php 
+}
+else
+{
+?>
+    <div style="text-align:center">No Device current status found.</div>
+<?php } ?>
 @endif
 @if(in_array(6, $report_type))
 <p style="margin-left: 53px"><b>Device Configuration</b></p>
+<?php
+if(count($monitoringReport->gps->ota)>0)
+{
+?>
 <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
     <thead>
     <tr>
@@ -640,73 +722,110 @@ if($role==0||$role==4)
         <td>{{$ota->updated_at}}</td>
     </tr>  
     @endforeach 
-    @if($monitoringReport->gps->ota->count()==0)
-    <tr>
-        <td colspan="3" style="text-align: center;"> No Data Available</td>
-    </tr>  
-    @endif
 </table>
+<?php 
+}
+else
+{
+?>
+    <div style="text-align:center">No OTA Responses.</div>
+<?php } ?>
 @endif
 @if(in_array(7, $report_type))
+<?php 
+
+$installation_jobs  = [];
+$service_jobs       = [];
+// seggregate installation and monitoring jobs
+foreach($monitoringReport->jobs as $job)
+{
+    switch($job->job_type)
+    {
+        case '1':
+            array_push($installation_jobs, $job);
+            break;
+        case '2':
+            array_push($service_jobs, $job);
+            break;
+        default;
+            break;
+    }
+}
+?>
 <p style="margin-left: 53px"><b>Installation</b></p>
-<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
-    <tr>
-        <th>Servicer Name</th>
-        <th>Job Date</th>
-        <th>Job Completed Date</th>
-        <th>Location</th>
-        <th>Description</th>
-        <th>Comments</th>
-    </tr>
-    @foreach($monitoringReport->jobs as $jobs)
-        @if($jobs->job_type==1)
+
+    <?php
+    if( count($installation_jobs) > 0 )
+    {
+    ?>
+    <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
         <tr>
-            <td>{{$jobs->servicer->name}}</td>
-            <td>{{$jobs->job_date}}</td>
-            <td>{{$jobs->job_complete_date}}</td>
-            <td>{{$jobs->location}}</td>
-            <td>{{$jobs->description}}</td>
-            <td>{{$jobs->comment}}</td>
+            <th>Servicer Name</th>
+            <th>Job Date</th>
+            <th>Job Completed Date</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Comments</th>
         </tr>
-         @else
+        @foreach($installation_jobs as $each_installation_job)
             <tr>
-                <td colspan="6" style="text-align: center;"> No Data Available</td>
-            </tr>  
-        @endif
-    @endforeach
-</table>
+                <td>{{$each_installation_job->servicer->name}}</td>
+                <td>{{$each_installation_job->job_date}}</td>
+                <td>{{$each_installation_job->job_complete_date}}</td>
+                <td>{{$each_installation_job->location}}</td>
+                <td>{{$each_installation_job->description}}</td>
+                <td>{{$each_installation_job->comment}}</td>
+            </tr>
+        @endforeach
+    </table>
+    <?php 
+    }
+    else
+    {
+    ?>
+    <div style="text-align:center">No installation found.</div>
+    <?php } ?>
 @endif
 @if(in_array(8, $report_type))
 <p style="margin-left: 53px"><b>Service(S)</b></p>
-<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
-    <tr>
-        <th>Servicer Name</th>
-        <th>Job Date</th>
-        <th>Job Completed Date</th>
-        <th>Location</th>
-        <th>Description</th>
-        <th>Comments</th>
-    </tr>
-    @foreach($monitoringReport->jobs as $service_jobs)
-        @if($service_jobs->job_type==2)
-        <tr>
-            <td>{{$service_jobs->servicer->name}}</td>
-            <td>{{$service_jobs->job_date}}</td>
-            <td>{{$service_jobs->job_complete_date}}</td>
-            <td>{{$service_jobs->location}}</td>
-            <td>{{$service_jobs->description}}</td>
-            <td>{{$service_jobs->comment}}</td>
-        </tr>
-        @else
+<?php
+    if( count($service_jobs) > 0 )
+    {
+    ?>
+        <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
             <tr>
-                <td colspan="6" style="text-align: center;"> No Data Available</td>
-            </tr>  
-        @endif
-    @endforeach
-</table>
+                <th>Servicer Name</th>
+                <th>Job Date</th>
+                <th>Job Completed Date</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>Comments</th>
+            </tr>
+            @foreach($monitoringReport->jobs as $service_jobs)
+                <tr>
+                    <td>{{$service_jobs->servicer->name}}</td>
+                    <td>{{$service_jobs->job_date}}</td>
+                    <td>{{$service_jobs->job_complete_date}}</td>
+                    <td>{{$service_jobs->location}}</td>
+                    <td>{{$service_jobs->description}}</td>
+                    <td>{{$service_jobs->comment}}</td>
+                </tr>
+            @endforeach
+        </table>
+    <?php 
+    }
+    else
+    {
+    ?>
+        <div style="text-align:center">No service(s) found.</div>
+    <?php } ?>
 @endif
 @if(in_array(9, $report_type))
 <p style="margin-left: 53px"><b>Alerts</b></p>
+<?php
+    if(count($monitoringReport->alerts)>0)
+    {
+    ?>
 <table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
     <tr>
         <th >Alert</th>
@@ -718,12 +837,14 @@ if($role==0||$role==4)
             <td>{{$alert->device_time}}</td>
         </tr>
     @endforeach
-    @if($monitoringReport->alerts->count()==0)
-    <tr>
-        <td colspan="2" style="text-align: center;"> No Data Available</td>
-    </tr>  
-    @endif
 </table>
+<?php 
+    }
+    else
+    {
+    ?>
+        <div style="text-align:center">No Alert(s) found.</div>
+    <?php } ?>
 @endif
 </body>
 </html>
