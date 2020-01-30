@@ -18,5 +18,15 @@ class GpsTransferItems extends Model
     {
     	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
+      /**
+     * 
+     * 
+     */
+    public function getTransferredGpsDevices($gps_transfer_id)
+    {
+        return self::select('gps_id')
+            ->where('gps_transfer_id', $gps_transfer_id)
+            ->get();
+    }
     
 }
