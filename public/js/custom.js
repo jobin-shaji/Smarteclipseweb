@@ -411,6 +411,10 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     getDeviceTransferList();
                 }
+                else if(callBack=='notificationAlertsList')
+                {
+                    notificationAlertsList(res);
+                }
                 else if(callBack=='getUploadDocs')
                 {
                     getUploadDocs(res);

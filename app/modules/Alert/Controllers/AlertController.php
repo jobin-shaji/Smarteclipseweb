@@ -15,6 +15,7 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Warehouse\Models\GpsStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 use DataTables;
 
 class AlertController extends Controller {
@@ -582,6 +583,48 @@ class AlertController extends Controller {
             'status' => 'gpsAlertTracker'           
         ]);   
     }
+    public function allAlerts(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;   
+        $client=Client::find($client_id);
+        return view('Alert::notification-list',['client'=>$client]);
+    }    
+    public function notificationAlertList(Request $request)
+    {
+        $offset=$request->offset;
+        $limit=$request->limit;
+        $user = $request->user();
+        $client_id=\Auth::user()->client->id; 
+        $single_vehicle_gps =  $this->singleGps($client_id);  
+        $alerts = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'gps_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at',
+            'device_time'
+        )
+        ->with('alertType:id,code,description')
+        ->with('gps.vehicle')
+        ->with('gps:id,imei')
+        ->orderBy('device_time', 'desc')
+        ->whereIn('gps_id',$single_vehicle_gps)
+        ->whereNotIn('alert_type_id',[17,18,23,24])
+        ->whereBetween(\DB::raw('DATE(device_time)'), [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d')])
+        ->get(); 
+        return response()->json([
+            'alerts' => $alerts,
+            'status' => 'notoficationAlerts'           
+        ]);                  
+    }
+
+
+
+
+
     //alert create rules 
     public function alert_rules(){
         $rules = [
