@@ -395,25 +395,25 @@ if($monitoringReport->gps)
             $calibrated_on=$monitoringReport->gps->calibrated_on;
         }
         else{
-            $calibrated_on="No Data available";
+            $calibrated_on="No Data Available";
         }
         if($monitoringReport->gps->login_on){
             $login_on=$monitoringReport->gps->login_on;
         }
         else{
-            $login_on="No Data available";
+            $login_on="No Data Available";
         }
         if($monitoringReport->gps->no_of_satellites){
             $no_of_satellites=$monitoringReport->gps->no_of_satellites;
         }
         else{
-            $no_of_satellites="No Data available";
+            $no_of_satellites="No Data Available";
         }
         if($monitoringReport->gps->e_sim_number){
             $e_sim_number=$monitoringReport->gps->e_sim_number;
         }
         else{
-            $e_sim_number="No Data available";
+            $e_sim_number="No Data Available";
         }
         ?>
 <tr>
@@ -474,7 +474,7 @@ if($monitoringReport->gps)
     </tr>
     <tr> 
         <th>Login on </th>
-        <td>@if($monitoringReport->gps->login_on){{ $monitoringReport->gps->login_on }}@else {{'NO Data Available'}}@endif</td>
+        <td>@if($monitoringReport->gps->login_on){{ $monitoringReport->gps->login_on }}@else {{'No Data Available'}}@endif</td>
     </tr>
     <tr> 
         <th>Created At </th>
@@ -510,36 +510,36 @@ if($monitoringReport->gps)
      }else if($mode='H'){
         $device_mode="Halt";
      }else{
-        $device_mode="No data Available";
+        $device_mode="No Data Available";
      }
 ?>
 <tr>
             <th style="width: 30%">Mode</th>
-            <td>@if($device_mode){{$device_mode}}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($device_mode){{$device_mode}}@endif</td> 
         </tr>   
         <tr>
             <th>Latitude</th>
-            <td>@if($monitoringReport->gps->lat){{ $monitoringReport->gps->lat }}@else {{'NO Data Available'}}@endif</td>
+            <td>@if($monitoringReport->gps->lat){{ $monitoringReport->gps->lat }}@else {{'No Data Available'}}@endif</td>
         </tr>   
         <tr>
             <th>Longitude</th>
-            <td>@if($monitoringReport->gps->lon){{ $monitoringReport->gps->lon }}@else {{'NO Data Available'}}@endif</td>
+            <td>@if($monitoringReport->gps->lon){{ $monitoringReport->gps->lon }}@else {{'No Data Available'}}@endif</td>
         </tr>   
         <tr>
             <th>Fuel Status</th>
-            <td>@if($fuel_status){{ $fuel_status }}@else {{'NO Data Available'}}@endif</td>
+            <td>@if($fuel_status){{ $fuel_status }}@else {{'No Data Available'}}@endif</td>
         </tr>   
         <tr>
             <th>Speed</th>
-            <td>@if($speed_status){{ $speed_status }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($speed_status){{ $speed_status }}@else {{'No Data Available'}}@endif</td> 
         </tr>   
         <tr>
             <th>Odometer</th>
-            <td>@if($odometer){{ $odometer }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($odometer){{ $odometer }}@else {{'No Data Available'}}@endif</td> 
         </tr>   
         <tr>
             <th>Battery Status</th> 
-            <td>@if($battery_status){{ $battery_status }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($battery_status){{ $battery_status }}@else {{'No Data Available'}}@endif</td> 
         </tr>
         <tr>
             <th>Main Power Status</th>  
@@ -549,7 +549,7 @@ if($monitoringReport->gps)
         </tr>
         <tr>
             <th>Device Date and Time</th>   
-            <td>@if($monitoringReport->gps->device_time){{ $monitoringReport->gps->device_time }}@else {{'NO Data Available'}}@endif</td> 
+            <td>@if($monitoringReport->gps->device_time){{ $monitoringReport->gps->device_time }}@else {{'No Data Available'}}@endif</td> 
         </tr>
         <tr>
             <th>Ignition</th>   
