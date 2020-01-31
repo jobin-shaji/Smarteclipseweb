@@ -434,7 +434,7 @@
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
                             </div>
-                                <a class="dropdown-item" href="{{url('/gps-alert')}}">VIEW ALL ALERTS</a>
+                                <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                             </div>
                         </li> 
                             
@@ -565,7 +565,35 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
     </form>
-
+    <div class="modal right fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+            <div class="modal-dialog model-class" role="document">
+                <div class="modal-content modal-content">
+                    <div class="modal-header modal-header">
+                            <h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
+                        <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                
+                    </div>                    
+                    <div class="modal-body">
+                    <div>
+                        <span id="alert_content">
+                            <div class="loader-wrapper" id="loader-1"></div>
+                            <div id="loader"></div>
+                          </div>
+                        </span>
+                        <div class="alert_address">
+                            <h4>Address</h4>
+                            <span id="alert_address"></span>
+                        </div>
+                    </div>
+                    <p></p>
+                    <!-- Alert address -->
+                   
+                    <!-- /Alert address -->
+                    </div>
+                </div>
+            <!-- modal-content -->
+            </div>
+        <!-- modal-dialog -->
+        </div>
     <div id="headerModal" class="modal_for_dash">
          
 <div class="modal-content" style="max-width:28%;z-index:9999!important">
@@ -639,6 +667,7 @@
 Contact for Assistance +91 9544313131</div>
 </div>  
     </div>
+    <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
 <style type="text/css">
   .notification-box {
   /*position: relative;*/
@@ -684,4 +713,15 @@ Contact for Assistance +91 9544313131</div>
 #2:hover{
     background-color: red!important
 }
+.psudo-link{
+    cursor:pointer;
+}
+.alert_content{
+    line-height:30px;
+}
+.alert_address{
+    margin-top: 12px;
+}
 </style>
+
+ 
