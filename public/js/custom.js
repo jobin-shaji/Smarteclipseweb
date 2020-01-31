@@ -1195,18 +1195,23 @@ function clientAlerts(){
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
+    // notificationAlertsList(res);
     if(res)
     {
         $("#alert_notification").empty();
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
         {
-            $("#alert_notification").append('<div class="dropdown-item" data-toggle="modal"  data-target="#myModal2" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
+            $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
- }
+        if(res.alert.length==0){
+            $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
+        }
+    }
 }
 
 function gpsAlertUpdate(value){
+    $('#loader').show();
     var url = 'gps-alert-update';
     var data={
       id:value    
@@ -1215,12 +1220,12 @@ function gpsAlertUpdate(value){
   }
     function gpsAlertconfirm(res)
     { 
-
-        $('#vehicle_name').text(res.get_vehicle.name);
-        $('#register_number').text(res.get_vehicle.register_number);
-        $('#description').text(res.alert_icon.description);
-        $('#device_time').text(res.alertmap.device_time);
-        $('#address').text(res.address);
+        $('#loader').hide();
+        // console.log(res);
+        $('#alert_'+res.alertmap.id).removeClass('allert');
+        var alert_content = res.alert_icon.description+' on vehicle '+res.get_vehicle.name+'('+res.get_vehicle.register_number+') at '+res.alertmap.device_time;
+        $('#alert_content').text(alert_content);
+        $('#alert_address').text(res.address);
     }
 
 function downloadLabel(id){
@@ -1440,6 +1445,7 @@ function rootSubdealer(res)
             var count_notification=res.notification_count;
             $("#bell_notification_count").text(count_notification);          
         }
+
         if(res.emergency_response.status == 'success'){
             var latitude=res.emergency_response.alerts[0].latitude;
             var longitude=res.emergency_response.alerts[0].longitude;
@@ -1476,6 +1482,7 @@ function rootSubdealer(res)
                 $('#emergency_vehicle_time').text(alert_time);
             }
         }
+        clientAlerts();
     }
 
 /////////////////////////Km Report/////////////////////////

@@ -41,19 +41,17 @@
 					<div class="modal-content modal-content-new">
 						<div class="modal-header modal-header-new">
 								<h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
-							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					
+							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>					
 						</div>
 						<div class="modal-body">
 						<div style="text-align:center;">
-							<label id="description" style="background-color:#add9f0"></label><br>
+							<label id="description" ></label><br>
 						</div>
 						<label>Vehicle Name :</label><span id="vehicle_name"></span><br>
-							<label>Register Number :</label><span id="register_number"></span><br>
-							
+							<label>Register Number :</label><span id="register_number"></span><br>							
 							<label>Alert Time:</label><span id="device_time"></span><br>
-							<!-- <label>Register Number :</label><span id="register_number"></span><br>
-							<label>Register Number :</label><span id="register_number"></span><br> -->
+							<label>Address :</label><span id="address"></span><br>
+							<!-- <label>Register Number :</label><span id="register_number"></span><br> -->
 
 						</div>
 					</div>

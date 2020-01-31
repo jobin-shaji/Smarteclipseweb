@@ -17,16 +17,20 @@ $(document).ready(function () {
   backgroundPostData(url,data,'notificationAlertsList',{alert:true});
 });
 function notificationAlertsList(res){
+  // $('#read').text(res.read_alerts_count);
+  // $('#unread').text(res.unread_alerts_count);
+
   var length=res.alerts.length;
     for (var i = 0; i < length; i++) {
     register_number=res.alerts[i].gps.vehicle.register_number;
     vehicle_name=res.alerts[i].gps.vehicle.name;
     alert=res.alerts[i].alert_type.description;
     device_time=res.alerts[i].device_time;
+   
     id=res.alerts[i].id;
       if(res.alerts[i].status==1){
         // console.log(res.alerts.length);
-        var notification=' <div class="item active-read" id="alert" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2">'+  
+        var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2">'+  
          '<div class="not-icon-bg">'+
         '<img src="images/bell.svg"/>'+
         '</div>'+
@@ -42,7 +46,7 @@ function notificationAlertsList(res){
         '</div>  ';    
       }
       if(res.alerts[i].status==0){
-        var notification=' <div class="item active-read allert alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2"  >'+  
+        var notification=' <div class="item active-read allert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2"  >'+  
          '<div class="not-icon-bg" >'+
         '<img src="/images/bell.svg"/>'+
         '</div>'+
@@ -114,6 +118,7 @@ function gpsAlertTracker(res)
   // console.log(res);
   function locs()
   {
+    $('#address').text(res.address);
     $('#vehicle_name').text(res.get_vehicle.name);
     $('#register_number').text(res.get_vehicle.register_number);
     $('#description').text(res.alert_icon.description);

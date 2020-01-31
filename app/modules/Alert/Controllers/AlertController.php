@@ -352,6 +352,7 @@ class AlertController extends Controller {
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
+        ->whereBetween(\DB::raw('DATE(device_time)'), [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d')])
         ->where('status',0)
         ->orderBy('id','DESC')
         ->limit(4)
@@ -398,11 +399,12 @@ class AlertController extends Controller {
         foreach ($userAlerts as $userAlert) {
               $alert_id[]=$userAlert->alert_id;
            }
-        $alert = Alert::select('id','gps_id','alert_type_id')
+        $alert = Alert::select('id','gps_id','alert_type_id','device_time')
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
         ->where('status',0)
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
         // ->get()
         ->count();
 
@@ -640,7 +642,9 @@ class AlertController extends Controller {
         ->get(); 
         return response()->json([
             'alerts' => $alerts,
-            'status' => 'notoficationAlerts'           
+            'read_alerts_count'=>$alerts->where('status',1)->count(),
+            'unread_alerts_count'=>$alerts->where('status',0)->count(),
+            'status' => 'notificationAlerts'           
         ]);                  
     }
     public function alerUpdation(Request $request){
