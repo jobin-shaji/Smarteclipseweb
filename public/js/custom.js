@@ -1222,7 +1222,7 @@ function gpsAlertUpdate(value){
     { 
         $('#loader').hide();
         // console.log(res);
-        $('#alert_'+res.alertmap.id).removeClass('allert');
+        $('#alert_'+res.alertmap.id).removeClass('alert');
         var alert_content = res.alert_icon.description+' on vehicle '+res.get_vehicle.name+'('+res.get_vehicle.register_number+') at '+res.alertmap.device_time;
         $('#alert_content').text(alert_content);
         $('#alert_address').text(res.address);

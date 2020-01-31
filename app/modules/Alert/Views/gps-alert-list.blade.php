@@ -72,7 +72,7 @@ All Alerts
  @endsection
  <style type="text/css">
 
-  .allert{
+  .alert{
     background-color: #bfc5c169;
   }
 

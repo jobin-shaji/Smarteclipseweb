@@ -111,7 +111,7 @@ margin-top: -3px;
 	.clr{
 		background:#fffbee;
 	}
-	.allert{
+	.alert{
 		background:#e1f9f3;
 	}
 </style>

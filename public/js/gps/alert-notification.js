@@ -46,7 +46,7 @@ function notificationAlertsList(res){
         '</div>  ';    
       }
       if(res.alerts[i].status==0){
-        var notification=' <div class="item active-read allert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2"  >'+  
+        var notification=' <div class="item active-read alert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2"  >'+  
          '<div class="not-icon-bg" >'+
         '<img src="/images/bell.svg"/>'+
         '</div>'+
@@ -75,7 +75,7 @@ function gpsAlertCount(value){
 }
 function gpsAlertTracker(res)
 {  
-  $('#alert_'+res.alertmap.id).removeClass('allert');
+  $('#alert_'+res.alertmap.id).removeClass('alert');
   var latitude=parseFloat(res.alertmap.latitude);
   var longitude=parseFloat(res.alertmap.longitude);
   var map = new google.maps.Map(document.getElementById('map'), {

@@ -352,8 +352,7 @@ class AlertController extends Controller {
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
-        ->whereBetween(\DB::raw('DATE(device_time)'), [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d')])
-        ->where('status',0)
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])->where('status',0)
         ->orderBy('id','DESC')
         ->limit(4)
         ->get();
@@ -405,6 +404,7 @@ class AlertController extends Controller {
         ->whereNotIn('alert_type_id',[17,18,23,24])
         ->where('status',0)
         ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
+               
         // ->get()
         ->count();
 
@@ -638,7 +638,7 @@ class AlertController extends Controller {
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
-        ->whereBetween(\DB::raw('DATE(device_time)'), [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d')])
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
         ->get(); 
         return response()->json([
             'alerts' => $alerts,
