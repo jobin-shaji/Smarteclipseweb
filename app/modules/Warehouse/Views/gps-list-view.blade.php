@@ -104,7 +104,7 @@ $is_root = false;
         $gps_transfer_id=$('#gps_transfer_id').val();
         $.ajax({
           type : 'get',
-          url : '{{URL::to('search')}}',
+          url : '{{URL::to('gps-transfer-search')}}',
           data:{
             'search':$value,
             'gps_transfer_id':$gps_transfer_id

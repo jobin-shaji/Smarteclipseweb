@@ -138,6 +138,8 @@ class AlertReportController extends Controller
     }
     public function export(Request $request)
     {
+        ob_end_clean(); 
+        ob_start();
         return Excel::download(new AlertReportExport($request->id,$request->alert,$request->vehicle,$request->fromDate,$request->toDate), 'Alert-report.xlsx');  
     }
 }

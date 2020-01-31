@@ -35,7 +35,9 @@ class GpsRecordController extends Controller {
 
     public function exportProcessedData(Request $request)
     {
-       return Excel::download(new GpsProcessedDataReportExport($request->gps_id,$request->date), 'gps-processed-data-report.xlsx');
+        ob_end_clean(); 
+        ob_start(); 
+        return Excel::download(new GpsProcessedDataReportExport($request->gps_id,$request->date), 'gps-processed-data-report.xlsx');
     } 
 
     public function gpsUnprocessedDateWiseRecord()
@@ -54,7 +56,9 @@ class GpsRecordController extends Controller {
 
     public function exportUnprocessedData(Request $request)
     {
-       return Excel::download(new GpsUnprocessedDataReportExport($request->gps_id,$request->date), 'gps-unprocessed-data-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new GpsUnprocessedDataReportExport($request->gps_id,$request->date), 'gps-unprocessed-data-report.xlsx');
     } 
     
 }

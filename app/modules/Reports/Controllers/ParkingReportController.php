@@ -46,7 +46,9 @@ class ParkingReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new ParkingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Parking-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new ParkingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Parking-report.xlsx');
     }
     function timeFormate($second){
       $hours = floor($second / 3600);
