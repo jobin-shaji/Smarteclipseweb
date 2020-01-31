@@ -37,6 +37,7 @@
                         <th>Vehicle Type</th>
                         <th>Distributor</th>
                         <th>Dealer</th>
+                         <th>Sub Dealer</th>
                         <th>End User</th>
                         <th>Action</th>
                     </tr>
