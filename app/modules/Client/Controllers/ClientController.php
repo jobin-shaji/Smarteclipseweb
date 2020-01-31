@@ -839,12 +839,15 @@ class ClientController extends Controller {
         $rules = $this->logoUpdateRules();
         $this->validate($request, $rules);
         $file=$request->file('logo');
-        if($file){
+        if($file){           
             $old_file = $client->logo;
-            if(file_exists("logo/".$old_file)){
-                $myFile = "logo/".$old_file;
-                $delete_file=unlink($myFile);
+            if($old_file){
+                if(file_exists("logo/".$old_file)){
+                    $myFile = "logo/".$old_file;
+                    $delete_file=unlink($myFile);
+                }
             }
+            
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
             $destinationPath =  public_path('/logo');

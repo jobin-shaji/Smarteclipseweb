@@ -434,7 +434,7 @@
                                 <div class="dropdown-divider"></div>
                                 <div id="alert_notification">
                             </div>
-                                <a class="dropdown-item" href="{{url('/gps-alert')}}">VIEW ALL ALERTS</a>
+                                <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                             </div>
                         </li> 
                             
@@ -565,7 +565,32 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
     </form>
+    <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+				<div class="modal-dialog model-class-new" role="document">
+					<div class="modal-content modal-content-new">
+						<div class="modal-header modal-header-new">
+								<h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
+							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					
+						</div>
+						<div class="modal-body">
+						<div style="text-align:center;">
+							<label id="description" style="background-color:#add9f0"></label><br>
+						</div>
+						<label>Vehicle Name :</label><span id="vehicle_name"></span><br>
+							<label>Register Number :</label><span id="register_number"></span><br>
+							
+							<label>Alert Time:</label><span id="device_time"></span><br>
+                            <label>Address :</label><span id="address"></span><br>
+							<!-- 
+							<label>Register Number :</label><span id="register_number"></span><br> -->
 
+						</div>
+					</div>
+				<!-- modal-content -->
+				</div>
+			<!-- modal-dialog -->
+			</div>
     <div id="headerModal" class="modal_for_dash">
          
 <div class="modal-content" style="max-width:28%;z-index:9999!important">

@@ -422,6 +422,9 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='getUploads'){
                     getUploads(res);
                 }
+                else if(callBack=='gpsAlertconfirm'){
+                    gpsAlertconfirm(res);
+                }
                 
                 
 
@@ -1198,10 +1201,27 @@ function clientAlerts(){
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
         {
-            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
+            $("#alert_notification").append('<div class="dropdown-item" data-toggle="modal"  data-target="#myModal2" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
  }
 }
+
+function gpsAlertUpdate(value){
+    var url = 'gps-alert-update';
+    var data={
+      id:value    
+    }
+    backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
+  }
+    function gpsAlertconfirm(res)
+    { 
+
+        $('#vehicle_name').text(res.get_vehicle.name);
+        $('#register_number').text(res.get_vehicle.register_number);
+        $('#description').text(res.alert_icon.description);
+        $('#device_time').text(res.alertmap.device_time);
+        $('#address').text(res.address);
+    }
 
 function downloadLabel(id){
     var url = 'gps-transfer-label/export';

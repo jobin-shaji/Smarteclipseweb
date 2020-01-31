@@ -6,8 +6,7 @@
 		<div class="notification-map">			
 			<div style="width: 100%; height:100%; float:left;">
 				<input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
-            	<input type="hidden" id="lng" name="lng" value="{{$client->longitude}}"> 
-				
+            	<input type="hidden" id="lng" name="lng" value="{{$client->longitude}}"> 				
 			<div class="notification-display-bg">		
 				<div class="content-header-1">
 					<ol class="breadcrumb">
@@ -41,38 +40,27 @@
 				<div class="modal-dialog model-class-new" role="document">
 					<div class="modal-content modal-content-new">
 						<div class="modal-header modal-header-new">
-								<h4 class="modal-title" id="myModalLabel2">Heading 2</h4>
+								<h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
 							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					
 						</div>
 						<div class="modal-body">
-							<p>
-							Test Samples
-							</p>
+						<div style="text-align:center;">
+							<label id="description" style="background-color:#add9f0"></label><br>
+						</div>
+						<label>Vehicle Name :</label><span id="vehicle_name"></span><br>
+							<label>Register Number :</label><span id="register_number"></span><br>
+							
+							<label>Alert Time:</label><span id="device_time"></span><br>
+							<!-- <label>Register Number :</label><span id="register_number"></span><br>
+							<label>Register Number :</label><span id="register_number"></span><br> -->
+
 						</div>
 					</div>
 				<!-- modal-content -->
 				</div>
 			<!-- modal-dialog -->
 			</div>		
-			<div class="modal right fade" id="myModal-3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-3">
-				<div class="modal-dialog " role="document">
-					<div class="modal-content">
-						<div class="modal-header ">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="myModalLabel2">Heading 2</h4>
-						</div>
-						<div class="modal-body">
-							<p>
-							Test Samples
-							</p>
-						</div>
-					</div>
-					<!-- modal-content -->
-				</div>
-				<!-- modal-dialog -->
-			
-		
 	</div>
 </div>
 @section('script')
@@ -121,6 +109,12 @@ margin-top: -3px;
 	}
 	.modal-close-new span{
 		 color:#fff;
+	}
+	.clr{
+		background:#fffbee;
+	}
+	.allert{
+		background:#e1f9f3;
 	}
 </style>
 	
