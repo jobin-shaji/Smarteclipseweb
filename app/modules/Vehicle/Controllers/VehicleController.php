@@ -1113,10 +1113,18 @@ class VehicleController extends Controller
             })
             ->addColumn('sub_dealer',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
-               return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->name : '';
-               //return $vehicle->client->subdealer->name;
-                
+                  if($vehicle->client->trader_id)
+                 {
+                     return $vehicle->client->trader->subDealer->name;
+                 }
+                 else{
+                    return $vehicle->client->subdealer->name;
+                 }
             })
+             ->addColumn('trader',function($vehicles){
+               $vehicle = Vehicle::find($vehicles->id);
+               return ( isset($vehicle->client->trader) ) ? $vehicle->client->trader->name : '';
+             })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
