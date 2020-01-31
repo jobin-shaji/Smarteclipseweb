@@ -17,6 +17,7 @@ yarn-error.log
 .htaccess
 /public/storage/log
 /public/documents/
+/public/service_engineer_application/
 
 
 
