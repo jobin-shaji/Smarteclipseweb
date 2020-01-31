@@ -12,8 +12,6 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Version</li>
                 <b>Add Service Engineer Version </b>
-                <?php echo 'HERE'.php_ini_loaded_file(); ?>
-                <?php echo ini_get('post_max_size'); ?>
             </ol>
             @if(Session::has('message'))
                 <div class="pad margin no-print">
