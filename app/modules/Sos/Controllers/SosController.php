@@ -193,7 +193,7 @@ class SosController extends Controller {
         $sos->save();
 
         $encrypted_sos_id = encrypt($sos->id);
-        $request->session()->flash('message', ' SOS updated successfully!'); 
+        $request->session()->flash('message', ' SOS button updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sos.details',$encrypted_sos_id));  
     }
