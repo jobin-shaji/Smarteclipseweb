@@ -10827,7 +10827,7 @@ html[dir=ltr] body .p-l-0 {
 
 #main-wrapper {
     width: 100%;
-    overflow: hidden
+    /* overflow: hidden */
 }
 
 .page-wrapper {
