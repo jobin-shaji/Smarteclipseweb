@@ -202,7 +202,7 @@
                                     <span class="vehicle-details-value" id="tvc_vehicle_chassis_number"> </span>
                                   </div>
                                   <div class="list-display">
-                                    <p>Theft Mode <span>:-</span></p>
+                                    <p> Anti Theft Mode <span>:-</span></p>
                                     <span class="vehicle-details-value" id="tvc_vehicle_theftmode"> </span>
                                   </div>
                                   <div class="list-display">
