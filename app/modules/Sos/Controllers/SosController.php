@@ -212,7 +212,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'SOS button deleted successfully'
+            'message' => 'SOS button deactivated successfully'
         ]);
     }
 
