@@ -895,7 +895,7 @@
         $( document ).ready(function() {
             $('.left-alert-box').css('display','none');
         });
-    function getPlaceName(lat,lng){
+       function getPlaceName(lat,lng){
         var location_name = "";
         return $.ajax({
           url: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
@@ -1005,7 +1005,6 @@
           $('#km_data').text((km_data/1000).toFixed(2));
 
         }
-
        function stopPlayback(){
         location.reload(true);
        }
