@@ -21,13 +21,16 @@ class SubDealerController extends Controller {
             'user_id',
             'dealer_id',                      
             'name',                   
-            'address',                               
+            'address',
+            'created_at',                               
             'deleted_at'
         )
         ->withTrashed()
         ->with('dealer:id,user_id,name')
         ->with('user:id,email,mobile,deleted_at')
+        ->orderBy('created_at','DESC')
         ->get();
+
         return DataTables::of($subdealers)
         ->addIndexColumn()      
         ->addColumn('working_status', function ($subdealers) {
@@ -147,7 +150,7 @@ class SubDealerController extends Controller {
         'user_id',
         'dealer_id',                      
         'name',                   
-        'address',                                       
+        'address',
         'deleted_at')
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')

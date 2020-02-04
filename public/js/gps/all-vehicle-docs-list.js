@@ -69,7 +69,7 @@ function callBackDataTable(data=null){
 
 function deleteDocumentFromAllDocumentList(doc_id){
     if(confirm('Are you sure to delete this document?')){
-        var url = 'vehicle-doc/delete';
+        var url = 'all-vehicle-doc/delete';
         var data = {
             id : doc_id
         };

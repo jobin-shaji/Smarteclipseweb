@@ -361,6 +361,37 @@ class VehicleController extends Controller
     // vehicle doc delete
     public function vehicleDocumentDelete(Request $request)
     { 
+        $decrypted_id = Crypt::decrypt($request->id);
+        $vehicle_doc=Document::find($decrypted_id);
+        if($vehicle_doc == null){
+           return view('Vehicle::404');
+        }
+        $file=$vehicle_doc->path;
+        if($file){
+            // $old_file = $vehicle_doc->path;
+            // $myFile = "documents/vehicledocs/".$old_file;
+            // $delete_file=unlink($myFile);
+            $vehicle_doc->delete(); 
+        }
+        $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
+        $request->session()->flash('message', 'Document deleted successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='client')
+        {
+            return redirect()->back();
+        }
+        else
+        {
+            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
+        }
+         
+    }
+
+    // vehicle doc delete from all vehicle list
+    public function deleteFromAllDocList(Request $request)
+    { 
         $vehicle_doc=Document::find($request->id);
         if($vehicle_doc == null){
             return response()->json([

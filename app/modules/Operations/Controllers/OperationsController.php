@@ -11,6 +11,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class OperationsController extends Controller {
+
     
     public function create()
     {
@@ -40,7 +41,7 @@ class OperationsController extends Controller {
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
@@ -73,6 +74,7 @@ class OperationsController extends Controller {
         )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
+        ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($operations)
         ->addIndexColumn()
@@ -156,7 +158,7 @@ class OperationsController extends Controller {
         $operations->name = $request->name;
         $operations->address = $request->address;       
         $operations->save();
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile_number;
         $user->email = $request->email;
         $user->save();
         $did = encrypt($user->id);
@@ -293,7 +295,7 @@ class OperationsController extends Controller {
         $operation->name = $request->name;
         $operation->address = $request->address;
         $operation->save();
-        $user->mobile = $request->mobile;
+        $user->mobile = $request->mobile_number;
         $user->email = $request->email;
         $user->save();
         $request->session()->flash('message', 'Your details updated successfully!');
@@ -462,7 +464,7 @@ class OperationsController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
         ];
         return  $rules;
     }
@@ -470,7 +472,7 @@ class OperationsController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
         ];
         return  $rules;
     }
@@ -479,7 +481,7 @@ class OperationsController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
@@ -490,7 +492,7 @@ class OperationsController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'mobile' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
@@ -508,8 +510,8 @@ class OperationsController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|string|unique:users|min:10|max:10',
             'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
+            'mobile_number' => 'required|string|unique:users,mobile|min:10|max:10',
         ];
         return  $rules;
     }
@@ -518,8 +520,8 @@ class OperationsController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|string|unique:users|min:11|max:11',
             'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
+            'mobile_number' => 'required|string|unique:users,mobile|min:11|max:11'
         ];
         return  $rules;
     }
