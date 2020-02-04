@@ -9,8 +9,8 @@
 <div class="page-wrapper-root1">
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Operation manager</li>
-      <b>List Operation Manager</b>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/List Operation Managers </li>
+      <b>List Operation Managers</b>
     </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -22,7 +22,7 @@
   </nav>
  
   <div class="container-fluid">
-    <div class="card-body"><h4>Operation Manager List</h4>
+    <div class="card-body">
       <div class="table-responsive scrollmenu">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
