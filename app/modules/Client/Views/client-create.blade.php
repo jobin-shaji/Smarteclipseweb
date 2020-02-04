@@ -60,7 +60,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
                         <div class="form-group ">
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
-                          <option selected disabled>Select Country</option>
+                          <option  value="" selected disabled>Select Country</option>
                           @foreach($countries as $country)
                           <option value="{{$country->id}}">{{$country->name}}</option>  
                           @endforeach
@@ -76,7 +76,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
-                          <option selected disabled>Select Country First</option>
+                          <option value="" selected disabled>Select Country First</option>
                           </select>
                         </div>
                         @if ($errors->has('state_id'))
@@ -90,7 +90,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
-                          <option selected disabled>Select Country and state First</option>
+                          <option value="" selected disabled>Select Country and state First</option>
                           </select>
                         </div>
                         @if ($errors->has('city_id'))
