@@ -143,7 +143,7 @@ class SosController extends Controller {
             'user_id' => $root_id,
             'status'=>1
         ]);
-        $request->session()->flash('message', 'New sos button created successfully!'); 
+        $request->session()->flash('message', 'New SOS button created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('sos.details',Crypt::encrypt($sos->id)));
     } 
@@ -205,14 +205,14 @@ class SosController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'SOS does not exist'
+                'message' => 'Does not find the SOS button'
             ]);
         }
         $sos->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'SOS deleted successfully'
+            'message' => 'SOS button deleted successfully'
         ]);
     }
 
@@ -224,7 +224,7 @@ class SosController extends Controller {
              return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'SOS does not exist'
+                'message' => 'Does not find the SOS button'
              ]);
         }
 
@@ -233,7 +233,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'SOS restored successfully'
+            'message' => 'SOS button restored successfully'
         ]);
     }
 
@@ -811,7 +811,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'SOS Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS button transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -925,7 +925,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'SOS Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS button transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -1046,7 +1046,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'SOS Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS button transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -1162,7 +1162,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'SOS Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS  button Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer-sub-dealer-to-trader.label',$encrypted_sos_transfer_id));
         }
@@ -1285,7 +1285,7 @@ class SosController extends Controller {
                 }
             }
             $encrypted_sos_transfer_id = encrypt($sos_transfer->id);
-            $request->session()->flash('message', 'SOS Transfer successfully completed!');
+            $request->session()->flash('message', 'SOS button transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('sos-transfer.label',$encrypted_sos_transfer_id));
         }
@@ -1294,21 +1294,28 @@ class SosController extends Controller {
     //view sos transfer list
     public function viewSosTransfer(Request $request)
     {
-        $decrypted_id = Crypt::decrypt($request->id);
-        $sos_items = SosTransferItems::select('id', 'sos_transfer_id', 'sos_id')
-                        ->where('sos_transfer_id',$decrypted_id)
-                        ->get();
-        if($sos_items == null){
-           return view('Sos::404');
+        $search_key                 = ( isset($request->search) ) ? $request->search : '';
+        $transferred_sos_device_ids = [];
+        $transferred_sos_details    = [];
+        $sos_transfer_id            = ( $request->ajax() ) ? $request->sos_transfer_id : Crypt::decrypt($request->id);   
+        $transferred_sos_devices    =   (new SosTransferItems())->getTransferredSosDevices($sos_transfer_id);
+        if( $transferred_sos_devices != null )
+        {
+            foreach($transferred_sos_devices as $each_transfer)
+            {
+                array_push($transferred_sos_device_ids, $each_transfer->sos_id);
+            }
+            $transferred_sos_details = (new Sos())->getTransferredSosDetails($transferred_sos_device_ids, $search_key);
         }
-        $devices=array();
-        foreach($sos_items as $sos_item){
-            $single_sos= $sos_item->sos_id;
-            $devices[]=Sos::select('id','imei','version','brand','model_name')
-                        ->where('id',$single_sos)
-                        ->first();
+        // Response
+        if($request->ajax())
+        {
+            return ($transferred_sos_devices != null) ? Response([ 'links' => $transferred_sos_details->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
-       return view('Sos::sos-list-view',['devices' => $devices]);
+        else
+        {
+            return ($transferred_sos_devices != null) ? view('Sos::sos-list-view',['devices' => $transferred_sos_details, 'sos_transfer_id' => $sos_transfer_id]) : view('Sos::404');
+        }       
     }
 
     //accept transferred sos
@@ -1320,7 +1327,7 @@ class SosController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred sos does not exist'
+                'message' => 'Transferred SOS button does not exist'
             ]);
         }
         $sos_transfer->accepted_on =date('Y-m-d H:i:s');
@@ -1344,7 +1351,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'SOS accepted successfully'
+            'message' => 'SOS  button accepted successfully'
         ]);
     }
 
@@ -1356,7 +1363,7 @@ class SosController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred sos does not exist'
+                'message' => 'Transferred SOS button does not exist'
             ]);
         }
         $cancel_transfer=$sos_transfer->delete();
@@ -1379,7 +1386,7 @@ class SosController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'SOS transfer cancelled successfully'
+            'message' => 'SOS button transfer cancelled successfully'
         ]);
     }
 

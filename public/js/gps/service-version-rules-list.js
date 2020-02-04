@@ -1,6 +1,5 @@
 $(document).ready(function () {
     callBackDataTable();
-
 });
 
 
@@ -17,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'vehicle-root-list',
+            url: 'service-version-rule-list',
             type: 'POST',
             data: {
                 'data': data
@@ -26,6 +25,7 @@ function callBackDataTable(){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
+
         createdRow: function ( row, data, index ) {
             if ( data['deleted_at'] ) {
                 $('td', row).css('background-color', 'rgb(243, 204, 204)');
@@ -36,21 +36,17 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'name', name: 'name'},
-            {data: 'register_number', name: 'register_number'},
-            {data: 'gps.serial_no', name: 'gps.serial_no'},
-            {data: 'vehicle_type.name', name: 'vehicle_type.name'},
-            {data: 'dealer', name: 'dealer'},
-            {data: 'sub_dealer', name: 'sub_dealer'},
-            {data: 'trader', name:'trader'},
-            {data: 'client.name', name: 'client.name'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}, 
-        ],
+            {data: 'DT_RowIndex', name: 'DT_RowIndex',searchable: false},
+            {data: 'name', name: 'name',orderable: false},
+            {data: 'version', name: 'version',orderable: false, searchable: false},
+            {data: 'description', name: 'description',orderable: false,searchable: false},
+            {data: 'priority', name: 'priority',orderable: false},
+            {data: 'file', name: 'file',orderable: false},
+           ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
- }
+}
 
 
 

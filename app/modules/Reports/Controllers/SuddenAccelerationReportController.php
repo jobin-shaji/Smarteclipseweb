@@ -84,7 +84,9 @@ class SuddenAccelerationReportController extends Controller
     } 
     public function export(Request $request)
     {
-       return Excel::download(new SuddenAccelerationReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'sudden-acceleration-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new SuddenAccelerationReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'sudden-acceleration-report.xlsx');
     } 
    
    

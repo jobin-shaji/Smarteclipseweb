@@ -203,6 +203,18 @@
                 </li>
                 </ul>
             </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" > SERVICER VERSION</a>
+                <ul class="dropdown-menu">
+                <li>
+                   <a class="dropdown-item" href="{{url('/service-version-type/create')}}">ADD VERSION </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{url('/service-version-rule')}}">LIST VERSION</a>
+          
+                </li>
+                </ul>
+            </li>
             
         </ul>
     </li>

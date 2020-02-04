@@ -191,7 +191,9 @@ class ServicerController extends Controller {
                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
 
                     <button onclick=delServicer(".$servicer->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>
+                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->user_id)."/password-change class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>"; 
+
                 }else{
                      return "
                     <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
@@ -728,7 +730,7 @@ public function serviceJobDetails(Request $request)
         
 
         // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
-        $job_completed_date=date("Y-m-d"); 
+        $job_completed_date = date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
         $driver_id=$request->driver;
@@ -793,7 +795,6 @@ public function serviceJobDetails(Request $request)
             $uploadedVehicleFile =   'vehicle_photo'.time().'.'.$getVehicleFileExt;
             $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
 
-
             $documents = Document::create([
                 'vehicle_id' => $vehicle_create->id,
                 'document_type_id' => 1,
@@ -839,7 +840,7 @@ public function serviceJobDetails(Request $request)
     public function jobSave(Request $request)
     { 
 
-        $job_completed_date=date("Y-m-d"); 
+        $job_completed_date = date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -865,7 +866,7 @@ public function serviceJobDetails(Request $request)
 
     public function jobstatuscomplete(Request $request)
     { 
-      $job_completed_date=date("Y-m-d"); 
+      $job_completed_date=date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -1602,6 +1603,35 @@ public function serviceJobDetails(Request $request)
     }
 
 
+ //for service eng password change
+    public function changeServicerPassword(Request $request)
+        {
+            $decrypted = Crypt::decrypt($request->id);
+            $servicer = Servicer::where('user_id',$decrypted)->first();
+            if($servicer == null)
+            {
+               return view('Servicer::404');
+            }
+            return view('Servicer::change-password-servicer',['servicer' => $servicer]);
+        }
+
+ //update password of service eng in common
+    public function updateServicerPassword(Request $request)
+    {
+        $servicer=User::find($request->id);
+        if($servicer== null){
+            return view('Servicer::404');
+        }
+        $did=encrypt($servicer->id);
+        $rules=$this->updatePasswordRule();
+        $this->validate($request,$rules);
+        $servicer->password=bcrypt($request->password);
+        $servicer->save();
+        $request->session()->flash('message','Password updated successfully!');
+        $request->session()->flash('alert-class','alert-success');
+        return redirect(route('servicer.list'));  
+       
+    }
 public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
