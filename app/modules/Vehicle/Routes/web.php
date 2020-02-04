@@ -31,7 +31,7 @@ Route::post('/vehicle-driver-log-list','VehicleController@getVehicleDriverLogLis
 Route::get('/all-vehicle-docs','VehicleController@allVehicleDocList')->name('all-vehicle-docs');
 
 Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->name('all-vehicle-docs-list');
-
+Route::post('/all-vehicle-doc/delete','VehicleController@deleteFromAllDocList')->name('all-vehicle-docs-delete');
 Route::post('/continuous-alert','VehicleController@continuousAlerts')->name('continuous.alerts');
 
 Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert')->name('continuous-alert.verify');
@@ -104,7 +104,7 @@ Route::get('/servicer-vehicles/{id}/details','VehicleController@servicerVehicleD
 
 
 Route::post('/servicer-vehicles/findDateFieldWithDocTypeID/','VehicleController@servicerfindDateFieldWithDocTypeID')->name('servicer.vehicles.findDateFieldWithDocTypeID');
-Route::post('vehicle-doc/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
+Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
 Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
