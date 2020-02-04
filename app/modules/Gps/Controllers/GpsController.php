@@ -22,11 +22,10 @@ use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Ota\Models\OtaUpdates;
 use App\Modules\Gps\Models\GpsConfiguration;
-
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 use DB;
 use Config;
@@ -1731,8 +1730,9 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
-    public function allpublicgpsListPage()
+    public function allpublicgpsListPage(Request $request)
     {
+        
         $ota = OtaType::all();
         $gps = Gps::all();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();

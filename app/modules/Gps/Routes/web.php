@@ -124,7 +124,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 });
 
 
-Route::group(['namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 	Route::get('/gps-data','GpsController@allpublicgpsListPage')->name('gps-data');
 	// Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');

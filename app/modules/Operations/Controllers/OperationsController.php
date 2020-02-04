@@ -11,6 +11,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class OperationsController extends Controller {
+
     
     public function create()
     {
