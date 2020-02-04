@@ -366,7 +366,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($user->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($user);
+        $rules=$this->updateUserPassword($user);
         $this->validate($request,$rules);
         $user->password=bcrypt($request->password);
         $user->save();
@@ -394,7 +394,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($client);
+        $rules=$this->updateUserPassword($client);
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->save();
@@ -454,7 +454,7 @@ class ClientController extends Controller {
         }
     }
 
-    public function updateDepotUserRuleChangePassword()
+    public function updateUserPassword()
     {
         $rules=[
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
