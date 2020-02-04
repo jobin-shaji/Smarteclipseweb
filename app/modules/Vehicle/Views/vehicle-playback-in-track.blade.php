@@ -43,7 +43,8 @@
 
           <div class="top-date">
              <div class="row">
-                
+              
+             <span id="cover_date_time_picker">
               <div class='col-sm-3'>
               <div class="form-group">
                 <label style="font-weight:bold">Start Date</label>
@@ -67,6 +68,7 @@
                 </div>
               </div>
             </div>
+          </span>
     
            <div class='col-sm-3'>   
             <div class="form-group">
@@ -91,7 +93,7 @@
            <button class="btn btn-primary btn-sm start_button" style="display:none; margin-right: 6px;float: left;" onclick="startPause()" id="btnPause">Pause</button>  
               <button class="btn btn-primary btn-sm" style="display:none; margin-right: 6px;float: left;" onclick="btnContinue()" id="btnContinue">Continue</button>
                        
-              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Stop</button>
+              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Reset</button>
         </div>
 
 
@@ -356,7 +358,7 @@
          }
 
         function startPlayBack(){
-              
+               
 
                 if($('#fromDate').val()== ""){
                   alertify.alert('From Date required').setHeader('<em> PLAYBACK</em>');
@@ -381,6 +383,15 @@
 
                 getLocationData();
                $('.left-alert-box').css('display','block');
+
+               if($('#fromDate').val() !="" && $('#toDate').val() != "" )
+                {
+                  var from_date = $('#fromDate').val();
+                  var to_date   = $('#toDate').val();
+
+                $('#cover_date_time_picker').empty();
+                $('#cover_date_time_picker').html('<div class="col-sm-6"><span class="datetime_searched"> '+from_date+ ' - '+to_date+' </span><span onclick="resetDate()"><i class="fa fa-times"></i></span></div>');
+                }
 
                
 
@@ -1011,6 +1022,10 @@
 
        function closePlayback(){
         window.close();
+       }
+
+       function resetDate(){
+         location.reload(true);
        }
 
     
