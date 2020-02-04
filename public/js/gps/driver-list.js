@@ -30,7 +30,7 @@ function callBackDataTable(){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name', orderable: false },            
             {data: 'address', name: 'address', orderable: false, searchable: false},           
             {data: 'mobile', name: 'mobile', orderable: false},             
@@ -57,6 +57,49 @@ function activateDriver(driver){
             id : driver
         };
         backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
+}
+
+function validate_driver(driver_id)
+{
+    var proceed = false;
+    if(typeof driver_id == 'undefined')
+    {
+        toastr.error( 'Invalid request', 'Error');
+        return false;
+    }
+    $.ajax({
+        type: 'POST',
+        url: 'driver/validate_driver',
+        data: {
+            id: driver_id
+        },
+        async: false,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            if(res.driver_exists == false)
+            {
+                toastr.error( 'Driver not exists', 'Error');
+                reloadPageWithAdelay(1000);
+            }
+            else
+            {
+                proceed = true;
+            }
+        }
+    });
+    return proceed;
+}
+
+function reloadPageWithAdelay(delay)
+{
+    if(typeof delay != 'undefined')
+    {
+        setTimeout(function(){
+            window.location.reload();
+          }, delay); 
     }
 }
 

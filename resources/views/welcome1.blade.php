@@ -93,7 +93,7 @@
 	<meta name="og:site_name"    content="SmartEclipse"/>
 	<meta name="og:description"  content="">
 	<meta name="fb:page_id"      content="vstmobilitysol" />
-	<meta name="og:email"        content="info@vstmobility.com"/>
+	<meta name="og:email"        content="info@smarteclipse.com"/>
 	<meta name="og:phone_number" content=""/>
 	<meta name="og:fax_number"  content=""/>
 	<meta name="og:street-address"  content="Kerala Technology Innovation Zone,Kinfra Hi-Tech Park , HMT Colony, North Kalamassery, Kerala, India "/>
@@ -566,7 +566,7 @@
   background-attachment: fixed;
   overflow: hidden;
   display: block;
-  position: relative;">
+  position: relative;" id ='authorizedservice'>
             <div class="container">
 			 <div class="row">
                     <div class="col-lg-12">
@@ -680,14 +680,14 @@
                     <div class="statistics--item__image">
 					<img src="smart/assets/img/talk.png" style="width:70%"/>
 					</div>
-                    <h3 class=" third">0484-40 007 47</h3>
+                    <h3 class=" third">9947900005</h3>
                     <h5>Talk To Us</h5>
                 </div>
 				  <div class="statistics--item">
                     <div class="statistics--item__image">
 					<img src="smart/assets/img/email.png" style="width:70%"/>
 					</div>
-                    <h3 class=" third">info@vstmobility.com</h3>
+                    <h3 class=" third">info@smarteclipse.com</h3>
                     <h5>Email Us</h5>
                 </div>
 		
@@ -843,10 +843,10 @@ function showSlides() {
                                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerala, India 683503</span>
                                 </li>
 								<li>
-                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;0484-40 007 47</span>
+                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;9947900005</span>
                                 </li>
                                 <li>
-                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@vstmobility.com</span>
+                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@smarteclipse.com</span>
                                 </li>
                             </ul>
                                 </div>

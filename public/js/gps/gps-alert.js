@@ -74,11 +74,11 @@ function gpsAlertCount(value){
     id:value
   }
   backgroundPostData(url,data,'gpsAlertTracker',{alert:true});
-  $('.messages').removeClass('allert');
+  $('.messages').removeClass('alert');
   changeAtiveColor(value);
 }
 function changeAtiveColor(value){
-  $('.alert_color_'+value).addClass('allert');
+  $('.alert_color_'+value).addClass('alert');
 }
 function gpsAlertTracker(res)
 {

@@ -60,7 +60,7 @@ function callBackDataTable(data){
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
+        // order: [[1, 'desc']],
         ajax: {
             url: 'gps-transfer-list-root',
             type: 'POST',
@@ -85,11 +85,11 @@ function callBackDataTable(data){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
-            {data: 'from_user.username', name: 'from_user.username'},
-            {data: 'to_user.username', name: 'to_user.username'},
-            {data: 'dispatched_on', name: 'dispatched_on'},
-            {data: 'count', name: 'count'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'from_user.username', name: 'from_user.username', orderable: false},
+            {data: 'to_user.username', name: 'to_user.username', orderable: false},
+            {data: 'dispatched_on', name: 'dispatched_on', orderable: false},
+            {data: 'count', name: 'count', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
         

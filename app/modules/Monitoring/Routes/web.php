@@ -9,5 +9,9 @@ Route::post('/check-emergency-alerts','MonitorController@getEmergencyalerts')->n
 
 Route::get('/monitor-map','MonitorController@getAlertMap')->name('alert-map');
 
+
+Route::post('/monitoring-report/export','MonitorController@export')->name('monitoring.report.export');
+    
+	Route::post('/monitoring-report-pdf-downloads','MonitorController@downloadPdfCertificate')->name('monitoring.report.pdf.downloads');
 });
 

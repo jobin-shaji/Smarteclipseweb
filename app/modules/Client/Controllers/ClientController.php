@@ -65,8 +65,6 @@ class ClientController extends Controller {
     {   
 
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
-
-
         if($placeLatLng==null){
             $request->session()->flash('message', 'Enter correct location'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
@@ -76,7 +74,7 @@ class ClientController extends Controller {
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
         $location=$request->search_place;
-
+        $current_date=date('Y-m-d H:i:s');
         if($request->user()->hasRole('sub_dealer'))
         {
             $subdealer_id = \Auth::user()->subdealer->id;
@@ -85,7 +83,7 @@ class ClientController extends Controller {
             $eclipse_key="eclipse";
 
             if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rafleet_user_create_rules();
+                 $rules = $this->rayfleet_user_create_rules();
             }
             else if (strpos($url, $eclipse_key) == true) {
                  $rules = $this->user_create_rules();
@@ -104,6 +102,7 @@ class ClientController extends Controller {
                 'password' => bcrypt($request->password),
                 'role' => 0,
             ]);
+                         
             $client = Client::create([            
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
@@ -111,10 +110,11 @@ class ClientController extends Controller {
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
-
+                'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
-                'city_id'=>$request->city_id        
+                'city_id'=>$request->city_id,
+                'latest_user_updates'=>$current_date        
             ]);
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
@@ -145,7 +145,7 @@ class ClientController extends Controller {
             $eclipse_key="eclipse";
 
             if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rafleet_user_create_rules();
+                 $rules = $this->rayfleet_user_create_rules();
             }
             else if (strpos($url, $eclipse_key) == true) {
                  $rules = $this->user_create_rules();
@@ -175,7 +175,8 @@ class ClientController extends Controller {
                 'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
-                'city_id'=>$request->city_id        
+                'city_id'=>$request->city_id ,
+                'latest_user_updates'=>$current_date       
             ]);
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
@@ -219,12 +220,14 @@ class ClientController extends Controller {
             'user_id',
             'sub_dealer_id',                      
             'name',                   
-            'address',                                       
+            'address',
+            'created_at',                                     
             'deleted_at'
             )
             ->withTrashed()
             ->with('user:id,email,mobile,deleted_at')
             ->where('trader_id',$trader)
+            ->orderBy('created_at','DESC')
             ->get();
         }else{
             $subdealer=$request->user()->subdealer->id;
@@ -233,12 +236,14 @@ class ClientController extends Controller {
             'user_id',
             'sub_dealer_id',                      
             'name',                   
-            'address',                                       
+            'address',    
+            'created_at',                                    
             'deleted_at'
             )
             ->withTrashed()
             ->with('user:id,email,mobile,deleted_at')
             ->where('sub_dealer_id',$subdealer)
+            ->orderBy('created_at','DESC')
             ->get();
         }
        
@@ -262,6 +267,7 @@ class ClientController extends Controller {
     }
     public function edit(Request $request)
     {
+
         $decrypted = Crypt::decrypt($request->id); 
         $client = Client::withTrashed()->where('user_id', $decrypted)->first();
         $latitude= $client->latitude;
@@ -306,48 +312,37 @@ class ClientController extends Controller {
         {
            $rules = $this->clientUpdateRules($client);
         }
-        $this->validate($request, $rules);   
-        $client->name = $request->name;
+        $this->validate($request, $rules); 
+        $user = User::find($request->id);  
+        $did = encrypt($user->id);
         $placeLatLng=$this->getPlaceLatLng($request->search_place);
+        if($placeLatLng==null){
+            $request->session()->flash('message', 'Enter correct location'); 
+            $request->session()->flash('alert-class', 'alert-danger'); 
+            return redirect(route('client.edit',$did));        
+        }
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
+        $client->name = $request->name;
         $client->latitude= $location_lat;
         $client->longitude=$location_lng;
         $client->location=$request->search_place;
+        $client->address=$request->address;
+        $current_date=date('Y-m-d H:i:s');
+        $client->latest_user_updates = $current_date;
         $client->save();
-        $user = User::find($request->id);
         $user->mobile = $request->mobile_number;
         $user->save();
-        $did = encrypt($user->id);
+        
         $request->session()->flash('message', 'Client details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.details',$did));  
     }
 
-    //validation for employee updation
-    public function clientUpdateRules($subdealer)
-    {
-        $rules = [
-            'name' => 'required',
-            'mobile_number' => 'required|digits:10|unique:users,mobile,'.$subdealer->user_id
-              ];
-        return  $rules;
-    }
-
-    public function rayfleetClientUpdateRules($subdealer)
-    {
-        $rules = [
-            'name' => 'required',
-            'mobile_number' => 'required|numeric|min:11|max:11|unique:users,mobile,'.$subdealer->user_id
-            
-        ];
-        return  $rules;
-    }
-    
-
     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
+
         $decrypted = Crypt::decrypt($request->id);
         $client = Client::where('user_id', $decrypted)->first();
          
@@ -361,16 +356,20 @@ class ClientController extends Controller {
     public function updatePassword(Request $request)
     {
         $client=\Auth::user()->sub_dealer;
-        $client=User::find($request->id);
-        if($client== null){
+        $user=User::find($request->id);
+        $client=Client::where('user_id',$user->id)->first();
+        $current_date=date('Y-m-d H:i:s');
+        $client->latest_user_updates = $current_date;
+        $client->save();
+        if($user== null){
             return view('SubDealer::404');
         }
-        $did=encrypt($client->id);
+        $did=encrypt($user->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($client);
+        $rules=$this->updateDepotUserRuleChangePassword($user);
         $this->validate($request,$rules);
-        $client->password=bcrypt($request->password);
-        $client->save();
+        $user->password=bcrypt($request->password);
+        $user->save();
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('client.change-password',$did));
@@ -512,14 +511,18 @@ class ClientController extends Controller {
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_id',                      
+            'sub_dealer_id',
+            'trader_id',                     
             'name',                   
-            'address',                               
+            'address',    
+            'created_at',                           
             'deleted_at'
         )
         ->withTrashed()
         ->with('subdealer:id,user_id,name')
+        ->with('trader')
         ->with('user:id,email,mobile,deleted_at')
+        ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($client)
         ->addIndexColumn()  
@@ -542,14 +545,27 @@ class ClientController extends Controller {
             ";
             }
         })
-        ->addColumn('subdealer', function ($client) {
-            $b_url = \URL::to('/');
-            if($client->sub_dealer_id){ 
-            return $client->subdealer->name;
-            }else{ 
-            return " ";
-            }
+        ->addColumn('subdealer', function ($client) 
+        {
+              if($client->trader_id)
+                {
+                    return $client->trader->subDealer->name;
+                }
+                else{
+                    return $client->subdealer->name;
+                }
         })
+        ->addColumn('trader', function ($client) 
+        {
+        
+                if($client->trader_id)
+                { 
+                    return $client->trader->name;
+                }else{ 
+                    return "--";
+                }
+        })
+
         ->rawColumns(['link','working_status'])             
         ->make();
     }
@@ -604,33 +620,63 @@ class ClientController extends Controller {
     //returns employees as json 
     public function getDealerClient()
     {
-         $dealer_id=\Auth::user()->dealer->id;
+        $dealer_id=\Auth::user()->dealer->id;
         $sub_dealers = SubDealer::select(
                 'id'
                 )
+                ->withTrashed()
                 ->where('dealer_id',$dealer_id)
                 ->get();
         $single_sub_dealers = [];
         foreach($sub_dealers as $sub_dealer){
             $single_sub_dealers[] = $sub_dealer->id;
         }
-       
+        $traders = Trader::select(
+            'id'
+            )
+            ->withTrashed()
+            ->whereIn('sub_dealer_id',$single_sub_dealers)
+            ->get();
+        $single_traders = [];
+        foreach($traders as $trader){
+            $single_traders[] = $trader->id;
+        }
 
         $client = Client::select(
             'id', 
             'user_id',
-            'sub_dealer_id',                      
+            'sub_dealer_id',  
+            'trader_id',                 
             'name',                   
             'address',                               
             'deleted_at'
         )
-        ->withTrashed()
         ->with('subdealer:id,user_id,name')
-         ->with('user:id,email,mobile')
-        ->whereIn('sub_dealer_id',$single_sub_dealers)
+        ->with('trader')
+        ->with('user:id,email,mobile')
+        ->where(function ($query) use($single_traders, $single_sub_dealers) {
+            $query->whereIn('trader_id', $single_traders)
+            ->orWhereIn('sub_dealer_id', $single_sub_dealers);
+        })
         ->get();
         return DataTables::of($client)
-        ->addIndexColumn()           
+        ->addColumn('dealer', function ($client) {
+            if($client->trader_id)
+            {
+                return $client->trader->subDealer->name;
+            }
+            else{
+                return $client->subdealer->name;
+            }
+        }) 
+        ->addColumn('sub_dealer', function ($client) {
+            if($client->trader_id){ 
+                return $client->trader->name;
+            }else{ 
+                return '--';
+            }
+        })  
+        ->addIndexColumn()         
         ->make();
     }
 //////////////////////////////////////subscription/////////////////////////////////////
@@ -793,12 +839,15 @@ class ClientController extends Controller {
         $rules = $this->logoUpdateRules();
         $this->validate($request, $rules);
         $file=$request->file('logo');
-        if($file){
+        if($file){           
             $old_file = $client->logo;
             if($old_file){
-                $myFile = "logo/".$old_file;
-                $delete_file=unlink($myFile);
+                if(file_exists("logo/".$old_file)){
+                    $myFile = "logo/".$old_file;
+                    $delete_file=unlink($myFile);
+                }
             }
+            
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   time().'.'.$getFileExt;
             $destinationPath =  public_path('/logo');
@@ -808,6 +857,8 @@ class ClientController extends Controller {
             })->save($destinationPath.'/'.$uploadedFile);
             // $file->move($destinationPath,$uploadedFile);
             $client->logo = $uploadedFile;
+            $current_date=date('Y-m-d H:i:s');
+            $client->latest_user_updates = $current_date;
             $client->save();
         }
         $request->session()->flash('message', 'Logo updated successfully!'); 
@@ -854,10 +905,11 @@ class ClientController extends Controller {
         {
            $rules = $this->clientProfileUpdateRules($client);
         }
-        
+         $current_date=date('Y-m-d H:i:s');
         $this->validate($request, $rules);       
         $client->name = $request->name;
         $client->address = $request->address;
+        $client->latest_user_updates = $current_date;
         $client->save();
         $user = User::find($request->id);
         $user->mobile = $request->mobile_number;
@@ -900,7 +952,7 @@ class ClientController extends Controller {
         $file=$request->file('logo');
         if($file){
             $old_file = $client->logo;
-            if($old_file){
+            if(file_exists("logo/".$old_file)){
                 $myFile = "logo/".$old_file;
                 $delete_file=unlink($myFile);
             }
@@ -979,20 +1031,19 @@ class ClientController extends Controller {
                $rules = $this->root_user_create_rules();
             }
            
+
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
+            $location=$request->search_place;
             $placeLatLng=$this->getPlaceLatLng($request->search_place);
-            if($placeLatLng==null){
-                $request->session()->flash('message', 'Enter correct location'); 
-                $request->session()->flash('alert-class', 'alert-danger'); 
-                return redirect(route('client.create'));        
-            }
             $location_lat=$placeLatLng['latitude'];
-            $location_lng=$placeLatLng['longitude'];           
+            $location_lng=$placeLatLng['longitude'];    
+            $current_date=date('Y-m-d H:i:s');
+
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
@@ -1003,9 +1054,10 @@ class ClientController extends Controller {
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
+                'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
-                'city_id'=>$request->city_id          
+                'latest_user_updates'=>$current_date        
             ]);
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
@@ -1064,7 +1116,9 @@ class ClientController extends Controller {
     public function logoUpdateRules()
     {
         $rules = [
-            'logo' => 'mimes:png|required|max:2000' 
+            'logo' => 'mimes:png|required|max:2000'
+            
+            
         ];
         return  $rules;
     }
@@ -1129,13 +1183,13 @@ class ClientController extends Controller {
             'city_id' => 'required',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'nullable|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
     }
 
-     public function rafleet_user_create_rules()
+     public function rayfleet_user_create_rules()
         {
             $rules = [
                 'name' => 'required',
@@ -1147,7 +1201,7 @@ class ClientController extends Controller {
                 'city_id' => 'required',
                 'username' => 'required|unique:users',
                 'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'nullable|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6|confirmed',
             ];
             return  $rules;
@@ -1167,9 +1221,10 @@ class ClientController extends Controller {
             'country_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
+            'search_place'=>'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string|min:10|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'mobile_number' => 'required|digits:10|unique:users,mobile',
+            'email' => 'nullable|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
@@ -1184,11 +1239,35 @@ class ClientController extends Controller {
             'country_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
+            'search_place'=>'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|string||min:11|max:11unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'mobile_number' => 'required|digits:11|unique:users,mobile',
+            'email' => 'nullable|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
+        return  $rules;
+    }
+
+    //validation for client updation
+    public function clientUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'search_place'=>'required',
+            'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
+              ];
+        return  $rules;
+    }
+
+    public function rayfleetClientUpdateRules($client)
+    {
+        $rules = [
+            'name' => 'required',
+            'address' => 'required',
+            'search_place'=>'required',
+            'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
+              ];
         return  $rules;
     }
 
@@ -1201,6 +1280,7 @@ class ClientController extends Controller {
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
         $geocode_stats = file_get_contents($url);
      
+
         // dd($geocode_stats);
         $output_deals = json_decode($geocode_stats);
       //  dd($output_deals);
@@ -1224,7 +1304,7 @@ class ClientController extends Controller {
             'name' => 'required',
             'address' => 'required',            
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
-            'email' => 'required|string|unique:users,email,'.$client->user_id
+            'email' => 'nullable|string|unique:users,email,'.$client->user_id
            
             
         ];
@@ -1236,7 +1316,7 @@ class ClientController extends Controller {
             'name' => 'required',
             'address' => 'required',            
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$client->user_id,
-            'email' => 'required|string|unique:users,email,'.$client->user_id
+            'email' => 'nullable|string|unique:users,email,'.$client->user_id
            
             
         ];

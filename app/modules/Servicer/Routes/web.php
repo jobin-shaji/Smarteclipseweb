@@ -13,6 +13,11 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer|trader'] , 'na
 	Route::post('/servicer-client-gps', 'ServicerController@clientGpsList')->name('servicer.client.gps');
     Route::get('/servicer-job-history-list','ServicerController@servicerJobHistoryList')->name('servicer.job.history-list');
 	Route::post('/servicer-list-history-jobs','ServicerController@getServicerJobsHistoryList')->name('servicer.list.history.jobs');	
+	//servicer change pasword for root,dealer,subdealer
+	Route::get('/servicer/{id}/password-change','ServicerController@changeServicerPassword')->name('servicer.change.password');
+    Route::post('/servicer/{id}/password-updation','ServicerController@updateServicerPassword')->name('servicer.change.password.p');
+
+
 });
  
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
@@ -93,5 +98,7 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer|trade
 	Route::get('/servicer-job-history/{id}/details','ServicerController@serviceJobHistoryDetails')->name('servicer.job.history.details');
 	Route::post('/servicer/vehicles/history','ServicerController@servicerJobHistory')->name('servicer.vehicles.history');
     Route::get('/job-complete-certificate/{id}','ServicerController@jobCompleteCertificate')->name('job-complete.certificate');
+
+    
 	Route::get('/job-complete/{id}/downloads','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 });

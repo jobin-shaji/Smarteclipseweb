@@ -1,6 +1,14 @@
 @extends('layouts.eclipse')
 
 @section('content')
+<?php 
+$is_root = false; 
+?>
+
+@role('root')
+ <?php $is_root = true;  ?>
+@endrole
+
 <div class="page-wrapper page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -25,7 +33,7 @@
                       <section class="content">
                         <div class="row">
                           <div class="form-group">
-                            <div style="margin-left:10px;padding:10px;">
+                            <div style="padding:10px;text-align:right;">
                               <input type="text" class="form-controller" id="search" name="search" placeholder="Search IMEI">
                             </div>
                              <input type="hidden" class="form-controller" id="gps_transfer_id" name="gps_transfer_id" value="{{$gps_transfer_id}}">
@@ -71,6 +79,8 @@
                                           <span id="pagination_links">
                                             {{ $devices->appends(['sort' => 'votes'])->links() }}
                                           </span>
+                                          <div id="gps_list_table_empty_message">
+                                          </div>
                                       <!-- </div>
                                     </div>
                                   </div>
@@ -94,13 +104,14 @@
         $gps_transfer_id=$('#gps_transfer_id').val();
         $.ajax({
           type : 'get',
-          url : '{{URL::to('search')}}',
+          url : '{{URL::to('gps-transfer-search')}}',
           data:{
             'search':$value,
             'gps_transfer_id':$gps_transfer_id
           },
           success:function(data){
              $("#data_tbody").empty();
+             $('#gps_list_table_empty_message').empty();
              $("#pagination_links").empty();
             // console.log(data.links.data);
             var gps;
@@ -112,16 +123,41 @@
                 '<td>'+data.links.data[i].icc_id+'</td>'+
                 '<td>'+data.links.data[i].imsi+'</td>'+
                 '<td>'+data.links.data[i].version+'</td>'+
-                '<td>'+data.links.data[i].batch_number+'</td>'+
-                '<td>'+data.links.data[i].model_name+'</td>'+
+                '<td>'+data.links.data[i].batch_number+'</td>';
+                <?php if($is_root === true){ ?>
+                  gps += '<td>'+data.links.data[i].employee_code+'</td>';
+                <?php } ?>
+                gps += '<td>'+data.links.data[i].model_name+'</td>'+
               '</tr>';
             }
             $("tbody").append(gps);
-            // $('#pagination_links').html(data.links);
+
+            if(gps == undefined)
+            {
+              $('#gps_list_table_empty_message').html('<div class="no-data-class">No data available</div>');
+            }
           }
         });
       })
     </script>
+<style>
+.no-data-class
+{
+  width: 100%;
+  text-align: center;
+  background:
+  #e1e1e1;
+  padding: 10px 0;
+  margin-left: 1%;
+  margin-top: -17px; 
+}
+#gps_list_table_empty_message{
+  width:100%;
+  float:left;
+}
+
+</style>
+
 <script type="text/javascript">
 $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>

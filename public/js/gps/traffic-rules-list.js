@@ -36,7 +36,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'speed', name: 'speed'},
             {data: 'state.name', name: 'state.name'},
             {data: 'country.name', name: 'country.name'},

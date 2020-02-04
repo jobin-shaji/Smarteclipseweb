@@ -84,9 +84,10 @@ class GeofenceReportController extends Controller
         ->addIndexColumn()
         ->make();
     }
-     public function export(Request $request)
+    public function export(Request $request)
     {
-        // dd($request->fromDate);    
+        ob_end_clean(); 
+        ob_start();   
         return Excel::download(new GeofenceReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'geofence-report.xlsx');
     }
 }

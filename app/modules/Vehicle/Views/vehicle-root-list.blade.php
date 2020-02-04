@@ -13,6 +13,13 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/View Vehicle</li>
         <b>Vehicle List</b>
       </ol>
+       @if(Session::has('message'))
+        <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+          {{ Session::get('message') }}  
+            </div>
+        </div>
+        @endif 
     </nav>
     <div class="container-fluid">
       <div class="card-body">
@@ -30,6 +37,7 @@
                         <th>Vehicle Type</th>
                         <th>Distributor</th>
                         <th>Dealer</th>
+                         <th>Sub Dealer</th>
                         <th>End User</th>
                         <th>Action</th>
                     </tr>

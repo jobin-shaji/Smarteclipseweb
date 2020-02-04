@@ -30,9 +30,9 @@
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
-                      <label class="srequired">Client Name</label>
+                      <label class="srequired">End User Name</label>
                       <select class="form-control select2 clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
-                        <option value="">Select Client</option>
+                        <option value="">Select End User</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                         @endforeach
@@ -81,7 +81,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Invoice Number</label>
-                    <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" autocomplete="off" required> 
+                    <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" pattern="[A-Za-z0-9]+" title="letters and numbers only, no punctuation or special characters" autocomplete="off" required> 
                     @if ($errors->has('invoice_number'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
@@ -98,10 +98,10 @@
                       <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;display: none;">
                         <thead>
                           <tr>
-                            <th>Serial Number</th>
-                            <th>Batch Number</th>                     
-                            <!-- <th>Employee Code</th> -->
-                            <th>Action</th>
+                              <th><b>Serial Number</b></th>
+                              <th><b>Batch Number</b></th>
+                              <!-- <th><b>Employee Code</b></th> -->
+                              <th><b>Action</b></th>
                           </tr>
                         </thead>
                         <tbody>

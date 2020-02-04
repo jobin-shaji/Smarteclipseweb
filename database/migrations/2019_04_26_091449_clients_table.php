@@ -26,6 +26,7 @@ class ClientsTable extends Migration
             $table->text('location')->nullable();
             $table->integer('country_id');
             $table->dateTime('latest_vehicle_updates');
+            $table->dateTime('latest_user_updates')->nullable();
             $table->integer('state_id');
             $table->integer('city_id');
             $table->timestamps();

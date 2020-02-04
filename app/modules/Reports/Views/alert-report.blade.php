@@ -71,8 +71,14 @@ Alert Report
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-5">  
                                   <div>          
-                                    <button type="submit" class="btn btn-sm btn-info btn2 srch" style="padding: 2% 2% 1% 2%;"> <i class="fa fa-search"></i> </button>
+                                    <button type="submit" class="btn btn-sm btn-info btn2 srch" > <i class="fa fa-search"></i> </button>
+
+                                              <button type="button" class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadAlertReport()" ><i class="fa fa-file download-icon" ></i>Download Excel</button>
                                    </div>
+                                   <style type="text/css">
+                                     
+
+                                   </style>
                                 </div> 
                               <div class="col-lg-3">  
                                   
@@ -81,7 +87,8 @@ Alert Report
                             </div>
                           </div>
                         </form> 
-                        <button type="button" class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadAlertReport()" style="float: right;margin-top: -87px;margin-right: 146px;"><i class="fa fa-file"></i>Download Excel</button>                          
+                      </div>
+                                        
                         @if(isset($alertReports))                
                         <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                           <thead>

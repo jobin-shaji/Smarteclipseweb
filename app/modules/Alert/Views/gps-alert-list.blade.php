@@ -7,7 +7,7 @@ All Alerts
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Alerts</li>
-      <b>Alerts</b>
+      <b>Alerts detailed view</b>
     </ol>
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -66,13 +66,13 @@ All Alerts
 @section('script')
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&callback=initMap"></script>
-<script src="{{asset('js/gps/gps-alert.js')}}"></script>
+<script src="{{asset('js/gps/all-alert.js')}}"></script>
 
  @endsection
  @endsection
  <style type="text/css">
 
-  .allert{
+  .alert{
     background-color: #bfc5c169;
   }
 

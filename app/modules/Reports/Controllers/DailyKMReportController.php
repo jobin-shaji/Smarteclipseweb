@@ -65,7 +65,9 @@ class DailyKMReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate), 'Daily-km-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate), 'Daily-km-report.xlsx');
     }
    
 }

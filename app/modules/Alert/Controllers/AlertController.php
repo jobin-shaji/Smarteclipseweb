@@ -15,6 +15,7 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Warehouse\Models\GpsStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 use DataTables;
 
 class AlertController extends Controller {
@@ -351,7 +352,7 @@ class AlertController extends Controller {
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
-        ->where('status',0)
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])->where('status',0)
         ->orderBy('id','DESC')
         ->limit(4)
         ->get();
@@ -397,12 +398,14 @@ class AlertController extends Controller {
         foreach ($userAlerts as $userAlert) {
               $alert_id[]=$userAlert->alert_id;
            }
-        $alert = Alert::select('id','gps_id','alert_type_id')
+        $alert = Alert::select('id','gps_id','alert_type_id','device_time')
         ->whereIn('gps_id',$single_vehicle_gps)
         ->whereIn('alert_type_id',$alert_id)
         ->whereNotIn('alert_type_id',[17,18,23,24])
         ->where('status',0)
-        ->get()
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
+               
+        // ->get()
         ->count();
 
         $all_gps=GpsStock::where('client_id',$client_id)->get();
@@ -568,20 +571,120 @@ class AlertController extends Controller {
             'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
         return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );      
     }
+
     public function alertLocation(Request $request){
-        $decrypted_id = $request->id;
-        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $decrypted_id = $request->id;        
+        $get_alerts=Alert::where('id',$decrypted_id)->first();
+        $get_alerts->status=1;
+        $get_alerts->save();
         $alert_icon  =  AlertType:: select(['description'])->where('id',$get_alerts->alert_type_id)->first(); 
-        $get_vehicle=Vehicle::select(['id','register_number',
+        $get_vehicle=Vehicle::select(['id','name','register_number',
             'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
+        $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);
         return response()->json([
             'alert_id' => $decrypted_id,
             'alertmap' => $get_alerts,
             'alert_icon' => $alert_icon,
             'get_vehicle' => $get_vehicle,
+            'address'=>      $placeName,
             'status' => 'gpsAlertTracker'           
         ]);   
     }
+
+
+
+    public function allAlerts(Request $request)
+    {
+        $client_id=\Auth::user()->client->id;   
+        $client=Client::find($client_id);
+        return view('Alert::notification-list',['client'=>$client]);
+    }    
+    public function notificationAlertList(Request $request)
+    {
+        $offset=$request->offset;
+        $limit=$request->limit;
+        $user = $request->user();
+        $client_id=\Auth::user()->client->id; 
+        $single_vehicle_gps =  $this->singleGps($client_id);  
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->with('alertType:id,code,description') 
+        ->where('status',1)               
+        ->where('client_id',$client_id)           
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+        }
+        $alerts = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'gps_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at',
+            'device_time'
+        )
+        ->with('alertType:id,code,description')
+        ->with('gps.vehicle')
+        ->with('gps:id,imei')
+        ->orderBy('device_time', 'desc')
+        ->whereIn('gps_id',$single_vehicle_gps)
+        ->whereIn('alert_type_id',$alert_id)
+        ->whereNotIn('alert_type_id',[17,18,23,24])
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
+        ->get(); 
+        return response()->json([
+            'alerts' => $alerts,
+            'read_alerts_count'=>$alerts->where('status',1)->count(),
+            'unread_alerts_count'=>$alerts->where('status',0)->count(),
+            'status' => 'notificationAlerts'           
+        ]);                  
+    }
+    public function alerUpdation(Request $request){
+        $decrypted_id = $request->id;        
+        $get_alerts=Alert::where('id',$decrypted_id)->first();
+        $get_alerts->status=1;
+        $get_alerts->save();
+        $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);
+        $alert_icon  =  AlertType:: select(['description'])->where('id',$get_alerts->alert_type_id)->first(); 
+        $get_vehicle=Vehicle::select(['id','name','register_number',
+            'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
+        return response()->json([
+            'alert_id' =>    $decrypted_id,
+            'alertmap' =>    $get_alerts,
+            'alert_icon' =>  $alert_icon,
+            'get_vehicle'=>  $get_vehicle,
+            'address'=>      $placeName,
+            'status' =>      'gpsAlertconfirm'           
+        ]);   
+    }
+    function getPlacenameFromLatLng($latitude,$longitude){
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo'); 
+            $output = json_decode($geocodeFromLatLong);
+            $status = $output->status;
+             $address = ($status=="OK")?$output->results[0]->formatted_address:'';
+            if(!empty($address)){
+                return $address;
+            }else{
+                return false;
+            }
+        }else{
+            return false;   
+        }
+    }
+
+
+
+
     //alert create rules 
     public function alert_rules(){
         $rules = [

@@ -46,7 +46,9 @@ class IdleReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new IdleReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Idle-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new IdleReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'Idle-report.xlsx');
     }
 
     function timeFormate($second){

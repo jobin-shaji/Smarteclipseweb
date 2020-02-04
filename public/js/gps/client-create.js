@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
   $("#message").hide();
+  $("#user_message").hide();
   $('#country_id').on('change', function() {
     var countryID = $(this).val();
     var data={ countryID : countryID };
@@ -34,6 +35,7 @@ $(document).ready(function() {
 });
 $(document).ready(function() {
   $("#message").hide();
+  $("#user_message").hide();
   $('#state_id').on('change', function() {
     var stateID = $(this).val();
     var data={ stateID : stateID };
@@ -69,6 +71,7 @@ $(document).ready(function() {
 
 $('#name').keypress(function (e) {
        $("#message").hide();
+       $("#user_message").hide();
        var keyCode = e.which;
      if (keyCode >= 48 && keyCode <= 57) 
      {
@@ -77,5 +80,15 @@ $('#name').keypress(function (e) {
     }
      
     });
-
+// CODE FOR USERNAME SPACE NOT ALLOWED
+$('#trader_username').keypress(function (e) {
+       $("#user_message").hide();
+      
+      if(e.which === 32) 
+      {
+        $("#user_message").show();
+        e.preventDefault();
+      }
+     
+    });
 

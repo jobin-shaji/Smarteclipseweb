@@ -45,7 +45,8 @@ class TrackingReportController extends Controller
     
     public function export(Request $request)
     {
-        // dd($request->fromDate);    
+        ob_end_clean(); 
+        ob_start();   
         return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
     }
 

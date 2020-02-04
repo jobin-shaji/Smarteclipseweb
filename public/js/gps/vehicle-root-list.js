@@ -36,13 +36,14 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'register_number', name: 'register_number'},
             {data: 'gps.serial_no', name: 'gps.serial_no'},
             {data: 'vehicle_type.name', name: 'vehicle_type.name'},
             {data: 'dealer', name: 'dealer'},
             {data: 'sub_dealer', name: 'sub_dealer'},
+            {data: 'trader', name:'trader'},
             {data: 'client.name', name: 'client.name'},
             {data: 'action', name: 'action', orderable: false, searchable: false}, 
         ],

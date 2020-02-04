@@ -1,7 +1,7 @@
 var client_lat = $('#lat').val();
 var client_lng = $('#lng').val();
-var latMap = client_lat;
-var lngMap = client_lng;
+var latMap = parseFloat(client_lat);
+var lngMap = parseFloat(client_lng);
 var haightAshbury = {
   lat: latMap,
   lng: lngMap
@@ -77,7 +77,7 @@ function vehicleTrack(res) {
 
   if(res.status!="failed"){
     var JSONObject = res.user_data;
-    console.log(JSONObject);
+    //console.log(JSONObject);
     var marker, i;
     for (i = 0; i < JSONObject.length; i++) {
     var lat = JSONObject[i].lat;

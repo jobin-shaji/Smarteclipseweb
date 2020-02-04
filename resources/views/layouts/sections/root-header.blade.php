@@ -15,6 +15,7 @@
             <!-- <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> -->
             <!-- <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>   -->
             <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a> 
+            <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a> 
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a> 
             <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST  <span class="badge">New</span> </a>
             <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK  <span class="badge">New</span></a> 
@@ -198,6 +199,18 @@
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{url('/version-rule')}}">LIST VERSION</a>
+          
+                </li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" > SERVICER VERSION</a>
+                <ul class="dropdown-menu">
+                <li>
+                   <a class="dropdown-item" href="{{url('/service-version-type/create')}}">ADD VERSION </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{url('/service-version-rule')}}">LIST VERSION</a>
           
                 </li>
                 </ul>

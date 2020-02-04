@@ -411,6 +411,21 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     getDeviceTransferList();
                 }
+                else if(callBack=='notificationAlertsList')
+                {
+                    notificationAlertsList(res);
+                }
+                else if(callBack=='getUploadDocs')
+                {
+                    getUploadDocs(res);
+                }
+                else if(callBack=='getUploads'){
+                    getUploads(res);
+                }
+                else if(callBack=='gpsAlertconfirm'){
+                    gpsAlertconfirm(res);
+                }
+                
                 
 
                 
@@ -492,10 +507,74 @@ function verifyAlertResponse(res){
 }
 
 
-function downloadFile(url,data){
+// function downloadFile(url,data){
+//     var purl = getUrl() + '/'+url ;
+//     $.ajax({
+//             cache: false,
+//             type: 'POST',
+//             url: purl,
+//             data: data,
+//              //xhrFields is what did the trick to read the blob to pdf
+//             xhrFields: {
+//                 responseType: 'blob'
+//             },
+//             headers: {
+//             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             success: function (response, status, xhr) {
+//                 console.log(response);
+//                 var filename = "";                   
+//                 var disposition = xhr.getResponseHeader('Content-Disposition');
 
+//                  if (disposition) {
+//                     var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+//                     var matches = filenameRegex.exec(disposition);
+//                     if (matches !== null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+//                 }
+//                 var linkelem = document.createElement('a');
+//                 try 
+//                 {
+//                     // var BOM = "\uFEFF";
+//                     // var  response = BOM + response;
+//                     // console.log(response);
+//                     var blob = new Blob([response], { type: 'application/octet-stream' });                        
+
+//                     if (typeof window.navigator.msSaveBlob !== 'undefined') {
+//                         //   IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+//                         window.navigator.msSaveBlob(blob, filename);
+//                     } else {
+//                         var URL = window.URL || window.webkitURL;
+//                         var downloadUrl = URL.createObjectURL(blob);
+                        
+//                         if (filename) {
+//                             // use HTML5 a[download] attribute to specify filename
+//                             var a = document.createElement("a");
+//                             // console.log(typeof a.download);
+//                             // safari doesn't support this yet
+//                             if (typeof a.download === 'undefined') {
+//                                 // window.location = downloadUrl;
+//                             } else {
+//                                 // console.log(blob);
+//                                 a.href = downloadUrl;
+//                                 a.download = filename;
+//                                 document.body.appendChild(a);
+//                                 a.target = "_blank";
+//                                 a.click();
+//                             }
+//                         } else {
+//                             window.location = downloadUrl;
+//                         }
+//                     }   
+
+//                 } catch (ex) {
+//                     console.log(ex);
+//                 }
+//             }
+//         });
+// }
+
+function downloadFile(url,data){
     var purl = getUrl() + '/'+url ;
-// console.log(data);
     $.ajax({
             cache: false,
             type: 'POST',
@@ -509,7 +588,7 @@ function downloadFile(url,data){
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response, status, xhr) {
-
+// console.log(xhr);
                 var filename = "";                   
                 var disposition = xhr.getResponseHeader('Content-Disposition');
 
@@ -517,10 +596,10 @@ function downloadFile(url,data){
                     var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
                     var matches = filenameRegex.exec(disposition);
                     if (matches !== null && matches[1]) filename = matches[1].replace(/['"]/g, '');
-                }
+                } 
                 var linkelem = document.createElement('a');
                 try {
-                                           var blob = new Blob([response], { type: 'application/octet-stream' });                        
+                        var blob = new Blob([response], { type: 'application/octet-stream' });                        
 
                     if (typeof window.navigator.msSaveBlob !== 'undefined') {
                         //   IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
@@ -529,7 +608,7 @@ function downloadFile(url,data){
                         var URL = window.URL || window.webkitURL;
                         var downloadUrl = URL.createObjectURL(blob);
                         
-                        if (filename) {
+                        if (filename) { 
                             // use HTML5 a[download] attribute to specify filename
                             var a = document.createElement("a");
                             // console.log(typeof a.download);
@@ -551,7 +630,7 @@ function downloadFile(url,data){
 
                 } catch (ex) {
                     console.log(ex);
-                }
+                } 
             }
         });
 }
@@ -595,7 +674,6 @@ function getPolygonData(url, data, callBack, options) {
 
 
 function downloadAlertReport(){
-    
     var url = 'alert-report/export';
     var  vehicles=$('#vehicle').val();
     var  alerts=$('#alert').val();
@@ -1117,16 +1195,38 @@ function clientAlerts(){
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
  function alertNotification(res){
+    // notificationAlertsList(res);
     if(res)
     {
         $("#alert_notification").empty();
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
         {
-            $("#alert_notification").append('<div class="dropdown-item" >'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
+            $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
- }
+        if(res.alert.length==0){
+            $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
+        }
+    }
 }
+
+function gpsAlertUpdate(value){
+    $('#loader').show();
+    var url = 'gps-alert-update';
+    var data={
+      id:value    
+    }
+    backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
+  }
+    function gpsAlertconfirm(res)
+    { 
+        $('#loader').hide();
+        // console.log(res);
+        $('#alert_'+res.alertmap.id).removeClass('alert');
+        var alert_content = res.alert_icon.description+' on vehicle '+res.get_vehicle.name+'('+res.get_vehicle.register_number+') at '+res.alertmap.device_time;
+        $('#alert_content').text(alert_content);
+        $('#alert_address').text(res.address);
+    }
 
 function downloadLabel(id){
     var url = 'gps-transfer-label/export';
@@ -1157,16 +1257,19 @@ $('#gps').find('option').remove();
  
 }
 
-    function getClientServicerGps(res){
-    if(res)
+function getClientServicerGps(client_id){
+    if(client_id)
     {    
         var job_type = $("#job_type option:selected").val();
         if(job_type==""||job_type==undefined){
-         alert('select job type!');   
+            alert('Please select job type!'); 
+            client_id=0;
+            // $("#gps option[value='']").remove();
+            // $("#gps").append(new Option("Select GPS", ""));
         }
         var url = 'servicer-client-gps';
         var data = {
-             client_id : res,
+             client_id : client_id,
              job_type:job_type
         };   
         backgroundPostData(url,data,'clientGps',{alert:false});   
@@ -1176,25 +1279,41 @@ $('#gps').find('option').remove();
 }
 function clientGps(res)
 {
-    $("#gps").empty();
-    var expired_documents;
-    length=res.devices.length;
-   if(length==0)
-   {
-        var gps='<option value="">No GPS</option>';  
+    if(res.code == 1)
+    {
+        $("#gps").empty();
+        var expired_documents;
+        length=res.devices.length;
+        if(length==0)
+        {
+            var gps='<option value=" ">No GPS</option>';  
+            $("#gps").append(gps);  
+        }
+        else
+        {
+            for (var i = 0; i < length; i++) {
+             var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
+             $("#gps").append(gps);   
+            }   
+        }  
+        
+        $('#search_place').val(res.location);
+    } 
+    else if(res.code == 2)
+    {
+        $("#gps").empty();
+        var gps='<option value=" ">No GPS</option>';  
         $("#gps").append(gps);  
-   }
-   else
-   {
-        for (var i = 0; i < length; i++) {
-         var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';  
-         $("#gps").append(gps);   
-        }   
-   }
+        $('#search_place').val(res.location);
+    }else
+    {
+        $("#search_place").val('');
+        $("#gps").val('');
+        $('#client option').prop('selected', function() {
+            return this.defaultSelected;
+        });
 
-         
-    
-     $('#search_place').val(res.location); 
+    }
 }
 
 
@@ -1326,30 +1445,44 @@ function rootSubdealer(res)
             var count_notification=res.notification_count;
             $("#bell_notification_count").text(count_notification);          
         }
+
         if(res.emergency_response.status == 'success'){
             var latitude=res.emergency_response.alerts[0].latitude;
             var longitude=res.emergency_response.alerts[0].longitude;
             getPlaceNameFromLatLng(latitude,longitude);
             var vehicle_id=res.emergency_response.alerts[0].gps.vehicle.id;
+            var alert_id=res.emergency_response.alerts[0].id;
+            var encrypted_vehicle_id=res.emergency_response.vehicle;
+            if(res.emergency_response.alerts[0].gps.vehicle.driver != null)
+            {
+                var driver_name = res.emergency_response.alerts[0].gps.vehicle.driver.name;
+            }
+            else
+            {
+                var driver_name = 'Not Assigned';
+            }
+            var register_number = res.emergency_response.alerts[0].gps.vehicle.register_number;
+            var alert_time = res.emergency_response.alerts[0].device_time;
             if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
                 $("#header-emergency").show();
-                document.getElementById("header_em_id").value = res.emergency_response.alerts[0].id;
-                document.getElementById("header_alert_vehicle_id").value = res.emergency_response.vehicle;
+                document.getElementById("header_em_id").value = alert_id;
+                document.getElementById("header_alert_vehicle_id").value = encrypted_vehicle_id;
                 document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
-                $('#header_emergency_vehicle_driver').text(res.emergency_response.alerts[0].gps.vehicle.driver.name);
-                $('#header_emergency_vehicle_number').text(res.emergency_response.alerts[0].gps.vehicle.register_number);
-                $('#header_emergency_vehicle_time').text(res.emergency_response.alerts[0].device_time);
+                $('#header_emergency_vehicle_driver').text(driver_name);
+                $('#header_emergency_vehicle_number').text(register_number);
+                $('#header_emergency_vehicle_time').text(alert_time);
             }else{
                 var modal = document.getElementById('emergency');
                 modal.style.display = "block";
-                document.getElementById("em_id").value = res.emergency_response.alerts[0].id;
-                document.getElementById("alert_vehicle_id").value = res.emergency_response.vehicle;
+                document.getElementById("em_id").value = alert_id;
+                document.getElementById("alert_vehicle_id").value = encrypted_vehicle_id;
                 document.getElementById("decrypt_vehicle_id").value = vehicle_id;
-                $('#emergency_vehicle_driver').text(res.emergency_response.alerts[0].gps.vehicle.driver.name);
-                $('#emergency_vehicle_number').text(res.emergency_response.alerts[0].gps.vehicle.register_number);
-                $('#emergency_vehicle_time').text(res.emergency_response.alerts[0].device_time);
+                $('#emergency_vehicle_driver').text(driver_name);
+                $('#emergency_vehicle_number').text(register_number);
+                $('#emergency_vehicle_time').text(alert_time);
             }
         }
+        clientAlerts();
     }
 
 /////////////////////////Km Report/////////////////////////
@@ -1447,7 +1580,7 @@ function getdataHLMList(id){
   }
 
 
-  function gpsDataHlm(res)
+function gpsDataHlm(res)
 {
 // console.log(res.gpsData.header);
     $("#allHLMDataTable tr").remove();
@@ -1495,13 +1628,55 @@ function getdataHLMList(id){
 //         }  
 //     }   
 // }
-
-
-
-
-
-
-
-
-
-
+function downloadMonitoringReport(){ 
+    var selected = [];
+    var report = document.getElementById("report_type");
+    var chks = report.getElementsByTagName("INPUT");
+    for (var i = 0; i < chks.length; i++) {
+        if (chks[i].checked) {
+            selected.push(chks[i].value);
+        }
+    }
+    if(selected.length!=0){
+        var vehicle_id=$('#vehicle_id').val(); 
+        var url = 'monitoring-report/export';
+        var data = {
+            id : $('meta[name = "client"]').attr('content'),
+            vehicle_id:vehicle_id,
+            report_type:selected
+        };
+        downloadFile(url,data);
+    }
+    else{         
+        alert("Please select report type");
+    }    
+}
+function getUploadDocs(res)
+{
+    // console.log(res);
+    if(res.count==3){
+        if (confirm('Do you want to delete')){
+            var url = '/delete-already-existing';
+            var data = {
+                expiry_date:res.data.expiry_date,
+                document_type_id:res.data.document_type_id,
+                // path:res.data.path,
+                vehicle_id:res.data.vehicle_id
+            };
+            backgroundPostData(url,data,'getUploads',{alert:true}); 
+        }else{
+            alert("Please delete the document manually");
+            location.reload();            
+        } 
+    }
+    else if(res.count==4){
+        alert("Expiry date mismatch");
+    }
+    else{
+        alert("Successfully Created"); 
+        location.reload(); 
+    }
+}
+function getUploads(res){
+    location.reload(); 
+}

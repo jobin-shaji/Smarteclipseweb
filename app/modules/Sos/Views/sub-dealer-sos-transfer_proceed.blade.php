@@ -61,7 +61,7 @@
             <div class="row">
               @foreach  ($devices as $device )
                 <div class="col-md-3">
-                    <input type="checkbox" checked class="selectedCheckBox" name="sos_id[]" value="{{$device->id}}">{{$device->imei}}
+                    <input type="checkbox" checked class="selectedCheckBox" name="sos_id[]" value="{{$device->id}}">&nbsp;&nbsp;{{$device->imei}}
                 </div>
               @endforeach
             </div>

@@ -43,3 +43,9 @@ Route::group(['middleware' => ['web','auth','role:trader'] , 'namespace' => 'App
        Route::get('/trader_profile_change_password/{id}/change-password','TraderController@changeProfilePassword')->name('trader.profile.change.password');
        Route::post('/trader_profile_update_password/{id}/update-password','TraderController@updateProfilePassword')->name('trader.profile.update.password.p');
 });
+
+//trader list in distributor page
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Trader\Controllers' ] , function() {
+	Route::get('/distributor-sub-dealer','TraderController@distributorSubDealerListPage')->name('distributor-sub-dealer');
+	Route::post('/distributor-sub-dealer-list','TraderController@getDistributorSubDealerList')->name('distributor-sub-dealer-list');
+});
