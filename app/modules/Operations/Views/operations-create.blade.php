@@ -120,12 +120,12 @@
                  
                   <div class="form-group has-feedback">
                       <label>Password</label>
-                      <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
+                      <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$' title='password must contains minimum 6 characters with atleast one uppercase letter,one lowercase letter,one number and one special character' maxlength='15' required>
                   </div>
 
                   <div class="form-group has-feedback">
                     <label>Confirm password</label>
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation">
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$' title='password must contains minimum 6 characters with atleast one uppercase letter,one lowercase letter,one number and one special character' maxlength='15' required>
                     @if ($errors->has('password'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('password') }}</strong>

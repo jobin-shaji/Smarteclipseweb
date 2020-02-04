@@ -457,7 +457,7 @@ class ClientController extends Controller {
     public function updateDepotUserRuleChangePassword()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/'
         ];
         return $rules;
     }
@@ -1107,7 +1107,7 @@ class ClientController extends Controller {
     public function passwordUpdateRules()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/'
         ];
         return $rules;
     }
@@ -1184,7 +1184,7 @@ class ClientController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }
@@ -1202,7 +1202,7 @@ class ClientController extends Controller {
                 'username' => 'required|unique:users',
                 'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
                 'email' => 'nullable|string|email|max:255|unique:users',
-                'password' => 'required|string|min:6|confirmed',
+                'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
             ];
             return  $rules;
         }
@@ -1225,7 +1225,7 @@ class ClientController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }
@@ -1243,7 +1243,7 @@ class ClientController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }

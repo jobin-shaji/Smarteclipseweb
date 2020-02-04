@@ -441,7 +441,7 @@ class OperationsController extends Controller {
      public function updatePasswordRule()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/'
         ];
         return $rules;
     }
@@ -499,7 +499,7 @@ class OperationsController extends Controller {
     public function passwordUpdateRules()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/'
         ];
         return $rules;
     }
@@ -509,7 +509,7 @@ class OperationsController extends Controller {
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => 'required|string|unique:users|min:10|max:10',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }
@@ -519,7 +519,7 @@ class OperationsController extends Controller {
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => 'required|string|unique:users|min:11|max:11',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }

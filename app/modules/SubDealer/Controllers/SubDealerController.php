@@ -337,7 +337,7 @@ class SubDealerController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }
@@ -349,7 +349,7 @@ class SubDealerController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
         ];
         return  $rules;
     }
@@ -362,8 +362,6 @@ class SubDealerController extends Controller {
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'address' => 'required|max:150'
-
-            
         ];
         return  $rules;
     }
@@ -375,10 +373,7 @@ class SubDealerController extends Controller {
             'name' => 'required|max:50',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'address' => 'required|max:150'
-
-
-            
+            'address' => 'required|max:150' 
         ];
         return  $rules;
     }
@@ -386,7 +381,7 @@ class SubDealerController extends Controller {
     public function updatePasswordRule()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/'
         ];
         return $rules;
     }

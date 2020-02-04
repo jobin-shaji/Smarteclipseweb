@@ -35,25 +35,19 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label class="srequired">New Password</label>
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$' title='password must contains minimum 6 characters with atleast one uppercase letter,one lowercase letter,one number and one special character' maxlength='15' required>
                   </div>
                   <div class="form-group has-feedback">
                     <label class="srequired">Confirm Password</label>
-                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$' title='password must contains minimum 6 characters with atleast one uppercase letter,one lowercase letter,one number and one special character' maxlength='15' required>
                       @if ($errors->has('password'))
                     <span class="help-block">
                     <strong class="error-text">{{ $errors->first('password') }}</strong>
                     </span>
                   @endif
                   </div>
-                
-
               </div>
             </div>
-
-              
               <div class="row">
                 <!-- /.col -->
                 <div class="col-md-3 ">

@@ -1675,7 +1675,7 @@ public function servicerProfileUpdateRules($servicer)
     public function updatePasswordRule()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/'
         ];
         return $rules;
     }
@@ -1685,7 +1685,7 @@ public function servicerProfileUpdateRules($servicer)
             'name' => 'required',
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{6,15}$/',
             'address' => 'required',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile'  
            
