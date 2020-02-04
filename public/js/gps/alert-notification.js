@@ -63,6 +63,11 @@ function notificationAlertsList(res){
       }   
       $("#notification").append(notification);       
     }  
+    if(length==0){
+      var notification=' <div class="item active-read psudo-link"  data-toggle="modal">No alerts found'+
+     '</div>';
+     $("#notification").append(notification); 
+    }
    // responseList(res);
 }
 function gpsAlertCount(value){
