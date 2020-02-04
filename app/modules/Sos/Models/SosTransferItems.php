@@ -18,4 +18,15 @@ class SosTransferItems extends Model
     {
     	return $this->hasOne('App\Modules\Sos\Models\Sos','id','sos_id');
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getTransferredSosDevices($sos_transfer_id)
+    {
+        return self::select('sos_id')
+            ->where('sos_transfer_id', $sos_transfer_id)
+            ->get();
+    }
 }

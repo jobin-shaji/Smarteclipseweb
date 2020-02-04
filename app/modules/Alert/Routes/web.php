@@ -34,13 +34,17 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::post('/gps-alert-list-view','AlertController@gpsAlertListView')->name('gps.alert.list.view');
 
 
-Route::post('/gps-alert-tracker','AlertController@alertLocation')->name('gps.alert.tracker');
+	Route::post('/gps-alert-tracker','AlertController@alertLocation')->name('gps.alert.tracker');
+	Route::post('/gps-alert-update','AlertController@alerUpdation')->name('gps.alert.update');
 
-
-Route::get('/alert/{id}/mapview','AlertController@location')->name('alert.mapview');
+	Route::get('/alert/{id}/mapview','AlertController@location')->name('alert.mapview');
 	// Route::post('/alert/report/show','AlertReportController@alertmap')->name('alert.report.show');
 
+	Route::get('/all-alerts','AlertController@allAlerts')->name('all-alerts');
+	Route::post('/notification-alerts-list','AlertController@notificationAlertList')->name('notification.alerts.list');
 
+
+	 
 
 
 

@@ -2126,24 +2126,28 @@ class WarehouseController extends Controller {
     //view gps transfer list
     public function viewGpsTransfer(Request $request)
     {
-        $decrypted_id = Crypt::decrypt($request->id);
-        $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-                        ->where('gps_transfer_id',$decrypted_id)
-                        ->get();
-        if($gps_items == null){
-           return view('Warehouse::404');
+        $search_key                 = ( isset($request->search) ) ? $request->search : '';
+        $transferred_gps_device_ids = [];
+        $transferred_gps_details    = [];
+        $gps_transfer_id            = ( $request->ajax() ) ? $request->gps_transfer_id : Crypt::decrypt($request->id);   
+        $transferred_gps_devices    =   (new GpsTransferItems())->getTransferredGpsDevices($gps_transfer_id);
+        if( $transferred_gps_devices != null )
+        {
+            foreach($transferred_gps_devices as $each_transfer)
+            {
+                array_push($transferred_gps_device_ids, $each_transfer->gps_id);
+            }
+            $transferred_gps_details = (new Gps())->getTransferredGpsDetails($transferred_gps_device_ids, $search_key);
         }
-        // $devices=array();
-        $single_gps=[];
-        foreach($gps_items as $gps_item){
-            $single_gps[]= $gps_item->gps_id;          
+        // Response
+        if($request->ajax())
+        {
+            return ($transferred_gps_devices != null) ? Response([ 'links' => $transferred_gps_details->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
-        $devices=Gps::select('id','imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name')
-                        ->whereIn('id',$single_gps)
-                        ->paginate(10);
-                        // ->get();
-
-       return view('Warehouse::gps-list-view',['devices' => $devices,'gps_transfer_id'=>$decrypted_id]);
+        else
+        {
+            return ($transferred_gps_devices != null) ? view('Warehouse::gps-list-view',['devices' => $transferred_gps_details, 'gps_transfer_id' => $gps_transfer_id]) : view('Warehouse::404');
+        }
     }
 
     //accept transferred gps in dealer
@@ -2764,31 +2768,7 @@ class WarehouseController extends Controller {
                             ->get();
         return view('Warehouse::device-track-root-details',['gps_transfers' => $gps_transfers]);
     }
-    public function search(Request $request)
-    {
-        if($request->ajax())
-        {
-            $output ="";
-            $result = [];
-            $gps_items = GpsTransferItems::select('id', 'gps_transfer_id', 'gps_id')
-            ->where('gps_transfer_id',$request->gps_transfer_id)
-            ->get();
-            $single_gps=[];
-            foreach($gps_items as $gps_item){
-                $single_gps[]= $gps_item->gps_id;               
-            }
-            $gps=Gps::where('imei','LIKE','%'.$request->search."%")
-            // ->orwhere('serial_no','LIKE','%'.$request->search."%")
-            ->whereIn('id',$single_gps)
-            ->paginate(10);
-            if($gps)
-            {
-                $result['links'] = $gps->appends(['sort' => 'votes']);
-                // $result['links'] = $gps;
-                return Response($result);
-            }
-        }
-    }
+    
     // root gps transfer rule
     public function gpsRootTransferRule(){
         $rules = [

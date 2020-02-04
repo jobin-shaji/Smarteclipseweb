@@ -90,7 +90,9 @@ class HarshBrakingReportController extends Controller
 }
     public function export(Request $request)
     {
-       return Excel::download(new HarshBrakingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'harsh-braking-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new HarshBrakingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'harsh-braking-report.xlsx');
     } 
    
 }

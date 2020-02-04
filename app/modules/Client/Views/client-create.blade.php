@@ -204,7 +204,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label> 
                         <div class="form-group has-feedback">
                           <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" title="spaces not allowed" name="username" id="trader_username" required autocomplete="off">
-                            <p style="color:#FF0000" id="user_message"> Spaces Not  allowed for Username</p>
+                            <p style="color:#FF0000" id="user_message"> Spaces not  allowed for Username</p>
                         </div>
                         @if ($errors->has('username'))
                           <span class="help-block">
@@ -262,6 +262,9 @@
     flex: inherit;
   max-width: 100%;
     }
+    .pac-container {
+    margin-top:20px!important;
+}
   </style>
   <style type="text/css">
      .max-width-lb

@@ -97,6 +97,8 @@ class RouteDeviationReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new RouteDeviationReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'route-deviation-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new RouteDeviationReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'route-deviation-report.xlsx');
     }
 }
