@@ -16,20 +16,19 @@ $(document).ready(function () {
   }
   backgroundPostData(url,data,'notificationAlertsList',{alert:true});
 });
-function notificationAlertsList(res){
-  // $('#read').text(res.read_alerts_count);
-  // $('#unread').text(res.unread_alerts_count);
 
-  var length=res.alerts.length;
-    for (var i = 0; i < length; i++) {
-    register_number=res.alerts[i].gps.vehicle.register_number;
-    vehicle_name=res.alerts[i].gps.vehicle.name;
-    alert=res.alerts[i].alert_type.description;
-    device_time=res.alerts[i].device_time;
-   
-    id=res.alerts[i].id;
-      if(res.alerts[i].status==1){
-        // console.log(res.alerts.length);
+function notificationAlertsList(res)
+{
+    for (var i = 0; i < res.alerts.length; i++)
+    {
+      register_number = res.alerts[i].gps.vehicle.register_number;
+      vehicle_name    = res.alerts[i].gps.vehicle.name;
+      alert           = res.alerts[i].alert_type.description;
+      device_time     = res.alerts[i].device_time;
+      id              = res.alerts[i].id;
+      // read alerts
+      if(res.alerts[i].status == 1)
+      {
         var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2">'+  
          '<div class="not-icon-bg">'+
         '<img src="images/bell.svg"/>'+
@@ -45,7 +44,9 @@ function notificationAlertsList(res){
         '</div>'+
         '</div>  ';    
       }
-      if(res.alerts[i].status==0){
+      // unread alerts
+      if(res.alerts[i].status == 0)
+      {
         var notification=' <div class="item active-read alert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2"  >'+  
          '<div class="not-icon-bg" >'+
         '<img src="/images/bell.svg"/>'+
@@ -62,14 +63,17 @@ function notificationAlertsList(res){
         '</div>';    
       }   
       $("#notification").append(notification);       
-    }  
-    if(length==0){
-      var notification=' <div class="item active-read psudo-link"  data-toggle="modal">No alerts found'+
-     '</div>';
-     $("#notification").append(notification); 
+    }
+    // empty alerts message
+    if(res.alerts.length == 0)
+    {
+      var notification = ' <div class="item active-read psudo-link"  data-toggle="modal">No alerts found'+
+      '</div>';
+      $("#notification").append(notification); 
     }
    // responseList(res);
 }
+
 function gpsAlertCount(value){
   // console.log(res);
   var url = 'gps-alert-tracker';
