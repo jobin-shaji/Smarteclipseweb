@@ -7,10 +7,13 @@
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon" />
+
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="{{ url('/') }}/dist/css/playback_style.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('alertify/css/alertify.min.css')}}" />
@@ -23,28 +26,36 @@
 
     <script src="{{asset('alertify/alertify.min.js')}}"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 </head>
+<body>
+
+<div class="lorder-bg-playback" id="preloader">
+<div class="lds-dual-ring" id="status"></div>
+</div>
 
 <div class="wrapper overlay-sidebar">
 
 
 <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
     
-    <div class="back_button_image">
+
+
+   
+ <div id="markers" style="width:100%px;height:100vh; position: relative;"></div>
+
+        <div class='col-lg-12 cover_date cover-date1'>
+    <div class="back_button_image back_button_image-1">
         <a onclick="closePlayback()" > 
          <img src="{{asset('playback/assets/img/back-button.png')}}">
         </a> 
       </div>
-
-    <div class="container">
-     
-
-        <div class='col-lg-12 cover_date'>
-
           <div class="top-date">
-             <div class="row">
+             <div class="row row-mrg-1">
               
              <span id="cover_date_time_picker">
+
               <div class='col-sm-3'>
               <div class="form-group">
                 <label style="font-weight:bold">Start Date</label>
@@ -56,6 +67,7 @@
                 </div>
               </div>
             </div>
+  
 
               <div class='col-sm-3'>
               <div class="form-group">
@@ -70,11 +82,11 @@
             </div>
           </span>
     
-           <div class='col-sm-3'>   
+           <div class='col-sm-2'>   
             <div class="form-group">
-            <div style="float: left;margin-left: 2%">
-              <label style="font-weight:bold">Speed</label>
-              <select name="speed" id="speed" onchange="changePlaySpeed(this.value)">
+            <div class="selce-bg-out">
+              <label style="font-weight:bold" class="speed-label">Speed</label>
+              <select name="speed" id="speed" class="speed-select-bx" onchange="changePlaySpeed(this.value)">
                   <option value="1">1X</option>
                   <option value="2">2X</option>
                   <option value="3">3X</option>
@@ -89,38 +101,18 @@
 
          <div class='col-sm-3' style="margin-top: 24px;">   
                    
-           <button class="btn btn-primary btn-sm start_button" onclick="startPlayBack()" id="btnPlay">Play</button>  
-           <button class="btn btn-primary btn-sm start_button" style="display:none; margin-right: 6px;float: left;" onclick="startPause()" id="btnPause">Pause</button>  
-              <button class="btn btn-primary btn-sm" style="display:none; margin-right: 6px;float: left;" onclick="btnContinue()" id="btnContinue">Continue</button>
+           <button class="btn btn-primary btn-sm start_button buton-new-cl" onclick="startPlayBack()" id="btnPlay">Play</button>  
+           <button class="btn btn-primary btn-sm start_button buton-new-c3" style="display:none; margin-right: 6px;float: left;" onclick="startPause()" id="btnPause">Pause</button>  
+              <button class="btn btn-primary btn-sm buton-new-cl" style="display:none; margin-right: 6px;float: left;" onclick="btnContinue()" id="btnContinue">Continue</button>
                        
-              <button class="btn btn-primary btn-sm" onclick="stopPlayback()" id="btnPlay">Reset</button>
+              <button class="btn btn-primary btn-sm buton-new-c2" onclick="stopPlayback()" id="btnPlay">Reset</button>
         </div>
 
 
 
 
       </div>
-      <div class="vehicle_details_list">
-       <div class="row">
-            <span><i class='fa fa-car'></i></span>
-            <span><span style="padding: 10px;">:</span> {{$vehicle->name}}</span>
-        </div>
-         <div class="row">
-            <span><i class='fa fa-truck'></i></span>
-            <span><span style="padding: 10px;">:</span> {{$vehicle->register_number}}</span>
-        </div>
-        <div class="row">
-             <span><i class='fa fa-user'></i></span>
-            <span><span style="padding: 15px;">:</span>@if($vehicle->driver){{ $vehicle->driver->name}}@endif</span>
-        </div>
-
-        <div class="row">
-             <span><i class='fa fa-tachometer'></i></span>
-            <span><span style="padding: 15px;">:</span><span id="km_data">0.0</span> KM
-        </div>
-
-
-        </div>
+    
 
   </div>
   
@@ -128,7 +120,64 @@
   
 
  </div>
+
+
+
+<div class="notification-icon">
+<div class="dropdownContainer"><div class="noti-alert-count">2
+</div> <div class="notification dropdown-toggle"></div>
+
+<div class="dropdown">
+
+<div class="notification-list-name">Alerts
+<span class="notification-number large-number"></span>
 </div>
+<ul >
+
+  <li><a href="#" >Over Speed <span>location Name</span>
+  <div class="time-dis">2019-12-24 06:40:14</div>
+</a>
+</li>
+ <li><a href="#" >Over Speed <span>location Name</span></a></li>
+
+  <li><a href="#" >Over Speed <span>location Name</span>
+
+  </a></li>
+ <li><a href="#" >Over Speed <span>location Name</span></a></li>
+
+  <li><a href="#" >Over Speed <span>location Name</span></a></li>
+ <li><a href="#" >Over Speed <span>location Name</span></a></li>
+     
+</ul>
+
+
+
+</div>
+</div>
+</div>
+
+
+  <div class="vehicle_details_list vehicle_details_list-1">
+       <div class="row">
+            <span class="play-back-icon1"><img src="{{asset('playback/assets/img/car.png')}}"/></span>
+            <span class="play-back-span"><span style="padding: 10px;">:</span> {{$vehicle->name}}</span>
+        </div>
+         <div class="row">
+        <span class="play-back-icon1"><img src="{{asset('playback/assets/img/number-plate.png')}}"/></span>
+            <span class="play-back-span"><span style="padding: 10px;">:</span> {{$vehicle->register_number}}</span>
+        </div>
+        <div class="row">
+             <span class="play-back-icon1"><img src="{{asset('playback/assets/img/user.png')}}"/></span>
+            <span class="play-back-span"><span style="padding: 15px;">:</span>@if($vehicle->driver){{ $vehicle->driver->name}}@endif</span>
+        </div>
+
+        <div class="row row-last">
+              <span class="play-back-icon1"><img src="{{asset('playback/assets/img/dash-board.png')}}"/></span>
+            <span class="play-back-span"><span style="padding: 15px;">:</span><span id="km_data">0.0</span> KM
+        </div>
+
+
+        </div>
         <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->web_online_icon}}">
         <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->web_offline_icon}}">
         <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->web_idle_icon}}">
@@ -142,16 +191,17 @@
                </div>
                </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
-                <div id="markers" style="width:100%px;height:595px; position: relative;">
+               
                  
-                    <div class="left-alert-box">
-                    <div id="details" class="left-alert-inner">  
+                    <div class="left-alert-box left-alert-box-1">
+                      <div class="left-inner-1bg">
+                    <div id="details" class="left-alert-inner left-alert-inner-1">  
                        <span id="location_details">
                         <h1 data-text="It's loading…" id="location_details_text">It's loading…</h1>
                     </span>                     
-                    </div> 
+                    </div>    </div> 
                     </div>
-                </div>
+                
                 <div class="page-inner mt--5">
                 </div>
             </div>
@@ -390,7 +440,7 @@
                   var to_date   = $('#toDate').val();
 
                 $('#cover_date_time_picker').empty();
-                $('#cover_date_time_picker').html('<div class="col-sm-6"><span class="datetime_searched"> '+from_date+ ' - '+to_date+' </span><span onclick="resetDate()"><i class="fa fa-times"></i></span></div>');
+                $('#cover_date_time_picker').html('<div class="col-sm-6 col-date-outer"><span class="datetime_searched"> '+from_date+ ' - '+to_date+' </span><span onclick="resetDate()" class="close-span-rt"><i class="fa fa-times"></i></span></div>');
                 }
 
                
@@ -883,8 +933,8 @@
                               '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
                               '<p><span class="place_data">'+
                               '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
-                                ' km/h <p class="datetime_cover" id="date">'+date+'</p>'+
-                                '<div class="left-alert-time"></div>'+
+                                ' km/h <p class="datetime_cover datetime_cover1" id="date">'+date+'</p>'+
+                                '<div class="left-alert-time "></div>'+
                             '</div>';
              $('#location_details').remove()            
              $("#details").prepend(details);
@@ -897,6 +947,10 @@
          }
 
         }
+
+
+
+
 
 
         // --------2019-12-19-2:20--------------------------------------------------------
@@ -1043,8 +1097,6 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 <script type="text/javascript">
 $(function() {
   $('#datetimepicker_live1').datetimepicker({
@@ -1058,6 +1110,509 @@ $(function() {
   });
 
 });
+
+
+      $( document ).ready(function() {
+        // makes sure the whole site is loaded
+jQuery(window).load(function() {
+// will first fade out the loading animation
+jQuery("#status").fadeOut();
+// will fade out the whole DIV that covers the website.
+jQuery("#preloader").delay(1000).fadeOut("slow");
+})
+
+});
 </script>
+
+
+  
+    <script>
+    $(function() {
+
+      // Dropdown toggle
+      $('.dropdown-toggle').click(function() {
+        $(this).next('.dropdown').toggle( 400 );
+      });
+
+      $(document).click(function(e) {
+        var target = e.target;
+        if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
+          $('.dropdown').hide() ;
+        }
+      });
+
+});
+    </script/>
+          <style type="text/css">
+              .col-date-outer{
+      margin-top: 23px;
+    background: #dab604;
+    padding: 3px 4px 3px 10px;
+    color: #fff;
+    text-align: center;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+    width: 45%;
+    border: 1px solid #c5a505;
+    border-radius: 8px;
+              }
+              .row-mrg-1{
+                    margin-bottom: 15px;
+              }
+.close-span-rt {
+    float: right;
+    background: #fff;
+    padding: 1px 5px;
+    border-radius: 50%;
+    color: #dab604;
+    font-weight: normal;
+    font-size: 13px;
+    margin-top: 0.5px;
+}
+.close-span-rt:hover {
+ background: #af9308;
+    color: #ffffff;
+}
+.col-lg-12.cover_date.cover-date1{
+     width: 100%;
+    margin: 0px auto;
+    padding: 0 3%;
+    background: #c7c7c7bf;
+    box-shadow: 0 2px 2px rgba(0,0,0,.15);
+    position: absolute;
+    top: 0;
+        max-height: 10vh;
+}
+
+.back_button_image-1 {
+   
+    margin-top: 2%;
+    position: absolute;
+    margin-left: -2%;
+}
+.speed-label{
+      font-weight: bold;
+    width: 100%;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+.vehicle_details_list-1{
+width: 228px;
+    float: left;
+    margin-bottom: 0;
+    display: block;
+    padding: 10px 0% 0;
+    background: #ffde7a;
+    color: #000;
+    right: 2%;
+    position: absolute;
+    bottom: 32px;
+    border-radius: 10px;
+  }
+.vehicle_details_list-1 .row{
+    width: 100%;
+    margin: 0;
+    padding: 5px 6%;
+    text-transform: uppercase;
+}
+.vehicle_details_list-1 .row-last{
+     background: #a98004;
+    padding-top: 7px;
+    color: #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-bottom: 7px;
+    font-size: 16px;
+}
+.left-alert-box-1{
+       display: block;
+    top: 11.5vh;
+    max-height: 85vh;
+    left: 15px;
+    box-shadow: 0 2px 2px rgba(66, 66, 66, 0.28);
+    background-color: #fff;
+    overflow-y: inherit;
+    border-radius: 8px;
+
+}
+.left-alert-inner-1 {
+   
+    background: #fff;
+    padding: 10px 0;
+   box-shadow: none ; 
+    border-radius: 4px;
+}
+.left-alert-text p.datetime_cover1{
+background: #ce9c06;
+    width: auto;
+    padding: 5px;
+    float: right;
+    border-radius: 5px;
+    color: #fff;
+}
+.left-inner-1bg{
+overflow-y: scroll;
+    width: 100%;
+    max-height: 83vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;}
+/* width */
+.left-alert-box-1 ::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.left-alert-box-1 ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.left-alert-box-1 ::-webkit-scrollbar-thumb {
+  background: #a98004;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.left-alert-box-1 ::-webkit-scrollbar-thumb:hover {
+  background: #a98004;
+    border-radius: 10px;
+}
+select.speed-select-bx{
+  width: 100%;
+}
+.selce-bg-out{
+  float: left;
+    margin-left: 2%;
+    width: 100%;
+}
+.buton-new-cl{
+  width: 80px;
+    background: #28a745;
+    box-shadow: none;
+    border: 0;
+    color: #fff;
+    font-size: 1em;
+    border-radius: 6px;
+    text-shadow: none;
+outline: 0;
+}
+.buton-new-cl:hover{
+   background: #28a745;
+}
+
+.buton-new-cl::focus{
+ background: #28a745;
+}
+
+.buton-new-c2{
+  width: 80px;
+    background: #ffc107;
+    box-shadow: none;
+    border: 0;
+    color: #fff;
+    font-size: 1em;
+    border-radius: 6px;
+    text-shadow: none;
+outline: 0;
+}
+.buton-new-c2:hover{
+   background: #ffc107;
+}
+
+.buton-new-c2:focus{
+ background: #ffc107;
+}
+
+
+.buton-new-cl:active:hover{
+  background: #28a745;
+}
+.buton-new-c3{
+  width: 80px;
+    background:#dc3545;
+    box-shadow: none;
+    border: 0;
+    color: #fff;
+    font-size: 1em;
+    border-radius: 6px;
+    text-shadow: none;
+outline: 0;
+}
+.buton-new-c3:hover{
+   background: #dc3545;
+}
+
+.buton-new-c3:focus{
+ background: #dc3545;
+}
+
+
+.lorder-bg-playback{
+      width: 100%;
+    float: left;
+    height: 100%;
+    background: #0000006b;
+    z-index: 9;
+    position: absolute
+}
+.lds-dual-ring {
+     display: inline-block;
+    width: 80px;
+    height: 80px;
+    z-index: 9999;
+    position: absolute;
+    margin-top: 23%;
+    left: 49%;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.play-back-icon1{
+  width: 30px;
+    float: left;
+}
+.play-back-span{
+      font-size: 1em;
+    font-weight: bold;
+    padding-top: 8px;
+    float: left;
+    margin-left: 0;
+}
+
+
+
+.dropdownContainer {
+position: relative;
+    float: right;
+    margin-left: 15px;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    color:red; 
+}
+.notification-icon {
+    position: absolute;
+    top: 20%;
+    right: 3%;
+    text-align: center;
+}
+.noti-alert-count{
+     position: absolute;
+    right: -11px;
+    top: -13px;
+    border: 2px #fff solid;
+    border-radius: 60px;
+    background: #ffc108;
+    padding: 5px 8px;
+    border-radius: 60px;
+    color: #fff;
+    line-height: 100%;
+    z-index: 9;
+    font-size: 0.7em;}
+ 
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 274px;
+    padding: 0;
+    border: 1px solid rgb(243, 243, 243);
+    border-radius: 7px;
+    box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+    z-index: 9;
+    background: #ffffff;
+}
+/* up arrow*/
+.dropdown:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+     right: 10px;
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: #fff transparent;
+}
+.dropdown:after {
+content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 10px;
+    border-width: 0 8px 7px 7px;
+    border-style: solid;
+    border-color: #fff transparent;
+}    
+
+ 
+.dropdown li {
+  list-style-type: none;
+  border-top: 1px solid #f1eee1;
+}   
+ 
+.dropdown li:hover{
+  background-color:#fffbee;
+}
+    
+.dropdown li:first-child {
+      list-style-type: none;
+    border-top: none;
+    margin-top: -10px;
+    padding-top: 4px;
+}
+    
+.dropdown .fa-circle{
+    font-size: 15px;
+    color: rgba(115, 187, 22, 1);  
+} 
+    .dropdown ul{
+margin: 0px;
+    padding: 0px;
+    width: 100%;
+    float: left;
+    overflow-y: scroll;
+    max-height: 165px;
+  }
+  
+  
+.dropdown li a {
+text-decoration: none;
+    padding: 10px 1em;
+    display: block;
+    
+    font-size:1em;
+    width: 100%;
+    font-weight: 600;
+        color: #f0b100;
+    float: left;
+    border-bottom: 1px solid #f1f0ed;
+}
+.dropdown li a span{
+  width: 100%;
+  float: left;
+  font-weight: normal;
+  display: block;
+  color: black;
+}
+ 
+/*View All Notification*/
+.dropdown .fa-list{
+    font-size: 15px;
+    padding:5px;
+    color: rgba(115, 187, 22, 1); 
+    border: 2px solid rgba(115, 187, 22, 1);
+    border-radius: 100%;
+}
+    
+
+  .notification-list-name{
+      margin: 0px;
+    padding: 6px 0;
+    float: left;
+    width: 100%;
+    background: #f0b100;
+    font-size: 16px;
+    font-weight: bold;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    color: #fff;
+  }
+  .view-all-notification{
+margin: 0px;
+    padding: 7px 0;
+    float: left;
+    width: 100%;
+    background:#f0b100;
+
+    font-size: 16px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;}
+    .view-all-notification a{
+    color:#fff;
+  float:left;
+  text-decoration:none;
+  text-align:center;
+  width:100%;
+  }
+
+  .notification {
+    display: inline-block;
+    position: relative;
+    padding: 0.6em;
+    background: #3498db;
+    border-radius: 0.2em;
+    font-size: 1.3em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.notification::before, 
+.notification::after {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.notification::before {
+    display: block;
+    content: "\f0f3";
+    font-family: "FontAwesome";
+    transform-origin: top center;
+}
+
+.dropdown ul ::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.dropdown ul ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.dropdown ul ::-webkit-scrollbar-thumb {
+  background: #a98004;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.dropdown ul ::-webkit-scrollbar-thumb:hover {
+  background: #a98004;
+    border-radius: 10px;
+}
+.time-dis{
+    width: 100%;
+    float: left;
+    border-radius: 7px;
+    font-size: 0.8em;
+    padding-top: 1px;
+    color: #000;
+}
+
+            </style>
+
 </body>
 </html>
