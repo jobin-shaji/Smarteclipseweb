@@ -1012,6 +1012,36 @@ class ClientController extends Controller {
         }  
     }
 
+public function selectTrader(Request $request)
+    {
+        $user = \Auth::user();
+        $sub_dealer_id=$request->dealer_id;
+
+        $traders=Trader::select([
+            'id',
+           'user_id',
+           'sub_dealer_id',
+           'name'
+        ])           
+        ->where('sub_dealer_id', $sub_dealer_id)
+        ->get();
+
+         if($traders== null){
+            return response()->json([
+                 'traders' => '',
+                'message' => 'subdealer doesnot have a dealer'
+            ]);
+        }else
+        {
+        // if($user->hasRole('root')){
+            return response()->json([            
+                'traders' => $traders,
+                   
+            ]);
+        // }  
+        }
+    }
+
     //upload employee details to database table
     public function clientSave(Request $request)
     {      
@@ -1030,10 +1060,9 @@ class ClientController extends Controller {
             {
                $rules = $this->root_user_create_rules();
             }
-           
-
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
+            $trader_id = $request->trader; 
             $location=$request->search_place;
             $placeLatLng=$this->getPlaceLatLng($request->search_place);
             $location_lat=$placeLatLng['latitude'];
@@ -1050,6 +1079,7 @@ class ClientController extends Controller {
             $client = Client::create([            
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
+                'trader_id'=>$trader_id,
                 'name' => $request->name,            
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
@@ -1214,6 +1244,7 @@ class ClientController extends Controller {
     public function root_user_create_rules()
     {
         $rules = [
+             'trader' => 'nullable',
             'sub_dealer' => 'required',
             'name' => 'required',
             'address' => 'required|string|max:150',
@@ -1232,6 +1263,7 @@ class ClientController extends Controller {
     public function rayfleetRootUserCreate_rules()
     {
         $rules = [
+            'trader' => 'nullable',
             'sub_dealer' => 'required',
             'name' => 'required',
             'address' => 'required',
