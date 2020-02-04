@@ -1014,9 +1014,8 @@ class ClientController extends Controller {
 
 public function selectTrader(Request $request)
     {
-        $user = \Auth::user();
+        
         $sub_dealer_id=$request->dealer_id;
-
         $traders=Trader::select([
             'id',
            'user_id',
@@ -1029,7 +1028,7 @@ public function selectTrader(Request $request)
          if($traders== null){
             return response()->json([
                  'traders' => '',
-                'message' => 'subdealer doesnot have a dealer'
+                'message' => 'dealer doesnot have any sub dealers'
             ]);
         }else
         {
