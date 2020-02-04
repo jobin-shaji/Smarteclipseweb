@@ -45,7 +45,7 @@ Route::get('/alert/{id}/mapview','AlertController@location')->name('alert.mapvie
 
 
 });
-Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer|operations'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer|operations|trader'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
  Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
  });
 

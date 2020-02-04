@@ -10,7 +10,7 @@
                         </li>
  
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
                             </a>
                             <ul class="dropdown-menu multi-level">
                                 <a class="dropdown-item" href="{{url('/gps-subdealer-new')}}">NEW ARRIVALS<span></span></a>
@@ -35,13 +35,24 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOS
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/sos-new')}}">NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/sos-sub-dealer')}}">SOS LIST</a>  
-                                <a class="dropdown-item" href="{{url('/sos-transfer-sub-dealer/create')}}">TRANSFER SOS</a> 
-                                <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST </a>                          
-                            </div>
+                            <ul class="dropdown-menu multi-level">
+                                <a class="dropdown-item" href="{{url('/sos-new')}}">NEW ARRIVALS<span></span></a>
+                                <a class="dropdown-item" href="{{url('/sos-sub-dealer')}}">IN STOCK<span></span></a>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUB DEALER</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('sos-transfer-sub-dealer-to-trader/create')}}">TRANSFER SOS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/sos-transferred-from-sub-dealer-to-trader')}}">SOS TRANSFER LIST</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >END USER</a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/sos-transfer-sub-dealer/create')}}">TRANSFER SOS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/sos-transferred-from-sub-dealer-to-client')}}">SOS TRANSFER LIST</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item dropdown">

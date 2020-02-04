@@ -24,7 +24,7 @@ Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App
 	Route::get('/dealer-client','ClientController@dealerClientListPage')->name('dealer-client');
 	Route::post('/dealer-client-list','ClientController@getDealerClient')->name('dealer-client-list');
 });
-Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:sub_dealer|trader'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/clients','ClientController@clientList')->name('clients');
 	Route::post('/client-list','ClientController@getClientlist')->name('client-list');
 	Route::get('/client/create','ClientController@create')->name('client.create');
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	
 });
 
-Route::group(['middleware' => ['web','auth','role:sub_dealer|root'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:sub_dealer|root|trader'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/client/{id}/edit','ClientController@edit')->name('client.edit');
 	Route::post('/client/{id}/edit','ClientController@update')->name('client.update.p'); 
 	Route::get('/client/{id}/change-password-subdealer','ClientController@changeClientPassword')->name('client.change-password-subdealer');

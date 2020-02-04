@@ -24,9 +24,9 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-6 col-md-6">
-            <form  method="POST" action="{{route('sub.dealer.update-password.p',$subdealer->user_id)}}">
+            <form  method="POST" action="{{route('trader.profile.update.password.p',$trader->user_id)}}">
                 {{csrf_field()}}
-              <input type="hidden" name="id" value="{{$subdealer->user_id}}"> 
+              <input type="hidden" name="id" value="{{$trader->user_id}}"> 
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="text-right control-label col-form-label">New Password</label>  
                 <div class="form-group has-feedback">
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="form-group row" style="float:none!important">
-                <label for="fname" class="text-right control-label col-form-label">Confirm password</label> 
+                <label for="fname" class="text-right control-label col-form-label">Confirm Password</label> 
                 <div class="form-group has-feedback">
                   <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
                 </div>

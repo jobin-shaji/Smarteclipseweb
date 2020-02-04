@@ -39,9 +39,10 @@ function callBackDataTable(){
             {data: 'gps.imei', name: 'gps.imei', orderable: false},
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
-            {data: 'gps.employee_code', name: 'gps.employee_code', orderable: false},
             {data: 'gps.model_name', name: 'gps.model_name', orderable: false},
+            {data: 'trader', name: 'trader', orderable: false},
             {data: 'client', name: 'client', orderable: false},
+            {data: 'status', name: 'status', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},  
         ],
         

@@ -1,23 +1,25 @@
 @extends('layouts.eclipse')
 @section('title')
-  View Dealer
+  GPS Transfer List
 @endsection
 @section('content')
+
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Dealer List</li>
-        <b>Dealer List</b>
-      </ol>
-      @if(Session::has('message'))
-        <div class="pad margin no-print">
-          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-              {{ Session::get('message') }}  
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer List</li>
+        <b>GPS Transfer List</b>
+        @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
           </div>
-        </div>
-      @endif 
-    </nav>  
+        @endif
+      </ol>
+    </nav>
+
     <div class="container-fluid">
       <div class="card-body">
         <div class="table-responsive">
@@ -27,12 +29,12 @@
                 <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                   <thead>
                     <tr>
-                        <th>SL.No</th>                              
-                        <th>Name</th>                            
-                        <th>Address</th>                              
-                        <th>Mobile</th>                            
-                        <th>email</th>
-                        <th style="width:0px!important;">Action</th>
+                        <th>SL.No</th>
+                        <th>From User</th>
+                        <th>To User</th>
+                        <th>Dispatched On</th>
+                        <th>Count</th>
+                        <th>Action</th>
                     </tr>
                   </thead>
                 </table>
@@ -40,7 +42,7 @@
             </div>
           </div>
         </div>
-      </div>      
+      </div>          
     </div>
   </div>
 </div>
@@ -48,5 +50,5 @@
 @endsection
 
   @section('script')
-     <script src="{{asset('js/gps/subdealer-list.js')}}"></script>
+    <script src="{{asset('js/gps/gps-transfer-trader-to-client.js')}}"></script>
   @endsection

@@ -36,7 +36,7 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_Row_Index', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'plan.name', name: 'plan.name'},
             {data: 'country.name', name: 'country.name'},
             {data: 'amount', name: 'amount'},

@@ -61,6 +61,56 @@
   <!-- Main Stylesheet File -->
   <link href="smart/lib/styles.css" rel="stylesheet">
 
+  <meta name="description" content="Kerala-made vehicle tracking device ‘Smart Eclipse’ goes global,Smart Eclipse Vehicle Tracking Unit,GPS Software Company in Kerala,Vehicle Tracking System Companies in India, GPS Tracker Software Companies, Live Fuel level monitoring">
+	<meta name="keywords"  content="Real Time Vehicle Tracking,">
+	<meta name="subject"    content="website"/>
+	<meta name="copyright"  content="All rights reserved | This Website is made with by VST Mobility Solutions"/>
+	<meta name="robots"     content="index,follow" />
+	<meta property="og:locale" content="en_US"/>
+	<meta name="topic"      content="website">
+	<meta name="summary"       content="Get info of suppliers, manufacturers, exporters, traders of Ticketing Machine for buying in India.">
+	<meta name="author"    content="Smart Eclipse Pvt Ltd">
+	<meta name="designer"   content="Randheer">
+	<meta name="owner"      content="Alvin">
+	<meta name="url"        content="http://smarteclipse.com/">
+	<meta name="rating"    content="general">
+	<meta name="language" content="english">
+	<meta name="distribution"       content="global">
+	<meta name="tweetmeme-title"  content="MobilityVst" />
+	<meta name="twitter:site"       content="@MobilityVst">
+	<meta name="blogcatalog"     content="https://vstmobility.blogspot.com/"/>
+	<meta name="google-analytics"	content="UA-139881523-1"/>
+	<meta name="theme-color"    content="#05061f"/>
+	
+  <!---------------------------------------->
+	<meta itemprop="name" content="Smart Eclipse Pvt Ltd">
+	<meta itemprop="description" content="Smart Eclipse  Pvt Ltd is a limited liability company, vehicle tracking system manufacturer in india ">
+	
+	<!-----------og tag------->
+	<meta property="og:image" content="http://smarteclipse.com/smart/assets/img/logos.png" />
+	<meta property="og:title" content="Smart Eclipse Vehicle Tracking Unit,Real Time Vehicle Tracking"/>
+	<meta name="og:url"    content="http://smarteclipse.com/">
+	<meta name="og:site_name"    content="SmartEclipse"/>
+	<meta name="og:description"  content="">
+	<meta name="fb:page_id"      content="vstmobilitysol" />
+	<meta name="og:email"        content="info@smarteclipse.com"/>
+	<meta name="og:phone_number" content=""/>
+	<meta name="og:fax_number"  content=""/>
+	<meta name="og:street-address"  content="Kerala Technology Innovation Zone,Kinfra Hi-Tech Park , HMT Colony, North Kalamassery, Kerala, India "/>
+	<meta name="og:locality"        content="Kerala Technology Innovation Zone,Kinfra Hi-Tech Park , HMT Colony, North Kalamassery, Kerala, India"/>
+	<meta name="og:region"       content=""/>
+	<meta name="og:postal-code"   content="683503"/>
+	<meta name="og:country-name"  content="QATAR,DUBAI,ALBANIA,USA,CHINA "/>
+    <meta property="og:type"        content="website"/>
+	<meta name="page-topic" content="VST Mobility Solutions - Real Time GPS Tracking Device" />
+	<meta property="article:section" content="NEWS AND EVENTS" />
+	<link itemprop="mainEntityOfPage" rel="canonical" href="http://smarteclipse.com/">
+	<meta name="twitter:url" content="https://twitter.com/MobilityVst"/>
+	<meta name="twitter:card" content="summary">
+	<meta property="fb:app_id"/>
+	<meta property="fb:pages" content="314006399267978"/>
+	<meta name="google-site-verification" content="huWFiNcI90nrAE2QCzaSxhl2YdamqSzCm376QCYRkIE" />
+  
 </head>
 
 <body>
@@ -516,7 +566,7 @@
   background-attachment: fixed;
   overflow: hidden;
   display: block;
-  position: relative;">
+  position: relative;" id ='authorizedservice'>
             <div class="container">
 			 <div class="row">
                     <div class="col-lg-12">
@@ -630,14 +680,14 @@
                     <div class="statistics--item__image">
 					<img src="smart/assets/img/talk.png" style="width:70%"/>
 					</div>
-                    <h3 class=" third">0484-40 007 47</h3>
+                    <h3 class=" third">9947900005</h3>
                     <h5>Talk To Us</h5>
                 </div>
 				  <div class="statistics--item">
                     <div class="statistics--item__image">
 					<img src="smart/assets/img/email.png" style="width:70%"/>
 					</div>
-                    <h3 class=" third">info@vstmobility.com</h3>
+                    <h3 class=" third">info@smarteclipse.com</h3>
                     <h5>Email Us</h5>
                 </div>
 		
@@ -793,10 +843,10 @@ function showSlides() {
                                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerala, India 683503</span>
                                 </li>
 								<li>
-                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;0484-40 007 47</span>
+                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;9947900005</span>
                                 </li>
                                 <li>
-                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@vstmobility.com</span>
+                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@smarteclipse.com</span>
                                 </li>
                             </ul>
                                 </div>

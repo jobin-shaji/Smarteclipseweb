@@ -104,13 +104,15 @@ Route::get('/servicer-vehicles/{id}/details','VehicleController@servicerVehicleD
 
 
 Route::post('/servicer-vehicles/findDateFieldWithDocTypeID/','VehicleController@servicerfindDateFieldWithDocTypeID')->name('servicer.vehicles.findDateFieldWithDocTypeID');
-Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
+Route::post('vehicle-doc/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
 Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
 Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
+Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
+Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
 
 
 
@@ -123,7 +125,7 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
 
 });
 
-Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
 

@@ -35,7 +35,9 @@
                         <option value="" selected disabled>Select Transfer Type</option>
                         <option value="1">Manufacturer To Distributor</option>
                         <option value="2">Distributor To Dealer</option>
-                        <option value="3">Dealer To Client</option>
+                        <option value="4">Dealer To Sub Dealer</option>
+                        <option value="3">Dealer To End User</option>
+                        <option value="5">Sub Dealer To End User</option>
                       </select>
                     </div>
                   </div>                     

@@ -26,7 +26,7 @@
                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/sos-new')}}"> NEW ARRIVALS</a>
-                                <a class="dropdown-item" href="{{url('/sos-dealer')}}"> SOS LIST</a>  
+                                <a class="dropdown-item" href="{{url('/sos-dealer')}}"> IN STOCK</a>  
                                 <a class="dropdown-item" href="{{url('/sos-transfer-dealer/create')}}">TRANSFER SOS</a>
                                 <a class="dropdown-item" href="{{url('/sos-transfers')}}"> SOS TRANSFER LIST</a>                           
                             </div>
@@ -42,14 +42,20 @@
                                    <a class="dropdown-item" href="{{url('/subdealers')}}">LIST DEALERS<span></span></a>
                             </div>
                         </li>
-                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> END USER
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SUB DEALERS
                             </a>
-                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="dropdown-divider"></div>
-                              
-                               
-                                   <a class="dropdown-item" href="{{url('/dealer-client')}}">LIST END USER<span></span></a>
+                                <a class="dropdown-item" href="{{url('/distributor-sub-dealer')}}">LIST SUB DEALERS<span></span></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> END USERS
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{url('/dealer-client')}}">LIST END USERS<span></span></a>
                             </div>
                         </li>
                     </ul>

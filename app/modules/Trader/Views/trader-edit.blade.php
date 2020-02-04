@@ -27,7 +27,7 @@
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
                 <div class="form-group has-feedback">
-                  <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $trader->name}}"> 
+                  <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" maxlength="50" required name="name" value="{{ $trader->name}}"> 
                 </div>
                 @if ($errors->has('name'))
                   <span class="help-block">
@@ -41,7 +41,7 @@
                       $eclipse_key="eclipse";
                       if (strpos($url, $rayfleet_key) == true) {  ?>
                           <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
                         <div class="form-group has-feedback">
                           <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$user->mobile }}" title="Mobile number should be exactly 11 digits" />
                         </div>
@@ -54,9 +54,9 @@
                       <?php } 
                       else if (strpos($url, $eclipse_key) == true) { ?>
                          <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
                         <div class="form-group has-feedback">
-                         <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile }}" title="Mobile number should be exactly 10 digits" />
+                         <input type="text" required pattern="[0-9]{10}" maxlength='11' class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile }}" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -67,9 +67,9 @@
                       <?php }
                       else { ?>
                            <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile }}" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" maxlength='10' class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ $user->mobile }}" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -81,7 +81,7 @@
                        <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" value="{{ $trader->address}}"> 
+                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" required maxlength="150" value="{{ $trader->address}}"> 
                         </div>
                         @if ($errors->has('address'))
                           <span class="help-block">
@@ -92,7 +92,7 @@
                        <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                         <div class="form-group has-feedback">
-                          <input type="email" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" value="{{ $user->email}}" placeholder="email" name="email" value="{{ old('email') }}" required  autocomplete="off">
+                          <input type="email" maxlength='50' class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" value="{{ $user->email}}" placeholder="email" name="email" value="{{ old('email') }}" required  autocomplete="off">
                         </div>
                         @if ($errors->has('email'))
                           <span class="help-block">

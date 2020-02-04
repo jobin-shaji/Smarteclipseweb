@@ -49,10 +49,17 @@ class User extends Authenticatable
         return $this->hasone('App\Modules\SubDealer\Models\SubDealer','user_id','id');
     } 
 
+    public function trader()
+    {
+        return $this->hasone('App\Modules\Trader\Models\Trader','user_id','id');
+
+    } 
+
     public function client()
     {
         return $this->hasone('App\Modules\Client\Models\Client','user_id','id');
     }
+
     public function servicer()
     {
         return $this->hasone('App\Modules\Servicer\Models\Servicer','user_id','id');
@@ -62,11 +69,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Modules\Dealer\Models\Dealer','root_id','id');
     } 
+
     public function geofence()
     {
         return $this->hasone('App\Modules\Geofence\Models\Geofence','user_id','id');
     }
-     public function operations()
+
+    public function operations()
     {
         return $this->hasone('App\Modules\Operations\Models\Operations','user_id','id');
     } 

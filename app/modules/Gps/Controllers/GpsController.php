@@ -22,11 +22,10 @@ use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Ota\Models\OtaUpdates;
 use App\Modules\Gps\Models\GpsConfiguration;
-
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 use DB;
 use Config;
@@ -439,20 +438,40 @@ class GpsController extends Controller {
                 'gps_id',
                 'dealer_id',
                 'subdealer_id',
+                'trader_id',
                 'client_id',
                 'deleted_at')
                 ->withTrashed()
                 ->with('gps')
                 ->with('client')
+                ->with('trader')
                 ->where('subdealer_id',$sub_dealer_id)
                 ->get();
         return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('trader', function ($gps_stock) {
+                if($gps_stock->trader_id==null){
+                    return "--";
+                }else{
+                    return ( is_object($gps_stock->trader) ) ? $gps_stock->trader->name : '';
+                }
+            })
             ->addColumn('client', function ($gps_stock) {
                 if($gps_stock->client_id==null){
-                    return "Not Transferred";
+                    return "--";
                 }else{
                     return ( is_object($gps_stock->client) ) ? $gps_stock->client->name : '';
+                }
+            })
+            ->addColumn('status', function ($gps_stock) {
+                if($gps_stock->client_id===null && $gps_stock->trader_id===null){
+                    return "Not Transferred";
+                }else if($gps_stock->client_id===null && $gps_stock->trader_id===0){
+                    return "Awaiting Confirmation";
+                }else if($gps_stock->client_id===0 && $gps_stock->trader_id===null){
+                    return "Awaiting Confirmation";
+                }else{
+                    return "Transferred";
                 }
             })
             ->addColumn('action', function ($gps_stock) {
@@ -551,6 +570,148 @@ class GpsController extends Controller {
     }
 
     //////////////////////////GPS SUB DEALER///////////////////////////////////
+
+    /////////////////////////GPS TRADER-START//////////////////////////////////
+
+    //All devices list in trader
+    public function gpsTraderListPage()
+    {
+        return view('Gps::gps-trader-list');
+    } 
+
+    //returns gps list as json 
+    public function getTraderGps()
+    {
+        $trader_id=\Auth::user()->trader->id;
+        $gps_stock = GpsStock::select(
+                'id',
+                'gps_id',
+                'dealer_id',
+                'subdealer_id',
+                'trader_id',
+                'client_id',
+                'deleted_at')
+                ->withTrashed()
+                ->with('gps')
+                ->with('client')
+                ->where('trader_id',$trader_id)
+                ->get();
+        return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('client', function ($gps_stock) {
+                if($gps_stock->client_id==null){
+                    return "--";
+                }else{
+                    return ( is_object($gps_stock->client) ) ? $gps_stock->client->name : '';
+                }
+            })
+            ->addColumn('status', function ($gps_stock) {
+                if($gps_stock->client_id===null){
+                    return "Not Transferred";
+                }else if($gps_stock->client_id===0){
+                    return "Awaiting Confirmation";
+                }else{
+                    return "Transferred";;
+                }
+            })
+            ->addColumn('action', function ($gps_stock) {
+                $b_url = \URL::to('/');
+                if($gps_stock->deleted_at == null){
+                    if($gps_stock->gps->status == 1){ 
+                        return "
+                            <b style='color:#008000';>Active</b>
+                            <a href=".$b_url."/gps-trader/".Crypt::encrypt($gps_stock->gps_id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                            <button onclick=deactivateGpsStatusFromTrader(".$gps_stock->gps_id.") class='btn btn-xs btn-danger'></i>Deactivate</button>
+                        ";
+                        }else{ 
+                        return "
+                            <b style='color:#FF0000';>Inactive</b>
+                            <a href=".$b_url."/gps-trader/".Crypt::encrypt($gps_stock->gps_id)."/status-log class='btn btn-xs btn-info'> Log </a>
+                            <button onclick=activateGpsStatusFromTrader(".$gps_stock->gps_id.") class='btn btn-xs btn-success'> Activate </button>
+                        ";
+                        }
+                }else{
+                     return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
+    //deactivate gps from trader
+    public function gpsInTraderStatusDeactivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'GPS does not exist'
+            ]);
+        }
+        $gps->status=0;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 0,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'GPS deactivated successfully'
+        ]);
+    }
+    // activate gps from trader
+    public function gpsInTraderStatusActivate(Request $request)
+    {
+        $user_id=\Auth::user()->id;
+        $gps = Gps::find($request->id);
+        if($gps==null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'GPS does not exist'
+            ]);
+        }
+        $gps->status=1;
+        $gps_status=$gps->save();
+        if($gps_status){
+            $gps = GpsLog::create([
+                'gps_id'=> $gps->id,
+                'status'=> 1,
+                'user_id'=> $user_id
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'GPS activated successfully'
+        ]);
+    }
+
+    public function viewTraderStatusLog(Request $request)
+    {
+        $decrypted_id = Crypt::decrypt($request->id);
+        $user_id=\Auth::user()->id;
+        $gps_logs = GpsLog::select(
+                'id',
+                'gps_id',
+                'status',
+                'user_id',
+                'created_at')
+                ->where('gps_id',$decrypted_id)
+                ->where('user_id',$user_id)
+                ->with('gps:id,imei')
+                ->get();
+        return view('Gps::gps-status-log-view',['gps_logs' => $gps_logs]);
+    }
+
+    /////////////////////////GPS TRADER-END////////////////////////////////////
 
     //Display all dealer gps
     public function gpsClientListPage()
@@ -718,18 +879,17 @@ class GpsController extends Controller {
 
     public function getPublicVltData(Request $request)
     {    
-        if($request->gps && $request->header){
-            
-         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->limit(500);  
+        if($request->gps && $request->header){           
+         $items = VltData::where('imei',$request->gps)->where('header',$request->header)->orderBy('id','desc')->limit(500);  
         }
         else if($request->gps){
-         $items = VltData::where('imei',$request->gps)->limit(500);  
+         $items = VltData::where('imei',$request->gps)->orderBy('id','desc')->limit(500);  
         }
         else if($request->header){
-            $items = VltData::where('header',$request->header)->limit(500); 
+            $items = VltData::where('header',$request->header)->orderBy('id','desc')->limit(500); 
         }
         else{
-         $items = VltData::limit(500);  
+         $items = VltData::orderBy('id','desc')->limit(500);  
         }
 
          // $items = VltData::all();                
@@ -1570,8 +1730,9 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
-    public function allpublicgpsListPage()
+    public function allpublicgpsListPage(Request $request)
     {
+        
         $ota = OtaType::all();
         $gps = Gps::all();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();
@@ -1582,16 +1743,16 @@ class GpsController extends Controller {
     {
         if($request->gps && $request->header){
             
-         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->limit(500);  
+         $items = GpsData::where('gps_id',$request->gps)->where('header',$request->header)->orderBy('id','desc')->limit(500);  
         }
         else if($request->gps){
-         $items = GpsData::where('gps_id',$request->gps)->limit(500);  
+         $items = GpsData::where('gps_id',$request->gps)->orderBy('id','desc')->limit(500);  
         }
         else if($request->header){
-            $items = GpsData::where('header',$request->header)->limit(500); 
+            $items = GpsData::where('header',$request->header)->orderBy('id','desc')->limit(500); 
         }
         else{
-         $items = GpsData::limit(500);  
+         $items = GpsData::orderBy('id','desc')->limit(500);  
         }
         return DataTables::of($items)
         ->addIndexColumn()
@@ -1909,7 +2070,7 @@ class GpsController extends Controller {
             'manufacturing_date' => 'required',
             'icc_id' => 'required',
             'imsi' => 'required',
-            'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
+            // 'e_sim_number' => 'required|string|min:11|max:11|unique:gps,e_sim_number,'.$gps->id,
             'batch_number' => 'required',
             'employee_code' => 'required',
             'model_name' => 'required',

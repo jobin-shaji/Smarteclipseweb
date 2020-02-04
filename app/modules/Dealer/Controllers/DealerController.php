@@ -20,11 +20,13 @@ class DealerController extends Controller {
             'id', 
             'user_id',                      
             'name',                   
-            'address',                                        
+            'address',
+            'created_at',                                        
             'deleted_at'
         )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
+        ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($dealers)
         ->addIndexColumn()
@@ -86,7 +88,7 @@ class DealerController extends Controller {
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
-                'mobile' => $request->mobile,
+                'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
@@ -151,13 +153,16 @@ class DealerController extends Controller {
         }
         $this->validate($request, $rules);   
         $dealer->name = $request->name;
+        $dealer->address = $request->address;
         $dealer->save();
-        $user->mobile = $request->phone_number;
+        $user->mobile = $request->mobile_number;
+        $user->email = $request->email;
+
         $user->save();
         $did = encrypt($user->id);
         $request->session()->flash('message', 'Distributor details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('dealers.edit',$did));  
+        return redirect(route('dealers.details',$did));  
     }
     //for edit page of employee password
     public function changePassword(Request $request)
@@ -318,7 +323,7 @@ class DealerController extends Controller {
         $dealer->name = $request->name;
         $dealer->address = $request->address;
         $dealer->save();
-        $user->mobile = $request->mobile;
+        $user->mobile = $request->mobile_number;
         $user->email = $request->email;
         $user->save();
         $request->session()->flash('message', 'Details updated successfully!');
@@ -341,7 +346,9 @@ class DealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id, 
+            'address' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
     }
@@ -349,7 +356,9 @@ class DealerController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'address' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,       
         ];
         return  $rules;
     }
@@ -357,7 +366,7 @@ class DealerController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'mobile' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
@@ -368,7 +377,7 @@ class DealerController extends Controller {
         $rules = [
             'name' => 'required',       
             'address' => 'required',       
-            'mobile' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
@@ -380,7 +389,7 @@ class DealerController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|string|unique:users|min:10|max:10',
+            'mobile_number' => 'required|string|unique:users,mobile|min:10|max:10',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;
@@ -390,7 +399,7 @@ class DealerController extends Controller {
         $rules = [
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|string|unique:users|min:11|max:11',
+            'mobile_number' => 'required|string|unique:users,mobile|min:11|max:11',
             'password' => 'required|string|min:6|confirmed',
         ];
         return  $rules;

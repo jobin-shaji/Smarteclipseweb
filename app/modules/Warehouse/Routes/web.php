@@ -57,11 +57,29 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 
 	Route::get('/gps-transfers-subdealer-to-trader','WarehouseController@getSubDealerToTraderTransferredList')->name('gps-transfers-subdealer-to-trader');
 	Route::post('/gps-transfer-list-subdealer-to-trader','WarehouseController@getSubDealerToTraderTransferredListData')->name('gps-transfer-list-subdealer-to-trader');
-	Route::post('/gps-transfer-subdealer-to-trader/accept','WarehouseController@AcceptGpsSubDealerToTraderTransfer')->name('gps-subdealer-to-trader.accept');
 	Route::post('/gps-transfer-subdealer-to-trader/cancel','WarehouseController@cancelSubDealerToTraderGpsTransfer')->name('gps-subdealer-to-trader.cancel');
 });
 
-Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'] , 'namespace' => 'App\Modules\Warehouse\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:trader'] , 'namespace' => 'App\Modules\Warehouse\Controllers' ] , function() 
+{
+	//gps new arrivals in trader(sub dealer)
+	Route::get('/gps-trader-new','WarehouseController@newGpsTraderListPage')->name('gps-trader-new');
+	Route::post('/gps-trader-new-list','WarehouseController@getNewGpsTraderList')->name('gps-trader-new-list');
+	Route::post('/gps-transfer-subdealer-to-trader/accept','WarehouseController@AcceptGpsSubDealerToTraderTransfer')->name('gps-subdealer-to-trader.accept');
+
+	//gps transfer from trader(sub dealer) to client
+	Route::get('/gps-transfer-trader-client/create','WarehouseController@createTraderToClientGpsTransfer')->name('gps-transfer-trader-client.create');
+	Route::post('/gps-transfer-trader-client-dropdown','WarehouseController@getClientDetailsInTrader')->name('gps-transfer-trader-client-dropdown');
+	Route::post('/gps-transfer-trader-client','WarehouseController@proceedTraderToClientGpsTransfer')->name('gps-transfer-trader-client.transfer.p');
+	Route::post('/gps-transfer-trader-client-proceed','WarehouseController@proceedConfirmTraderToClientGpsTransfer')->name('gps-transfer-trader-client-proceed.create.p');
+
+	//transferred gps list from trader(sub dealer) to client
+	Route::get('/gps-transferred-trader-to-client','WarehouseController@getTraderToClientTransferredList')->name('gps-transferred-trader-to-client');
+	Route::post('/gps-transferred-list-trader-to-client','WarehouseController@getTraderToClientTransferredListData')->name('gps-transferred-list-trader-to-client');
+});
+
+
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader|client'] , 'namespace' => 'App\Modules\Warehouse\Controllers' ] , function() {
 
 	//for Gps transfer
 	Route::get('/gps-transfers','WarehouseController@getList')->name('gps-transfers');
@@ -70,7 +88,7 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client'
 
 	Route::post('/gps-list-view','WarehouseController@viewGpsTransferList')->name('gps.list.view');
 
-Route::get('/search','WarehouseController@search');
+	Route::get('/search','WarehouseController@search');
 
 
 	Route::post('/gps-transfer/user-detils','WarehouseController@userData')->name('gps-transfer.user-detils');
@@ -93,6 +111,10 @@ Route::get('/search','WarehouseController@search');
 	//boxlabel view  for sub dealer(dealer) to trader(sub dealer)
 	Route::get('/gps-transfer-root-sub-dealer-trader/{id}/label','WarehouseController@gpsTransferLabelRootSubDealerToTrader')->name('gps-transfer-root-sub-dealer-trader.label');
 	Route::get('/gps-transfer-label-root-sub-dealer-trader/{id}/export','WarehouseController@exportGpsTransferLabelRootSubDealerToTrader')->name('gps-transfer-label-root-sub-dealer-trader.export');
+
+	//boxlabel view in root for trader to client
+	Route::get('/gps-transfer-root-trader-client/{id}/label','WarehouseController@gpsTransferLabelRootTraderToClient')->name('gps-transfer-root-trader-client.label');
+	Route::get('/gps-transfer-label-root-trader-client/{id}/export','WarehouseController@exportGpsTransferLabelRootTraderToClient')->name('gps-transfer-label-root-trader-client.export');
 
 	Route::post('/gps-scan','WarehouseController@getScannedGps')->name('gps-scan');
 

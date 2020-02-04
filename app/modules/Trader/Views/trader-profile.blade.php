@@ -33,11 +33,11 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
                     <label>Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $sub_dealer->name}}" disabled>
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{$trader->name}}" disabled>
                   </div>
                   <div class="form-group has-feedback">
                     <label>Address</label>
-                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$sub_dealer->address}}" disabled>
+                    <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$trader->address}}" disabled>
                   </div>
                   <div class="form-group has-feedback">
                     <label>Mobile No.</label>

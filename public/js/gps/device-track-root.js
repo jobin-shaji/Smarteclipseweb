@@ -36,12 +36,13 @@ function callBackDataTable(){
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex',searchable: false},
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'gps.imei', name: 'gps.imei', orderable: false},
             {data: 'manufacturer', name: 'manufacturer', orderable: false},
             {data: 'distributor', name: 'distributor', orderable: false},
             {data: 'dealer', name: 'dealer', orderable: false},
+            {data: 'sub_dealer', name: 'sub_dealer', orderable: false},
             {data: 'client', name: 'client', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],

@@ -17087,7 +17087,7 @@ a.btn.btn-block.btn-social.btn-bitbucket.track_item {
 }
 
 .page-wrapper-root {
-    min-height: 500px;
+    min-height: 560px;
     background: #f8f9fa;
 }
 .page-wrapper-root {
@@ -17948,4 +17948,26 @@ a,
     margin-top: 20%;
     color: white;
     margin-left: 4%;
+}
+ .modal-out
+  {
+    width: 90%;
+float: left;
+margin: 20px;
+margin-top: 20px;
+display: block;
+  }
+  .modal-out input[type="checkbox"], .modal-out input[type="radio"] .modal-out label{
+    margin-bottom: 9px;
+    margin-right: 8px;
+  }
+
+input:required {
+    box-shadow:none;
+}
+input:invalid {
+    box-shadow:0 0 3px none;
+}
+.download-icon{
+  padding-right: 5px;
 }

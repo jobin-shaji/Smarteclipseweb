@@ -7,9 +7,9 @@
      
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
-<div class="page-wrapper-root1"> 
+  <div class="page-wrapper-root1"> 
 
-  <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer Confirmation Form</li>
         <b>GPS Transfer Confirmation</b>
@@ -24,69 +24,65 @@
       </ol>
     </nav>
     
-        <div class="card-body">
-          <section class="hilite-content">
-       
-<form  method="POST" action="{{route('gps-transfer-root-proceed.create.p')}}">
+    <div class="card-body">
+      <section class="hilite-content">
+        <form  method="POST" action="{{route('gps-transfer-root-proceed.create.p')}}">
         {{csrf_field()}}
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group has-feedback">
-            <label>Distributor Name</label>
-            <select class="form-control"  name="dealer_user_id" readonly>
-              <option value="{{$dealer_user_id}}">{{$dealer_name}}</option>
-            </select>
-          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group has-feedback">
+                <label>Distributor Name</label>
+                <select class="form-control"  name="dealer_user_id" readonly>
+                  <option value="{{$dealer_user_id}}">{{$dealer_name}}</option>
+                </select>
+              </div>
 
-          <div class="form-group has-feedback">
-            <label>Distributor Address</label>
-            <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
-          </div>
+              <div class="form-group has-feedback">
+                <label>Distributor Address</label>
+                <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
+              </div>
 
-          <div class="form-group has-feedback">
-            <label>Mobile No</label>
-            <input type="text" class="form-control" name="mobile" value="{{ $mobile}}" readonly> 
-          </div>
+              <div class="form-group has-feedback">
+                <label>Mobile No</label>
+                <input type="text" class="form-control" name="mobile" value="{{ $mobile}}" readonly> 
+              </div>
 
-          <div class="form-group has-feedback">
-            <label>Scanned Employee Code</label>
-            <input type="text" class="form-control" name="scanned_employee_code" value="{{ $scanned_employee_code}}" readonly> 
-          </div>
+              <div class="form-group has-feedback">
+                <label>Scanned Employee Code</label>
+                <input type="text" class="form-control" name="scanned_employee_code" value="{{ $scanned_employee_code}}" readonly> 
+              </div>
 
-          <div class="form-group has-feedback">
-            <label>Invoice Number</label>
-            <input type="text" class="form-control" name="invoice_number" value="{{ $invoice_number}}" readonly> 
+              <div class="form-group has-feedback">
+                <label>Invoice Number</label>
+                <input type="text" class="form-control" name="invoice_number" value="{{ $invoice_number}}" readonly> 
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <label class="srequired">GPS List (serial numbers)</label>
-        <div class="row">
-
+          <div class="form-group has-feedback">
+            <label class="srequired mt-2">GPS List (serial numbers)</label>
+              <div class="row">
                @foreach  ($devices as $device )
                 <div class="col-md-3">
-                    <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">{{$device->serial_no}}
+                    <input type="checkbox" checked class="selectedCheckBox" name="gps_id[]" value="{{$device->id}}">&nbsp;&nbsp;{{$device->serial_no}}
                 </div>
               @endforeach
-        </div>
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-md-3 ">
-          <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
-        </div>
-        <div class="col-md-1 ">
-          <a href="{{ route('gps.transfer.root') }}">
-            <button type="button" class="btn btn-md ">Cancel</button>
-          </a>
-        </div>
-        <!-- /.col -->
-      </div>
+              </div>
+              <div class="row">
+                <!-- /.col -->
+                <div class="col-md-3 ">
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
+                </div>
+                <div class="col-md-1 ">
+                  <a href="{{ route('gps.transfer.root') }}">
+                    <button type="button" class="btn btn-md ">Cancel</button>
+                  </a>
+              </div>
+                <!-- /.col -->
+          </div>
+        </form>
+      </section>
     </div>
-    </form>
-</section>
- 
-</div>
-</div>
+  </div>
 </div>
 
 <div class="clearfix"></div>

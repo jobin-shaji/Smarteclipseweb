@@ -36,7 +36,7 @@
                         <div class="form-group row form-group-driver">
                           <label for="fname" class="col-sm-3 control-label col-form-label lab label-form-drive">Name</label>
                           <div class="form-group has-feedback form-drive-outer">
-                            <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
+                            <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
                           </div> 
                         </div>
                         @if ($errors->has('name'))
@@ -93,7 +93,7 @@
                         <div class="form-group row form-group-driver">
                           <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Address</label>
                           <div class="form-group has-feedback form-drive-outer">
-                            <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5 maxlength="150"></textarea>
+                            <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address"  required name="address" rows=5 maxlength="150"></textarea>
                           </div>
                           @if ($errors->has('address'))
                             <span class="help-block">

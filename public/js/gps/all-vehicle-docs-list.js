@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 
 function check(){
+ 
     if(document.getElementById('vehicle').value == ''){
         alert('Please select vehicle');
     }else if(document.getElementById('status').value == ''){
@@ -16,6 +17,21 @@ function check(){
     }
 }
 
+// function deleteAlert()
+// {
+    
+
+//       alertify.confirm("Do you want to delete.",
+//       function(){
+//         alertify.success('Yes');
+//         return true;
+//       },
+//       function(){
+//         alertify.error('No');
+//         return false;
+//       });
+//       return false;
+// }
 
 function callBackDataTable(data=null){
 
@@ -49,7 +65,17 @@ function callBackDataTable(data=null){
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
- }
+}
+
+function deleteDocumentFromAllDocumentList(doc_id){
+    if(confirm('Are you sure to delete this document?')){
+        var url = 'vehicle-doc/delete';
+        var data = {
+            id : doc_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
+}
 
 
 

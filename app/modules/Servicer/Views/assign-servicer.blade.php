@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+  <!-- @extends('layouts.eclipse') -->
 @section('title')
     Assign Servicer
 @endsection
@@ -13,14 +13,14 @@
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Assign Servicer</li>
       <b>Assign Servicer</b>
    </ol>
+  </nav>  
    @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
           {{ Session::get('message') }}  
       </div>
     </div>
-  @endif           
-  </nav>           
+  @endif                
       <div class="container-fluid">                    
         <div class="card-body">
           <div class="table-responsive">
@@ -40,8 +40,8 @@
                       <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Service Engineer</label> 
                       <div class="form-group has-feedback">
 
-                       <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="servicer" name="servicer">
-                          <option value="">Select</option>
+                       <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="servicer" name="servicer" required>
+                          <option value="">Select Servicer</option>
                           @foreach ($servicers as $servicer)
                           <option value="{{$servicer->id}}">{{$servicer->name}}</option>
                           @endforeach  
@@ -53,11 +53,39 @@
                       </span>
                       @endif
                     </div>
+                      <div class="form-group row" style="float:none!important">
+                      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Plan</label> 
+                      <div class="form-group has-feedback">
+
+                       <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role" required>
+                          <option value="1">Freebies</option>
+                          <option value="2">Fundamental</option>
+                          <option value="3">Superior</option>
+                          <option value="4">Pro</option>
+                        </select>
+                      </div>
+          
+                    </div>
+                    <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
+                      <div class="form-group has-feedback">
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type" required>
+                          <option value="">Select Job Type</option>
+                          <option value="1">Installation</option>
+                          <option value="2">Service</option>                         
+                        </select>
+                      </div>
+                      @if ($errors->has('job_type'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('job_type') }}</strong>
+                      </span>
+                      @endif
+                    </div>
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
                       <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"  onchange="getClientServicerGps(this.value)">
-                          <option value="">select</option>
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"  onchange="getClientServicerGps(this.value)" required>
+                          <option value="" selected="selected">Select Client</option>
                           @foreach ($clients as $client)
                           <option value="{{$client->id}}">{{$client->name}}</option>
                           @endforeach  
@@ -82,11 +110,11 @@
                       @endif
                     </div>
                      <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Gps</label>
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">GPS</label>
                       <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select Gps" id="gps" name="gps" >
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Gps" id="gps" name="gps" required>
                       <!--   <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"> -->
-                          <option value="">select</option>
+                          <option value="">Select GPS</option>
                          
                         </select>
                       </div>
@@ -97,22 +125,6 @@
                       @endif
                     </div>
 
-                     
-                    <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
-                      <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type">
-                          <option value="">select</option>
-                          <option value="1">Installation</option>
-                          <!-- <option value="2">Service</option>                          -->
-                        </select>
-                      </div>
-                      @if ($errors->has('job_type'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('job_type') }}</strong>
-                      </span>
-                      @endif
-                    </div>
                     <div class="form-group row" style="float:none!important">               
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Description</label> 
                       <div class="form-group has-feedback">

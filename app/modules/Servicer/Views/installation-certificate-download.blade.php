@@ -156,10 +156,10 @@
 
             <div style="position:absolute;left:73px;top:60px;width: 65%" class="cls_002">
                 <div class="cls_002 lineheight">
-                    {{$servicer_job->sub_dealer->name}}
+                    {{$dealer_trader->name}}
                 </div>
                 <div class="cls_002 lineheight">
-                    {{$servicer_job->sub_dealer->address}}
+                    {{$dealer_trader->address}}
                 </div>
                 <div class="cls_002 lineheight">
 
@@ -191,7 +191,7 @@
                 <tr>
                     <td class="cls_002 yellow">Manufacturer</td>
                     <td>
-                        B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam 
+                       VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam 
                     </td>
                 </tr>
                 <tr>
@@ -225,9 +225,7 @@
                     <td class="cls_002 grey">Date of Installation</td>
                     <td>{{$date}}</td>
                 </tr>
-            </table>
-           
-            
+            </table>           
             <div style="position:absolute;left:70px;top:830px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
@@ -235,12 +233,11 @@
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
              <div style="position:absolute;left:70px;top:920px" class="cls_002">
-                <span class="cls_002">{{$servicer_job->sub_dealer->name}}</span>
+                <span class="cls_002">{{$dealer_trader->name}}</span>
             </div>
             <div style="position:absolute;left:70px;top:1000px" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
-        </div>
-        
+        </div>        
     </body>
 </html>

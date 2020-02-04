@@ -10,7 +10,7 @@ class ServicerJob extends Model
 	 use SoftDeletes;
 
 	 protected $fillable = [
-        'servicer_id', 'client_id','job_id','job_type','user_id','description','job_date','job_complete_date','status','latitude','longitude','gps_id','comment','location'
+        'servicer_id', 'client_id','job_id','job_type','user_id','description','job_date','job_complete_date','status','latitude','longitude','gps_id','comment','location','role','job_status'
     ];
     public function user()
 	  {
@@ -31,6 +31,11 @@ class ServicerJob extends Model
     public function sub_dealer()
     {
       return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','user_id','user_id');
+    }
+    // added line
+     public function trader()
+    {
+      return $this->hasOne('App\Modules\Trader\Models\Trader','user_id','user_id');
     }
      public function vehicle()
     {

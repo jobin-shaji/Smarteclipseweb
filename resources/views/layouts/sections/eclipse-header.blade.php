@@ -1,3 +1,6 @@
+<?php 
+    header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0');
+?>
 <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                
@@ -36,7 +39,7 @@
                             @endif
                         @endrole
 
-                        @role('root|dealer|sub_dealer|servicer')
+                        @role('root|dealer|sub_dealer|servicer|trader')
                             <?php
                             $url=url()->current();
                             $rayfleet_key="rayfleet";
@@ -111,7 +114,7 @@
                         </li> -->
                          <li class="nav-item">
                              <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
-                                <i class="fa fa-home i.fa.fa-home" aria-hidden="true" style="font-size: 2em!important;padding: 35% 0 0 0;margin-top: 10px"></i>
+                                <i class="fa fa-home i.fa.fa-home" aria-hidden="true" style="font-size: 2em!important;padding: 35% 0 0 0;margin-top: 2px"></i>
                             </a>
                         </li>
                         <!-- <li class="nav-item dropdown">
@@ -425,6 +428,7 @@
                                     <i class="mdi mdi-bell font-24" ></i>
                                 </div>
                             </span>
+                        </a>
 
 
 <!-- style="padding: 18% 0 0 56%" -->
@@ -557,15 +561,15 @@
                                 @endrole
 
                                 @role('trader')
-                                    <a class="dropdown-item" href="{{url('/operations/profile')}}">
+                                    <a class="dropdown-item" href="{{url('/trader/profile')}}">
                                         <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
                                     </a>
-                                    <a class="dropdown-item" href="{{url('/operations/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                    <a class="dropdown-item" href="{{url('/trader_profile_change_password/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                         <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                                 @endrole
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
+                                onclick="return clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
                                
                             </div>
                         </li>

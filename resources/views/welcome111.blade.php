@@ -516,7 +516,7 @@
   background-attachment: fixed;
   overflow: hidden;
   display: block;
-  position: relative;">
+  position: relative;" id ='authorizedservice'>
             <div class="container">
 			 <div class="row">
                     <div class="col-lg-12">
@@ -626,7 +626,7 @@
                     <div class="statistics--item__image">
 					<img src="smart/assets/img/email.png" style="width:70%"/>
 					</div>
-                    <h3 class=" third">info@vstmobility.com</h3>
+                    <h3 class=" third">info@smarteclipse.com</h3>
                     <h5>Email Us</h5>
                 </div>
 		
@@ -780,10 +780,10 @@
                                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerala, India 683503</span>
                                 </li>
 								<li>
-                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;0484-40 007 47</span>
+                                    <span><i class="fa fa-phone" aria-hidden="true" style="color: #e05504;"></i>&nbsp;9947900005</span>
                                 </li>
                                 <li>
-                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@vstmobility.com</span>
+                                    <span><i class="fa fa-envelope" aria-hidden="true" style="color: #e05504;"></i>&nbsp;info@smarteclipse.com</span>
                                 </li>
                             </ul>
                                 </div>
