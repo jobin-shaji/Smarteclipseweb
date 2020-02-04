@@ -257,7 +257,15 @@ class SubDealerController extends Controller {
         $subdealer->save();
         $request->session()->flash('message','Password updated successfully!');
         $request->session()->flash('alert-class','alert-success');
-         return redirect(route('subdealers'));   
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='sub_dealer')
+        {
+            return redirect()->back();
+        }
+        else{
+            return redirect(route('subdealers'));  
+        } 
      
     }
     
