@@ -1612,6 +1612,30 @@ margin: 0px;
     color: #000;
 }
 
+@media only screen and (max-width: 1600px) {
+
+.col-lg-12.cover_date.cover-date1 {
+      max-height: 14vh;
+}
+.left-alert-box-1 {
+    top: 14.5vh;
+    max-height: 84vh;
+}
+.row-mrg-1 {
+    margin-left: 0px;
+}
+.back_button_image-1 {
+    margin-top: 3%;
+}
+.play-back-icon1 {
+    width: 24px;
+}
+.play-back-span {
+    font-size: 0.96em;
+    padding-top: 2px;
+}
+
+}
             </style>
 
 </body>
