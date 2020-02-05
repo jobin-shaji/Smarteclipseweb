@@ -381,6 +381,8 @@ class ComplaintController extends Controller {
     public function assignComplaintToServicer(Request $request)
     {
         $user_id=\Auth::user()->id;
+     
+
         $complaint = Complaint::where('id', $request->id)->first();
         if($complaint == null){
            return view('Complaint::404');
