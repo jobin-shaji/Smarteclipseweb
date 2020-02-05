@@ -237,15 +237,7 @@ if($role==0||$role==4)
  else{
     $user_role="No data Available";
  }
- if($monitoringReport->client->subdealer){
-    $dealer_trader=$monitoringReport->client->subdealer->name;
- }
- else if($monitoringReport->client->trader){
-    $dealer_trader=$monitoringReport->client->trader->name;
- }
- else{
-    $dealer_trader="Not Assigned";
- }                
+              
 ?>
 <tr>
         <th style="width: 30%">Owner Name </th>
@@ -289,7 +281,7 @@ if($role==0||$role==4)
     </tr>
     <tr>
         <th>Dealer </th>
-        <td>@if($dealer_trader){{ $dealer_trader}}@else{{'No data available'}} @endif</td> 
+        <td>@if($monitoringReport->gpsStock->subdealer){{ $monitoringReport->gpsStock->subdealer->name}}@else{{'No data available'}} @endif</td> 
     </tr> 
     <tr>
         <th>Owner Package </th>
