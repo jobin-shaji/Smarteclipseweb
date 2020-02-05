@@ -43,9 +43,9 @@
       </div>    -->
 
       <div class="row">
-         <div class="loader-wrapper" id="loader-1">
+         <!-- <div class="loader-wrapper" id="loader-1">
             <div id="loader"></div>
-          </div>  
+          </div>   -->
         <div class="col-lg-6 col-md-6">
           <h3 style="text-align:center;">Driver Score</h3>
           <h6 style="text-align:center;font-size: 12px;">Note: Kindly click on the box to get the individual details of driver.</h6>
