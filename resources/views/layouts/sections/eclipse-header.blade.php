@@ -526,7 +526,7 @@
             {{ csrf_field() }}
 </form>
 
-<div class="modal right fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+<div class="modal right fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
     <div class="modal-dialog model-class" role="document">
         <div class="modal-content modal-content">
             <div class="modal-header modal-header">

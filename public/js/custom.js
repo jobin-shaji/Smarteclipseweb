@@ -1202,7 +1202,7 @@ function clientAlerts(){
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
         {
-            $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
+            $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal3" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');       
         }  
         if(res.alert.length==0){
             $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
