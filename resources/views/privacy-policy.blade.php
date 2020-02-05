@@ -8,9 +8,9 @@
     </head>
     <body>
     <h2>Privacy Policy</h2> <p>
-                    VST Mobility built the KSUM app as
-                    a Free app. This SERVICE is provided by
-                    VST Mobility at no cost and is intended for
+                    VST Mobility solution built the Smart Eclipse app as
+                    a Commercial app. This SERVICE is provided by
+                    VST Mobility solution  and is intended for
                     use as is.
                   </p> <p>
                     This page is used to inform visitors regarding
@@ -28,7 +28,7 @@
                   </p> <p>
                     The terms used in this Privacy Policy have the same meanings
                     as in our Terms and Conditions, which is accessible at
-                    KSUM unless otherwise defined in this Privacy
+                    Smart Eclipse unless otherwise defined in this Privacy
                     Policy.
                   </p> <p><strong>Information Collection and Use</strong></p> <p>
                     For a better experience, while using our Service,
@@ -42,7 +42,7 @@
                   </p> <div><p>
                       Link to privacy policy of third party service providers
                       used by the app
-                    </p> <ul><li><a href="https://www.google.com/policies/privacy/" target="_blank">Google Play Services</a></li><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></div> <p><strong>Log Data</strong></p> <p>
+                    </p> <ul><li><a href="https://www.google.com/policies/privacy/" target="_blank">Google Play Services</a></li><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></div> <p><strong>Log Data</strong></p> <p>
                     We want to inform you that whenever
                     you use our Service, in a case of an error in the
                     app we collect data and information (through third
