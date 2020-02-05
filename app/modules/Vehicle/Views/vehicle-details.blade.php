@@ -209,9 +209,9 @@
                       </div>
                       <!-- /.col -->
                     </div>
-                    <form  method="POST" action="{{route('vehicles.doc.p')}}" enctype="multipart/form-data">
+                    <form  method="POST" id="upload_form" enctype="multipart/form-data">
                     {{csrf_field()}}
-                      <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
+                      <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$vehicle->id}}">
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Document Type </label>
                           <div class="form-group has-feedback">
@@ -228,11 +228,9 @@
                             </span>
                           @endif
                       </div>
-
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label" id="expiry_heading" style="display: none;">Expiry Date</label> 
                           <div class="form-group has-feedback">
-
                             <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" > 
                           </div>
                           @if ($errors->has('expiry_date'))
@@ -241,27 +239,27 @@
                             </span>
                           @endif
                       </div>
-
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Upload File</label>
                           <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" > 
+                            <input type="file" id="choose_image" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}">
+                              <span style='color:#f29a0e;'>Size: max 2MB, Format: jpg,png</span>
                           </div>
+                          <img width="150" height="100" class='selected_image' style='display:none;' src="#"  />
                           @if ($errors->has('path'))
                             <span class="help-block">
                                 <strong class="error-text">{{ $errors->first('path') }}</strong>
                             </span>
                           @endif
-                      </div>
-          
+                      </div>          
                       <div class="row">
                         <!-- /.col -->
-                        <div class="col-md-3 ">
-                          <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
-                        </div>
+                        <div class="col-md-3 ">                         
+                          <button type="submit" class="btn btn-primary btn-md form-btn "  >Save</button>
                         <!-- /.col -->
                       </div>
                     </form>
+                   
                   </section>
                 </div>
                 @if($vehicleDocs->count()!=0)
@@ -297,7 +295,7 @@
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
                                         <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' id ="delete_button" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                                       </td>
                                     @else
                                       <td>

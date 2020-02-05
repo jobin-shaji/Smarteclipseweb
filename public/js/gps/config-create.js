@@ -180,7 +180,7 @@ function getConfiguration(data,name,version)
     }
     route_playback_history_month="<input type='text' id='route_playback_history_month' name='route_playback_history_month' value='"+route_playback_history_month+"'>";
     var plan='<tr><td>Ac Status</td><td>'+ac_input+'</td></tr>'+
-            '<tr><td>Theft Mode</td><td >'+theft_input+'</td></tr>'+
+            '<tr><td>Anti Theft Mode</td><td >'+theft_input+'</td></tr>'+
             '<tr><td> Api Access</td><td>'+api_access_input+'</td></tr>'+
             '<tr><td>Client Domain</td><td>'+client_domain_input+'</td></tr>'+
             '<tr><td>Client Logo</td><td>'+client_logo_input+'</td></tr>'+

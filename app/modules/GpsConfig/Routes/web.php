@@ -16,7 +16,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 	Route::post('/gps-unprocessed-records-list','GpsRecordController@gpsUnprocessedDateWiseRecordList')->name('gps.unprocessed.records.list');
 	Route::post('/gps-unprocessed-records/export','GpsRecordController@exportUnprocessedData')->name('gps.unprocessed.records.export');
 });
-Route::group(['namespace' => 'App\Modules\GpsConfig\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\GpsConfig\Controllers' ] , function() {
 	Route::get('/gps-config-public','GpsConfigController@gpsConfigListPagePublic')->name('gps-config-public');
 	Route::post('/piblic-gpsconfig-list','GpsConfigController@getAllGpsConfigPublic')->name('public-gpsconfig-list');
 	

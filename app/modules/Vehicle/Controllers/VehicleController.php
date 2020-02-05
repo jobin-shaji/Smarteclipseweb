@@ -282,7 +282,6 @@ class VehicleController extends Controller
     {
         return (new DailyKm())->updateDailyKilometre($gps_id, $value);
     }
-
     // details page
     public function details(Request $request)
     {
@@ -313,59 +312,7 @@ class VehicleController extends Controller
         return response()->json($docTypeID);
     }
 
-    // save documents
-    public function saveDocuments(Request $request)
-    {
-        $custom_messages = [
-        'path.required' => 'File cannot be blank'
-        ];
-        if($request->document_type_id == 1 || $request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8){
-            $rules = $this->documentCreateRules();
-            $expiry_date=null;
-        }else{
-            $rules = $this->customDocCreateRules();
-            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
-        }
-        $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get()->count();
-        if($documents_count<2)
-        {
-            $this->validate($request, $rules, $custom_messages);
-            $file=$request->path;
-            $getFileExt   = $file->getClientOriginalExtension();
-            $uploadedFile =   time().'.'.$getFileExt;
-            //Move Uploaded File
-            $destinationPath = 'documents/vehicledocs';
-            $file->move($destinationPath,$uploadedFile);
-            $documents = Document::create([
-                'vehicle_id' => $request->vehicle_id,
-                'document_type_id' => $request->document_type_id,
-                'expiry_date' => $expiry_date,
-                'path' => $uploadedFile,
-            ]);
-            $request->session()->flash('message', 'Document stored successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success');  
-        }
-        else
-        {
-            $request->session()->flash('message', 'Already updated this document!'); 
-            $request->session()->flash('alert-class', 'alert-success');
-        }
-        $encrypted_vehicle_id = encrypt($request->vehicle_id);
-            
-        $user=\Auth::user();
-        $user_role=$user->roles->first()->name;
-        if($user_role=='client')
-        {
-            return redirect(route('vehicles.details',$encrypted_vehicle_id));
-        }
-        else
-        {
-            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
-        }
-       
-       
-    }
-
+    
     // edit vehicle doc
     public function vehicleDocumentEdit(Request $request)
     {
@@ -434,12 +381,37 @@ class VehicleController extends Controller
         if($user_role=='client')
         {
             return redirect()->back();
-            // return redirect(route('vehicles.details',$encrypted_vehicle_id));
         }
         else
         {
             return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
         }
+         
+    }
+
+    // vehicle doc delete from all vehicle list
+    public function deleteFromAllDocList(Request $request)
+    { 
+        $vehicle_doc=Document::find($request->id);
+        if($vehicle_doc == null){
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Document does not exist'
+            ]);
+        }
+        $file=$vehicle_doc->path;
+        if($file){
+            // $old_file = $vehicle_doc->path;
+            // $myFile = "documents/vehicledocs/".$old_file;
+            // $delete_file=unlink($myFile);
+            $vehicle_doc->delete(); 
+        }
+        return response()->json([
+            'status' => 1,
+            'title' => 'Success',
+            'message' => 'Document deleted successfully!'
+        ]);
          
     }
 
@@ -671,29 +643,31 @@ class VehicleController extends Controller
     // critical alert verification
     public function verifyContinuousAlert(Request $request)
     {
-        $decrypted_vehicle_id = Crypt::decrypt($request->id); 
-        $alert_id = $request->alert_id; 
-        $vehicle=Vehicle::find($decrypted_vehicle_id);
-        $alerts = Alert::where('alert_type_id',$alert_id)
-                        ->where('status',0)
-                        ->where('gps_id',$vehicle->gps_id)
-                        ->get();
-        if($alerts == null){
-            return response()->json([
-                'status' => 0,
-                'title' => 'Error',
-                'message' => 'Alert does not exist'
-            ]);
+        $data = [
+            'status'    => 0,
+            'title'     => 'Failed',
+            'message'   => 'Alert does not exist'
+        ];
+        $decrypted_vehicle_id   = Crypt::decrypt($request->id); 
+        $alert_id               = $request->alert_id; 
+        $vehicle                = Vehicle::find($decrypted_vehicle_id);
+        $alerts                 = Alert::where('alert_type_id',$alert_id)
+            ->where('status',0)
+            ->where('gps_id',$vehicle->gps_id)
+            ->count();
+        if($alerts > 0)
+        {
+            $updated = DB::statement("UPDATE alerts SET STATUS = 1 WHERE alert_type_id ='$alert_id' AND gps_id='$vehicle->gps_id' AND status=0");
+            if($updated)
+            {
+                $data = [
+                    'status'    => 1,
+                    'title'     => 'Success',
+                    'message'   => 'Alert verified successfully'
+                ];
+            }  
         }
-        foreach ($alerts as $alert) {
-            $alert->status = 1;
-            $alert->save();
-        }
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Alert verified successfully'
-        ]);
+        return response()->json($data);
      }
 
     // vehicle drivers list
@@ -805,8 +779,7 @@ class VehicleController extends Controller
                 $b_url = \URL::to('/');
                 $path = url($b_url.'/documents/vehicledocs').'/'.$vehicle_documents->path;
                 return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
-               
-               <a href=".$b_url."/vehicle-doc/".Crypt::encrypt($vehicle_documents->id)."/delete class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'>Delete </a>";
+                     <button onclick=deleteDocumentFromAllDocumentList(".$vehicle_documents->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete </button>";
              })
             ->rawColumns(['link', 'action','status'])
             ->make();
@@ -1171,10 +1144,18 @@ class VehicleController extends Controller
             })
             ->addColumn('sub_dealer',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
-               return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->name : '';
-               //return $vehicle->client->subdealer->name;
-                
+                  if($vehicle->client->trader_id)
+                 {
+                     return $vehicle->client->trader->subDealer->name;
+                 }
+                 else{
+                    return $vehicle->client->subdealer->name;
+                 }
             })
+             ->addColumn('trader',function($vehicles){
+               $vehicle = Vehicle::find($vehicles->id);
+               return ( isset($vehicle->client->trader) ) ? $vehicle->client->trader->name : '';
+             })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
@@ -1303,7 +1284,8 @@ class VehicleController extends Controller
         }
  
         if($track_data){
-            $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+            //$connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
+            $connection_lost_time_minutes = date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
             $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
@@ -2169,7 +2151,7 @@ class VehicleController extends Controller
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'nullable',
-            'path' => 'required|mimes:jpeg,png|max:4096'
+            'path' => 'required|mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2180,7 +2162,7 @@ class VehicleController extends Controller
             'vehicle_id' => 'required',
             'document_type_id' => 'required',
             'expiry_date' => 'required',
-            'path' => 'required|mimes:jpeg,png|max:4096'
+            'path' => 'required|mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2192,7 +2174,7 @@ class VehicleController extends Controller
         $rules = [
             'vehicle_id' => 'required',
             'expiry_date' => 'nullable',
-            'path'=>'mimes:jpeg,png|max:4096'
+            'path'=>'mimes:jpeg,jpg,png|max:2000'
 
         ];
         return  $rules;
@@ -2987,5 +2969,99 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-tracker-second',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
     }
 
-   
+
+
+
+    public function saveUploadDocuments(Request $request)
+    {       
+        $rules = $this->customDocCreateRules();
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));       
+        $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+        $data=[
+            'vehicle_id' => $request->vehicle_id,
+            'document_type_id' => $request->document_type_id,
+            'expiry_date' => $expiry_date,
+            'path'=>$request->path
+        ]; 
+        $file = $request->file('path'); 
+        $getFileExt   = $file->getClientOriginalExtension();
+        $uploadedFile =   time().'.'.$getFileExt;        
+        $destinationPath = 'documents/vehicledocs';
+        
+        if($documents_count->count()<2)
+        {
+            if($documents_count->count()==0){  
+
+                $file->move($destinationPath,$uploadedFile);       
+                $documents = Document::create([
+                    'vehicle_id' => $request->vehicle_id,
+                    'document_type_id' => $request->document_type_id,
+                    'expiry_date' => $expiry_date,
+                    'path' => $uploadedFile
+                ]);
+                $response = [                    
+                    'count'=>$documents_count->count(),
+                    'data'=>$data
+                ];   
+            }
+            else if($documents_count->first()->expiry_date==$expiry_date)
+            {
+                $file->move($destinationPath,$uploadedFile);
+                $documents = Document::create([
+                    'vehicle_id' => $request->vehicle_id,
+                    'document_type_id' => $request->document_type_id,
+                    'expiry_date' => $expiry_date,
+                    'path' => $uploadedFile
+                ]);
+                $response = [
+                    
+                    'count'=>$documents_count->count(),
+                    'data'=>$data
+                ];               
+            }
+            else{
+                $response = [                   
+                    'count'=>4,
+                    'data'=>$data
+                ]; 
+            }                      
+        }
+        else
+        {          
+             $response = [
+                'count'=>3,
+                'data'=>$data
+            ];            
+        }
+       
+        return response()->json($response);
+    }
+
+    public function saveUploads(Request $request)
+    {  
+            
+       $rules = $this->customDocCreateRules();
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));       
+        $documents_to_delete = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+        foreach ($documents_to_delete as $document_to_delete) {
+            $delete_document = Document::find($document_to_delete->id);
+            $delete_document->delete();
+        }     
+         $file = $request->file('path'); 
+        $getFileExt   = $file->getClientOriginalExtension();
+        $uploadedFile =   time().'.'.$getFileExt;        
+        $destinationPath = 'documents/vehicledocs';
+        $file->move($destinationPath,$uploadedFile);
+        $documents = Document::create([
+            'vehicle_id' => $request->vehicle_id,
+            'document_type_id' => $request->document_type_id,
+            'expiry_date' => $expiry_date,
+            'path' => $uploadedFile
+        ]);
+        $response = [
+            'status' => 'success',
+            'alerts' => $documents
+        ];        
+        return response()->json($response);
+    }  
 }

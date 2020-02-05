@@ -84,7 +84,9 @@ class TotalKMReportController extends Controller
     }
     public function export(Request $request)
     {
-       return Excel::download(new TotalKMReportExport($request->id,$request->vehicle), 'Total-km-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new TotalKMReportExport($request->id,$request->vehicle), 'Total-km-report.xlsx');
     } 
 
 
@@ -113,7 +115,9 @@ class TotalKMReportController extends Controller
 
     public function kmExport(Request $request)
     {
-       return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');
+        ob_end_clean(); 
+        ob_start();
+        return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');
     }
     
 }

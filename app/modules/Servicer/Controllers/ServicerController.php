@@ -191,7 +191,9 @@ class ServicerController extends Controller {
                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>
 
                     <button onclick=delServicer(".$servicer->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>
+                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->user_id)."/password-change class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
                     <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>"; 
+
                 }else{
                      return "
                     <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
@@ -247,8 +249,8 @@ class ServicerController extends Controller {
             'job_date' => $job_date,   
             'role'      =>  $request->role,    
             'status' => 1, //ASSIGNED STATUS
-            'location'=>$request->search_place
-            // 'latitude'=>$location_lat,
+            'location'=>$request->search_place,
+            'job_status'=>0
             // 'longitude'=>$location_lng              
         ]); 
         // $gps = Gps::find($request->gps);
@@ -365,8 +367,8 @@ class ServicerController extends Controller {
                 'job_date' => $job_date,
                 'gps_id' => $request->gps,                
                 'status' => 1, //ASSIGN STATUS
-                'location'=>$location 
-                // 'latitude'=>$location_lat,
+                'location'=>$location,
+                'job_status'=>0
                 // 'longitude'=>$location_lng           
             ]); 
             $request->session()->flash('message', 'Assigned Job successfully!'); 
@@ -728,7 +730,7 @@ public function serviceJobDetails(Request $request)
         
 
         // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
-        $job_completed_date=date("Y-m-d"); 
+        $job_completed_date = date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
         $driver_id=$request->driver;
@@ -776,23 +778,22 @@ public function serviceJobDetails(Request $request)
             $vehicle_photo=$request->vehicle_photo;
            
             $getFileExt   = $file->getClientOriginalExtension();
-            $uploadedFile =   time().'.'.$getFileExt;
+            $uploadedFile =   'rcbook'.time().'.'.$getFileExt;
             //Move Uploaded File
             $destinationPath = 'documents/vehicledocs';
             $file->move($destinationPath,$uploadedFile);
 
             $getInstallationFileExt   = $installation_photo->getClientOriginalExtension();
-            $uploadedInstallationFile =   time().'.'.$getInstallationFileExt;
+            $uploadedInstallationFile =   'installation'.time().'.'.$getInstallationFileExt;
             $installation_photo->move($destinationPath,$uploadedInstallationFile);
 
             $getActivationFileExt   = $activation_photo->getClientOriginalExtension();
-            $uploadedActivationFile =   time().'.'.$getActivationFileExt;
+            $uploadedActivationFile =   'activation'.time().'.'.$getActivationFileExt;
             $activation_photo->move($destinationPath,$uploadedActivationFile);
 
             $getVehicleFileExt   = $vehicle_photo->getClientOriginalExtension();
-            $uploadedVehicleFile =   time().'.'.$getVehicleFileExt;
+            $uploadedVehicleFile =   'vehicle_photo'.time().'.'.$getVehicleFileExt;
             $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
-
 
             $documents = Document::create([
                 'vehicle_id' => $vehicle_create->id,
@@ -839,7 +840,7 @@ public function serviceJobDetails(Request $request)
     public function jobSave(Request $request)
     { 
 
-        $job_completed_date=date("Y-m-d"); 
+        $job_completed_date = date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -865,7 +866,7 @@ public function serviceJobDetails(Request $request)
 
     public function jobstatuscomplete(Request $request)
     { 
-      $job_completed_date=date("Y-m-d"); 
+      $job_completed_date=date("Y-m-d H:i:s"); 
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -1602,6 +1603,35 @@ public function serviceJobDetails(Request $request)
     }
 
 
+ //for service eng password change
+    public function changeServicerPassword(Request $request)
+        {
+            $decrypted = Crypt::decrypt($request->id);
+            $servicer = Servicer::where('user_id',$decrypted)->first();
+            if($servicer == null)
+            {
+               return view('Servicer::404');
+            }
+            return view('Servicer::change-password-servicer',['servicer' => $servicer]);
+        }
+
+ //update password of service eng in common
+    public function updateServicerPassword(Request $request)
+    {
+        $servicer=User::find($request->id);
+        if($servicer== null){
+            return view('Servicer::404');
+        }
+        $did=encrypt($servicer->id);
+        $rules=$this->updatePasswordRule();
+        $this->validate($request,$rules);
+        $servicer->password=bcrypt($request->password);
+        $servicer->save();
+        $request->session()->flash('message','Password updated successfully!');
+        $request->session()->flash('alert-class','alert-success');
+        return redirect(route('servicer.list'));  
+       
+    }
 public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
@@ -1645,7 +1675,7 @@ public function servicerProfileUpdateRules($servicer)
     public function updatePasswordRule()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
     }
@@ -1655,7 +1685,7 @@ public function servicerProfileUpdateRules($servicer)
             'name' => 'required',
             'username' => 'required|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
             'address' => 'required',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile'  
            

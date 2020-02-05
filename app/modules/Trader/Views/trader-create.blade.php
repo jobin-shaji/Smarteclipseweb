@@ -40,8 +40,8 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
                   <div class="form-group has-feedback">
-                    <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" maxlength="50" value="{{ old('name') }}"> 
-                  </div>
+                    <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name"  name="name" maxlength="50" id="dealer_name" title="only Characters are allowed" value="{{ old('name') }}"></div>
+                    <p style="color:#FF0000" id="message">only characters are allowed</p>
                   @if ($errors->has('name'))
                   <span class="help-block">
                   <strong class="error-text">{{ $errors->first('name') }}</strong>
@@ -116,8 +116,9 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label>
                   <div class="form-group has-feedback">
-                    <input type="text" required class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}">
-                  </div>
+                    <input type="text" required class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" id="username" value="{{ old('username') }}">
+                    </div>
+                     <p style="color:#FF0000" id="user_message"> Spaces not  allowed for Username</p>
                   @if ($errors->has('username'))
                   <span class="help-block">
                   <strong class="error-text">{{ $errors->first('username') }}</strong>
@@ -127,13 +128,13 @@
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                   <div class="form-group has-feedback">
-                    <input type="password"  required class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password">
+                    <input type="password"  required class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" autocomplete="new-password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20'>
                   </div>
                 </div>
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>  
                   <div class="form-group has-feedback">
-                    <input type="password" required class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation">
+                    <input type="password" required class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20'>
                   </div>
                   @if ($errors->has('password'))
                   <span class="help-block">
@@ -157,3 +158,36 @@
 </section> 
 <div class="clearfix"></div>                    
 @endsection
+<!-- for name only allow characters -->
+@section('script')
+  <script>
+
+$('#username').keypress(function (e) {
+       $("#user_message").hide();
+      
+      if(e.which === 32) 
+      {
+        $("#user_message").show();
+        e.preventDefault();
+      }
+     
+    });
+
+
+  $(document).ready(function() 
+   {
+     $("#user_message").hide();
+     $("#message").hide();
+      $('#dealer_name').keypress(function (e) 
+        {
+            $("#message").hide();
+             var keyCode = e.which;
+             if (keyCode >= 48 && keyCode <= 57) 
+              {
+              $("#message").show();
+              e.preventDefault();
+              }
+        }); 
+   });
+    </script>
+    @endsection

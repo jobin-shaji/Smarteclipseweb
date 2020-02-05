@@ -205,10 +205,10 @@ class ComplaintController extends Controller {
             })
             ->addColumn('status', function ($complaints) { 
                 if($complaints->status==0){
-                    return "Not Assigned";
+                    return "Open";
                 }
                 else if($complaints->status==1){
-                    return "Assigned";
+                    return "In Progress";
                 }
                  else if($complaints->status==2){
                     return "Closed";
@@ -381,6 +381,8 @@ class ComplaintController extends Controller {
     public function assignComplaintToServicer(Request $request)
     {
         $user_id=\Auth::user()->id;
+     
+
         $complaint = Complaint::where('id', $request->id)->first();
         if($complaint == null){
            return view('Complaint::404');

@@ -1,4 +1,4 @@
-  @extends('layouts.eclipse')
+  <!-- @extends('layouts.eclipse') -->
 @section('title')
     Assign Servicer
 @endsection
@@ -13,14 +13,14 @@
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ Assign Servicer</li>
       <b>Assign Servicer</b>
    </ol>
+  </nav>  
    @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
           {{ Session::get('message') }}  
       </div>
     </div>
-  @endif           
-  </nav>           
+  @endif                
       <div class="container-fluid">                    
         <div class="card-body">
           <div class="table-responsive">
@@ -72,7 +72,7 @@
                         <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type" required>
                           <option value="">Select Job Type</option>
                           <option value="1">Installation</option>
-                          <!-- <option value="2">Service</option>                          -->
+                          <option value="2">Service</option>                         
                         </select>
                       </div>
                       @if ($errors->has('job_type'))

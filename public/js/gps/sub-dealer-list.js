@@ -10,7 +10,7 @@ function callBackDataTable(){
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
+        // order: [[1, 'desc']],
         ajax: {
             url: 'sub-dealer-list',
             type: 'POST',
@@ -32,7 +32,7 @@ function callBackDataTable(){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
-            {data: 'name', name: 'name' },            
+            {data: 'name', name: 'name',orderable: false},            
             {data: 'address', name: 'address',searchable: false, orderable: false},           
             {data: 'user.mobile', name: 'user.mobile', orderable: false},
             {data: 'user.email', name: 'user.email', orderable: false},          

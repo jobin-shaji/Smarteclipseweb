@@ -89,6 +89,7 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader|
     Route::get('/sos-transfers','SosController@getList')->name('sos-transfers');
     Route::post('/sos-transfer-list','SosController@getListData')->name('sos-transfer-list');
     Route::get('/sos-transfer/{id}/view','SosController@viewSosTransfer')->name('sos-transfer.view');
+    Route::get('/sos-transfer-search','SosController@viewSosTransfer')->name('sos-transfer-search');
     Route::post('/sos-transfer/user-detils','SosController@userData')->name('sos-transfer.user-detils');
     Route::post('/sos-transfer/accept','SosController@AcceptSosTransfer')->name('sos.accept');
     Route::post('/sos-transfer/cancel','SosController@cancelSosTransfer')->name('sos.cancel');

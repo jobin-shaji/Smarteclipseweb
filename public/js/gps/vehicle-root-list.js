@@ -43,6 +43,7 @@ function callBackDataTable(){
             {data: 'vehicle_type.name', name: 'vehicle_type.name'},
             {data: 'dealer', name: 'dealer'},
             {data: 'sub_dealer', name: 'sub_dealer'},
+            {data: 'trader',name:'trader'},
             {data: 'client.name', name: 'client.name'},
             {data: 'action', name: 'action', orderable: false, searchable: false}, 
         ],

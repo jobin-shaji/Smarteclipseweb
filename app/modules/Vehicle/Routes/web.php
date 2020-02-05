@@ -31,7 +31,7 @@ Route::post('/vehicle-driver-log-list','VehicleController@getVehicleDriverLogLis
 Route::get('/all-vehicle-docs','VehicleController@allVehicleDocList')->name('all-vehicle-docs');
 
 Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->name('all-vehicle-docs-list');
-
+Route::post('/all-vehicle-doc/delete','VehicleController@deleteFromAllDocList')->name('all-vehicle-docs-delete');
 Route::post('/continuous-alert','VehicleController@continuousAlerts')->name('continuous.alerts');
 
 Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert')->name('continuous-alert.verify');
@@ -111,6 +111,8 @@ Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')-
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
 Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
+Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
+Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
 
 
 
@@ -123,7 +125,7 @@ Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Contr
 
 });
 
-Route::group(['namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
 

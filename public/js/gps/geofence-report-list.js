@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
-    callBackDataTable();
+    // callBackDataTable();
+    check();
 });
  
 function check(){

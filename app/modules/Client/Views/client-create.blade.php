@@ -60,7 +60,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
                         <div class="form-group ">
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
-                          <option selected disabled>Select Country</option>
+                          <option  value="" selected disabled>Select Country</option>
                           @foreach($countries as $country)
                           <option value="{{$country->id}}">{{$country->name}}</option>  
                           @endforeach
@@ -76,7 +76,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
-                          <option selected disabled>Select Country First</option>
+                          <option value="" selected disabled>Select Country First</option>
                           </select>
                         </div>
                         @if ($errors->has('state_id'))
@@ -90,7 +90,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
-                          <option selected disabled>Select Country and state First</option>
+                          <option value="" selected disabled>Select Country and state First</option>
                           </select>
                         </div>
                         @if ($errors->has('city_id'))
@@ -182,13 +182,13 @@
             <div class="row">
               <div class="col-sm-12">                    
                 <div class="row">
-                  <div class="col-md-6">
+                   <div class="col-md-6">
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client Category</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label max-width-lb">End User Category</label> 
                         <div class="form-group has-feedback">
                           <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
-                            <option value="" selected disabled>Select Client Category</option>
+                            <option value="" selected disabled>Select End User Category</option>
                             <!-- <option value="school">School</option> -->
                             <option value="other">General</option>
                           </select>
@@ -203,7 +203,8 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" maxlength="20" value="{{ old('username') }}" required autocomplete="off">
+                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" title="spaces not allowed" name="username" id="trader_username" required autocomplete="off">
+                            <p style="color:#FF0000" id="user_message"> Spaces not  allowed for Username</p>
                         </div>
                         @if ($errors->has('username'))
                           <span class="help-block">
@@ -215,14 +216,14 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password">
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20'>
                         </div>
                       </div>
 
-           <div class="form-group row" style="float:none!important">
+                      <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label font-size-14">Confirm Password</label> 
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                         </div>
                         @if ($errors->has('password'))
                           <span class="help-block">
@@ -261,8 +262,19 @@
     flex: inherit;
   max-width: 100%;
     }
+    .pac-container {
+    margin-top:20px!important;
+}
   </style>
-           
+  <style type="text/css">
+     .max-width-lb
+        {
+         max-width: 100%;
+         float: left;
+         width: 100%;
+         flex: auto;
+       }
+  </style>      
 @section('script')
    <script>
      function initMap()

@@ -43,6 +43,11 @@ Route::get('/privacy-policy', function () {
          }
 });
 
+Route::get('/logout', function(){
+  Auth::logout();
+  return Redirect::to('login');
+});
+
 Auth::routes();
 
 
