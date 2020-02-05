@@ -366,7 +366,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($user->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($user);
+        $rules=$this->updateUserPassword($user);
         $this->validate($request,$rules);
         $user->password=bcrypt($request->password);
         $user->save();
@@ -394,7 +394,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateDepotUserRuleChangePassword($client);
+        $rules=$this->updateUserPassword($client);
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->save();
@@ -454,10 +454,10 @@ class ClientController extends Controller {
         }
     }
 
-    public function updateDepotUserRuleChangePassword()
+    public function updateUserPassword()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
     }
@@ -1012,6 +1012,35 @@ class ClientController extends Controller {
         }  
     }
 
+public function selectTrader(Request $request)
+    {
+        
+        $sub_dealer_id=$request->dealer_id;
+        $traders=Trader::select([
+            'id',
+           'user_id',
+           'sub_dealer_id',
+           'name'
+        ])           
+        ->where('sub_dealer_id', $sub_dealer_id)
+        ->get();
+
+         if($traders== null){
+            return response()->json([
+                 'traders' => '',
+                'message' => 'dealer doesnot have any sub dealers'
+            ]);
+        }else
+        {
+        // if($user->hasRole('root')){
+            return response()->json([            
+                'traders' => $traders,
+                   
+            ]);
+        // }  
+        }
+    }
+
     //upload employee details to database table
     public function clientSave(Request $request)
     {      
@@ -1030,10 +1059,9 @@ class ClientController extends Controller {
             {
                $rules = $this->root_user_create_rules();
             }
-           
-
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
+            $trader_id = $request->trader; 
             $location=$request->search_place;
             $placeLatLng=$this->getPlaceLatLng($request->search_place);
             $location_lat=$placeLatLng['latitude'];
@@ -1050,6 +1078,7 @@ class ClientController extends Controller {
             $client = Client::create([            
                 'user_id' => $user->id,
                 'sub_dealer_id' => $subdealer_id,
+                'trader_id'=>$trader_id,
                 'name' => $request->name,            
                 'address' => $request->address, 
                 'latitude'=>$location_lat,
@@ -1107,7 +1136,7 @@ class ClientController extends Controller {
     public function passwordUpdateRules()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
     }
@@ -1184,7 +1213,7 @@ class ClientController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
         ];
         return  $rules;
     }
@@ -1202,7 +1231,7 @@ class ClientController extends Controller {
                 'username' => 'required|unique:users',
                 'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
                 'email' => 'nullable|string|email|max:255|unique:users',
-                'password' => 'required|string|min:6|confirmed',
+                'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
             ];
             return  $rules;
         }
@@ -1214,6 +1243,7 @@ class ClientController extends Controller {
     public function root_user_create_rules()
     {
         $rules = [
+             'trader' => 'nullable',
             'sub_dealer' => 'required',
             'name' => 'required',
             'address' => 'required|string|max:150',
@@ -1225,13 +1255,14 @@ class ClientController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
         ];
         return  $rules;
     }
     public function rayfleetRootUserCreate_rules()
     {
         $rules = [
+            'trader' => 'nullable',
             'sub_dealer' => 'required',
             'name' => 'required',
             'address' => 'required',
@@ -1243,7 +1274,7 @@ class ClientController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
         ];
         return  $rules;
     }

@@ -1,7 +1,7 @@
 
 		.box-inner {
       border-top: 0;
-width: auto;
+width: 100%;
 border-radius: 0;
 padding: 0px 0;
 float: left;
@@ -155,7 +155,7 @@ margin-top: 60px;
 }
 
 .content-header-1 .breadcrumb{
-    float: right;
+    float: right;   width: 100%;
     background: 0 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -204,7 +204,7 @@ height: 100vh;
     border-radius: 0;
 }
 .notification-map{
-	    width: 100%;
+	 
 	float:left;
 	display:block;
 	margin-left:0%;

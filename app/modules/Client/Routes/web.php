@@ -13,6 +13,11 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 	Route::post('/root/client/create','ClientController@clientSave')->name('root.client.create.p');
 
+	// for trader
+	
+	Route::post('/select/trader','ClientController@selectTrader')->name('root.client.trader.list');
+
+
 	// Route::get('/root/client/{id}/edit','ClientController@edit')->name('client.edit');
 	// Route::post('/root/client/{id}/edit','ClientController@update')->name('client.update.p'); 
 	// Route::get('/root/client/{id}/change-password-subdealer','ClientController@changeClientPassword')->name('client.change-password-subdealer');
