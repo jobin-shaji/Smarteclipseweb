@@ -65,7 +65,7 @@
                       <div class="form-group row" style="float:none!important">
                         <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Dealer</label> 
                         <div class="form-group has-feedback">
-                          <select class="form-control select2 dealerData" id="sub_dealer" name="sub_dealer" data-live-search="true" title="Select Sub Dealer" required >
+                          <select class="form-control select2 dealerData" id="sub_dealer" name="sub_dealer" data-live-search="true" title="Select Sub Dealer" required  onchange="selectTrader(this.value)" >
                             <option value="">Select Dealer</option>
                           </select>
                           @if ($errors->has('sub_dealer'))
@@ -79,6 +79,24 @@
                             <strong class="error-text">{{ $errors->first('name') }}</strong>
                           </span>
                         @endif
+                      </div>
+                       <div class="form-group row" style="float:none!important">
+                        <label  for="fname" class="col-sm-3 text-right control-label col-form-label"> Sub Dealer</label> 
+                        <div class="form-group has-feedback">
+                          <select class="form-control select2 dealerData" id="trader" name="trader" data-live-search="true" title="Select Sub Dealer">
+                            <option value="">Select Sub Dealer</option>
+                          </select>
+                          <!-- @if ($errors->has('sub_dealer')) -->
+                            <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('trader') }}</strong>
+                            </span>
+                          <!-- @endif  -->
+                        </div>
+                        <!-- @if ($errors->has('name')) -->
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('name') }}</strong>
+                          </span>
+                        <!-- @endif -->
                       </div>
 
                       <div class="form-group row" style="float:none!important">
@@ -204,7 +222,7 @@
                       <?php } ?>
 
                       <div class="form-group row" style="float:none!important">         
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email.</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label> 
                         <div class="form-group has-feedback">
                           <input type="email" maxlength='50' class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}">
                           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
@@ -217,10 +235,10 @@
                       </div>
 
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client Category</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User Category</label> 
                         <div class="form-group has-feedback">
                           <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}" required>
-                            <option value="" selected disabled>Select Client Category</option>
+                            <option value="" selected disabled>Select End User Category</option>
                             <!-- <option value="school">School</option> -->
                             <option value="other">General</option>
                           </select>
@@ -248,14 +266,14 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password">
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20'>
                         </div>
                       </div>
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm password</label> 
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                         </div>
                         @if ($errors->has('password'))
                           <span class="help-block">

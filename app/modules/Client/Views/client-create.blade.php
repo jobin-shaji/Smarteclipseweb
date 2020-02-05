@@ -60,7 +60,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
                         <div class="form-group ">
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
-                          <option selected disabled>Select Country</option>
+                          <option  value="" selected disabled>Select Country</option>
                           @foreach($countries as $country)
                           <option value="{{$country->id}}">{{$country->name}}</option>  
                           @endforeach
@@ -76,7 +76,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
-                          <option selected disabled>Select Country First</option>
+                          <option value="" selected disabled>Select Country First</option>
                           </select>
                         </div>
                         @if ($errors->has('state_id'))
@@ -90,7 +90,7 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
-                          <option selected disabled>Select Country and state First</option>
+                          <option value="" selected disabled>Select Country and state First</option>
                           </select>
                         </div>
                         @if ($errors->has('city_id'))
@@ -216,14 +216,14 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password">
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20'>
                         </div>
                       </div>
 
-           <div class="form-group row" style="float:none!important">
+                      <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label font-size-14">Confirm Password</label> 
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
+                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                         </div>
                         @if ($errors->has('password'))
                           <span class="help-block">

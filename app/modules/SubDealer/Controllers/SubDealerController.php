@@ -21,13 +21,16 @@ class SubDealerController extends Controller {
             'user_id',
             'dealer_id',                      
             'name',                   
-            'address',                               
+            'address',
+            'created_at',                               
             'deleted_at'
         )
         ->withTrashed()
         ->with('dealer:id,user_id,name')
         ->with('user:id,email,mobile,deleted_at')
+        ->orderBy('created_at','DESC')
         ->get();
+
         return DataTables::of($subdealers)
         ->addIndexColumn()      
         ->addColumn('working_status', function ($subdealers) {
@@ -147,7 +150,7 @@ class SubDealerController extends Controller {
         'user_id',
         'dealer_id',                      
         'name',                   
-        'address',                                       
+        'address',
         'deleted_at')
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
@@ -254,7 +257,15 @@ class SubDealerController extends Controller {
         $subdealer->save();
         $request->session()->flash('message','Password updated successfully!');
         $request->session()->flash('alert-class','alert-success');
-         return redirect(route('subdealers'));   
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='sub_dealer')
+        {
+            return redirect()->back();
+        }
+        else{
+            return redirect(route('subdealers'));  
+        } 
      
     }
     
@@ -337,7 +348,7 @@ class SubDealerController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
         ];
         return  $rules;
     }
@@ -349,7 +360,7 @@ class SubDealerController extends Controller {
             'username' => 'required|unique:users',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
         ];
         return  $rules;
     }
@@ -362,8 +373,6 @@ class SubDealerController extends Controller {
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'address' => 'required|max:150'
-
-            
         ];
         return  $rules;
     }
@@ -375,10 +384,7 @@ class SubDealerController extends Controller {
             'name' => 'required|max:50',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'address' => 'required|max:150'
-
-
-            
+            'address' => 'required|max:150' 
         ];
         return  $rules;
     }
@@ -386,7 +392,7 @@ class SubDealerController extends Controller {
     public function updatePasswordRule()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
     }

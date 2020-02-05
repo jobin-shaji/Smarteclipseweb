@@ -30,13 +30,13 @@
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="text-right control-label col-form-label">New Password</label>  
                 <div class="form-group has-feedback">
-                  <input type="password"  class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" required>
+                  <input type="password"  class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                 </div>
               </div>
               <div class="form-group row" style="float:none!important">
                 <label for="fname" class="text-right control-label col-form-label">Confirm Password</label> 
                 <div class="form-group has-feedback">
-                  <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" required>
+                  <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                 </div>
                 @if ($errors->has('password'))
                   <span class="help-block">
