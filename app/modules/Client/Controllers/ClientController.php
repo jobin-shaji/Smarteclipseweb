@@ -1075,19 +1075,36 @@ public function selectTrader(Request $request)
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
-            $client = Client::create([            
-                'user_id' => $user->id,
-                'sub_dealer_id' => $subdealer_id,
-                'trader_id'=>$trader_id,
-                'name' => $request->name,            
-                'address' => $request->address, 
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng,
-                'location'=>$location,
-                'country_id'=>$request->country_id,
-                'state_id'=>$request->state_id,
-                'latest_user_updates'=>$current_date        
-            ]);
+            if($trader_id == null)
+             {
+                $client = Client::create([            
+                    'user_id' => $user->id,
+                    'sub_dealer_id' => $subdealer_id,
+                    'name' => $request->name,            
+                    'address' => $request->address, 
+                    'latitude'=>$location_lat,
+                    'longitude'=>$location_lng,
+                    'location'=>$location,
+                    'country_id'=>$request->country_id,
+                    'state_id'=>$request->state_id,
+                    'latest_user_updates'=>$current_date        
+                ]);
+             }
+             else
+                {
+                $client = Client::create([            
+                    'user_id' => $user->id,
+                    'trader_id' => $trader_id,
+                    'name' => $request->name,            
+                    'address' => $request->address, 
+                    'latitude'=>$location_lat,
+                    'longitude'=>$location_lng,
+                    'location'=>$location,
+                    'country_id'=>$request->country_id,
+                    'state_id'=>$request->state_id,
+                    'latest_user_updates'=>$current_date        
+                ]);
+            }
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
             }else{
