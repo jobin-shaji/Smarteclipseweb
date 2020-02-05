@@ -106,7 +106,7 @@
                   <td style="width:15%;">{{ $each_vehicle->vehicle_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->imei }}</td>
                   <td style="width:11%;">{{ $each_vehicle->distributor_name }} ({{ $each_vehicle->distributor_mobile }})</td>
-                  <td style="width:11%;"><?php if( isset($each_vehicle->sub_dealer_name) ){ echo '--'; } else { echo $each_vehicle->dealer_name.'('.$each_vehicle->dealer_mobile.')'; } ?></td>
+                  <td style="width:11%;">{{$each_vehicle->dealer_name}}({{$each_vehicle->dealer_mobile}})</td>
                   <td style="width:11%;"><?php echo (isset($each_vehicle->sub_dealer_name)) ? $each_vehicle->sub_dealer_name.'('.$each_vehicle->sub_dealer_mobile.')' : '--'; ?></td>
                   <td style="width:11%;">{{$each_vehicle->servicer_name }} ({{ $each_vehicle->servicer_mobile }})</td>
                   <td style="width:4%;">{{ $date[0] }}</td>
@@ -517,8 +517,8 @@
       <div class="modal-content">
          <form  method="POST" action="{{route('monitoring.report.pdf.downloads')}}">
             {{csrf_field()}}
+            <button type="button" class="close" data-dismiss="modal" style="align:right;margin-top:5.2%;margin-right:3%">&times;</button>
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Report Type</h4>
         </div>
          <input type="hidden" name="vehicle_id" id="vehicle_id" value="">
