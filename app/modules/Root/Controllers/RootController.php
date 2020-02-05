@@ -47,7 +47,7 @@ class RootController extends Controller {
     }
 
     public function createUser(Request $request){
-        $rules = $this->state_user_add_rules();
+        $rules = $this->userCreateRule();
         $request->validate($rules);
 
          $user =  DB::table('users')->insert([
@@ -98,17 +98,17 @@ class RootController extends Controller {
     public function updateRootPasswordRule()
     {
         $rules=[
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
     }
 
     //rules for adding a state user
-    public function state_user_add_rules()
+    public function userCreateRule()
     {
         $rules=[
         'username' => 'required|string|max:255|min:5|unique:users',
-        'password' => 'required|min:6', 
+        'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/', 
         'email' => 'required|string|email|max:255|unique:users',
         'mobile' => 'required'
              ];
