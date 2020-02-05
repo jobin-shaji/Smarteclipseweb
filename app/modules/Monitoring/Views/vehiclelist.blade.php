@@ -106,7 +106,7 @@
                   <td style="width:15%;">{{ $each_vehicle->vehicle_name }}</td>
                   <td style="width:8%;">{{ $each_vehicle->imei }}</td>
                   <td style="width:11%;">{{ $each_vehicle->distributor_name }} ({{ $each_vehicle->distributor_mobile }})</td>
-                  <td style="width:11%;"><?php if( isset($each_vehicle->sub_dealer_name) ){ echo '--'; } else { echo $each_vehicle->dealer_name.'('.$each_vehicle->dealer_mobile.')'; } ?></td>
+                  <td style="width:11%;">{{$each_vehicle->dealer_name}}({{$each_vehicle->dealer_mobile}})</td>
                   <td style="width:11%;"><?php echo (isset($each_vehicle->sub_dealer_name)) ? $each_vehicle->sub_dealer_name.'('.$each_vehicle->sub_dealer_mobile.')' : '--'; ?></td>
                   <td style="width:11%;">{{$each_vehicle->servicer_name }} ({{ $each_vehicle->servicer_mobile }})</td>
                   <td style="width:4%;">{{ $date[0] }}</td>
