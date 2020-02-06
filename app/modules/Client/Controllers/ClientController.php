@@ -735,6 +735,8 @@ class ClientController extends Controller {
         }
         $user->assignRole($request->client_role);        
         $roles = $user->roles;
+        $request->session()->flash('message', 'User Role added successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.subscription',$request->id));
 
     }
@@ -767,7 +769,8 @@ class ClientController extends Controller {
         $user->save();        
         $user->removeRole($decrypted_role_id);
         $roles = $user->roles;
-
+        $request->session()->flash('message', 'User Role deleted successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.subscription',$request->user_id));
         
     }
