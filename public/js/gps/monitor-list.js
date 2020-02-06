@@ -580,7 +580,7 @@ function render_devicetab(res)
             table +='<tr>'+
                 '<td>'+header+'</td>'+
                 '<td>'+each_ota.value+'</td>'+
-                '<td>'+each_ota.updated_at+'</td>'+
+                '<td>'+each_ota.device_time+'</td>'+
             '</tr>';
         });
         table += '</table>';
