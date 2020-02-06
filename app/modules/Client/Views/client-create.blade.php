@@ -189,7 +189,7 @@
                         <div class="form-group has-feedback">
                           <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
                             <option value="" selected disabled>Select End User Category</option>
-                            <!-- <option value="school">School</option> -->
+                            <option value="school">School</option>
                             <option value="other">General</option>
                           </select>
                         </div>
