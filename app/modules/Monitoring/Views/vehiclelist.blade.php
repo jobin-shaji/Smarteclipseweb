@@ -210,10 +210,6 @@
                                     <span class="vehicle-details-value" id="tvc_vehicle_towing"> </span>
                                   </div>
                                   <div class="list-display">
-                                    <p>Emergency Status <span>:-</span></p>
-                                    <span class="vehicle-details-value" id="tvc_vehicle_emergency_status"> </span>
-                                  </div>
-                                  <div class="list-display">
                                     <p>Created At <span>:-</span></p>
                                     <span class="vehicle-details-value" id="tvc_vehicle_created_date"> </span>
                                   </div>
@@ -274,7 +270,7 @@
                                 Driver Details
                               </div>
                               <div class="slide">
-                                <div class="list-outer-bg">
+                                <div class="list-outer-bg vehicle-driver-details">
                                   <div class="list-display">
                                     <p>Driver Name <span>:-</span></p>
                                     <span  class="vehicle-details-value" id="tvc_driver_name"> </span>
@@ -292,6 +288,7 @@
                                     <span  cl!importantass="vehicle-details-value" id="tvc_driver_points"> </span>
                                   </div>
                                 </div>
+                                <div class="vehicle-driver-details-empty">No driver found</div>
                               </div>
                             </div>
                             <!-- /Driver details -->

@@ -105,7 +105,6 @@ function render_vehicletab(res)
         {'id' : 'tvc_vehicle_chassis_number', 'key' : 'chassis_number'},
         {'id' : 'tvc_vehicle_theftmode', 'key' : 'theft_mode'},
         {'id' : 'tvc_vehicle_towing', 'key' : 'towing'},
-        {'id' : 'tvc_vehicle_emergency_status', 'key' : 'emergency_status'},
         {'id' : 'tvc_vehicle_created_date', 'key' : 'created_at'},
         /* /Vehicle Details */
         /* Client Details */
@@ -128,6 +127,7 @@ function render_vehicletab(res)
         {'id' : 'tvc_driver_address', 'key' : ['driver','address']},
         {'id' : 'tvc_driver_mobile', 'key' : ['driver','mobile']},
         {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
+        {'id' : 'driver_deleted', 'key' : ['driver','deleted_at']},
         /* /Driver Details */
     ].forEach(function(each_element){
         repaint(each_element.id);
@@ -142,10 +142,6 @@ function render_vehicletab(res)
             else if( each_element.id == 'tvc_vehicle_towing')
             {
                 $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On Towing' : 'Not Towing');
-            }
-            else if( each_element.id == 'tvc_vehicle_emergency_status')
-            {
-                $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On' : 'Off');
             }
             else
             {
@@ -226,6 +222,19 @@ function render_vehicletab(res)
             else if( each_element.id == 'tvc_driver_points')
             {
                 $('#'+each_element.id).text( (detail > 0) ? detail : 0 );
+            }
+            else if(each_element.id == 'driver_deleted')
+            {
+                if(detail.length > 0)
+                {
+                    $('.vehicle-driver-details').hide();
+                    $('.vehicle-driver-details-empty').show();
+                }
+                else
+                {
+                    $('.vehicle-driver-details').show();
+                    $('.vehicle-driver-details-empty').hide();
+                }
             }
             else
             {
@@ -566,7 +575,7 @@ function render_devicetab(res)
             table +='<tr>'+
                 '<td>'+header+'</td>'+
                 '<td>'+each_ota.value+'</td>'+
-                '<td>'+each_ota.updated_at+'</td>'+
+                '<td>'+each_ota.device_time+'</td>'+
             '</tr>';
         });
         table += '</table>';

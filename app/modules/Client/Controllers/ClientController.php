@@ -201,7 +201,7 @@ class ClientController extends Controller {
         }
 
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New client created successfully!'); 
+        $request->session()->flash('message', 'New end user created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('clients'));        
     }
@@ -334,7 +334,7 @@ class ClientController extends Controller {
         $user->mobile = $request->mobile_number;
         $user->save();
         
-        $request->session()->flash('message', 'Client details updated successfully!');
+        $request->session()->flash('message', 'End user details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.details',$did));  
     }
@@ -579,7 +579,7 @@ class ClientController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Client does not exist'
+                'message' => 'End user does not exist'
             ]);
         }
         $client_user->delete();
@@ -587,7 +587,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client disabled successfully'
+            'message' => 'End user disabled successfully'
         ]);
     }
 
@@ -600,7 +600,7 @@ class ClientController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Client does not exist'
+                'message' => 'End user does not exist'
             ]);
         }
         $client_user->restore();
@@ -608,7 +608,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client enabled successfully'
+            'message' => 'End user enabled successfully'
         ]);
     }
 
@@ -735,6 +735,8 @@ class ClientController extends Controller {
         }
         $user->assignRole($request->client_role);        
         $roles = $user->roles;
+        $request->session()->flash('message', 'User Role added successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.subscription',$request->id));
 
     }
@@ -767,7 +769,8 @@ class ClientController extends Controller {
         $user->save();        
         $user->removeRole($decrypted_role_id);
         $roles = $user->roles;
-
+        $request->session()->flash('message', 'User Role deleted successfully!');
+        $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.subscription',$request->user_id));
         
     }
@@ -780,7 +783,7 @@ class ClientController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Client does not exist'
+                'message' => 'End user does not exist'
             ]);
         }
         $client->user->delete();
@@ -788,7 +791,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client deactivated successfully'
+            'message' => 'End user deactivated successfully'
         ]);
     }
 
@@ -800,7 +803,7 @@ class ClientController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Client does not exist'
+                'message' => 'End user does not exist'
             ]);
         }
 
@@ -809,7 +812,7 @@ class ClientController extends Controller {
         return response()->json([
             'status' => 1,
             'title' => 'Success',
-            'message' => 'Client activated successfully'
+            'message' => 'End user activated successfully'
         ]);
     }
 
@@ -918,7 +921,7 @@ class ClientController extends Controller {
         $did = encrypt($user->id);
         // $subdealer->phone_number = $request->phone_number;       
         // $did = encrypt($subdealer->id);
-        $request->session()->flash('message', 'Client details updated successfully!');
+        $request->session()->flash('message', 'End user details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client.profile'));  
     }
@@ -1117,7 +1120,7 @@ public function selectTrader(Request $request)
             }
         }
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New client created successfully!'); 
+        $request->session()->flash('message', 'New End user created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client'));        
     }

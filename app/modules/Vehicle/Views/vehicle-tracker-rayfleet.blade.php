@@ -44,31 +44,31 @@
             </span>
           </div>
           <div class="col-sm-12 social-buttons" style="margin-left: 2.5%!important;">
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <img src="../../assets/images/plate.png" width=30px height=25px><label id="vehicle_name" class="mgl"></label>
             </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <i class="fa fa-key fapad"></i> <b class="mgl">IGNITION <b style="margin-left: 11.5%;font-size: 11px;">: <label class="mgl" id="ignition"></label></b></b>
             </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <i class="fa fa-tachometer fapad"></i> <b class="mgl">SPEED <b style="margin-left: 17.8%;font-size: 11px;">: <label class="mgl" id="car_speed"></label> <span id="valid_speed">km/h </span></b></b>
             </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <img src="../../assets/images/odo.png" height="30px" width="30px" class="fapad"><b class="mgl">ODOMETER<b style="margin-left: 8.2%;font-size: 11px;">: <label class="mgl" id="odo"></label> <span id="odometer"> </span></b></b>
             </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <i class="fa fa-battery-full fapad"></i><b class="mgl">BATTERY <b style="margin-left: 11.4%;font-size: 11px;">: <label class="mgl" id="car_bettary"></label> %</b></b>
             </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <i class="fa fa-plug fapad"></i><b class="mgl"> MAIN POWER <b style="margin-left: 2%;font-size: 11px;">: <label class="mgl" id="car_power"></label></b></b>
             </a> 
-            <a class=" btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1">
+            <a class=" btn btn-block btn-social btn-bitbucket track_item" id="lost_blink_id1" style="cursor:auto!important">
               <i class="fa fa-signal fapad"></i><b class="mgl"> NETWORK <b style="margin-left: 10%;font-size: 11px;">: <label class="mgl" id="network_status"></label></b></b>
             </a> 
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <img src="../../assets/images/ac.png" height="25px" width="30px" class="fapad"> <b class="mgl">AC <b style="margin-left: 27%;font-size: 11px;">: <label class="mgl" id="ac"></label></b></b>
             </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
+            <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 23.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>
             <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
@@ -114,18 +114,18 @@
     </div>
     
     <div class="cover_poi">
-      <div  class="poi_atm poi_item" id="actv1">
-        <a href="#" id="poi_atm" onclick="clr1()">
+      <div class="poi_atm poi_item" filter="atm" id="actv1">
+        <a href="#" id="poi_atm" >
         <img src="{{ url('/') }}/images/ATM.png">
         </a>
       </div>
-      <div class="poi_petrol poi_item" id="actv2">
-        <a href="#" id="poi_petrol" onclick="clr2()">
+      <div class="poi_petrol poi_item" filter="gas_station" id="actv2">
+        <a href="#" id="poi_petrol" >
           <img src="{{ url('/') }}/images/pump.png">
        </a>
       </div>
-      <div class="poi_hopital poi_item" id="actv3">
-        <a href="#" id="poi_hopital" onclick="clr3()">
+      <div class="poi_hopital poi_item" filter="hospital" id="actv3">
+        <a href="#" id="poi_hopital" >
           <img src="{{ url('/') }}/images/hospital.png">
         </a>
       </div>
@@ -182,6 +182,9 @@ font-family:'Raleway',sans-serif;
 font-size:18px;
 cursor:pointer
 }
+.poi_item_active{
+  background-color:red;
+}
 </style>
 <!-- <script src="{{asset('js/odometer.js')}}"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script>
@@ -190,39 +193,6 @@ cursor:pointer
 <script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/gps_animation/markerAnimate.js')}}"></script>
 <script src="{{asset('js/gps_animation/SlidingMarker.js')}}"></script>
-<script type="text/javascript">
-  function clr1()
-  {
-    document.getElementById('actv1').style.background = "red";
-    document.getElementById('actv2').style.background = "white";
-    document.getElementById('actv3').style.background = "white";
-  }
-  function clr2()
-  {
-    document.getElementById('actv2').style.background = "red";
-    document.getElementById('actv1').style.background = "white";
-    document.getElementById('actv3').style.background = "white";
-  }
-  function clr3()
-  {
-    document.getElementById('actv3').style.background = "red";
-    document.getElementById('actv2').style.background = "white";
-    document.getElementById('actv1').style.background = "white";
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection
 
