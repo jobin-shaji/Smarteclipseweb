@@ -664,73 +664,69 @@ function offsetCenter(latlng)
 
 // -------------------------------------------------------------
 
-
 var POI_markers = [];
 var lat=posLat;
 var lng=posLng;
 
-var atm_flag=0;
+var poi_atm_clicked = false;
+var clicked_poi_item = '';
 var petrol_flag=0;
 var hospital_flag=0;
 
+$('.poi_item').click(function(){
+  var marker_images             = {
+    atm:{
+      'icon': '/images/ATM.svg',
+      'label': 'ATM'
+    },
+    gas_station:{
+      'icon': '/images/petrol-pump.svg',
+      'label': 'Petrol Pump'
+    },
+    hospital:{
+      'icon': '/images/hospital.svg',
+      'label': 'Hospital'
+    }
+  };
+  // map filter
+  var filter = $(this).attr('filter');
+  if(filter == 'undefined')
+  {
+    return true;
+  }
+  // clear existing markers
+  deleteMarkersPOI();
+  $('.poi_item').removeClass('poi_item_active');
 
-$('#poi_atm').click(function(){
-    deleteMarkersPOI();
-    if(atm_flag==0){
-        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        service.nearbySearch(
-          {location: pyrmont, radius: 1000, type:['atm']},
-           function(results, status, pagination) {
-           if (status !== 'OK') return;
-           var image="/images/ATM.svg";
-              createMarkers(results,image);
-            });
-         atm_flag=1;
-         }else{
-           deleteMarkersPOI();
-           atm_flag=0;
-         }
- 
+  if( clicked_poi_item != filter)
+  {
+    // set active class
+    $(this).addClass('poi_item_active');
+    // filter map contents
+    var latlng_location = {lat: parseFloat(lat), lng: parseFloat(lng)};
+    service.nearbySearch({
+      location: latlng_location, radius: 1000, type:[filter]
+    },
+    function(results, status) 
+    {
+      if (status !== 'OK') 
+      {
+        alert(' No '+marker_images[filter]['label']+' found within 1 KM');
+        return;
+      }
+      createMarkers(results, marker_images[filter]['icon']);
+      map.setZoom(15);
+     });
+    // set selected item
+    clicked_poi_item = filter;
+  }
+  else
+  {
+    clicked_poi_item = '';
+    map.setZoom(17);
+  }
+});
 
- });
-
-
-$('#poi_petrol').click(function(){
-        deleteMarkersPOI();
-        if(petrol_flag==0){
-        var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        service.nearbySearch(
-          {location: pyrmont, radius: 1000, type:['gas_station']},
-           function(results, status, pagination) {
-           if (status !== 'OK') return;
-             var image="/images/petrol-pump.svg";
-              createMarkers(results,image);
-            });
-
-          petrol_flag=1;
-         }else{
-           deleteMarkersPOI();
-           petrol_flag=0;
-         }
-  
-    });
- $('#poi_hopital').click(function(){
-        deleteMarkersPOI();
-        if(hospital_flag==0){
-          var pyrmont = {lat: parseFloat(lat), lng: parseFloat(lng)};
-          service.nearbySearch(
-            {location: pyrmont, radius: 1000, type:['hospital']},
-             function(results, status, pagination) {
-             if (status !== 'OK') return;
-             var image="/images/hospital.svg";
-                createMarkers(results,image);
-              });
-          hospital_flag=1;
-         }else{
-           deleteMarkersPOI();
-           hospital_flag=0;
-        }
-    });
 // ---------------find nearest map points-----------------
  var infowindow = new google.maps.InfoWindow();
  function createMarkers(places,image_icon) {

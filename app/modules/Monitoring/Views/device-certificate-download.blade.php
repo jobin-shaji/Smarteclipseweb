@@ -248,6 +248,68 @@ else
 @endif
 @if(in_array(2, $report_type))
 <p style="margin-left: 53px"><b>Owner Details</b></p>
+<table border="1" cellspacing="0" cellpadding="2px" style="margin-left: 53px;width: 100%">
+    <?php
+$role=$monitoringReport->client->user->role;
+if($role==0||$role==4)
+ { 
+    $user_role="Freebies";
+ }else if($role==6){
+    $user_role="Fundamental";
+ }else if($role==7){
+    $user_role="Superior";
+ }else if($role==8){
+    $user_role="Pro";
+ }
+ else{
+    $user_role="No data Available";
+ }
+              
+?>
+<tr>
+        <th style="width: 30%">Owner Name </th>
+        <td>@if($monitoringReport->client->name){{ $monitoringReport->client->name }}@else{{'No data available'}} @endif</td> 
+    </tr>
+    <tr>
+        <th>Owner Username</th>
+        <td>@if($monitoringReport->client->user->username){{ $monitoringReport->client->user->username}}@else{{'No data available'}} @endif</td> 
+    </tr>
+    <tr>
+        <th>Owner Address</th>
+        <td>@if($monitoringReport->client->address){{ $monitoringReport->client->address}}@else{{'No data available'}} @endif</td>
+    </tr>
+    <tr>
+        <th>Owner Mobile</th>
+        <td>@if($monitoringReport->client->user->mobile){{ $monitoringReport->client->user->mobile}}@else{{'No data available'}} @endif</td> 
+    </tr>
+    <tr>
+        <th>Owner Email</th>
+        <td>@if($monitoringReport->client->user->email){{ $monitoringReport->client->user->email}}@else{{'No data available'}} @endif</td>                  
+    </tr>
+    <tr>
+        <th>Owner Latitude </th> 
+        <td>@if($monitoringReport->client->latitude){{ $monitoringReport->client->latitude}}@else{{'No data available'}} @endif</td>                  
+    </tr> 
+    <tr>
+        <th>Owner Longitude</th>
+        <td>@if($monitoringReport->client->longitude){{ $monitoringReport->client->longitude}}@else{{'No data available'}} @endif</td>
+    </tr>
+    <tr> 
+        <th>Owner Country</th>
+        <td>@if($monitoringReport->client->country){{ $monitoringReport->client->country->name}}@else{{'No data available'}} @endif</td>
+    </tr>
+    <tr> 
+        <th>Owner State</th>
+        <td>@if($monitoringReport->client->state){{ $monitoringReport->client->state->name}}@else{{'No data available'}} @endif</td>
+    </tr> 
+    <tr>
+        <th>Owner City </th> 
+        <td>@if($monitoringReport->client->city){{ $monitoringReport->client->city->name}}@else{{'No data available'}} @endif</td>
+    </tr>
+    <tr>
+        <th>Dealer </th>
+        <td>@if($monitoringReport->gpsStock->subdealer){{ $monitoringReport->gpsStock->subdealer->name}}@else{{'No data available'}} @endif</td> 
+    </tr> 
 <?php
 if($monitoringReport->client)
 {
@@ -268,15 +330,7 @@ if($monitoringReport->client)
     else{
         $user_role="No data Available";
     }
-    if($monitoringReport->client->subdealer){
-        $dealer_trader=$monitoringReport->client->subdealer->name;
-    }
-    else if($monitoringReport->client->trader){
-        $dealer_trader=$monitoringReport->client->trader->name;
-    }
-    else{
-        $dealer_trader="Not Assigned";
-    }                
+              
     ?>
     <tr>
             <th style="width: 30%">Owner Name </th>
@@ -316,7 +370,7 @@ if($monitoringReport->client)
         </tr>
         <tr>
             <th>Dealer </th>
-            <td>@if($dealer_trader){{ $dealer_trader}}@else{{'No data available'}} @endif</td> 
+            <td>@if($monitoringReport->gpsStock->subdealer){{ $monitoringReport->gpsStock->subdealer->name}}@else{{'No data available'}} @endif</td> 
         </tr> 
         <tr>
             <th>Owner Package </th>

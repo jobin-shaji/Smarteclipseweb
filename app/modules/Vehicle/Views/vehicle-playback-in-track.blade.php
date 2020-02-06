@@ -39,10 +39,6 @@
 
 
 <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
-    
-
-
-   
  <div id="markers" style="width:100%px;height:100vh; position: relative;"></div>
 
         <div class='col-lg-12 cover_date cover-date1'>
@@ -53,26 +49,22 @@
       </div>
           <div class="top-date">
              <div class="row row-mrg-1">
-              
              <span id="cover_date_time_picker">
-
               <div class='col-sm-3'>
               <div class="form-group">
-                <label style="font-weight:bold">Start Date</label>
-                <div class='input-group date' id='datetimepicker_live1'>
-                  <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" required />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
+                <label style="font-weight:bold">Start Date</label>            
+                <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">                 
+                    <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" required />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>                
                 </div>
               </div>
             </div>
-  
-
               <div class='col-sm-3'>
               <div class="form-group">
                 <label style="font-weight:bold">End Date</label>
-                <div class='input-group date' id='datetimepicker_live2'>
+                <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'todatepickerSuperior'; }else if(\Auth::user()->hasRole('freebies')){ echo 'todatepickerFreebies'; } else if(\Auth::user()->hasRole('fundamental')){ echo 'todatepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'todatepickerPro'; } else{ echo 'todatepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'todatepickerSuperior'; }else if(\Auth::user()->hasRole('freebies')){ echo 'todatepickerFreebies'; } else if(\Auth::user()->hasRole('fundamental')){ echo 'todatepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'todatepickerPro'; } else{ echo 'todatepickerFreebies';}?>">
                   <input type="text" id="toDate" style="height: 33px;"class="form-control" name="toDate" required>
                   <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -1086,7 +1078,8 @@
 
 
     </script>
-
+ <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
+    
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
@@ -1099,15 +1092,61 @@
 
 <script type="text/javascript">
 $(function() {
-  $('#datetimepicker_live1').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss',
-    maxDate: moment()
-  });
 
-    $('#datetimepicker_live2').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss',
-    maxDate: moment()
+  var d = new Date();
+    free_date=d.setMonth(d.getMonth() - 1);
+    fundamental_date=d.setMonth(d.getMonth() - 1);
+    superior_date=d.setMonth(d.getMonth() - 2);
+    pro_date=d.setMonth(d.getMonth() - 2);
+  $('#datepickerFreebies').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:free_date
   });
+  $('#todatepickerFreebies').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:free_date
+  });
+  $('#datepickerFundamental').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:fundamental_date
+  });
+  $('#todatepickerFundamental').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:fundamental_date
+  });
+  $('#datepickerSuperior').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:superior_date
+  });
+  $('#todatepickerSuperior').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:superior_date
+  });
+  $('#datepickerPro').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:pro_date
+  });
+  $('#todatepickerPro').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+        maxDate: new Date(),
+        minDate:pro_date
+  });
+  // $('#datetimepicker_live1').datetimepicker({
+  //   format: 'YYYY-MM-DD HH:mm:ss',
+  //   maxDate: moment()
+  // });
+
+  //   $('#datetimepicker_live2').datetimepicker({
+  //   format: 'YYYY-MM-DD HH:mm:ss',
+  //   maxDate: moment()
+  // });
 
 });
 
@@ -1123,7 +1162,34 @@ jQuery("#preloader").delay(1000).fadeOut("slow");
 
 });
 </script>
+<script> 
+$("#todatepickerFreebies").on('dp.change', function (e) {
+  
+    var startDate = document.getElementById("fromDate").value;
+    var endDate = document.getElementById("toDate").value;   
+    var a = new Date(startDate);
+    var b = new Date(endDate);
 
+    alert(new Date.parse(startDate));
+    if (new Date(parse(startDate)) > new Date(parse(endDate))) {
+        alert("End date should be greater than Start date");
+        document.getElementById("toDate").value = "";
+    }
+});  
+$("#datepickerFreebies").on('dp.change', function (e) {
+    var startDate = Date.parse(document.getElementById("fromDate").value);
+    var endDate = Date.parse(document.getElementById("toDate").value);
+    if(endDate){
+     
+      // alert(Date(startDate));
+      if (startDate < endDate) {
+          alert("Start date should be less than End date");
+          document.getElementById("fromDate").value = "";
+      }
+    }   
+});         
+ 
+</script>
 
   
     <script>
