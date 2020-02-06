@@ -114,18 +114,18 @@
     </div>
     
     <div class="cover_poi">
-      <div  class="poi_atm poi_item" id="actv1">
-        <a href="#" id="poi_atm" onclick="clr1()">
+      <div class="poi_atm poi_item" filter="atm" id="actv1">
+        <a href="#" id="poi_atm" >
         <img src="{{ url('/') }}/images/ATM.png">
         </a>
       </div>
-      <div class="poi_petrol poi_item" id="actv2">
-        <a href="#" id="poi_petrol" onclick="clr2()">
+      <div class="poi_petrol poi_item" filter="gas_station" id="actv2">
+        <a href="#" id="poi_petrol" >
           <img src="{{ url('/') }}/images/pump.png">
        </a>
       </div>
-      <div class="poi_hopital poi_item" id="actv3">
-        <a href="#" id="poi_hopital" onclick="clr3()">
+      <div class="poi_hopital poi_item" filter="hospital" id="actv3">
+        <a href="#" id="poi_hopital" >
           <img src="{{ url('/') }}/images/hospital.png">
         </a>
       </div>
@@ -182,6 +182,9 @@ font-family:'Raleway',sans-serif;
 font-size:18px;
 cursor:pointer
 }
+.poi_item_active{
+  background-color:red;
+}
 </style>
 <!-- <script src="{{asset('js/odometer.js')}}"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script>
@@ -190,39 +193,6 @@ cursor:pointer
 <script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/gps_animation/markerAnimate.js')}}"></script>
 <script src="{{asset('js/gps_animation/SlidingMarker.js')}}"></script>
-<script type="text/javascript">
-  function clr1()
-  {
-    document.getElementById('actv1').style.background = "red";
-    document.getElementById('actv2').style.background = "white";
-    document.getElementById('actv3').style.background = "white";
-  }
-  function clr2()
-  {
-    document.getElementById('actv2').style.background = "red";
-    document.getElementById('actv1').style.background = "white";
-    document.getElementById('actv3').style.background = "white";
-  }
-  function clr3()
-  {
-    document.getElementById('actv3').style.background = "red";
-    document.getElementById('actv2').style.background = "white";
-    document.getElementById('actv1').style.background = "white";
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection
 
