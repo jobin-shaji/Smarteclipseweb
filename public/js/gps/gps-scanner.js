@@ -37,7 +37,7 @@ scanner.addListener('scan', function (content) {
                 var gps_batch_number=res.gps_batch_number;
                 var gps_employee_code=res.gps_employee_code;
                 $("#gps_id").val(items); 
-                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='return deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                 $("table tbody").append(markup);
                 var value = $('#gps_id').val();
                 if (value) {
@@ -92,9 +92,9 @@ $(function(){
                             $('#scanned_device_count').text(scanned_device_count);
                             var role = $('#role').val();
                             if(role=='root'){
-                              var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                              var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='return deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                             }else{
-                              var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td><button class='btn btn-xs btn-danger' onclick='deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
+                              var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td><button class='btn btn-xs btn-danger' onclick='return deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
                             }
                             $("table tbody").append(markup);
                             var value = $('#gps_id').val();
@@ -139,26 +139,34 @@ $(function(){
 
 function deleteValueArray(gps_id)
 {
-  var item_data = items.indexOf(gps_id);
-  if (item_data > -1) {
-    items.splice(item_data, 1);
-    $('.cover_imei_'+gps_id).remove();
-    var old_device_count = $('#scanned_device_count').text();
-    var scanned_device_count = parseInt(old_device_count)-1;
-    $('#scanned_device_count').text(scanned_device_count);
-    $('#gps_id').val(items); 
-    var value = $('#gps_id').val();
-    if (value) {
-      $("#stock_table_heading").show();
-      $("#stock_table").show();
-      $("#transfer_button").show();
-    }else{
-      $("#stock_table_heading").hide();
-      $("#stock_table").hide();
-      $("#transfer_button").hide();
+  if( confirm('Do you want to remove this ?') )
+  {
+    var item_data = items.indexOf(gps_id);
+    if (item_data > -1) {
+      items.splice(item_data, 1);
+      $('.cover_imei_'+gps_id).remove();
+      var old_device_count = $('#scanned_device_count').text();
+      var scanned_device_count = parseInt(old_device_count)-1;
+      $('#scanned_device_count').text(scanned_device_count);
+      $('#gps_id').val(items); 
+      var value = $('#gps_id').val();
+      if (value) {
+        $("#stock_table_heading").show();
+        $("#stock_table").show();
+        $("#transfer_button").show();
+      }else{
+        $("#stock_table_heading").hide();
+        $("#stock_table").hide();
+        $("#transfer_button").hide();
+      }
     }
   }
+  else
+  {
+    return false;
+  }
 }
+
 
 $(function() {
   $('input[name="type"]').on('click', function() {
