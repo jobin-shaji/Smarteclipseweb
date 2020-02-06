@@ -128,6 +128,7 @@ function render_vehicletab(res)
         {'id' : 'tvc_driver_address', 'key' : ['driver','address']},
         {'id' : 'tvc_driver_mobile', 'key' : ['driver','mobile']},
         {'id' : 'tvc_driver_points', 'key' : ['driver','points']},
+        {'id' : 'driver_deleted', 'key' : ['driver','deleted_at']},
         /* /Driver Details */
     ].forEach(function(each_element){
         repaint(each_element.id);
@@ -226,6 +227,19 @@ function render_vehicletab(res)
             else if( each_element.id == 'tvc_driver_points')
             {
                 $('#'+each_element.id).text( (detail > 0) ? detail : 0 );
+            }
+            else if(each_element.id == 'driver_deleted')
+            {
+                if(detail.length > 0)
+                {
+                    $('.vehicle-driver-details').hide();
+                    $('.vehicle-driver-details-empty').show();
+                }
+                else
+                {
+                    $('.vehicle-driver-details').show();
+                    $('.vehicle-driver-details-empty').hide();
+                }
             }
             else
             {
