@@ -72,13 +72,16 @@
                   <section class="hilite-content">
                   <!-- title row -->
                     <div class="row">
-                      <div class="col-lg-6 col-md-6 col-xs-12">
+                      <div class="col-lg-9 col-md-9 col-xs-12">
                         <h3 class="page-header">
                           <i class="fa fa-user"> Change Driver</i> 
                         </h3>
                         <?php 
                           $encript=Crypt::encrypt($vehicle->gps->id)
                         ?>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-xs-12">
+                      <a href="/driver/create" class='btn btn-xs btn' data-toggle='tooltip'><i class='fa fa-plus'></i> <b>Create Driver</b></i></a>
                       </div>
                     </div>
 
