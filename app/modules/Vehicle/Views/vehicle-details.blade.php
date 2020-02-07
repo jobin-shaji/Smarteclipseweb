@@ -225,35 +225,23 @@
                               @endforeach
                             </select>
                           </div>
-                          @if ($errors->has('document_type_id'))
-                            <span class="help-block">
-                              <strong class="error-text">{{ $errors->first('document_type_id') }}</strong>
-                            </span>
-                          @endif
+                          <span class="error_document_type_id" style='color:red;'></span>
                       </div>
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label" id="expiry_heading" style="display: none;">Expiry Date</label> 
                           <div class="form-group has-feedback">
-                            <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" > 
+                            <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" required> 
                           </div>
-                          @if ($errors->has('expiry_date'))
-                            <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('expiry_date') }}</strong>
-                            </span>
-                          @endif
+                          <span class="error_expiry_date" style='color:red;'></span>
                       </div>
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Upload File</label>
                           <div class="form-group has-feedback">
-                            <input type="file" id="choose_image" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}">
-                              <span style='color:#f29a0e;'>Size: max 2MB, Format: jpg,png</span>
+                            <input type="file" id="choose_image" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" required accept="image/png, image/jpeg">
+                              <span style='color:#f29a0e;'>Size: max 2MB, Format: jpg/jpeg,png</span>
                           </div>
                           <img width="150" height="100" class='selected_image' style='display:none;' src="#"  />
-                          @if ($errors->has('path'))
-                            <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('path') }}</strong>
-                            </span>
-                          @endif
+                          <span class="error_path" style='color:red;'></span>
                       </div>          
                       <div class="row">
                         <!-- /.col -->

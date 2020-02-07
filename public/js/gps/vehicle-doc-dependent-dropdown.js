@@ -49,7 +49,13 @@ $('#upload_form').on('submit', function(event){
            processData: false,
            success:function(res)
            {
-            console.log(res);
+                if(typeof res.error != 'undefined')
+                {
+                    Object.keys(res.error).forEach(key => {
+                        $('.error_'+key).text(res.error[key]);
+                    });
+                    return false;
+                }
                 if(res.count==3){
                     if (confirm('Maximum number of documents with same expiry date is reached. Do you want to replace all existing documents with the current one ?')){            
                         deleteDocuments(data_val);
@@ -72,18 +78,17 @@ $('#upload_form').on('submit', function(event){
  });
 function deleteDocuments(data_val){
    $.ajax({
-       url:'/delete-already-existing',
-       method:"POST",
-       data:data_val,
-       dataType:'JSON',
-       contentType: false,
-       cache: false,
-       processData: false,
-       success:function(data)
-       {
-            // alert("Successfully Created"); 
+        url:'/delete-already-existing',
+        method:"POST",
+        data:data_val,
+        dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success:function(data)
+        {
             location.reload(true); 
-       }
+        }
   })
 }
 
@@ -92,15 +97,15 @@ $("#choose_image").change(function() {
     displaySelectedImage(this);
   });
 function displaySelectedImage(input) {
-if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    
-    reader.onload = function(e) {
-    $('.selected_image').show();
-    $('.selected_image').attr('src', e.target.result);
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+        $('.selected_image').show();
+        $('.selected_image').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]);
     }
-    
-    reader.readAsDataURL(input.files[0]);
-}
 }
 
