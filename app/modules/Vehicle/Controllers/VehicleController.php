@@ -2997,40 +2997,40 @@ class VehicleController extends Controller
     { 
         $messages = [
             'path.uploaded' => "The file size should be less than 2MB"
-        ];    
-        $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
-        if ($validator->fails()) 
+        ];  
+        if($request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8)
         {
-            $error = [];
-            foreach($validator->getMessageBag()->toArray() as $key => $each_error)
+            $validator = Validator::make($request->all(), $this->documentCreateRules(),$messages);
+            $expiry_date=null;
+            if ($validator->fails()) 
             {
-                $error[$key] = $each_error[0];
+                $error = [];
+                foreach($validator->getMessageBag()->toArray() as $key => $each_error)
+                {
+                    $error[$key] = $each_error[0];
+                }
+                $response = [
+                    'count' => 0,
+                    'data'  => [],
+                    'error' => $error
+                ];
             }
-            $response = [
-                'count' => 0,
-                'data'  => [],
-                'error' => $error
-            ];
-        }
-        else
-        {
-            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));       
-            $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
-            $data=[
-                'vehicle_id' => $request->vehicle_id,
-                'document_type_id' => $request->document_type_id,
-                'expiry_date' => $expiry_date,
-                'path'=>$request->path
-            ]; 
-            $file = $request->file('path'); 
-            $getFileExt   = $file->getClientOriginalExtension();
-            $uploadedFile =   time().'.'.$getFileExt;        
-            $destinationPath = 'documents/vehicledocs';
-            
-            if($documents_count->count()<2)
-            {
-                if($documents_count->count()==0){  
-
+            else
+            {      
+                $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+                $data=[
+                    'vehicle_id' => $request->vehicle_id,
+                    'document_type_id' => $request->document_type_id,
+                    'expiry_date' => $expiry_date,
+                    'path'=>$request->path
+                ]; 
+                $file = $request->file('path'); 
+                $getFileExt   = $file->getClientOriginalExtension();
+                $uploadedFile =   time().'.'.$getFileExt;        
+                $destinationPath = 'documents/vehicledocs';
+                
+                if($documents_count->count()<2)
+                { 
                     $file->move($destinationPath,$uploadedFile);       
                     $documents = Document::create([
                         'vehicle_id' => $request->vehicle_id,
@@ -3041,36 +3041,93 @@ class VehicleController extends Controller
                     $response = [                    
                         'count'=>$documents_count->count(),
                         'data'=>$data
-                    ];   
+                    ];                     
                 }
-                else if($documents_count->first()->expiry_date==$expiry_date)
-                {
-                    $file->move($destinationPath,$uploadedFile);
-                    $documents = Document::create([
-                        'vehicle_id' => $request->vehicle_id,
-                        'document_type_id' => $request->document_type_id,
-                        'expiry_date' => $expiry_date,
-                        'path' => $uploadedFile
-                    ]);
+                else
+                {          
                     $response = [
-                        
-                        'count'=>$documents_count->count(),
+                        'count'=>3,
                         'data'=>$data
-                    ];               
+                    ];            
                 }
-                else{
-                    $response = [                   
-                        'count'=>4,
-                        'data'=>$data
-                    ]; 
-                }                      
+            }
+        }
+        else
+        {
+            $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
+            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));  
+            if ($validator->fails()) 
+            {
+                $error = [];
+                foreach($validator->getMessageBag()->toArray() as $key => $each_error)
+                {
+                    $error[$key] = $each_error[0];
+                }
+                $response = [
+                    'count' => 0,
+                    'data'  => [],
+                    'error' => $error
+                ];
             }
             else
-            {          
-                $response = [
-                    'count'=>3,
-                    'data'=>$data
-                ];            
+            {      
+                $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+                $data=[
+                    'vehicle_id' => $request->vehicle_id,
+                    'document_type_id' => $request->document_type_id,
+                    'expiry_date' => $expiry_date,
+                    'path'=>$request->path
+                ]; 
+                $file = $request->file('path'); 
+                $getFileExt   = $file->getClientOriginalExtension();
+                $uploadedFile =   time().'.'.$getFileExt;        
+                $destinationPath = 'documents/vehicledocs';
+                
+                if($documents_count->count()<2)
+                {
+                    if($documents_count->count()==0){  
+
+                        $file->move($destinationPath,$uploadedFile);       
+                        $documents = Document::create([
+                            'vehicle_id' => $request->vehicle_id,
+                            'document_type_id' => $request->document_type_id,
+                            'expiry_date' => $expiry_date,
+                            'path' => $uploadedFile
+                        ]);
+                        $response = [                    
+                            'count'=>$documents_count->count(),
+                            'data'=>$data
+                        ];   
+                    }
+                    else if($documents_count->first()->expiry_date==$expiry_date)
+                    {
+                        $file->move($destinationPath,$uploadedFile);
+                        $documents = Document::create([
+                            'vehicle_id' => $request->vehicle_id,
+                            'document_type_id' => $request->document_type_id,
+                            'expiry_date' => $expiry_date,
+                            'path' => $uploadedFile
+                        ]);
+                        $response = [
+                            
+                            'count'=>$documents_count->count(),
+                            'data'=>$data
+                        ];               
+                    }
+                    else{
+                        $response = [                   
+                            'count'=>4,
+                            'data'=>$data
+                        ]; 
+                    }                      
+                }
+                else
+                {          
+                    $response = [
+                        'count'=>3,
+                        'data'=>$data
+                    ];            
+                }
             }
         }
        

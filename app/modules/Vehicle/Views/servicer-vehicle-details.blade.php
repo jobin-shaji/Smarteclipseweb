@@ -6,18 +6,18 @@
 @section('content')
 
 <div class="page-wrapper_new">
-   <nav aria-label="breadcrumb">
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Details</li>
       <b>Vehicle Details</b>
-      @if(Session::has('message'))
-  <div class="pad margin no-print">
-    <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-      {{ Session::get('message') }}  
-    </div>
-  </div>
-  @endif  
     </ol>
+    @if(Session::has('message'))
+    <div class="pad margin no-print">
+      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+        {{ Session::get('message') }}  
+      </div>
+    </div>
+    @endif  
   </nav>
 
  
@@ -98,11 +98,7 @@
                               @endforeach
                             </select>
                           </div>
-                          @if ($errors->has('document_type_id'))
-                            <span class="help-block">
-                              <strong class="error-text">{{ $errors->first('document_type_id') }}</strong>
-                            </span>
-                          @endif
+                          <span class="error_document_type_id" style='color:red;'></span>
                       </div>
 
                       <div class="form-group row" style="float:none!important">
@@ -110,23 +106,15 @@
                           <div class="form-group has-feedback">
                             <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Expiry Date" name="expiry_date" id="expiry_date" style="display: none;" value="{{ old('expiry_date') }}" > 
                           </div>
-                          @if ($errors->has('expiry_date'))
-                            <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('expiry_date') }}</strong>
-                            </span>
-                          @endif
+                          <span class="error_expiry_date" style='color:red;'></span>
                       </div>
 
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Upload File</label>
                           <div class="form-group has-feedback">
-                            <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" > 
+                            <input type="file" class="form-control {{ $errors->has('path') ? ' has-error' : '' }}" placeholder="Choose File" name="path" value="{{ old('path') }}" required accept="image/png, image/jpeg"> 
+                            <span class="error_path" style='color:red;'></span>
                           </div>
-                          @if ($errors->has('path'))
-                            <span class="help-block">
-                                <strong class="error-text">{{ $errors->first('path') }}</strong>
-                            </span>
-                          @endif
                       </div>
           
                       <div class="row">
@@ -170,12 +158,12 @@
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
                                         <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                                       </td>
                                     @else
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='Download'><i class='fa fa-download'></i></a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger'  data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')"  data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
                                       </td>
                                     @endif
                                   </tr>
