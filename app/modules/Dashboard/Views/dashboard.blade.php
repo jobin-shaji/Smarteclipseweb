@@ -1061,11 +1061,13 @@
             <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px">
               @foreach ($vehicles as $vehicle)       
                 <div class="border-card">
-                  <div class="card-type-icon with-border">
+                
+                  <div class="content-wrapper con-radio">
+
+                      <div class="card-type-icon with-border">
                   <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
                   </div>
                   
-                  <div class="content-wrapper">
                     <div class="label-group fixed">
                       <p class="title">
                         <span><i class="fa fa-car"></i></span>
@@ -1086,6 +1088,13 @@
                 </div>
               @endforeach  
             </div>
+
+<style>
+  .content-wrapper.con-radio{
+    height: auto;
+  }
+</style>
+
               <div id="msg"></div>
           </div>
           <div class="right-bottom">
