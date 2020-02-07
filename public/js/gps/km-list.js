@@ -1,5 +1,5 @@
 $(document).ready(function () { 
-     $("#loader-1").hide();
+     $(".loader-1").hide();
 });
 
 function check(){
@@ -44,7 +44,7 @@ function check(){
             report_type : report_type          
         }; 
 
-        $("#loader-1").show();
+        $(".loader-1").show();
         backgroundPostData(url,data,'kmReport',{alert:true});
     }
 }
@@ -52,7 +52,7 @@ function check(){
 
 function kmReport(res)
 {
-    $("#loader-1").hide();
+    $(".loader-1").hide();
     var km =res.dailykm;
     var sudden_acceleration=res.sudden_acceleration;
     var harsh_braking=res.harsh_braking;

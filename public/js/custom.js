@@ -1191,6 +1191,7 @@ function notification(res){
 }
 
 function clientAlerts(){
+    console.log(1);
   var flag;
     var url = 'alert-notification';
     var data = {
@@ -1518,9 +1519,13 @@ function rootTrader(res)
                 $('#emergency_vehicle_time').text(alert_time);
             }
         }
-        clientAlerts();
+        var  role=$('#header_role').val();
+        if(role=='62608e08adc29a8d6dbc9754e659f125')
+        {
+            // alert(role);
+            clientAlerts();
+        }     
     }
-
 /////////////////////////Km Report/////////////////////////
 function downloadKMReport(){    
     var url = 'km-report/export';
