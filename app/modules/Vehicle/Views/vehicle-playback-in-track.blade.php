@@ -50,6 +50,9 @@
           <div class="top-date">
              <div class="row row-mrg-1">
              <span id="cover_date_time_picker">
+              <span id="cover_date_time_picker_cover_date">
+
+
               <div class='col-sm-3'>
               <div class="form-group">
                 <label style="font-weight:bold">Start Date</label>            
@@ -72,6 +75,7 @@
                 </div>
               </div>
             </div>
+          </span>
           </span>
     
            <div class='col-sm-2'>   
@@ -116,7 +120,7 @@
 
 
 <div class="notification-icon">
-<div class="dropdownContainer"><div class="noti-alert-count">2
+<div class="dropdownContainer"><div class="noti-alert-count">0
 </div> <div class="notification dropdown-toggle"></div>
 
 <div class="dropdown">
@@ -126,19 +130,10 @@
 </div>
 <ul >
 
-  <li><a href="#" >Over Speed <span>location Name</span>
+ <!--  <li><a href="#" >Over Speed <span>location Name</span>
   <div class="time-dis">2019-12-24 06:40:14</div>
 </a>
-</li>
- <li><a href="#" >Over Speed <span>location Name</span></a></li>
-
-  <li><a href="#" >Over Speed <span>location Name</span>
-
-  </a></li>
- <li><a href="#" >Over Speed <span>location Name</span></a></li>
-
-  <li><a href="#" >Over Speed <span>location Name</span></a></li>
- <li><a href="#" >Over Speed <span>location Name</span></a></li>
+</li> -->
      
 </ul>
 
@@ -431,8 +426,8 @@
                   var from_date = $('#fromDate').val();
                   var to_date   = $('#toDate').val();
 
-                $('#cover_date_time_picker').empty();
-                $('#cover_date_time_picker').html('<div class="col-sm-6 col-date-outer"><span class="datetime_searched"> '+from_date+ ' - '+to_date+' </span><span onclick="resetDate()" class="close-span-rt"><i class="fa fa-times"></i></span></div>');
+                $('#cover_date_time_picker_cover_date').css('display','none');
+                $('#cover_date_time_picker').append('<div class="col-sm-6 col-date-outer"><span class="datetime_searched"> '+from_date+ ' - '+to_date+' </span><span onclick="resetDate()" class="close-span-rt"><i class="fa fa-times"></i></span></div>');
                 }
 
                
@@ -761,8 +756,12 @@
 
                 if(last_offset==true && location_data_que.length ==0){
                      
+
+                     
                      var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
                      map.addObject(flag);
+                     
+
                 }
                 // stop point
                 
@@ -776,6 +775,8 @@
                      
                      var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
                      map.addObject(flag);
+
+                     $('#btnPause').css('display','none');
                 }
 
              }
@@ -1094,47 +1095,47 @@
 $(function() {
 
   var d = new Date();
-    free_date=d.setMonth(d.getMonth() - 1);
-    fundamental_date=d.setMonth(d.getMonth() - 1);
-    superior_date=d.setMonth(d.getMonth() - 2);
-    pro_date=d.setMonth(d.getMonth() - 2);
+  free_date=d.setMonth(d.getMonth() - 1);
+  fundamental_date=d.setMonth(d.getMonth() - 1);
+  superior_date=d.setMonth(d.getMonth() - 2);
+  pro_date=d.setMonth(d.getMonth() - 2);
   $('#datepickerFreebies').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+    format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:free_date
   });
   $('#todatepickerFreebies').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+      format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:free_date
   });
   $('#datepickerFundamental').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+    format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:fundamental_date
   });
   $('#todatepickerFundamental').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+    format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:fundamental_date
   });
   $('#datepickerSuperior').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+    format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:superior_date
   });
   $('#todatepickerSuperior').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+    format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:superior_date
   });
   $('#datepickerPro').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+        format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:pro_date
   });
   $('#todatepickerPro').datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
+    format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
         minDate:pro_date
   });
@@ -1163,31 +1164,76 @@ jQuery("#preloader").delay(1000).fadeOut("slow");
 });
 </script>
 <script> 
-$("#todatepickerFreebies").on('dp.change', function (e) {
-  
-    var startDate = document.getElementById("fromDate").value;
-    var endDate = document.getElementById("toDate").value;   
-    var a = new Date(startDate);
-    var b = new Date(endDate);
-
-    alert(new Date.parse(startDate));
-    if (new Date(parse(startDate)) > new Date(parse(endDate))) {
-        alert("End date should be greater than Start date");
-        document.getElementById("toDate").value = "";
-    }
-});  
-$("#datepickerFreebies").on('dp.change', function (e) {
-    var startDate = Date.parse(document.getElementById("fromDate").value);
-    var endDate = Date.parse(document.getElementById("toDate").value);
-    if(endDate){
+  $('#todatepickerFreebies').on('dp.change', function(e) {    
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+// alert(e.date);
      
-      // alert(Date(startDate));
-      if (startDate < endDate) {
-          alert("Start date should be less than End date");
-          document.getElementById("fromDate").value = "";
-      }
+
+    if( new Date(startDate) > new Date(endDate)){
+      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("toDate").value = "";
+    }
+  });
+  $("#datepickerFreebies").on('dp.change', function (e) {
+   
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+
+    if( new Date(startDate) > new Date(endDate)){    
+      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("fromDate").value = "";
     }   
-});         
+  });  
+
+  $('#todatepickerFundamental').on('dp.change', function(e) {    
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){
+      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("toDate").value = "";
+    }
+  });
+  $("#datepickerFundamental").on('dp.change', function (e) {
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){    
+      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("fromDate").value = "";
+    }   
+  });  
+  $('#todatepickerSuperior').on('dp.change', function(e) {    
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){
+      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("toDate").value = "";
+    }
+  });
+  $("#datepickerSuperior").on('dp.change', function (e) {
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){    
+      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("fromDate").value = "";
+    }   
+  }); 
+   $('#todatepickerPro').on('dp.change', function(e) {    
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){
+      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("toDate").value = "";
+    }
+  });
+  $("#datepickerPro").on('dp.change', function (e) {
+    var startDate = $("#fromDate").val();
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){    
+      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
+      document.getElementById("fromDate").value = "";
+    }   
+  });         
  
 </script>
 

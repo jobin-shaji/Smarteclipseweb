@@ -11,6 +11,7 @@ function initMap() {
   });
 }
 $(document).ready(function () {
+   $(".loader-1").show();
   var url = 'notification-alerts-list';
   var data={  
   }
@@ -19,6 +20,7 @@ $(document).ready(function () {
 
 function notificationAlertsList(res)
 {
+    $(".loader-1").hide();
     for (var i = 0; i < res.alerts.length; i++)
     {
       register_number = res.alerts[i].gps.vehicle.register_number;
@@ -72,6 +74,9 @@ function notificationAlertsList(res)
       $("#notification").append(notification); 
     }
    // responseList(res);
+    $("#loader-1").hide();
+    $(".loader-1").hide();
+
 }
 
 function gpsAlertCount(value){
@@ -84,6 +89,7 @@ function gpsAlertCount(value){
 }
 function gpsAlertTracker(res)
 {  
+
   $('#alert_'+res.alertmap.id).removeClass('alert');
   var latitude=parseFloat(res.alertmap.latitude);
   var longitude=parseFloat(res.alertmap.longitude);

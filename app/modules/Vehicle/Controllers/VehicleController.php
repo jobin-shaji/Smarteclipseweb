@@ -2858,8 +2858,8 @@ class VehicleController extends Controller
     { 
         
         $vehicleid = $request->vehicleid;
-        $from_date = $request->fromDateTime;
-        $to_date = $request->toDateTime;
+        $from_date =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
+        $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
         $get_vehicle = Vehicle::find($vehicleid);
         $offset = $request->offset;
        
@@ -2882,22 +2882,42 @@ class VehicleController extends Controller
             $limit = 30;
             $start_offset = ($offset * $limit) - $limit;
         }
+
+   
         $gps_id = $get_vehicle->gps_id;
 
-        $count_of_gpsdata = GpsData::select('latitude as latitude', 'longitude as longitude', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->whereNotNull('latitude')
-            ->whereNotNull('longitude')
-            ->where('gps_fix',1)
-            ->orderBy('device_time', 'asc')
-            ->count();
-        $total_index = round($count_of_gpsdata / 30);
+        $count_of_gpsdata = GpsData::where('device_time', '>=', $from_date)
+                            ->where('device_time', '<=', $to_date)
+                            ->where('gps_id', $gps_id)
+                            ->whereNotNull('latitude')
+                            ->whereNotNull('longitude')
+                            ->where('gps_fix',1)
+                            ->orderBy('device_time', 'asc')
+                            ->count();
+        $total_index = ceil($count_of_gpsdata / 30);
        
-        $track_data = GpsData::select('id', 'latitude as latitude', 'longitude as longitude', 'lat_dir as latitude_dir', 'lon_dir as longitude_dir', 'heading as angle', 'vehicle_mode as vehicleStatus', 'speed', 'device_time as dateTime')->where('device_time', '>=', $from_date)->where('device_time', '<=', $to_date)->where('gps_id', $gps_id)->offset($start_offset)->limit($limit)->whereNotNull('latitude')
-            ->whereNotNull('longitude')
-            ->where('gps_fix',1)
-            ->orderBy('device_time', 'asc')
-            ->get();
+        $track_data = GpsData::select('id',
+                                      'latitude as latitude',
+                                      'longitude as longitude', 
+                                      'lat_dir as latitude_dir', 
+                                      'lon_dir as longitude_dir', 
+                                      'heading as angle', 
+                                      'vehicle_mode as vehicleStatus', 
+                                      'speed', 
+                                      'device_time as dateTime')
+                                      ->where('device_time', '>=', $from_date)
+                                      ->where('device_time', '<=', $to_date)
+                                      ->where('gps_id', $gps_id)
+                                      ->offset($start_offset)
+                                      ->limit($limit)
+                                      ->whereNotNull('latitude')
+                                      ->whereNotNull('longitude')
+                                      ->where('gps_fix',1)
+                                      ->orderBy('device_time', 'asc')
+                                      ->get();
 
         $alerts_list    =   [];
+
         if($track_data->count() > 0){
 
           $from_date_time   = $track_data->first()->dateTime;

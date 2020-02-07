@@ -1078,19 +1078,26 @@ public function selectTrader(Request $request)
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
-            $client = Client::create([            
-                'user_id' => $user->id,
-                'sub_dealer_id' => $subdealer_id,
-                'trader_id'=>$trader_id,
-                'name' => $request->name,            
-                'address' => $request->address, 
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng,
-                'location'=>$location,
-                'country_id'=>$request->country_id,
-                'state_id'=>$request->state_id,
-                'latest_user_updates'=>$current_date        
-            ]);
+            $client_data=['user_id' => $user->id,
+                        'name' => $request->name,            
+                        'address' => $request->address, 
+                        'latitude'=>$location_lat,
+                        'longitude'=>$location_lng,
+                        'location'=>$location,
+                        'country_id'=>$request->country_id,
+                        'state_id'=>$request->state_id,
+                        'latest_user_updates'=>$current_date];
+                      
+                        if($trader_id == null)
+                        {
+                            $client_data['sub_dealer_id']=$subdealer_id;
+                        }else
+                        {
+                            $client_data['trader_id']=$trader_id;
+                        }
+                        $client = Client::create($client_data);
+
+          
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
             }else{
