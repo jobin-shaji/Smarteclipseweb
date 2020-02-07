@@ -14,7 +14,7 @@ $(document).ready(function() {
                     },
                     success:function(res) {
                         if(res){
-                            if (res == '1' || res == '6' || res == '7' || res == '8') {
+                            if (res == '6' || res == '7' || res == '8') {
                                 $("#expiry_heading").hide();
                                 $("#expiry_date").hide();
                             }else {
@@ -39,32 +39,56 @@ $('#upload_form').on('submit', function(event){
       event.preventDefault();
       var data_val=new FormData(this);
       $.ajax({
-           url:'/document-upload',
-           method:"POST",
-           data:new FormData(this),
-           dataType:'JSON',
-           contentType: false,
-           cache: false,
-           processData: false,
-           success:function(res)
-           {
-            console.log(res);
-                if(res.count==3){
-                    if (confirm('Maximum number of documents with same expiry date is reached. Do you want to replace all existing documents with the current one ?')){            
-                        deleteDocuments(data_val);
-                    }else{
-                        alert("Please delete the document manually");
-                        location.reload(true);            
-                    } 
+            url:'/document-upload',
+            method:"POST",
+            data:new FormData(this),
+            dataType:'JSON',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success:function(res)
+            {
+                if(typeof res.error != 'undefined')
+                {
+                    Object.keys(res.error).forEach(key => {
+                        $('.error_'+key).text(res.error[key]);
+                    });
+                    return false;
                 }
-                else if(res.count==4){
-                     if (confirm('A document with a different expiry date is already in the database. Do you want to replace this ?')){            
-                        deleteDocuments(data_val);
+                if(res.data.expiry_date != null)
+                {
+                    if(res.count==3){
+                        if (confirm('Maximum number of documents with same expiry date is reached. Do you want to replace all existing documents with the current one ?')){            
+                            deleteDocuments(data_val);
+                        }else{
+                            alert("Please delete the document manually");
+                            location.reload(true);            
+                        } 
+                    }
+                    else if(res.count==4){
+                         if (confirm('A document with a different expiry date is already in the database. Do you want to replace this ?')){            
+                            deleteDocuments(data_val);
+                        }
+                    }
+                    else{
+                        alert("Document successfully uploaded"); 
+                        location.reload(true); 
                     }
                 }
-                else{
-                    alert("Document successfully uploaded"); 
-                    location.reload(true); 
+                else
+                {
+                    if(res.count==3){
+                        if (confirm('This document is already exists. Do you want to replace all existing documents with the current one ?')){            
+                            deleteDocuments(data_val);
+                        }else{
+                            alert("Please delete the document manually");
+                            location.reload(true);            
+                        } 
+                    }
+                    else{
+                        alert("Document successfully uploaded"); 
+                        location.reload(true); 
+                    }
                 }
            }
       })
