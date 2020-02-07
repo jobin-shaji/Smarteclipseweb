@@ -514,7 +514,7 @@
       <div class="modal-content">
          <form  method="POST" action="{{route('monitoring.report.pdf.downloads')}}">
             {{csrf_field()}}
-            <button type="button" class="close" data-dismiss="modal" style="align:right;margin-top:5.2%;margin-right:3%">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" style="margin-top:5.2%;margin-right:3%">&times;</button>
         <div class="modal-header">
           <h4 class="modal-title">Report Type</h4>
         </div>
