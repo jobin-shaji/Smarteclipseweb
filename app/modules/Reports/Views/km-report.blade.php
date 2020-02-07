@@ -151,7 +151,7 @@ Total KM Report
                             </div>
                           </div>
                         </div>
-                        <div class="loader-wrapper" id="loader-1">
+                        <div class="loader-wrapper loader-1" >
                           <div id="loader"></div>
                         </div> 
                         <div class="widthh">
@@ -300,7 +300,7 @@ Total KM Report
 
 </section>
 @section('script')
-  <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
+  <link rel="stylesheet" href="{{asset('css/km-loader-1.css')}}">
     <script src="{{asset('js/gps/km-list.js')}}"></script>
 @endsection
 @endsection

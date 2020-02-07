@@ -520,6 +520,26 @@
                 </li>
             </ul>
         </div>
+      <?php
+            if(\Auth::user()->hasRole('root'))
+            {
+                $role=md5('root');
+            }
+            else if(\Auth::user()->hasRole('dealer'))
+            {
+                $role=md5('dealer');
+            }
+            else if(\Auth::user()->hasRole('sub_dealer'))
+            {
+                $role=md5('sub_dealer');
+            }
+            else if(\Auth::user()->hasRole('client'))
+            {
+                $role=md5('client');
+            }       
+
+    ?>
+    <input type="hidden" id="header_role" name="header_role" value="{{$role}}">
     </nav>
 </header>
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
