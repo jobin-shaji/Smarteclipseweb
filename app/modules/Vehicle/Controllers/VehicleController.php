@@ -2858,8 +2858,8 @@ class VehicleController extends Controller
     { 
         
         $vehicleid = $request->vehicleid;
-        $from_date = $request->fromDateTime;
-        $to_date = $request->toDateTime;
+        $from_date =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
+        $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
         $get_vehicle = Vehicle::find($vehicleid);
         $offset = $request->offset;
        
@@ -2883,7 +2883,7 @@ class VehicleController extends Controller
             $start_offset = ($offset * $limit) - $limit;
         }
 
-        
+   
         $gps_id = $get_vehicle->gps_id;
 
         $count_of_gpsdata = GpsData::where('device_time', '>=', $from_date)
