@@ -533,6 +533,10 @@
             {
                 $role=md5('sub_dealer');
             }
+            else if(\Auth::user()->hasRole('trader'))
+            {
+                $role=md5('trader');
+            }
             else if(\Auth::user()->hasRole('client'))
             {
                 $role=md5('client');
