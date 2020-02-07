@@ -137,7 +137,9 @@ class Vehicle extends Model
             'servicer_job_id',
             'gps_id',
             'register_number')
-        ->with('gps.ota')
+        ->with(['gps.ota' => function($q){
+          return $q->orderBy('device_time', 'desc');
+        }])
         ->with('vehicleType')
         ->with('vehicleModels.vehicleMake')
         ->with('jobs', 'jobs.servicer')

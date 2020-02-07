@@ -105,7 +105,6 @@ function render_vehicletab(res)
         {'id' : 'tvc_vehicle_chassis_number', 'key' : 'chassis_number'},
         {'id' : 'tvc_vehicle_theftmode', 'key' : 'theft_mode'},
         {'id' : 'tvc_vehicle_towing', 'key' : 'towing'},
-        {'id' : 'tvc_vehicle_emergency_status', 'key' : 'emergency_status'},
         {'id' : 'tvc_vehicle_created_date', 'key' : 'created_at'},
         /* /Vehicle Details */
         /* Client Details */
@@ -143,10 +142,6 @@ function render_vehicletab(res)
             else if( each_element.id == 'tvc_vehicle_towing')
             {
                 $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On Towing' : 'Not Towing');
-            }
-            else if( each_element.id == 'tvc_vehicle_emergency_status')
-            {
-                $('#'+each_element.id).text( (res.data[each_element.key] == '1') ? 'On' : 'Off');
             }
             else
             {
@@ -580,7 +575,7 @@ function render_devicetab(res)
             table +='<tr>'+
                 '<td>'+header+'</td>'+
                 '<td>'+each_ota.value+'</td>'+
-                '<td>'+each_ota.updated_at+'</td>'+
+                '<td>'+each_ota.device_time+'</td>'+
             '</tr>';
         });
         table += '</table>';
