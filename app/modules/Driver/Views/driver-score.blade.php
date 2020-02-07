@@ -53,8 +53,8 @@
           <canvas id="driver-behaviour"></canvas>  
           </div>
         </div>
-        <div class="loader-wrapper" id="loader-1">
-            <div id="loader"></div>
+        <div class="loader-wrapper" id="load-3">
+            <div id="load3"></div>
           </div>  
         <div class="col-lg-6 col-md-6">
           <h3 style="text-align:center;">Driver Behaviour</h3>
@@ -68,10 +68,13 @@
   </div>
 </div>
 
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
 
 @endsection
 
   @section('script')
     <script src="{{asset('js/gps/mdb.js')}}"></script>
     <script src="{{asset('js/gps/driver-score.js')}}"></script>
+
+
      @endsection

@@ -3,12 +3,17 @@ $(document).ready(function() {
 });
 
 function check(){
+   $("#load3").css("display", "none");
+   $("#load-3").css("display", "none");
+  
   var driver=$('#driver').val();  
     driverBehaviour(driver); 
     score(driver);
 }
 function score(driver){
-  $("#loader-1").show();
+     $("#load3").css("display", "none");
+     $("#load-3").css("display", "none");
+  
     var url = 'driver-score';
     var data = {
       driver:driver
@@ -19,9 +24,10 @@ function score(driver){
  if (myPolarChart) myPolarChart.destroy();
 
 function driverScore(res) {
-// console.log(res.drive_score);
+      $("#load3").css("display", "none");
+      $("#load-3").css("display", "none");
   var ctxPA = document.getElementById("driver-behaviour").getContext('2d');
-  $("#loader-1").show();
+  
   var myPolarChart = new Chart(ctxPA, {
   type: 'polarArea',
   data: {

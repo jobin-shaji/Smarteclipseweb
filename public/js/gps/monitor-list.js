@@ -731,7 +731,7 @@ function markAlertAsRead(id)
         read_alerts.push(id.toString());
         localStorage.setItem('read_alerts', read_alerts);
         // remove the read alert
-        $('.eam-body > eam-each_alert-'+id).remove();
+        $('.eam-each_alert-'+id).remove();
         // if there is only on alert in the modal and that too read
         // remove that alert and close the modal
         if( (read_alerts.length - critical_alerts.length) == 0 )

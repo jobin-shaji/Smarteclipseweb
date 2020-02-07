@@ -51,10 +51,10 @@
                   @endif
 
                   <div class="form-group has-feedback"><br>
-                    <label class="srequired">Upload File</label>&nbsp;&nbsp;&nbsp;<span style='color:#f29a0e;'>Size: max 2MB, Format: jpg,png</span>
+                    <label class="srequired">Upload File</label>&nbsp;&nbsp;&nbsp;<span style='color:#f29a0e;'>Size: max 2MB, Format: jpg/jpeg,png</span>
                     <div class="row">
                       <div class="col-md-6">
-                        <input type="file" id="choose_image" name="path" value="{{$vehicle_doc->path }}">
+                        <input type="file" id="choose_image" name="path" value="{{$vehicle_doc->path }}" accept="image/png, image/jpeg">
                       </div>
                       <div class="col-md-6">
                         @if($vehicle_doc->path)
