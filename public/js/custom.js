@@ -1198,10 +1198,12 @@ function clientAlerts(){
     };   
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
- function alertNotification(res){
-    // notificationAlertsList(res);
-    if(res)
-    {
+ function alertNotification(res)
+ {
+      $('#load-2').show();
+   
+     if(res)
+        {
         $("#alert_notification").empty();
         // display each alerts
         for (var i = 0; i < res.alert.length; i++)
@@ -1211,26 +1213,27 @@ function clientAlerts(){
         if(res.alert.length==0){
             $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
         }
-    }
+        }
 }
 
-function gpsAlertUpdate(value){
-    $('#loader').show();
-    var url = 'gps-alert-update';
-    var data={
-      id:value    
-    }
-    backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
-  }
+        function gpsAlertUpdate(value)
+        {
+            $("#load2").css("display", "none");
+            var url = 'gps-alert-update';
+            var data={
+              id:value    
+            }
+            backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
+        }
     function gpsAlertconfirm(res)
-    { 
-        $('#loader').hide();
-        // console.log(res);
+        { 
+            
+        $("#load-2").css("display", "none");
         $('#alert_'+res.alertmap.id).removeClass('alert');
         var alert_content = res.alert_icon.description+' on vehicle '+res.get_vehicle.name+'('+res.get_vehicle.register_number+') at '+res.alertmap.device_time;
         $('#alert_content').text(alert_content);
         $('#alert_address').text(res.address);
-    }
+         }
 
 function downloadLabel(id){
     var url = 'gps-transfer-label/export';

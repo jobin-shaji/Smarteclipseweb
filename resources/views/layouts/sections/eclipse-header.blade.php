@@ -534,11 +534,11 @@
                 <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                
             </div>                    
             <div class="modal-body">
-                <div>
+                 <div class="loader-wrapper" id="load-2">
+                 <div id="load2" class="load-modal-img" ></div>
+                </div>
                     <span id="alert_content">
-                        <div class="loader-wrapper" id="loader-1"></div>
-                        <div id="loader"></div>
-                        </div>
+                        
                     </span>
                     <div class="alert_address">
                         <h4>Address</h4>
@@ -624,8 +624,17 @@
         Contact for Assistance +91 9544313131</div>
     </div>  
 </div>
+<style>
+    .load-modal-img{
+        width: 35px !important;
+        height: 35px !important;
+        float: left;
+        margin-top: 40px !important;
+        margin-left: -32px !important;
+    }
 
-<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
+</style>
+<link rel="stylesheet" href="{{asset('css/loader-2.css')}}">
 <style type="text/css">
   .notification-box {
   /*position: relative;*/
@@ -638,6 +647,8 @@
 .notification-bell {
   /*animation: bell 1s 1s both infinite;*/
 }
+
+
 
 .notification-count {
   position: absolute;

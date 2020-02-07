@@ -2,8 +2,8 @@
 /*Loader 1- Spinning */
 
 
-#loader-1 #loader, #load-2 #load2 {
-	position: relative;
+#load-3 #loader-3{
+    position: relative;
     left: 50%;
     top: 50%;
     height: 10vw;
@@ -20,8 +20,8 @@
     animation: spin 2s linear infinite;
 }
 
-#loader-1 #loader:before, #load-2 #load2:before{
-	content: "";
+#load-3 #loader-3:before{
+    content: "";
     position: absolute;
     top:2%;
     bottom: 2%;
@@ -38,8 +38,8 @@
 
 }
 
-#loader-1 #loader:after, #load-2 #load2:after{
-	content: "";
+#load-3 #loader-3:after{
+    content: "";
     position: absolute;
     top:5%;
     bottom: 5%;

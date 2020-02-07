@@ -24,7 +24,10 @@
 						</div>
 						<div class="noti-box">					
 							<div class="notificaton-bx-inner">
-								<div id="notification" calss="notification">								
+
+								<div id="notification" calss="notification">					<div class="loader-wrapper" id="loader-1">
+                                     <div id="loader" class="load-style"></div>
+                                     </div> 			
 								</div>
 							</div>
 						</div>					
@@ -44,6 +47,9 @@
 							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>					
 						</div>
 						<div class="modal-body">
+							          <div class="loader-wrapper loader-1" >
+                                      <div  class="load-style loader"></div>
+                                      </div> 
 						<div style="text-align:center;">
 							<label id="description" ></label><br>
 						</div>
@@ -62,8 +68,10 @@
 	</div>
 </div>
 @section('script')
+
 <script async defer src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&callback=initMap"></script>
-<script src="{{asset('js/gps/alert-notification.js')}}"></script>	
+<script src="{{asset('js/gps/alert-notification.js')}}"></script>
+
 		<script>
 		var el = document.querySelector('.notification');
 		document.querySelector('.button').addEventListener('click', function(){
@@ -77,19 +85,26 @@
 		    }
 		}, false);
 		</script>		
-
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
 <style>
-	
-	.model-class-new{
-		position: fixed !important;
-right: 0 !important;
-width: 400px !important;
-margin: 0px !important;
-height: 100% !important;
-padding: 0 !important;
-min-height: 400px !important;
-overflow: scroll;
-background:#fff;
+	.load-style
+	     {
+			    top: 190px !important;
+			    width: 30px !important;
+			    height: 30px !important;
+		 }
+
+	.model-class-new
+	{
+					position: fixed !important;
+			right: 0 !important;
+			width: 400px !important;
+			margin: 0px !important;
+			height: 100% !important;
+			padding: 0 !important;
+			min-height: 400px !important;
+			overflow: scroll;
+			background:#fff;
 	}
 	.modal-content-new{
 box-shadow: none;
