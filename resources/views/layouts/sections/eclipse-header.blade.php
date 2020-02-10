@@ -553,11 +553,11 @@
 <div class="modal right fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
     <div class="modal-dialog model-class" role="document">
         <div class="modal-content modal-content">
-            <div class="modal-header modal-header">
+            <div class="modal-header modal-header modal-head-bg">
                 <h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
                 <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                
             </div>                    
-            <div class="modal-body">
+            <div class="modal-body moadl-span-outer">
                  <div class="loader-wrapper" id="load-2">
                  <div id="load2" class="load-modal-img" ></div>
                 </div>
@@ -565,7 +565,7 @@
                         
                     </span>
                     <div class="alert_address">
-                        <h4>Address</h4>
+                        <h4 class="modai-h4-inner">Address</h4>
                         <span id="alert_address"></span>
                     </div>
                 </div>
@@ -715,6 +715,32 @@
 .alert_address{
     margin-top: 12px;
 }
+
+.modal-head-bg{
+    background: #ffb848;
+    color: #fff;
+    float: left;
+    font-size: 18px;
+    padding: 8px 13px;
+}
+.modal-head-bg h4{
+    font-size: 1em;
+}
+.modai-h4-inner{
+    color: #3e5569;
+    font-size: 1em;
+    float: left;
+    padding-bottom: 3px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+.moadl-span-outer span{ 
+    font-size: 0.9em;
+    float: left;
+    width: 100%;
+
+}
+
 </style>
 
  
