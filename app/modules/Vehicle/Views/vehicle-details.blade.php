@@ -215,8 +215,10 @@
                     <form  method="POST" id="upload_form" enctype="multipart/form-data">
                     {{csrf_field()}}
                       <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$vehicle->id}}">
+                       
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Document Type </label>
+
                           <div class="form-group has-feedback">
                             <select class="form-control {{ $errors->has('document_type_id') ? ' has-error' : '' }}" placeholder="Document Type" name="document_type_id" id="document_type_id" value="{{ old('document_type_id') }}" required>
                               <option value="" selected disabled>Select Document Type</option>
@@ -226,6 +228,10 @@
                             </select>
                           </div>
                           <span class="error_document_type_id" style='color:red;'></span>
+                      </div>
+
+                        <div class="loader-wrapper loader-wrapper-4" id="load-4" style="display: none;">
+                       <div id="load4" class="load-style"></div>
                       </div>
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label" id="expiry_heading" style="display: none;">Expiry Date</label> 
@@ -242,7 +248,10 @@
                           </div>
                           <img width="150" height="100" class='selected_image' style='display:none;' src="#"  />
                           <span class="error_path" style='color:red;'></span>
-                      </div>          
+                           
+                      </div>   
+                            
+
                       <div class="row">
                         <!-- /.col -->
                         <div class="col-md-3 ">                         
@@ -315,7 +324,20 @@
   </div>
 </div>
 
-
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
+<style>
+  .loader-wrapper-4{
+    width: 100%;
+float: left;
+  }
+.load-style
+       {  left:20%;
+          position: absolute;
+          top: 100px !important;
+          width: 60px !important;
+          height: 60px !important;
+     }
+   </style>
 @section('script')
     <script src="{{asset('js/gps/vehicle-doc-dependent-dropdown.js')}}"></script>
 @endsection

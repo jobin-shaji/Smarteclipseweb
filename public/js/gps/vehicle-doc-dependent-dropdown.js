@@ -37,7 +37,11 @@ $(document).ready(function() {
 
 
 $('#upload_form').on('submit', function(event){
-      event.preventDefault();
+   
+       event.preventDefault();
+       $("#load4").removeAttr("style");
+       $("#load-4").removeAttr("style");
+        
       var data_val=new FormData(this);
       $.ajax({
            url:'/document-upload',
@@ -49,6 +53,7 @@ $('#upload_form').on('submit', function(event){
            processData: false,
            success:function(res)
            {
+              
                 if(typeof res.error != 'undefined')
                 {
                     Object.keys(res.error).forEach(key => {
@@ -94,6 +99,7 @@ function deleteDocuments(data_val){
 
 
 $("#choose_image").change(function() {
+
     displaySelectedImage(this);
   });
 function displaySelectedImage(input) {

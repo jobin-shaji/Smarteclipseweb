@@ -2,7 +2,7 @@
 /*Loader 1- Spinning */
 
 
-#loader-1 #loader, #load-2 #load2, #load-3 #load3 {
+#loader-1 #loader, #load-2 #load2, #load-3 #load3,#load-4 #load4 {
 	position: relative;
     left: 50%;
     top: 50%;
@@ -20,7 +20,7 @@
     animation: spin 2s linear infinite;
 }
 
-#loader-1 #loader:before, #load-2 #load2:before, #load-3 #load3:before{
+#loader-1 #loader:before, #load-2 #load2:before, #load-3 #load3:before,#load-4 #load4:before{
 	content: "";
     position: absolute;
     top:2%;
@@ -38,7 +38,7 @@
 
 }
 
-#loader-1 #loader:after, #load-2 #load2:after, #load-3 #load3:after{
+#loader-1 #loader:after, #load-2 #load2:after, #load-3 #load3:after,#load-4 #load4:after{
 	content: "";
     position: absolute;
     top:5%;
