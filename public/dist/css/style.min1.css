@@ -17960,11 +17960,11 @@ display: block;
     margin-bottom: 9px;
     margin-right: 8px;
   }
-
-input:required {
+/*code to  make text area and text field required*/
+input:required, textarea:required, select:required {
     box-shadow:none;
 }
-input:invalid {
+input:invalid, textarea:invalid, select:invalid {
     box-shadow:0 0 3px none;
 }
 .download-icon{
