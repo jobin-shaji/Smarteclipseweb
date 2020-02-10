@@ -26,7 +26,7 @@
                       <th>SL.No</th>  
                       <th>Job Code</th>                   
                       <th>Service Engineer</th>
-                      <th>Client</th>
+                      <th>End User</th>
                       <th>Gps</th>
                       <th>Job Type</th>
                       <!-- <th >User</th> -->

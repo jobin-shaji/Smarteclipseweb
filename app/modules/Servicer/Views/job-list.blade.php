@@ -32,7 +32,7 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Job Code</th>
-                    <th>Client</th> 
+                    <th>End User</th> 
                     <th>Mobile</th> 
                     <th>Email</th>
                     <th>Address</th>                     
