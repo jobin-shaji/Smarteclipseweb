@@ -45,7 +45,7 @@
                   <div class="form-group has-feedback form-group-1 ">
                   <label class="srequired">Complaint Reason</label>
                   <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
-                    <option value="">Select  a Complaint Type</option>
+                    <option >Select  a Complaint Type</option>
                   </select>
                 </div>
                   
@@ -59,7 +59,7 @@
                   </div>     
                    <div class="form-group has-feedback form-group-1">
                     <label class="srequired">Complaint Title</label>
-                    <input type="text" class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
+                    <input type="text"  class="form-control {{ $errors->has('title') ? ' has-error' : '' }}" placeholder="Complaint Title" name="title" value="{{ old('title') }}" required minlength="10" maxlength="40">
                    
                     @if ($errors->has('title'))
                       <span class="help-block">
