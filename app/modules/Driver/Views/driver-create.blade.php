@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
- Add driver
+ Create driver
 @endsection
 @section('content')   
       
@@ -10,8 +10,8 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-page-heading"></li>
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Driver</li>
-        <b>Add driver</b> 
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Driver</li>
+        <b>Create driver</b> 
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -36,7 +36,7 @@
                         <div class="form-group row form-group-driver">
                           <label for="fname" class="col-sm-3 control-label col-form-label lab label-form-drive">Name</label>
                           <div class="form-group has-feedback form-drive-outer">
-                            <input type="text" required class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
+                            <input type="text" required maxlength='50' class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
                           </div> 
                         </div>
                         @if ($errors->has('name'))
@@ -51,7 +51,7 @@
                       $eclipse_key="eclipse";
                       if (strpos($url, $rayfleet_key) == true) {  ?>
                           <div class="form-group row form-group-driver">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile Number</label>
                           <div class="form-group has-feedback form-drive-outer">
                              <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" /> 
                           </div>
@@ -64,7 +64,7 @@
                       <?php } 
                       else if (strpos($url, $eclipse_key) == true) { ?>
                          <div class="form-group row form-group-driver">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile Number</label>
                           <div class="form-group has-feedback form-drive-outer">
                             <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                           </div>
@@ -77,7 +77,7 @@
                       <?php }
                       else { ?>
                           <div class="form-group row form-group-driver">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile Number</label>
                           <div class="form-group has-feedback form-drive-outer">
                             <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                           </div>
