@@ -32,7 +32,7 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Job Code</th>
-                    <th>Client</th>   
+                    <th>End User</th>   
                     <th>Vehicle Number</th>                   
                     <th>Job Type</th>
                     <th>Assignee</th>
