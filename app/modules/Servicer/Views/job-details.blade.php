@@ -32,7 +32,7 @@
                     <div class="card">
                       <div class="card-body">                                     
                         <div class="form-group row" style="float:none!important">
-                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
+                          <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User</label>
                           <div class="form-group has-feedback">
                            <input type="text" class="form-control {{ $errors->has('client') ? ' has-error' : '' }}"  name="client" value="{{$servicer_job->clients->name}}" required readonly>
                             <span class="glyphicon glyphicon-phone form-control-feedback"></span>

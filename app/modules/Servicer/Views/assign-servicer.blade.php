@@ -69,7 +69,7 @@
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
                       <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="job_type" name="job_type" required>
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Job Type" id="job_type" name="job_type" required>
                           <option value="">Select Job Type</option>
                           <option value="1">Installation</option>
                           <option value="2">Service</option>                         
@@ -82,10 +82,10 @@
                       @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Client</label>
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User</label>
                       <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"  onchange="getClientServicerGps(this.value)" required>
-                          <option value="" selected="selected">Select Client</option>
+                        <select class="form-control selectpicker" data-live-search="true" title="Select End User" id="client" name="client"  onchange="getClientServicerGps(this.value)" required>
+                          <option value="" selected="selected">Select End User</option>
                           @foreach ($clients as $client)
                           <option value="{{$client->id}}">{{$client->name}}</option>
                           @endforeach  
@@ -128,7 +128,7 @@
                     <div class="form-group row" style="float:none!important">               
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Description</label> 
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{ old('description') }}" required>
+                        <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{ old('description') }}" maxlength ='200' required>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('description'))
