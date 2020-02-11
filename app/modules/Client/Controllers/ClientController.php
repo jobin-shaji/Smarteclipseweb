@@ -23,6 +23,7 @@ use App\Modules\Client\Models\ClientTransaction;
 use App\Modules\Subscription\Models\Plan;
 use App\Modules\Subscription\Models\Subscription;
 use DataTables;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 class ClientController extends Controller {
    
@@ -343,18 +344,20 @@ class ClientController extends Controller {
     public function changePassword(Request $request)
     {
 
+
         $decrypted = Crypt::decrypt($request->id);
         $client = Client::where('user_id', $decrypted)->first();
-         
         if($client == null){
            return view('Client::404');
         }
-        return view('Client::client-change-password',['client' => $client]);
+    return view('Client::client-change-password',['client' => $client,
+        'decrypted'=>$decrypted]);
     }
 
     //update password
     public function updatePassword(Request $request)
     {
+        
         $client=\Auth::user()->sub_dealer;
         $user=User::find($request->id);
         $client=Client::where('user_id',$user->id)->first();
@@ -365,7 +368,7 @@ class ClientController extends Controller {
             return view('SubDealer::404');
         }
         $did=encrypt($user->id);
-        // dd($request->password);
+       
         $rules=$this->updateUserPassword($user);
         $this->validate($request,$rules);
         $user->password=bcrypt($request->password);
@@ -457,7 +460,8 @@ class ClientController extends Controller {
     public function updateUserPassword()
     {
         $rules=[
-            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
+             'oldpassword'=>'required',
         ];
         return $rules;
     }
@@ -1123,6 +1127,28 @@ public function selectTrader(Request $request)
         $request->session()->flash('message', 'New End user created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('client'));        
+    }
+ public function getOldPasswordMessage(Request $request)
+    {
+        $user_id = $request->user_id;
+        $password=$request->user_typed_older_password;
+        $user = User::where('id', $user_id)->first();
+            
+             if (Hash::check($password, $user->password))
+              {
+                return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Password is Correct'
+            ]);  
+            }else
+            {
+               return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Incorrect Password'
+            ]);  
+            }
     }
 
 /////////////////////////Update client role-start//////////

@@ -1284,9 +1284,8 @@ function getClientServicerGps(client_id){
         };   
         backgroundPostData(url,data,'clientGps',{alert:false});   
     }
-    
-           
 }
+
 function clientGps(res)
 {
     if(res.code == 1)
