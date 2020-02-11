@@ -244,6 +244,8 @@ function backgroundPostData(url, data, callBack, options) {
                     driverScore(res);
                 }else if(callBack =='driverScoreAlerts'){
                     driverScoreAlerts(res);
+                }else if(callBack =='fuelGraph'){
+                    fuelGraph(res);
                 }else if(callBack == 'continuousAlert'){
                     continuousAlert(res);
                 }else if(callBack == 'getPlaceName'){
