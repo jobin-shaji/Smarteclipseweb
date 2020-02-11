@@ -1314,8 +1314,8 @@ class VehicleController extends Controller
                 $modulus=$fuel_min-$fuel_max;
                 $value=$vehicle_models->fuel_min-$fuel_gps;
                 $fuel=($value/$modulus)*100;
-                $ruel_round=round($fuel);
-                $fuel_status=$ruel_round."%";
+                $fuel_percentage=round($fuel);
+                $fuel_status = $this->limitFuelPercentageRange($fuel_percentage)."%";
             }      
             else
             {
