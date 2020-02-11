@@ -1285,6 +1285,26 @@ function getClientServicerGps(client_id){
     
            
 }
+// function getClientServicerGps(client_id){
+//     if(client_id)
+//     {    
+//         var job_type = $("#job_type option:selected").val();
+//         if(job_type==""||job_type==undefined){
+//             alert('Please select job type!'); 
+//             client_id=0;
+//             // $("#gps option[value='']").remove();
+//             // $("#gps").append(new Option("Select GPS", ""));
+//         }
+//         var url = 'servicer-client-gps';
+//         var data = {
+//              client_id : client_id,
+//              job_type:job_type
+//         };   
+//         backgroundPostData(url,data,'clientGps',{alert:false});   
+//     }
+    
+           
+// }
 function clientGps(res)
 {
     if(res.code == 1)

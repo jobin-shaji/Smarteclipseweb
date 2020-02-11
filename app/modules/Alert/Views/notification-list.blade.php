@@ -7,7 +7,8 @@
 			<div style="width: 100%; height:100%; float:left;">
 				<input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
             	<input type="hidden" id="lng" name="lng" value="{{$client->longitude}}"> 				
-			<div class="notification-display-bg">		
+			<div class="notification-display-bg">
+					
 				<div class="content-header-1">
 					<ol class="breadcrumb">
 				        <li class="breadcrumb-item"><a href="/home">Home</a></li>
@@ -16,6 +17,7 @@
 				</div>
 			</div>
 		</div>
+
 			<div class="box-inner">		
 				<div class="notification-bar-outer">
 					<div class="notification-bar">

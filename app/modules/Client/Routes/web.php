@@ -58,6 +58,8 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	Route::get('/client/profile/edit','ClientController@userProfileEdit')->name('client.profile.edit');
 	Route::post('/client/profile/{id}/edit','ClientController@profileUpdate')->name('client.profile.update.p');
+	Route::post('/client/get-password-message/','ClientController@getOldPasswordMessage')->name('client-create.get-password-message');
+	
 	
 });
 
