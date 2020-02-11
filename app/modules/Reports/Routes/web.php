@@ -8,6 +8,11 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::post('/geofence-report-list','GeofenceReportController@geofenceReportList')->name('geofence-report-list');
 	Route::post('/geofence-report/export','GeofenceReportController@export')->name('geofence.report.export');
 
+	// fuel report 
+	Route::get('/fuel-report','FuelReportController@fuelReport')->name('fuel-report');
+	Route::post('/fuel-report-list','FuelReportController@fuelReportList')->name('fuel-report-list');
+	Route::post('/fuel-graph','FuelReportController@getFuelGraphDetails')->name('fuel.graph');
+	
 	// alert report 
 	Route::get('/alert-report','AlertReportController@alertReport')->name('alert-report');
 	Route::get('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
