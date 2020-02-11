@@ -31,7 +31,7 @@
                       <input type="hidden" name="id" value="{{$client->user_id}}">
                        <div class="form-group has-feedback">
                           <label class="srequired">Old Password</label>
-                         <input type="hidden" id="hiddenpassword" value="{{$userid}}">
+                         <input type="hidden" id="hiddenpassword" value="{{$decrypted}}">
                             <input  class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Old Password"  id="oldpassword" name="oldpassword" maxlength='20' required>
                               <p style="color:#FF0000" id="error_message">Please Enter Correct Older Password</p> 
                           </div>

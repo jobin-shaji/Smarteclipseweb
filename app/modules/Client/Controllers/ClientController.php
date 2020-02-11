@@ -346,15 +346,12 @@ class ClientController extends Controller {
 
 
         $decrypted = Crypt::decrypt($request->id);
-        $user=User::find($decrypted);
-        $userid= $user->id;
-
         $client = Client::where('user_id', $decrypted)->first();
-         
         if($client == null){
            return view('Client::404');
         }
-return view('Client::client-change-password',['client' => $client,'userid'=>$userid]);
+    return view('Client::client-change-password',['client' => $client,
+        'decrypted'=>$decrypted]);
     }
 
     //update password
@@ -1149,7 +1146,7 @@ public function selectTrader(Request $request)
                return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Password is Not Correct'
+                'message' => 'Incorrect Password'
             ]);  
             }
     }
