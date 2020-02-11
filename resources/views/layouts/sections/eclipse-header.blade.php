@@ -532,7 +532,7 @@
                 </li>
             </ul>
         </div>
-      <?php
+        <?php
             if(\Auth::user()->hasRole('root'))
             {
                 $role=md5('root');
@@ -552,8 +552,15 @@
             else if(\Auth::user()->hasRole('client'))
             {
                 $role=md5('client');
-            }       
-
+            }     
+            else if(\Auth::user()->hasRole('operations'))
+            {
+                $role=md5('operations');
+            }  
+            else if(\Auth::user()->hasRole('servicer'))
+            {
+                $role=md5('servicer');
+            }
     ?>
     <input type="hidden" id="header_role" name="header_role" value="{{$role}}">
     </nav>
