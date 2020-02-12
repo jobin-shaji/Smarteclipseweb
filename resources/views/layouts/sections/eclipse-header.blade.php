@@ -526,7 +526,7 @@
                         @endrole
 
                         <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="return clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
+                        onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
                             
                     </div>
                 </li>
