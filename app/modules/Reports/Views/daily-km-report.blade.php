@@ -41,6 +41,9 @@ Daily KM Report
                           <div class="form-group">          
                             <label> From Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off">
+                            <span class="input-group-addon" style="z-index: 99;">
+                                <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                            </span>
                           </div>
                           </div>
 
