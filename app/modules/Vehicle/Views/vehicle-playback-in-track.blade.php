@@ -118,7 +118,7 @@
  </div>
 
 
-
+<!-- 
 <div class="notification-icon">
 <div class="dropdownContainer"><div class="noti-alert-count">0
 </div> <div class="notification dropdown-toggle"></div>
@@ -130,18 +130,18 @@
 </div>
 <ul >
 
- <!--  <li><a href="#" >Over Speed <span>location Name</span>
+<li><a href="#" >Over Speed <span>location Name</span>
   <div class="time-dis">2019-12-24 06:40:14</div>
 </a>
 </li> -->
      
-</ul>
+<!-- </ul>
 
 
 
 </div>
 </div>
-</div>
+</div> -->
 
 
   <div class="vehicle_details_list vehicle_details_list-1">
