@@ -84,4 +84,13 @@ class Gps extends Model
         }
         return $query->whereIn('id',$transferred_gps_device_ids)->paginate(10);
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getImeiList()
+    {
+        return self::select('imei')->get();
+    }
 }
