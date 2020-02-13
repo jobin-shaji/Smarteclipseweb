@@ -20,7 +20,7 @@
                 <a class="dropdown-item"href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
                 <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
                 <a class="dropdown-item" href="{{url('/gps-km-map')}}">GPS KM</a>
-                <a class="dropdown-item" href="{{url('/all-gps-data')}}">CONSOLE</a>
+                <a class="dropdown-item" href="{{url('/console-data-list')}}">CONSOLE</a>
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -49,7 +49,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/vltdata')}}">UNPROCESSED DATA</a>
+                <a class="dropdown-item" href="{{url('/unprocessed-data-list')}}">UNPROCESSED DATA</a>
                 <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
                 <a class="dropdown-item" href="{{url('/packet-split-data')}}">
                 NRM PACKET DATA </a>
