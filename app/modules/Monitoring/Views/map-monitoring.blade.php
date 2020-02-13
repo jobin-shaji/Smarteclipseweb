@@ -149,10 +149,10 @@
         if(currentURL != '')
         {
           var urlParams = new URLSearchParams(currentURL);
-          var alertdata = JSON.parse(atob(decodeURI(urlParams.get('detail'))));
-          
+         
           if(currentURL.indexOf("detail") > -1) 
           {
+            var alertdata = JSON.parse(atob(decodeURI(urlParams.get('detail'))));
             alert_from_list = true;
             var location_alerts = {
                           "alert_id" : alertdata.id,
