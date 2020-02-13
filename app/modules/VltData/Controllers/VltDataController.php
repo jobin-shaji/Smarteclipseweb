@@ -117,6 +117,7 @@ class VltDataController extends Controller
     {
         $vlt_data_id    =   $request->vlt_data_id;
         $imei           =   $request->imei;
+        $header           =   $request->header;
         $gps_data       =   (new Gps())->getGpsId($imei);
         $detailed_data  =   (new GpsData())->getDetailedPacketData($vlt_data_id);
         if($detailed_data == null)
