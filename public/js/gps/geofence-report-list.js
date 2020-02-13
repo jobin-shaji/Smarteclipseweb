@@ -1,9 +1,3 @@
-$(document).ready(function () {
-
-    // callBackDataTable();
-    check();
-});
- 
 function check(){
      if(document.getElementById('vehicle').value == ''){
         alert('please select Vehicle');
