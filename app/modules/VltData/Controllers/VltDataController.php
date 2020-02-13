@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\VltData\Models\VltData;
+use App\Modules\Gps\Models\GpsData;
+use App\Modules\Ota\Models\OtaResponse;
 
 class VltDataController extends Controller 
 {
@@ -68,6 +70,30 @@ class VltDataController extends Controller
      * 
      * 
      */
+    public function consoleDataView(Request $request)
+    {
+        $imei_serial_no_list    = (new Gps())->getImeiList();
+        $data                   = [];
+        // params
+        $this->imei             = ( isset($request->imei) ) ? $request->imei : '';
+
+        // filters
+        $filters    = [
+            'imei'  => $this->imei
+        ];
+
+        if( $this->imei != '' )
+        {
+            $data   = (new VltData())->getProcessedVltData($this->imei);
+        }
+        
+        return view('VltData::console-list', [ 'imei_serial_no_list' => $imei_serial_no_list, 'data' => $data, 'filters' => $filters ]);
+    }
+
+    /**
+     * 
+     * 
+     */
     public static function getVltDataHeaders()
     {
         return [
@@ -83,23 +109,59 @@ class VltDataController extends Controller
             self::VLT_DTA_HEADER_ALERT  
         ];
     }
-
     /**
      * 
      * 
-     * 
      */
-    public function getConsoleData(Request $request)
+    public function consoleDataPacketView(Request $request)
     {
-        $data = (new VltData())->getVltData($this->imei, $this->header, $this->search_key);
+        $vlt_data_id    =   $request->vlt_data_id;
+        $imei           =   $request->imei;
+        $gps_data       =   (new Gps())->getGpsId($imei);
+        $detailed_data  =   (new GpsData())->getDetailedPacketData($vlt_data_id);
+        if($detailed_data == null)
+        {
+            $response    =  array(
+                'status'    =>  0,
+                'message'   =>  'failed',
+                'gps_id'    =>  $gps_data->id
+            );
+        }
+        else
+        {
+            $response    =  array(
+                'status'        =>  1,
+                'message'       =>  'success',
+                'packet_data'   =>  $detailed_data,
+                'gps_id'    =>  $gps_data->id
+            );
+        }
+        return response()->json($response);
     }
-
-    /**
+     /**
      * 
      * 
      */
-    public function getPublicVltData(Request $request)
+    public function setOtaInConsole(Request $request)
     {
-        $data = (new VltData())->getVltData($this->imei, $this->header, $this->search_key);
+        $gps_id     =   $request->gps_id;  
+        $command    =   $request->command;        
+        $response   =   OtaResponse::create([
+                            'gps_id'=>$gps_id,
+                            'response'=>$command
+        ]); 
+        if($response){
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Command send successfully'
+            ]);
+        }else{
+           return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Try again!!'
+            ]); 
+        }
     }
 }

@@ -91,6 +91,14 @@ class Gps extends Model
      */
     public function getImeiList()
     {
-        return self::select('imei')->get();
+        return self::select('imei', 'serial_no')->get();
+    }
+    /**
+     * 
+     * 
+     */
+    public function getGpsId($imei)
+    {
+        return self::select('id')->where('imei',$imei)->first();
     }
 }
