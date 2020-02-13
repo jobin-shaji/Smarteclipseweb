@@ -270,7 +270,7 @@ function render_devicetab(res)
         {'id' : 'tvc_device_lon', 'key' : ['gps','lon']},
         {'id' : 'tvc_device_fuel_status', 'key' : ['gps','fuel_status']},
         {'id' : 'tvc_device_speed', 'key' : ['gps','speed']},
-        {'id' : 'tvc_device_odometer', 'key' : ['gps','odometer']},
+        {'id' : 'tvc_device_odometer', 'key' : ['gps','km']},
         {'id' : 'tvc_device_battery_status', 'key' : ['gps','battery_status']},
         {'id' : 'tvc_device_main_power_status', 'key' : ['gps','main_power_status']},
         {'id' : 'tvc_device_device_time', 'key' : ['gps','device_time']},

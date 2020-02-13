@@ -553,7 +553,7 @@ if($monitoringReport->gps)
 <?php
     $fuel_status    =   round( ( ($monitoringReport->vehicleModels->fuel_min - $monitoringReport->gps->fuel_status) / ($monitoringReport->vehicleModels->fuel_min - $monitoringReport->vehicleModels->fuel_max) ) * 100 ).'%';
     $speed_status   =   round($monitoringReport->gps->speed).' km/h';
-    $odometer       =   round($monitoringReport->gps->odometer);
+    $odometer       =   round($monitoringReport->gps->km);
     $battery_status =   round($monitoringReport->gps->battery_status).'%';
     $mode           =   $monitoringReport->gps->mode;
     if($mode = 'S')

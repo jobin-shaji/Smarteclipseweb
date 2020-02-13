@@ -329,7 +329,7 @@ if($role==0||$role==4)
 		</tr>	
 		<tr>
 			<th>Odometer</th>
-			<td>@if($monitoringReportExport->gps->odometer){{ $monitoringReportExport->gps->odometer }}@else {{'NO Data Available'}}@endif</td> 
+			<td>@if($monitoringReportExport->gps->km){{ $monitoringReportExport->gps->km }}@else {{'NO Data Available'}}@endif</td> 
 		</tr>	
 		<tr>
 			<th>Battery Status</th>	
