@@ -847,7 +847,7 @@ function prepareAlertTabContent(alert)
         +'<p class="t-alert">'+alert_title.charAt(0).toUpperCase()+'</p>'
         +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
         +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="'+map_url+'" target="_blank">View map</a></button> </p>'
-        +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
+        // +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
         +'</div></div>';
 }
 
