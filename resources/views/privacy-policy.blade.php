@@ -8,9 +8,9 @@
     </head>
     <body>
     <h2>Privacy Policy</h2> <p>
-                    VST Mobility solution built the Smart Eclipse app as
-                    a Commercial app. This SERVICE is provided by
-                    VST Mobility solution  and is intended for
+                    VST MOBILITY SOLUTIONS PVT LTD built the SMART ECLIPSE app as
+                    a Free app. This SERVICE is provided by
+                    VST MOBILITY SOLUTIONS PVT LTD at no cost and is intended for
                     use as is.
                   </p> <p>
                     This page is used to inform visitors regarding
@@ -28,7 +28,7 @@
                   </p> <p>
                     The terms used in this Privacy Policy have the same meanings
                     as in our Terms and Conditions, which is accessible at
-                    Smart Eclipse unless otherwise defined in this Privacy
+                    SMART ECLIPSE unless otherwise defined in this Privacy
                     Policy.
                   </p> <p><strong>Information Collection and Use</strong></p> <p>
                     For a better experience, while using our Service,
@@ -109,7 +109,10 @@
                     notify you of any changes by posting the new Privacy Policy
                     on this page. These changes are effective immediately after
                     they are posted on this page.
-                  
+                  </p> <p><strong>Contact Us</strong></p> <p>
+                    If you have any questions or suggestions about
+                    our Privacy Policy, do not hesitate to contact
+                    us at info@smarteclipse.com.
+                  </p>
     </body>
     </html>
-      
