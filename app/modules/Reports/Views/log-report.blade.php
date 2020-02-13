@@ -5,6 +5,10 @@
 @section('content')
 
 
+   
+
+
+
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
 
@@ -23,21 +27,28 @@
             <div class="col-sm-12">
               <div class="col-md-12 col-md-offset-1">
                 <div class="panel panel-default">
-                  <div >
+                  <div>
                     <div class="panel-body">
                       <div class="panel-heading">
                         <div class="cover_div_search">
-                        <div class="row">                          
+                        <div class="row">                         
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                    
                             <label> From Date</label>
-                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                            <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">  
+                            <span class="input-group-addon" style="z-index: 99;">
+                                <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                              </span>
                           </div>
                         </div>
+                      
                           <div class="col-lg-3 col-md-3"> 
                           <div class="form-group">                    
                             <label> To Date</label>
                             <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
+                            <span class="input-group-addon" style="z-index: 99;">
+                                <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                              </span>
                           </div>
                           </div>
                            <div class="col-lg-3 col-md-3 pt-4">
