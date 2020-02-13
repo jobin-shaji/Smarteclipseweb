@@ -600,8 +600,17 @@ function render_installationtab(res)
             '<th>Comments</th>'+
         '</tr>';
     res.data.jobs.forEach(function(each_job){
+        var comments = '';
         if(each_job.job_type == '1')
         {
+            if( each_job.comment == null || each_job.comment == '')
+            {
+                comments = "No Comments";
+            }
+            else
+            {
+                comments = each_job.comment;
+            }
             no_data_found = false;
             table +='<tr>'+
                 '<td>'+each_job.servicer.name+'</td>'+
@@ -609,7 +618,7 @@ function render_installationtab(res)
                 '<td>'+each_job.job_complete_date+'</td>'+
                 '<td>'+each_job.location+'</td>'+
                 '<td>'+each_job.description+'</td>'+
-                '<td>'+each_job.comment+'</td>'+
+                '<td>'+comments+'</td>'+
             '</tr>';
         }
     });
