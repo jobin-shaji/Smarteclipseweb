@@ -13,11 +13,11 @@ function searchButtonClicked()
     return status;
 }
 
-function clickedPacketDetails(vlt_data_id,imei,header)
+function clickedPacketDetails(vlt_data_id,imei,vlt_data)
 {
     var url = 'console-data-packet-view';
     var data = {
-        vlt_data_id:vlt_data_id, imei:imei, header:header
+        vlt_data_id:vlt_data_id, imei:imei, vlt_data:vlt_data
     };   
     $.ajax({
         type:'POST',

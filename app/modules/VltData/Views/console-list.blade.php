@@ -47,7 +47,7 @@
 <section class="content" >  
     <div class="col-md-6"> 
         @foreach($data as $key => $each_data)
-        <div class="gps_data_item" onclick="clickedPacketDetails('{{$each_data->id}}','{{$each_data->imei}}','{{$each_data->header}}')" data-target="#sidebar-right" data-toggle="modal">
+        <div class="gps_data_item" onclick="clickedPacketDetails('{{$each_data->id}}','{{$each_data->imei}}','{{$each_data->vltdata}}')" data-target="#sidebar-right" data-toggle="modal">
         {{$each_data->vltdata}}
         <div class="timestamp">
             <p>

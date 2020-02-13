@@ -44,7 +44,7 @@ class VltData extends Model
     public function getProcessedVltData($imei)
     {
         $query  =   DB::table('vlt_data')
-                        ->select('id','imei','header','vltdata','created_at')
+                        ->select('id','imei','vltdata','created_at')
                         ->where('is_processed', '1')
                         ->orderBy('created_at','DESC');
         if( $imei != '0' )
