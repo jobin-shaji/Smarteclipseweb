@@ -630,19 +630,4 @@ trait VehicleDataProcessorTrait{
         return $km_report = $query->first();  
     }
 
-    public function limitFuelPercentageRange($percentage)
-    {
-        if($percentage < 0)
-        {
-            return 0;
-        }
-        else if($percentage > 100)
-        {
-            return 100;
-        }
-        else
-        {
-            return $percentage;
-        }
-    }
 }
