@@ -57,7 +57,13 @@
         </div>
         </div>
         @endforeach
-
+        @if(count($data)== 0)
+        <div>
+            <p style="font-size: 50px;text-align: center;margin-top: 12%;">
+               No Data Found
+            </p>
+        </div>
+        @endif
 
         
         <?php if( gettype($data) == 'object') { echo $data->appends([
@@ -67,7 +73,7 @@
     </div>
 </section>
 
-<div class="console_details_wrapper">
+<div class="console_details_wrapper" style="height:27vh">
     <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
