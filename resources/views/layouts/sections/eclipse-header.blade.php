@@ -396,7 +396,7 @@
                 </li>
                 @role('client')
 
-                <input type="hidden" id="client_id" value="{{\Auth::user()->id}}">
+                <input type="hidden" id="user_id" value="{{\Auth::user()->id}}">
                 <li class="nav-item dropdown">
                     <!-- by christeena<a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

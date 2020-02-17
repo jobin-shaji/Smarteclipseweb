@@ -73,6 +73,7 @@
 
 <script async defer src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&callback=initMap"></script>
 <script src="{{asset('js/gps/alert-notification.js')}}"></script>
+<script src="{{asset('js/gps/alert-notification-firebase.js')}}"></script>
 
 		<script>
 		var el = document.querySelector('.notification');
