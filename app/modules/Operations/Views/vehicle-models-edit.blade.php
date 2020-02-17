@@ -1,4 +1,4 @@
-@extends('layouts.eclipse') 
+@extends('layouts.eclipse')
 @section('title')
     Update vehicle models Details
 @endsection
@@ -13,10 +13,10 @@
       @if(Session::has('message'))
       <div class="pad margin no-print">
         <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-          {{ Session::get('message') }}  
+          {{ Session::get('message') }}
         </div>
       </div>
-      @endif 
+      @endif
     </nav>
     <div class="card-body">
       <div class="table-responsive">
@@ -26,7 +26,7 @@
             <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label class="srequired">Vehicle model</label>
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_models->name}}"> 
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ $vehicle_models->name}}">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 @if ($errors->has('name'))
                 <span class="help-block">
@@ -48,8 +48,8 @@
                 @endif
               </div>
               <div class="form-group has-feedback">
-                <label class="srequired">Min fuel</label>
-                <input type="number" class="form-control {{ $errors->has('fuel_min') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_min" value="{{ $vehicle_models->fuel_min}}" min="0">
+                <label class="srequired">Voltage if fuel empty</label>
+                <input type="text" class="form-control {{ $errors->has('fuel_min') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_min" value="{{ $vehicle_models->fuel_min}}" min="0" pattern="[0-9.]+">
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                 @if ($errors->has('fuel_min'))
                 <span class="help-block">
@@ -57,9 +57,43 @@
                 </span>
                 @endif
               </div>
+
+              <div class="form-group has-feedback">
+                <label class="srequired">Voltage if fuel is 25%</label>
+                <input type="text" class="form-control {{ $errors->has('fuel_25') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_25" value="{{ $vehicle_models->fuel_25}}" min="0" pattern="[0-9.]+">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                @if ($errors->has('fuel_25'))
+                <span class="help-block">
+                <strong class="error-text">{{ $errors->first('fuel_25') }}</strong>
+                </span>
+                @endif
+              </div>
+
+              <div class="form-group has-feedback">
+                <label class="srequired">Voltage if fuel is 50%</label>
+                <input type="text" class="form-control {{ $errors->has('fuel_50') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_50" value="{{ $vehicle_models->fuel_50}}" min="0" pattern="[0-9.]+">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                @if ($errors->has('fuel_50'))
+                <span class="help-block">
+                <strong class="error-text">{{ $errors->first('fuel_50') }}</strong>
+                </span>
+                @endif
+              </div>
+
+              <div class="form-group has-feedback">
+                <label class="srequired">Voltage if fuel is 75%</label>
+                <input type="text" class="form-control {{ $errors->has('fuel_75') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_75" value="{{ $vehicle_models->fuel_75}}" min="0" pattern="[0-9.]+">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                @if ($errors->has('fuel_75'))
+                <span class="help-block">
+                <strong class="error-text">{{ $errors->first('fuel_75') }}</strong>
+                </span>
+                @endif
+              </div>
+
                <div class="form-group has-feedback">
-                <label class="srequired">Max fuel</label>
-                <input type="number" class="form-control {{ $errors->has('fuel_max') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_max" value="{{ $vehicle_models->fuel_max}}" min="0">
+                <label class="srequired">Voltage if fuel is 100%</label>
+                <input type="text" class="form-control {{ $errors->has('fuel_max') ? ' has-error' : '' }}" placeholder="Mobile" name="fuel_max" value="{{ $vehicle_models->fuel_max}}" pattern="[0-9.]+">
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                 @if ($errors->has('fuel_max'))
                 <span class="help-block">
@@ -67,6 +101,7 @@
                 </span>
                 @endif
               </div>
+
             </div>
           </div>
           <div class="row">
