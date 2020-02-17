@@ -371,42 +371,43 @@ class AlertController extends Controller {
     {
         $flag=$request->flag;
         $user=\Auth::user();
-        if($user->hasRole('client')){
+        if($user->hasRole('client'))
+        {
         $client_id=\Auth::user()->client->id;
-        $VehicleGpss=Vehicle::select(
-            'id',
-            'gps_id',
-            'client_id'
-        )
-        ->where('client_id',$client_id)
-        ->get();      
-        $single_vehicle_gps = [];
-        foreach($VehicleGpss as $VehicleGps){
-            $single_vehicle_gps[] = $VehicleGps->gps_id;
-        }
-        $userAlerts = UserAlerts::select(
-            'id',
-            'client_id',
-            'alert_id',
-            'status'
-        )
-        ->with('alertType:id,code,description') 
-        ->where('status',1)               
-        ->where('client_id',$client_id)           
-        ->get();
-        $alert_id=[];
-        foreach ($userAlerts as $userAlert) {
-              $alert_id[]=$userAlert->alert_id;
-           }
-        $alert = Alert::select('id','gps_id','alert_type_id','device_time')
-        ->whereIn('gps_id',$single_vehicle_gps)
-        ->whereIn('alert_type_id',$alert_id)
-        ->whereNotIn('alert_type_id',[17,18,23,24])
-        ->where('status',0)
-        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
+        // $VehicleGpss=Vehicle::select(
+        //     'id',
+        //     'gps_id',
+        //     'client_id'
+        // )
+        // ->where('client_id',$client_id)
+        // ->get();      
+        // $single_vehicle_gps = [];
+        // foreach($VehicleGpss as $VehicleGps){
+        //     $single_vehicle_gps[] = $VehicleGps->gps_id;
+        // }
+        // $userAlerts = UserAlerts::select(
+        //     'id',
+        //     'client_id',
+        //     'alert_id',
+        //     'status'
+        // )
+        // ->with('alertType:id,code,description') 
+        // ->where('status',1)               
+        // ->where('client_id',$client_id)           
+        // ->get();
+        // $alert_id=[];
+        // foreach ($userAlerts as $userAlert) {
+        //       $alert_id[]=$userAlert->alert_id;
+        //    }
+        // $alert = Alert::select('id','gps_id','alert_type_id','device_time')
+        // ->whereIn('gps_id',$single_vehicle_gps)
+        // ->whereIn('alert_type_id',$alert_id)
+        // ->whereNotIn('alert_type_id',[17,18,23,24])
+        // ->where('status',0)
+        // ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
                
-        // ->get()
-        ->count();
+        // // ->get()
+        // ->count();
 
         $all_gps=GpsStock::where('client_id',$client_id)->get();
         $single_gps=[];
@@ -421,7 +422,6 @@ class AlertController extends Controller {
             'longitude',
             'device_time'
         )
-        //->with('vehicle:id,name,register_number,driver_id')
         ->with('gps.vehicle')
         ->with('gps.vehicle.driver')
         ->whereIn('gps_id',$single_gps)
@@ -443,7 +443,7 @@ class AlertController extends Controller {
         }
 
         return response()->json([                          
-            'notification_count' => $alert,
+            'notification_count' => 0,
             'status' => 'success',
             'flag' => $flag,
             'emergency_response' => $response       
@@ -647,7 +647,7 @@ class AlertController extends Controller {
             'status' => 'notificationAlerts'           
         ]);                  
     }
-    public function alerUpdation(Request $request){
+    public function alertUpdation(Request $request){
         $decrypted_id = $request->id;        
         $get_alerts=Alert::where('id',$decrypted_id)->first();
         $get_alerts->status=1;
