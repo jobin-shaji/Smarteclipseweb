@@ -417,7 +417,6 @@
                     </div>
                     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
                     <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>
-                    ddddddddddddddddddddddd
                 </li> 
                 <li class="nav-item dropdown">
                     <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>
@@ -675,8 +674,6 @@
         Contact for Assistance +91 9544313131</div>
     </div>  
 </div>
-
-<input type="hidden" id="database_url" value="{{ env('FIREBASE_DATABASE_URL') }}">
 
 <style>
     .load-modal-img{
