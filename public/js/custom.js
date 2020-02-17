@@ -1214,7 +1214,6 @@ function notification(res){
 }
 
 function clientAlerts(){
-    console.log(1);
   var flag;
     var url = 'alert-notification';
     var data = {
@@ -1222,11 +1221,11 @@ function clientAlerts(){
     };   
     backgroundPostData(url,data,'alertNotification',{alert:false});           
 }
- function alertNotification(res)
- {
+    function alertNotification(res)
+    {
       $('#load-2').show();
    
-     if(res)
+        if(res)
         {
         $("#alert_notification").empty();
         // display each alerts
@@ -1238,26 +1237,26 @@ function clientAlerts(){
             $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
         }
         }
-}
+    }
 
-        function gpsAlertUpdate(value)
-        {
-            $("#load2").css("display", "none");
-            var url = 'gps-alert-update';
-            var data={
-              id:value    
-            }
-            backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
+    function gpsAlertUpdate(value)
+    {
+        $("#load2").css("display", "none");
+        var url = 'gps-alert-update';
+        var data={
+            id:value    
         }
+        backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
+    }
     function gpsAlertconfirm(res)
-        { 
-            
+    { 
+        
         $("#load-2").css("display", "none");
         $('#alert_'+res.alertmap.id).removeClass('alert');
         var alert_content = res.alert_icon.description+' on vehicle '+res.get_vehicle.name+'('+res.get_vehicle.register_number+') at '+res.alertmap.device_time;
         $('#alert_content').text(alert_content);
         $('#alert_address').text(res.address);
-         }
+    }
 
 function downloadLabel(id){
     var url = 'gps-transfer-label/export';
@@ -1503,12 +1502,13 @@ function rootTrader(res)
 // ---------------check notification-----------------------------------
 
     function notificationCount(res){
-        if(res.status=="success"){
-            var count_notification=res.notification_count;
-            $("#bell_notification_count").text(count_notification);          
-        }
+        // if(res.status=="success"){
+        //     var count_notification=res.notification_count;
+        //     $("#bell_notification_count").text(count_notification);          
+        // }
 
-        if(res.emergency_response.status == 'success'){
+        if(res.emergency_response.status == 'success')
+        {
             var latitude=res.emergency_response.alerts[0].latitude;
             var longitude=res.emergency_response.alerts[0].longitude;
             getPlaceNameFromLatLng(latitude,longitude);
@@ -1548,7 +1548,7 @@ function rootTrader(res)
         if(role=='62608e08adc29a8d6dbc9754e659f125')
         {
             // alert(role);
-            clientAlerts();
+            //clientAlerts();
         }     
     }
 /////////////////////////Km Report/////////////////////////

@@ -395,8 +395,11 @@
                     </div>
                 </li>
                 @role('client')
+
+                <input type="hidden" id="client_id" value="{{\Auth::user()->id}}">
                 <li class="nav-item dropdown">
-                    <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!-- by christeena<a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="notification-box">
                         <span class="notification-count" id="bell_notification_count">0</span>
                         <div>
@@ -404,6 +407,7 @@
                         </div>
                     </span>
                 </a>
+                
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <div class="dropdown-divider"></div>
@@ -411,6 +415,8 @@
                         </div>
                         <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                     </div>
+                    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+                    <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>
                 </li> 
                 <li class="nav-item dropdown">
                     <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>
@@ -445,6 +451,7 @@
                     </div>
                 </li>
                 <!--  <label>View Documents</label> -->
+
                 @endrole
                 <li class="nav-item dropdown">
                     @role('client')
@@ -667,6 +674,7 @@
         Contact for Assistance +91 9544313131</div>
     </div>  
 </div>
+
 <style>
     .load-modal-img{
         width: 35px !important;
@@ -761,5 +769,6 @@
 }
 
 </style>
+
 
  
