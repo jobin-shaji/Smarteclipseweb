@@ -1308,14 +1308,7 @@ class VehicleController extends Controller
                 )
                 ->where('id',$model)
                 ->first();
-                $fuel_gps=$track_data->fuel_status;
-                $fuel_min=$vehicle_models->fuel_min;
-                $fuel_max=$vehicle_models->fuel_max;
-                $modulus=$fuel_min-$fuel_max;
-                $value=$vehicle_models->fuel_min-$fuel_gps;
-                $fuel=($value/$modulus)*100;
-                $fuel_percentage=round($fuel);
-                $fuel_status = $this->limitFuelPercentageRange($fuel_percentage)."%";
+                $fuel_status=$track_data->fuel_status;
             }      
             else
             {
@@ -2817,14 +2810,7 @@ class VehicleController extends Controller
         )
         ->where('id',$model)
         ->first();
-        $fuel_gps=$gps_fuel->fuel_status;
-        $fuel_min=$vehicle_models->fuel_min;
-        $fuel_max=$vehicle_models->fuel_max;
-        $modulus=$fuel_min-$fuel_max;
-        $value=$vehicle_models->fuel_min-$fuel_gps;
-        $fuel=($value/$modulus)*100;
-
-       
+        $fuel_status=$gps_fuel->fuel_status;
         // return response()->json($response_data); 
     }
 

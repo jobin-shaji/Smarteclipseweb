@@ -17970,3 +17970,9 @@ input:invalid, textarea:invalid, select:invalid {
 .download-icon{
   padding-right: 5px;
 }
+
+.calender1 {
+    position: absolute;
+    right: 26px;
+    top: 37px;
+}

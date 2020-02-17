@@ -600,8 +600,17 @@ function render_installationtab(res)
             '<th>Comments</th>'+
         '</tr>';
     res.data.jobs.forEach(function(each_job){
+        var comments = '';
         if(each_job.job_type == '1')
         {
+            if( each_job.comment == null || each_job.comment == '')
+            {
+                comments = "No Comments";
+            }
+            else
+            {
+                comments = each_job.comment;
+            }
             no_data_found = false;
             table +='<tr>'+
                 '<td>'+each_job.servicer.name+'</td>'+
@@ -609,7 +618,7 @@ function render_installationtab(res)
                 '<td>'+each_job.job_complete_date+'</td>'+
                 '<td>'+each_job.location+'</td>'+
                 '<td>'+each_job.description+'</td>'+
-                '<td>'+each_job.comment+'</td>'+
+                '<td>'+comments+'</td>'+
             '</tr>';
         }
     });
@@ -841,13 +850,16 @@ function prepareAlertModalContent(alert)
 function prepareAlertTabContent(alert)
 {
     var alert_title = getAlertTitle(alert);
-    var map_url     = '/monitor-map?&latitude='+alert.lat+'&longitude='+alert.lon;
+    var map_details={"lat":alert.lat,"lon":alert.lon,"id":alert.id,"title":alert_title,"client":alert.vehicle.client.name,"vehicle":alert.vehicle.name,"reg":alert.vehicle.register_number,"imei":alert.imei,"serial":alert.serial_no};
+    var myJSON = btoa(JSON.stringify(map_details));
+    var msg_data = encodeURI(myJSON);
+    var map_url     = '/monitor-map?&detail='+msg_data;
     return '<div class="alert-page-dispaly" id="'+alert.id+'">'
         +'<div class="eam-each_alert">'
         +'<p class="t-alert">'+alert_title.charAt(0).toUpperCase()+'</p>'
         +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
         +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="'+map_url+'" target="_blank">View map</a></button> </p>'
-        +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
+        // +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
         +'</div></div>';
 }
 

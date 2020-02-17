@@ -23,411 +23,411 @@ trait VehicleDataProcessorTrait{
       return $timeFormat;
     }
 
-	public function engineStatus($gps_id,$from_date,$to_date)
-    { 
-        $first_log=GpsData::select('id','ignition','device_time')
-                ->where('device_time', '>=', $from_date)
-                ->where('device_time', '<=', $to_date)
-                ->where('gps_id',$gps_id)
-                ->whereIn('vehicle_mode',['H','S','M'])
-                ->orderBy('device_time')
-                ->first();
-        $last_log=GpsData::select('id','ignition','device_time')
-                ->where('device_time', '>=', $from_date)
-                ->where('device_time', '<=', $to_date)
-                ->where('gps_id',$gps_id)
-                ->whereIn('vehicle_mode',['H','S','M'])
-                ->latest('device_time')
-                ->first();
-        $balance_log=DB::select('SELECT id,ignition,device_time FROM
-                            ( SELECT (@statusPre <> ignition) AS statusChanged
-                                 , ignition, device_time,id
-                                 , @statusPre := ignition
-                            FROM gps_data
-                               , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
-                          ) AS good
-                        WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
-        $engine_on_time=0;
-        $engine_off_time=0;
-        if($balance_log)
-        {
-            $i=0;
-            foreach ($balance_log as $item) {
-                if($i==0){
-                    $first_device_time=$first_log->device_time;
-                    $item_device_time=$item->device_time;
-                    $ignition=$item->ignition;
+	// public function engineStatus($gps_id,$from_date,$to_date)
+    // { 
+    //     $first_log=GpsData::select('id','ignition','device_time')
+    //             ->where('device_time', '>=', $from_date)
+    //             ->where('device_time', '<=', $to_date)
+    //             ->where('gps_id',$gps_id)
+    //             ->whereIn('vehicle_mode',['H','S','M'])
+    //             ->orderBy('device_time')
+    //             ->first();
+    //     $last_log=GpsData::select('id','ignition','device_time')
+    //             ->where('device_time', '>=', $from_date)
+    //             ->where('device_time', '<=', $to_date)
+    //             ->where('gps_id',$gps_id)
+    //             ->whereIn('vehicle_mode',['H','S','M'])
+    //             ->latest('device_time')
+    //             ->first();
+    //     $balance_log=DB::select('SELECT id,ignition,device_time FROM
+    //                         ( SELECT (@statusPre <> ignition) AS statusChanged
+    //                              , ignition, device_time,id
+    //                              , @statusPre := ignition
+    //                         FROM gps_data
+    //                            , (SELECT @statusPre:=NULL) AS d
+    //                         WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") ORDER BY device_time 
+    //                       ) AS good
+    //                     WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+    //     $engine_on_time=0;
+    //     $engine_off_time=0;
+    //     if($balance_log)
+    //     {
+    //         $i=0;
+    //         foreach ($balance_log as $item) {
+    //             if($i==0){
+    //                 $first_device_time=$first_log->device_time;
+    //                 $item_device_time=$item->device_time;
+    //                 $ignition=$item->ignition;
 
-                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                    $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==0){
-                        $engine_on_time=$engine_on_time+$diff_in_minutes;
-                    }else{
-                        $engine_off_time=$engine_off_time+$diff_in_minutes;
-                    }
-                }else{
-                    $item_device_time=$item->device_time;
-                    $ignition=$item->ignition;
-                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                    $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ignition==0){
-                        $engine_on_time=$engine_on_time+$diff_in_minutes;
-                    }else{
-                        $engine_off_time=$engine_off_time+$diff_in_minutes;
-                    }
-                }
-                $last_item_device_time=$item->device_time;
-                $last_ignition=$item->ignition;
-                $i++;
-            }
-            $last_device_time=$last_log->device_time;
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-            $diff_in_minutes = $to->diffInSeconds($from);
-            if($last_ignition==0){
-                $engine_off_time=$engine_off_time+$diff_in_minutes;
-            }else{
-                $engine_on_time=$engine_on_time+$diff_in_minutes;
-            }
-        }else if($first_log != null && $balance_log==null)
-        {
-            $first_device_time=$first_log->device_time;
-            $last_device_time=$last_log->device_time;
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-            $diff_in_minutes = $to->diffInSeconds($from);
-            if($first_log->ignition==0){
-                $engine_off_time=$engine_off_time+$diff_in_minutes;
-            }else{
-                $engine_on_time=$engine_on_time+$diff_in_minutes;
-            }
-        }
-        $engine_on_time = $this->timeFormate($engine_on_time);
-        $engine_off_time = $this->timeFormate($engine_off_time);
-        $engine_status = array(
-                "engine_on_time" => $engine_on_time, 
-                "engine_off_time" => $engine_off_time
-                );
-        return $engine_status;
-    }
+    //                 $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //                 $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //                 $diff_in_minutes = $to->diffInSeconds($from);
+    //                 if($ignition==0){
+    //                     $engine_on_time=$engine_on_time+$diff_in_minutes;
+    //                 }else{
+    //                     $engine_off_time=$engine_off_time+$diff_in_minutes;
+    //                 }
+    //             }else{
+    //                 $item_device_time=$item->device_time;
+    //                 $ignition=$item->ignition;
+    //                 $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //                 $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //                 $diff_in_minutes = $to->diffInSeconds($from);
+    //                 if($ignition==0){
+    //                     $engine_on_time=$engine_on_time+$diff_in_minutes;
+    //                 }else{
+    //                     $engine_off_time=$engine_off_time+$diff_in_minutes;
+    //                 }
+    //             }
+    //             $last_item_device_time=$item->device_time;
+    //             $last_ignition=$item->ignition;
+    //             $i++;
+    //         }
+    //         $last_device_time=$last_log->device_time;
+    //         $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //         $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //         $diff_in_minutes = $to->diffInSeconds($from);
+    //         if($last_ignition==0){
+    //             $engine_off_time=$engine_off_time+$diff_in_minutes;
+    //         }else{
+    //             $engine_on_time=$engine_on_time+$diff_in_minutes;
+    //         }
+    //     }else if($first_log != null && $balance_log==null)
+    //     {
+    //         $first_device_time=$first_log->device_time;
+    //         $last_device_time=$last_log->device_time;
+    //         $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //         $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //         $diff_in_minutes = $to->diffInSeconds($from);
+    //         if($first_log->ignition==0){
+    //             $engine_off_time=$engine_off_time+$diff_in_minutes;
+    //         }else{
+    //             $engine_on_time=$engine_on_time+$diff_in_minutes;
+    //         }
+    //     }
+    //     $engine_on_time = $this->timeFormate($engine_on_time);
+    //     $engine_off_time = $this->timeFormate($engine_off_time);
+    //     $engine_status = array(
+    //             "engine_on_time" => $engine_on_time, 
+    //             "engine_off_time" => $engine_off_time
+    //             );
+    //     return $engine_status;
+    // }
 
-    public function trackingMode($gps_id,$from_date,$to_date)
-    {
-    	$first_log=GpsData::select('id','vehicle_mode','device_time')             
-                ->where('device_time','>=',$from_date)
-                ->where('device_time','<=',$to_date) 
-                ->where('gps_id',$gps_id)
-                ->whereIn('vehicle_mode',['H','S','M'])
-                ->orderBy('device_time')
-                ->first();
-        $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
-                            ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
-                                 , id,gps_id,vehicle_mode,device_time
-                                 , @statusPre := vehicle_mode
-                            FROM gps_data
-                               , (SELECT @statusPre:=NULL) AS d
-                            WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("H", "S", "M") ORDER BY device_time 
-                          ) AS good
-                        WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
-        $last_log=GpsData::select('id','vehicle_mode','device_time')                 
-                ->where('gps_id',$gps_id)
-                ->whereIn('vehicle_mode',['H','S','M'])
-                ->where('device_time','>=',$from_date)
-                ->where('device_time','<=',$to_date) 
-                ->latest('device_time')
-                ->first();
-        $motion_time=0;
-        $halt_time=0;
-        $sleep_time=0;
-        if($balance_log)
-        {
-            $i=0;
-            foreach ($balance_log as $item) {
-                if($i==0){
-                    $first_device_time=$first_log->device_time;
-                    $first_vehicle_mode=$first_log->vehicle_mode;
-                    $item_device_time=$item->device_time;
-                    $item_vehicle_mode=$item->vehicle_mode;
+    // public function trackingMode($gps_id,$from_date,$to_date)
+    // {
+    // 	$first_log=GpsData::select('id','vehicle_mode','device_time')             
+    //             ->where('device_time','>=',$from_date)
+    //             ->where('device_time','<=',$to_date) 
+    //             ->where('gps_id',$gps_id)
+    //             ->whereIn('vehicle_mode',['H','S','M'])
+    //             ->orderBy('device_time')
+    //             ->first();
+    //     $balance_log=DB::select('SELECT id,gps_id,vehicle_mode,device_time FROM
+    //                         ( SELECT (@statusPre <> vehicle_mode) AS statusChanged
+    //                              , id,gps_id,vehicle_mode,device_time
+    //                              , @statusPre := vehicle_mode
+    //                         FROM gps_data
+    //                            , (SELECT @statusPre:=NULL) AS d
+    //                         WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("H", "S", "M") ORDER BY device_time 
+    //                       ) AS good
+    //                     WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+    //     $last_log=GpsData::select('id','vehicle_mode','device_time')                 
+    //             ->where('gps_id',$gps_id)
+    //             ->whereIn('vehicle_mode',['H','S','M'])
+    //             ->where('device_time','>=',$from_date)
+    //             ->where('device_time','<=',$to_date) 
+    //             ->latest('device_time')
+    //             ->first();
+    //     $motion_time=0;
+    //     $halt_time=0;
+    //     $sleep_time=0;
+    //     if($balance_log)
+    //     {
+    //         $i=0;
+    //         foreach ($balance_log as $item) {
+    //             if($i==0){
+    //                 $first_device_time=$first_log->device_time;
+    //                 $first_vehicle_mode=$first_log->vehicle_mode;
+    //                 $item_device_time=$item->device_time;
+    //                 $item_vehicle_mode=$item->vehicle_mode;
 
-                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                    $diff_in_minutes = $to->diffInSeconds($from);
-                    if($item_vehicle_mode== "M"){
-                    	if($first_vehicle_mode == "S"){
-                    		$sleep_time=$sleep_time+$diff_in_minutes;
-                    	}else if($first_vehicle_mode == "H"){
-                    		$halt_time=$halt_time+$diff_in_minutes;
-                    	}
+    //                 $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //                 $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //                 $diff_in_minutes = $to->diffInSeconds($from);
+    //                 if($item_vehicle_mode== "M"){
+    //                 	if($first_vehicle_mode == "S"){
+    //                 		$sleep_time=$sleep_time+$diff_in_minutes;
+    //                 	}else if($first_vehicle_mode == "H"){
+    //                 		$halt_time=$halt_time+$diff_in_minutes;
+    //                 	}
                         
-                    }else if($item_vehicle_mode== "S"){
-                    	if($first_vehicle_mode == "M"){
-                    		$motion_time=$motion_time+$diff_in_minutes;
-                    	}else if($first_vehicle_mode == "H"){
-                    		$halt_time=$halt_time+$diff_in_minutes;
-                    	}
-                    }else if($item_vehicle_mode== "H"){
-                    	if($first_vehicle_mode == "M"){
-                    		$motion_time=$motion_time+$diff_in_minutes;
-                    	}else if($first_vehicle_mode == "S"){
-                    		$sleep_time=$sleep_time+$diff_in_minutes;
-                    	}
-                    }
-                }else{
-                    $item_device_time=$item->device_time;
-                    $item_vehicle_mode=$item->vehicle_mode;
-                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                    $diff_in_minutes = $to->diffInSeconds($from);
-                    if($item_vehicle_mode== "M"){
-                    	if($last_item_vehicle_mode == "S"){
-                    		$sleep_time=$sleep_time+$diff_in_minutes;
-                    	}else if($last_item_vehicle_mode == "H"){
-                    		$halt_time=$halt_time+$diff_in_minutes;
-                    	}
+    //                 }else if($item_vehicle_mode== "S"){
+    //                 	if($first_vehicle_mode == "M"){
+    //                 		$motion_time=$motion_time+$diff_in_minutes;
+    //                 	}else if($first_vehicle_mode == "H"){
+    //                 		$halt_time=$halt_time+$diff_in_minutes;
+    //                 	}
+    //                 }else if($item_vehicle_mode== "H"){
+    //                 	if($first_vehicle_mode == "M"){
+    //                 		$motion_time=$motion_time+$diff_in_minutes;
+    //                 	}else if($first_vehicle_mode == "S"){
+    //                 		$sleep_time=$sleep_time+$diff_in_minutes;
+    //                 	}
+    //                 }
+    //             }else{
+    //                 $item_device_time=$item->device_time;
+    //                 $item_vehicle_mode=$item->vehicle_mode;
+    //                 $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //                 $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //                 $diff_in_minutes = $to->diffInSeconds($from);
+    //                 if($item_vehicle_mode== "M"){
+    //                 	if($last_item_vehicle_mode == "S"){
+    //                 		$sleep_time=$sleep_time+$diff_in_minutes;
+    //                 	}else if($last_item_vehicle_mode == "H"){
+    //                 		$halt_time=$halt_time+$diff_in_minutes;
+    //                 	}
                         
-                    }else if($item_vehicle_mode== "S"){
-                    	if($last_item_vehicle_mode == "M"){
-                    		$motion_time=$motion_time+$diff_in_minutes;
-                    	}else if($last_item_vehicle_mode == "H"){
-                    		$halt_time=$halt_time+$diff_in_minutes;
-                    	}
-                    }else if($item_vehicle_mode== "H"){
-                    	if($last_item_vehicle_mode == "M"){
-                    		$motion_time=$motion_time+$diff_in_minutes;
-                    	}else if($last_item_vehicle_mode == "S"){
-                    		$sleep_time=$sleep_time+$diff_in_minutes;
-                    	}
-                    }
-                }
-                $last_item_device_time=$item->device_time;
-                $last_item_vehicle_mode=$item->vehicle_mode;
-                $i++;
-            }
-            $last_device_time=$last_log->device_time;
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-            $diff_in_minutes = $to->diffInSeconds($from);
-            if($last_item_vehicle_mode== "M"){
-                $motion_time=$motion_time+$diff_in_minutes;	          
-            }else if($item_vehicle_mode== "S"){
-            	$sleep_time=$sleep_time+$diff_in_minutes;
-            }else if($item_vehicle_mode== "H"){
-            	$halt_time=$halt_time+$diff_in_minutes;
-            }
-        }else if($first_log != null && $balance_log==null)
-        {
-            $first_device_time=$first_log->device_time;
-            $last_device_time=$last_log->device_time;
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-            $diff_in_minutes = $to->diffInSeconds($from);
-            if($first_log->vehicle_mode== "M"){
-                $motion_time=$motion_time+$diff_in_minutes;	    
-            }else if($first_log->vehicle_mode== "S"){
-            	$sleep_time=$sleep_time+$diff_in_minutes;
-            }else if($first_log->vehicle_mode== "H"){
-            	$halt_time=$halt_time+$diff_in_minutes;
-            }
-        }
-        $sleep_time=$this->timeFormate($sleep_time);
-        $halt_time=$this->timeFormate($halt_time);
-        $motion_time=$this->timeFormate($motion_time);
-        $output_data = ["total_moving" => $motion_time, 
-                        "total_halt" => $halt_time,
-                        "total_sleep" => $sleep_time
-                       ];
-        return $output_data;
-    }
+    //                 }else if($item_vehicle_mode== "S"){
+    //                 	if($last_item_vehicle_mode == "M"){
+    //                 		$motion_time=$motion_time+$diff_in_minutes;
+    //                 	}else if($last_item_vehicle_mode == "H"){
+    //                 		$halt_time=$halt_time+$diff_in_minutes;
+    //                 	}
+    //                 }else if($item_vehicle_mode== "H"){
+    //                 	if($last_item_vehicle_mode == "M"){
+    //                 		$motion_time=$motion_time+$diff_in_minutes;
+    //                 	}else if($last_item_vehicle_mode == "S"){
+    //                 		$sleep_time=$sleep_time+$diff_in_minutes;
+    //                 	}
+    //                 }
+    //             }
+    //             $last_item_device_time=$item->device_time;
+    //             $last_item_vehicle_mode=$item->vehicle_mode;
+    //             $i++;
+    //         }
+    //         $last_device_time=$last_log->device_time;
+    //         $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //         $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //         $diff_in_minutes = $to->diffInSeconds($from);
+    //         if($last_item_vehicle_mode== "M"){
+    //             $motion_time=$motion_time+$diff_in_minutes;	          
+    //         }else if($item_vehicle_mode== "S"){
+    //         	$sleep_time=$sleep_time+$diff_in_minutes;
+    //         }else if($item_vehicle_mode== "H"){
+    //         	$halt_time=$halt_time+$diff_in_minutes;
+    //         }
+    //     }else if($first_log != null && $balance_log==null)
+    //     {
+    //         $first_device_time=$first_log->device_time;
+    //         $last_device_time=$last_log->device_time;
+    //         $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //         $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //         $diff_in_minutes = $to->diffInSeconds($from);
+    //         if($first_log->vehicle_mode== "M"){
+    //             $motion_time=$motion_time+$diff_in_minutes;	    
+    //         }else if($first_log->vehicle_mode== "S"){
+    //         	$sleep_time=$sleep_time+$diff_in_minutes;
+    //         }else if($first_log->vehicle_mode== "H"){
+    //         	$halt_time=$halt_time+$diff_in_minutes;
+    //         }
+    //     }
+    //     $sleep_time=$this->timeFormate($sleep_time);
+    //     $halt_time=$this->timeFormate($halt_time);
+    //     $motion_time=$this->timeFormate($motion_time);
+    //     $output_data = ["total_moving" => $motion_time, 
+    //                     "total_halt" => $halt_time,
+    //                     "total_sleep" => $sleep_time
+    //                    ];
+    //     return $output_data;
+    // }
 
-	public function acStatus($gps_id,$from_date,$to_date)
-    { 
-        $first_log=GpsData::select('id','ac_status','device_time')
-                ->where('device_time', '>=', $from_date)
-                ->where('device_time', '<=', $to_date)
-                ->where('gps_id',$gps_id)
-                ->whereIn('vehicle_mode',['H','S','M'])
-                ->orderBy('device_time')
-                ->first();
-        $last_log=GpsData::select('id','ac_status','device_time')
-                ->where('device_time', '>=', $from_date)
-                ->where('device_time', '<=', $to_date)
-                ->where('gps_id',$gps_id)
-                ->whereIn('vehicle_mode',['H','S','M'])
-                ->latest('device_time')
-                ->first();
-        $balance_log=DB::select('SELECT id,ac_status,device_time FROM
-                          ( SELECT (@statusPre <> ac_status) AS statusChanged
-                               , ac_status, device_time,id
-                               , @statusPre := ac_status
-                          FROM gps_data
-                             , (SELECT @statusPre:=NULL) AS d
-                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") AND ac_status IS NOT NULL ORDER BY device_time 
-                        ) AS good
-                      WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+	// public function acStatus($gps_id,$from_date,$to_date)
+    // { 
+    //     $first_log=GpsData::select('id','ac_status','device_time')
+    //             ->where('device_time', '>=', $from_date)
+    //             ->where('device_time', '<=', $to_date)
+    //             ->where('gps_id',$gps_id)
+    //             ->whereIn('vehicle_mode',['H','S','M'])
+    //             ->orderBy('device_time')
+    //             ->first();
+    //     $last_log=GpsData::select('id','ac_status','device_time')
+    //             ->where('device_time', '>=', $from_date)
+    //             ->where('device_time', '<=', $to_date)
+    //             ->where('gps_id',$gps_id)
+    //             ->whereIn('vehicle_mode',['H','S','M'])
+    //             ->latest('device_time')
+    //             ->first();
+    //     $balance_log=DB::select('SELECT id,ac_status,device_time FROM
+    //                       ( SELECT (@statusPre <> ac_status) AS statusChanged
+    //                            , ac_status, device_time,id
+    //                            , @statusPre := ac_status
+    //                       FROM gps_data
+    //                          , (SELECT @statusPre:=NULL) AS d
+    //                       WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode IN ("M", "S", "H") AND ac_status IS NOT NULL ORDER BY device_time 
+    //                     ) AS good
+    //                   WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
        
-        $ac_on_time=0;
-        $ac_off_time=0;
-        if($balance_log)
-        {
-            $i=0;
-            foreach ($balance_log as $item) {
-                if($i==0){
-                    $first_device_time=$first_log->device_time;
-                    $item_device_time=$item->device_time;
-                    $ac_status=$item->ac_status;                  
-                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                    $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ac_status==0){
-                        $ac_on_time=$ac_on_time+$diff_in_minutes;
-                    }else{
-                        $ac_off_time=$ac_off_time+$diff_in_minutes;
-                    }
-                }else{
-                    $item_device_time=$item->device_time;
-                    $ac_status=$item->ac_status;
-                    $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-                    $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                    $diff_in_minutes = $to->diffInSeconds($from);
-                    if($ac_status==0){
-                        $ac_on_time=$ac_on_time+$diff_in_minutes;
-                    }else{
-                        $ac_off_time=$ac_off_time+$diff_in_minutes;
-                    }
-                }
-                $last_item_device_time=$item->device_time;
-                $last_ac_status=$item->ac_status;
-                $i++;
-            }
-            $last_device_time=$last_log->device_time;
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-            $diff_in_minutes = $to->diffInSeconds($from);
-            if($last_ac_status==0){
-                $ac_off_time=$ac_off_time+$diff_in_minutes;
-            }else{
-                $ac_on_time=$ac_on_time+$diff_in_minutes;
-            }
-        }else if($first_log != null && $balance_log==null)
-        {
-            $first_device_time=$first_log->device_time;
-            $last_device_time=$last_log->device_time;
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-            $diff_in_minutes = $to->diffInSeconds($from);
-            if($first_log->ac_status==0){
-                $ac_off_time=$ac_off_time+$diff_in_minutes;
-            }else if($first_log->ac_status==1){
-                $ac_on_time=$ac_on_time+$diff_in_minutes;
-            }else if($first_log->ac_status==null && $last_log->ac_status==0 ){
-                $ac_off_time=$ac_off_time+$diff_in_minutes;
-            }else if($first_log->ac_status==null && $last_log->ac_status==1){
-                $ac_on_time=$ac_on_time+$diff_in_minutes;
-            }
-        }
-        $ac_on_time = $this->timeFormate($ac_on_time);
-        $ac_off_time = $this->timeFormate($ac_off_time);
-        $ac_status = array(
-              "ac_on_time" => $ac_on_time, 
-              "ac_off_time" => $ac_off_time
-              );
-        return $ac_status;
-    }
+    //     $ac_on_time=0;
+    //     $ac_off_time=0;
+    //     if($balance_log)
+    //     {
+    //         $i=0;
+    //         foreach ($balance_log as $item) {
+    //             if($i==0){
+    //                 $first_device_time=$first_log->device_time;
+    //                 $item_device_time=$item->device_time;
+    //                 $ac_status=$item->ac_status;                  
+    //                 $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //                 $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //                 $diff_in_minutes = $to->diffInSeconds($from);
+    //                 if($ac_status==0){
+    //                     $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //                 }else{
+    //                     $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //                 }
+    //             }else{
+    //                 $item_device_time=$item->device_time;
+    //                 $ac_status=$item->ac_status;
+    //                 $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //                 $to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //                 $diff_in_minutes = $to->diffInSeconds($from);
+    //                 if($ac_status==0){
+    //                     $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //                 }else{
+    //                     $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //                 }
+    //             }
+    //             $last_item_device_time=$item->device_time;
+    //             $last_ac_status=$item->ac_status;
+    //             $i++;
+    //         }
+    //         $last_device_time=$last_log->device_time;
+    //         $from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //         $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //         $diff_in_minutes = $to->diffInSeconds($from);
+    //         if($last_ac_status==0){
+    //             $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //         }else{
+    //             $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //         }
+    //     }else if($first_log != null && $balance_log==null)
+    //     {
+    //         $first_device_time=$first_log->device_time;
+    //         $last_device_time=$last_log->device_time;
+    //         $from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //         $to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //         $diff_in_minutes = $to->diffInSeconds($from);
+    //         if($first_log->ac_status==0){
+    //             $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //         }else if($first_log->ac_status==1){
+    //             $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //         }else if($first_log->ac_status==null && $last_log->ac_status==0 ){
+    //             $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //         }else if($first_log->ac_status==null && $last_log->ac_status==1){
+    //             $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //         }
+    //     }
+    //     $ac_on_time = $this->timeFormate($ac_on_time);
+    //     $ac_off_time = $this->timeFormate($ac_off_time);
+    //     $ac_status = array(
+    //           "ac_on_time" => $ac_on_time, 
+    //           "ac_off_time" => $ac_off_time
+    //           );
+    //     return $ac_status;
+    // }
 
-    public function haltAcStatus($gps_id,$from_date,$to_date)
-    { 
-        $first_log=GpsData::select('id','ac_status','device_time')
-                ->where('device_time', '>=', $from_date)
-                ->where('device_time', '<=', $to_date)
-                ->where('gps_id',$gps_id)
-                ->where('vehicle_mode','H')
-                ->orderBy('device_time')
-                ->first();
-        $last_log=GpsData::select('id','ac_status','device_time')
-                ->where('device_time', '>=', $from_date)
-                ->where('device_time', '<=', $to_date)
-                ->where('gps_id',$gps_id)
-                ->where('vehicle_mode','H')
-                ->latest('device_time')
-                ->first();
-        $balance_halt_log=DB::select('SELECT id,ac_status,device_time FROM
-                          ( SELECT (@statusPre <> ac_status) AS statusChanged
-                               , ac_status, device_time,id
-                               , @statusPre := ac_status
-                          FROM gps_data
-                             , (SELECT @statusPre:=NULL) AS d
-                          WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode="H" AND ac_status IS NOT NULL ORDER BY device_time 
-                        ) AS good
-                      WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
-      	$ac_on_time=0;
-      	$ac_off_time=0;
-      	if($balance_halt_log)
-      	{
-          	$i=0;
-          	foreach ($balance_halt_log as $item) {
-              	if($i==0){
-                  	$first_device_time=$first_log->device_time;
-                  	$item_device_time=$item->device_time;
-                  	$ac_status=$item->ac_status;
-                 	$from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-                  	$to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                  	$diff_in_minutes = $to->diffInSeconds($from);
-                  	if($ac_status==0){
-                      $ac_on_time=$ac_on_time+$diff_in_minutes;
-                  	}else{
-                      $ac_off_time=$ac_off_time+$diff_in_minutes;
-                  	}
-              	}else{
-                  	$item_device_time=$item->device_time;
-                  	$ac_status=$item->ac_status;
-                  	$from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-                  	$to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
-                  	$diff_in_minutes = $to->diffInSeconds($from);
-                  	if($ac_status==0){
-                      	$ac_on_time=$ac_on_time+$diff_in_minutes;
-                  	}else{
-                      	$ac_off_time=$ac_off_time+$diff_in_minutes;
-                  	}
-              	}
-              	$last_item_device_time=$item->device_time;
-              	$last_ac_status=$item->ac_status;
-              	$i++;
-          	}
-          	$last_device_time=$last_log->device_time;
-          	$from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
-          	$to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-          	$diff_in_minutes = $to->diffInSeconds($from);
-          	if($last_ac_status==0){
-              	$ac_off_time=$ac_off_time+$diff_in_minutes;
-          	}else{
-              	$ac_on_time=$ac_on_time+$diff_in_minutes;
-          	}
-      	}else if($first_log != null && $balance_halt_log==null)
-      	{
-          	$first_device_time=$first_log->device_time;
-          	$last_device_time=$last_log->device_time;
-          	$from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
-          	$to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
-          	$diff_in_minutes = $to->diffInSeconds($from);
-          	if($first_log->ac_status==0){
-                $ac_off_time=$ac_off_time+$diff_in_minutes;
-            }else if($first_log->ac_status==1){
-                $ac_on_time=$ac_on_time+$diff_in_minutes;
-            }else if($first_log->ac_status==null && $last_log->ac_status==0 ){
-                $ac_off_time=$ac_off_time+$diff_in_minutes;
-            }else if($first_log->ac_status==null && $last_log->ac_status==1){
-                $ac_on_time=$ac_on_time+$diff_in_minutes;
-            }
-      	}
-      	$ac_on_time = $this->timeFormate($ac_on_time);
-      	$ac_halt_status = array(
-        	"ac_on_time" => $ac_on_time 
-      	);
-      	return $ac_halt_status;
-    }
+    // public function haltAcStatus($gps_id,$from_date,$to_date)
+    // { 
+    //     $first_log=GpsData::select('id','ac_status','device_time')
+    //             ->where('device_time', '>=', $from_date)
+    //             ->where('device_time', '<=', $to_date)
+    //             ->where('gps_id',$gps_id)
+    //             ->where('vehicle_mode','H')
+    //             ->orderBy('device_time')
+    //             ->first();
+    //     $last_log=GpsData::select('id','ac_status','device_time')
+    //             ->where('device_time', '>=', $from_date)
+    //             ->where('device_time', '<=', $to_date)
+    //             ->where('gps_id',$gps_id)
+    //             ->where('vehicle_mode','H')
+    //             ->latest('device_time')
+    //             ->first();
+    //     $balance_halt_log=DB::select('SELECT id,ac_status,device_time FROM
+    //                       ( SELECT (@statusPre <> ac_status) AS statusChanged
+    //                            , ac_status, device_time,id
+    //                            , @statusPre := ac_status
+    //                       FROM gps_data
+    //                          , (SELECT @statusPre:=NULL) AS d
+    //                       WHERE device_time >=:from_date AND device_time <=:to_date  AND gps_id=:gps_id AND vehicle_mode="H" AND ac_status IS NOT NULL ORDER BY device_time 
+    //                     ) AS good
+    //                   WHERE statusChanged',['from_date' => $from_date,'to_date' => $to_date,'gps_id' => $gps_id]);
+    //   	$ac_on_time=0;
+    //   	$ac_off_time=0;
+    //   	if($balance_halt_log)
+    //   	{
+    //       	$i=0;
+    //       	foreach ($balance_halt_log as $item) {
+    //           	if($i==0){
+    //               	$first_device_time=$first_log->device_time;
+    //               	$item_device_time=$item->device_time;
+    //               	$ac_status=$item->ac_status;
+    //              	$from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //               	$to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //               	$diff_in_minutes = $to->diffInSeconds($from);
+    //               	if($ac_status==0){
+    //                   $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //               	}else{
+    //                   $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //               	}
+    //           	}else{
+    //               	$item_device_time=$item->device_time;
+    //               	$ac_status=$item->ac_status;
+    //               	$from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //               	$to = Carbon::createFromFormat('Y-m-d H:i:s', $item_device_time);
+    //               	$diff_in_minutes = $to->diffInSeconds($from);
+    //               	if($ac_status==0){
+    //                   	$ac_on_time=$ac_on_time+$diff_in_minutes;
+    //               	}else{
+    //                   	$ac_off_time=$ac_off_time+$diff_in_minutes;
+    //               	}
+    //           	}
+    //           	$last_item_device_time=$item->device_time;
+    //           	$last_ac_status=$item->ac_status;
+    //           	$i++;
+    //       	}
+    //       	$last_device_time=$last_log->device_time;
+    //       	$from = Carbon::createFromFormat('Y-m-d H:i:s', $last_item_device_time);
+    //       	$to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //       	$diff_in_minutes = $to->diffInSeconds($from);
+    //       	if($last_ac_status==0){
+    //           	$ac_off_time=$ac_off_time+$diff_in_minutes;
+    //       	}else{
+    //           	$ac_on_time=$ac_on_time+$diff_in_minutes;
+    //       	}
+    //   	}else if($first_log != null && $balance_halt_log==null)
+    //   	{
+    //       	$first_device_time=$first_log->device_time;
+    //       	$last_device_time=$last_log->device_time;
+    //       	$from = Carbon::createFromFormat('Y-m-d H:i:s', $first_device_time);
+    //       	$to = Carbon::createFromFormat('Y-m-d H:i:s', $last_device_time);
+    //       	$diff_in_minutes = $to->diffInSeconds($from);
+    //       	if($first_log->ac_status==0){
+    //             $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //         }else if($first_log->ac_status==1){
+    //             $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //         }else if($first_log->ac_status==null && $last_log->ac_status==0 ){
+    //             $ac_off_time=$ac_off_time+$diff_in_minutes;
+    //         }else if($first_log->ac_status==null && $last_log->ac_status==1){
+    //             $ac_on_time=$ac_on_time+$diff_in_minutes;
+    //         }
+    //   	}
+    //   	$ac_on_time = $this->timeFormate($ac_on_time);
+    //   	$ac_halt_status = array(
+    //     	"ac_on_time" => $ac_on_time 
+    //   	);
+    //   	return $ac_halt_status;
+    // }
 
     function getDateFromType($searchType, $custom_from_date, $custom_to_date) 
     {
@@ -630,19 +630,4 @@ trait VehicleDataProcessorTrait{
         return $km_report = $query->first();  
     }
 
-    public function limitFuelPercentageRange($percentage)
-    {
-        if($percentage < 0)
-        {
-            return 0;
-        }
-        else if($percentage > 100)
-        {
-            return 100;
-        }
-        else
-        {
-            return $percentage;
-        }
-    }
 }

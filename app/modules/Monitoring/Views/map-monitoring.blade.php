@@ -27,14 +27,6 @@
               <img id="loading-image" src="{{asset('playback/assets/img/loader.gif')}}" />
             </div>
           </div>
-          <div class ="cover_bell_icon">
-            <div class ="bell_icon_image">
-              <img src="{{asset('images/bell.png')}}">
-              <span id ="cover_alert_count" class="alert_count_bell">
-                0
-              </span>
-            </div>
-          </div>
           <!--<div id="markers" style="width:1800px;height:780px"></div>-->
           <div id="markers" style="width:100%;height:100vh; position: relative;"></div>
         </div>
@@ -157,27 +149,26 @@
         if(currentURL != '')
         {
           var urlParams = new URLSearchParams(currentURL);
-          if(window.location.href.indexOf("?&latitude=") > -1) 
+         
+          if(currentURL.indexOf("detail") > -1) 
           {
-            alert_latitude = urlParams.get('latitude');
-            alert_longitude= urlParams.get('longitude');
+            var alertdata = JSON.parse(atob(decodeURI(urlParams.get('detail'))));
             alert_from_list = true;
             var location_alerts = {
-                          "alert_id" : 1,
-                          "latitude" : alert_latitude,
-                          "longitude": alert_longitude
+                          "alert_id" : alertdata.id,
+                          "latitude" : alertdata.lat,
+                          "longitude": alertdata.lon
             } ;
             location_data.push(location_alerts); 
-            $('#cover_alert_count').text(location_data.length);
-            addInfoBubble(alert_latitude,
-                          alert_longitude,
-                          1,
-                          "Emergancy",
-                          "raju",
-                          "benz",
-                          "394",
-                          "10101010101010",
-                          "101201000"
+            addInfoBubble(alertdata.lat,
+                          alertdata.lon,
+                          alertdata.id,
+                          alertdata.title,
+                          alertdata.client,
+                          alertdata.vehicle,
+                          alertdata.reg,
+                          alertdata.imei,
+                          alertdata.serial
             );
           }                                 
         }
@@ -238,7 +229,6 @@
                         "longitude": vehicle_alerts.lon
                       } ;
                       location_data.push(location_alerts); 
-                      $('#cover_alert_count').text(location_data.length);
                       addInfoBubble(vehicle_alerts.lat,
                                     vehicle_alerts.lon,
                                     vehicle_alerts.id,
@@ -258,7 +248,6 @@
                     location_data  = [];
                     map.removeObject(group);
                     group.removeObject(map_markers);
-                    $('#cover_alert_count').text(location_data.length);
                     remove_marker_flag = false;
                   }
                 }

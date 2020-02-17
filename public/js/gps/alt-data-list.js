@@ -18,7 +18,7 @@ $(function(){
                  $('#header').val(res.data.header);
                  $('#imei').val(res.data.imei); 
                  $('#alert_id').val(res.data.alert_id);
-                 $('#imei').val(res.data.imei); 
+                
                  $('#date').val(res.data.date); 
                  $('#time').val(res.data.time); 
                  $('#packet_status').val(res.data.packet_status); 

@@ -23,14 +23,12 @@ use App\Modules\Operations\Models\VehicleModels;
 
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
-use App\Http\Traits\VehicleDataProcessorTrait;
 use DataTables;
 use DB;
 use Carbon\Carbon; 
 use Config;
 class DashboardController extends Controller
 {
-    use VehicleDataProcessorTrait;
     /**
      * Create a new controller instance.
      *
@@ -632,15 +630,7 @@ class DashboardController extends Controller
             )
             ->where('id',$model)
             ->first();
-
-            $fuel_gps=$gps->fuel_status;
-            $fuel_min=$vehicle_models->fuel_min;
-            $fuel_max=$vehicle_models->fuel_max;
-            $modulus=$fuel_min-$fuel_max;
-            $value=$vehicle_models->fuel_min-$fuel_gps;
-            $fuel=($value/$modulus)*100;
-            $fuel_percentage=round($fuel);
-            $fuel_status = $this->limitFuelPercentageRange($fuel_percentage)."%";
+            $fuel_status=$gps->fuel_status;
         }
         else
         {
