@@ -128,14 +128,14 @@ Notification.prototype.notificationItemClicked= function(alert_id)
 
 $(function(){
     var firebaseConfig = {
-        apiKey: "AIzaSyAOVP1nmuXNkFI5ofP58euHXMoIGegbXeE",
-        authDomain: "gps-web-c8391.firebaseapp.com",
-        databaseURL: "https://gps-web-c8391.firebaseio.com",
-        projectId: "gps-web-c8391",
-        storageBucket: "gps-web-c8391.appspot.com",
-        messagingSenderId: "271290674440",
-        appId: "1:271290674440:web:063d272d0714bff5dd50bd",
-        measurementId: "G-H202XYT3NW"
+        apiKey: "AIzaSyC_TvHgud2Ikov0R5ziznssGH1bTjwEId8",
+        authDomain: "gps-web-dev-566db.firebaseapp.com",
+        databaseURL: "https://gps-web-dev-566db.firebaseio.com",
+        projectId: "gps-web-dev-566db",
+        storageBucket: "gps-web-dev-566db.appspot.com",
+        messagingSenderId: "66637854905",
+        appId: "1:66637854905:web:5605cfc44025ae01de4368",
+        measurementId: "G-K05CT6PNM1"
       };
     firebase.initializeApp(firebaseConfig);
     notify.getNotificationCount();
