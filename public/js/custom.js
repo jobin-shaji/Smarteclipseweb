@@ -1214,7 +1214,7 @@ function notification(res){
 }
 
 function clientAlerts(){
-    console.log(1);
+    // console.log(1);
   var flag;
     var url = 'alert-notification';
     var data = {
