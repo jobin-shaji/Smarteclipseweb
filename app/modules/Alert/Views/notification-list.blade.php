@@ -27,7 +27,8 @@
 						<div class="noti-box">					
 							<div class="notificaton-bx-inner">
 
-								<div id="notification" calss="notification">					<div class="loader-wrapper" id="loader-1">
+								<div id="notification" class="alert_notification">					
+									<div class="loader-wrapper" id="loader-1">
                                      <div id="loader" class="load-style"></div>
                                      </div> 			
 								</div>
@@ -41,24 +42,24 @@
 				</div>
 			</div>
 			</div>			
-			<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+			<div class="modal right fade" id="clickedModelInDetailPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
 				<div class="modal-dialog model-class-new" role="document">
 					<div class="modal-content modal-content-new">
 						<div class="modal-header modal-header-new">
-								<h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
+							<h4 class="modal-title" id="myModalLabel2">Alert Details</h4>
 							<button type="button" class="close modal-close-new" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>					
 						</div>
 						<div class="modal-body">
-							          <div class="loader-wrapper loader-1" >
-                                      <div  class="load-style loader"></div>
-                                      </div> 
+							<div class="loader-wrapper loader-1" >
+								<div  class="load-style loader"></div>
+							</div> 
 						<div style="text-align:center;">
-							<label id="description" ></label><br>
+							<label class='model_label' id="description" ></label><br>
 						</div>
-						<label>Vehicle Name :</label><span id="vehicle_name"></span><br>
-							<label>Register Number :</label><span id="register_number"></span><br>							
-							<label>Alert Time:</label><span id="device_time"></span><br>
-							<label>Address :</label><span id="address"></span><br>
+						<label>Vehicle Name :</label><span class='model_label' id="vehicle_name"></span><br>
+						<label>Register Number :</label><span class='model_label' id="register_number"></span><br>							
+						<label>Alert Time:</label><span class='model_label' id="device_time"></span><br>
+						<label>Address :</label><span class='model_label' id="address"></span><br>
 							<!-- <label>Register Number :</label><span id="register_number"></span><br> -->
 
 						</div>
@@ -72,8 +73,8 @@
 @section('script')
 
 <script async defer src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&callback=initMap"></script>
-<script src="{{asset('js/gps/alert-notification.js')}}"></script>
 <script src="{{asset('js/gps/alert-notification-firebase.js')}}"></script>
+<!-- <script src="{{asset('js/gps/alert-notification.js')}}"></script> -->
 
 		<script>
 		var el = document.querySelector('.notification');

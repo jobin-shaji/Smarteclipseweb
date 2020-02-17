@@ -1,6 +1,6 @@
 function Notification(){
    
-    this.user_id                =  $("#user_id").val();
+    this.user_id                = $("#user_id").val();
     this.notify_count           = 0;
     this.notification_count     = $('body').find('#bell_notification_count');
     this.alert_notification     = $('body').find('#alert_notification');
@@ -128,14 +128,14 @@ Notification.prototype.notificationItemClicked= function(alert_id)
 
 $(function(){
     var firebaseConfig = {
-        apiKey: "AIzaSyC_TvHgud2Ikov0R5ziznssGH1bTjwEId8",
-        authDomain: "gps-web-dev-566db.firebaseapp.com",
-        databaseURL: "https://gps-web-dev-566db.firebaseio.com",
-        projectId: "gps-web-dev-566db",
-        storageBucket: "gps-web-dev-566db.appspot.com",
-        messagingSenderId: "66637854905",
-        appId: "1:66637854905:web:5605cfc44025ae01de4368",
-        measurementId: "G-K05CT6PNM1"
+        apiKey: "AIzaSyAOVP1nmuXNkFI5ofP58euHXMoIGegbXeE",
+        authDomain: "gps-web-c8391.firebaseapp.com",
+        databaseURL: "https://gps-web-c8391.firebaseio.com",
+        projectId: "gps-web-c8391",
+        storageBucket: "gps-web-c8391.appspot.com",
+        messagingSenderId: "271290674440",
+        appId: "1:271290674440:web:063d272d0714bff5dd50bd",
+        measurementId: "G-H202XYT3NW"
       };
     firebase.initializeApp(firebaseConfig);
     notify.getNotificationCount();

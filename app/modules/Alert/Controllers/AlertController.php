@@ -572,23 +572,35 @@ class AlertController extends Controller {
         return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );      
     }
 
-    public function alertLocation(Request $request){
-        $decrypted_id = $request->id;        
-        $get_alerts=Alert::where('id',$decrypted_id)->first();
-        $get_alerts->status=1;
-        $get_alerts->save();
-        $alert_icon  =  AlertType:: select(['description'])->where('id',$get_alerts->alert_type_id)->first(); 
-        $get_vehicle=Vehicle::select(['id','name','register_number',
-            'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
-        $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);
-        return response()->json([
-            'alert_id' => $decrypted_id,
-            'alertmap' => $get_alerts,
-            'alert_icon' => $alert_icon,
-            'get_vehicle' => $get_vehicle,
-            'address'=>      $placeName,
-            'status' => 'gpsAlertTracker'           
-        ]);   
+    public function alertLocation(Request $request)
+    {
+        $decrypted_id   =   $request->id;        
+        $alert_details  =   Alert::where('id',$decrypted_id)->first();
+        if($alert_details)
+        {
+            $alert_details->status  =   1;
+            $alert_details->save();
+            $alert_icon             =   AlertType:: select(['description'])->where('id',$alert_details->alert_type_id)->first(); 
+            $vehicle_details        =   Vehicle::select(['id','name','register_number',
+                'vehicle_type_id'])->where('id',$alert_details->gps->vehicle->id)->first();
+            $place_name             =   $this->getPlacenameFromLatLng($alert_details->latitude,$alert_details->longitude);
+            return response()->json([
+                'alert_id'      =>  $decrypted_id,
+                'alert_details' =>  $alert_details,
+                'alert_icon'    =>  $alert_icon,
+                'vehicle_details'   =>  $vehicle_details,
+                'address'       =>  $place_name,
+                'status'        =>  1,
+                'message'       =>  'success'
+            ]); 
+        }
+        else
+        {
+            return response()->json([
+                'status'        =>  0,
+                'message'       =>  'error'
+            ]); 
+        } 
     }
 
 

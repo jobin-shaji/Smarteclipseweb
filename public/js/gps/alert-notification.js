@@ -31,7 +31,7 @@ function notificationAlertsList(res)
       // read alerts
       if(res.alerts[i].status == 1)
       {
-        var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2">'+  
+        var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#clickedModelInDetailPage">'+  
          '<div class="not-icon-bg">'+
         '<img src="images/bell.svg"/>'+
         '</div>'+
@@ -49,7 +49,7 @@ function notificationAlertsList(res)
       // unread alerts
       if(res.alerts[i].status == 0)
       {
-        var notification=' <div class="item active-read alert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#myModal2"  >'+  
+        var notification=' <div class="item active-read alert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#clickedModelInDetailPage"  >'+  
          '<div class="not-icon-bg" >'+
         '<img src="/images/bell.svg"/>'+
         '</div>'+
