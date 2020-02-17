@@ -102,4 +102,32 @@ function reloadPageWithAdelay(delay)
           }, delay); 
     }
 }
-
+function validate_driver_mobileno()
+    {
+        var proceed = false;
+        var mob=$('#mobile').val();
+         $.ajax({
+            type: 'POST',
+            url: '/validate_mobile_driver',
+            data: {
+            mobile: mob
+            },
+            async: false,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+                if(res.driver_exists == true)
+                {
+                
+                    toastr.error( 'Driver with this mobile number already exists', 'Error');
+                    reloadPageWithAdelay(2000);
+                }
+                else
+                {
+                    proceed = true;
+                }
+            }
+        });
+        return proceed;
+    }
