@@ -14,7 +14,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;  
+    user-select: none;
     background-color:#ccc;
     border: 1px solid transparent;
     padding: 0 .21rem;
@@ -149,10 +149,10 @@
       </div>
       <div class="row">
         <div class="col-lg-6 col-xs-6">
-          <canvas id="rootChart" style="max-width: 100%; height: 200px;" ></canvas>  
+          <canvas id="rootChart" style="max-width: 100%; height: 200px;" ></canvas>
         </div>
         <div class="col-lg-6 col-xs-6">
-          <canvas id="rootChartUser" style="max-width: 100%; height: 200px;" ></canvas>  
+          <canvas id="rootChartUser" style="max-width: 100%; height: 200px;" ></canvas>
         </div>
       </div>
     </section>
@@ -243,7 +243,7 @@
                   <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
                     <!-- small box -->
                     <div class="small-box bg-green bxs">
-                      
+
                       <div class="inner inner-left">
                         <div class="box-2">
                           <div style="float:left; width:50%">
@@ -313,10 +313,10 @@
             </div>
             <div class="row">
               <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
+                <canvas id="rootChart" style="max-width: 100%;" ></canvas>
               </div>
               <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
+                <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>
               </div>
             </div>
           </div>
@@ -325,7 +325,7 @@
     </div>
   </div>
 </div>
-<!-- ./col -->       
+<!-- ./col -->
 @endrole
 <!-- DEALER ROLE-END -->
 <!-- DEALER ROLE-START -->
@@ -365,7 +365,7 @@
                         <p>Total Devices Tested</p>
                       </div>
                       <div class="icon">
-                        <img src="../../assets/images/gps104.png" height="50%" width="30%" style="float: right;margin-top: 10%">             
+                        <img src="../../assets/images/gps104.png" height="50%" width="30%" style="float: right;margin-top: 10%">
                     </div>
                   </div>
                 </div>
@@ -385,8 +385,8 @@
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
-                  
-              
+
+
 
                    <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
                     <!-- small box -->
@@ -403,9 +403,9 @@
                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
                     </div>
                   </div>
-                 
+
                  <!--  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
-                   
+
                     <div class="small-box bg-green bxs">
                       <div class="inner">
                         <h3 id="gps_add_to_stock">
@@ -416,10 +416,10 @@
                       <div class="icon">
                         <img src="../../assets/images/gps105.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
                       </div>
-                    
+
                     </div>
                   </div> -->
-                
+
                 </div>
               </div>
             </div>
@@ -429,7 +429,7 @@
     </div>
   </div>
 </div>
-<!-- ./col -->       
+<!-- ./col -->
 @endrole
 <!-- SUB DEALER ROLE-START -->
 @role('sub_dealer')
@@ -528,7 +528,7 @@
       <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-green bxs">
-          
+
           <div class="inner inner-left">
             <div class="box-2">
               <div style="float:left; width:50%">
@@ -593,13 +593,13 @@
         </div>
       </div>
     </div>
-      
+
     <div class="row">
       <div class="col-lg-6 col-xs-6">
-        <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
+        <canvas id="rootChart" style="max-width: 100%;" ></canvas>
       </div>
       <div class="col-lg-6 col-xs-6">
-        <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
+        <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>
       </div>
     </div>
   </div>
@@ -675,10 +675,10 @@
     </div>
     <div class="row">
       <div class="col-lg-6 col-xs-6">
-        <canvas id="rootChart" style="max-width: 100%;" ></canvas>  
+        <canvas id="rootChart" style="max-width: 100%;" ></canvas>
       </div>
       <div class="col-lg-6 col-xs-6">
-        <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>  
+        <canvas id="rootChartUser" style="max-width: 100%;" ></canvas>
       </div>
     </div>
   </div>
@@ -720,7 +720,7 @@
             <a href="/service-job-list" class="small-box-footer" style="background-color: #002c7d!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-      
+
         <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid"  style="background-color: #d46415!important">
           <div class="small-box bg-yellow bxs">
             <div class="inner">
@@ -730,7 +730,7 @@
               <p> INSTALLATION COMPLETED JOBS</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>  
+              <i class="fa fa-tablet"></i>
             </div>
               <a href="/job-history-list" class="small-box-footer" style="background-color: #963f0c!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -744,7 +744,7 @@
               <p> SERVICE COMPLETED JOBS</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tablet"></i>  
+              <i class="fa fa-tablet"></i>
             </div>
               <a href="/servicerjob-history-list" class="small-box-footer" style="background-color: #073e03!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -785,11 +785,11 @@
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
           <div class="st-panel" style="overflow: scroll!important;">
-            <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
+            <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i>
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
             <div class="st-panel-contents" id="vehicle_card_cover">
-              @foreach ($vehicles as $vehicle) 
+              @foreach ($vehicles as $vehicle)
 
                 <div class="border-card">
                   <div class="card-type-icon with-border">
@@ -810,10 +810,10 @@
                       <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                     </div>
                     <div class="min-gap"></div>
-                   
+
                   </div>
                 </div>
-              @endforeach  
+              @endforeach
             </div>
           </div>
           <div class="right-bottom">
@@ -844,7 +844,7 @@
                           <option value="100">100 KM</option>
                         </select>
                       </div>
-                    </div>   
+                    </div>
                     <div class="col-lg-2 col-md-2 ">
                       <button type="submit" class="btn btn-primary btn-block">
                         <i class="fas fa-search"></i>
@@ -861,8 +861,8 @@
             <!-- Modal content -->
             <div class="modal-content">
               <div class="modal-header">
-                <span class="close"></span>   
-                  <div class="container">  
+                <span class="close"></span>
+                  <div class="container">
                     <div class="container">
                       <canvas id="myChart" style="max-width: 500px;"></canvas>
                     </div>
@@ -1009,14 +1009,14 @@
                 <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
-                 
-              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
+                 <div class="clear"></div>
+              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 0px; padding: 10px 0 10px 0px!important;" >
                 <h4 class="m-b-0 m-t-5 score_data_text">
                   <img src="assets/images/location.png">
                     Location
                 </h4>
                 <medium id="address" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>   
+                <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -1055,19 +1055,19 @@
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom" >
           <div class="st-panel" style="width: 50%">
-            <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> 
+            <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i>
               <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
             </div> -->
             <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px">
-              @foreach ($vehicles as $vehicle)       
+              @foreach ($vehicles as $vehicle)
                 <div class="border-card">
-                
+
                   <div class="content-wrapper con-radio">
 
                       <div class="card-type-icon with-border">
                   <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
                   </div>
-                  
+
                     <div class="label-group fixed">
                       <p class="title">
                         <span><i class="fa fa-car"></i></span>
@@ -1083,10 +1083,10 @@
                     </div>
                     <!-- <div id="msg"></div> -->
                     <div class="min-gap"></div>
-                   
+
                   </div>
                 </div>
-              @endforeach  
+              @endforeach
             </div>
 
 <style>
@@ -1101,11 +1101,11 @@
             <div class="st-button-main">
               <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
             </div>
-          
+
           </div>
-        
-             
-           
+
+
+
 
           @role('fundamental|superior|pro|school')
           <div class="right-bottom2">
@@ -1117,7 +1117,7 @@
                       <div class="form-group">
                         <input type="text" id="search_place" class="form-control" value="">
 
-                        
+
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-4 ">
@@ -1131,7 +1131,7 @@
                           <option value="100">100 KM</option>
                         </select>
                       </div>
-                    </div>   
+                    </div>
                     <div class="col-lg-2 col-md-2 ">
                       <button type="submit" class="btn btn-primary btn-block">
                         <i class="fas fa-search"></i>
@@ -1161,8 +1161,8 @@ position: absolute !important;
             <!-- Modal content -->
             <div class="modal-content">
               <div class="modal-header">
-                <span class="close"></span>   
-                  <div class="container">  
+                <span class="close"></span>
+                  <div class="container">
                     <div class="container">
                       <canvas id="myChart" style="max-width: 500px;"></canvas>
                     </div>
@@ -1252,7 +1252,7 @@ position: absolute !important;
           <div class="card card-hover" style="width:100%;-webkit-box-shadow: 1px 1px 2px 3px #ccc;
                -moz-box-shadow: 1px 1px 2px 3px #ccc;
                box-shadow: 1px 1px 21px 1px #ccc">
-            <div class="col-6 m-t-15">
+            <div class="col-6 m-t-15"  style="background-color: #fff;">
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
                 <img src="assets/images/network-status.png" id="network_online">
                 <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
@@ -1313,14 +1313,14 @@ position: absolute !important;
                 <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
-                 
-              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px;">
-                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
+<div class="clear"></div>
+              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 10px!important; float:left;">
+                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 10px  0!important";>
                   <img src="assets/images/location.png">
                     Location
                 </h4>
-                <medium id="address" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>   
+                <medium id="address" class="font-light" style="width:100%; float:left; line-height: 15px!important;">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
             </div>
           </div>
