@@ -2,6 +2,7 @@ function AlertNotification()
 {
     this.user_id                    =   notify.user_id;
     this.alert_notification_wrapper =   $('body').find('#notification');
+    this.selected_key               = '';
 }
 
 AlertNotification.prototype.getAllAlertNotifications = function(){
@@ -77,9 +78,10 @@ AlertNotification.prototype.displayAllAlertNotifications = function(notification
 
 AlertNotification.prototype.markDatabaseNotificationAsRead = function(alert_id)
 {
+    console.log(alert_id);
     var url = 'gps-alert-tracker';
     var data={
-      id:alert_id    
+      id:alert_id   
     }
     notify.ajaxCall(url,data,alert_notify.successMethodAsRead,alert_notify.errorMethod);
 
@@ -90,53 +92,59 @@ AlertNotification.prototype.successMethodAsRead = function(response)
     $('.model_label').empty();
     if(response.status  ==  1)
     {
-        var latitude=parseFloat(response.alert_details.latitude);
-        var longitude=parseFloat(response.alert_details.longitude);
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 17,
-            center: {lat: latitude, lng: longitude},
-            mapTypeId: 'terrain'
-        });
-        $.ajax({
-        url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
-        method  :"get",
-        async   :true,
-        context :this,
-        success : function (Result) {
-            alert_notify.displayAlertDetailsInModel(response);
-        }
-        });     
-        var alertMap = {
-            alerttype: {
-                center: {lat: latitude, lng: longitude},               
-            }
-        };
-        for (var alert in alertMap) {
-            var cityCircle = new google.maps.Circle({
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35,
-                map: map,
-                center: alertMap[alert].center
+        var latitude;
+        var longitude;
+        var key =   alert_notify.selected_key;
+        firebase.database().ref(alert_notify.user_id+'/notifications/'+key)
+        .orderByChild('created_at').on('value' , function(single_notifications){
+            latitude    =   parseFloat(single_notifications.val().latitude);
+            longitude   =   parseFloat(single_notifications.val().longitude);
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 17,
+                center: {lat: latitude, lng: longitude},
+                mapTypeId: 'terrain'
             });
-        }
-        var marker = new google.maps.Marker({
-        position:  alertMap[alert].center,
-            map: map
+            $.ajax({
+                url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
+                method  :"get",
+                async   :true,
+                context :this,
+                success : function (Result) {
+                    alert_notify.displayAlertDetailsInModel(single_notifications,response.address);
+                }
+            });     
+            var alertMap = {
+                alerttype: {
+                    center: {lat: latitude, lng: longitude},               
+                }
+            };
+            for (var alert in alertMap) {
+                var cityCircle = new google.maps.Circle({
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: alertMap[alert].center
+                });
+            }
+            var marker = new google.maps.Marker({
+                position:  alertMap[alert].center,
+                map: map
+            });
         });
     }
-    
+    alert_notify.selected_key   =   '';
 }
 
-AlertNotification.prototype.displayAlertDetailsInModel = function(response)
+AlertNotification.prototype.displayAlertDetailsInModel = function(response,address)
 {
-    $('#address').text(response.address);
-    $('#vehicle_name').text(response.vehicle_details.name);
-    $('#register_number').text(response.vehicle_details.register_number);
-    $('#description').text(response.alert_icon.description);
-    $('#device_time').text(response.alert_details.device_time);
+    $('#address').text(address);
+    $('#vehicle_name').text(response.val().vehicle_name);
+    $('#register_number').text(response.val().vehicle_registration_number);
+    $('#description').text(response.val().type);
+    $('#device_time').text(response.val().device_time);
 }
 
 AlertNotification.prototype.errorMethod = function(response){
@@ -156,6 +164,7 @@ $(function(){
         if(is_read == 0){
             notify.markFirebaseNotificationAsRead(alert_id);
         }
+        alert_notify.selected_key = key;
         alert_notify.markDatabaseNotificationAsRead(alert_id);
     });
   

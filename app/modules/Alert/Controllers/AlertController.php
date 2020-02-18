@@ -574,21 +574,14 @@ class AlertController extends Controller {
 
     public function alertLocation(Request $request)
     {
-        $decrypted_id   =   $request->id;        
+        $decrypted_id   =   $request->id;       
         $alert_details  =   Alert::where('id',$decrypted_id)->first();
         if($alert_details)
         {
             $alert_details->status  =   1;
             $alert_details->save();
-            $alert_icon             =   AlertType:: select(['description'])->where('id',$alert_details->alert_type_id)->first(); 
-            $vehicle_details        =   Vehicle::select(['id','name','register_number',
-                'vehicle_type_id'])->where('id',$alert_details->gps->vehicle->id)->first();
             $place_name             =   $this->getPlacenameFromLatLng($alert_details->latitude,$alert_details->longitude);
             return response()->json([
-                'alert_id'      =>  $decrypted_id,
-                'alert_details' =>  $alert_details,
-                'alert_icon'    =>  $alert_icon,
-                'vehicle_details'   =>  $vehicle_details,
                 'address'       =>  $place_name,
                 'status'        =>  1,
                 'message'       =>  'success'
