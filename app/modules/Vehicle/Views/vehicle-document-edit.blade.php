@@ -143,22 +143,22 @@ $('#upload_form').on('submit', function(event){
                 return false;
             }
             if(res.count==0){
-                 if (confirm('image size should be 2 MBs')){
-                }
+              alert('image size should be 2 MBs');
+
             }
             else if(res.count==3){
                  if (confirm('A document with a different expiry date is already in the database. Do you want to replace date ?')){
-                  deleteEditDocuments(data_val);
+                  changeEditDocumentsExpiryDate(data_val);
                 }
             }
             else{
-                alert("Document successfully uploaded");
+                alert("Document successfully Updated");
                 location.reload(true);
             }
        }
   })
 });
-function deleteEditDocuments(data_val){
+function changeEditDocumentsExpiryDate(data_val){
    $.ajax({
         url:'/edit-already-existing',
         method:"POST",
