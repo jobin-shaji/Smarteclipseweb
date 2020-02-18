@@ -52,6 +52,16 @@
                   </div>
 
                   <div class="form-group has-feedback">
+                    <label class="srequired">Fuel Tank Capacity</label>
+                    <input type="text" class="form-control {{ $errors->has('fuel_capacity') ? ' has-error' : '' }}" placeholder="" name="fuel_capacity" value="{{ old('fuel_capacity') }}" pattern="[0-9.]+" required>
+                    @if ($errors->has('fuel_capacity'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('fuel_capacity') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+
+                  <div class="form-group has-feedback">
                     <label class="srequired">Voltage if fuel empty</label>
                     <input type="text" class="form-control {{ $errors->has('fuel_min') ? ' has-error' : '' }}" placeholder="" name="fuel_min" value="{{ old('fuel_min') }}" pattern="[0-9.]+" required>
                     @if ($errors->has('fuel_min'))
@@ -130,6 +140,12 @@
 
 
 <div class="clearfix"></div>
-
+<style>
+label{
+  /* padding: 1.5% 0 0 0; */
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+</style>
 
 @endsection
