@@ -15,21 +15,21 @@
       @if(Session::has('message'))
         <div class="pad margin no-print">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-             {{ Session::get('message') }}  
+             {{ Session::get('message') }}
           </div>
         </div>
-      @endif  
+      @endif
     </nav>
-    <div class="container-fluid">                    
-      <div class="col-sm-12">      
+    <div class="container-fluid">
+      <div class="col-sm-12">
         <form  method="POST" action="{{route('servicer.save')}}">
           {{csrf_field()}}
           <div class="card">
             <div class="card-body">
             <div class="form-group row" style="float:none!important">
-              <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
+              <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
               <div class="form-group has-feedback">
-                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" maxlength="50" required> 
+                <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" maxlength="50" required>
               </div>
               @if ($errors->has('name'))
                 <span class="help-block">
@@ -56,7 +56,7 @@
                 <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
                 <div class="form-group has-feedback">
-                  <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" />
+                  <input type="text" required pattern="[0-9]{11}" maxlength="11" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" />
                 </div>
                 @if ($errors->has('mobile_number'))
                   <span class="help-block">
@@ -64,12 +64,12 @@
                   </span>
                 @endif
               </div>
-              <?php } 
+              <?php }
               else if (strpos($url, $eclipse_key) == true) { ?>
                 <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
                 <div class="form-group has-feedback">
-                  <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
+                  <input type="text" required pattern="[0-9]{10}" maxlength="10" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
                 </div>
                 @if ($errors->has('mobile_number'))
                   <span class="help-block">
@@ -82,7 +82,7 @@
                 <div class="form-group row" style="float:none!important">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile Number</label>
                 <div class="form-group has-feedback">
-                  <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
+                  <input type="text" required pattern="[0-9]{10}" maxlength="10" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" />
                 </div>
                 @if ($errors->has('mobile_number'))
                   <span class="help-block">
@@ -91,8 +91,8 @@
                 @endif
               </div>
             <?php } ?>
-            <div class="form-group row" style="float:none!important">               
-                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label> 
+            <div class="form-group row" style="float:none!important">
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                 <div class="form-group has-feedback">
                 <input type="email" maxlength='50' class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="email" name="email" value="{{ old('email') }}" required>
                 </div>
@@ -103,7 +103,7 @@
                 @endif
             </div>
             <div class="form-group row" style="float:none!important">
-                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label> 
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label>
                 <div class="form-group has-feedback">
                 <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" name="username" value="{{ old('username') }}" required>
                 </div>
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="form-group row" style="float:none!important">
-                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label> 
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>
                 <div class="form-group has-feedback">
                 <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                 </div>
@@ -139,7 +139,7 @@
           </div>
         </form>
       </div>
-    </div>            
+    </div>
   </div>
 </div>
 <div class="clearfix"></div>
