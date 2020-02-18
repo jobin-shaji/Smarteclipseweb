@@ -1,6 +1,7 @@
 <?php
     header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0');
 ?>
+
 <header class="topbar" data-navbarbg="skin5">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                
@@ -415,6 +416,18 @@
                         </div>
                         <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                     </div>
+                    <script> 
+                        var firebaseConfig = {
+                            apiKey:  '{{env("FIREBASE_API_KEY")}}',
+                            authDomain: '{{env("FIREBASE_AUTH_DOMAIN")}}',
+                            databaseURL: '{{env("FIREBASE_DATABASE_URL")}}',
+                            projectId: '{{env("FIREBASE_PROJECT_ID")}}',
+                            storageBucket: '{{env("FIREBASE_STORAGE_BUCKET")}}',
+                            messagingSenderId: '{{env("FIREBASE_MESSAGING_SENDER_ID")}}',
+                            appId: '{{env("FIREBASE_APP_ID")}}',
+                            measurementId: '{{env("FIREBASE_MEASUREMENT_ID")}}'
+                        };
+                    </script>
                     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
                     <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>
                 </li> 
