@@ -15,10 +15,10 @@
   @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-        {{ Session::get('message') }}  
+        {{ Session::get('message') }}
       </div>
     </div>
-  @endif  
+  @endif
 
   <div class="container-fluid">
     <div class="card-body">
@@ -30,19 +30,22 @@
                 <div class="row">
                   <div class="col-xs-12">
                       <h2 class="page-header">
-                        <i class="fa fa-file"></i> 
+                        <i class="fa fa-file"></i>
                       </h2>
                   </div>
                 </div>
-                <form  method="POST" action="{{route('vehicle-doc.update.p',$vehicle_doc->id)}}" enctype="multipart/form-data">
+                <form  method="POST"  id="upload_form"  enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="row">
                   <div class="col-xs-12">
-                  <input type="hidden" name="vehicle_id" value="{{$vehicle_doc->vehicle_id}}">
+                  <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$vehicle_doc->vehicle_id}}">
+                  <input type="hidden" name="document_type_id" id="document_type_id" value="{{$vehicle_doc->document_type_id}}">
+                  <input type="hidden" name="id" id="id" value="{{$vehicle_doc->id}}">
+
                   <div class="form-group has-feedback">
-                    
+
                     <label>Expiry Date</label>
-                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}"> 
+                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}">
                   </div>
                   @if ($errors->has('expiry_date'))
                     <span class="help-block">
@@ -72,7 +75,7 @@
                       @endif
                     </div>
                   </div>
-                 
+
                   </div>
 
                   </div>
@@ -92,7 +95,7 @@
     </div>
   </div>
 </div>
- 
+
 <div class="clearfix"></div>
 
 @section('script')
@@ -103,16 +106,73 @@
     function displaySelectedImage(input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
-        
+
         reader.onload = function(e) {
           $('.selected_image').show();
           $('.uploaded_image').hide();
           $('.selected_image').attr('src', e.target.result);
         }
-        
+
         reader.readAsDataURL(input.files[0]);
       }
     }
+  </script>
+   <script>
+$('#upload_form').on('submit', function(event){
+
+   event.preventDefault();
+  //  $("#load4").removeAttr("style");
+  //  $("#load-4").removeAttr("style");
+
+  var data_val=new FormData(this);
+  $.ajax({
+       url:'/edit-document-upload',
+       method:"POST",
+       data:new FormData(this),
+       dataType:'JSON',
+       contentType: false,
+       cache: false,
+       processData: false,
+       success:function(res)
+       {
+            if(typeof res.error != 'undefined')
+            {
+                Object.keys(res.error).forEach(key => {
+                    $('.error_'+key).text(res.error[key]);
+                });
+                return false;
+            }
+            if(res.count==0){
+              alert('image size should be 2 MBs');
+
+            }
+            else if(res.count==3){
+                 if (confirm('A document with a different expiry date is already in the database. Do you want to replace date ?')){
+                  changeEditDocumentsExpiryDate(data_val);
+                }
+            }
+            else{
+                alert("Document successfully Updated");
+                location.reload(true);
+            }
+       }
+  })
+});
+function changeEditDocumentsExpiryDate(data_val){
+   $.ajax({
+        url:'/edit-already-existing',
+        method:"POST",
+        data:data_val,
+        dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success:function(data)
+        {
+            location.reload(true);
+        }
+  })
+}
   </script>
 @endsection
 

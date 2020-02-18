@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class OperationsController extends Controller {
 
-    
+
     public function create()
     {
        return view('Operations::operations-create');
@@ -48,16 +48,16 @@ class OperationsController extends Controller {
             $operations = Operations::create([
                 'user_id' => $user->id,
                 'root_id'=>$root_id,
-                'name' => $request->name,            
+                'name' => $request->name,
                 'address' => $request->address,
             ]);
             User::where('username', $request->username)->first()->assignRole('operations');
-            
+
         }
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New operations created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('operations')); 
+        $request->session()->flash('message', 'New operations created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('operations'));
     }
     public function operationsListPage()
     {
@@ -66,10 +66,10 @@ class OperationsController extends Controller {
     public function getOperations()
     {
         $operations = Operations::select(
-            'id', 
-            'user_id',                      
-            'name',                   
-            'address',                                        
+            'id',
+            'user_id',
+            'name',
+            'address',
             'deleted_at'
         )
         ->withTrashed()
@@ -79,12 +79,12 @@ class OperationsController extends Controller {
         return DataTables::of($operations)
         ->addIndexColumn()
         ->addColumn('working_status', function ($operations) {
-            if($operations->user->deleted_at == null){ 
+            if($operations->user->deleted_at == null){
             return "
                 <b style='color:#008000';>Enabled</b>
                 <button onclick=disableOperations(".$operations->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
             ";
-            }else{ 
+            }else{
             return "
                 <b style='color:#FF0000';>Disabled</b>
                 <button onclick=enableOperations(".$operations->user_id.") class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Enable </button>
@@ -93,14 +93,14 @@ class OperationsController extends Controller {
         })
         ->addColumn('action', function ($operations) {
              $b_url = \URL::to('/');
-            if($operations->user->deleted_at == null){ 
+            if($operations->user->deleted_at == null){
             return "
             <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/change-password class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
             <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
             <a href=".$b_url."/operations/".Crypt::encrypt($operations->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-           
+
             ";
-            }else{ 
+            }else{
             return "";
             }
         })
@@ -113,8 +113,8 @@ class OperationsController extends Controller {
     {
         $decrypted = Crypt::decrypt($request->id);
         $operations = Operations::where('user_id', $decrypted)->first();
-        $user=User::find($decrypted);   
-        
+        $user=User::find($decrypted);
+
         if($operations == null){
             return view('Operations::404');
         }
@@ -123,7 +123,7 @@ class OperationsController extends Controller {
     public function edit(Request $request)
     {
         // dd(1);
-        $decrypted = Crypt::decrypt($request->id); 
+        $decrypted = Crypt::decrypt($request->id);
         $operations = Operations::where('user_id', $decrypted)->first();
         $user=User::find($decrypted);
 // dd($user);
@@ -133,13 +133,13 @@ class OperationsController extends Controller {
         return view('Operations::operations-edit',['operations' => $operations,'user' => $user]);
     }
     public function update(Request $request)
-    {  
+    {
         $user = User::find($request->id);
         $operations = Operations::where('user_id', $request->id)->first();
 
         if($operations == null){
            return view('Operations::404');
-        } 
+        }
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
@@ -154,17 +154,17 @@ class OperationsController extends Controller {
         {
            $rules = $this->operationsUpdatesRules($user);
         }
-        $this->validate($request, $rules);   
+        $this->validate($request, $rules);
         $operations->name = $request->name;
-        $operations->address = $request->address;       
+        $operations->address = $request->address;
         $operations->save();
         $user->mobile = $request->mobile_number;
         $user->email = $request->email;
         $user->save();
         $did = encrypt($user->id);
         $request->session()->flash('message', 'Operations details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('operations.edit',$did));  
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('operations.edit',$did));
     }
     //for edit page of employee password
     public function changePassword(Request $request)
@@ -240,7 +240,7 @@ class OperationsController extends Controller {
         $operations_id = \Auth::user()->operations->id;
         $operations_user_id = \Auth::user()->id;
         $operations = Operations::withTrashed()->where('id', $operations_id)->first();
-        $user=User::find($operations_user_id); 
+        $user=User::find($operations_user_id);
         if($operations == null)
         {
            return view('Operations::404');
@@ -252,7 +252,7 @@ class OperationsController extends Controller {
     {
          $decrypted = Crypt::decrypt($request->id);
           $trader = Trader::where('user_id', $decrypted)->first();
-         
+
         if($trader == null){
            return view('Trader::404');
         }
@@ -271,12 +271,12 @@ class OperationsController extends Controller {
     }
     //update dealer profile details
     public function updateOperationsProfile(Request $request)
-    {  
+    {
         $operation = Operations::find($request->id);
         $user = User::where('id', $operation->user_id)->first();
         if($operation == null){
            return view('Operation::404');
-        } 
+        }
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
@@ -291,7 +291,7 @@ class OperationsController extends Controller {
         {
            $rules = $this->operationProfileUpdatesRules($user);
         }
-        $this->validate($request, $rules);   
+        $this->validate($request, $rules);
         $operation->name = $request->name;
         $operation->address = $request->address;
         $operation->save();
@@ -299,8 +299,8 @@ class OperationsController extends Controller {
         $user->email = $request->email;
         $user->save();
         $request->session()->flash('message', 'Your details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('operations.profile'));  
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('operations.profile'));
     }
     public function vehicleModelsCreate()
     {
@@ -320,28 +320,34 @@ class OperationsController extends Controller {
                 'name' => $request->name,
                 'vehicle_make_id' => $request->vehicle_make,
                 'fuel_min' => $request->fuel_min,
+                'fuel_25' => $request->fuel_25,
+                'fuel_50' => $request->fuel_50,
+                'fuel_75' => $request->fuel_75,
                 'fuel_max' => $request->fuel_max,
-            ]);                       
+            ]);
         }
-        
-        $request->session()->flash('message', 'New vehicle models created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.models.create')); 
+
+        $request->session()->flash('message', 'New vehicle models created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('vehicle.models.create'));
     }
-     //Display employee details 
+     //Display employee details
     public function vehicleModelsListPage()
     {
         return view('Operations::vehicle-models-list');
     }
-    //returns employees as json 
+    //returns employees as json
     public function getVehicleModels()
     {
         $vehicle_models = VehicleModels::select(
-            'id', 
-            'name',                      
-            'vehicle_make_id',                   
-            'fuel_min', 
-            'fuel_max',                                       
+            'id',
+            'name',
+            'vehicle_make_id',
+            'fuel_min',
+            'fuel_25',
+            'fuel_50',
+            'fuel_75',
+            'fuel_max',
             'deleted_at'
         )
         ->withTrashed()
@@ -351,12 +357,12 @@ class OperationsController extends Controller {
         ->addIndexColumn()
         ->addColumn('action', function ($vehicle_models) {
              $b_url = \URL::to('/');
-            if($vehicle_models->deleted_at == null){ 
+            if($vehicle_models->deleted_at == null){
             return "
             <a href=".$b_url."/vehicle-models/".Crypt::encrypt($vehicle_models->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
-           
+
             ";
-            }else{ 
+            }else{
             return "";
             }
         })
@@ -366,36 +372,39 @@ class OperationsController extends Controller {
 //////////////////Vehicle Model edit/////////////
     public function modelEdit(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id); 
-        $vehicle_models = VehicleModels::where('id', $decrypted)->first(); 
+        $decrypted = Crypt::decrypt($request->id);
+        $vehicle_models = VehicleModels::where('id', $decrypted)->first();
         $vehicle_make=VehicleMake::select('id','name')
-        ->get();    
+        ->get();
         if($vehicle_models == null){
             return view('Operations::404');
         }
         return view('Operations::vehicle-models-edit',['vehicle_models' => $vehicle_models,'vehicle_makes' => $vehicle_make]);
     }
     public function modelUpdate(Request $request)
-    {  
+    {
         $vehicle_models = VehicleModels::where('id', $request->id)->first();
         if($vehicle_models == null){
            return view('Operations::404');
-        } 
+        }
         $rules = $this->vehiclemodelsUpdatesRules($vehicle_models);
-        $this->validate($request, $rules);   
+        $this->validate($request, $rules);
         $vehicle_models->name = $request->name;
         $vehicle_models->vehicle_make_id = $request->vehicle_make;
         $vehicle_models->fuel_min = $request->fuel_min;
+        $vehicle_models->fuel_25 = $request->fuel_25;
+        $vehicle_models->fuel_50 = $request->fuel_50;
+        $vehicle_models->fuel_75 = $request->fuel_75;
         $vehicle_models->fuel_max = $request->fuel_max;
         $vehicle_models->save();
         $did = encrypt($vehicle_models->id);
         $request->session()->flash('message', 'vehicle models details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle.models.edit',$did));  
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('vehicle.models.edit',$did));
     }
     public function disableVehicleModels(Request $request)
     {
-        $vehicle_models = VehicleModels::find($request->id);       
+        $vehicle_models = VehicleModels::find($request->id);
         if($vehicle_models == null){
             return response()->json([
                 'status' => 0,
@@ -429,7 +438,7 @@ class OperationsController extends Controller {
     }
 
 
-    
+
 
 
 
@@ -451,11 +460,14 @@ class OperationsController extends Controller {
     public function vehicle_model_create_rules()
     {
         $rules = [
-            'name' => 'required',  
-            'vehicle_make'=> 'required',     
-            'fuel_min' => 'required',       
+            'name' => 'required',
+            'vehicle_make'=> 'required',
+            'fuel_min' => 'required',
+            'fuel_25' => 'required',
+            'fuel_50' => 'required',
+            'fuel_75' => 'required',
             'fuel_max' => 'required',
-           
+
         ];
         return  $rules;
     }
@@ -464,7 +476,7 @@ class OperationsController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,       
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
         ];
         return  $rules;
     }
@@ -472,15 +484,15 @@ class OperationsController extends Controller {
     {
         $rules = [
             'name' => 'required',
-            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,       
+            'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
         ];
         return  $rules;
     }
 
     public function operationProfileUpdatesRules($user){
         $rules = [
-            'name' => 'required',       
-            'address' => 'required',       
+            'name' => 'required',
+            'address' => 'required',
             'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
@@ -490,14 +502,14 @@ class OperationsController extends Controller {
 
     public function operationProfileUpdatesRulesRayfleet($user){
         $rules = [
-            'name' => 'required',       
-            'address' => 'required',       
+            'name' => 'required',
+            'address' => 'required',
             'mobile_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         ];
         return  $rules;
 
-    } 
+    }
     public function passwordUpdateRules()
     {
         $rules=[
@@ -505,7 +517,7 @@ class OperationsController extends Controller {
         ];
         return $rules;
     }
-    //user create rules 
+    //user create rules
     public function user_create_rules(){
         $rules = [
             'username' => 'required|unique:users',
@@ -531,6 +543,9 @@ class OperationsController extends Controller {
             'name' => 'required',
             'vehicle_make' => 'required',
             'fuel_min' => 'required',
+            'fuel_25' => 'required',
+            'fuel_50' => 'required',
+            'fuel_75' => 'required',
             'fuel_max' => 'required'
 
         ];

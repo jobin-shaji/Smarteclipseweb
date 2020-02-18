@@ -39,14 +39,14 @@ use DataTables;
 use Config;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class VehicleController extends Controller 
+class VehicleController extends Controller
 {
 
     CONST DAILY_KILOMETRE_RESET_VALUE = 0;
 
 
-    /** 
-     * Response data 
+    /**
+     * Response data
      */
     private $data;
 
@@ -79,17 +79,17 @@ class VehicleController extends Controller
     /**
      * add geo fence
      * @author  spm
-     * 
+     *
      */
     use VehicleDataProcessorTrait;
-    
+
     // show list page
     public function vehicleList()
     {
-        
-       return view('Vehicle::vehicle-list'); 
+
+       return view('Vehicle::vehicle-list');
     }
-   
+
     public function getVehicleList()
     {
         $client_id=\Auth::user()->client->id;
@@ -118,7 +118,7 @@ class VehicleController extends Controller
                 else
                 {
                   return $vehicles->driver->name;
-                 
+
                 }
             })
             ->addColumn('action', function ($vehicles) {
@@ -131,10 +131,10 @@ class VehicleController extends Controller
                          <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"
 
 
-                         ; 
-                    
+                         ;
+
                 }else{
-                     return ""; 
+                     return "";
                 }
              })
             ->rawColumns(['link', 'action'])
@@ -197,8 +197,8 @@ class VehicleController extends Controller
             }
         }
         $encrypted_vehicle_id = encrypt($vehicle->id);
-        $request->session()->flash('message', 'New Vehicle created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'New Vehicle created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('vehicles.details',$encrypted_vehicle_id));
     }
 
@@ -224,8 +224,8 @@ class VehicleController extends Controller
             ]);
         }
         $encrypted_vehicle_id = encrypt($vehicle->id);
-        $request->session()->flash('message', 'Driver updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'Driver updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         $user=\Auth::user();
         $user_role=$user->roles->first()->name;
         if($user_role=='client')
@@ -236,7 +236,7 @@ class VehicleController extends Controller
         {
             return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
         }
-        // return redirect(route('vehicles.details',$encrypted_vehicle_id));  
+        // return redirect(route('vehicles.details',$encrypted_vehicle_id));
     }
 
     public function odometerUpdate(Request $request)
@@ -257,7 +257,7 @@ class VehicleController extends Controller
         $odometer_in_km=$request->odometer;
         $odometer_in_meter=round($odometer_in_km*1000);
         $gps->km = $odometer_in_meter;
-        $save_update = $gps->save(); 
+        $save_update = $gps->save();
         if($save_update)
         {
             $odometer_update = OdometerUpdate::create([
@@ -272,10 +272,10 @@ class VehicleController extends Controller
             if( ($odometer_update) && ($request->reset_daily_km == '1') )
             {
                 $this->updateVehicleDailyKilometre($vehicle->gps_id, self::DAILY_KILOMETRE_RESET_VALUE);
-            }  
-        }       
-        $request->session()->flash('message', 'Vehicle odometer updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+            }
+        }
+        $request->session()->flash('message', 'Vehicle odometer updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('vehicles.details',$encrypted_gps_id));
     }
 
@@ -308,12 +308,12 @@ class VehicleController extends Controller
 
     //for dependent dropdown doc add
     public function findDateFieldWithDocTypeID(Request $request)
-    {   
+    {
         $docTypeID=$request->docTypeID;
         return response()->json($docTypeID);
     }
 
-    
+
     // edit vehicle doc
     public function vehicleDocumentEdit(Request $request)
     {
@@ -348,20 +348,20 @@ class VehicleController extends Controller
             $vehicle_doc->path = $uploadedFile;
             // }
         }
-        
+
         $vehicle_doc->vehicle_id = $request->vehicle_id;
         $vehicle_doc->expiry_date= date("Y-m-d", strtotime($request->expiry_date));
         $vehicle_doc->save();
 
         $encrypted_vehicle_doc_id = encrypt($vehicle_doc->id);
-        $request->session()->flash('message', 'Document updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle-doc.edit',$encrypted_vehicle_doc_id));  
+        $request->session()->flash('message', 'Document updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('vehicle-doc.edit',$encrypted_vehicle_doc_id));
     }
 
     // vehicle doc delete
     public function vehicleDocumentDelete(Request $request)
-    { 
+    {
         $decrypted_id = Crypt::decrypt($request->id);
         $vehicle_doc=Document::find($decrypted_id);
         if($vehicle_doc == null){
@@ -372,11 +372,11 @@ class VehicleController extends Controller
             // $old_file = $vehicle_doc->path;
             // $myFile = "documents/vehicledocs/".$old_file;
             // $delete_file=unlink($myFile);
-            $vehicle_doc->delete(); 
+            $vehicle_doc->delete();
         }
         $encrypted_vehicle_id = encrypt($vehicle_doc->vehicle_id);
-        $request->session()->flash('message', 'Document deleted successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'Document deleted successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         $user=\Auth::user();
         $user_role=$user->roles->first()->name;
         if($user_role=='client')
@@ -387,12 +387,12 @@ class VehicleController extends Controller
         {
             return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
         }
-         
+
     }
 
     // vehicle doc delete from all vehicle list
     public function deleteFromAllDocList(Request $request)
-    { 
+    {
         $vehicle_doc=Document::find($request->id);
         if($vehicle_doc == null){
             return response()->json([
@@ -406,14 +406,14 @@ class VehicleController extends Controller
             // $old_file = $vehicle_doc->path;
             // $myFile = "documents/vehicledocs/".$old_file;
             // $delete_file=unlink($myFile);
-            $vehicle_doc->delete(); 
+            $vehicle_doc->delete();
         }
         return response()->json([
             'status' => 1,
             'title' => 'Success',
             'message' => 'Document deleted successfully!'
         ]);
-         
+
     }
 
     // Vehicle OTA
@@ -461,12 +461,12 @@ class VehicleController extends Controller
             $ota->created_at = now();
             $ota->updated_at = null;
             $ota->save();
-            //add response to ota response table-end 
+            //add response to ota response table-end
         }
-        
-        $request->session()->flash('message', 'OTA details updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle'));  
+
+        $request->session()->flash('message', 'OTA details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('vehicle'));
     }
 
     // save vehicle route
@@ -483,8 +483,8 @@ class VehicleController extends Controller
             'client_id' => $client_id,
             'status' =>1,
         ]);
-        $request->session()->flash('message', 'Vehicle Route scheduled successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'Vehicle Route scheduled successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
 
         return redirect(route('vehicle.edit',Crypt::encrypt($vehicle_route->vehicle_id)));
     }
@@ -519,9 +519,9 @@ class VehicleController extends Controller
         $vehicle_route->save();
 
         $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
-        $request->session()->flash('message', 'Vehicle route details updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle-route.edit',$encrypted_vehicle_route_id));  
+        $request->session()->flash('message', 'Vehicle route details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('vehicle-route.edit',$encrypted_vehicle_route_id));
     }
 
     // view page
@@ -531,7 +531,7 @@ class VehicleController extends Controller
         $route=Route::find($decrypted_route_id);
         if($route==null){
             return view('Route::404');
-        } 
+        }
         $route_area=RouteArea::select('route_id','latitude','longitude')
                                         ->where('route_id',$decrypted_route_id)
                                         ->get();
@@ -549,11 +549,11 @@ class VehicleController extends Controller
         $vehicle_route->delete();
 
         $encrypted_vehicle_route_id = encrypt($vehicle_route->id);
-        $request->session()->flash('message', 'Vehicle Route deleted successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'Vehicle Route deleted successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('vehicle.edit',Crypt::encrypt($vehicle_route->vehicle_id)));
     }
-    
+
     // vehicle delete
     public function deleteVehicle(Request $request)
     {
@@ -565,7 +565,7 @@ class VehicleController extends Controller
                 'message' => 'Vehicle does not exist'
             ]);
         }
-        $vehicle->delete(); 
+        $vehicle->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -576,11 +576,11 @@ class VehicleController extends Controller
 
     // restore vehicle
     public function activateVehicle(Request $request)
-    {       
-        $vehicles = Vehicle::where('gps_id', $request->gps_id)->first();        
+    {
+        $vehicles = Vehicle::where('gps_id', $request->gps_id)->first();
         if($vehicles== null)
         {
-            $vehicle = Vehicle::withTrashed()->find($request->id);  
+            $vehicle = Vehicle::withTrashed()->find($request->id);
             if($vehicle==null){
                 return response()->json([
                     'status' => 0,
@@ -638,7 +638,7 @@ class VehicleController extends Controller
                 'vehicle' => $vehicle_id
             ];
         }
-        return response()->json($response); 
+        return response()->json($response);
     }
 
     // critical alert verification
@@ -649,8 +649,8 @@ class VehicleController extends Controller
             'title'     => 'Failed',
             'message'   => 'Alert does not exist'
         ];
-        $decrypted_vehicle_id   = Crypt::decrypt($request->id); 
-        $alert_id               = $request->alert_id; 
+        $decrypted_vehicle_id   = Crypt::decrypt($request->id);
+        $alert_id               = $request->alert_id;
         $vehicle                = Vehicle::find($decrypted_vehicle_id);
         $alerts                 = Alert::where('alert_type_id',$alert_id)
             ->where('status',0)
@@ -666,7 +666,7 @@ class VehicleController extends Controller
                     'title'     => 'Success',
                     'message'   => 'Alert verified successfully'
                 ];
-            }  
+            }
         }
         return response()->json($data);
      }
@@ -674,7 +674,7 @@ class VehicleController extends Controller
     // vehicle drivers list
     public function vehicleDriverLogList()
     {
-       return view('Vehicle::vehicle-driver-log-list'); 
+       return view('Vehicle::vehicle-driver-log-list');
     }
 
     // vehicle drivers list data
@@ -692,8 +692,8 @@ class VehicleController extends Controller
         ->where('client_id',$client_id)
         ->with('Fromdriver:id,name')
         ->with('Todriver:id,name')
-        ->with('vehicle:id,name,register_number') 
-        ->orderBy('id','desc')       
+        ->with('vehicle:id,name,register_number')
+        ->orderBy('id','desc')
         ->get();
 // dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
@@ -710,15 +710,15 @@ class VehicleController extends Controller
         $vehicles=Vehicle::select('id','name','register_number','client_id')
                             ->where('client_id',$client_id)
                             ->get();
-        return view('Vehicle::all-vehicle-doc-list',['vehicles'=>$vehicles]); 
+        return view('Vehicle::all-vehicle-doc-list',['vehicles'=>$vehicles]);
     }
 
     // vehicle documents list data
     public function getAllVehicleDocList(Request $request)
     {
         $client_id=\Auth::user()->client->id;
-        $selected_vehicle_id= $request->vehicle_id; 
-        $selected_status= $request->status; 
+        $selected_vehicle_id= $request->vehicle_id;
+        $selected_status= $request->status;
         $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
@@ -737,7 +737,7 @@ class VehicleController extends Controller
         ->with('documentType:id,name')
         ->with('vehicle:id,name,register_number');
         if($selected_vehicle_id==null && $selected_status==null)
-        { 
+        {
            $vehicle_documents =$vehicle_documents->whereIn('vehicle_id',$vehicle_id);
         }
         else if($selected_status=="valid"){
@@ -758,7 +758,7 @@ class VehicleController extends Controller
         else
         {
             $vehicle_documents =$vehicle_documents->where('vehicle_id',$selected_vehicle_id);
-        } 
+        }
         $vehicle_documents =$vehicle_documents->get();
         return DataTables::of($vehicle_documents)
             ->addIndexColumn()
@@ -787,12 +787,12 @@ class VehicleController extends Controller
     }
 
 
-    
+
 ///////////////////////// VEHICLE TYPE ///////////////////////////////////
     // vehicle type list
     public function vehicleTypeList()
     {
-       return view('Vehicle::vehicle-type-list'); 
+       return view('Vehicle::vehicle-type-list');
     }
 
     // vehicle type list data
@@ -874,7 +874,7 @@ class VehicleController extends Controller
 
         ///Web online icon
         $web_online_vehicle=$request->web_online_icon;
-        if($web_online_vehicle){              
+        if($web_online_vehicle){
             $getFileExt   = $web_online_vehicle->getClientOriginalExtension();
             $web_online_uploadedFile =   time().'_web_online_vehicle.'.$getFileExt;
             //Move Uploaded File
@@ -909,8 +909,8 @@ class VehicleController extends Controller
             // sleep vehicle image
         }
         // sleep vehicle image
-        $name = $request->name; 
-        $name = str_replace(' ', '_', $name);//replace spaces with underscore 
+        $name = $request->name;
+        $name = str_replace(' ', '_', $name);//replace spaces with underscore
         $name = strtolower($name); //convert string to lowercase
         $vehicle_type = VehicleType::create([
             'name' => $name,
@@ -930,8 +930,8 @@ class VehicleController extends Controller
             'status' =>1,
            ]);
         $this->updateVehicleTypeApiResponse();
-        $request->session()->flash('message', 'New Vehicle type created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'New Vehicle type created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('vehicle_type.details',Crypt::encrypt($vehicle_type->id)));
     }
 
@@ -942,7 +942,7 @@ class VehicleController extends Controller
         $vehicle_type=VehicleType::find($decrypted_id);
         if($vehicle_type==null){
             return view('Vehicle::404');
-        } 
+        }
         return view('Vehicle::vehicle-type-details',['vehicle_type' => $vehicle_type]);
      }
     // edit vehicle type
@@ -965,11 +965,11 @@ class VehicleController extends Controller
            return view('Vehicle::404');
         }
         $online_vehicle=$request->online_icon;
-        if($online_vehicle){              
+        if($online_vehicle){
             $getFileExt   = $online_vehicle->getClientOriginalExtension();
             $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
             $destinationPath =  public_path('/documents');
-            $online_vehicle = Image::make($online_vehicle->getRealPath());           
+            $online_vehicle = Image::make($online_vehicle->getRealPath());
             $online_vehicle->resize(250,250, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$online_uploadedFile);
@@ -985,7 +985,7 @@ class VehicleController extends Controller
             // $destinationPath = 'documents';
             // $offline_vehicle->move($destinationPath,$offline_uploadedFile);
             $destinationPath =  public_path('/documents');
-            $offline_vehicle = Image::make($offline_vehicle->getRealPath());           
+            $offline_vehicle = Image::make($offline_vehicle->getRealPath());
             $offline_vehicle->resize(250,250, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$offline_uploadedFile);
@@ -1001,7 +1001,7 @@ class VehicleController extends Controller
             // $destinationPath = 'documents';
             // $ideal_vehicle->move($destinationPath,$ideal_uploadedFile);
             $destinationPath =  public_path('/documents');
-            $ideal_vehicle = Image::make($ideal_vehicle->getRealPath());           
+            $ideal_vehicle = Image::make($ideal_vehicle->getRealPath());
             $ideal_vehicle->resize(250,250, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$ideal_uploadedFile);
@@ -1017,7 +1017,7 @@ class VehicleController extends Controller
             // $destinationPath = 'documents';
             // $sleep_vehicle->move($destinationPath,$sleep_uploadedFile);
             $destinationPath =  public_path('/documents');
-            $sleep_vehicle = Image::make($sleep_vehicle->getRealPath());           
+            $sleep_vehicle = Image::make($sleep_vehicle->getRealPath());
             $sleep_vehicle->resize(250,250, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$sleep_uploadedFile);
@@ -1028,7 +1028,7 @@ class VehicleController extends Controller
 
         $web_online_vehicle=$request->web_online_icon;
         if($web_online_vehicle){
-              
+
         $getFileExt   = $web_online_vehicle->getClientOriginalExtension();
         $web_online_uploadedFile =   time().'_web_online_vehicle.'.$getFileExt;
         //Move Uploaded File
@@ -1036,8 +1036,8 @@ class VehicleController extends Controller
         $web_online_vehicle->move($destinationPath,$web_online_uploadedFile);
         $vehicle_type->web_online_icon = $web_online_uploadedFile;
         }
-        
-       
+
+
         // online vehicle image
          // offline vehicle image
         $web_offline_vehicle=$request->web_offline_icon;
@@ -1074,12 +1074,12 @@ class VehicleController extends Controller
         }
         $rules = $this->vehicleTypeUpdateRules();
         $this->validate($request, $rules);
-        $name = $request->name; 
-        $name = str_replace(' ', '_', $name);//replace spaces with underscore 
+        $name = $request->name;
+        $name = str_replace(' ', '_', $name);//replace spaces with underscore
         $name = strtolower($name); //convert string to lowercase
         $vehicle_type->name = $name;
         $vehicle_type->svg_icon = $request->svg_icon;
- 
+
         $vehicle_type->vehicle_scale = $request->scale;
         $vehicle_type->opacity = $request->opacity;
         $vehicle_type->strokeWeight = $request->weight;
@@ -1088,9 +1088,9 @@ class VehicleController extends Controller
         $this->updateVehicleTypeApiResponse();
 
         $encrypted_vehicle_type_id = encrypt($vehicle_type->id);
-        $request->session()->flash('message', 'Vehicle type details updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('vehicle-type.edit',$encrypted_vehicle_type_id));  
+        $request->session()->flash('message', 'Vehicle type details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('vehicle-type.edit',$encrypted_vehicle_type_id));
     }
     // delete vehicle type
      public function deleteVehicleType(Request $request)
@@ -1103,20 +1103,20 @@ class VehicleController extends Controller
                 'message' => 'Bus type does not exist'
             ]);
         }
-        $vehicle_type->delete(); 
+        $vehicle_type->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
             'message' => 'Bus type deleted successfully'
         ]);
-        
+
      }
-    
+
     /////////////////////////////Vehicle Root List//////////////////////////
     // show list page
     public function vehicleRootList()
     {
-       return view('Vehicle::vehicle-root-list'); 
+       return view('Vehicle::vehicle-root-list');
     }
 
     // data for list page
@@ -1141,7 +1141,7 @@ class VehicleController extends Controller
                 $vehicle = Vehicle::find($vehicles->id);
                 return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->dealer->name : '';
                // return $vehicle->client->subdealer->dealer->name;
-                
+
             })
             ->addColumn('sub_dealer',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
@@ -1161,9 +1161,9 @@ class VehicleController extends Controller
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
                         return "
-                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>"; 
+                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning'><i class='glyphicon glyphicon-map-marker'></i>Track</a>";
                 }else{
-                     return ""; 
+                     return "";
                 }
             })
             ->rawColumns(['link', 'action'])
@@ -1177,18 +1177,18 @@ class VehicleController extends Controller
         $user_role=$user->roles->first()->name;
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
-        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
         $track_data=Gps::select('lat as latitude',
                               'lon as longitude'
-                              )         
+                              )
                               ->where('id',$get_vehicle->gps_id)
-                              ->first();   
+                              ->first();
         if($track_data==null)
         {
-            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
+            $request->session()->flash('message', 'No Data Received From GPS!!!');
             $request->session()->flash('alert-class', 'alert-success');
             if($user_role=='client')
-            { 
+            {
                 return redirect(route('vehicle'));
             }
             else if($user_role=='root'){
@@ -1197,10 +1197,10 @@ class VehicleController extends Controller
         }
         else if($track_data->latitude==null || $track_data->longitude==null)
         {
-            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'No Data Received From GPS!!!');
+            $request->session()->flash('alert-class', 'alert-success');
              if($user_role=='client')
-            { 
+            {
                 return redirect(route('vehicle'));
             }
             else if($user_role=='root'){
@@ -1232,19 +1232,19 @@ class VehicleController extends Controller
         }
 
 
-        
+
     }
     public function locationTrack(Request $request)
     {
         $get_vehicle=Vehicle::find($request->id);
         $currentDateTime=Date('Y-m-d H:i:s');
-        $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time')."")); 
+        $last_update_time=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         $connection_lost_time_motion = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
         $connection_lost_time_halt = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
         $connection_lost_time_sleep = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
         $offline="Offline";
         $signal_strength="Connection Lost";
-    
+
         $track_data=Gps::select('lat as latitude',
                       'lon as longitude',
                       'heading as angle',
@@ -1283,7 +1283,7 @@ class VehicleController extends Controller
                               ->first();
             $minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
         }
- 
+
         if($track_data){
             //$connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $connection_lost_time_minutes = date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
@@ -1291,7 +1291,7 @@ class VehicleController extends Controller
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
                 $gps_id= $get_vehicle->gps_id;
-                
+
                 $vehicle=Vehicle::select(
                     'id',
                     'gps_id',
@@ -1299,7 +1299,7 @@ class VehicleController extends Controller
                     'client_id'
                 )
                 ->where('gps_id',$gps_id)
-                ->first(); 
+                ->first();
                 $model= $vehicle->model_id;
                 $vehicle_models=VehicleModels::select(
                     'id',
@@ -1309,7 +1309,7 @@ class VehicleController extends Controller
                 ->where('id',$model)
                 ->first();
                 $fuel_status=$track_data->fuel_status;
-            }      
+            }
             else
             {
                 $fuel_status="UPGRADE VERSION";
@@ -1321,7 +1321,7 @@ class VehicleController extends Controller
                 }else{
                     $ac_status="OFF";
                 }
-            }      
+            }
             else
             {
                 $ac_status="UPGRADE VERSION";
@@ -1370,37 +1370,37 @@ class VehicleController extends Controller
                             'code'    =>0);
         }
              // dd($response_data['liveData']['ign']);
-        return response()->json($response_data); 
+        return response()->json($response_data);
     }
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
-        $decrypted_id = Crypt::decrypt($request->id);  
+        $decrypted_id = Crypt::decrypt($request->id);
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
-       
+
     }
 
      public function playbackB(Request $request){
-        $decrypted_id = Crypt::decrypt($request->id);  
+        $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
-        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id); 
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
         return view('Vehicle::playbak-second',['Vehicle_id' => $decrypted_id,'vehicle_type' =>$vehicle_type] );
-       
+
     }
 
     public function playbackPageInTrack(Request $request){
-        $decrypted_id = Crypt::decrypt($request->id);  
+        $decrypted_id = Crypt::decrypt($request->id);
          $get_vehicle=Vehicle::find($decrypted_id);
-        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id); 
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
         return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id,'vehicle_type' =>$vehicle_type,'vehicle'=>$get_vehicle] );
-       
+
     }
     public function playbackHMap(Request $request){
-        $decrypted_id = Crypt::decrypt($request->id);  
+        $decrypted_id = Crypt::decrypt($request->id);
         $user=\Auth::user();
-    
+
         $user_role=$user->roles->first()->name;
-        $date_by_role=$this->playbackHistoryDataPeriod($user_role);  
+        $date_by_role=$this->playbackHistoryDataPeriod($user_role);
         return view('Vehicle::vehicle-playback-hmap',['Vehicle_id' => $decrypted_id,'start_date'=>$date_by_role] );
     }
 
@@ -1408,7 +1408,7 @@ class VehicleController extends Controller
     public function playbackHistoryDataPeriod($role){
         if($role=="fundamental|| client"){
             $from_date=Carbon::now()->subMonth(2);
-         }else if($role=="superior"){ 
+         }else if($role=="superior"){
             $from_date=Carbon::now()->subMonth(4);
          }else if($role=="pro"){
              $from_date=Carbon::now()->subMonth(6);
@@ -1426,14 +1426,14 @@ class VehicleController extends Controller
          $vehicles=Vehicle::select('id','name','register_number','client_id')
         ->where('client_id',$client_id)
         ->get();
-          
+
         return view('Vehicle::invoice',['vehicles'=>$vehicles] );
     }
 
     public function export(Request $request){
         $from = $request->fromDate;
         $to = $request->toDate;
-        $vehicle = $request->vehicle;           
+        $vehicle = $request->vehicle;
         if($vehicle!=0)
         {
             $vehicle_details =Vehicle::withTrashed()->find($vehicle);
@@ -1484,7 +1484,7 @@ class VehicleController extends Controller
             'digital_input_status',
             'digital_output_status',
             'frame_number',
-            'checksum',            
+            'checksum',
             'gf_id',
             // 'device_time',
             \DB::raw('DATE(device_time) as date'),
@@ -1492,14 +1492,14 @@ class VehicleController extends Controller
         )
         ->with('gps.vehicle')
         ->where('gps_id',$single_vehicle_ids)
-        ->groupBy('date');                     
+        ->groupBy('date');
         if($from){
             $search_from_date=date("Y-m-d", strtotime($from));
                 $search_to_date=date("Y-m-d", strtotime($to));
                 $query = $query->whereDate('device_time', '>=', $search_from_date)
                 ->whereDate('device_time', '<=', $search_to_date);
         }
-        $vehicle_invoice = $query->get();  
+        $vehicle_invoice = $query->get();
 
         $pdf = PDF::loadView('Vehicle::invoice-pdf-download',['vehicle_invoices'=> $vehicle_invoice]);
         return $pdf->download('Invoice.pdf');
@@ -1508,14 +1508,14 @@ class VehicleController extends Controller
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
-    //         'longitude as lng', 
+    //         'longitude as lng',
     //         'heading as angle',
-    //         'speed'       
+    //         'speed'
     //     )
     //     ->where('device_time', '>=',$request->from_time)
     //     ->where('device_time', '<=',$request->to_time)
-    //     ->where('vehicle_id',$request->id)                
-    //     ->get();    
+    //     ->where('vehicle_id',$request->id)
+    //     ->get();
     //     $playback=array();
     //     $gps_playback=array();
     //     if($gpsdata){
@@ -1523,16 +1523,16 @@ class VehicleController extends Controller
     //             $playback[]=array(
     //                 "lat"=>(float)$data->lat,
     //                 "lng"=>(float)$data->lng
-    //             ); 
+    //             );
     //             $gps_playback[]=array(
     //                 "angle"=>$data->angle,
     //                 "speed"=>$data->speed
-    //             );            
+    //             );
     //         }
     //         $response_data = array(
     //             'status'  => 'success',
     //             'message' => 'success',
-    //             'code'    =>1,                              
+    //             'code'    =>1,
     //             'polyline' => $playback,
     //             'marker' => $gps_playback
     //         );
@@ -1543,24 +1543,24 @@ class VehicleController extends Controller
     //             'code'    =>0
     //         );
     //     }
-    //     return response()->json($response_data); 
+    //     return response()->json($response_data);
     // }
 
 
     public function locationPlayback(Request $request){
- 
+
      $gpsdata=GpsData::Select(
             'latitude as lat',
-            'longitude as lng', 
+            'longitude as lng',
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed'       
+            'speed'
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)                
-        ->get();    
+        ->where('vehicle_id',$request->id)
+        ->get();
         $playback=array();
        $playbackData=array();
         if($gpsdata){
@@ -1577,23 +1577,23 @@ class VehicleController extends Controller
                     // "Speed"=>$data->speed,
                     //  "Ignition"=>$ignitionData,
                     // "DateTime"=>$data->datetime
-                ); 
-                
+                );
+
             }
         }
          $gpsvdata=GpsData::Select(
             'latitude as lat',
-            'longitude as lng', 
+            'longitude as lng',
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
-            'speed'       
+            'speed'
         )
         ->where('device_time', '>=',$request->from_time)
         ->where('device_time', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id) 
-        // ->orderBy('id','desc')               
-        ->get(); 
+        ->where('vehicle_id',$request->id)
+        // ->orderBy('id','desc')
+        ->get();
         if($gpsvdata)
         {
 
@@ -1613,25 +1613,25 @@ class VehicleController extends Controller
                     $ignitionData="Off";
                 }
                 $playbackData[]=array(
-                    
+
                     "lat"=>(float)$vdata->lat,
                     "lng"=>(float)$vdata->lng,
                     "angle"=>$vdata->angle,
                     "Speed"=>$vdata->speed,
                     "DateTime"=>$vdata->datetime,
                     "Ignition"=>$ignitionData
-                ); 
+                );
                 $startLat=(float)$vdata->lat;
                 $startLng=(float)$vdata->lng;
             // }
-            }           
+            }
             $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',
-                'code'    =>1,                              
+                'code'    =>1,
                 'polyline' => $playback,
                 'markers' => $playbackData,
-                
+
             );
         }else{
             $response_data = array(
@@ -1641,13 +1641,13 @@ class VehicleController extends Controller
             );
         }
 
-    
-    return response()->json($response_data); 
+
+    return response()->json($response_data);
 }
 
 
     public function hmapLocationPlayback(Request $request)
-    { 
+    {
         $from_date=$request->from_time;
         $to_date=$request->to_time;
         $user=\Auth::user();
@@ -1660,26 +1660,26 @@ class VehicleController extends Controller
             'polyline' => "wrong_date",
             'code'    =>0
         );
-         return response()->json($response_data); 
+         return response()->json($response_data);
         }
 
 
         $gpsdata=GpsData::Select(
             'latitude as lat',
-            'longitude as lng', 
+            'longitude as lng',
             'heading as angle',
             'ignition as ign',
             'device_time as datetime',
             'speed',
             'time',
-            'gps_fix'       
+            'gps_fix'
         )
         ->where('created_at', '>=',$request->from_time)
         ->where('created_at', '<=',$request->to_time)
-        ->where('vehicle_id',$request->id)   
-        ->where('latitude','>',0)  
-        ->orderBy('created_at') 
-        ->limit(145)        
+        ->where('vehicle_id',$request->id)
+        ->where('latitude','>',0)
+        ->orderBy('created_at')
+        ->limit(145)
         ->get();
         $playback=array();
         $playback_point= array();
@@ -1687,42 +1687,42 @@ class VehicleController extends Controller
         $playbackData=array();
         $length=0;
         $counts=0;
-        $count=0;       
+        $count=0;
         if($gpsdata){
-            $length=$gpsdata->count(); 
+            $length=$gpsdata->count();
             if($length!=0)
-            {   
-                // $counts=$length;            
+            {
+                // $counts=$length;
                 if($length>=150)
                 {
-                    $counts=$length/90;                    
+                    $counts=$length/90;
                 }
                 else
                 {
                     $counts=$length;
-                }                               
-                $round_value=round($counts);             
+                }
+                $round_value=round($counts);
                 $startLat=(float)$gpsdata[0]->lat;
-                $startLng=(float)$gpsdata[0]->lng; 
+                $startLng=(float)$gpsdata[0]->lng;
                 for($i=0;$i<$round_value; $i++)
-                {                
+                {
                     $playback_round[]=$gpsdata[$i];
-                } 
+                }
                 $playback_point[]=array(
                     "lat"=>(float)$gpsdata[0]->lat,
-                    "lng"=>(float)$gpsdata[0]->lng                    
-                );    
+                    "lng"=>(float)$gpsdata[0]->lng
+                );
                 // dd($playback_round);
                 foreach ($playback_round as $data) {
                     // dd($data->lat);
                     $playback[]=array(
                         "lat"=>(float)$data->lat,
                         "lng"=>(float)$data->lng ,
-                        "speed"=>(float)$data->speed, 
-                        "datetime"=>$data->datetime,                    
-                    );                   
+                        "speed"=>(float)$data->speed,
+                        "datetime"=>$data->datetime,
+                    );
                     $startLat=(float)$data->lat;
-                    $startLng=(float)$data->lng; 
+                    $startLng=(float)$data->lng;
                 }
             }
             else
@@ -1733,7 +1733,7 @@ class VehicleController extends Controller
             $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',
-                'code'    =>1,                              
+                'code'    =>1,
                 'polyline' => $playback,
                 'firstpoint' => $playback_point,
             );
@@ -1746,8 +1746,8 @@ class VehicleController extends Controller
                 'polyline' => "empty",
                 'code'    =>0
             );
-        }    
-        return response()->json($response_data); 
+        }
+        return response()->json($response_data);
     }
   public function playBackForLine($vehicleID,$fromDate,$toDate){
     $playBackDataList=array();
@@ -1755,11 +1755,11 @@ class VehicleController extends Controller
 
     $gpsdata=GpsData::Select(
             'latitude as lat',
-            'longitude as lng', 
+            'longitude as lng',
             'heading as angle',
             'gps_fix as gps',
             'ignition as ign',
-            'speed'       
+            'speed'
         )
         // ->where('device_time', '>=',$fromDate)
         // ->where('device_time', '<=',$toDate)
@@ -1767,8 +1767,8 @@ class VehicleController extends Controller
         ->where('created_at', '<=',$toDate)
         ->where('gps_fix',1)
 
-        ->where('vehicle_id',$vehicleID)                
-        ->get(); 
+        ->where('vehicle_id',$vehicleID)
+        ->get();
         $startLat=(float)$gpsdata[0]->lat;
     $startLng=(float)$gpsdata[0]->lng;
     if($gpsdata){
@@ -1776,29 +1776,29 @@ class VehicleController extends Controller
                 $playback[]=array(
                     "lat"=>(float)$data->lat,
                     "lng"=>(float)$data->lng
-                ); 
+                );
         }
              $response_data = array(
                 'status'  => 'success',
                 'message' => 'success',
-                'code'    =>1,                              
+                'code'    =>1,
                 'polyline' => $playback
-                
+
             );
     }
-    return response()->json($response_data); 
+    return response()->json($response_data);
      // return json_encode($playback);
-       // return response()->json($playback); 
+       // return response()->json($playback);
    }
 
     public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
         $playBackDataList=array();
-        $playback = array();   
+        $playback = array();
         $gpsdata=GpsData::Select(
             'latitude as lat',
-            'longitude as lng', 
+            'longitude as lng',
             'heading as angle',
-            'speed',                 
+            'speed',
             'main_power_status as power',
             'gps_fix as gps',
             'ignition as ign',
@@ -1806,12 +1806,12 @@ class VehicleController extends Controller
         )
         ->where('device_time', '>=',$fromDate)
         ->where('device_time', '<=',$toDate)
-        ->where('vehicle_id',$vehicleID)                
-        ->get(); 
-    $vehicle_status="Running";    
+        ->where('vehicle_id',$vehicleID)
+        ->get();
+    $vehicle_status="Running";
     $startLat=(float)$gpsdata[0]->lat;
     $startLng=(float)$gpsdata[0]->lng;
-   
+
     if($gpsdata)
     {
         foreach ($gpsdata as $vdata) {
@@ -1826,14 +1826,14 @@ class VehicleController extends Controller
             }else{
                 $ignitionData="Off";
             }
-           
+
             $playback[]=array(
                 "lat"=>$startLat,
                 "lng"=>$startLng,
                 "angle"=>$vdata->angle,
                 "Speed"=>$vdata->speed,
                 "Ignition"=>$ignitionData
-            ); 
+            );
             $startLat=$vdata->lat;
             $startLng=$vdata->lng;
         // }
@@ -1876,7 +1876,7 @@ class VehicleController extends Controller
         $single_gps = [];
         foreach($vehicle_device as $device){
             $single_gps[] = $device->gps_id;
-        } 
+        }
 
         $devices=Gps::select('id','imei')
                 ->where('user_id',$client_user_id)
@@ -1890,33 +1890,33 @@ class VehicleController extends Controller
     public function checkRolePlayback($role,$user_from_date){
        if($role=="fundamental"||"client"){
             $from_date=Carbon::now()->subMonth(2);
-         }else if($role=="superior"){ 
+         }else if($role=="superior"){
             $from_date=Carbon::now()->subMonth(4);
          }else if($role=="pro"){
              $from_date=Carbon::now()->subMonth(6);
          }else{
            $from_date=Carbon::now()->subMonth(1);
          }
-         
+
          if(Carbon::parse($from_date) <= Carbon::parse($user_from_date)){
             $return="Success";
          }else{
-            $return="failed"; 
+            $return="failed";
          }
          return $return;
     }
     // ---validate from date-----------------
 
- 
+
 
 
 
     public function servicerVehicleList()
     {
-        
-       return view('Vehicle::servicer-vehicle-list'); 
+
+       return view('Vehicle::servicer-vehicle-list');
     }
-   
+
     public function getServicerVehicleList()
     {
         $servicer_id=\Auth::user()->servicer->id;
@@ -1932,7 +1932,7 @@ class VehicleController extends Controller
         $job_id = [];
         foreach($servicer_jobs as $servicer_job){
             $job_id[] = $servicer_job->id;
-        } 
+        }
         // dd($client_id);
         $vehicles = Vehicle::select(
             'id',
@@ -1960,7 +1960,7 @@ class VehicleController extends Controller
             }
             else
             {
-              return $vehicles->driver->name;             
+              return $vehicles->driver->name;
             }
         })
         ->addColumn('action', function ($vehicles) {
@@ -1968,7 +1968,7 @@ class VehicleController extends Controller
             if($vehicles->deleted_at == null){
                     return "
                      <a href=".$b_url."/servicer-vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>
-                    ";                 
+                    ";
             }
          })
         ->rawColumns(['link', 'action'])
@@ -1979,7 +1979,7 @@ class VehicleController extends Controller
     {
         $decrypted_id = Crypt::decrypt($request->id);
         $vehicle = Vehicle::find($decrypted_id);
-        $client_id=$vehicle->client_id;        
+        $client_id=$vehicle->client_id;
         if($vehicle == null){
             return view('Vehicle::404');
         }
@@ -1988,7 +1988,7 @@ class VehicleController extends Controller
                 ->get();
          $docTypes=DocumentType::select(
                 'id','name')->whereIn('id',[1,6,7,8])->get();
-       
+
         $vehicleDocs=Document::select(
                 'id','vehicle_id','document_type_id','expiry_date','path')
                 ->where('vehicle_id',$vehicle->id)
@@ -1999,22 +1999,22 @@ class VehicleController extends Controller
 
      //for dependent dropdown doc add
     public function servicerfindDateFieldWithDocTypeID(Request $request)
-    {   
+    {
         $docTypeID=$request->docTypeID;
         return response()->json($docTypeID);
     }
 
 
     // --------------playback page-------------------------------------
-    public function playbackPage(){ 
-       return view('Vehicle::vehicle-playback-window'); 
+    public function playbackPage(){
+       return view('Vehicle::vehicle-playback-window');
     }
-     public function playbackPageData(Request $request){ 
+     public function playbackPageData(Request $request){
       $vehicle_id=$request->vehicle_id;
       $start_date=$request->start_date;
       $end_date=$request->end_date;
-     
-      $vehicle=Vehicle::find($vehicle_id); 
+
+      $vehicle=Vehicle::find($vehicle_id);
       if($vehicle==null){
              $data = array('status' => 200,
                            'message' => 'vehicle doesnot exist',
@@ -2046,10 +2046,10 @@ class VehicleController extends Controller
                                 'message' => 'failed',
                                 'code'    =>0);
           }
-        
-        return response()->json($response_data); 
+
+        return response()->json($response_data);
     }
-    
+
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
     public function vehicleCreateRules()
@@ -2069,21 +2069,21 @@ class VehicleController extends Controller
         $rules = [
             'driver_id' => 'required',
         ];
-        return  $rules;  
+        return  $rules;
     }
     public function vehicleOdometerUpdateRules($gps)
     {
         $rules = [
             'odometer' => 'required|numeric|digits_between:0,7',
         ];
-        return  $rules;  
+        return  $rules;
     }
     public function vehicleModelUpdateRules($vehicle)
     {
         $rules = [
             'model' => 'required',
         ];
-        return  $rules; 
+        return  $rules;
     }
 
     // vehicle route create rules
@@ -2177,10 +2177,10 @@ class VehicleController extends Controller
     function getPlacenameFromLatLng($latitude,$longitude){
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo'); 
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo');
             $output = json_decode($geocodeFromLatLong);
-             
-         
+
+
             $status = $output->status;
             //Get address from json data
             $address = ($status=="OK")?$output->results[1]->formatted_address:'';
@@ -2192,7 +2192,7 @@ class VehicleController extends Controller
                 return false;
             }
         }else{
-            return false;   
+            return false;
         }
     }
 /////////////// snap root for live data///////////////////////////////////
@@ -2225,7 +2225,7 @@ class VehicleController extends Controller
      /*function LiveSnapRoot($b_lat, $b_lng) {
         $lat = $b_lat;
         $lng = $b_lng;
-        
+
         $userData = ["lat" => $lat, "lng" => $lng];
         return $userData;
 
@@ -2234,14 +2234,14 @@ class VehicleController extends Controller
 
 ///////////////////API-start////////////////////////////////////////
 
-    public function vehicleStatics(Request $request) 
+    public function vehicleStatics(Request $request)
     {
         $user_id = $request->userid;
         $user = User::where('id', $user_id)->first();
-        if ($user == null) 
+        if ($user == null)
          {
-            $data = array('status' => 'failed', 
-                          'message' => 'user does not exist', 
+            $data = array('status' => 'failed',
+                          'message' => 'user does not exist',
                           'code' => 0
                          );
             return response()->json($data);
@@ -2267,30 +2267,30 @@ class VehicleController extends Controller
                 if($get_driver){
                  $driver_points=$get_driver->points;
                 }else{
-                 $driver_points=""; 
+                 $driver_points="";
                 }
                 $gps_data=GpsData::where('gps_id',$single_vehicle_details->gps->id)
                                    ->where('device_time','>=', $from_date)
                                    ->where('device_time','<=', $to_date)
                                    ->get();
-                               
-                $maximum_speed=$gps_data->max('speed');   
+
+                $maximum_speed=$gps_data->max('speed');
                 if($type==2)
                 {
                   // for get single date km
                   $to_date=$from_date;
-                }                  
-                $statics[] = array("vehicle_number" => $single_vehicle_details->register_number, 
-                                   "vehicle_id" => $single_vehicle_details->id, 
-                                   "total_distance" => 0, 
-                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
-                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
-                                   "total_number_of_stops" =>0, 
-                                   "ac_on_time_idle" => 0, 
-                                   "ac_on_time_running" =>0, 
-                                   "driver_behaviour" => $driver_points, 
-                                   "total_km" => $vehicle_profile['dailykm'], 
-                                   "max_speed" => $maximum_speed ?$maximum_speed:"", 
+                }
+                $statics[] = array("vehicle_number" => $single_vehicle_details->register_number,
+                                   "vehicle_id" => $single_vehicle_details->id,
+                                   "total_distance" => 0,
+                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'],
+                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'],
+                                   "total_number_of_stops" =>0,
+                                   "ac_on_time_idle" => 0,
+                                   "ac_on_time_running" =>0,
+                                   "driver_behaviour" => $driver_points,
+                                   "total_km" => $vehicle_profile['dailykm'],
+                                   "max_speed" => $maximum_speed ?$maximum_speed:"",
                                    "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
                                    "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
                                    "overspeed_violation_count" => $vehicle_profile['over_speed'],
@@ -2302,29 +2302,29 @@ class VehicleController extends Controller
                                    "main_battey_disconnect_count" => $vehicle_profile['main_battery_disconnect'],
 
 
-                                   "total_moving_time" => $vehicle_profile['motion'], 
+                                   "total_moving_time" => $vehicle_profile['motion'],
                                    "total_idle_time" => $vehicle_profile['halt'],
                                    "total_sleep_time" => $vehicle_profile['sleep'],
-                                   "total_offline_time" => 0, 
+                                   "total_offline_time" => 0,
 
 
                                    "total_alerts" => $vehicle_profile['user_alert'],
-                                   "vehicle_type" => $single_vehicle_details->vehicleType->name, 
-                                   "vehicle_online" => $single_vehicle_details->vehicleType->online_icon, 
-                                   "vehicle_offline" => $single_vehicle_details->vehicleType->offline_icon, 
-                                   "vehicle_ideal" => $single_vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_type" => $single_vehicle_details->vehicleType->name,
+                                   "vehicle_online" => $single_vehicle_details->vehicleType->online_icon,
+                                   "vehicle_offline" => $single_vehicle_details->vehicleType->offline_icon,
+                                   "vehicle_ideal" => $single_vehicle_details->vehicleType->ideal_icon,
                                    "vehicle_sleep" => $single_vehicle_details->vehicleType->sleep_icon
                                   );
             }
-            $response_data = array('status' => 'success', 
-                                   'message' => 'success', 
-                                   'code' => 1, 
+            $response_data = array('status' => 'success',
+                                   'message' => 'success',
+                                   'code' => 1,
                                    'vehicle_value' => $statics,
                                    'search_date'=>$app_date
                                   );
         } else {
-            $response_data = array('status' => 'failed', 
-                                   'message' => 'failed', 
+            $response_data = array('status' => 'failed',
+                                   'message' => 'failed',
                                    'code' => 0
                                   );
         }
@@ -2444,8 +2444,8 @@ class VehicleController extends Controller
                                ->where('device_time','>=', $from_date)
                                ->where('device_time','<=', $to_date)
                                ->get();
-                          
-            $maximum_speed=$gps_data->max('speed');  
+
+            $maximum_speed=$gps_data->max('speed');
             if($type==2)
             {
               // for get single date km
@@ -2492,7 +2492,7 @@ class VehicleController extends Controller
                                    'vehicle_value' => $statics,
                                    'search_date'=>$app_date
                                   );
-        }       
+        }
         else {
             $response_data = array('status' => 'failed',
                                    'message' => 'failed',
@@ -2510,7 +2510,7 @@ class VehicleController extends Controller
 
 
 
-    public function eclipseSingleVehicleReport(Request $request) 
+    public function eclipseSingleVehicleReport(Request $request)
     {
         $user_id = $request->user_id;
         // dd($user_id);
@@ -2518,10 +2518,10 @@ class VehicleController extends Controller
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
         $user = Client::where('user_id', $user_id)->first();
-        if ($user == null) 
+        if ($user == null)
         {
             $this->success=false;
-            $data = array('success' => $this->success, 
+            $data = array('success' => $this->success,
                           'message' => 'user does not exist',
                           'data'    =>$this->data
                          );
@@ -2542,25 +2542,25 @@ class VehicleController extends Controller
             if($get_driver){
                 $driver_points=$get_driver->points;
             }else{
-                $driver_points=""; 
+                $driver_points="";
             }
             $gps_data=GpsData::where('gps_id',$vehicle_details->gps->id)
                                ->where('device_time','>=', $from_date)
                                ->where('device_time','<=', $to_date)
                                ->get();
-                           
-            $maximum_speed=$gps_data->max('speed');   
-            $statics[] = array("vehicle_number" => $vehicle_details->register_number, 
-                                   "vehicle_id" => $vehicle_details->id, 
-                                   "total_distance" => $vehicle_profile['dailykm'], 
-                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'], 
-                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'], 
-                                   "total_number_of_stops" =>0, 
-                                   "ac_on_time_idle" => $vehicle_profile['ac_halt_on_duration'], 
-                                   "ac_on_time_running" =>$vehicle_profile['ac_on_duration'], 
-                                   "driver_behaviour" => strval($driver_points), 
-                                   "total_km" => $vehicle_profile['dailykm'], 
-                                   "max_speed" => $maximum_speed ?$maximum_speed:"", 
+
+            $maximum_speed=$gps_data->max('speed');
+            $statics[] = array("vehicle_number" => $vehicle_details->register_number,
+                                   "vehicle_id" => $vehicle_details->id,
+                                   "total_distance" => $vehicle_profile['dailykm'],
+                                   "total_ignition_on_time" =>$vehicle_profile['engine_on_duration'],
+                                   "total_ignition_off_time" =>$vehicle_profile['engine_off_duration'],
+                                   "total_number_of_stops" =>0,
+                                   "ac_on_time_idle" => $vehicle_profile['ac_halt_on_duration'],
+                                   "ac_on_time_running" =>$vehicle_profile['ac_on_duration'],
+                                   "driver_behaviour" => strval($driver_points),
+                                   "total_km" => $vehicle_profile['dailykm'],
+                                   "max_speed" => $maximum_speed ?$maximum_speed:"",
                                    "geofence_entry_count" =>$vehicle_profile['geofence_entry'],
                                    "geofence_exit_count" =>$vehicle_profile['geofence_exit'],
                                    "overspeed_violation_count" => $vehicle_profile['over_speed'],
@@ -2572,29 +2572,29 @@ class VehicleController extends Controller
                                    "main_battey_disconnect_count" => $vehicle_profile['main_battery_disconnect'],
 
 
-                                   "total_moving_time" => $vehicle_profile['motion'], 
+                                   "total_moving_time" => $vehicle_profile['motion'],
                                    "total_idle_time" => $vehicle_profile['halt'],
                                    "total_sleep_time" => $vehicle_profile['sleep'],
-                                   "total_offline_time" => 0, 
+                                   "total_offline_time" => 0,
 
 
                                    "total_alerts" => $vehicle_profile['user_alert'],
-                                   "vehicle_type" => $vehicle_details->vehicleType->name 
-                                   // "vehicle_online" => $vehicle_details->vehicleType->online_icon, 
-                                   // "vehicle_offline" => $vehicle_details->vehicleType->offline_icon, 
-                                   // "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon, 
+                                   "vehicle_type" => $vehicle_details->vehicleType->name
+                                   // "vehicle_online" => $vehicle_details->vehicleType->online_icon,
+                                   // "vehicle_offline" => $vehicle_details->vehicleType->offline_icon,
+                                   // "vehicle_ideal" => $vehicle_details->vehicleType->ideal_icon,
                                    // "vehicle_sleep" => $vehicle_details->vehicleType->sleep_icon
                                   );
             $this->data[] = ['vehicle_value' => $statics];
             $response_data = array(
-                                    'success' => $this->success, 
+                                    'success' => $this->success,
                                     'message' => 'success',
                                     'data'    =>$this->data
                                 );
-        }        
+        }
         else {
             $this->success=false;
-            $response_data = array('success' => $this->success, 
+            $response_data = array('success' => $this->success,
                                    'message' => 'failed',
                                    'data'    =>$this->data
                                   );
@@ -2614,17 +2614,17 @@ class VehicleController extends Controller
         $custom_from_date = $request->from_date;
         $custom_to_date = $request->to_date;
         $user = User::where('id', $user_id)->first();
-        if ($user == null) 
+        if ($user == null)
         {
             $this->success=false;
-            $data = array('success' => $this->success, 
+            $data = array('success' => $this->success,
                           'message' => 'user does not exist',
                           'data'    =>$this->data
                          );
             return response()->json($data,$this->code);
         }
         $client = Client::where('user_id', $user_id)->first();
-        
+
         $from_date = date('Y-m-d H:i:s', strtotime($custom_from_date));
         $to_date = date('Y-m-d H:i:s', strtotime($custom_to_date));
         $date_and_time = array('from_date' => $from_date,'to_date' => $to_date );
@@ -2641,36 +2641,36 @@ class VehicleController extends Controller
                                ->get();
             $avg_speed = $gps_data->avg('speed');
             $max_speed = $gps_data->max('speed');
-            $travel_duration = array("idle" =>$vehicle_profile['halt'], 
+            $travel_duration = array("idle" =>$vehicle_profile['halt'],
                                   "running" => $vehicle_profile['motion'],
-                                  "stop" => $vehicle_profile['sleep'], 
+                                  "stop" => $vehicle_profile['sleep'],
                                   "inactive" => 0
                                  );
-            $travel_speed = array("speed" =>0, 
+            $travel_speed = array("speed" =>0,
                                   "total_km" => $vehicle_profile['dailykm'],
-                                  "avg_speed" => number_format($avg_speed, 2), 
+                                  "avg_speed" => number_format($avg_speed, 2),
                                   "max_speed" => $max_speed ?$max_speed:""
                                  );
-            $travel_data[] = array("travel_duration" => $travel_duration, 
-                                   "travel_speed" => $travel_speed, 
-                                   "total_alerts" => $vehicle_profile['user_alert'], 
-                                   "vehicleId" => $vehicle_details->id, 
-                                   "vehicle_number" => $vehicle_details->register_number, 
-                                   "vehicle_type" => $vehicle_details->vehicleType->name, 
+            $travel_data[] = array("travel_duration" => $travel_duration,
+                                   "travel_speed" => $travel_speed,
+                                   "total_alerts" => $vehicle_profile['user_alert'],
+                                   "vehicleId" => $vehicle_details->id,
+                                   "vehicle_number" => $vehicle_details->register_number,
+                                   "vehicle_type" => $vehicle_details->vehicleType->name,
                                    );
 
             $this->data[] = [
                             'travel_summary' => $travel_data
                             ];
 
-            $response_data = array('success' => $this->success, 
-                                   'message' => 'success', 
+            $response_data = array('success' => $this->success,
+                                   'message' => 'success',
                                    'data'    =>$this->data
                                   );
         }else {
             $this->success=false;
             $response_data = array(
-                                    'status' => $this->success, 
+                                    'status' => $this->success,
                                     'message' => 'failed',
                                     'data'    =>$this->data
                                 );
@@ -2681,10 +2681,10 @@ class VehicleController extends Controller
     public function getTravelSummary(Request $request) {
         $user_id = $request->userid;
         $user = User::where('id', $user_id)->first();
-        if ($user == null) 
+        if ($user == null)
         {
-            $data = array('status' => 'failed', 
-                          'message' => 'user does not exist', 
+            $data = array('status' => 'failed',
+                          'message' => 'user does not exist',
                           'code' => 0
                          );
             return response()->json($data);
@@ -2722,39 +2722,39 @@ class VehicleController extends Controller
                 }
                 // km dummy
 
-                $travel_duration = array("idle" =>$vehicle_profile['halt'], 
+                $travel_duration = array("idle" =>$vehicle_profile['halt'],
                                       "running" => $vehicle_profile['motion'],
-                                      "stop" => $vehicle_profile['sleep'], 
+                                      "stop" => $vehicle_profile['sleep'],
                                       "inactive" => 0
                                      );
-                $travel_speed = array("speed" =>0, 
+                $travel_speed = array("speed" =>0,
                                       "total_km" => $vehicle_profile['dailykm'],
-                                      "avg_speed" => number_format($avg_speed, 2), 
+                                      "avg_speed" => number_format($avg_speed, 2),
                                       "max_speed" => $max_speed ?$max_speed:""
                                      );
-                $travel_data[] = array("travel_duration" => $travel_duration, 
-                                       "travel_speed" => $travel_speed, 
-                                       "total_alerts" => $vehicle_profile['user_alert'], 
-                                       "vehicleId" => $get_vehicle->id, 
-                                       "user_name" => $user->username, 
-                                       "vehicle_number" => $get_vehicle->register_number, 
-                                       "vehicle_type" => $get_vehicle->vehicleType->name, 
-                                       "vehicle_online" => $get_vehicle->vehicleType->online_icon, 
-                                       "vehicle_offline" => $get_vehicle->vehicleType->offline_icon, 
-                                       "vehicle_ideal" => $get_vehicle->vehicleType->ideal_icon, 
+                $travel_data[] = array("travel_duration" => $travel_duration,
+                                       "travel_speed" => $travel_speed,
+                                       "total_alerts" => $vehicle_profile['user_alert'],
+                                       "vehicleId" => $get_vehicle->id,
+                                       "user_name" => $user->username,
+                                       "vehicle_number" => $get_vehicle->register_number,
+                                       "vehicle_type" => $get_vehicle->vehicleType->name,
+                                       "vehicle_online" => $get_vehicle->vehicleType->online_icon,
+                                       "vehicle_offline" => $get_vehicle->vehicleType->offline_icon,
+                                       "vehicle_ideal" => $get_vehicle->vehicleType->ideal_icon,
                                        "vehicle_sleep" => $get_vehicle->vehicleType->sleep_icon
                                       );
             }
-            $response_data = array('status' => 'success', 
-                                   'message' => 'success', 
-                                   'code' => 1, 
-                                   'user_name' => $user->username, 
+            $response_data = array('status' => 'success',
+                                   'message' => 'success',
+                                   'code' => 1,
+                                   'user_name' => $user->username,
                                    'travel_summary' => $travel_data,
                                    'from_date'=>$from_date,
                                    'to_date'=>$to_date
                                   );
-        } 
-        else 
+        }
+        else
         {
             $response_data = array('status' => 'failed', 'message' => 'failed', 'code' => 0);
         }
@@ -2773,9 +2773,9 @@ class VehicleController extends Controller
         $rules = $this->vehicleModelUpdateRules($vehicle);
         $this->validate($request, $rules);
         $vehicle->model_id = $request->model;
-        $vehicle->save();        
-        $request->session()->flash('message', 'Vehicle model updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $vehicle->save();
+        $request->session()->flash('message', 'Vehicle model updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('vehicles.details',$encrypted_gps_id));
      }
 
@@ -2793,7 +2793,7 @@ class VehicleController extends Controller
         $gps_fuel=Gps::select('id','fuel_status')
         ->where('id',$gps_id)
         ->first();
-        
+
         $vehicle=Vehicle::select(
             'id',
             'gps_id',
@@ -2801,7 +2801,7 @@ class VehicleController extends Controller
             'client_id'
         )
         ->where('gps_id',$gps_id)
-        ->first(); 
+        ->first();
         $model= $vehicle->model_id;
         $vehicle_models=VehicleModels::select(
             'id',
@@ -2811,7 +2811,7 @@ class VehicleController extends Controller
         ->where('id',$model)
         ->first();
         $fuel_status=$gps_fuel->fuel_status;
-        // return response()->json($response_data); 
+        // return response()->json($response_data);
     }
 
 
@@ -2842,14 +2842,14 @@ class VehicleController extends Controller
 
 
     public function vehiclePlayback(Request $request)
-    { 
-        
+    {
+
         $vehicleid = $request->vehicleid;
         $from_date =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
         $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
         $get_vehicle = Vehicle::find($vehicleid);
         $offset = $request->offset;
-       
+
         if ($get_vehicle == null)
         {
             $response_data = array(
@@ -2870,7 +2870,7 @@ class VehicleController extends Controller
             $start_offset = ($offset * $limit) - $limit;
         }
 
-   
+
         $gps_id = $get_vehicle->gps_id;
 
         $count_of_gpsdata = GpsData::where('device_time', '>=', $from_date)
@@ -2882,15 +2882,15 @@ class VehicleController extends Controller
                             ->orderBy('device_time', 'asc')
                             ->count();
         $total_index = ceil($count_of_gpsdata / 30);
-       
+
         $track_data = GpsData::select('id',
                                       'latitude as latitude',
-                                      'longitude as longitude', 
-                                      'lat_dir as latitude_dir', 
-                                      'lon_dir as longitude_dir', 
-                                      'heading as angle', 
-                                      'vehicle_mode as vehicleStatus', 
-                                      'speed', 
+                                      'longitude as longitude',
+                                      'lat_dir as latitude_dir',
+                                      'lon_dir as longitude_dir',
+                                      'heading as angle',
+                                      'vehicle_mode as vehicleStatus',
+                                      'speed',
                                       'device_time as dateTime')
                                       ->where('device_time', '>=', $from_date)
                                       ->where('device_time', '<=', $to_date)
@@ -2944,22 +2944,22 @@ class VehicleController extends Controller
     {
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
-        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);  
+        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
         $track_data=Gps::select('lat as latitude',
                               'lon as longitude'
-                              )         
+                              )
                               ->where('id',$get_vehicle->gps_id)
-                              ->first();   
+                              ->first();
         if($track_data==null)
         {
-            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'No Data Received From GPS!!!');
+            $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('vehicle'));
         }
         else if($track_data->latitude==null || $track_data->longitude==null)
         {
-            $request->session()->flash('message', 'No Data Received From GPS!!!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'No Data Received From GPS!!!');
+            $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('vehicle'));
         }
         else
@@ -2980,15 +2980,15 @@ class VehicleController extends Controller
 
 
     public function saveUploadDocuments(Request $request)
-    { 
+    {
         $messages = [
             'path.uploaded' => "The file size should be less than 2MB"
-        ];  
+        ];
         if($request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8)
         {
             $validator = Validator::make($request->all(), $this->documentCreateRules(),$messages);
             $expiry_date=null;
-            if ($validator->fails()) 
+            if ($validator->fails())
             {
                 $error = [];
                 foreach($validator->getMessageBag()->toArray() as $key => $each_error)
@@ -3002,47 +3002,48 @@ class VehicleController extends Controller
                 ];
             }
             else
-            {      
+            {
+
                 $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
                 $data=[
                     'vehicle_id' => $request->vehicle_id,
                     'document_type_id' => $request->document_type_id,
                     'expiry_date' => $expiry_date,
                     'path'=>$request->path
-                ]; 
-                $file = $request->file('path'); 
+                ];
+                $file = $request->file('path');
                 $getFileExt   = $file->getClientOriginalExtension();
-                $uploadedFile =   time().'.'.$getFileExt;        
+                $uploadedFile =   time().'.'.$getFileExt;
                 $destinationPath = 'documents/vehicledocs';
-                
+
                 if($documents_count->count()<2)
-                { 
-                    $file->move($destinationPath,$uploadedFile);       
+                {
+                    $file->move($destinationPath,$uploadedFile);
                     $documents = Document::create([
                         'vehicle_id' => $request->vehicle_id,
                         'document_type_id' => $request->document_type_id,
                         'expiry_date' => $expiry_date,
                         'path' => $uploadedFile
                     ]);
-                    $response = [                    
+                    $response = [
                         'count'=>$documents_count->count(),
                         'data'=>$data
-                    ];                     
+                    ];
                 }
                 else
-                {          
+                {
                     $response = [
                         'count'=>3,
                         'data'=>$data
-                    ];            
+                    ];
                 }
             }
         }
         else
         {
             $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
-            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));  
-            if ($validator->fails()) 
+            $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
+            if ($validator->fails())
             {
                 $error = [];
                 foreach($validator->getMessageBag()->toArray() as $key => $each_error)
@@ -3056,34 +3057,34 @@ class VehicleController extends Controller
                 ];
             }
             else
-            {      
+            {
                 $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
                 $data=[
                     'vehicle_id' => $request->vehicle_id,
                     'document_type_id' => $request->document_type_id,
                     'expiry_date' => $expiry_date,
                     'path'=>$request->path
-                ]; 
-                $file = $request->file('path'); 
+                ];
+                $file = $request->file('path');
                 $getFileExt   = $file->getClientOriginalExtension();
-                $uploadedFile =   time().'.'.$getFileExt;        
+                $uploadedFile =   time().'.'.$getFileExt;
                 $destinationPath = 'documents/vehicledocs';
-                
+
                 if($documents_count->count()<2)
                 {
-                    if($documents_count->count()==0){  
+                    if($documents_count->count()==0){
 
-                        $file->move($destinationPath,$uploadedFile);       
+                        $file->move($destinationPath,$uploadedFile);
                         $documents = Document::create([
                             'vehicle_id' => $request->vehicle_id,
                             'document_type_id' => $request->document_type_id,
                             'expiry_date' => $expiry_date,
                             'path' => $uploadedFile
                         ]);
-                        $response = [                    
+                        $response = [
                             'count'=>$documents_count->count(),
                             'data'=>$data
-                        ];   
+                        ];
                     }
                     else if($documents_count->first()->expiry_date==$expiry_date)
                     {
@@ -3095,42 +3096,42 @@ class VehicleController extends Controller
                             'path' => $uploadedFile
                         ]);
                         $response = [
-                            
+
                             'count'=>$documents_count->count(),
                             'data'=>$data
-                        ];               
+                        ];
                     }
                     else{
-                        $response = [                   
+                        $response = [
                             'count'=>4,
                             'data'=>$data
-                        ]; 
-                    }                      
+                        ];
+                    }
                 }
                 else
-                {          
+                {
                     $response = [
                         'count'=>3,
                         'data'=>$data
-                    ];            
+                    ];
                 }
             }
         }
-       
+
         return response()->json($response);
     }
 
     public function saveUploads(Request $request)
-    {  
-        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));       
+    {
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
         $documents_to_delete = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
         foreach ($documents_to_delete as $document_to_delete) {
             $delete_document = Document::find($document_to_delete->id);
             $delete_document->delete();
-        }     
-        $file = $request->file('path'); 
+        }
+        $file = $request->file('path');
         $getFileExt   = $file->getClientOriginalExtension();
-        $uploadedFile =   time().'.'.$getFileExt;        
+        $uploadedFile =   time().'.'.$getFileExt;
         $destinationPath = 'documents/vehicledocs';
         $file->move($destinationPath,$uploadedFile);
         $documents = Document::create([
@@ -3142,7 +3143,128 @@ class VehicleController extends Controller
         $response = [
             'status' => 'success',
             'alerts' => $documents
-        ];        
+        ];
         return response()->json($response);
-    }  
+    }
+
+
+    public function saveEditUploadDocuments(Request $request)
+    {
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
+        $documents = Document::where('id',$request->id)->first();
+         if($request->path){
+            $messages = [
+                'path.uploaded' => "The file size should be less than 2MB"
+            ];
+            $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
+            if ($validator->fails())
+            {
+                $error = [];
+                foreach($validator->getMessageBag()->toArray() as $key => $each_error)
+                {
+                    $error[$key] = $each_error[0];
+                }
+                $response = [
+                    'count' => 0,
+                    'data'  => []
+                ];
+            }
+            else{
+                $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+            if($documents_count->count()>=1){
+                    if($documents_count->first()->expiry_date==$expiry_date)
+                    {
+                        $file = $request->file('path');
+                        if($file){
+                            $getFileExt   = $file->getClientOriginalExtension();
+                            $uploadedFile =   time().'.'.$getFileExt;
+                            $destinationPath = 'documents/vehicledocs';
+                            // dd($request->id);
+                            $file->move($destinationPath,$uploadedFile);
+                            $documents->path=$uploadedFile;
+                        }
+
+                        $documents->expiry_date=$expiry_date;
+                        $documents->save();
+                        $response = [
+                            'count'=>$documents_count->count(),
+                            // 'data'=>$data
+                        ];
+                    }
+                    else
+                    {
+                        $response = [
+                            'count'=>3,
+                            // 'data'=>$data
+                        ];
+                    }
+                }
+
+            }
+
+
+        }
+
+            else
+            {
+
+                $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+
+                if($documents_count->count()>=1){
+                    if($documents_count->first()->expiry_date==$expiry_date)
+                    {
+                        $documents->expiry_date=$expiry_date;
+                        $documents->save();
+                        $response = [
+                            'count'=>$documents_count->count(),
+                            // 'data'=>$data
+                        ];
+                    }
+                    else
+                    {
+                        $response = [
+                            'count'=>3,
+                            // 'data'=>$data
+                        ];
+                    }
+                }
+
+        }
+
+        return response()->json($response);
+    }
+
+
+    public function saveEditUploads(Request $request)
+    {
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
+        $documents_to_delete = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+        foreach ($documents_to_delete as $document_to_delete) {
+            $delete_document = Document::find($document_to_delete->id);
+            $delete_document->expiry_date=$expiry_date;
+            $delete_document->save();
+        }
+        $file = $request->file('path');
+        $documents = Document::find($request->id);
+        if($file){
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            $destinationPath = 'documents/vehicledocs';
+            $file->move($destinationPath,$uploadedFile);
+
+            $documents->path=$uploadedFile;
+            $documents->save();
+        }
+        $response = [
+            'status' => 'success',
+            'alerts' => $documents
+        ];
+        return response()->json($response);
+    }
+
+
+
+
+
+
 }

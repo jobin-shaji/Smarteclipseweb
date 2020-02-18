@@ -22,48 +22,69 @@ class DriverController extends Controller {
     {
        return view('Driver::driver-create');
     }
-    //upload employee details to database table
+   
     public function save(Request $request)
-    {    
+        { 
         $client_id=\Auth::user()->client->id; 
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
-
-        if (strpos($url, $rayfleet_key) == true) {
-             $rules = $this->rayfleetDriverCreateRules();
-        }
-        else if (strpos($url, $eclipse_key) == true) {
+            if (strpos($url, $rayfleet_key) == true) {
+            $rules = $this->rayfleetDriverCreateRules();
+            }
+            else if (strpos($url, $eclipse_key) == true) {
             $rules = $this->driver_create_rules();
-        }
-        else
-        {
-           $rules = $this->driver_create_rules();
-        }
-        
-        $this->validate($request, $rules);           
-        $client = Driver::create([            
-            'name' => $request->name,            
-            'address' => $request->address,
-            'mobile' => $request->mobile,
-            'client_id' => $client_id, 
-            'points' => 100          
+            }
+            else
+            {
+            $rules = $this->driver_create_rules();
+            }
+             $this->validate($request, $rules); 
+        $client = Driver::create([ 
+        'name' => $request->name, 
+        'address' => $request->address,
+        'mobile' => $request->mobile,
+        'client_id' => $client_id, 
+        'points' => 100 
         ]);
         $eid= encrypt($client->id);
         $request->session()->flash('message', 'New Driver created successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('drivers'));        
-    }
-    public function driverList()
+        return redirect(route('drivers')); 
+        }
+
+        public function driverList()
+        {
+            return view('Driver::driver-list');
+        }
+
+
+    public function validateMobilenoDriver(Request $request)
     {
-        return view('Driver::driver-list');
+       
+        $client_id=\Auth::user()->client->id; 
+        $driver_available = Driver::where('mobile','=',$request->mobile)->where('client_id', $client_id)->count();
+        if ($driver_available >= 1)
+        {
+            $data       = [
+                'status'        => 1,
+                'driver_exists' => true
+            ];
+        }else
+        {
+            $data       = [
+                'status'        => 0,
+                'driver_exists' => false
+            ]; 
+        }
+        return response()->json($data);
     }
     public function driver_create_rules()
     {
         $rules = [
             'name' => 'required',
             'address' => 'required|max:150',
-            'mobile' => 'required|numeric|unique:drivers',
+            'mobile' => 'required|numeric',
             
         ];
         return  $rules;
@@ -73,7 +94,7 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required|max:150',
-            'mobile' => 'required|numeric|unique:drivers',
+            'mobile' => 'required|numeric',
             
         ];
         return  $rules;
