@@ -53,6 +53,8 @@ $('#upload_form').on('submit', function(event){
            processData: false,
            success:function(res)
            {
+            $("#load4").attr("style", "display: none;");
+            $("#load-4").attr("style", "display: none;");
               
                 if(typeof res.error != 'undefined')
                 {
