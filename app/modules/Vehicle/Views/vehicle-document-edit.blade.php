@@ -34,7 +34,7 @@
                       </h2>
                   </div>
                 </div>
-                <form  method="POST"  id="upload_form" action="{{route('vehicle-doc.update.p',$vehicle_doc->id)}}" enctype="multipart/form-data">
+                <form  method="POST"  id="upload_form"  enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="row">
                   <div class="col-xs-12">
