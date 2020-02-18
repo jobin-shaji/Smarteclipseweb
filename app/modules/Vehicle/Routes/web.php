@@ -113,7 +113,8 @@ Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->n
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
 Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
 Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
-
+Route::post('/edit-document-upload','VehicleController@saveEditUploadDocuments')->name('edit.document.upload');
+Route::post('/edit-already-existing','VehicleController@saveEditUploads')->name('edit.already.existing');
 
 
 	});
@@ -136,7 +137,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
 
 	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
- 	
+
 });
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
