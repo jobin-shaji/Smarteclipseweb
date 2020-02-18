@@ -73,7 +73,11 @@ function trackMode()
      if(document.getElementById('vehicle').value == ''){
         alert('please enter vehicle');
     }
-  
+    else if(document.getElementById('fromDate').value == ''){
+        alert('Please select From date');
+    }else if(document.getElementById('toDate').value == ''){
+        alert('Please select To date');
+    }
     else{       
         var vehicle_id=$('#vehicle').val();       
         var client=$('meta[name = "client"]').attr('content');

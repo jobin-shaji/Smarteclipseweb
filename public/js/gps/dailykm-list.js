@@ -14,19 +14,18 @@ $(document).ready(function () {
     callBackDataTable(data);
 });
 
-function check(){     
-     if(document.getElementById('vehicle').value == ''){
-        alert('Please Select Vehicle');
+    function check()
+    {     
+        if(document.getElementById('vehicle').value == ''){
+            alert('Please Select Vehicle');
+        }
+        else if(document.getElementById('fromDate').value == ''){
+            alert('please enter from date');
+        }
+        else{    
+            callBackDataTable();
+        }
     }
-    // else if(document.getElementById('fromDate').value == ''){
-    //     alert('please enter from date');
-    // }else if(document.getElementById('toDate').value == ''){
-    //     alert('please enter to date');
-    // }
-    else{    
-        callBackDataTable();
-    }
-}
 function callBackDataTable(){
     var vehicle =document.getElementById('vehicle').value;
     var from_date =document.getElementById('fromDate').value;
