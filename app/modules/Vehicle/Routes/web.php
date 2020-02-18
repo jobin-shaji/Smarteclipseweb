@@ -109,6 +109,7 @@ Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehic
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+Route::post('/vehicle/{id}/reg_edit','VehicleController@regupdate')->name('reg.update.p');
 Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
 Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
@@ -136,7 +137,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
 
 	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
- 	
+
 });
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
