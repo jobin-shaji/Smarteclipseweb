@@ -31,30 +31,19 @@ $(function () {
             var startDate = $("#fromDate").val();
             var endDate = $("#toDate").val();
             if( new Date(startDate) > new Date(endDate)){
-              alertify.alert("Start date should be less than end date").setHeader('<em> Report</em>');
-              document.getElementById("fromDate").value = "";
+              alertify.alert("From date should be less than To date").setHeader('<em> Report</em>');
+              $("#fromDate").val(endDate);
             }
-            // var startdate=$(this).data('fromdate');
-            // // calculate();
-            // var incrementDay = moment().millisecond(0).second(0).minute(0).hour(0);
-            // incrementDay.add(1, 'days');
-            // $('#toDate').data('DateTimePicker').minDate(incrementDay);
-            // $(this).data("DateTimePicker").hide();
-
         });
+
         $('#toDate').datetimepicker().on('dp.change', function (e) {
 
             var startDate = $("#fromDate").val();
             var endDate = $("#toDate").val();
             if( new Date(startDate) > new Date(endDate)){
-                alertify.alert("End date should be greater than start date").setHeader('<em> Report</em>');
-                document.getElementById("toDate").value = "";
+                alertify.alert("To date should be greater than From date").setHeader('<em> Report</em>');
+                $("#toDate").val(startDate);
             }
-            // var decrementDay = moment(new Date(e.date));
-            // decrementDay.subtract(0, 'days');
-            // $('#fromDate').data('DateTimePicker').maxDate(decrementDay);
-            // $(this).data("DateTimePicker").hide();
-            // calculate();
         });
 
         $('#assignfromDate').datetimepicker().on('dp.change', function (e) {
@@ -110,33 +99,40 @@ $(function () {
     });
     $(".datepicker" ).datetimepicker({
         format: 'DD-MM-YYYY',
-        useCurrent: false,
+        defaultDate: null,
+        useCurrent: true,
         maxDate: new Date()
      });
     $( ".datepickerFreebies" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
+        defaultDate: null,
         maxDate: new Date(),
         minDate:free_date
      });
     $( ".datepickerFundamental" ).datetimepicker({
-        // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
-        useCurrent: false,
+        defaultDate: null,
         maxDate: new Date(),
         minDate:fundamental_date
      });
+    $('.datepickerFundamental').val("");
+    $('.datepickerFreebies').val("");
+    $('.datepickerSuperior').val("");
+    $('.datepickerPro').val("");
     $( ".datepickerSuperior" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
-        useCurrent: false,
+        useCurrent: true,
+        defaultDate: null,
         maxDate: new Date(),
         minDate:superior_date
      });
     $(".datepickerPro" ).datetimepicker({
         format: 'YYYY-MM-DD',
         // format: 'DD-MM-YYYY',
-        useCurrent: false,
+        defaultDate: null,
+        useCurrent: true,
         maxDate: new Date(),
         minDate:pro_date
     });
