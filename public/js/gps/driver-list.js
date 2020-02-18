@@ -3,8 +3,8 @@ $(document).ready(function () {
 });
 function callBackDataTable(){
     var  data = {
-        
-    }; 
+
+    };
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -26,37 +26,37 @@ function callBackDataTable(){
             if ( data['deleted_at'] ) {
                 $('td', row).css('background-color', 'rgb(243, 204, 204)');
             }
-        },       
+        },
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'name', name: 'name', orderable: false },            
-            {data: 'address', name: 'address', orderable: false, searchable: false},           
-            {data: 'mobile', name: 'mobile', orderable: false},             
+            {data: 'name', name: 'name', orderable: false },
+            {data: 'address', name: 'address', orderable: false, searchable: false},
+            {data: 'mobile', name: 'mobile', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
-           
+
         ],
-        
+
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
 function delDriver(driver){
-    if(confirm('Are you sure to deactivate this driver?')){
+    if(confirm('The driver will be removed from the assigned vehicle.   Are you sure to deactivate this driver?')){
         var url = 'driver/delete';
         var data = {
             uid : driver
         };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});
     }
 }
 function activateDriver(driver){
-    if(confirm('Are you sure to activate this driver?')){
+    if(confirm('Driver should be assigned manually to any vehicle.        Are you sure to activate this driver?')){
         var url = 'driver/activate';
         var data = {
             id : driver
         };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});
     }
 }
 
@@ -99,7 +99,7 @@ function reloadPageWithAdelay(delay)
     {
         setTimeout(function(){
             window.location.reload();
-          }, delay); 
+          }, delay);
     }
 }
 function validate_driver_mobileno()
@@ -119,7 +119,7 @@ function validate_driver_mobileno()
             success: function (res) {
                 if(res.driver_exists == true)
                 {
-                
+
                     toastr.error( 'Driver with this mobile number already exists', 'Error');
                     reloadPageWithAdelay(2000);
                 }
