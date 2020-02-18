@@ -367,96 +367,45 @@ class AlertController extends Controller {
     }
 
 
-    function notificationAlertCount(Request $request)
+    function emergencyAlertDetails(Request $request)
     {
-        $flag=$request->flag;
         $user=\Auth::user();
         if($user->hasRole('client'))
         {
-        $client_id=\Auth::user()->client->id;
-        // $VehicleGpss=Vehicle::select(
-        //     'id',
-        //     'gps_id',
-        //     'client_id'
-        // )
-        // ->where('client_id',$client_id)
-        // ->get();      
-        // $single_vehicle_gps = [];
-        // foreach($VehicleGpss as $VehicleGps){
-        //     $single_vehicle_gps[] = $VehicleGps->gps_id;
-        // }
-        // $userAlerts = UserAlerts::select(
-        //     'id',
-        //     'client_id',
-        //     'alert_id',
-        //     'status'
-        // )
-        // ->with('alertType:id,code,description') 
-        // ->where('status',1)               
-        // ->where('client_id',$client_id)           
-        // ->get();
-        // $alert_id=[];
-        // foreach ($userAlerts as $userAlert) {
-        //       $alert_id[]=$userAlert->alert_id;
-        //    }
-        // $alert = Alert::select('id','gps_id','alert_type_id','device_time')
-        // ->whereIn('gps_id',$single_vehicle_gps)
-        // ->whereIn('alert_type_id',$alert_id)
-        // ->whereNotIn('alert_type_id',[17,18,23,24])
-        // ->where('status',0)
-        // ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])        
-               
-        // // ->get()
-        // ->count();
+            $alert_id           =   $request->alert_id;
+            $key                =   $request->key;
+            $client_id          =   $user->client->id;
 
-        $all_gps=GpsStock::where('client_id',$client_id)->get();
-        $single_gps=[];
-        foreach ($all_gps as $gps) {
-            $single_gps[]=$gps->gps_id;
-        }
-        $alerts = Alert::select(
-            'id',
-            'alert_type_id',
-            'gps_id',
-            'latitude',
-            'longitude',
-            'device_time'
-        )
-        ->with('gps.vehicle')
-        ->with('gps.vehicle.driver')
-        ->whereIn('gps_id',$single_gps)
-        ->where('alert_type_id',21)
-        ->where('status',0)
-        ->get();
-        if(sizeof($alerts) == 0){
-            $response=[
-                'status' => 'failed'
-            ];
-        }else{
-            $vehicle_id=$alerts[0]->gps->vehicle->id;
-            $vehicle_id = Crypt::encrypt($vehicle_id);
-            $response = [
-                'status' => 'success',
-                'alerts' => $alerts,
-                'vehicle' => $vehicle_id
-            ];
-        }
+            $alert_details      =   Alert::select(
+                'id',
+                'latitude',
+                'longitude',
+                'gps_id',
+                'device_time'
+            )
+            ->with('gps.vehicle')
+            ->where('id',$alert_id)
+            ->first();
 
-        return response()->json([                          
-            'notification_count' => 0,
-            'status' => 'success',
-            'flag' => $flag,
-            'emergency_response' => $response       
-        ]);
-        }
-        else{
-            $response=[
-                    'status' => 'failed'
-                ];
-            return response()->json([                          
-                'status' => 'failed',  
-                'emergency_response' => $response
-            ]);   
+            if($alert_details)
+            {
+                $vehicle_id                 =   $alert_details->gps->vehicle->id;
+                $encrypted_vehicle_id       =   Crypt::encrypt($vehicle_id);
+                return response()->json([ 
+                    'alert_details'         => $alert_details,  
+                    'encrypted_vehicle_id'  => $encrypted_vehicle_id,
+                    'firebase_key'          => $key,                     
+                    'status'                => '1',  
+                    'message'               => 'success'
+                ]); 
+            }
+            else
+            {
+                return response()->json([                          
+                    'status'            => '0',  
+                    'message'           => 'failed'
+                ]); 
+            }   
         }  
     }
 

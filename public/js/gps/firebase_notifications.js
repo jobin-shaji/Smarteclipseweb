@@ -12,7 +12,12 @@ Notification.prototype.getNotificationCount = function(){
     .on('value', function(notifications) {
         var notification_count  = 0;
         notifications.forEach(function(childNotification) {
-            var item = childNotification.val();
+            var item    =   childNotification.val();
+            var key     =   childNotification.key;
+            if(item.alert_type_id == 21 && item.is_read ==  0)
+            {
+                notify.displayEmergencyNotifications(item.id,key);
+            }
             if(item.is_read == 0)
             {
                 notification_count++;
@@ -41,8 +46,6 @@ Notification.prototype.getNotifications = function(){
 
 Notification.prototype.displayNotifications= function(notifications){
     notify.alert_notification.html("")
-
-
     if(notifications.length > 0){
         $.each(notifications, function( index, value ) {
             var theDate = new Date(value.created_at * 1000);
@@ -53,12 +56,55 @@ Notification.prototype.displayNotifications= function(notifications){
         });
     }else{
         notify.alert_notification.append('<div class="dropdown-item" >No alerts found</div>');
+    }  
+}
+
+Notification.prototype.displayEmergencyNotifications= function(alert_id,key)
+{
+    var url = 'emergency_alert_details';
+    var data={
+        alert_id:alert_id,key:key   
     }
-
-
+    notify.ajaxCall(url,data,notify.successMethodForEmergencyPopup,notify.errorMethod);
     
- }
+}
 
+Notification.prototype.successMethodForEmergencyPopup = function(response)
+{
+    if(response.status  ==  1)
+    {
+        var latitude                =   response.alert_details.latitude;
+        var longitude               =   response.alert_details.longitude;
+        getPlaceNameFromLatLng(latitude,longitude);
+        var vehicle_id              =   response.alert_details.gps.vehicle.id;
+        var alert_id                =   response.alert_details.id;
+        var encrypted_vehicle_id    =   response.encrypted_vehicle_id;
+        var register_number         =   response.alert_details.gps.vehicle.register_number;
+        var alert_time              =   response.alert_details.device_time;
+        document.getElementById("firebase_key").value     =   response.firebase_key;
+        if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
+            $("#header-emergency").show();
+            document.getElementById("header_emergency_alert_id").value     =   alert_id;
+            document.getElementById("header_alert_vehicle_id").value       =   encrypted_vehicle_id;
+            document.getElementById("header_decrypt_vehicle_id").value     =   vehicle_id;
+            $('#header_emergency_vehicle_number').text(register_number);
+            $('#header_emergency_vehicle_time').text(alert_time);
+        }else{
+            var modal = document.getElementById('emergency');
+            modal.style.display                                            =   "block";
+            document.getElementById("emergency_alert_id").value            =   alert_id;
+            document.getElementById("alert_vehicle_id").value              =   encrypted_vehicle_id;
+            document.getElementById("decrypt_vehicle_id").value            =   vehicle_id;
+            $('#emergency_vehicle_number').text(register_number);
+            $('#emergency_vehicle_time').text(alert_time);
+        }
+    }
+}
+
+Notification.prototype.markFirebaseEmergencyNotificationAsRead = function(firebase_key)
+{
+    firebase.database().ref(notify.user_id+'/notifications/'+firebase_key).update({"is_read": "1"})
+}
 
 Notification.prototype.markFirebaseNotificationAsRead = function(alert_id)
 {

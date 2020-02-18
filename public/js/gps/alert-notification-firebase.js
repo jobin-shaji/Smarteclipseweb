@@ -78,7 +78,6 @@ AlertNotification.prototype.displayAllAlertNotifications = function(notification
 
 AlertNotification.prototype.markDatabaseNotificationAsRead = function(alert_id)
 {
-    console.log(alert_id);
     var url = 'gps-alert-tracker';
     var data={
       id:alert_id   

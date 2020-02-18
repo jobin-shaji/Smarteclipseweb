@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 
 });
 Route::group(['middleware' => ['web','auth','role:client|root|dealer|sub_dealer|school|servicer|operations|trader'] , 'namespace' => 'App\Modules\Alert\Controllers' ] , function() {
- Route::post('/notification_alert_count', 'AlertController@notificationAlertCount')->name('notification_alert_count');
+ Route::post('/emergency_alert_details', 'AlertController@emergencyAlertDetails')->name('emergency_alert_details');
  });
 
 Route::group(['namespace' => 'App\Modules\Alert\Controllers' ] , function() {
