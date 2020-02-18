@@ -33,6 +33,7 @@
                       <th>SL.No</th>
                       <th>Vehicle Models</th>
                       <th>Vehicle Make</th>
+                      <th>Fuel Tank Capacity</th>
                       <th>Voltage if fuel empty</th>
                       <th>Voltage if fuel is 25%</th>
                       <th>Voltage if fuel is 50%</th>

@@ -317,19 +317,20 @@ class OperationsController extends Controller {
             $rules = $this->vehicle_model_create_rules();
             $this->validate($request, $rules);
             $vehicle_models = VehicleModels::create([
-                'name' => $request->name,
-                'vehicle_make_id' => $request->vehicle_make,
-                'fuel_min' => $request->fuel_min,
-                'fuel_25' => $request->fuel_25,
-                'fuel_50' => $request->fuel_50,
-                'fuel_75' => $request->fuel_75,
-                'fuel_max' => $request->fuel_max,
+                'name'              => $request->name,
+                'vehicle_make_id'   => $request->vehicle_make,
+                'fuel_capacity'     => $request->fuel_capacity,
+                'fuel_min'          => $request->fuel_min,
+                'fuel_25'           => $request->fuel_25,
+                'fuel_50'           => $request->fuel_50,
+                'fuel_75'           => $request->fuel_75,
+                'fuel_max'          => $request->fuel_max,
             ]);
         }
 
         $request->session()->flash('message', 'New vehicle models created successfully!');
         $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('vehicle.models.create'));
+        return redirect(route('vehicle.models'));
     }
      //Display employee details
     public function vehicleModelsListPage()
@@ -343,6 +344,7 @@ class OperationsController extends Controller {
             'id',
             'name',
             'vehicle_make_id',
+            'fuel_capacity',
             'fuel_min',
             'fuel_25',
             'fuel_50',
@@ -389,18 +391,19 @@ class OperationsController extends Controller {
         }
         $rules = $this->vehiclemodelsUpdatesRules($vehicle_models);
         $this->validate($request, $rules);
-        $vehicle_models->name = $request->name;
-        $vehicle_models->vehicle_make_id = $request->vehicle_make;
-        $vehicle_models->fuel_min = $request->fuel_min;
-        $vehicle_models->fuel_25 = $request->fuel_25;
-        $vehicle_models->fuel_50 = $request->fuel_50;
-        $vehicle_models->fuel_75 = $request->fuel_75;
-        $vehicle_models->fuel_max = $request->fuel_max;
+        $vehicle_models->name               = $request->name;
+        $vehicle_models->vehicle_make_id    = $request->vehicle_make;
+        $vehicle_models->fuel_capacity      = $request->fuel_capacity;
+        $vehicle_models->fuel_min           = $request->fuel_min;
+        $vehicle_models->fuel_25            = $request->fuel_25;
+        $vehicle_models->fuel_50            = $request->fuel_50;
+    $vehicle_models->fuel_75                = $request->fuel_75;
+        $vehicle_models->fuel_max           = $request->fuel_max;
         $vehicle_models->save();
-        $did = encrypt($vehicle_models->id);
+        $did                                = encrypt($vehicle_models->id);
         $request->session()->flash('message', 'vehicle models details updated successfully!');
         $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('vehicle.models.edit',$did));
+        return redirect(route('vehicle.models'));
     }
     public function disableVehicleModels(Request $request)
     {
@@ -462,6 +465,7 @@ class OperationsController extends Controller {
         $rules = [
             'name' => 'required',
             'vehicle_make'=> 'required',
+            'fuel_capacity' => 'required',
             'fuel_min' => 'required',
             'fuel_25' => 'required',
             'fuel_50' => 'required',
@@ -542,6 +546,7 @@ class OperationsController extends Controller {
         $rules = [
             'name' => 'required',
             'vehicle_make' => 'required',
+            'fuel_capacity' => 'required',
             'fuel_min' => 'required',
             'fuel_25' => 'required',
             'fuel_50' => 'required',

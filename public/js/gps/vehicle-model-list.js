@@ -34,6 +34,7 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name' },
             {data: 'vehicle_make.name', name: 'vehicle_make.name' },
+            {data: 'fuel_capacity', name: 'fuel_capacity' },
             {data: 'fuel_min', name: 'fuel_min' },
             {data: 'fuel_25', name: 'fuel_25' },
             {data: 'fuel_50', name: 'fuel_50' },
