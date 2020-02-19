@@ -1333,18 +1333,7 @@ class VehicleController extends Controller
                 )
                 ->where('id',$model)
                 ->first();
-<<<<<<< HEAD
-                $fuel_gps=$track_data->fuel_status;
-                $fuel_min=$vehicle_models->fuel_min;
-                $fuel_max=$vehicle_models->fuel_max;
-                $modulus=$fuel_min-$fuel_max;
-                $value=$vehicle_models->fuel_min-$fuel_gps;
-                $fuel=($value/$modulus)*100;
-                $fuel_percentage=round($fuel);
-                $fuel_status = $this->limitFuelPercentageRange($fuel_percentage)."%";
-=======
                 $fuel_status=$track_data->fuel_status;
->>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
             }
             else
             {
@@ -2846,18 +2835,7 @@ class VehicleController extends Controller
         )
         ->where('id',$model)
         ->first();
-<<<<<<< HEAD
-        $fuel_gps=$gps_fuel->fuel_status;
-        $fuel_min=$vehicle_models->fuel_min;
-        $fuel_max=$vehicle_models->fuel_max;
-        $modulus=$fuel_min-$fuel_max;
-        $value=$vehicle_models->fuel_min-$fuel_gps;
-        $fuel=($value/$modulus)*100;
-
-
-=======
         $fuel_status=$gps_fuel->fuel_status;
->>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
         // return response()->json($response_data);
     }
 
@@ -3050,10 +3028,6 @@ class VehicleController extends Controller
             }
             else
             {
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
                 $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
                 $data=[
                     'vehicle_id' => $request->vehicle_id,
@@ -3196,8 +3170,6 @@ class VehicleController extends Controller
         ];
         return response()->json($response);
     }
-<<<<<<< HEAD
-=======
 
 
     public function saveEditUploadDocuments(Request $request)
@@ -3319,5 +3291,4 @@ class VehicleController extends Controller
 
 
 
->>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
 }
