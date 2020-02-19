@@ -803,10 +803,22 @@ class VehicleController extends Controller
              })
             ->addColumn('action', function ($vehicle_documents) {
                 $b_url = \URL::to('/');
+                $document_type_id=$vehicle_documents->document_type_id;
                 $path = url($b_url.'/documents/vehicledocs').'/'.$vehicle_documents->path;
+
+                if($document_type_id==2 || $document_type_id==3 || $document_type_id==4 || $document_type_id==5)
+               {
+                    return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
+                <button onclick=deleteDocumentFromAllDocumentList(".$vehicle_documents->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete </button>";
+
+               }
+               else
+               {
                 return "<a href= ".$path." download='".$vehicle_documents->path."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
-                     <button onclick=deleteDocumentFromAllDocumentList(".$vehicle_documents->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete </button>";
-             })
+                    ";
+
+               }
+                })
             ->rawColumns(['link', 'action','status'])
             ->make();
     }
