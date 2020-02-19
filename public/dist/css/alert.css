@@ -128,11 +128,11 @@ button:hover {
 }
 
 .content-wrapper {
-    background-color: #f1f6f8;
+    /* background-color: #f1f6f8; */
     z-index: 800;
     width: 100%;
     float: left;
-    height: 100vh;
+    /* height: 100vh; */
 }
 .page-wrapper_new {
     min-height: 500px;

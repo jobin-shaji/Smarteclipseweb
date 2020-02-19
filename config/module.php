@@ -39,7 +39,8 @@ return  [
        'Configuration',
        'Version',
        'Trader',
-       'Monitoring'
+       'Monitoring',
+       'VltData'
 
     ]
 ]

@@ -40,10 +40,10 @@
         <a class="nav-link " href="{{url('/gps-data')}}"><b>PROCESSED DATA</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="{{url('/public-vltdata')}}"><b>UNPROCESSED DATA</b></a>
+        <a class="nav-link " href="{{url('/unprocessed-data-list')}}"><b>UNPROCESSED DATA</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="{{url('/all-gps-data-public')}}"><b>CONSOLE</b></a>
+        <a class="nav-link " href="{{url('/console-data-list')}}"><b>CONSOLE</b></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url('/gps-config-public')}}"><b>GPS CONFIGURATION</b></a>

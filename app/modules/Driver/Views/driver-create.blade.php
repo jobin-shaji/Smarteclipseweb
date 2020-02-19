@@ -53,7 +53,7 @@
                           <div class="form-group row form-group-driver">
                           <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile Number</label>
                           <div class="form-group has-feedback form-drive-outer">
-                             <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" /> 
+                             <input type="text" id="mobile" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 11 digits" /> 
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -66,7 +66,7 @@
                          <div class="form-group row form-group-driver">
                           <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile Number</label>
                           <div class="form-group has-feedback form-drive-outer">
-                            <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
+                            <input type="text" id="mobile" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -79,7 +79,7 @@
                           <div class="form-group row form-group-driver">
                           <label for="fname" class="col-sm-3 text-right control-label col-form-label lab label-form-drive">Mobile Number</label>
                           <div class="form-group has-feedback form-drive-outer">
-                            <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
+                            <input type="text" id="mobile" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" title="Mobile number should be exactly 10 digits" />
                           </div>
                           @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -104,7 +104,7 @@
                         <div class="m-t-lg m-t-lg-new">
                           <ul class="list-inline">
                             <li>
-                              <input class="btn btn-primary address_btn btn btn--form" type="submit" value="Add" />
+                              <input class="btn btn-primary address_btn btn btn--form" onclick="return validate_driver_mobileno()" type="submit" value="Add" />
                             </li>
                           </ul>
                         </div>
@@ -124,51 +124,7 @@
 
 
 
-                              <!-- <div class="form-group row">
-                                 <label for="fname" class="col-sm-3 control-label col-form-label" style="margin-left: 80%!important">Name</label>
-                                 <div class="form-group has-feedback">
-                                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" style="margin-left: 80%!important" > 
-                                 </div>
-                                 @if ($errors->has('name'))
-                                  <span class="help-block">
-                                      <strong class="error-text">{{ $errors->first('name') }}</strong>
-                                  </span>
-                                @endif
-                              </div>
-                               <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile</label>
-                                 <div class="form-group has-feedback">
-                                     <input type="number" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile No." name="mobile" value="{{ old('mobile') }}" > 
-                                  </div>
-                                  @if ($errors->has('mobile'))
-                                    <span class="help-block">
-                                        <strong class="error-text">{{ $errors->first('mobile') }}</strong>
-                                    </span>
-                                  @endif
-                              </div>
-                              <div class="form-group row" style="float:none!important">
-                                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
-                                 <div class="form-group has-feedback">
-                                    <textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" rows=5></textarea>
-                                  </div>
-                                   @if ($errors->has('address'))
-                                <span class="help-block">
-                                    <strong class="error-text">{{ $errors->first('address') }}</strong>
-                                    </span>
-                                @endif
-                              </div>                                                         
-                           </div> -->
-
-     
-       <!-- <div class="row">
-         <div class="col-lg-6 col-md-12">
-            <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
-              <div class="row">
-                 <button type="submit" class="btn btn-primary address_btn">Create</button>
-              </div>
-            </div>
-          </div>
-        </div> -->  
+                        
      
   </div>
 <style>
@@ -234,3 +190,8 @@ padding-left: 3%;
 
 </section>
  @endsection
+ @section('script')
+   
+    <script src="{{asset('js/gps/driver-list.js')}}"></script>
+  
+  @endsection

@@ -15,15 +15,15 @@
       @if(Session::has('message'))
         <div class="pad margin no-print">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-              {{ Session::get('message') }}  
+              {{ Session::get('message') }}
           </div>
         </div>
-        @endif 
+        @endif
   </nav>
   <div class="container-fluid">
-    <div class="card-body"><h4>Vehicle models List</h4>
+    <div class="card-body">
       <div class="table-responsive scrollmenu">
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
           <div class="row">
             <div class="col-sm-12">
 
@@ -31,10 +31,14 @@
                 <thead>
                   <tr>
                       <th>SL.No</th>
-                      <th>Vehicle Models</th> 
-                      <th>Vehicle Make</th>                            
-                      <th>Fuel min</th>                              
-                      <th>Fuel max</th>
+                      <th>Vehicle Models</th>
+                      <th>Vehicle Make</th>
+                      <th>Fuel Tank Capacity</th>
+                      <th>Voltage if fuel empty</th>
+                      <th>Voltage if fuel is 25%</th>
+                      <th>Voltage if fuel is 50%</th>
+                      <th>Voltage if fuel is 75%</th>
+                      <th>Voltage if fuel is 100%</th>
                       <th style="width:160px;">Action</th>
                   </tr>
                 </thead>
@@ -44,7 +48,7 @@
         </div>
       </div>
     </div>
-            
+
   </div>
 </div>
 </div>

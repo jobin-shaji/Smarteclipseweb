@@ -1,6 +1,7 @@
 <?php
     header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0');
 ?>
+
 <header class="topbar" data-navbarbg="skin5">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                
@@ -384,19 +385,22 @@
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="header-emergency" style="display: none;"><img src="{{ url('/') }}/assets/images/emergency.gif" alt="user" width="50"></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="color: #FF0000">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Driver : <h4 id="header_emergency_vehicle_driver"></h4></a>
                         <a class="dropdown-item">Vehicle Number : <h4 id="header_emergency_vehicle_number"></h4></a>
                         <a class="dropdown-item">Location : <h4 id="header_emergency_vehicle_location"></h4></a>
                         <a class="dropdown-item">Time : <h4 id="header_emergency_vehicle_time"></h4></a>
-                        <input type="hidden" id="header_em_id">
+                        <input type="hidden" id="header_emergency_alert_id">
                         <input type="hidden" id="header_alert_vehicle_id">
                         <input type="hidden" id="header_decrypt_vehicle_id">
+                        <input type="hidden" id="firebase_key">
                         <a class="dropdown-item"><button onclick="verifyHeaderEmergency()">Verify</button></a>
                     </div>
                 </li>
                 @role('client')
+
+                <input type="hidden" id="user_id" value="{{\Auth::user()->id}}">
                 <li class="nav-item dropdown">
-                    <a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!-- by christeena<a onclick="clientAlerts()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" title="Alerts" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="notification-box">
                         <span class="notification-count" id="bell_notification_count">0</span>
                         <div>
@@ -404,6 +408,7 @@
                         </div>
                     </span>
                 </a>
+                
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <div class="dropdown-divider"></div>
@@ -411,6 +416,20 @@
                         </div>
                         <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                     </div>
+                    <script> 
+                        var firebaseConfig = {
+                            apiKey:  '{{env("FIREBASE_API_KEY")}}',
+                            authDomain: '{{env("FIREBASE_AUTH_DOMAIN")}}',
+                            databaseURL: '{{env("FIREBASE_DATABASE_URL")}}',
+                            projectId: '{{env("FIREBASE_PROJECT_ID")}}',
+                            storageBucket: '{{env("FIREBASE_STORAGE_BUCKET")}}',
+                            messagingSenderId: '{{env("FIREBASE_MESSAGING_SENDER_ID")}}',
+                            appId: '{{env("FIREBASE_APP_ID")}}',
+                            measurementId: '{{env("FIREBASE_MEASUREMENT_ID")}}'
+                        };
+                    </script>
+                    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+                    <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>
                 </li> 
                 <li class="nav-item dropdown">
                     <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>
@@ -445,6 +464,7 @@
                     </div>
                 </li>
                 <!--  <label>View Documents</label> -->
+
                 @endrole
                 <li class="nav-item dropdown">
                     @role('client')
@@ -667,6 +687,7 @@
         Contact for Assistance +91 9544313131</div>
     </div>  
 </div>
+
 <style>
     .load-modal-img{
         width: 35px !important;
@@ -761,5 +782,6 @@
 }
 
 </style>
+
 
  

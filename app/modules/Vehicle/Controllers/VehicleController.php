@@ -1333,6 +1333,7 @@ class VehicleController extends Controller
                 )
                 ->where('id',$model)
                 ->first();
+<<<<<<< HEAD
                 $fuel_gps=$track_data->fuel_status;
                 $fuel_min=$vehicle_models->fuel_min;
                 $fuel_max=$vehicle_models->fuel_max;
@@ -1341,6 +1342,9 @@ class VehicleController extends Controller
                 $fuel=($value/$modulus)*100;
                 $fuel_percentage=round($fuel);
                 $fuel_status = $this->limitFuelPercentageRange($fuel_percentage)."%";
+=======
+                $fuel_status=$track_data->fuel_status;
+>>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
             }
             else
             {
@@ -2842,6 +2846,7 @@ class VehicleController extends Controller
         )
         ->where('id',$model)
         ->first();
+<<<<<<< HEAD
         $fuel_gps=$gps_fuel->fuel_status;
         $fuel_min=$vehicle_models->fuel_min;
         $fuel_max=$vehicle_models->fuel_max;
@@ -2850,6 +2855,9 @@ class VehicleController extends Controller
         $fuel=($value/$modulus)*100;
 
 
+=======
+        $fuel_status=$gps_fuel->fuel_status;
+>>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
         // return response()->json($response_data);
     }
 
@@ -3042,6 +3050,10 @@ class VehicleController extends Controller
             }
             else
             {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
                 $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
                 $data=[
                     'vehicle_id' => $request->vehicle_id,
@@ -3184,4 +3196,128 @@ class VehicleController extends Controller
         ];
         return response()->json($response);
     }
+<<<<<<< HEAD
+=======
+
+
+    public function saveEditUploadDocuments(Request $request)
+    {
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
+        $documents = Document::where('id',$request->id)->first();
+         if($request->path){
+            $messages = [
+                'path.uploaded' => "The file size should be less than 2MB"
+            ];
+            $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
+            if ($validator->fails())
+            {
+                $error = [];
+                foreach($validator->getMessageBag()->toArray() as $key => $each_error)
+                {
+                    $error[$key] = $each_error[0];
+                }
+                $response = [
+                    'count' => 0,
+                    'data'  => []
+                ];
+            }
+            else{
+                $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+            if($documents_count->count()>=1){
+                    if($documents_count->first()->expiry_date==$expiry_date)
+                    {
+                        $file = $request->file('path');
+                        if($file){
+                            $getFileExt   = $file->getClientOriginalExtension();
+                            $uploadedFile =   time().'.'.$getFileExt;
+                            $destinationPath = 'documents/vehicledocs';
+                            // dd($request->id);
+                            $file->move($destinationPath,$uploadedFile);
+                            $documents->path=$uploadedFile;
+                        }
+
+                        $documents->expiry_date=$expiry_date;
+                        $documents->save();
+                        $response = [
+                            'count'=>$documents_count->count(),
+                            // 'data'=>$data
+                        ];
+                    }
+                    else
+                    {
+                        $response = [
+                            'count'=>3,
+                            // 'data'=>$data
+                        ];
+                    }
+                }
+
+            }
+
+
+        }
+
+            else
+            {
+
+                $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+
+                if($documents_count->count()>=1){
+                    if($documents_count->first()->expiry_date==$expiry_date)
+                    {
+                        $documents->expiry_date=$expiry_date;
+                        $documents->save();
+                        $response = [
+                            'count'=>$documents_count->count(),
+                            // 'data'=>$data
+                        ];
+                    }
+                    else
+                    {
+                        $response = [
+                            'count'=>3,
+                            // 'data'=>$data
+                        ];
+                    }
+                }
+
+        }
+
+        return response()->json($response);
+    }
+
+
+    public function saveEditUploads(Request $request)
+    {
+        $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
+        $documents_to_delete = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
+        foreach ($documents_to_delete as $document_to_delete) {
+            $delete_document = Document::find($document_to_delete->id);
+            $delete_document->expiry_date=$expiry_date;
+            $delete_document->save();
+        }
+        $file = $request->file('path');
+        $documents = Document::find($request->id);
+        if($file){
+            $getFileExt   = $file->getClientOriginalExtension();
+            $uploadedFile =   time().'.'.$getFileExt;
+            $destinationPath = 'documents/vehicledocs';
+            $file->move($destinationPath,$uploadedFile);
+
+            $documents->path=$uploadedFile;
+            $documents->save();
+        }
+        $response = [
+            'status' => 'success',
+            'alerts' => $documents
+        ];
+        return response()->json($response);
+    }
+
+
+
+
+
+
+>>>>>>> 7b2115a92c76ae48eb8ce17a5ed760447b9166f1
 }

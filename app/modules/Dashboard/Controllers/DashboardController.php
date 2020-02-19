@@ -23,14 +23,12 @@ use App\Modules\Operations\Models\VehicleModels;
 
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
-use App\Http\Traits\VehicleDataProcessorTrait;
 use DataTables;
 use DB;
 use Carbon\Carbon; 
 use Config;
 class DashboardController extends Controller
 {
-    use VehicleDataProcessorTrait;
     /**
      * Create a new controller instance.
      *
@@ -535,33 +533,45 @@ class DashboardController extends Controller
     // emergency alert verification
     public function verifyEmergencyAlert(Request $request)
     {
-        $decrypted_vehicle_id = Crypt::decrypt($request->id);
-        $vehicle=Vehicle::find($decrypted_vehicle_id);
-        $alerts = Alert::where('alert_type_id',21)
-        ->where('status',0)
-        ->where('gps_id',$vehicle->gps_id)
-        ->get();
-        // dd($alerts);
-        if($alerts == null){
+        // $decrypted_vehicle_id = Crypt::decrypt($request->id);
+        // $vehicle=Vehicle::find($decrypted_vehicle_id);
+        // $alerts = Alert::where('alert_type_id',21)
+        // ->where('status',0)
+        // ->where('gps_id',$vehicle->gps_id)
+        // ->get();
+
+        // if($alerts == null){
+        //     return response()->json([
+        //         'status' => 0,
+        //         'title' => 'Error',
+        //         'message' => 'Alert does not exist'
+        //     ]);
+        // }
+        // $confirm_alerts =Alert::where('alert_type_id',21)->where('gps_id', $vehicle->gps_id)->where('status', 0)->update(['status'=> 1]); 
+       
+        // return response()->json([
+        //     'status' => 1,
+        //     'title' => 'Success',
+        //     'message' => 'Alert verified successfully'
+        // ]);
+        $alert_id   =   $request->id;
+        $alert      =   Alert::find($alert_id);
+        if($alert == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Alert does not exist'
             ]);
         }
-        $confirm_alerts =Alert::where('alert_type_id',21)->where('gps_id', $vehicle->gps_id)->where('status', 0)->update(['status'=> 1]); 
-        // dd($confirm_alerts);
-        // foreach ($alerts as $alert) {
-        //     $alert->status = 1;
-        //     $alert->save();
-        // }
+        $alert->status  =   1;
+        $alert->save();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
             'message' => 'Alert verified successfully'
         ]);
      }
-    //get place namee
+    //get place name
     public function getLocationFromLatLng(Request $request)
     {
         $latitude = $request->latitude; 
@@ -632,15 +642,7 @@ class DashboardController extends Controller
             )
             ->where('id',$model)
             ->first();
-
-            $fuel_gps=$gps->fuel_status;
-            $fuel_min=$vehicle_models->fuel_min;
-            $fuel_max=$vehicle_models->fuel_max;
-            $modulus=$fuel_min-$fuel_max;
-            $value=$vehicle_models->fuel_min-$fuel_gps;
-            $fuel=($value/$modulus)*100;
-            $fuel_percentage=round($fuel);
-            $fuel_status = $this->limitFuelPercentageRange($fuel_percentage)."%";
+            $fuel_status=$gps->fuel_status;
         }
         else
         {

@@ -17,11 +17,14 @@ class CreateVehicleModelsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('vehicle_make_id');
-            $table->integer('fuel_min');
-            $table->integer('fuel_max');
+            $table->float('fuel_min');
+            $table->float('fuel_25');
+            $table->float('fuel_50');
+            $table->float('fuel_75');
+            $table->float('fuel_max');
             $table->timestamps();
             $table->softDeletes();
-            
+
         });
     }
 

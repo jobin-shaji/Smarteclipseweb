@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:client|school'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:client|school|root'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 
 Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
@@ -114,7 +114,8 @@ Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->n
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
 Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
 Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
-
+Route::post('/edit-document-upload','VehicleController@saveEditUploadDocuments')->name('edit.document.upload');
+Route::post('/edit-already-existing','VehicleController@saveEditUploads')->name('edit.already.existing');
 
 
 	});
