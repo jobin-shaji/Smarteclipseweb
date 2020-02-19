@@ -89,10 +89,10 @@ $(function () {
         });
     });
     var d = new Date();
-    free_date=d.setMonth(d.getMonth() - 1);
-    fundamental_date=d.setMonth(d.getMonth() - 1);
-    superior_date=d.setMonth(d.getMonth() - 2);
-    pro_date=d.setMonth(d.getMonth() - 2);
+    free_date=d.setMonth(d.getMonth() - 1);//// one month
+    fundamental_date=d.setMonth(d.getMonth() - 1);// 2 month
+    superior_date=d.setMonth(d.getMonth() - 2);// 4 month
+    pro_date=d.setMonth(d.getMonth() - 2);///6 month
     $(".datetimepicker" ).datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date()
@@ -109,17 +109,20 @@ $(function () {
         defaultDate: null,
         maxDate: new Date(),
         minDate:free_date
-     });
-    $( ".datepickerFundamental" ).datetimepicker({
+    });
+    $(".datepickerFundamental").datetimepicker({
         format: 'YYYY-MM-DD',
         defaultDate: null,
         maxDate: new Date(),
         minDate:fundamental_date
-     });
+    });
     $('.datepickerFundamental').val("");
     $('.datepickerFreebies').val("");
     $('.datepickerSuperior').val("");
     $('.datepickerPro').val("");
+
+
+
     $( ".datepickerSuperior" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
@@ -136,6 +139,40 @@ $(function () {
         maxDate: new Date(),
         minDate:pro_date
     });
+
+
+    $( ".performancedatepickerSuperior" ).datetimepicker({
+        // format: 'DD-MM-YYYY',
+        format: 'YYYY-MM-DD',
+        useCurrent: true,
+        defaultDate: null,
+        maxDate: new Date(),
+        minDate:superior_date
+     });
+    $(".performancedatepickerPro" ).datetimepicker({
+        format: 'YYYY-MM-DD',
+        // format: 'DD-MM-YYYY',
+        defaultDate: null,
+        useCurrent: true,
+        maxDate: new Date(),
+        minDate:pro_date
+    });
+    $( ".performancedatepickerFreebies" ).datetimepicker({
+        // format: 'DD-MM-YYYY',
+        format: 'YYYY-MM-DD',
+        defaultDate: null,
+        maxDate: new Date(),
+        minDate:free_date
+    });
+    $(".performancedatepickerFundamental").datetimepicker({
+        format: 'YYYY-MM-DD',
+        defaultDate: null,
+        maxDate: new Date(),
+        minDate:fundamental_date
+    });
+
+
+
 
     $( ".date_expiry" ).datetimepicker({
         format: 'DD-MM-YYYY',
