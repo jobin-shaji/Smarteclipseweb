@@ -528,16 +528,19 @@ function getPlaceName(res){
 }
 
 function verifyEmergency(){
-    var id = document.getElementById("alert_vehicle_id").value;
+    var alert_id = document.getElementById("emergency_alert_id").value;
     var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
-    VerifyAlert(id,decrypt_id);
+    var firebase_key = document.getElementById("firebase_key").value;
+    VerifyAlert(alert_id,decrypt_id);
+    notify.markFirebaseEmergencyNotificationAsRead(firebase_key);
 }
 
 function verifyHeaderEmergency(){
-
-    var id = document.getElementById("header_alert_vehicle_id").value;
+    var alert_id = document.getElementById("header_emergency_alert_id").value;
     var decrypt_id = document.getElementById("header_decrypt_vehicle_id").value;
-    VerifyAlert(id,decrypt_id);
+    var firebase_key = document.getElementById("firebase_key").value;
+    VerifyAlert(alert_id,decrypt_id);
+    notify.markFirebaseEmergencyNotificationAsRead(firebase_key);
 }
 
 function track_vehicle(){
@@ -545,13 +548,13 @@ function track_vehicle(){
     window.location.href = "/vehicles/" + id+"/location";
 }
 
-function VerifyAlert(vehicle_id,decrypt_vehicle_id){
+function VerifyAlert(alert_id,decrypt_vehicle_id){
         if(typeof(Storage) !== "undefined") {
             localStorage.setItem("qwertasdfgzxcvb", decrypt_vehicle_id);
         }
         var url = 'emergency-alert/verify';
         var data = {
-        id : vehicle_id
+            id : alert_id
         };
         backgroundPostData(url,data,'verifyAlertResponse',{alert:false});
 
@@ -1520,71 +1523,69 @@ function rootTrader(res)
    }
 
 // ---------------check notification-----------------------------------
-    setInterval(function() {
+    // setInterval(function() {
+       
+    //     var url = 'notification_alert_count';
+    //     var data = {};
+    //     backgroundPostData(url,data,'notificationCount',{alert:false});
+    // }, 8000);
 
-        var url = 'notification_alert_count';
-        var data = {};
-        backgroundPostData(url,data,'notificationCount',{alert:false});
-    }, 8000);
-
-    $( document ).ready(function() {
-        var flag;
-        var url = 'notification_alert_count';
-        var data = {};
-        backgroundPostData(url,data,'notificationCount',{alert:false});
-    });
+    // $( document ).ready(function() {
+    //     var flag;
+    //     var url = 'notification_alert_count';
+    //     var data = {};
+    //     backgroundPostData(url,data,'notificationCount',{alert:false});
+    // });
 // ---------------check notification-----------------------------------
 
-    function notificationCount(res){
-        // if(res.status=="success"){
-        //     var count_notification=res.notification_count;
-        //     $("#bell_notification_count").text(count_notification);
-        // }
+    // function notificationCount(res){
+    //     // if(res.status=="success"){
+    //     //     var count_notification=res.notification_count;
+    //     //     $("#bell_notification_count").text(count_notification);          
+    //     // }
 
-        if(res.emergency_response.status == 'success')
-        {
-            var latitude=res.emergency_response.alerts[0].latitude;
-            var longitude=res.emergency_response.alerts[0].longitude;
-            getPlaceNameFromLatLng(latitude,longitude);
-            var vehicle_id=res.emergency_response.alerts[0].gps.vehicle.id;
-            var alert_id=res.emergency_response.alerts[0].id;
-            var encrypted_vehicle_id=res.emergency_response.vehicle;
-            if(res.emergency_response.alerts[0].gps.vehicle.driver != null)
-            {
-                var driver_name = res.emergency_response.alerts[0].gps.vehicle.driver.name;
-            }
-            else
-            {
-                var driver_name = 'Not Assigned';
-            }
-            var register_number = res.emergency_response.alerts[0].gps.vehicle.register_number;
-            var alert_time = res.emergency_response.alerts[0].device_time;
-            if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
-                $("#header-emergency").show();
-                document.getElementById("header_em_id").value = alert_id;
-                document.getElementById("header_alert_vehicle_id").value = encrypted_vehicle_id;
-                document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
-                $('#header_emergency_vehicle_driver').text(driver_name);
-                $('#header_emergency_vehicle_number').text(register_number);
-                $('#header_emergency_vehicle_time').text(alert_time);
-            }else{
-                var modal = document.getElementById('emergency');
-                modal.style.display = "block";
-                document.getElementById("em_id").value = alert_id;
-                document.getElementById("alert_vehicle_id").value = encrypted_vehicle_id;
-                document.getElementById("decrypt_vehicle_id").value = vehicle_id;
-                $('#emergency_vehicle_driver').text(driver_name);
-                $('#emergency_vehicle_number').text(register_number);
-                $('#emergency_vehicle_time').text(alert_time);
-            }
-        }
-        var  role=$('#header_role').val();
-        if(role=='62608e08adc29a8d6dbc9754e659f125')
-        {
-            // alert(role);
-            //clientAlerts();
-        }
-    }
+    //     if(res.emergency_response.status == 'success')
+    //     {
+    //         var latitude=res.emergency_response.alerts[0].latitude;
+    //         var longitude=res.emergency_response.alerts[0].longitude;
+    //         getPlaceNameFromLatLng(latitude,longitude);
+    //         var vehicle_id=res.emergency_response.alerts[0].gps.vehicle.id;
+    //         var alert_id=res.emergency_response.alerts[0].id;
+    //         var encrypted_vehicle_id=res.emergency_response.vehicle;
+    //         if(res.emergency_response.alerts[0].gps.vehicle.driver != null)
+    //         {
+    //             var driver_name = res.emergency_response.alerts[0].gps.vehicle.driver.name;
+    //         }
+    //         else
+    //         {
+    //             var driver_name = 'Not Assigned';
+    //         }
+    //         var register_number = res.emergency_response.alerts[0].gps.vehicle.register_number;
+    //         var alert_time = res.emergency_response.alerts[0].device_time;
+    //         if(localStorage.getItem("qwertasdfgzxcvb") == vehicle_id ){
+    //             $("#header-emergency").show();
+    //             document.getElementById("header_em_id").value = alert_id;
+    //             document.getElementById("header_alert_vehicle_id").value = encrypted_vehicle_id;
+    //             document.getElementById("header_decrypt_vehicle_id").value = vehicle_id;
+    //             $('#header_emergency_vehicle_number').text(register_number);
+    //             $('#header_emergency_vehicle_time').text(alert_time);
+    //         }else{
+    //             var modal = document.getElementById('emergency');
+    //             modal.style.display = "block";
+    //             document.getElementById("em_id").value = alert_id;
+    //             document.getElementById("alert_vehicle_id").value = encrypted_vehicle_id;
+    //             document.getElementById("decrypt_vehicle_id").value = vehicle_id;
+    //             $('#emergency_vehicle_number').text(register_number);
+    //             $('#emergency_vehicle_time').text(alert_time);
+    //         }
+    //     }
+    //     var  role=$('#header_role').val();
+    //     if(role=='62608e08adc29a8d6dbc9754e659f125')
+    //     {
+    //         // alert(role);
+    //         //clientAlerts();
+    //     }     
+    // }
 /////////////////////////Km Report/////////////////////////
 function downloadKMReport(){
     var url = 'km-report/export';
