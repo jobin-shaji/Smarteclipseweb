@@ -40,17 +40,17 @@ Performance Score History
                                   </div>
                                 </div>
                                 <!-- -->
+
                                 <div class="col-lg-3 col-md-3">
                                 	<div class="form-group">
                                     <label> From Date</label>
-                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off" required>
-                                    <!-- @if(isset($performance_score))<input type ="hidden" id="from_date" value ={{$from}} > @endif -->
+                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($performance_score)){{$from}}@endif" required autocomplete="off" />
                                 	</div>
                                 </div>
                                 <div class="col-lg-3 col-md-3">
                                 	<div class="form-group">
                                     <label> To Date</label>
-                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
+                                    <input type="text" class="dph-datepicker@if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off"  value="@if(isset($performance_score)){{$to}}@endif" required />
                                 	  <!-- @if(isset($performance_score))<input type ="hidden" id="to_date"  value ={{$to}}> @endif -->
                                   </div>
                                 </div>
