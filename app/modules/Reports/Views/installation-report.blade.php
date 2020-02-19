@@ -50,7 +50,7 @@
                     <div class="col-lg-2 col-md-2"> 
                       <div class="form-group">                    
                         <label> From Date</label>
-                        <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">
+                        <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off">
                         <span class="input-group-addon" style="z-index: 99;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                               </span>
@@ -59,7 +59,7 @@
                     <div class="col-lg-2 col-md-2"> 
                       <div class="form-group">                    
                         <label> To Date</label>
-                        <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
+                        <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">
                         <span class="input-group-addon" style="z-index: 99;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                               </span>
