@@ -6,22 +6,22 @@
 
      
 
-<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper page-wrapper-root" style="height:auto!important;margin: 10px 52px;background: #f8f9fa;">
   <div class="page-wrapper-root1"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer Confirmation Form (Dealer To Sub Dealer)</li>
         <b>SOS Transfer Confirmation Form (Dealer To Sub Dealer)</b>
-        @if(Session::has('message'))
+         </ol>
+    </nav>
+    @if(Session::has('message'))
         <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
             {{ Session::get('message') }}  
           </div>
         </div>
         @endif
-      </ol>
-    </nav>
-    
+        <br>
     <div class="card-body">
       <section class="hilite-content">
         <form  method="POST" action="{{route('sos-transfer-sub-dealer-to-trader-proceed.create.p')}}">
