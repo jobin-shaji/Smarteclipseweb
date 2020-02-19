@@ -239,6 +239,31 @@ class VehicleController extends Controller
         // return redirect(route('vehicles.details',$encrypted_vehicle_id));
     }
 
+    public function regupdate(Request $request)
+    {
+        $vehicle = Vehicle::find($request->id);
+        if($vehicle == null){
+           return view('Vehicle::404');
+        }
+        $vehicle->register_number = $request->register_number;
+        $vehicle->is_registernumber_updated = 1;
+        $vehicle->save();
+        $encrypted_vehicle_id = encrypt($vehicle->id);
+        $request->session()->flash('message', 'Register number updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        $user=\Auth::user();
+        $user_role=$user->roles->first()->name;
+        if($user_role=='client')
+        {
+            return redirect(route('vehicles.details',$encrypted_vehicle_id));
+        }
+        else
+        {
+            return redirect(route('servicer-vehicles.details',$encrypted_vehicle_id));
+        }
+        // return redirect(route('vehicles.details',$encrypted_vehicle_id));
+    }
+
     public function odometerUpdate(Request $request)
     {
         //dd($request->reset_daily_km);
@@ -3003,7 +3028,6 @@ class VehicleController extends Controller
             }
             else
             {
-
                 $documents_count = Document::where('vehicle_id',$request->vehicle_id)->where('document_type_id',$request->document_type_id)->get();
                 $data=[
                     'vehicle_id' => $request->vehicle_id,
