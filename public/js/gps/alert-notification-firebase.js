@@ -113,23 +113,10 @@ AlertNotification.prototype.successMethodAsRead = function(response)
                 }
             });     
             var alertMap = {
-                alerttype: {
                     center: {lat: latitude, lng: longitude},               
-                }
             };
-            for (var alert in alertMap) {
-                var cityCircle = new google.maps.Circle({
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35,
-                    map: map,
-                    center: alertMap[alert].center
-                });
-            }
             var marker = new google.maps.Marker({
-                position:  alertMap[alert].center,
+                position:  alertMap.center,
                 map: map
             });
         });
