@@ -1,6 +1,6 @@
 @extends('layouts.eclipse') 
 @section('title')
-   GPS Transfer 
+   SOS Transfer
 @endsection
 @section('content')
 
@@ -8,52 +8,53 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1"> 
-    <nav aria-label="breadcrumb">
+
+  <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Transfer</li>
-        <b>GPS Transfer</b>
-      </ol>
-      @if(Session::has('message'))
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer </li>
+         <b>SOS Transfer</b>
+        @if(Session::has('message'))
         <div class="pad margin no-print">
-          <div class="callout {{ Session::get('callout-class', 'callout-warning') }}" style="margin-bottom: 0!important;">
-              {{ Session::get('message') }}  
+            <div class="callout {{ Session::get('callout-class', 'callout-warning') }}" style="margin-bottom: 0!important;">
+            {{ Session::get('message') }}  
           </div>
         </div>
-      @endif 
-      
+        @endif
+      </ol>
+     
     </nav>
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('gps-transfer-trader-client.transfer.p')}}">
+        <form  method="POST" action="{{route('sos-transfer-trader-to-end-user.transfer.p')}}">
                 {{csrf_field()}}
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
-                      <label class="srequired">Client Name</label>
-                      <select class="form-control select2 clientDataInTrader" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
-                        <option value="">Select Client</option>
+                      <label class="srequired">End User Name</label>
+                      <select class="form-control select2 traderToClientData" id="to_user" name="client_user_id" data-live-search="true" title="Select End User" required>
+                        <option value="">Select End User</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                         @endforeach
                       </select>
-                      @if ($errors->has('client_user_id'))
+                       @if ($errors->has('client_user_id'))
                         <span class="help-block">
                             <strong class="error-text">{{ $errors->first('client_user_id') }}</strong>
                         </span>
                       @endif 
                   </div>     
-                  
+                 
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Address</label>
                     <input type="text" name="address"  id="address"  value="" class="form-control" placeholder="Address" readonly>
                     <input type="hidden" name="client_name"  id="client_name"  value="" class="form-control">
                      @if ($errors->has('address'))
-                        <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('address') }}</strong>
-                        </span>
-                      @endif
+                      <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('address') }}</strong>
+                      </span>
+                    @endif
                   </div>
                  
 
@@ -71,36 +72,36 @@
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
                     <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
-                    @if ($errors->has('scanned_employee_code'))
+                     @if ($errors->has('scanned_employee_code'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
                       </span>
                     @endif
                   </div>
-                  
+                 
 
                   <div class="form-group has-feedback">
-                    <label class="srequired">Invoice Number</label>
-                    <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" pattern="[A-Za-z0-9]+" title="letters and numbers only, no punctuation or special characters" autocomplete="off" required> 
-                    @if ($errors->has('invoice_number'))
-                      <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
-                      </span>
-                    @endif
-                  </div>
-                
+                      <label class="srequired">Invoice Number</label>
+                      <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" pattern="[A-Za-z0-9]+" title="letters and numbers only, no punctuation or special characters" autocomplete="off" required>
+                      @if ($errors->has('invoice_number'))
+                        <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
+                        </span>
+                      @endif
+   
+                    </div>
+
                   <div class="form-group has-feedback">
-                    <label>Scanned GPS Count : <span id="scanned_device_count">0</span></label>
+                    <label>Scanned SOS Count: <span id="scanned_device_count">0</span></label>
                   </div> 
-                  <div class="form-group has-feedback">
-                    <label class="srequired" id="stock_table_heading" style="display: none;">GPS List</label>
-                      <input type="hidden" name="gps_id[]" id="gps_id" value="">
-                      <table class="table table-bordered  table-striped " id="stock_table" style="width:100%;text-align: center;display: none;">
+                    
+                  <div class="form-group has-feedback" id ="sos_table" style="display: none;">
+                    <label class="srequired">SOS List</label>
+                      <input type="hidden" name="sos_id[]" id="sos_id" value="">
+                      <table class="table table-bordered  table-striped " style="width:100%">
                         <thead>
                           <tr>
                               <th><b>Serial Number</b></th>
-                              <th><b>Batch Number</b></th>
-                              <!-- <th><b>Employee Code</b></th> -->
                               <th><b>Action</b></th>
                           </tr>
                         </thead>
@@ -108,30 +109,24 @@
   
                         </tbody>
                       </table>
-                      @if ($errors->has('gps_id'))
+                      @if ($errors->has('sos_id'))
                         <span class="help-block">
-                            <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                            <strong class="error-text">{{ $errors->first('sos_id') }}</strong>
                         </span>
                       @endif
                   </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
-                  <!-- <input type="checkbox" name="type" value="camera"> Camera enable/disable
+                  <input type="checkbox" name="type" value="camera"> Camera enable/disable
                   <div id="camera_enable" style="display: none">
                     <div id="warn">Please connect your camera to scan QR code.</div>
                     <video id="preview" style="height:100%; width: 100%;"></video>
-                  </div> -->
-                  <div style="position: absolute; bottom: 0;">
-                    <textarea id="scanner" autofocus="autofocus" style="height:150px!important; width: 100%;" placeholder="Please click here for scanning.."></textarea>
-                    <input type="hidden" id="role"name="role" value="{{\Auth::user()->roles->first()->name}}">
-                    <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
-                    <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
                   </div>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-lg-1 col-md-1">
                   <button type="submit" class="btn btn-primary btn-md form-btn " id="transfer_button" style="display: none;">Transfer</button>
                 </div>
               </div>
@@ -144,8 +139,8 @@
 <div class="clearfix"></div>
 
 @section('script')
-    <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
-    <script src="{{asset('js/gps/gps-scanner.js')}}"></script>
+    <script src="{{asset('js/gps/sos-transfer.js')}}"></script>
+    <script src="{{asset('js/gps/sos-scanner.js')}}"></script>
 @endsection
    
 @endsection

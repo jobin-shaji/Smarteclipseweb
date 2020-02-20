@@ -37,7 +37,7 @@
                            $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number.'InvoiceNumber:'.$gps_transfer->invoice_number;
                         ?>
                         {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
-                      <a href="{{route('gps-transfer-label-root-trader-client.export',$gps_transfer->id)}}">
+                      <a href="{{route('gps-transfer-label-root-trader-end-user.export',$gps_transfer->id)}}">
                         <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
                       </a>
                     </div>

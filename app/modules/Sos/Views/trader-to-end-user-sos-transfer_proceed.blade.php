@@ -22,7 +22,7 @@
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('sos-transfer-trader-to-client-proceed.create.p')}}">
+        <form  method="POST" action="{{route('sos-transfer-trader-to-end-user-proceed.create.p')}}">
         {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
@@ -69,7 +69,7 @@
                 <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
               </div>
               <div class="col-md-1 ">
-                <a href="{{ route('sos-transfer-trader-to-client.create') }}">
+                <a href="{{ route('sos-transfer-trader-to-end-user.create') }}">
                   <button type="button" class="btn btn-md ">Cancel</button>
                 </a>
             </div>

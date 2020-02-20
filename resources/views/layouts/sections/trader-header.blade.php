@@ -15,8 +15,8 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/gps-trader-new')}}">NEW ARRIVALS</a>
                                 <a class="dropdown-item" href="{{url('/gps-trader-all-devices')}}">ALL DEVICES </a>  
-                                <a class="dropdown-item" href="{{url('/gps-transfer-trader-client/create')}}">TRANSFER DEVICE</a> 
-                                <a class="dropdown-item" href="{{url('/gps-transferred-trader-to-client')}}">DEVICE TRANSFER LIST </a>                          
+                                <a class="dropdown-item" href="{{url('/gps-transfer-trader-end-user/create')}}">TRANSFER DEVICE</a> 
+                                <a class="dropdown-item" href="{{url('/gps-transferred-trader-to-end-user')}}">DEVICE TRANSFER LIST </a>                          
                             </div>
                         </li>
                     
@@ -27,7 +27,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{url('/sos-new')}}">NEW ARRIVALS</a>
                                 <a class="dropdown-item" href="{{url('/sos-trader')}}">IN STOCK</a>  
-                                <a class="dropdown-item" href="{{url('/sos-transfer-trader-to-client/create')}}">TRANSFER SOS</a> 
+                                <a class="dropdown-item" href="{{url('/sos-transfer-trader-to-end-user/create')}}">TRANSFER SOS</a> 
                                 <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST </a>                          
                             </div>
                         </li>
