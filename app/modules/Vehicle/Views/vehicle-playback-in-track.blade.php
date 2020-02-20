@@ -401,9 +401,23 @@
                   alertify.alert('From Date required').setHeader('<em> PLAYBACK</em>');
                   return false;
                 }
-
                  if($('#toDate').val()== ""){
                   alertify.alert('To Date required').setHeader('<em> PLAYBACK</em>');
+                  return false;
+                }
+                var startDate = $("#fromDate").val();
+                var endDate = $("#toDate").val();
+                var start_time= new Date( startDate ).getTime();
+                var end_time = new Date( endDate ).getTime();
+                 var time_diff= end_time- start_time;
+                if(time_diff==0){
+                  alertify.alert("Please Change the time").setHeader('<em> PLAYBACK</em>');
+
+                  return false;
+                }
+                else if( new Date(startDate) > new Date(endDate)){
+                 alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
+                  document.getElementById("toDate").value = "";
                   return false;
                 }
 
@@ -1154,16 +1168,6 @@ $(function() {
         minDate: new Date(currentYear, currentMonth-6, currentDate)
         // minDate:pro_date
   });
-  // $('#datetimepicker_live1').datetimepicker({
-  //   format: 'YYYY-MM-DD HH:mm:ss',
-  //   maxDate: moment()
-  // });
-
-  //   $('#datetimepicker_live2').datetimepicker({
-  //   format: 'YYYY-MM-DD HH:mm:ss',
-  //   maxDate: moment()
-  // });
-
 });
 
 
@@ -1179,83 +1183,6 @@ jQuery("#preloader").delay(1000).fadeOut("slow");
 });
 </script>
 <script>
-  $('#todatepickerFreebies').on('dp.change', function(e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-// alert(e.date);
-
-
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      $("#toDate").val(startDate);
-      // document.getElementById("toDate").value = "";
-    }
-  });
-  $("#datepickerFreebies").on('dp.change', function (e) {
-
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      $("#fromDate").val(endDate);
-      // document.getElementById("fromDate").value = "";
-    }
-  });
-
-  $('#todatepickerFundamental').on('dp.change', function(e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("toDate").value = "";
-      $("#toDate").val(startDate);
-    }
-  });
-  $("#datepickerFundamental").on('dp.change', function (e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("fromDate").value = "";
-      $("#fromDate").val(endDate);
-    }
-  });
-  $('#todatepickerSuperior').on('dp.change', function(e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("toDate").value = "";
-      $("#toDate").val(startDate);
-    }
-  });
-  $("#datepickerSuperior").on('dp.change', function (e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("fromDate").value = "";
-      $("#fromDate").val(endDate);
-    }
-  });
-   $('#todatepickerPro').on('dp.change', function(e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("toDate").value = "";
-      $("#toDate").val(startDate);
-    }
-  });
-  $("#datepickerPro").on('dp.change', function (e) {
-    var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
-      alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("fromDate").value = "";
-      $("#fromDate").val(endDate);
-    }
-  });
 
 </script>
 
