@@ -1,16 +1,17 @@
-$(document).ready(function () {   
+var selected_vehicle_mode = null;
+$(document).ready(function () {
   var url = 'root-vehicle-mode-count';
-  var data = {      
+  var data = {
   };
   // window.setInterval(function(){
   backgroundPostData(url,data,'vehicleModeCount',{alert:true});
-  // }, 5000);   
+  // }, 5000);
 });
 function vehicleModeCount(res){
   $('#moving').text(res.moving);
   $('#idle').text(res.idle);
   $('#stop').text(res.stop);
-  $('#offline').text(res.offline);      
+  $('#offline').text(res.offline);
 }
 var latMap = 20.593683;
 var lngMap = 78.962883;
@@ -251,6 +252,16 @@ function locationSearch() {
 }
 
 function mode(vehicle_mode) {
+
+  if(selected_vehicle_mode == vehicle_mode)
+  {
+    window.location.reload(true);
+  }
+  else
+  {
+    selected_vehicle_mode = vehicle_mode;
+  }
+
   track_flag = 1;
   $('#gps_id').empty();
   var vehicleData ='<option value=""disabled selected>select</option>';
@@ -360,7 +371,7 @@ function redarLocationSelectVehicle(lat, lng, radius) {
  };
  cityCircle = new google.maps.Circle(sunCircle);
 
- 
+
  circleStatus=1;
 }
 
@@ -399,12 +410,12 @@ $('.cover_track_data').click(function(){
 
 $(document).ready(function () {
   var url = 'dash-count';
-  var data = { 
-     
+  var data = {
+
   };
   backgroundPostData(url,data,'dbcount',{alert:true});
  //    window.setInterval(function(){
- //      backgroundPostData(url,data,'dbcount',{alert:false});  
+ //      backgroundPostData(url,data,'dbcount',{alert:false});
 
   // }, 5000);
 });
@@ -428,14 +439,14 @@ function dbcount(res){
       $('#moving').text(res.moving);
       $('#idle').text(res.idle);
       $('#stop').text(res.stop);
-      $('#offline').text(res.offline);      
+      $('#offline').text(res.offline);
 }
 
 //vehicle deatails in right side box of dashboard
 function getVehicle(value)
-{  
+{
   var url = '/vehicle-detail';
-  var data = { 
+  var data = {
     gps_id : value
   };
   backgroundPostData(url,data,'vehicle_details',{alert:true});
@@ -484,5 +495,5 @@ function vehicle_details(res){
   $('#battery_status').text(res.battery_status);
   $('#ignition').text(res.ignition);
   var address=res.address;
-  $('#address').text(address);      
+  $('#address').text(address);
 }

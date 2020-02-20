@@ -47,7 +47,7 @@ scanner.addListener('scan', function (content) {
                 toastr.success('Scanned Successfully');
             }
         }else{
-          toastr.error('Could not find this button');
+          toastr.error('Could not find this SOS button');
         }
       }
   });
