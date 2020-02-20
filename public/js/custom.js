@@ -93,6 +93,11 @@ $(function () {
     fundamental_date=d.setMonth(d.getMonth() - 1);// 2 month
     superior_date=d.setMonth(d.getMonth() - 2);// 4 month
     pro_date=d.setMonth(d.getMonth() - 2);///6 month
+    var date = new Date();
+    var currentMonth = date.getMonth();
+    var currentDate = date.getDate();
+    var currentYear = date.getFullYear();
+
     $(".datetimepicker" ).datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
         maxDate: new Date()
@@ -108,18 +113,17 @@ $(function () {
         format: 'YYYY-MM-DD',
         defaultDate: null,
         maxDate: new Date(),
-        minDate:free_date
+        minDate: new Date(currentYear, currentMonth-1, currentDate)
+        // minDate:free_date
     });
     $(".datepickerFundamental").datetimepicker({
         format: 'YYYY-MM-DD',
         defaultDate: null,
         maxDate: new Date(),
-        minDate:fundamental_date
+        minDate: new Date(currentYear, currentMonth-2, currentDate)
+        // minDate:fundamental_date
     });
-    $('.datepickerFundamental').val("");
-    $('.datepickerFreebies').val("");
-    $('.datepickerSuperior').val("");
-    $('.datepickerPro').val("");
+
 
 
 
@@ -129,7 +133,8 @@ $(function () {
         useCurrent: true,
         defaultDate: null,
         maxDate: new Date(),
-        minDate:superior_date
+        minDate: new Date(currentYear, currentMonth-4, currentDate)
+        // minDate:superior_date
      });
     $(".datepickerPro" ).datetimepicker({
         format: 'YYYY-MM-DD',
@@ -137,9 +142,13 @@ $(function () {
         defaultDate: null,
         useCurrent: true,
         maxDate: new Date(),
-        minDate:pro_date
+        minDate: new Date(currentYear, currentMonth-6, currentDate)
+        // minDate:pro_date
     });
-
+    $('.datepickerFundamental').val("");
+    $('.datepickerFreebies').val("");
+    $('.datepickerSuperior').val("");
+    $('.datepickerPro').val("");
 
     $( ".performancedatepickerSuperior" ).datetimepicker({
         // format: 'DD-MM-YYYY',
@@ -147,7 +156,8 @@ $(function () {
         useCurrent: true,
         defaultDate: null,
         maxDate: new Date(),
-        minDate:superior_date
+        minDate: new Date(currentYear, currentMonth-4, currentDate)
+        // minDate:superior_date
      });
     $(".performancedatepickerPro" ).datetimepicker({
         format: 'YYYY-MM-DD',
@@ -155,22 +165,24 @@ $(function () {
         defaultDate: null,
         useCurrent: true,
         maxDate: new Date(),
-        minDate:pro_date
+        minDate: new Date(currentYear, currentMonth-6, currentDate)
+        // minDate:pro_date
     });
     $( ".performancedatepickerFreebies" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
         defaultDate: null,
         maxDate: new Date(),
-        minDate:free_date
+        minDate: new Date(currentYear, currentMonth-1, currentDate)
+        // minDate:free_date
     });
     $(".performancedatepickerFundamental").datetimepicker({
         format: 'YYYY-MM-DD',
         defaultDate: null,
         maxDate: new Date(),
-        minDate:fundamental_date
+        minDate: new Date(currentYear, currentMonth-2, currentDate)
+        // minDate:fundamental_date
     });
-
 
 
 
@@ -1524,7 +1536,7 @@ function rootTrader(res)
 
 // ---------------check notification-----------------------------------
     // setInterval(function() {
-       
+
     //     var url = 'notification_alert_count';
     //     var data = {};
     //     backgroundPostData(url,data,'notificationCount',{alert:false});
@@ -1541,7 +1553,7 @@ function rootTrader(res)
     // function notificationCount(res){
     //     // if(res.status=="success"){
     //     //     var count_notification=res.notification_count;
-    //     //     $("#bell_notification_count").text(count_notification);          
+    //     //     $("#bell_notification_count").text(count_notification);
     //     // }
 
     //     if(res.emergency_response.status == 'success')
@@ -1584,7 +1596,7 @@ function rootTrader(res)
     //     {
     //         // alert(role);
     //         //clientAlerts();
-    //     }     
+    //     }
     // }
 /////////////////////////Km Report/////////////////////////
 function downloadKMReport(){
