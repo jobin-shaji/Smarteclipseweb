@@ -27,14 +27,14 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group has-feedback">
-                <label>Client Name</label>
+                <label>End User Name</label>
                 <select class="form-control"  name="client_user_id" readonly>
                   <option value="{{$client_user_id}}">{{$client_name}}</option>
                 </select>
               </div>
 
               <div class="form-group has-feedback">
-                <label>Client Address</label>
+                <label>End User Address</label>
                 <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
               </div>
 
