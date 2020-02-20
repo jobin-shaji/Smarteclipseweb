@@ -1,7 +1,7 @@
 <ul class="navbar-nav float-left mr-auto">
     <li class="nav-item d-none d-md-block">
-    </li>                       
-    <li class="nav-item"> 
+    </li>
+    <li class="nav-item">
         <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
             <i class="fa fa-home" aria-hidden="true"></i>
         </a>
@@ -14,11 +14,11 @@
             <!-- <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a> -->
             <!-- <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> -->
             <!-- <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>   -->
-            <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a> 
-            <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a> 
-            <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a> 
+            <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a>
+            <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>
+            <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a>
             <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST  <span class="badge">New</span> </a>
-            <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK  <span class="badge">New</span></a> 
+            <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK  <span class="badge">New</span></a>
         </div>
     </li>
     <li class="nav-item dropdown">
@@ -27,9 +27,9 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/sos/create')}}">ADD SOS</a>
-            <a class="dropdown-item" href="{{url('/sos')}}">IN STOCK</a>  
-            <a class="dropdown-item" href="{{url('/sos-transfer-root/create')}}">TRANSFER SOS</a> 
-            <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST</a> 
+            <a class="dropdown-item" href="{{url('/sos')}}">IN STOCK</a>
+            <a class="dropdown-item" href="{{url('/sos-transfer-root/create')}}">TRANSFER SOS</a>
+            <a class="dropdown-item" href="{{url('/sos-transfers')}}">SOS TRANSFER LIST</a>
             <a class="dropdown-item" href="{{url('/sos-transferred')}}">TRANSFERRED SOS</a>
         </div>
     </li>
@@ -137,39 +137,39 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/employee/create')}}">ADD EMPLOYEE<span></span></a> 
-            <a class="dropdown-item" href="{{url('/employee')}}">LIST EMPLOYEES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/employee/create')}}">ADD EMPLOYEE<span></span></a>
+            <a class="dropdown-item" href="{{url('/employee')}}">LIST EMPLOYEES<span></span></a>
         </div>
-    </li>  
+    </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a> 
-            <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a>
+            <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
-            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
+            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">ASSIGNED COMPLAINT HISTORY </a>
         </div>
-    </li>  
+    </li>
       <li class="nav-item dropdown">
         <a class="nav-link waves-effect waves-dark" href="{{url('/map-view')}}"  aria-haspopup="true" > MAP VIEW
         </a>
         <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a> 
-            <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a> 
+            <a class="dropdown-item" href="{{url('/complaint-type/create')}}">ADD COMPLAINT TYPE<span></span></a>
+            <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
-            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
+            <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>
         </div> -->
-    </li> 
+    </li>
     </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CONFIGURATION
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/configuration-create')}}">PLAN CONFIGURATION </a>          
+            <a class="dropdown-item" href="{{url('/configuration-create')}}">PLAN CONFIGURATION </a>
         </div>
     </li>
 
@@ -187,7 +187,7 @@
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{url('/subscription')}}">LIST WARRANTY AND PLANS </a>
-          
+
                 </li>
                 </ul>
             </li>
@@ -199,7 +199,7 @@
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{url('/version-rule')}}">LIST VERSION</a>
-          
+
                 </li>
                 </ul>
             </li>
@@ -211,13 +211,13 @@
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{url('/service-version-rule')}}">LIST VERSION</a>
-          
+
                 </li>
                 </ul>
             </li>
-            
+
         </ul>
     </li>
-  
-  
+
+
 </ul>

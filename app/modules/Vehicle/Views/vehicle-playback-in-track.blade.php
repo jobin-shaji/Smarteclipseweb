@@ -1113,60 +1113,45 @@ $(function() {
   fundamental_date=d.setMonth(d.getMonth() - 1);
   superior_date=d.setMonth(d.getMonth() - 2);
   pro_date=d.setMonth(d.getMonth() - 2);
-
-  var date = new Date();
-  var currentMonth = date.getMonth();
-  var currentDate = date.getDate();
-  var currentYear = date.getFullYear();
-
-
   $('#datepickerFreebies').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-1, currentDate)
-        // minDate:free_date
+        minDate:free_date
   });
   $('#todatepickerFreebies').datetimepicker({
       format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-1, currentDate)
-        // minDate:free_date
+        minDate:free_date
   });
   $('#datepickerFundamental').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-2, currentDate)
-        // minDate:fundamental_date
+        minDate:fundamental_date
   });
   $('#todatepickerFundamental').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-2, currentDate)
-        // minDate:fundamental_date
+        minDate:fundamental_date
   });
   $('#datepickerSuperior').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-4, currentDate)
-        // minDate:superior_date
+        minDate:superior_date
   });
   $('#todatepickerSuperior').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-4, currentDate)
-        // minDate:superior_date
+        minDate:superior_date
   });
   $('#datepickerPro').datetimepicker({
         format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-6, currentDate)
-        // minDate:pro_date
+        minDate:pro_date
   });
   $('#todatepickerPro').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-6, currentDate)
-        // minDate:pro_date
+        minDate:pro_date
   });
 });
 
