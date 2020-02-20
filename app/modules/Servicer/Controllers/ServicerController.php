@@ -22,7 +22,7 @@ use App\Modules\Driver\Models\Driver;
 use DataTables;
 use PDF;
 class ServicerController extends Controller {
-    
+
 
     public function create()
     {
@@ -42,7 +42,7 @@ class ServicerController extends Controller {
         ]);
 
         $user->assignRole('servicer');
-       
+
 
         if($request->user()->hasRole('root')){
             $servicer = Servicer::create([
@@ -52,7 +52,7 @@ class ServicerController extends Controller {
                 'status' => 0,
                 'user_id' => $user->id
             ]);
-        }else if($request->user()->hasRole('sub_dealer')){ 
+        }else if($request->user()->hasRole('sub_dealer')){
             $sub_dealer_id=\Auth::user()->subdealer->id;
              $servicer = Servicer::create([
                 'name' => $request->name,
@@ -73,14 +73,14 @@ class ServicerController extends Controller {
                 'user_id' => $user->id
             ]);
         }
-        $request->session()->flash('message', 'New servicer created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'New servicer created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('servicer.details',encrypt($servicer->id)));
     }
 
     public function list()
     {
-        return view('Servicer::list'); 
+        return view('Servicer::list');
     }
 
     public function edit(Request $request){
@@ -106,8 +106,8 @@ class ServicerController extends Controller {
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->save();
-        $request->session()->flash('message', 'Details updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
+        $request->session()->flash('message', 'Details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
 
         return redirect()->route('servicer.details',['id' => encrypt($servicer->id)]);
 
@@ -124,7 +124,7 @@ class ServicerController extends Controller {
             ]);
         }
         $servicer->user->delete();
-        $servicer->delete(); 
+        $servicer->delete();
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -138,7 +138,7 @@ class ServicerController extends Controller {
         $servicer=Servicer::find($decrypted_id);
         if($servicer==null){
             return view('Route::404');
-        } 
+        }
         return view('Servicer::details',compact('servicer'));
     }
 
@@ -192,11 +192,11 @@ class ServicerController extends Controller {
 
                     <button onclick=delServicer(".$servicer->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate</button>
                      <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->user_id)."/password-change class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Change Password </a>
-                    <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>"; 
+                    <a href=".$b_url."/servicer/".Crypt::encrypt($servicer->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> Edit</a>";
 
                 }else{
                      return "
-                    <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>"; 
+                    <button onclick=activateServicer(".$servicer->id.") class='btn btn-xs btn-success'data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>";
 
                 }
              })
@@ -226,17 +226,17 @@ class ServicerController extends Controller {
         ];
         $this->validate($request, $rules, $customMessages);
         $job_date=date("Y-m-d H:i:m", strtotime($request->job_date));
-        
+
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
         // $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
         // if($placeLatLng==null){
-        //       $request->session()->flash('message', 'Enter correct location'); 
-        //       $request->session()->flash('alert-class', 'alert-danger'); 
-        //       return redirect(route('sub-dealer.assign.servicer'));        
+        //       $request->session()->flash('message', 'Enter correct location');
+        //       $request->session()->flash('alert-class', 'alert-danger');
+        //       return redirect(route('sub-dealer.assign.servicer'));
         // }
         // $location_lat=$placeLatLng['latitude'];
-        // $location_lng=$placeLatLng['logitude'];        
+        // $location_lng=$placeLatLng['logitude'];
         $user_id=\Auth::user()->id;
         $servicer = ServicerJob::create([
             'servicer_id' => $request->servicer,
@@ -245,22 +245,22 @@ class ServicerController extends Controller {
             'job_type' => $request->job_type,
             'user_id' => $user_id,
             'description' => $request->description,
-            'gps_id' => $request->gps, 
-            'job_date' => $job_date,   
-            'role'      =>  $request->role,    
+            'gps_id' => $request->gps,
+            'job_date' => $job_date,
+            'role'      =>  $request->role,
             'status' => 1, //ASSIGNED STATUS
             'location'=>$request->search_place,
             'job_status'=>0
-            // 'longitude'=>$location_lng              
-        ]); 
+            // 'longitude'=>$location_lng
+        ]);
         // $gps = Gps::find($request->gps);
-        // $gps->user_id = null;        
-        // $gps->save();                
-        $request->session()->flash('message', 'Assign  servicer successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('assign.servicer'));  
-       
-         
+        // $gps->user_id = null;
+        // $gps->save();
+        $request->session()->flash('message', 'Assign  servicer successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('assign.servicer'));
+
+
     }
 
 
@@ -274,7 +274,7 @@ class ServicerController extends Controller {
         $user_id=\Auth::user()->id;
 
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
@@ -283,7 +283,7 @@ class ServicerController extends Controller {
             'description',
             'gps_id',
             // 'job_date',
-            'job_date',                 
+            'job_date',
             'created_at',
             'status'
         )
@@ -292,27 +292,27 @@ class ServicerController extends Controller {
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
-        ->get();       
+        ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
+                return "Service" ;
             }
-                       
-         })            
+
+         })
         ->rawColumns(['link'])
         ->make();
     }
     public function subDealerAssignServicer(Request $request)
     {
         if($request->user()->hasRole('sub_dealer')){
-            $sub_dealer_id=\Auth::user()->subDealer->id;  
+            $sub_dealer_id=\Auth::user()->subDealer->id;
             $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
             ->where('sub_dealer_id',$sub_dealer_id)
             ->where('status',0)
@@ -321,7 +321,7 @@ class ServicerController extends Controller {
             $clients=Client::where('sub_dealer_id',$sub_dealer_id)->get();
         }
         else{
-            $trader_id=\Auth::user()->trader->id;  
+            $trader_id=\Auth::user()->trader->id;
             $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','trader_id')
             ->where('trader_id',$trader_id)
             ->where('status',0)
@@ -339,16 +339,16 @@ class ServicerController extends Controller {
             'gps.required' => 'The GPS field is required.'
         ];
         $this->validate($request, $rules, $customMessages);
-        $job_date=date("Y-m-d H:i:s", strtotime($request->job_date));   
+        $job_date=date("Y-m-d H:i:s", strtotime($request->job_date));
 
         $job_id = str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT);
 
         // $placeLatLng=$this->getPlaceLatLng($request->search_place);
 
         // if($placeLatLng==null){
-        //       $request->session()->flash('message', 'Enter correct location'); 
-        //       $request->session()->flash('alert-class', 'alert-danger'); 
-        //       return redirect(route('sub-dealer.assign.servicer'));        
+        //       $request->session()->flash('message', 'Enter correct location');
+        //       $request->session()->flash('alert-class', 'alert-danger');
+        //       return redirect(route('sub-dealer.assign.servicer'));
         // }
 
         // $location_lat=$placeLatLng['latitude'];
@@ -365,16 +365,16 @@ class ServicerController extends Controller {
                 'description' => $request->description,
                 'role' => $request->role,
                 'job_date' => $job_date,
-                'gps_id' => $request->gps,                
+                'gps_id' => $request->gps,
                 'status' => 1, //ASSIGN STATUS
                 'location'=>$location,
                 'job_status'=>0
-                // 'longitude'=>$location_lng           
-            ]); 
-            $request->session()->flash('message', 'Assigned Job successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
-            
-            return redirect(route('sub-dealer.assign.servicer'));  
+                // 'longitude'=>$location_lng
+            ]);
+            $request->session()->flash('message', 'Assigned Job successfully!');
+            $request->session()->flash('alert-class', 'alert-success');
+
+            return redirect(route('sub-dealer.assign.servicer'));
     }
     public function subDealerAssignServicerList()
     {
@@ -384,7 +384,7 @@ class ServicerController extends Controller {
     {
         $user_id=\Auth::user()->id;
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
@@ -392,8 +392,8 @@ class ServicerController extends Controller {
             'user_id',
             'description',
             'gps_id',
-            // 'job_date', 
-            'job_date',                
+            // 'job_date',
+            'job_date',
             'created_at',
             'status'
         )
@@ -404,20 +404,20 @@ class ServicerController extends Controller {
         ->whereNull('job_complete_date')
         ->with('servicer:id,name')
         ->orderBy('id','desc')
-        ->get();       
+        ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
+                return "Service" ;
             }
-                       
-         })            
+
+         })
         ->rawColumns(['link'])
         ->make();
     }
@@ -436,7 +436,7 @@ class ServicerController extends Controller {
     {
         $user_id=\Auth::user()->servicer->id;
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
@@ -444,9 +444,9 @@ class ServicerController extends Controller {
             'user_id',
             'description',
             'gps_id',
-            'job_complete_date', 
-            'job_date',                 
-            'created_at',           
+            'job_complete_date',
+            'job_date',
+            'created_at',
             'location',
             'status'
         )
@@ -457,47 +457,47 @@ class ServicerController extends Controller {
         ->with('user:id,username')
         ->with('clients.user')
         ->with('servicer:id,name')
-        ->get();       
+        ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
         ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
-            }                       
-         }) 
+                return "Service" ;
+            }
+         })
            ->addColumn('status', function ($servicer_job) {
             if($servicer_job->status==0)
             {
-                return "Cancel" ; 
+                return "Cancel" ;
             }
             else if($servicer_job->status==1)
             {
-                return "Assigned" ; 
-            } 
+                return "Assigned" ;
+            }
             else if($servicer_job->status==2)
             {
-                return "Pending" ; 
+                return "Pending" ;
             } else{
-                  return "Completed" ; 
-            }                            
-         }) 
-       
+                  return "Completed" ;
+            }
+         })
+
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
 if($servicer_job->status==0){
     return "<font color='red'>Cancelled</font>";
-                
+
             }else
             {
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
             }
-          
+
         })
         ->rawColumns(['link', 'action'])
         ->make();
@@ -508,7 +508,7 @@ if($servicer_job->status==0){
     {
         $user_id=\Auth::user()->servicer->id;
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
@@ -516,9 +516,9 @@ if($servicer_job->status==0){
             'user_id',
             'description',
             'gps_id',
-            'job_complete_date', 
-            'job_date',                 
-            'created_at',           
+            'job_complete_date',
+            'job_date',
+            'created_at',
             'location',
             'status'
         )
@@ -528,58 +528,58 @@ if($servicer_job->status==0){
         ->with('gps:id,imei,serial_no')
         ->with('user:id,username')
         ->with('clients.user')
-        ->with('servicer:id,name')     
-        ->get(); 
+        ->with('servicer:id,name')
+        ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
         ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
-            }                       
-         }) 
+                return "Service" ;
+            }
+         })
          ->addColumn('status', function ($servicer_job) {
             if($servicer_job->status==0)
             {
-                return "Cancel" ; 
+                return "Cancel" ;
             }
             else if($servicer_job->status==1)
             {
-                return "Assigned" ; 
-            } 
+                return "Assigned" ;
+            }
             else if($servicer_job->status==2)
             {
-                return "Pending" ; 
+                return "Pending" ;
             } else{
-                  return "Completed" ; 
-            }                            
-         }) 
+                  return "Completed" ;
+            }
+         })
         ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
                 if($servicer_job->status==0){
     return "<font color='red'>Cancelled</font>";
-                
+
             }else
             {
                 if($servicer_job->status==2)
             {
                return "
-                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Edit</a>";  
-            } 
+                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+            }
             else{
-                
-                  return "<a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";  
+
+                  return "<a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
 
             }
-               
+
             }
-          
+
         })
-       
+
         ->rawColumns(['link', 'action'])
         ->make();
     }
@@ -591,7 +591,7 @@ if($servicer_job->status==0){
     public function jobDetails(Request $request)
     {
 
-        $decrypted = Crypt::decrypt($request->id); 
+        $decrypted = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::select(
             'id',
             'servicer_id',
@@ -605,12 +605,16 @@ if($servicer_job->status==0){
             'status',
             'latitude',
             'longitude',
+            'location',
             'gps_id'
         )
         ->withTrashed()
         ->where('id', $decrypted)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
+        ->with('user:id,email,mobile')
+        ->with('sub_dealer:user_id,name')
+        ->with('trader:user_id,name')
         ->first();
         $client_id=$servicer_job->client_id;
         // dd($client_id);
@@ -618,13 +622,13 @@ if($servicer_job->status==0){
         $vehicleTypes=VehicleType::select(
             'id','name'
         )
-        ->get();       
+        ->get();
         $drivers=Driver::select('id','name')
         ->where('client_id',$client_id)
         ->get();
-         $makes=VehicleMake::select('id','name')->get();     
+         $makes=VehicleMake::select('id','name')->get();
 
-         $models=VehicleModels::select('id','name')->get();   
+         $models=VehicleModels::select('id','name')->get();
        if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -634,7 +638,7 @@ if($servicer_job->status==0){
 public function serviceJobDetails(Request $request)
     {
 
-        $decrypted = Crypt::decrypt($request->id); 
+        $decrypted = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::select(
             'id',
             'servicer_id',
@@ -654,18 +658,21 @@ public function serviceJobDetails(Request $request)
         ->where('id', $decrypted)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
+        ->with('user:id,email,mobile')
+        ->with('sub_dealer:user_id,name')
+        ->with('trader:user_id,name')
         ->first();
         $client_id=$servicer_job->client_id;
         $servicer_id=\Auth::user()->servicer->id;
         $vehicleTypes=VehicleType::select(
             'id','name'
         )
-        ->get();       
+        ->get();
         $drivers=Driver::select('id','name')
         ->where('client_id',$client_id)
-        ->get();    
+        ->get();
 
-         $models=VehicleModels::select('id','name')->get();   
+         $models=VehicleModels::select('id','name')->get();
        if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -675,9 +682,9 @@ public function serviceJobDetails(Request $request)
     public function serviceJobedit(Request $request)
     {
 
-        $decrypted = Crypt::decrypt($request->id); 
+        $decrypted = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::select(
-           'id', 
+           'id',
             'servicer_id',
             'client_id',
             'job_id',
@@ -685,9 +692,9 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'gps_id',
-            'job_complete_date', 
-            \DB::raw('Date(job_date) as job_date'),                 
-            'created_at',           
+            'job_complete_date',
+            \DB::raw('Date(job_date) as job_date'),
+            'created_at',
             'location',
             'status'
         )
@@ -695,7 +702,9 @@ public function serviceJobDetails(Request $request)
         ->where('id', $decrypted)
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
-        ->with('user:id,username')
+        ->with('user:id,email,mobile')
+        ->with('sub_dealer:user_id,name')
+        ->with('trader:user_id,name')
         ->first();
         $job_id=$servicer_job->job_id;
         $client_id=$servicer_job->client_id;
@@ -704,19 +713,19 @@ public function serviceJobDetails(Request $request)
         $vehicleTypes=VehicleType::select(
             'id','name'
         )
-        ->get();       
+        ->get();
         $drivers=Driver::select('id','name')
         ->where('client_id',$client_id)
-        ->get();    
+        ->get();
 
-         $models=VehicleModels::select('id','name')->get();   
+         $models=VehicleModels::select('id','name')->get();
        if($servicer_job == null){
            return view('Servicer::404');
         }
         return view('Servicer::service-job-edit',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers]);
     }
     public function servicerJobSave(Request $request)
-    { 
+    {
         $custom_messages = [
             'file.required' => 'Rc Book cannot be blank',
              // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'
@@ -726,11 +735,11 @@ public function serviceJobDetails(Request $request)
         ];
         // dd($request->id);
         $rules = $this->servicercompleteJobRules();
-        $this->validate($request,$rules,$custom_messages);  
-        
+        $this->validate($request,$rules,$custom_messages);
+
 
         // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
-        $job_completed_date = date("Y-m-d H:i:s"); 
+        $job_completed_date = date("Y-m-d H:i:s");
         $servicer_job = ServicerJob::find($request->id);
         $servicer_job->job_complete_date = $job_completed_date;
         $driver_id=$request->driver;
@@ -738,14 +747,14 @@ public function serviceJobDetails(Request $request)
         $driver = Driver::find($driver_id);
         // if($driver)
         // {
-            
-       
+
+
             $servicer_job->comment = $request->comment;
             $servicer_job->status = 3;
             $servicer_job->save();
             if($servicer_job)
-            {        
-            $name= $request->name;         
+            {
+            $name= $request->name;
             $register_number = $request->register_number;
             $vehicle_type_id = $request->vehicle_type_id;
             $gps_id = $request->gps_id;
@@ -776,7 +785,7 @@ public function serviceJobDetails(Request $request)
             $installation_photo=$request->installation_photo;
             $activation_photo=$request->activation_photo;
             $vehicle_photo=$request->vehicle_photo;
-           
+
             $getFileExt   = $file->getClientOriginalExtension();
             $uploadedFile =   'rcbook'.time().'.'.$getFileExt;
             //Move Uploaded File
@@ -821,26 +830,26 @@ public function serviceJobDetails(Request $request)
             ]);
             // dd($servicer_job->id);
             // $service_job_id=Crypt::encrypt($servicer_job->id);
-            $request->session()->flash('message', 'Job  completed successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'Job  completed successfully!');
+            $request->session()->flash('alert-class', 'alert-success');
             return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
         }
     // }
     // else
     // {
-    //     $request->session()->flash('message', 'Driver doesnot exist!'); 
-    //     $request->session()->flash('alert-class', 'alert-success'); 
+    //     $request->session()->flash('message', 'Driver doesnot exist!');
+    //     $request->session()->flash('alert-class', 'alert-success');
     //    return view('Servicer::404');
     // }
 
-        // return redirect(route('job.list'));  
-        // return redirect(route('job-complete.certificate',$service_job_id));  
+        // return redirect(route('job.list'));
+        // return redirect(route('job-complete.certificate',$service_job_id));
     }
     // for service
     public function jobSave(Request $request)
-    { 
+    {
 
-        $job_completed_date = date("Y-m-d H:i:s"); 
+        $job_completed_date = date("Y-m-d H:i:s");
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -851,13 +860,13 @@ public function serviceJobDetails(Request $request)
             // dd($servicer_job->id);
              // dd($servicer_job->id);
             $service_job_id=Crypt::encrypt($servicer_job->id);
-            $request->session()->flash('message', 'Job  completed successfully!'); 
+            $request->session()->flash('message', 'Job  completed successfully!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect()->route('servicerjob.history.list'); 
+            return redirect()->route('servicerjob.history.list');
             // return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
        }else
        {
-             $request->session()->flash('message', 'Job completion failed'); 
+             $request->session()->flash('message', 'Job completion failed');
              $request->session()->flash('alert-class', 'alert-danger');
              return redirect()->route('servicerjob.history.list');
 
@@ -865,8 +874,8 @@ public function serviceJobDetails(Request $request)
     }
 
     public function jobstatuscomplete(Request $request)
-    { 
-      $job_completed_date=date("Y-m-d H:i:s"); 
+    {
+      $job_completed_date=date("Y-m-d H:i:s");
         $servicer_job = ServicerJob::find($request->id);
         if($servicer_job!=null)
         {
@@ -883,14 +892,14 @@ public function serviceJobDetails(Request $request)
                 'title' => 'Failed',
                 'message' => 'Something went wrong'
             ]);
-             // $request->session()->flash('message', 'Job completion failed'); 
+             // $request->session()->flash('message', 'Job completion failed');
              // $request->session()->flash('alert-class', 'alert-danger');
              // return redirect()->route('job.history.details');
         }
     }
 
     public function jobupdate(Request $request)
-    { 
+    {
 
         $servicer_job = ServicerJob::find($request->id);
         // dd( $servicer_job);
@@ -898,11 +907,11 @@ public function serviceJobDetails(Request $request)
         {
             $servicer_job->comment = $request->comment;
             $servicer_job->status = 2;
-            $servicer_job->save();         
+            $servicer_job->save();
             // dd($servicer_job->id);
-            $service_job_id=Crypt::encrypt($servicer_job->id);           
-            $request->session()->flash('message', 'Comments added successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $service_job_id=Crypt::encrypt($servicer_job->id);
+            $request->session()->flash('message', 'Comments added successfully!');
+            $request->session()->flash('alert-class', 'alert-success');
             // return redirect()->route('job.history.details',['id' => $service_job_id]);
              // return redirect()->back();
             return redirect()->route('service.job.list');
@@ -910,14 +919,14 @@ public function serviceJobDetails(Request $request)
        }
        else
        {
-            $request->session()->flash('message', 'Coments adding failed'); 
+            $request->session()->flash('message', 'Coments adding failed');
             $request->session()->flash('alert-class', 'alert-danger');
             return redirect()->route('service.job.list');
         }
     }
 
     // save vehicle
-   
+
      public function jobCompleteCertificate(Request $request)
     {
 
@@ -949,7 +958,7 @@ public function serviceJobDetails(Request $request)
             'client_id',
             'servicer_job_id',
             'chassis_number',
-            'engine_number'             
+            'engine_number'
         )
         ->with('gps:id,imei')
         ->where('servicer_job_id',$servicer_job_id)
@@ -976,15 +985,15 @@ public function serviceJobDetails(Request $request)
     {
         $user_id=\Auth::user()->servicer->id;
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
             'job_type',
             'user_id',
             'description',
-            'job_complete_date', 
-             'job_date',                 
+            'job_complete_date',
+             'job_date',
             'created_at',
             'status',
             'location',
@@ -1000,26 +1009,26 @@ public function serviceJobDetails(Request $request)
         ->with('vehicle:id,register_number,gps_id')
         ->orderBy('job_complete_date','desc')
         ->where('status',3)
-        ->get();     
+        ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
+                return "Service" ;
             }
-                       
+
          })
-       
+
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
                 return "
                 <a href=".$b_url."/job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
-          
+
         })
         ->rawColumns(['link', 'action'])
         ->make();
@@ -1030,15 +1039,15 @@ public function serviceJobDetails(Request $request)
     {
         $user_id=\Auth::user()->servicer->id;
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
             'job_type',
             'user_id',
             'description',
-            'job_complete_date', 
-            'job_date',                 
+            'job_complete_date',
+            'job_date',
             'created_at',
             'status',
             'location',
@@ -1054,54 +1063,54 @@ public function serviceJobDetails(Request $request)
         ->with('vehicle:id,register_number,gps_id')
          ->orderBy('job_complete_date','Desc')
          ->where('status',3)
-        ->get();     
+        ->get();
         // dd($servicer_job);
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
+                return "Service" ;
             }
-                       
+
          })
-         // ->addColumn('location', function ($servicer_job) {                    
+         // ->addColumn('location', function ($servicer_job) {
          //    $latitude= $servicer_job->latitude;
-         //    $longitude=$servicer_job->longitude;          
+         //    $longitude=$servicer_job->longitude;
          //    if(!empty($latitude) && !empty($longitude)){
          //        //Send request and receive json data by address
-         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-         //        $output = json_decode($geocodeFromLatLong);         
+         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap');
+         //        $output = json_decode($geocodeFromLatLong);
          //        $status = $output->status;
          //        //Get address from json data
          //        $address = ($status=="OK")?$output->results[1]->formatted_address:'';
          //        //Return address of the given latitude and longitude
          //        if(!empty($address)){
          //            $location=$address;
-         //            return $location;                                 
-         //        }        
+         //            return $location;
+         //        }
          //    }
          //    else
          //    {
          //        return "No Address";
          //    }
-         // }) 
+         // })
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
                 return "
                 <a href=".$b_url."/servicer-job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
-          
+
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
     public function jobHistoryDetails(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id); 
+        $decrypted = Crypt::decrypt($request->id);
         // dd($decrypted);
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
         $client_id=$servicer_job->client_id;
@@ -1118,7 +1127,7 @@ public function serviceJobDetails(Request $request)
         ->where('servicer_job_id',$servicer_job->id)
         ->first();
 
-        
+
         if($servicer_job == null){
            return view('Servicer::404');
         }
@@ -1126,11 +1135,11 @@ public function serviceJobDetails(Request $request)
     }
 
 
-    
+
     public function serviceJobHistoryDetails(Request $request)
     {
 
-        $decrypted = Crypt::decrypt($request->id); 
+        $decrypted = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)
         ->with('vehicle:name,register_number,gps_id')->first();
         $client_id=$servicer_job->client_id;
@@ -1162,26 +1171,26 @@ public function serviceJobDetails(Request $request)
             'vehicle_type_id',
             'gps_id',
             'client_id',
-            'servicer_job_id'               
+            'servicer_job_id'
         )
         ->with('gps:id,imei')
        // ->with('vehicle:id,name,register_number')
         ->where('servicer_job_id',$servicer_job_id)
         ->get();
         return DataTables::of($vehicle)
-        ->addIndexColumn() 
+        ->addIndexColumn()
         ->addColumn('action', function ($vehicle) {
           $b_url = \URL::to('/');
                 return "
                 <a href=".$b_url."/job-complete/".Crypt::encrypt($vehicle->servicer_job_id)."/downloads/".Crypt::encrypt($vehicle->id).">
                         <button class='btn'><i class='fa fa-download'></i>Download</button>
                       </a>";
-          
+
         })
-        ->rawColumns(['link', 'action'])             
+        ->rawColumns(['link', 'action'])
         ->make();
- 
-        
+
+
     }
 
 
@@ -1215,16 +1224,16 @@ public function serviceJobDetails(Request $request)
         $client_id=$request->client_id;
         if($client_id != 0)
         {
-            $job_type=$request->job_type;        
+            $job_type=$request->job_type;
             $client = Client::find($client_id);
             $latitude=$client->latitude;
-            $longitude=$client->longitude; 
-            $address=$client->location; 
+            $longitude=$client->longitude;
+            $address=$client->location;
             if(!empty($address))
             {
             $location=$address;
-                                                    
-            }      
+
+            }
             else
             {
                 $location= "No Address";
@@ -1240,10 +1249,10 @@ public function serviceJobDetails(Request $request)
             $stock_gps_id = [];
             foreach($gps_stocks as $stock_gps){
                 $stock_gps_id[] = $stock_gps->gps_id;
-            }  
+            }
 
             if($stock_gps_id)
-            {        
+            {
                 $vehicle_device = Vehicle::select(
                     'gps_id',
                     'id',
@@ -1256,7 +1265,7 @@ public function serviceJobDetails(Request $request)
                 foreach($vehicle_device as $device){
                     $single_gps[] = $device->gps_id;
                 }
-                
+
                 $servicer_jobs = ServicerJob::select(
                     'gps_id',
                     'servicer_id',
@@ -1268,7 +1277,7 @@ public function serviceJobDetails(Request $request)
                 $servicer_gps = [];
                 foreach($servicer_jobs as $servicer_job){
                     $servicer_gps[] = $servicer_job->gps_id;
-                }     
+                }
                 // dd($servicer_gps);
                 // $devices=Gps::select('id','imei','serial_no')
                 // ->whereIn('id',$stock_gps_id)
@@ -1293,11 +1302,11 @@ public function serviceJobDetails(Request $request)
                                 ->whereIn('id',$servicer_gps)
                                 ->get();
                 }else{
-                 $devices=[];   
+                 $devices=[];
                 }
                 // if($user->hasRole('sub_dealer')){
                 if($devices)
-                {               
+                {
                     $response_data = array(
                         'status'    => 'client-gps',
                         'devices'   => $devices,
@@ -1331,8 +1340,8 @@ public function serviceJobDetails(Request $request)
                         'code'    =>0
                         );
         }
-        return response()->json($response_data); 
-        
+        return response()->json($response_data);
+
     }
     ##############################################
 
@@ -1344,17 +1353,17 @@ public function serviceJobDetails(Request $request)
     {
 
         $user_id=\Auth::user()->id;
-        
+
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
             'job_type',
             'user_id',
             'description',
-            'job_complete_date', 
-             'job_date',                 
+            'job_complete_date',
+             'job_date',
             'created_at',
             'gps_id',
             'status'
@@ -1367,21 +1376,21 @@ public function serviceJobDetails(Request $request)
         ->with('clients:id,name')
         ->with('servicer:id,name')
         ->orderBy('id','Desc')
-        ->get();  
-        
+        ->get();
+
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
+                return "Service" ;
             }
-                       
-         }) 
+
+         })
          ->addColumn('action', function ($servicer_job) {
            $b_url = \URL::to('/');
             if($servicer_job->job_type==1)
@@ -1394,7 +1403,7 @@ public function serviceJobDetails(Request $request)
                 return "
                 <a href=".$b_url."/servicer-job-history/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='View'></i> View</a>";
             }
-          
+
         })
         ->rawColumns(['link', 'action'])
         ->make();
@@ -1405,7 +1414,7 @@ public function serviceJobDetails(Request $request)
         $servicer_id = \Auth::user()->servicer->id;
         $servicer_user_id = \Auth::user()->id;
         $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
-        $user=User::find($servicer_user_id); 
+        $user=User::find($servicer_user_id);
         if($servicer == null)
         {
            return view('Servicer::404');
@@ -1449,9 +1458,9 @@ public function serviceJobDetails(Request $request)
         $servicer_id = \Auth::user()->servicer->id;
         $servicer_user_id = \Auth::user()->id;
         $servicer = Servicer::withTrashed()->where('id', $servicer_id)->first();
-        $user=User::find($servicer_user_id); 
+        $user=User::find($servicer_user_id);
 
-       
+
         if($servicer == null)
         {
            return view('Servicer::404');
@@ -1465,22 +1474,22 @@ public function serviceJobDetails(Request $request)
         $servicer = Servicer::where('user_id', $request->id)->first();
         if($servicer == null){
            return view('Client::404');
-        } 
+        }
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
         if (strpos($url, $rayfleet_key) == true) {
              $rules = $this->rayfleetservicerProfileUpdateRules($servicer);
         }
-        else if (strpos($url, $eclipse_key) == true) { 
+        else if (strpos($url, $eclipse_key) == true) {
             $rules = $this->servicerProfileUpdateRules($servicer);
         }
         else
         {
            $rules = $this->servicerProfileUpdateRules($servicer);
         }
-        
-        $this->validate($request, $rules);       
+
+        $this->validate($request, $rules);
         $servicer->name = $request->name;
         $servicer->address = $request->address;
         $servicer->save();
@@ -1489,11 +1498,11 @@ public function serviceJobDetails(Request $request)
         $user->email = $request->email;
         $user->save();
         $did = encrypt($user->id);
-        // $subdealer->phone_number = $request->phone_number;       
+        // $subdealer->phone_number = $request->phone_number;
         // $did = encrypt($subdealer->id);
         $request->session()->flash('message', 'Service engineer details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('servicer.profile'));  
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('servicer.profile'));
     }
 
     public function pendingJob()
@@ -1505,7 +1514,7 @@ public function serviceJobDetails(Request $request)
         $user_id=\Auth::user()->servicer->id;
         // dd($user_id);
         $servicer_job = ServicerJob::select(
-            'id', 
+            'id',
             'servicer_id',
             'client_id',
             'job_id',
@@ -1513,10 +1522,10 @@ public function serviceJobDetails(Request $request)
             'user_id',
             'description',
             'gps_id',
-            'job_complete_date', 
-            // \DB::raw('Date(job_date) as job_date'),   
-            'job_date',                 
-            'created_at',           
+            'job_complete_date',
+            // \DB::raw('Date(job_date) as job_date'),
+            'job_date',
+            'created_at',
             'location',
             'status'
         )
@@ -1530,58 +1539,62 @@ public function serviceJobDetails(Request $request)
         ->orderBy('job_date','Desc')
         ->with('vehicle:id,register_number,gps_id')
         // ->where('status',2)
-        ->get();       
+        ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
         ->addColumn('job_type', function ($servicer_job) {
             if($servicer_job->job_type==1)
             {
-                return "Installation" ; 
+                return "Installation" ;
             }
             else
             {
-                return "Service" ; 
-            }                       
-        })           
-       
+                return "Service" ;
+            }
+        })
+
          ->addColumn('action', function ($servicer_job) {
              $b_url = \URL::to('/');
             if($servicer_job->status==0){
-                return "<font color='red'>Cancelled</font>";                            
+                return "<font color='red'>Cancelled</font>";
             }else
             {
                 if($servicer_job->status==1)
                 {
                     return "
-                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i> Job Completion</a>";    
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
                 }
-               
+
                 else if($servicer_job->status==2)
                 {
                    return "
-                    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Edit</a>";  
-                } 
+                    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                }
+                else
+                {
+                    return "<font color='red'>Cancelled</font>";
+                }
             }
         })
         ->rawColumns(['link', 'action'])
         ->make();
     }
-     
+
     public function getVehicleModels(Request $request)
     {
         $user = $request->user();
         $make_id=$request->make_id;
         $vehicle_models=VehicleModels::select('id','vehicle_make_id','name')
-        ->where('vehicle_make_id',$make_id)      
+        ->where('vehicle_make_id',$make_id)
         ->get();
         if($vehicle_models)
-        {               
+        {
             $response_data = array(
                 'status'  => 'vehicleModels',
                 'vehicle_models' => $vehicle_models
-               
+
             );
-        }      
+        }
         else
         {
              $response_data = array(
@@ -1590,7 +1603,7 @@ public function serviceJobDetails(Request $request)
                     'code'    =>0
                 );
         }
-        return response()->json($response_data); 
+        return response()->json($response_data);
         // }
     }
 
@@ -1621,18 +1634,18 @@ public function serviceJobDetails(Request $request)
         $servicer->save();
         $request->session()->flash('message','Password updated successfully!');
         $request->session()->flash('alert-class','alert-success');
-        return redirect(route('servicer.list'));  
-       
+        return redirect(route('servicer.list'));
+
     }
 public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',            
+            'address' => 'required',
             'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$servicer->user_id,
             'email' => 'required|string|unique:users,email,'.$servicer->user_id
-           
-            
+
+
         ];
         return  $rules;
     }
@@ -1640,11 +1653,11 @@ public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',            
+            'address' => 'required',
             'phone_number' => 'required|string|min:11|max:11|unique:users,mobile,'.$servicer->user_id,
             'email' => 'required|string|unique:users,email,'.$servicer->user_id
-           
-            
+
+
         ];
         return  $rules;
     }
@@ -1652,11 +1665,11 @@ public function servicerProfileUpdateRules($servicer)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',            
+            'address' => 'required',
             'phone_number' => 'required|string|min:10|max:10|unique:users,mobile,'.$client->user_id,
             'email' => 'required|string|unique:users,email,'.$client->user_id
-           
-            
+
+
         ];
         return  $rules;
     }
@@ -1679,12 +1692,12 @@ public function servicerProfileUpdateRules($servicer)
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
             'address' => 'required',
-            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile'  
-           
+            'mobile_number' => 'required|string|min:10|max:10|unique:users,mobile'
+
         ];
         return  $rules;
     }
-    
+
     public function servicerJobRules()
     {
         $rules = [
@@ -1694,7 +1707,7 @@ public function servicerProfileUpdateRules($servicer)
             'description' => 'required',
             'gps' => 'required',
             'job_date' => 'required',
-            'search_place'=>'required'            
+            'search_place'=>'required'
         ];
         return  $rules;
     }
@@ -1709,7 +1722,7 @@ public function servicerProfileUpdateRules($servicer)
         ];
         return  $rules;
     }
-    
+
     public function servicerVehicleCreateRules()
     {
         $rules = [
@@ -1717,13 +1730,13 @@ public function servicerProfileUpdateRules($servicer)
             'register_number' => 'required|unique:vehicles',
             'vehicle_type_id' => 'required',
             'gps_id' => 'required'
-            
+
         ];
         return  $rules;
     }
      public function servicercompleteJobRules()
     {
-        $rules = [          
+        $rules = [
             // 'job_completed_date' => 'required',
             'name' => 'required',
             'register_number' => 'required|unique:vehicles',
@@ -1746,7 +1759,7 @@ public function servicerProfileUpdateRules($servicer)
 
 
         ];
-        return  $rules; 
+        return  $rules;
     }
 
 

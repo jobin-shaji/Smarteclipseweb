@@ -2,11 +2,11 @@ $(document).ready(function () {
     callBackDataTable();
 });
 
- function callBackDataTable(){  
+ function callBackDataTable(){
     var  data = {
-    
-    }; 
-  
+
+    };
+
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-       
+
         fnDrawCallback: function (oSettings, json) {
 
         },
@@ -40,12 +40,12 @@ $(document).ready(function () {
             {data: 'gps.serial_no', name: 'gps.serial_no'},
             {data: 'description', name: 'description'},
             {data: 'location', name: 'location'},
-            {data: 'job_date', name: 'job_date'}, 
-            {data: 'status', name: 'status'},     
+            {data: 'job_date', name: 'job_date'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
-           
+
         ],
-        
+
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }

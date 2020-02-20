@@ -715,7 +715,7 @@
               </h3>
               <p>Installation Job</p>
             </div>
-            <div class="icon"> style="width:100%; float:left; line-height: 15px!important;"
+            <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
             <a href="/job-list" class="small-box-footer" style="background-color: #0b24d6!important">View <i class="fa fa-arrow-circle-right"></i></a>
