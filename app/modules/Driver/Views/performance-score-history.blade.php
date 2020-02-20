@@ -50,7 +50,7 @@ Performance Score History
                                 <div class="col-lg-3 col-md-3">
                                 	<div class="form-group">
                                     <label> To Date</label>
-                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off"  value="@if(isset($performance_score)){{$to}}@endif" required />
+                                    <input type="text" class="dph-datepicker@if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off"  value="@if(isset($performance_score)){{$to}}@endif" required />
                                 	  <!-- @if(isset($performance_score))<input type ="hidden" id="to_date"  value ={{$to}}> @endif -->
                                   </div>
                                 </div>

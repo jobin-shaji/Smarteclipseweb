@@ -43,9 +43,9 @@
 
         <div class='col-lg-12 cover_date cover-date1'>
     <div class="back_button_image back_button_image-1">
-        <a onclick="closePlayback()" >
+        <a onclick="closePlayback()" > 
          <img src="{{asset('playback/assets/img/back-button.png')}}">
-        </a>
+        </a> 
       </div>
           <div class="top-date">
              <div class="row row-mrg-1">
@@ -55,12 +55,12 @@
 
               <div class='col-sm-3'>
               <div class="form-group">
-                <label style="font-weight:bold">Start Date</label>
-                <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">
+                <label style="font-weight:bold">Start Date</label>            
+                <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">                 
                     <input type='text' style="height: 33px;" class="form-control" id="fromDate" name="fromDate" required />
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
-                      </span>
+                      </span>                
                 </div>
               </div>
             </div>
@@ -77,8 +77,8 @@
             </div>
           </span>
           </span>
-
-           <div class='col-sm-2'>
+    
+           <div class='col-sm-2'>   
             <div class="form-group">
             <div class="selce-bg-out">
               <label style="font-weight:bold" class="speed-label">Speed</label>
@@ -92,15 +92,15 @@
             </div>
           </div>
           </div>
+        
 
 
-
-         <div class='col-sm-3' style="margin-top: 24px;">
-
-           <button class="btn btn-primary btn-sm start_button buton-new-cl" onclick="startPlayBack()" id="btnPlay">Play</button>
-           <button class="btn btn-primary btn-sm start_button buton-new-c3" style="display:none; margin-right: 6px;float: left;" onclick="startPause()" id="btnPause">Pause</button>
+         <div class='col-sm-3' style="margin-top: 24px;">   
+                   
+           <button class="btn btn-primary btn-sm start_button buton-new-cl" onclick="startPlayBack()" id="btnPlay">Play</button>  
+           <button class="btn btn-primary btn-sm start_button buton-new-c3" style="display:none; margin-right: 6px;float: left;" onclick="startPause()" id="btnPause">Pause</button>  
               <button class="btn btn-primary btn-sm buton-new-cl" style="display:none; margin-right: 6px;float: left;" onclick="btnContinue()" id="btnContinue">Continue</button>
-
+                       
               <button class="btn btn-primary btn-sm buton-new-c2" onclick="stopPlayback()" id="btnPlay">Reset</button>
         </div>
 
@@ -108,17 +108,17 @@
 
 
       </div>
-
+    
 
   </div>
-
-
-
+  
+       
+  
 
  </div>
 
 
-<!--
+<!-- 
 <div class="notification-icon">
 <div class="dropdownContainer"><div class="noti-alert-count">0
 </div> <div class="notification dropdown-toggle"></div>
@@ -134,7 +134,7 @@
   <div class="time-dis">2019-12-24 06:40:14</div>
 </a>
 </li> -->
-
+     
 <!-- </ul>
 
 
@@ -178,17 +178,17 @@
                </div>
                </div>
                 <!--<div id="markers" style="width:1800px;height:780px"></div>-->
-
-
+               
+                 
                     <div class="left-alert-box left-alert-box-1">
                       <div class="left-inner-1bg">
-                    <div id="details" class="left-alert-inner left-alert-inner-1">
+                    <div id="details" class="left-alert-inner left-alert-inner-1">  
                        <span id="location_details">
                         <h1 data-text="It's loading…" id="location_details_text">It's loading…</h1>
-                    </span>
-                    </div>    </div>
+                    </span>                     
+                    </div>    </div> 
                     </div>
-
+                
                 <div class="page-inner mt--5">
                 </div>
             </div>
@@ -205,9 +205,9 @@
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
-
+     
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
-
+      
     <script>
         var km_data           = 0;
         var pauseMapRendering = false;
@@ -217,13 +217,13 @@
         var startPointLongitude      = null;
         var endPointLatitude         = null;
         var endPointLongitude        = null;
-
+        
         var blPlaceCaronMap          = false;
         var FirstLoop                = false;
         var first_point              = true;
         var total_offset             = 0;
         var last_offset              = false;
-        var vehicle_halt,vehicle_sleep,vehicle_offline,vehicle_online;
+        var vehicle_halt,vehicle_sleep,vehicle_offline,vehicle_online;   
        vehicle_halt        =   '/documents/'+$('#ideal_icon').val();
        vehicle_sleep       =   '/documents/'+$('#sleep_icon').val();
        vehicle_offline     =   '/documents/'+$('#offline_icon').val();
@@ -243,7 +243,7 @@
            app_code            = "4YMdYfSTVVe1MOD_bDp_ZA";
         var mapContainer        = document.getElementById('markers');
         var platform            = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
-        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+        var maptypes            = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);  
 
         var map                 = new H.Map(mapContainer, maptypes.normal.map);
         map.setCenter({ lat: 10.192656, lng: 76.386666 });
@@ -280,8 +280,8 @@
         var mapUpdateInterval_location;
 
 
-
-
+    
+         
 
         var locationQueue       = [];
         var alertsQueue         = [];
@@ -395,7 +395,7 @@
          }
 
         function startPlayBack(){
-
+               
 
                 if($('#fromDate').val()== ""){
                   alertify.alert('From Date required').setHeader('<em> PLAYBACK</em>');
@@ -406,7 +406,7 @@
                   alertify.alert('To Date required').setHeader('<em> PLAYBACK</em>');
                   return false;
                 }
-
+           
                $(".start_button").css("display","none");
                 loader      =   true;
                 // speed_val   =   $('#speed').val();
@@ -430,7 +430,7 @@
                 $('#cover_date_time_picker').append('<div class="col-sm-6 col-date-outer"><span class="datetime_searched"> '+from_date+ ' - '+to_date+' </span><span onclick="resetDate()" class="close-span-rt"><i class="fa fa-times"></i></span></div>');
                 }
 
-
+               
 
 
         }
@@ -453,14 +453,14 @@
             // --------2019-12-19-2:20--------------------------------------------------------
             var mapUpdateInterval   = window.setInterval(function(){
              dataShownOnList();
-
+          
              }, 500);
             // --------2019-12-19-2:20-----------------------------------------
 
 
             isDataLoadInProgress = true;
             var Objdata = {
-                vehicleid: $('#vehicle_id').val(),
+                vehicleid: $('#vehicle_id').val(), 
                 fromDateTime: $('#fromDate').val(),
                 toDateTime: $('#toDate').val(),
                  offset: offset
@@ -499,13 +499,13 @@
                         first_response=true;
                         total_offset=response.total_offset;
                         if(offset < total_offset){
-
+                        
                          locationStore(response.playback);
                          alertStore(response.alerts);
                          offset = offset+1;
                           if(offset==total_offset){
                             last_offset=true;
-
+                      
                           }
                         }
                     }
@@ -527,16 +527,16 @@
                              return false;
                             // console.log('No more data to display');
                         }
-
+                       
                     }
                 },
                 failure: function (response) {
-
+                 
                 },
                 error: function (response) {
-
+                 
                 }
-            });
+            }); 
         }
 
         function alertStore(alerts){
@@ -554,20 +554,20 @@
             }
           }
         }
-        var previous_vehicle_mode = null;
+        var previous_vehicle_mode = null; 
         function locationStore(data)
-        {
-
+        {   
+              
             for (var i = 0; i < data.length; i++)
             {
 
 
                    var current_vehicle_mode =  data[i].vehicleStatus;
-
+                   
                   if(first_set_data==true){
                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
-                      previous_data={
-                                        "lat"   : data[i].latitude,
+                      previous_data={   
+                                        "lat"   : data[i].latitude, 
                                         "lng"   : data[i].longitude,
                                         "angle" : data[i].angle,
                                         "mode"  : data[i].vehicleStatus
@@ -582,13 +582,13 @@
                       // console.log("previous_vehicle_mode"+previous_vehicle_mode);
                       // console.log('same mode :- '+current_vehicle_mode);
                       // debugger;
-
+                     
                    }else{
 
                     if(first_set_data==true){
                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
-                      previous_data={
-                                        "lat"   : data[i].latitude,
+                      previous_data={   
+                                        "lat"   : data[i].latitude, 
                                         "lng"   : data[i].longitude,
                                         "angle" : data[i].angle,
                                         "mode"  : data[i].vehicleStatus
@@ -603,29 +603,29 @@
 
                       createNewCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus,total_distance,previous_data);
 
-                      previous_data = {
-                                        "lat"   : data[i].latitude,
+                      previous_data = {   
+                                        "lat"   : data[i].latitude, 
                                         "lng"   : data[i].longitude,
                                         "angle" : data[i].angle,
                                         "mode"  : data[i].vehicleStatus
                                       };
 
 
-                    // location_data_que.push({
-                    //           "lat"   : data[i].latitude,
+                    // location_data_que.push({   
+                    //           "lat"   : data[i].latitude, 
                     //           "lng"   : data[i].longitude,
                     //           "angle" : data[i].angle,
                     //           "mode"  : data[i].vehicleStatus
                     //       });
 
                     }
-
+                    
                     previous_vehicle_mode = null;
                     }
                    previous_vehicle_mode  = data[i].vehicleStatus;
                   // --------2019-12-19-2:20--------------------------------------------------------
                    location_details_que.push({
-                                                "lat"   : data[i].latitude,
+                                                "lat"   : data[i].latitude, 
                                                 "lng"   : data[i].longitude,
                                                 "angle" : data[i].angle,
                                                 "mode"  : data[i].vehicleStatus,
@@ -641,17 +641,17 @@
                 {
                     dataLoadingCompleted = true;
                     // console.log('data loading completed');
-                }
+                } 
 
 
-
-
+              
+                  
             }
         }
 
         function firstCoods(lat,lng,angle,mode){
-           location_data_que.push({
-                              "lat"   : lat,
+           location_data_que.push({   
+                              "lat"   : lat, 
                               "lng"   : lng,
                               "angle" : angle,
                               "mode"  : mode
@@ -668,35 +668,35 @@
 
           var new_coord = gis.createCoord(start, angle, distance);
           var pCoordinates;
-
-          for (var i = 0; i < distance/playback_speed_rate; i++) {
+          
+          for (var i = 0; i < distance/playback_speed_rate; i++) {   
                 bearing = gis.getBearing(start, end);
                 new_coord = gis.createCoord(start, bearing, i);
 
                 if (i > 0) {
                     if (pCoordinates != new_coord[0]) {
-
-                        location_data_que.push({
-                              "lat"   : new_coord[0],
+                        
+                        location_data_que.push({   
+                              "lat"   : new_coord[0], 
                               "lng"   : new_coord[1],
                               "angle" : angle,
                               "mode"  : mode
                           });
 
-
-
+                        
+                    
 
                     }
-
-
+                  
+                  
                 }
                 pCoordinates = new_coord;
-
+                
             }
-
+      
         }
 
-
+     
 
         function plotLocationOnMap()
         {
@@ -708,11 +708,11 @@
                  if(loader == false){
                  $("#lorder-cover-bg-image").css("display","none");
                 }
-
+               
                 moveMap(location_data_que[0].lat,location_data_que[0].lng);
                 // create start marker
                 if(first_point==true){
-
+                    
                      var madridMarker = new H.map.Marker({lat:location_data_que[0].lat, lng:location_data_que[0].lng},{ icon: start_icon});
                      map.addObject(madridMarker);
                 }
@@ -726,7 +726,7 @@
                     endPointLatitude    = location_data_que[0].lat;
                     endPointLongitude   = location_data_que[0].lng;
                     vehicle_mode        = location_data_que[0].mode;
-                    // calculate the direction of movement
+                    // calculate the direction of movement   
                     // var direction = calculateCarDirection(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
 
                     var direction    =  location_data_que[0].angle;
@@ -743,10 +743,10 @@
                 popFromLocationQueue();
                 // want to load new set of data ?
 
-
-
-
-
+        
+            
+                   
+                
                 if( (location_data_que.length < location_queue_lower_limit ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
                 {
                     getLocationData();
@@ -755,16 +755,16 @@
                 // stop point
 
                 if(last_offset==true && location_data_que.length ==0){
+                     
 
-
-
+                     
                      var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
                      map.addObject(flag);
-
+                     
 
                 }
                 // stop point
-
+                
              }else{
                 if( (location_data_que.length < location_queue_lower_limit ) && ( !isDataLoadInProgress ) && (!dataLoadingCompleted) )
                 {
@@ -772,7 +772,7 @@
                 }
 
                 if(last_offset==true && location_data_que.length ==0){
-
+                     
                      var flag = new H.map.Marker({lat:startPointLatitude, lng:startPointLongitude},{ icon: stop_icon});
                      map.addObject(flag);
 
@@ -783,14 +783,14 @@
         }
 
         /**
-         *
-         *
+         * 
+         * 
          */
         function popFromLocationQueue()
         {
             if(location_data_que.length > 0)
             {
-                return location_data_que.splice(0,1)[0];
+                return location_data_que.splice(0,1)[0];    
             }
             else
             {
@@ -817,7 +817,7 @@
 
         function getDegree(lat1, long1, lat2, long2)
         {
-
+    
             var dLon = (long2 - long1);
             var y = Math.sin(dLon) * Math.cos(lat2);
             var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
@@ -850,7 +850,7 @@
                 map.removeObject(bearsMarkeronStartPoint);
                 blPlaceCaronMap = false;
             }
-
+            
             if(vehicle_mode=="M")
              {
               objImg.src = vehicle_online;
@@ -863,7 +863,7 @@
              }else{
               objImg.src = vehicle_offline;
              }
-
+            
             el = objImg;
             var carDirection = RotateDegree;
             if (el.style.transform.includes("rotate")) {
@@ -883,7 +883,7 @@
             if(lat != undefined && lng != undefined){
               alertPlotOnMap(lat,lng);
              }
-
+            
             blPlaceCaronMap = true;
     }
         // --------2019-12-19-2:20--------------------------------------------------------
@@ -902,18 +902,18 @@
 
             var status = "";
             if(mode=="M"){
-              status="<span style='color:#84b752 !important'>ONLINE<span>";
+              status="<span style='color:#84b752 !important'>ONLINE<span>";     
             }else if(mode=="S"){
-              status="<span style='color:#858585 !important;'>SLEEP<span>";
-            }else if(mode=="H"){
-              status="<span style='color:#69b4b9 !important'>HALT<span>";
+              status="<span style='color:#858585 !important;'>SLEEP<span>";     
+            }else if(mode=="H"){ 
+              status="<span style='color:#69b4b9 !important'>HALT<span>";     
             }else{
-              status="<span style='color:#c41900 !important'>OFFLINE<span>";
+              status="<span style='color:#c41900 !important'>OFFLINE<span>";     
             }
-
+            
              var location_name = await getPlaceName(lat,lng).then(function(data){
                     var location_data = JSON.stringify(data.Response.View);
-               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
+               return location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label; 
              });
 
              // var location_name = lat+","+lng;
@@ -929,7 +929,7 @@
                                 ' km/h <p class="datetime_cover datetime_cover1" id="date">'+date+'</p>'+
                                 '<div class="left-alert-time "></div>'+
                             '</div>';
-             $('#location_details').remove()
+             $('#location_details').remove()            
              $("#details").prepend(details);
              popDetailsLocationQueue();
 
@@ -976,7 +976,7 @@
         {
             if(location_details_que.length > 0)
             {
-                return location_details_que.splice(0,1)[0];
+                return location_details_que.splice(0,1)[0];    
             }
             else
             {
@@ -991,7 +991,7 @@
         {
             if(location_details_que.length > 0)
             {
-                return location_details_que.splice(0,1)[0];
+                return location_details_que.splice(0,1)[0];    
             }
             else
             {
@@ -1003,8 +1003,8 @@
 
 
 
-         function alertPlotOnMap(lat,lng){
-                alertsQueue.find(function(x,i){
+         function alertPlotOnMap(lat,lng){   
+                alertsQueue.find(function(x,i){  
                if(x != undefined)
                {
                  var start = [lat,lng];
@@ -1015,7 +1015,7 @@
                         addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
                         }
                         alertsQueue.splice(0,1)[i];
-
+                    
                   }
                  }
                 },lat,lng);
@@ -1075,12 +1075,12 @@
          location.reload(true);
        }
 
-
+    
 
 
     </script>
  <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
-
+    
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
@@ -1099,60 +1099,45 @@ $(function() {
   fundamental_date=d.setMonth(d.getMonth() - 1);
   superior_date=d.setMonth(d.getMonth() - 2);
   pro_date=d.setMonth(d.getMonth() - 2);
-
-  var date = new Date();
-  var currentMonth = date.getMonth();
-  var currentDate = date.getDate();
-  var currentYear = date.getFullYear();
-
-
   $('#datepickerFreebies').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-1, currentDate)
-        // minDate:free_date
+        minDate:free_date
   });
   $('#todatepickerFreebies').datetimepicker({
       format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-1, currentDate)
-        // minDate:free_date
+        minDate:free_date
   });
   $('#datepickerFundamental').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-2, currentDate)
-        // minDate:fundamental_date
+        minDate:fundamental_date
   });
   $('#todatepickerFundamental').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-2, currentDate)
-        // minDate:fundamental_date
+        minDate:fundamental_date
   });
   $('#datepickerSuperior').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-4, currentDate)
-        // minDate:superior_date
+        minDate:superior_date
   });
   $('#todatepickerSuperior').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-4, currentDate)
-        // minDate:superior_date
+        minDate:superior_date
   });
   $('#datepickerPro').datetimepicker({
         format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-6, currentDate)
-        // minDate:pro_date
+        minDate:pro_date
   });
   $('#todatepickerPro').datetimepicker({
     format: 'Y-MM-DD HH:mm:ss',
         maxDate: new Date(),
-        minDate: new Date(currentYear, currentMonth-6, currentDate)
-        // minDate:pro_date
+        minDate:pro_date
   });
   // $('#datetimepicker_live1').datetimepicker({
   //   format: 'YYYY-MM-DD HH:mm:ss',
@@ -1178,88 +1163,81 @@ jQuery("#preloader").delay(1000).fadeOut("slow");
 
 });
 </script>
-<script>
-  $('#todatepickerFreebies').on('dp.change', function(e) {
+<script> 
+  $('#todatepickerFreebies').on('dp.change', function(e) {    
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
+    var endDate = $("#toDate").val();   
 // alert(e.date);
-
+     
 
     if( new Date(startDate) > new Date(endDate)){
       alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      $("#toDate").val(startDate);
-      // document.getElementById("toDate").value = "";
+      document.getElementById("toDate").value = "";
     }
   });
   $("#datepickerFreebies").on('dp.change', function (e) {
-
+   
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
+    var endDate = $("#toDate").val();   
+
+    if( new Date(startDate) > new Date(endDate)){    
       alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      $("#fromDate").val(endDate);
-      // document.getElementById("fromDate").value = "";
-    }
-  });
+      document.getElementById("fromDate").value = "";
+    }   
+  });  
 
-  $('#todatepickerFundamental').on('dp.change', function(e) {
+  $('#todatepickerFundamental').on('dp.change', function(e) {    
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
+    var endDate = $("#toDate").val();   
     if( new Date(startDate) > new Date(endDate)){
       alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("toDate").value = "";
-      $("#toDate").val(startDate);
+      document.getElementById("toDate").value = "";
     }
   });
   $("#datepickerFundamental").on('dp.change', function (e) {
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){    
       alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("fromDate").value = "";
-      $("#fromDate").val(endDate);
-    }
-  });
-  $('#todatepickerSuperior').on('dp.change', function(e) {
+      document.getElementById("fromDate").value = "";
+    }   
+  });  
+  $('#todatepickerSuperior').on('dp.change', function(e) {    
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
+    var endDate = $("#toDate").val();   
     if( new Date(startDate) > new Date(endDate)){
       alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("toDate").value = "";
-      $("#toDate").val(startDate);
+      document.getElementById("toDate").value = "";
     }
   });
   $("#datepickerSuperior").on('dp.change', function (e) {
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){    
       alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("fromDate").value = "";
-      $("#fromDate").val(endDate);
-    }
-  });
-   $('#todatepickerPro').on('dp.change', function(e) {
+      document.getElementById("fromDate").value = "";
+    }   
+  }); 
+   $('#todatepickerPro').on('dp.change', function(e) {    
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
+    var endDate = $("#toDate").val();   
     if( new Date(startDate) > new Date(endDate)){
       alertify.alert("End date should be greater than start date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("toDate").value = "";
-      $("#toDate").val(startDate);
+      document.getElementById("toDate").value = "";
     }
   });
   $("#datepickerPro").on('dp.change', function (e) {
     var startDate = $("#fromDate").val();
-    var endDate = $("#toDate").val();
-    if( new Date(startDate) > new Date(endDate)){
+    var endDate = $("#toDate").val();   
+    if( new Date(startDate) > new Date(endDate)){    
       alertify.alert("Start date should be less than end date").setHeader('<em> PLAYBACK</em>');
-      // document.getElementById("fromDate").value = "";
-      $("#fromDate").val(endDate);
-    }
-  });
-
+      document.getElementById("fromDate").value = "";
+    }   
+  });         
+ 
 </script>
 
-
+  
     <script>
     $(function() {
 
@@ -1320,7 +1298,7 @@ jQuery("#preloader").delay(1000).fadeOut("slow");
 }
 
 .back_button_image-1 {
-
+   
     margin-top: 2%;
     position: absolute;
     margin-left: -2%;
@@ -1375,10 +1353,10 @@ width: 228px;
 
 }
 .left-alert-inner-1 {
-
+   
     background: #fff;
     padding: 10px 0;
-   box-shadow: none ;
+   box-shadow: none ; 
     border-radius: 4px;
 }
 .left-alert-text p.datetime_cover1{
@@ -1544,7 +1522,7 @@ position: relative;
 
 .dropdown-toggle {
     cursor: pointer;
-    color:red;
+    color:red; 
 }
 .notification-icon {
     position: absolute;
@@ -1565,7 +1543,7 @@ position: relative;
     line-height: 100%;
     z-index: 9;
     font-size: 0.7em;}
-
+ 
 .dropdown {
     display: none;
     position: absolute;
@@ -1601,29 +1579,29 @@ content: "";
     border-width: 0 8px 7px 7px;
     border-style: solid;
     border-color: #fff transparent;
-}
+}    
 
-
+ 
 .dropdown li {
   list-style-type: none;
   border-top: 1px solid #f1eee1;
-}
-
+}   
+ 
 .dropdown li:hover{
   background-color:#fffbee;
 }
-
+    
 .dropdown li:first-child {
       list-style-type: none;
     border-top: none;
     margin-top: -10px;
     padding-top: 4px;
 }
-
+    
 .dropdown .fa-circle{
     font-size: 15px;
-    color: rgba(115, 187, 22, 1);
-}
+    color: rgba(115, 187, 22, 1);  
+} 
     .dropdown ul{
 margin: 0px;
     padding: 0px;
@@ -1632,13 +1610,13 @@ margin: 0px;
     overflow-y: scroll;
     max-height: 165px;
   }
-
-
+  
+  
 .dropdown li a {
 text-decoration: none;
     padding: 10px 1em;
     display: block;
-
+    
     font-size:1em;
     width: 100%;
     font-weight: 600;
@@ -1653,16 +1631,16 @@ text-decoration: none;
   display: block;
   color: black;
 }
-
+ 
 /*View All Notification*/
 .dropdown .fa-list{
     font-size: 15px;
     padding:5px;
-    color: rgba(115, 187, 22, 1);
+    color: rgba(115, 187, 22, 1); 
     border: 2px solid rgba(115, 187, 22, 1);
     border-radius: 100%;
 }
-
+    
 
   .notification-list-name{
       margin: 0px;
@@ -1704,7 +1682,7 @@ margin: 0px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.notification::before,
+.notification::before, 
 .notification::after {
     color: #fff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
