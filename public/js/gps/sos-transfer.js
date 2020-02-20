@@ -162,7 +162,7 @@ $('.clientData').on('change', function() {
 
 $('.traderToClientData').on('change', function() {
     var clientUserID=this.value;
-    var purl = getUrl() + '/'+'sos-transfer-trader-to-client-dropdown' ;
+    var purl = getUrl() + '/'+'sos-transfer-trader-to-end-user-dropdown' ;
     var data = { client_user_id : clientUserID };
     $.ajax({
         type:'POST',

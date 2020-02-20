@@ -16,7 +16,7 @@ function callBackDataTable(){
         deferRender: true,
         order: [[1, 'desc']],
         ajax: {
-            url: 'gps-transferred-list-trader-to-client',
+            url: 'gps-transferred-list-trader-to-end-user',
             type: 'POST',
             data: {
                 'data': data
