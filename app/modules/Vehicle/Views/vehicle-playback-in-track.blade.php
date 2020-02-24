@@ -207,6 +207,8 @@
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
 
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
+       <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+
 
     <script>
         var km_data           = 0;
