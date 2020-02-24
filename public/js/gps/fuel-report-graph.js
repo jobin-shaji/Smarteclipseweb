@@ -13,10 +13,10 @@ function getFuelGraphDetails()
         var url = 'fuel-graph';
         var data = {
             gps_id:gps_id,date:date
-        };   
+        };
         backgroundPostData(url, data, 'fuelGraph', {alert: false});
     }
-  
+
 }
 function callBackDataTable(gps_id,date)
 {
@@ -40,7 +40,7 @@ function callBackDataTable(gps_id,date)
         },
         createdRow: function ( row, data, index ) {
         },
-       
+
         fnDrawCallback: function (oSettings, json) {
 
         },
@@ -51,7 +51,7 @@ function callBackDataTable(gps_id,date)
             {data: 'percentage', name: 'percentage', orderable: false},
             {data: 'created_at', name: 'created_at', orderable: false}
         ],
-        
+
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
@@ -60,6 +60,16 @@ function fuelGraph(res)
 {
     if(res.status == 1)
     {
+        // res.fuel_km.km
+       var fuel_km= '<div class="col-lg-3 col-xs-6 gps_dashboard_grid km_grid">'+
+        '<div class="small-box bg-green bxs">'+
+          '<div class="inner">'+
+            '<h3 >KM : '+res.fuel_km.km+
+            '</h3>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+        $('#fuel_km').append(fuel_km);
         $('#fuel_graph').show();
         //line graph
         var fuel_chart_container = document.getElementById("fuel_graph").getContext('2d');
@@ -95,13 +105,14 @@ function fuelGraph(res)
                     labelString: 'Percentage'
                     }
                 }]
-                } 
+                }
             }
         });
     }
     else
     {
+        $('#fuel_km').text('');
         $('#fuel_graph').hide();
     }
-    
+
 }
