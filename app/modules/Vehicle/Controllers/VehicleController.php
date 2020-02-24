@@ -1410,6 +1410,165 @@ class VehicleController extends Controller
         return response()->json($response_data);
     }
 
+    public function locationFirebase(Request $request)
+    {
+        $user                   =   \Auth::user();
+        $user_role              =   $user->roles->first()->name;
+        $decrypted_vehicle_id   =   Crypt::decrypt($request->id);
+        $vehicle_details        =   Vehicle::find($decrypted_vehicle_id);
+        $vehicle_type           =   VehicleType::find($vehicle_details->vehicle_type_id);
+        $track_data             =   Gps::select('lat as latitude',
+                                            'lon as longitude'
+                                    )
+                                    ->where('id',$vehicle_details->gps_id)
+                                    ->first();
+        if($track_data==null)
+        {
+            $request->session()->flash('message', 'No Data Received From GPS!!!');
+            $request->session()->flash('alert-class', 'alert-success');
+            if($user_role   ==  'client')
+            {
+                return redirect(route('vehicle'));
+            }
+            else if($user_role  ==  'root')
+            {
+                return redirect(route('vehicle-root'));
+            }
+        }
+        else if($track_data->latitude==null || $track_data->longitude==null)
+        {
+            $request->session()->flash('message', 'No Data Received From GPS!!!');
+            $request->session()->flash('alert-class', 'alert-success');
+             if($user_role  ==  'client')
+            {
+                return redirect(route('vehicle'));
+            }
+            else if($user_role  ==  'root')
+            {
+                return redirect(route('vehicle-root'));
+            }
+        }
+        else
+        {
+            $latitude   =   $track_data->latitude;
+            $longitude  =   $track_data->longitude;
+        }
+
+        $snap_route     =   $this->LiveSnapRoot($latitude,$longitude);
+        $latitude       =   $snap_route['lat'];
+        $longitude      =   $snap_route['lng'];
+
+        $url            =   url()->current();
+        $rayfleet_key   =   "rayfleet";
+        $eclipse_key    =   "eclipse";
+        if (strpos($url, $rayfleet_key) == true) 
+        {
+                return view('Vehicle::vehicle-tracker-rayfleet-firebase',['Vehicle_id' => $decrypted_vehicle_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+        }
+        else if (strpos($url, $eclipse_key) == true) 
+        {
+            return view('Vehicle::vehicle-tracker-firebase',['Vehicle_id' => $decrypted_vehicle_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+        }
+        else
+        {
+            return view('Vehicle::vehicle-tracker-firebase',['Vehicle_id' => $decrypted_vehicle_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+        }
+
+    }
+
+    public function locationTrackFirebase(Request $request)  //from firebase
+    {
+        $vehicle_details                    =   Vehicle::find($request->vehicle_id);
+        if($request->livetrack)
+        {
+            $currentDateTime                =   Date('Y-m-d H:i:s');
+            $last_update_time               =   date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
+            $connection_lost_time_motion    =   date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_motion').""));
+            $connection_lost_time_halt      =   date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_halt').""));
+            $connection_lost_time_sleep     =   date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.connection_lost_time_sleep').""));
+            $vehicle_mode                   =   $request->livetrack['mode'];
+            $gsm_signal_strength            =   $request->livetrack['gsm_signal_strength'];
+
+            $device_time                    =   $request->livetrack['device_time'];
+            $latitude                       =   $request->livetrack['lat'];
+            $longitude                      =   $request->livetrack['lon'];
+            
+            if( $device_time <  $last_update_time )
+            {
+                $vehicle_mode               =   "Offline";
+                $gsm_signal_strength        =   "Connection Lost";
+            }
+            $connection_lost_time_minutes   =   date('d-m-Y h:i:s a', strtotime($device_time));
+            $place_name                     =   $this->getPlacenameFromLatLng($latitude,$longitude);
+            //$snap_route                     =   $this->LiveSnapRoot($latitude,$longitude);
+            if(\Auth::user()->hasRole('pro|superior')){
+                $fuel_status                =   $request->livetrack['fuel_status'];
+            }
+            else
+            {
+                $fuel_status="UPGRADE VERSION";
+            }
+            if(\Auth::user()->hasRole('fundamental|pro|superior')){
+                $ac_status                  =   $request->livetrack['ac_status'];
+                if($ac_status == 1)
+                {
+                    $ac_status              =   "ON";
+                }else
+                {
+                    $ac_status              =   "OFF";
+                }
+            }
+            else
+            {
+                $ac_status                  =   "UPGRADE VERSION";
+            }
+            $last_seen                      =   date('d-m-Y h:i:s a', strtotime($device_time));
+            $gps_meter                      =   $request->livetrack['km'];
+            $gps_km                         =   $gps_meter/1000;
+            $odometer                       =   round($gps_km);
+
+            $reponseData=array(
+                        "latitude"                      =>  $latitude ,//floatval($snap_route['lat']),
+                        "longitude"                     =>  $longitude, //floatval($snap_route['lng']),
+                        "angle"                         =>  $request->livetrack['heading'],
+                        "vehicleStatus"                 =>  $vehicle_mode,
+                        "speed"                         =>  round($request->livetrack['speed']),
+                        "dateTime"                      =>  $device_time,
+                        "power"                         =>  $request->livetrack['main_power_status'],
+                        "ign"                           =>  $request->livetrack['ignition'],
+                        "battery_status"                =>  round($request->livetrack['battery_status']),
+                        "signalStrength"                =>  $gsm_signal_strength,
+                        "connection_lost_time_motion"   =>  $connection_lost_time_motion,
+                        "connection_lost_time_halt"     =>  $connection_lost_time_halt,
+                        "connection_lost_time_sleep"    =>  $connection_lost_time_sleep,
+                        "last_seen"                     =>  $last_seen,
+                        "connection_lost_time_minutes"  =>  $connection_lost_time_minutes,
+                        "fuel"                          =>  $fuel_status,
+                        "ac"                            =>  $ac_status,
+                        "place"                         =>  $place_name,
+                        "fuelquantity"                  =>  "",
+                        "odometer"                      =>  $odometer
+                      );
+            $response_data = array( 'status'        => 'success',
+                                    'message'       => 'success',
+                                    'code'          =>  1,
+                                    'vehicle_type'  => $vehicle_details->vehicleType->name,
+                                    'client_name'   => $vehicle_details->client->name,
+                                    'vehicle_reg'   => $vehicle_details->register_number,
+                                    'vehicle_name'  => $vehicle_details->name,
+                                    'liveData'      => $reponseData
+                            );
+        }
+        else
+        {
+            $response_data = array( 'status'        => 'failed',
+                                    'message'       => 'failed',
+                                    'code'          =>  0
+                                );
+        }
+        return response()->json($response_data);
+    }
+
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
