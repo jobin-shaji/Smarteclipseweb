@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Reports\Models\FuelUpdate;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\DailyKm;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
 use DataTables;
-
 class FuelReportController extends Controller
 {
     public function fuelReport()
@@ -24,8 +24,8 @@ class FuelReportController extends Controller
         ->where('client_id', $client_id)
         ->withTrashed()
         ->get();
-        return view('Reports::fuel-report',['vehicles' =>$client_vehicles]);  
-    }  
+        return view('Reports::fuel-report',['vehicles' =>$client_vehicles]);
+    }
     public function fuelReportList(Request $request)
     {
         $gps_id     =   $request->gps_id;
@@ -33,15 +33,15 @@ class FuelReportController extends Controller
 
         $fuel_details = FuelUpdate::select(
             'id',
-            'gps_id', 
-            'percentage',    
+            'gps_id',
+            'percentage',
             'created_at'
         )
         ->where('gps_id', $gps_id)
         ->with('gps.vehicle')
         ->whereDate('created_at',$date)
         ->orderBy('created_at', 'ASC')
-        ->get();  
+        ->get();
         return DataTables::of($fuel_details)
         ->addIndexColumn()
         ->addColumn('vehicle', function ($fuel_details) {
@@ -58,13 +58,19 @@ class FuelReportController extends Controller
         $gps_id     =   $request->gps_id;
         $date       =   date('Y-m-d',strtotime($request->date));
         $fuel_details = FuelUpdate::select(
-            'percentage',    
+            'percentage',
             'created_at'
         )
         ->where('gps_id', $gps_id)
         ->whereDate('created_at',$date)
         ->orderBy('created_at', 'ASC')
-        ->get();  
+        ->get();
+        $fuel_km = DailyKM::select(
+            'km'
+        )
+        ->where('gps_id', $gps_id)
+        ->whereDate('date',$date)
+        ->first();
         if(sizeof($fuel_details) != 0)
         {
             $percentage = [];
@@ -78,7 +84,8 @@ class FuelReportController extends Controller
                 'status'    =>  1,
                 'message'   =>  'success',
                 "percentage"=>  $percentage,
-                "date_time" =>  $date_time
+                "date_time" =>  $date_time,
+                "fuel_km"   =>  $fuel_km
             );
         }
         else{
@@ -87,7 +94,7 @@ class FuelReportController extends Controller
                 'message'   =>  'failed'
             );
         }
-        return response()->json($response); 
+        return response()->json($response);
     }
-    
+
 }
