@@ -23,12 +23,8 @@ Assign Servicer
       <div class="card-body">
         <div class="table-responsive">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-
-
-            <form method="POST" action="{{route('servicejob.complete.save',$servicer_job->id)}}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
-                  {{csrf_field()}}
                   <div class="card">
                     <div class="card-body">
                       <div class="form-group row" style="float:none!important">
@@ -139,9 +135,6 @@ Assign Servicer
                   </div>
                 </div>
               </div>
-            </form>
-
-
           </div>
         </div>
       </div>

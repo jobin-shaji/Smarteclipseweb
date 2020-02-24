@@ -606,7 +606,10 @@ if($servicer_job->status==0){
             'latitude',
             'longitude',
             'location',
-            'gps_id'
+            'gps_id',
+            'unboxing_checklist',
+            'device_test_scenario',
+            'device_command'
         )
         ->withTrashed()
         ->where('id', $decrypted)
