@@ -114,6 +114,7 @@ Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehic
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+Route::post('/vehicle/{id}/reg_edit','VehicleController@regupdate')->name('reg.update.p');
 Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
 Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');

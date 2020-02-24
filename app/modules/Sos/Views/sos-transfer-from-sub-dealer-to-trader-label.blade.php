@@ -33,16 +33,14 @@
             </div>                   
               <div class="card" style="max-width: 700px;">
                 <div class="row no-gutters">
-                    <div class="col-md-5">
+                    <div class="col-md-7">
                         <?php 
                            $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$sos_transfer->scanned_employee_code.'OrderNumber:'.$sos_transfer->order_number.'InvoiceNumber:'.$sos_transfer->invoice_number;
                         ?>
                         {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
-                      <a href="{{route('sos-transfer-sub-dealer-to-trader-label.export',$sos_transfer->id)}}">
-                        <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
-                      </a>
+                     
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-5">
                         <div class="card-body">
                             <p class="card-text"><b>Order Number : </b> {{$sos_transfer->order_number}} </p>
                             <p class="card-text"><b>Invoice Number : </b> {{$sos_transfer->invoice_number}} </p>
@@ -53,6 +51,11 @@
                               {{$role_details->address}}</p>
                             <p class="card-text"><b>Mobile Number : </b> {{$user_details->mobile}} </p>
                         </div>
+                    </div>
+                    <div class="row no-gutters">
+                    <a href="{{route('sos-transfer-sub-dealer-to-trader-label.export',$sos_transfer->id)}}">
+                        <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
+                      </a>
                     </div>
                 </div>
               </div>

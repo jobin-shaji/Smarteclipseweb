@@ -4,37 +4,37 @@
 @endsection
 @section('content')
 
-<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper page-wrapper-root" style="height:auto!important;margin: 10px 52px;background: #f8f9fa;">
   <div class="page-wrapper-root1"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer Confirmation Form</li>
         <b>SOS Transfer Confirmation Form </b>
-        @if(Session::has('message'))
+        </ol>
+    </nav>
+    @if(Session::has('message'))
         <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
             {{ Session::get('message') }}  
           </div>
         </div>
         @endif
-      </ol>
-    </nav>
-    
+        <br>
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('sos-transfer-trader-to-client-proceed.create.p')}}">
+        <form  method="POST" action="{{route('sos-transfer-trader-to-end-user-proceed.create.p')}}">
         {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
               <div class="form-group has-feedback">
-                <label>Client Name</label>
+                <label>End User Name</label>
                 <select class="form-control"  name="client_user_id" readonly>
                   <option value="{{$client_user_id}}">{{$client_name}}</option>
                 </select>
               </div>
 
               <div class="form-group has-feedback">
-                <label>Client Address</label>
+                <label>End User Address</label>
                 <input type="text" class="form-control" name="address" value="{{ $address}}" readonly> 
               </div>
 
@@ -69,7 +69,7 @@
                 <button type="submit" class="btn btn-primary btn-md form-btn ">Proceed</button>
               </div>
               <div class="col-md-1 ">
-                <a href="{{ route('sos-transfer-trader-to-client.create') }}">
+                <a href="{{ route('sos-transfer-trader-to-end-user.create') }}">
                   <button type="button" class="btn btn-md ">Cancel</button>
                 </a>
             </div>

@@ -25,7 +25,7 @@
     
     <div class="card-body">
         <section class="hilite-content">
-            <form  method="POST" action="{{route('gps-transfer-trader-client-proceed.create.p')}}">
+            <form  method="POST" action="{{route('gps-transfer-trader-end-user-proceed.create.p')}}">
             {{csrf_field()}}
             <div class="row">
                 <div class="col-md-12">
