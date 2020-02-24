@@ -4,6 +4,13 @@ function getUrl() {
  var vehiclePath = document.getElementById('svg_con').value;
  var start_lat = document.getElementById('lat').value;
  var start_lng = document.getElementById('lng').value;
+
+  var vehicle_current_location = {
+    'latitude'  : document.getElementById('lat').value,
+    'longitude' : document.getElementById('lng').value,
+  };
+  var start_lng = document.getElementById('lng').value;
+
  var vehicle_scale = document.getElementById('vehicle_scale').value;
  var opacity = document.getElementById('opacity').value;
  var strokeWeight = document.getElementById('strokeWeight').value;
@@ -23,73 +30,14 @@ var vehicleColor = "#0C2161";
 var vehicleScale = vehicle_scale;
 var service;
 
+var vehicle_data = [];
 
-$('document').ready(function(){
-  initMap();
-  setInterval(function() {
-        var url = 'continuous-alert';
-        var data = { 
-          vehicle_id:track_vehicle_id
-        };
-        backgroundPostData(url,data,'continuousAlert',{alert:false});
-  }, 8000);
-
-}); 
-
-function continuousAlert(res){
-    if(res.status == 'success'){
-        var latitude=res.alerts[0].latitude;
-        var longitude=res.alerts[0].longitude;
-        getPlaceNameFromLatLng(latitude,longitude);
-        
-        var modal = document.getElementById('track_alert');
-        modal.style.display = "block";
-        document.getElementById("alert_id").value = res.alerts[0].alert_type_id;
-        document.getElementById("alert_vehicle_id").value = res.vehicle;
-        document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
-        $('#critical_alert_name').text(res.alerts[0].alert_type.description);
-        $('#critical_alert_time').text(res.alerts[0].device_time); 
-    }
-}
-
-function verifyCriticalAlert(){
-    var alert_id = document.getElementById("alert_id").value;
-    var vehicle_id = document.getElementById("alert_vehicle_id").value;
-    var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
-    var url = 'continuous-alert/verify';
-    var data = {
-    id : vehicle_id,
-    alert_id : alert_id
-    };
-    backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
-}
-
-function verifyCriticalAlertResponse(res){
-    if(res){
-        var modal = document.getElementById('track_alert');
-        modal.style.display = "none";
-    }
-}
-
-function initMap(){
-  map = new google.maps.Map(document.getElementById('map'), {
-      center: {
-          lat: parseFloat(start_lat),
-          lng: parseFloat(start_lng)
-      },
-      zoom: 17,
-      fullscreenControl: false,
-      mapTypeId: 'roadmap'
-  });  
-  // marker = new google.maps.Marker({});
-  marker = new SlidingMarker({});
-  // marker = new google.maps.Marker({});
-  map.setOptions({maxZoom:19,minZoom:9});
-  getMarkers();
-  service = new google.maps.places.PlacesService(map);
-}
-
-function getMarkers()  //from firebase
+/**
+ * 
+ * 
+ * 
+ */
+function getFirebaseData()
 {
   var vehicle_id = $("#vehicle_id_data").val();
   firebase.database().ref(notify.user_id+'/livetrack/'+vehicle_id)
@@ -433,7 +381,73 @@ function getMarkers()  //from firebase
 
     track(latitude,longitude,angle);
   });
-   
+}
+
+
+$('document').ready(function(){
+  // get live tracking data
+  getFirebaseData();
+  initMap();
+  setInterval(function() {
+        var url = 'continuous-alert';
+        var data = { 
+          vehicle_id:track_vehicle_id
+        };
+        backgroundPostData(url,data,'continuousAlert',{alert:false});
+  }, 8000);
+
+}); 
+
+function continuousAlert(res){
+    if(res.status == 'success'){
+        var latitude=res.alerts[0].latitude;
+        var longitude=res.alerts[0].longitude;
+        getPlaceNameFromLatLng(latitude,longitude);
+        
+        var modal = document.getElementById('track_alert');
+        modal.style.display = "block";
+        document.getElementById("alert_id").value = res.alerts[0].alert_type_id;
+        document.getElementById("alert_vehicle_id").value = res.vehicle;
+        document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
+        $('#critical_alert_name').text(res.alerts[0].alert_type.description);
+        $('#critical_alert_time').text(res.alerts[0].device_time); 
+    }
+}
+
+function verifyCriticalAlert(){
+    var alert_id = document.getElementById("alert_id").value;
+    var vehicle_id = document.getElementById("alert_vehicle_id").value;
+    var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
+    var url = 'continuous-alert/verify';
+    var data = {
+    id : vehicle_id,
+    alert_id : alert_id
+    };
+    backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
+}
+
+function verifyCriticalAlertResponse(res){
+    if(res){
+        var modal = document.getElementById('track_alert');
+        modal.style.display = "none";
+    }
+}
+
+function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+      center: {
+          lat: parseFloat(vehicle_current_location),
+          lng: parseFloat(vehicle_current_location)
+      },
+      zoom: 17,
+      fullscreenControl: false,
+      mapTypeId: 'roadmap'
+  });  
+  // marker = new google.maps.Marker({});
+  marker = new SlidingMarker({});
+  // marker = new google.maps.Marker({});
+  map.setOptions({maxZoom:19,minZoom:9});
+  service = new google.maps.places.PlacesService(map);
 }
 
 // function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)

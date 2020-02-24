@@ -126,7 +126,7 @@ class VehicleController extends Controller
                 if($vehicles->deleted_at == null){
                         return "
 
-                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location-firebase class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
+                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
 
                          <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"
 
