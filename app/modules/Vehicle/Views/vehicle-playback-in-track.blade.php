@@ -1069,14 +1069,25 @@
        // --------2019-12-19-2:20-------------------------------------------------------
 
 
-       function kmCalculation(lat1,lng1,lat2,lng2) {
-          var start          = [lat1 ,lng1];
-          var end            = [lat2 ,lng2];
-          var total_distance = gis.calculateDistance(start, end);
-          km_data            = km_data+total_distance;
-          $('#km_data').text((km_data/1000).toFixed(2));
+       // function kmCalculation(lat1,lng1,lat2,lng2) {
+       //    var start          = [lat1 ,lng1];
+       //    var end            = [lat2 ,lng2];
+       //    var total_distance = gis.calculateDistance(start, end);
+       //    km_data            = km_data+total_distance;
+       //    $('#km_data').text((km_data/1000).toFixed(2));
 
+       //  }
+
+       function kmCalculation(lat1,lng1,lat2,lng2) {
+
+          var p1 = new google.maps.LatLng(lat1,lng1);
+          var p2 = new google.maps.LatLng(lat2,lng2);
+          var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
+          
+              km_data            = km_data+total_distance;
+             $('#km_data').text((km_data/1000).toFixed(2));
         }
+
        function stopPlayback(){
         location.reload(true);
        }
