@@ -40,7 +40,8 @@ return  [
        'Version',
        'Trader',
        'Monitoring',
-       'VltData'
+       'VltData',
+       'DeviceReturn'
 
     ]
 ]
