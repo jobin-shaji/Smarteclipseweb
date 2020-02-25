@@ -1377,9 +1377,6 @@
                   <img src="assets/images/odometer.png">
                   <h4 class="m-b-0 m-t-5 score_data_text">Odometer</h4>
                   <medium id="odometer" class="font-light">
-                  <img src="assets/images/speed.png">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Speed</h4>
-                  <medium id="speed" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
 
@@ -1391,9 +1388,6 @@
                   <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
                   <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                   <medium id="mode" class="font-light">
-                  <img src="assets/images/odometer.png">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Odometer</h4>
-                  <medium id="odometer" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
 
@@ -1401,13 +1395,6 @@
                   <img src="assets/images/sattelite.png">
                   <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
                   <medium id="satelite" class="font-light">
-                  <img src="assets/images/vehicle-status.png" id="vehicle_status">
-                  <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
-                  <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
-                  <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
-                  <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
-                  <medium id="mode" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
 
@@ -1415,9 +1402,6 @@
                   <img src="assets/images/battery-status.png">
                   <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
                   <medium id="battery_status" class="font-light">
-                  <img src="assets/images/sattelite.png">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
-                  <medium id="satelite" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
 
@@ -1434,27 +1418,9 @@
                     Location
                   </h4>
                   <medium id="address" class="font-light">
-                  <img src="assets/images/battery-status.png">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
-                  <medium id="battery_status" class="font-light">
-                    <i class="fa fa-spinner" aria-hidden="true"></i>
-                </div>
-
-                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
-                  <img src="assets/images/ignition-dashboard.png">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
-                  <medium id="ignition" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
                 <div class="clear"></div>
-                <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 10px!important; float:left;">
-                  <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 10px  0!important">
-                    <img src="assets/images/location.png">
-                    Location
-                  </h4>
-                  <medium id="address" class="font-light" style="width:100%; float:left; line-height: 15px!important;">
-                    <i class="fa fa-spinner" aria-hidden="true"></i>
-                </div>
               </div>
             </div>
           </div>
