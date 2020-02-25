@@ -155,7 +155,7 @@ function getFirebaseData()
 
       // for snap routing
       $.ajax({
-        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
         crossDomain: true,
         dataType: 'jsonp'
       }).done(function(response) {
@@ -398,7 +398,7 @@ function getFirebaseData()
       document.getElementById("car_battery").innerHTML = battery_status;
       //for getting place name 
       $.ajax({
-        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+clickedPointCurrent+'&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo', 
+        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4', 
       }).done(function(response) {
         place = (response.status=="OK")?response.results[1].formatted_address:'';
         document.getElementById("car_location").innerHTML = place;
@@ -415,7 +415,7 @@ function getFirebaseData()
 // function liveSnapRoot(clickedPointCurrent)
 // {
 //   $.ajax({
-//     url: 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+//     url: 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
 //     crossDomain: true,
 //     dataType: 'jsonp'
 //   }).done(function(response) {

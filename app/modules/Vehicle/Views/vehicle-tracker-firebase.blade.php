@@ -80,7 +80,7 @@
 @section('script')
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,geometry,places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing,geometry,places"></script>
 
 <script src="{{asset('js/gps/location-track-firebase.js')}}"></script>
 <script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>

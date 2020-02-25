@@ -45,7 +45,7 @@
 
   @section('script')
     <script src="{{asset('js/gps/geofence-details.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing&callback=initMap"
          async defer></script>
   @endsection
   

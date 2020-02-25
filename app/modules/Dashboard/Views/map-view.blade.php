@@ -220,7 +220,7 @@
 </section>
 @section('script')
 <script src="{{asset('js/gps/map-view.js')}}"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
 </script>
 <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
