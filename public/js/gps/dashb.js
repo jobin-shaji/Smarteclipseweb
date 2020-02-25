@@ -1,8 +1,12 @@
 $(document).ready(function () {
-   
+  $('#fuel_100').hide();
+  $('#fuel_75').hide();
+  $('#fuel_50').hide();
+  $('#fuel_25').hide();
+  $('#fuel_0').hide();
      var url = 'dash-count';
-     var data = { 
-     
+     var data = {
+
      };
 
 
@@ -10,7 +14,7 @@ $(document).ready(function () {
 
 
  //    window.setInterval(function(){
- //    	 backgroundPostData(url,data,'dbcount',{alert:false});  
+ //    	 backgroundPostData(url,data,'dbcount',{alert:false});
 
 	// }, 5000);
 });
@@ -52,30 +56,30 @@ function dbcount(res){
       $('#moving').text(res.moving);
       $('#idle').text(res.idle);
       $('#stop').text(res.stop);
-      $('#offline').text(res.offline);  
-      
+      $('#offline').text(res.offline);
+
       $('#pending_jobs').text(res.pending_jobs);
       $('#pending_service_jobs').text(res.pending_service_jobs);
       $('#completed_jobs').text(res.completed_jobs);
-      $('#service_completed_jobs').text(res.service_completed_jobs);  
-      $('#gps_today').text(res.gps_today); 
-      $('#gps_stock').text(res.gps_stock); 
-      $('#gps').text(res.gps); 
-      $('#gps_add_to_stock').text(res.gps_add_to_stock); 
-      $('#pending_gps').text(res.gps_to_verify); 
-      $('#all_pending_jobs').text(res.all_pending_jobs); 
-      
+      $('#service_completed_jobs').text(res.service_completed_jobs);
+      $('#gps_today').text(res.gps_today);
+      $('#gps_stock').text(res.gps_stock);
+      $('#gps').text(res.gps);
+      $('#gps_add_to_stock').text(res.gps_add_to_stock);
+      $('#pending_gps').text(res.gps_to_verify);
+      $('#all_pending_jobs').text(res.all_pending_jobs);
 
-      
-      
-         
+
+
+
+
 }
 
 //updated all aaaaa
 function getVehicle(value, displayRefreshButton)
-{  
+{
   var url = '/vehicle-detail';
-  var data = { 
+  var data = {
     gps_id : value
   };
   backgroundPostData(url,data,'vehicle_details',{alert:true});
@@ -95,6 +99,7 @@ function vehicle_details(res){
   //console.log(res);
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
+  var fuel=res.fuel_status;
   if(network_status=="Connection Lost"){
     $("#network_offline").show();
     $("#network_online").hide();
@@ -127,8 +132,79 @@ function vehicle_details(res){
     $("#vehicle_sleep").hide();
     $("#vehicle_stop").show();
   }
+  if(fuel == 100+'%')
+  {
+    // $('#fuel_status').text('OOOO');
+    $('#fuel_100').show();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 76+'%')
+  {
+    // $('#fuel_status').text('OOOO');
+    $('#fuel_100').show();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 51+'%')
+  {
+    // $('#fuel_status').text('OOO');
+    $('#fuel_100').hide();
+    $('#fuel_75').show();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 26+'%')
+  {
+    // $('#fuel_status').text('OO');
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').show();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 1+'%')
+  {
+    // $('#fuel_status').text('O');
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').show();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel == 0+'%')
+  {
+    // $('#fuel_status').text('Empty');
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').show();
+    $('.fa-spinner').hide();
+  }
+  else
+  {
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').show();
+    $('.fa-spinner').hide();
+  }
+
+  console.log(res.fuel_status);
   $('#network_status').text(network_status);
-  $('#fuel_status').text(res.fuel_status);
+  // $('#fuel_status').text(res.fuel_status);
   $('#speed').text(res.speed);
   $('#odometer').text(res.odometer);
   $('#mode').text(vehicle_mode);
@@ -140,6 +216,6 @@ function vehicle_details(res){
   }
 
 
-  
+
 
 

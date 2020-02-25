@@ -9,18 +9,18 @@
     <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
     <div class="pageContainer" style="overflow: scroll">
       <div class="col-lg-12">
-        <div class="st-actionContainer right-bottom" >         
-          <div class="right-bottom">                        
-          </div>         
-          <div class="right-bottom2 all_user_gps_data">    
-                 
-            <select id="gps_id" name=""  class="form-control vehicle_gps_id select2"  onchange="getVehicle(this.value)">
+        <div class="st-actionContainer right-bottom">
+          <div class="right-bottom">
+          </div>
+          <div class="right-bottom2 all_user_gps_data">
+
+            <select id="gps_id" name="" class="form-control vehicle_gps_id select2" onchange="getVehicle(this.value)">
               <option value="" disabled selected>Select</option>
               @foreach ($gpss as $gps)
-                 <option  value="{{$gps->id}}">{{$gps->imei}}@if($gps->vehicle)({{$gps->vehicle->name}})@endif</option>
-              @endforeach  
-            </select> 
-                              
+              <option value="{{$gps->id}}">{{$gps->imei}}@if($gps->vehicle)({{$gps->vehicle->name}})@endif</option>
+              @endforeach
+            </select>
+
           </div>
         </div>
       </div>
@@ -32,12 +32,12 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#84b752!important">
-              <!-- <img src="assets/images/moving.png" style="width:100%"> -->
+                <!-- <img src="assets/images/moving.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Moving</span>
-              <span style="float:left;width:100%"  >
-                <h1 id="moving"  class="text-white"  style="font-size:19px;color:#fab03a!important">0</h1>
+              <span style="float:left;width:100%">
+                <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                 <!--  <h5 class="text-white">MOVING</h5> -->
               </span>
             </div>
@@ -48,12 +48,12 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #69b4b9!important">
-               <!--  <img src="assets/images/idling.png" style="width:100%"> -->
+                <!--  <img src="assets/images/idling.png" style="width:100%"> -->
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
-                <h1  id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                <h1 id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                 <!-- <h5 class="text-white">Halt</h5> -->
               </span>
             </div>
@@ -69,7 +69,7 @@
               </h1>
               <span class="track_status">Sleep</span>
               <span style="float:left;width:100%">
-                <h1 id="stop"  class="text-white"  style="font-size:19px;color:#fab03a!important">0</h1>
+                <h1 id="stop" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
                 <!-- <h5 class="text-white">DELAY</h5> -->
               </span>
             </div>
@@ -98,33 +98,74 @@
                -moz-box-shadow: 1px 1px 2px 3px #ccc;
                box-shadow: 1px 1px 21px 1px #ccc">
             <div class="col-6 m-t-15">
-              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;" >
-                <img src="assets/images/network-status.png" id="network_online">
-                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
-                <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
-                <medium id="network_status" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
-              </div>
+              <div style="width: 100%;float: left;">
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
+                  <img src="assets/images/network-status.png" id="network_online">
+                  <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
+                  <medium id="network_status" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
 
-              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;" >
-                <img src="assets/images/fuel-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
-                <medium id="fuel_status" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
+                  <img src="assets/images/fuel-status.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
+                  <!-- <medium id="fuel_status" class="font-light"> -->
+                  <div id="fuel_100" class="fuel-outer">
+                    <ul>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_75" class="fuel-outer">
+                    <ul>
+                      <li id="f75"></li>
+                      <li id="f75"></li>
+                      <li id="f75"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_50" class="fuel-outer">
+                    <ul>
+                      <li id="f50"></li>
+                      <li id="f50"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_25" class="fuel-outer">
+                    <ul>
+                      <li id="f25"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_0" class="fuel-outer">
+                    <ul>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
               </div>
-
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/speed.png">
                 <h4 class="m-b-0 m-t-5 score_data_text">Speed</h4>
                 <medium id="speed" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/odometer.png">
                 <h4 class="m-b-0 m-t-5 score_data_text">Odometer</h4>
                 <medium id="odometer" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
@@ -135,14 +176,14 @@
                 <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
                 <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
                 <medium id="mode" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/sattelite.png">
                 <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
                 <medium id="satelite" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
@@ -156,16 +197,16 @@
                 <img src="assets/images/ignition-dashboard.png">
                 <h4 class="m-b-0 m-t-5 score_data_text">Ingition</h4>
                 <medium id="ignition" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
-                 
-              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 10px;">
-                <h4 class="m-b-0 m-t-5 score_data_text">
+
+              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 14px!important;">
+                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
                   <img src="assets/images/location.png">
-                    Location
+                  Location
                 </h4>
                 <medium id="address" class="font-light">
-                <i class="fa fa-spinner" aria-hidden="true"></i>   
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -179,14 +220,74 @@
 </section>
 @section('script')
 <script src="{{asset('js/gps/map-view.js')}}"></script>
-<script async defer
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
 </script>
 <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
 <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
 <style type="text/css">
-  .container-fluid {padding-left: 0px !important}
+  .container-fluid {
+    padding-left: 0px !important
+  }
+
+  .fuel-outer {
+    width: 67px;
+    float: right;
+    display: block;
+    margin-top: 6px;
+  }
+
+  .fuel-outer ul {
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #f100 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #74ce12;
+  }
+
+  #f75 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #c78307;
+  }
+
+  #f50 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #f79f1c;
+  }
+
+  #f25 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #f51902;
+  }
+
+  #f0 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #cecece;
+  }
+
+  .fuel-outer ul li:last-child {
+    margin-right: 0;
+  }
 </style>
 
 

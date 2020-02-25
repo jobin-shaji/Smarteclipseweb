@@ -1,16 +1,21 @@
-$(document).ready(function () {   
+$(document).ready(function () {
+  $('#fuel_100').hide();
+  $('#fuel_75').hide();
+  $('#fuel_50').hide();
+  $('#fuel_25').hide();
+  $('#fuel_0').hide();
   var url = 'root-vehicle-mode-count';
-  var data = {      
+  var data = {
   };
   // window.setInterval(function(){
   backgroundPostData(url,data,'vehicleModeCount',{alert:true});
-  // }, 5000);   
+  // }, 5000);
 });
 function vehicleModeCount(res){
   $('#moving').text(res.moving);
   $('#idle').text(res.idle);
   $('#stop').text(res.stop);
-  $('#offline').text(res.offline);      
+  $('#offline').text(res.offline);
 }
 var latMap = 20.593683;
 var lngMap = 78.962883;
@@ -360,7 +365,7 @@ function redarLocationSelectVehicle(lat, lng, radius) {
  };
  cityCircle = new google.maps.Circle(sunCircle);
 
- 
+
  circleStatus=1;
 }
 
@@ -399,12 +404,12 @@ $('.cover_track_data').click(function(){
 
 $(document).ready(function () {
   var url = 'dash-count';
-  var data = { 
-     
+  var data = {
+
   };
   backgroundPostData(url,data,'dbcount',{alert:true});
  //    window.setInterval(function(){
- //      backgroundPostData(url,data,'dbcount',{alert:false});  
+ //      backgroundPostData(url,data,'dbcount',{alert:false});
 
   // }, 5000);
 });
@@ -428,14 +433,14 @@ function dbcount(res){
       $('#moving').text(res.moving);
       $('#idle').text(res.idle);
       $('#stop').text(res.stop);
-      $('#offline').text(res.offline);      
+      $('#offline').text(res.offline);
 }
 
 //vehicle deatails in right side box of dashboard
 function getVehicle(value)
-{  
+{
   var url = '/vehicle-detail';
-  var data = { 
+  var data = {
     gps_id : value
   };
   backgroundPostData(url,data,'vehicle_details',{alert:true});
@@ -443,6 +448,7 @@ function getVehicle(value)
 function vehicle_details(res){
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
+  var fuel=res.fuel_status;
   if(network_status=="Connection Lost"){
     $("#network_offline").show();
     $("#network_online").hide();
@@ -475,8 +481,77 @@ function vehicle_details(res){
     $("#vehicle_sleep").hide();
     $("#vehicle_stop").show();
   }
+  if(fuel == 100+'%')
+  {
+    // $('#fuel_status').text('OOOO');
+    $('#fuel_100').show();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 76+'%')
+  {
+    // $('#fuel_status').text('OOOO');
+    $('#fuel_100').show();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 51+'%')
+  {
+    // $('#fuel_status').text('OOO');
+    $('#fuel_100').hide();
+    $('#fuel_75').show();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 26+'%')
+  {
+    // $('#fuel_status').text('OO');
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').show();
+    $('#fuel_25').hide();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel >= 1+'%')
+  {
+    // $('#fuel_status').text('O');
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').show();
+    $('#fuel_0').hide();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel == 0+'%')
+  {
+    // $('#fuel_status').text('Empty');
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').show();
+    $('.fa-spinner').hide();
+  }
+  else
+  {
+    $('#fuel_100').hide();
+    $('#fuel_75').hide();
+    $('#fuel_50').hide();
+    $('#fuel_25').hide();
+    $('#fuel_0').show();
+    $('.fa-spinner').hide();
+  }
   $('#network_status').text(network_status);
-  $('#fuel_status').text(res.fuel_status);
+  // $('#fuel_status').text(res.fuel_status);
   $('#speed').text(res.speed);
   $('#odometer').text(res.odometer);
   $('#mode').text(vehicle_mode);
@@ -484,5 +559,5 @@ function vehicle_details(res){
   $('#battery_status').text(res.battery_status);
   $('#ignition').text(res.ignition);
   var address=res.address;
-  $('#address').text(address);      
+  $('#address').text(address);
 }
