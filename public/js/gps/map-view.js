@@ -1,5 +1,5 @@
-var selected_vehicle_mode = null;
 $(document).ready(function () {
+  $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0').hide();
   var url = 'root-vehicle-mode-count';
   var data = {
   };
@@ -454,6 +454,7 @@ function getVehicle(value)
 function vehicle_details(res){
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
+  var fuel=res.fuel_status;
   if(network_status=="Connection Lost"){
     $("#network_offline").show();
     $("#network_online").hide();
@@ -486,8 +487,35 @@ function vehicle_details(res){
     $("#vehicle_sleep").hide();
     $("#vehicle_stop").show();
   }
+  // manage fuel status
+  if(fuel < 1)
+  {
+    $('#fuel_0').show();
+    $('.fa-spinner').hide();
+  }
+  else if((fuel > 0) && (fuel <= 25))
+  {
+    $('#fuel_25').show();
+    $('.fa-spinner').hide();
+  }
+  else if((fuel > 25) && (fuel <= 50))
+  {
+    $('#fuel_50').show();
+    $('.fa-spinner').hide();
+  }
+  else if((fuel > 50) && (fuel <= 75))
+  {
+    $('#fuel_75').show();
+    $('.fa-spinner').hide();
+  }
+  else if(fuel > 75)
+  {
+    $('#fuel_100').show();
+    $('.fa-spinner').hide();
+  }
+
   $('#network_status').text(network_status);
-  $('#fuel_status').text(res.fuel_status);
+  // $('#fuel_status').text(res.fuel_status);
   $('#speed').text(res.speed);
   $('#odometer').text(res.odometer);
   $('#mode').text(vehicle_mode);

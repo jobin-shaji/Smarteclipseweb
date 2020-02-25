@@ -964,19 +964,61 @@
                -moz-box-shadow: 1px 1px 2px 3px #ccc;
                box-shadow: 1px 1px 21px 1px #ccc">
             <div class="col-6 m-t-15">
-              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
-                <img src="assets/images/network-status.png" id="network_online">
-                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
-                <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
-                <medium id="network_status" class="font-light">
-                  <i class="fa fa-spinner" aria-hidden="true"></i>
-              </div>
+              <div style="width: 100%;float: left;">
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
+                  <img src="assets/images/network-status.png" id="network_online">
+                  <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
+                  <medium id="network_status" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
 
-              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
-                <img src="assets/images/fuel-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
-                <medium id="fuel_status" class="font-light">
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
+                  <img src="assets/images/fuel-status.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
+                  <!-- <medium id="fuel_status" class="font-light"> -->
+                  <div id="fuel_100" class="fuel-outer">
+                    <ul>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_75" class="fuel-outer">
+                    <ul>
+                      <li id="f75"></li>
+                      <li id="f75"></li>
+                      <li id="f75"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_50" class="fuel-outer">
+                    <ul>
+                      <li id="f50"></li>
+                      <li id="f50"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_25" class="fuel-outer">
+                    <ul>
+                      <li id="f25"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_0" class="fuel-outer">
+                    <ul>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
                   <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
               </div>
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
@@ -1024,9 +1066,9 @@
                 <medium id="ignition" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
-              <div class="clear"></div>
-              <div class="bg-dark p-10 text-white text-center location_details" style="float: left;width:100%;border-radius: 0px 0px 8px 0px; padding: 10px 0 10px 0px!important;">
-                <h4 class="m-b-0 m-t-5 score_data_text">
+
+              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 14px!important;">
+                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
                   <img src="assets/images/location.png">
                   Location
                 </h4>
@@ -1267,20 +1309,61 @@
             <div class="card card-hover" style="width:100%;-webkit-box-shadow: 1px 1px 2px 3px #ccc;
                -moz-box-shadow: 1px 1px 2px 3px #ccc;
                box-shadow: 1px 1px 21px 1px #ccc">
-              <div class="col-6 m-t-15" style="background-color: #fff;">
-                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
-                  <img src="assets/images/network-status.png" id="network_online">
-                  <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
-                  <medium id="network_status" class="font-light">
+              <div class="col-6 m-t-15">
+                <div style="width: 100%;float: left;">
+                  <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
+                    <img src="assets/images/network-status.png" id="network_online">
+                    <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+                    <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
+                    <medium id="network_status" class="font-light">
+                      <i class="fa fa-spinner" aria-hidden="true"></i>
+                  </div>
+                  <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
+                    <img src="assets/images/fuel-status.png">
+                    <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
+                    <!-- <medium id="fuel_status" class="font-light"> -->
+                    <div id="fuel_100" class="fuel-outer">
+                      <ul>
+                        <li id="f100"></li>
+                        <li id="f100"></li>
+                        <li id="f100"></li>
+                        <li id="f100"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_75" class="fuel-outer">
+                      <ul>
+                        <li id="f75"></li>
+                        <li id="f75"></li>
+                        <li id="f75"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_50" class="fuel-outer">
+                      <ul>
+                        <li id="f50"></li>
+                        <li id="f50"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_25" class="fuel-outer">
+                      <ul>
+                        <li id="f25"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_0" class="fuel-outer">
+                      <ul>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
                     <i class="fa fa-spinner" aria-hidden="true"></i>
-                </div>
-
-                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
-                  <img src="assets/images/fuel-status.png">
-                  <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
-                  <medium id="fuel_status" class="font-light">
-                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                  </div>
                 </div>
 
                 <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
@@ -1328,15 +1411,16 @@
                   <medium id="ignition" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
-                <div class="clear"></div>
-                <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 10px!important; float:left;">
-                  <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 10px  0!important">
+
+                <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 14px!important;">
+                  <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
                     <img src="assets/images/location.png">
                     Location
                   </h4>
-                  <medium id="address" class="font-light" style="width:100%; float:left; line-height: 15px!important;">
+                  <medium id="address" class="font-light">
                     <i class="fa fa-spinner" aria-hidden="true"></i>
                 </div>
+                <div class="clear"></div>
               </div>
             </div>
           </div>
@@ -1368,6 +1452,65 @@
   <style type="text/css">
     .container-fluid {
       padding-left: 0px !important
+    }
+
+    .fuel-outer {
+      width: 67px;
+      float: right;
+      display: block;
+      margin-top: 6px;
+    }
+
+    .fuel-outer ul {
+      width: 100%;
+      float: left;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #f100 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #74ce12;
+    }
+
+    #f75 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #c78307;
+    }
+
+    #f50 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #f79f1c;
+    }
+
+    #f25 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #f51902;
+    }
+
+    #f0 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #cecece;
+    }
+
+    .fuel-outer ul li:last-child {
+      margin-right: 0;
     }
   </style>
   @endrole
