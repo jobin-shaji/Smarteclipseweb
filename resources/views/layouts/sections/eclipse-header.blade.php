@@ -418,14 +418,14 @@
                     </div>
                     <script> 
                         var firebaseConfig = {
-                            apiKey:  '{{env("FIREBASE_API_KEY")}}',
-                            authDomain: '{{env("FIREBASE_AUTH_DOMAIN")}}',
-                            databaseURL: '{{env("FIREBASE_DATABASE_URL")}}',
-                            projectId: '{{env("FIREBASE_PROJECT_ID")}}',
-                            storageBucket: '{{env("FIREBASE_STORAGE_BUCKET")}}',
-                            messagingSenderId: '{{env("FIREBASE_MESSAGING_SENDER_ID")}}',
-                            appId: '{{env("FIREBASE_APP_ID")}}',
-                            measurementId: '{{env("FIREBASE_MEASUREMENT_ID")}}'
+                            apiKey:  '{{Config::get("firebase.apiKey")}}',
+                            authDomain: '{{Config::get("firebase.authDomain")}}',
+                            databaseURL: '{{Config::get("firebase.databaseURL")}}',
+                            projectId: '{{Config::get("firebase.projectId")}}',
+                            storageBucket: '{{Config::get("firebase.storageBucket")}}',
+                            messagingSenderId: '{{Config::get("firebase.messagingSenderId")}}',
+                            appId: '{{Config::get("firebase.appId")}}',
+                            measurementId: '{{Config::get("firebase.measurementId")}}'
                         };
                     </script>
                     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>

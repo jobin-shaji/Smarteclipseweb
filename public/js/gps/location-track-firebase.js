@@ -3,17 +3,17 @@ var vehicle_scale   =   $("#vehicle_scale").val();
 var stroke_weight   =   $("#stroke_weight").val();
 var opacity         =   $("#opacity").val();
 var marker, map, icon;
-var numDeltas = 100;
-var delay = 5; //milliseconds
-var i = 0;
-var posLat = '';
-var posLng = '';
+var numDeltas       = 100;
+var delay           = 5; //milliseconds
+var i               = 0;
+var posLat          = '';
+var posLng          = '';
 var deltaLat, deltaLng;
-var vehicleColor = "#0C2161";
-var vehicle_data = {
-  latitude  : '',
-  longitude :''
-};
+var vehicleColor    = "#0C2161";
+var vehicle_data    = {
+                      latitude  : '',
+                      longitude :''
+                    };
 
 
 $('document').ready(function(){
