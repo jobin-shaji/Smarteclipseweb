@@ -1,9 +1,5 @@
 $(document).ready(function () {
-  $('#fuel_100').hide();
-  $('#fuel_75').hide();
-  $('#fuel_50').hide();
-  $('#fuel_25').hide();
-  $('#fuel_0').hide();
+  $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0').hide();
   var url = 'root-vehicle-mode-count';
   var data = {
   };
@@ -491,75 +487,33 @@ function vehicle_details(res){
     $("#vehicle_sleep").hide();
     $("#vehicle_stop").show();
   }
-  if(fuel == 100+'%')
+  // manage fuel status
+  if(fuel < 1)
   {
-    // $('#fuel_status').text('OOOO');
-    $('#fuel_100').show();
-    $('#fuel_75').hide();
-    $('#fuel_50').hide();
-    $('#fuel_25').hide();
-    $('#fuel_0').hide();
+    $('#fuel_0').show();
     $('.fa-spinner').hide();
   }
-  else if(fuel >= 76+'%')
+  else if((fuel > 0) && (fuel <= 25))
   {
-    // $('#fuel_status').text('OOOO');
-    $('#fuel_100').show();
-    $('#fuel_75').hide();
-    $('#fuel_50').hide();
-    $('#fuel_25').hide();
-    $('#fuel_0').hide();
-    $('.fa-spinner').hide();
-  }
-  else if(fuel >= 51+'%')
-  {
-    // $('#fuel_status').text('OOO');
-    $('#fuel_100').hide();
-    $('#fuel_75').show();
-    $('#fuel_50').hide();
-    $('#fuel_25').hide();
-    $('#fuel_0').hide();
-    $('.fa-spinner').hide();
-  }
-  else if(fuel >= 26+'%')
-  {
-    // $('#fuel_status').text('OO');
-    $('#fuel_100').hide();
-    $('#fuel_75').hide();
-    $('#fuel_50').show();
-    $('#fuel_25').hide();
-    $('#fuel_0').hide();
-    $('.fa-spinner').hide();
-  }
-  else if(fuel >= 1+'%')
-  {
-    // $('#fuel_status').text('O');
-    $('#fuel_100').hide();
-    $('#fuel_75').hide();
-    $('#fuel_50').hide();
     $('#fuel_25').show();
-    $('#fuel_0').hide();
     $('.fa-spinner').hide();
   }
-  else if(fuel == 0+'%')
+  else if((fuel > 25) && (fuel <= 50))
   {
-    // $('#fuel_status').text('Empty');
-    $('#fuel_100').hide();
-    $('#fuel_75').hide();
-    $('#fuel_50').hide();
-    $('#fuel_25').hide();
-    $('#fuel_0').show();
+    $('#fuel_50').show();
     $('.fa-spinner').hide();
   }
-  else
+  else if((fuel > 50) && (fuel <= 75))
   {
-    $('#fuel_100').hide();
-    $('#fuel_75').hide();
-    $('#fuel_50').hide();
-    $('#fuel_25').hide();
-    $('#fuel_0').show();
+    $('#fuel_75').show();
     $('.fa-spinner').hide();
   }
+  else if(fuel > 75)
+  {
+    $('#fuel_100').show();
+    $('.fa-spinner').hide();
+  }
+
   $('#network_status').text(network_status);
   // $('#fuel_status').text(res.fuel_status);
   $('#speed').text(res.speed);
