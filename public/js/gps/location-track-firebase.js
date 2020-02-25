@@ -47,7 +47,8 @@ function getFirebaseData()
     var live_data_for_tracking  = liveTrack.val();
     if(live_data_for_tracking == null)
     {
-      //alert('No Data Received From GPS!!!!!')
+      alert('No Data Received From GPS!!!!!');
+      window.location = window.location.origin+'/vehicle';
     }
     else
     {
