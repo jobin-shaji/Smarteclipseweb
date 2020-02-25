@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:client|school'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::group(['middleware' => ['web','auth','role:client|school|root'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
 
 Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
@@ -86,6 +86,9 @@ Route::get('/vehicles/fuel-track','VehicleController@fuelTrack')->name('vehicles
 
 Route::get('/vehicles-second/{id}/location','VehicleController@vehicleLocationTrack')->name('vehicles-second.location');
 
+// new track firebase
+Route::get('/vehicles/{id}/location-firebase','VehicleController@locationFirebase')->name('vehicles.location.firebase');
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -109,11 +112,13 @@ Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehic
 Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
 Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
 Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+Route::post('/vehicle/{id}/reg_edit','VehicleController@regupdate')->name('reg.update.p');
 Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
 Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
 Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
 Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
-
+Route::post('/edit-document-upload','VehicleController@saveEditUploadDocuments')->name('edit.document.upload');
+Route::post('/edit-already-existing','VehicleController@saveEditUploads')->name('edit.already.existing');
 
 
 	});
@@ -136,7 +141,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
 
 	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
- 	
+
 });
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 

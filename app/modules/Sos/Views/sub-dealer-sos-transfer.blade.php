@@ -13,16 +13,16 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/SOS Transfer (Dealers To End Users)</li>
          <b>SOS Transfer (Dealers To End Users)</b>
-        @if(Session::has('message'))
+         </ol>
+     
+    </nav>
+    @if(Session::has('message'))
         <div class="pad margin no-print">
             <div class="callout {{ Session::get('callout-class', 'callout-warning') }}" style="margin-bottom: 0!important;">
             {{ Session::get('message') }}  
           </div>
         </div>
         @endif
-      </ol>
-     
-    </nav>
     
     <div class="card-body">
       <section class="hilite-content">

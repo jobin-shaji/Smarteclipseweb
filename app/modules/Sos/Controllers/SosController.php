@@ -1182,7 +1182,7 @@ class SosController extends Controller {
 
         $entities = $entities->where('user.deleted_at',null);
 
-        return view('Sos::trader-to-client-sos-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Sos::trader-to-end-user-sos-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
 
     //get address and mobile details based on client selection
@@ -1229,7 +1229,7 @@ class SosController extends Controller {
         $devices = Sos::select('id', 'imei')
                         ->whereIn('id',$sos_list)
                         ->get();
-        return view('Sos::trader-to-client-sos-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+        return view('Sos::trader-to-end-user-sos-transfer_proceed', ['client_user_id' => $client_user_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save trader sos transfer/transfer sos from trader to client
@@ -1254,7 +1254,7 @@ class SosController extends Controller {
         if($transferred_devices){
             $request->session()->flash('message', 'Sorry!! This transaction is cancelled, SOS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('sos-transfer-trader-to-client.create'));
+            return redirect(route('sos-transfer-trader-to-end-user.create'));
         }else{
             $uniqid=uniqid();
             $order_number=$uniqid.date("Y-m-d h:i:s");

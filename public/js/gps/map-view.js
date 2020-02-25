@@ -256,6 +256,16 @@ function locationSearch() {
 }
 
 function mode(vehicle_mode) {
+
+  if(selected_vehicle_mode == vehicle_mode)
+  {
+    window.location.reload(true);
+  }
+  else
+  {
+    selected_vehicle_mode = vehicle_mode;
+  }
+
   track_flag = 1;
   $('#gps_id').empty();
   var vehicleData ='<option value=""disabled selected>select</option>';

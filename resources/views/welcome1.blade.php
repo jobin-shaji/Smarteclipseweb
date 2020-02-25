@@ -7,26 +7,26 @@
     <title>SMART ECLIPSE</title>
     <meta charset="utf-8" />
     <link rel="icon" href="smart/assets/img/allicons/favicon.ico" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link href="smart/css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="smart/css/vendor/font-awesome.css" rel="stylesheet" />
     <link href="smart/css/vendor/slick.css" rel="stylesheet" />
     <link href="smart/css/vendor/slick-theme.css" rel="stylesheet" />
-  
+
     <link href="smart/css/main.css" rel="stylesheet" />
 	<style>
 	.ran{
       font: 400 14px/25px "Source Sans Pro";
       margin-bottom: 40px; }
-	  
-	  
+
+
 	  </style>
 	  <!--------------------------------------------------------------->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oxygen&display=swap" rel="stylesheet">
 	  <link rel="stylesheet" href="smart/font-awesome-animation.min.css">
 <link rel="Stylesheet" type="text/css" href="smart/css/carousel.css" />
 <!-------------------------------------------------------------->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  <!------------------------------------------------------------>
 <script>
 (function titleScroller(text) {
@@ -40,7 +40,7 @@
 <!-------------------------------------------------------------------------------------------------------------------------------------->
     <link rel="stylesheet" type="text/css" href="smart/css/magnific-popup/magnific-popup.css" />
     <link rel="stylesheet" href="smart/css/ionicons.min.css">
-   
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="smart/css/bootstrap.min.css">
     <!-- owl-carousel -->
@@ -55,9 +55,9 @@
     <link rel="stylesheet" href="smart/css/responsive.css">
 
     <!-- header section menu bar -->
-  
+
   <link href="smart/lib/animate.min.css" rel="stylesheet">
- 
+
   <!-- Main Stylesheet File -->
   <link href="smart/lib/styles.css" rel="stylesheet">
 
@@ -81,11 +81,11 @@
 	<meta name="blogcatalog"     content="https://vstmobility.blogspot.com/"/>
 	<meta name="google-analytics"	content="UA-139881523-1"/>
 	<meta name="theme-color"    content="#05061f"/>
-	
+
   <!---------------------------------------->
 	<meta itemprop="name" content="Smart Eclipse Pvt Ltd">
 	<meta itemprop="description" content="Smart Eclipse  Pvt Ltd is a limited liability company, vehicle tracking system manufacturer in india ">
-	
+
 	<!-----------og tag------->
 	<meta property="og:image" content="http://smarteclipse.com/smart/assets/img/logos.png" />
 	<meta property="og:title" content="Smart Eclipse Vehicle Tracking Unit,Real Time Vehicle Tracking"/>
@@ -110,7 +110,7 @@
 	<meta property="fb:app_id"/>
 	<meta property="fb:pages" content="314006399267978"/>
 	<meta name="google-site-verification" content="huWFiNcI90nrAE2QCzaSxhl2YdamqSzCm376QCYRkIE" />
-  
+
 </head>
 
 <body>
@@ -123,7 +123,7 @@
         </div>
     </div>
 <!----------------------------------------------------->
-	
+
 	<header id="header">
     <div class="container">
 
@@ -139,7 +139,7 @@
           <li><a href="#authorizedservice">AUTHORIZED SERVICE CENTER</a></li>
           <li><a href="#Screen">APP SCREENS </a></li>
           <li><a href="#contacts">CONTACT</a></li>
-        
+
           <li class="buy-tickets"><a href="{{ route('login') }}"><i class="fa fa-user"></i>&nbsp;LOGIN</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
@@ -156,7 +156,7 @@
                         <span class="dot-dash">.</span>-->
                         <div class="slider-buttons" style="margin-top:50%">
                               <a href="smart/assets/GPS-Brochure.pdf" class="button" download target="_blank"><i class="fa fa-download" style="font-size:18px;"></i>&nbsp;&nbsp;DOWNLOAD</a>
-                         
+
                         </div>
                     </div>
                 </div>
@@ -169,13 +169,13 @@
                         <span class="dot-dash">.</span>-->
                         <div class="slider-buttons" style="margin-top:50%">
                              <a href="smart/assets/GPS-Brochure.pdf" class="button" download target="_blank" ><i class="fa fa-download" style="font-size:18px;"></i>&nbsp;&nbsp;DOWNLOAD</a>
-                           
+
 							<!-- <a href="#" class="button button-w" data-toggle="modal" data-target="#myModal">ABOUT SMART ECLIPSE</a> -->
                         </div>
                     </div>
                 </div>
             </div>
-			
+
         </div>
         <!--<div class="home-slider--nav" >
             <div class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
@@ -188,7 +188,7 @@
 
     <!-- Header -->
 
- 
+
     <!-- Header End -->
 
     <!-- Banner -->
@@ -216,12 +216,12 @@
 					<div class="row">
                     <div class="col-lg-12">
                         <h3 style="margin:2px 2px 30px 3px;color:#333232;Font-size:28px;font-weight:600">ABOUT SMART ECLIPSE</h3>
-						
-                     
+
+
                     </div>
 					</div>
                     <div class="lead iq-tw-4 iq-mb-20">Vehicle Tracking Unit (VTU) is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management. It helps in real-time tracking & MIS Reports by using artificial intelligence(AI) technology</div>
-                   
+
                 </div>
             </div>
         </div>
@@ -235,11 +235,11 @@
 	<!--------------------------------------------------------------------------------------->
 	<section class="our-history four-elements our-team " >
 		  <div class="container">
-              
+
                 <div class="row">
-				 
+
 					 <div class="col-md-12 col-sm-12 col-xs-12">
-				   
+
 									<div>
                                         <h3 style="color: #fcd200;font-size:28px;font-weight:600">
 										<!-- <span><img src="https://www.pinclipart.com/picdir/middle/420-4205333_animated-gif-alert-icon-clipart.png"/></span> -->
@@ -247,195 +247,195 @@
 										<span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;line-height: 0;
 										color: #fcd200;margin:0px 0 30px;display: block;">.</span>
                                     </div>
-                                    <div class="row"> 
-					
+                                    <div class="row">
+
 										<div class="col-md-3 col-sm-2">
 											<div class="four-elements--image">
-											
+
 											<img src="smart/assets/img/icons/low-battery.png" style="width:80%;"/>
 											</div>
-											<h3>Low-Battery</h3> 
-										</div> 
+											<h3>Low-Battery</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 												<img src="smart/assets/img/icons/over-air-parameter.png" style="width:80%;"/>
 											</div>
-											<h3>Over-Air-Parameter</h3> 
-										</div> 
+											<h3>Over-Air-Parameter</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/box-opened.png" style="width:80%;"/>
 											</div>
-											<h3>Box-Opened</h3> 
-										</div> 
+											<h3>Box-Opened</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/disconnect-from-main-battery.png" style="width:80%;"/>
 											</div>
-											<h3>Disconnect-From-Main-Battery</h3> 
-										</div> 
+											<h3>Disconnect-From-Main-Battery</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/emergency-button-disconnect.png" style="width:80%;"/>
 											</div>
-											<h3>Emergency-Button-Disconnect</h3> 
+											<h3>Emergency-Button-Disconnect</h3>
 										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/emergency-state-on.png" style="width:80%;"/>
 											</div>
-											<h3>Emergency-State-On</h3> 
-										</div> 										
+											<h3>Emergency-State-On</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/emergency-state-off.png" style="width:80%;"/>
 											</div>
-											<h3>Emergency-State-Off</h3> 
-										</div> 
-									
+											<h3>Emergency-State-Off</h3>
+										</div>
+
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/ignition-on.png" style="width:80%;"/>
 											</div>
-											<h3>Ignition-On</h3> 
-										</div> 
+											<h3>Ignition-On</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/ignition-off.png" style="width:80%;"/>
 											</div>
-											<h3>Ignition-Off</h3> 
-										</div> 
-										
-										
-										
+											<h3>Ignition-Off</h3>
+										</div>
+
+
+
 									</div>
 									<!-------------------------------------------->
-									 <div class="row"> 
-					
+									 <div class="row">
+
 											<div class="col-md-3 col-sm-2">
 											<div class="four-elements--image">
-											
+
 											<img src="smart/assets/img/icons/geofence-entry.png" style="width:80%;"/>
 											</div>
-											<h3>Geofence-Entry</h3> 
-										</div> 
+											<h3>Geofence-Entry</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 												<img src="smart/assets/img/icons/geofence-exit.png" style="width:80%;"/>
 											</div>
-											<h3>Geofence-Exit</h3> 
-										</div> 
+											<h3>Geofence-Exit</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/harsh-accelaration.png" style="width:80%;"/>
 											</div>
-											<h3>Harsh-Acceleration</h3> 
-										</div> 
+											<h3>Harsh-Acceleration</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/harsh-braking.png" style="width:80%;"/>
 											</div>
-											<h3>Harsh-Braking</h3> 
-										</div> 
+											<h3>Harsh-Braking</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/impact.png" style="width:80%;"/>
 											</div>
-											<h3>Impact</h3> 
-										</div> 
+											<h3>Impact</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/location-update.png" style="width:80%;"/>
 											</div>
-											<h3>Location-Update</h3> 
-										</div> 
+											<h3>Location-Update</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/location-update-history.png" style="width:80%;"/>
 											</div>
-											<h3>Location-Update-History</h3> 
-										</div> 
+											<h3>Location-Update-History</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/low-battery-removed.png" style="width:80%;"/>
 											</div>
-											<h3>Low-Battery-Removed</h3> 
-										</div> 
+											<h3>Low-Battery-Removed</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/overspeed.png" style="width:80%;"/>
 											</div>
-											<h3>Over-speed</h3> 
-										</div> 
-										
+											<h3>Over-speed</h3>
+										</div>
+
 									</div>
 										<!-------------------------------------------->
-									 <div class="row"> 
-					
+									 <div class="row">
+
 											<div class="col-md-3 col-sm-2">
 											<div class="four-elements--image">
-											
+
 											<img src="smart/assets/img/icons/overspeed-entry.png" style="width:80%;"/>
 											</div>
-											<h3>Over-Speed-Entry</h3> 
-										</div> 
+											<h3>Over-Speed-Entry</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 												<img src="smart/assets/img/icons/overspeed-exit.png" style="width:80%;"/>
 											</div>
-											<h3>Over-Speed-Exit</h3> 
-										</div> 
+											<h3>Over-Speed-Exit</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/rash-turning.png" style="width:80%;"/>
 											</div>
-											<h3>Rash-Turning</h3> 
-										</div> 
+											<h3>Rash-Turning</h3>
+										</div>
 										<div class="col-md-3 col-sm-2 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/reconnect-main-battery.png" style="width:80%;"/>
 											</div>
-											<h3>Reconnect-Main-Battery</h3> 
-										</div> 
+											<h3>Reconnect-Main-Battery</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/Route-devation.png" style="width:80%;"/>
 											</div>
-											<h3>Route-Deviation</h3> 
-										</div> 
+											<h3>Route-Deviation</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/tilt.png" style="width:80%;"/>
 											</div>
-											<h3>Tilt</h3> 
-										</div> 
+											<h3>Tilt</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/towing.png" style="width:80%;"/>
 											</div>
-											<h3>Towing</h3> 
-										</div> 
+											<h3>Towing</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/traffic-offence.png" style="width:80%;"/>
 											</div>
-											<h3>Traffic-Offence</h3> 
-										</div> 
+											<h3>Traffic-Offence</h3>
+										</div>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<div class="four-elements--image">
 											<img src="smart/assets/img/icons/AC-red.png" style="width:80%;"/>
 											</div>
-											<h3>AC On / Off </h3> 
-										</div> 
-										
+											<h3>AC On / Off </h3>
+										</div>
+
 									</div>
-									
+
 				    </div>
-                 
-				
-				
+
+
+
 				</div>
-           
+
 			</div>
         </section>
 		<!---------------------------------------------------------------------------------------------------------------------->
@@ -447,7 +447,7 @@
                         <h2 style="margin:12px 22px -30px 3px;"><img src="smart/assets/img/tracking1.png" />Vehicle Tracking Unit</h2>
 							<span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;
 										color: #fcd200;display: block;">.</span>
-                     
+
                     </div>
                 </div>
                 <div class="row">
@@ -485,7 +485,7 @@
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Geo-fencing</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Onsite Support</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:18px;"></i>&nbsp;&nbsp;Rugged and Environment Proof ABS Casing with IP65</h6>
-							
+
 								   </div>
                                 </div>
                             </li>
@@ -508,10 +508,10 @@
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Boat Tracking</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Usage Based Insurance</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Adventure/Traveling</h6>
-							
+
 
 								   </div>
-								   
+
 								   <div class="timeline-body">
                                         <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Intelligent Transportation</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Anti-Hijack and Vehicle Security System</h6>
@@ -519,7 +519,7 @@
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Agriculture Fleet Management</h6>
 										<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Mobility Advertisement</h6>
 
-								
+
 
 								   </div>
                                 </div>
@@ -531,7 +531,7 @@
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
                                             <h4 style="color: #fcd200;font-size:24px;margin:10px;">SOFTWARE SOLUTIONS</h4>
-										 <!-- <span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;margin:0px 0px 20px 50px; 
+										 <!-- <span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;margin:0px 0px 20px 50px;
 										color: #fcd200;display: block;">.</span>-->
                                     </div>
                                     <div class="timeline-body">
@@ -541,11 +541,11 @@
 								<h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Aggregation Platform</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Usage Based Insurance</h6>
 								    <h6 style="text-align:left"><i class="fa fa-shield" style="color:#84783cb0;font-size:16px;"></i>&nbsp;&nbsp;Fleet Management Solution</h6>
-								
+
 								  </div>
                                 </div>
                             </li>
-                           
+
                             <li class="timeline-inverted">
                                 <div class="timeline-image">
                                     <h4 style="color:#000">Be a Part
@@ -574,81 +574,85 @@
     font-weight: 700;">AUTHORIZED SERVICE CENTER</h2>
 							<span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;
 										color: #fcd200;display: block;">.</span>
-                     
+
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">CENTRAL I TRACK </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;PATHANAMTHITTA</h3>
-						
+
                         <p style="color: #bfeab3;">ZION PURAM,MALLAPALLY WEST P.O,MALLAPALLY,PATHANAMTHITTA - 689585</p>
                         <p style="color: #bfeab3;">Mob: 9746990803</p>
                     </div>
                     <!--<div class="col-md-4">
                         <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MAAZ CARS PRIVATE LTD</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ALAPPUZHA</h3>
-						
+
                       <p style="color: #bfeab3;">ZION TOWER,MC ROAD,KALLISHERY P.O,CHENGANNUR</p>
                     </div>-->
                      <div class="col-md-4">
                         <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">I TRACK SOLUTION</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;MALAPPURAM</h3>
-						
+
                       <p style="color: #bfeab3;">TMK BUILDING NEAR ERAM MOTORS 22 MILE MANJERI MALAPPURAM-676121 </p>
                       <p style="color: #bfeab3;">Mob: 9995964385</p>
                     </div>
 					 <div class="col-md-4">
                          <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">CENTRAL I TRACK </h4>
 						 	<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
-					
+
                       <p style="color: #bfeab3;">CENTRAL ITRACK ,ST.RITAS ROAD,NEAR GOLD SOUCK,VYTILLA,KOCHI - 682019</p>
                        <p style="color: #bfeab3;">Mob: 9188521721</p>
                     </div>
-                   
+
                 </div>
 				<div class="row">
                     <div class="col-md-4">
                         <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">VIJAYAJYOTHI ENTERPRICES </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;PALAKKAD</h3>
-					
+
                         <p style="color: #bfeab3;">1st FLOOR,MADHAVA ARCADE,YAKKARA ROAD,NEAR PALAT HOSPITAL,PALAKKAD-678001</p>
                         <p style="color: #bfeab3;">Mob: 9556098932</p>
                     </div>
                     <div class="col-md-4">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">COLOUR LAND  </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KOZHIKODE</h3>
-					
+
                         <p style="color: #bfeab3;">GROUND FLOOR,KP.18-507D,VELLAYIKOTT COMPLEX, KARANTHUR-WAYANAD ROAD,KARANTHUR, KOZHIKODE, KERALA - 673571</p>
                          <p style="color: #bfeab3;">Mob: 9946489687</p>
-                       
+
                     </div>
 					 <div class="col-md-4">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">JAIN DEVICES</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;WAYANAD</h3>
-					
+
                         <p style="color: #bfeab3;">JAYAKUMARI ESTATE,MADAKKIMALA,KALPETTA,WAYANAD - 673122</p>
                         <p style="color: #bfeab3;">Mob: 8606330755</p>
                     </div>
                     <div class="col-md-4">
                         <h4  style="color: #fcd200b8;font-size:20px;margin:10px;">MALAYIL VEHICLE TRACKING SOLUTION</h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ERNAKULAM</h3>
-						
+
                       <p style="color: #bfeab3;">GULF TOWER M.C ROAD MATTOOR P.O KALADY ERNAKULAM-683574</p>
                       <p style="color: #bfeab3;"> Mob: 9744335604</p>
                     </div>
-                   
+
                     <div class="col-md-4" style="boder-color:red">
                       <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">TECTIV  </h4>
 						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;KASARAGOD</h3>
-					
+
                         <p style="color: #bfeab3;">NETWORKING AND SECURITY SYSTEMS DOOR N0:15/486N CENTER POINT BUILDING NEAR RTO OFFICE VELLARIKUNDU (PO) PIN :671533 KASARAGOD</p>
-                       
+
                     </div>
-					 <div class="col-md-4">
-                     
+                    <div class="col-md-4" style="boder-color:red">
+                      <h4 style="color: #fcd200b8;font-size:20px;margin:10px;">MAAZ CARS PRIVATE LIMITED</h4>
+						<h3 style="font-size:16px;color: #d6d1d3;font-weight: 500;font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;ALAPPUZHA</h3>
+
+                        <p style="color: #bfeab3;">ZION TOWER MC ROAD KALLISSERY P.O CHENGANNUR ALAPPUZHA</p>
+                        <p style="color: #bfeab3;">MOB: 9496333264</p>
                     </div>
-                   
+
                 </div>
             </div>
         </section>
@@ -690,17 +694,17 @@
                     <h3 class=" third">info@smarteclipse.com</h3>
                     <h5>Email Us</h5>
                 </div>
-		
 
 
-              
+
+
             </div>
         </section>
-		
+
 		<!---------------------------------------------------------------------------------------------------------->
-		
-		
-		
+
+
+
     <!-- App Screenshots -->
 
     <section id="Screen" class="iq-app iq-bg iq-bg-fixed iq-font-white" style="background: url(smart/images/banner/bg.jpg);" >
@@ -711,9 +715,9 @@
                     <h2 class="heading-left iq-font-white white iq-tw-6 "> APP SCREENS </h2>
                     <div class="lead iq-mb-20" style="color:#fff">
 					  <div class="row">
-					  
+
 							<div class="mySlides">
- 
+
 							<p><u><i><b>LOGIN PAGE</b></i></u><br><br>
 								ALLOWS AUTHORIZED USERS TO ACCESS THE APP BASED ON THE PACKAGE THEY HAVE PURCHASED, ALSO PROVIDES FORGOT PASSWORD AUTHENTICATION AND SECURITY FEATURES THERE BY MAKING THE APP MORE SECURE.</p>
 							</div>
@@ -745,12 +749,12 @@
 						<br/>
 
 <div style="text-align:center">
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
 </div>
 <!--------------------------------------------------------------------------------------------->
 <script>
@@ -762,14 +766,14 @@ function showSlides() {
   var slides = document.getElementsByClassName("mySlides");
   var dots = document.getElementsByClassName("dot");
   for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
+    slides[i].style.display = "none";
   }
   slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
+  if (slideIndex > slides.length) {slideIndex = 1}
   for (i = 0; i < dots.length; i++) {
     dots[i].className = dots[i].className.replace(" active", "");
   }
-  slides[slideIndex-1].style.display = "block";  
+  slides[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " active";
   setTimeout(showSlides, 5550); // Change image every 2 seconds
 }
@@ -777,7 +781,7 @@ function showSlides() {
 
 <!---------------------------------------------------------------------------------------------->
 					</div>
-                   				  
+
                     <!-- <p class="">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, Lorem Ipsum is simply dummy text of the printing and typesetting indus</p> -->
                   <div class="row">
 							 <h4 class="iq-mt-5 iq-font-white iq-tw-3 iq-mb-15">DOWNLOAD APPLICATION</h4>
@@ -809,13 +813,13 @@ function showSlides() {
         </div>
       </div>
     </section>
-	
+
 		<!------------------------------------------------------------------------------------------------------------>
   <section class="partners" id="contacts">
             <div class="container">
-			 
+
                 <div class="row">
-				
+
                     <div class="col-md-5">
 					 <!-- <h2>Our History</h2> -->
                         <!-- <img src="assets/img/girl-map.png" alt=""  /> -->
@@ -825,7 +829,7 @@ function showSlides() {
 										color: #fcd200;display: block;">.</span>
                             <div class="row">
                                 <div  class="col-md-8" style="text-align:left">
-                           
+
 							<ul>
                                 <li>
                                     <span style="font-weight:700">VST Mobility Solutions Pvt. Ltd</span>
@@ -853,7 +857,7 @@ function showSlides() {
                             </div>
 							   <div class="clearfix"></div>
 							    <div class="row">
-							
+
 						   <h5 class="blink blink-two">DOWNLOAD APPLICATION</h5>
 						   <style>
       .blink {
@@ -863,25 +867,25 @@ function showSlides() {
       font-family: sans-serif;
 	  margin-top:12px;
       }
-      @keyframes blinker {  
+      @keyframes blinker {
       50% { opacity: 0; }
       }
       .blink-one {
       animation: blinker-one 1s linear infinite;
       }
-      @keyframes blinker-one {  
+      @keyframes blinker-one {
       0% { opacity: 0; }
       }
       .blink-two {
       animation: blinker-two 1.4s linear infinite;
       }
-      @keyframes blinker-two {  
+      @keyframes blinker-two {
       100% { opacity: 0; }
       }
     </style>
 						   </div>
 						    <div class="row">
-							
+
 						  <div class="partners--item" >
 								<div class="partners--item__image">
 								<img src="smart/assets/img/play_store.png" alt="" >
@@ -893,11 +897,11 @@ function showSlides() {
 								</div>
                            </div>
 						   </div>
-							
+
                     </div>
                     <div class="col-md-7">
                         <!-- <h2 style="font-size:25px;margin: 0 0 -30px;"><img src="assets/img/certify/trophy.png" alt="" style="height:35px;">OUR CERTIFICATIONS</h2> -->
-						
+
 						<h2 style="font-size:25px;margin: 0 0 -30px;">OUR CERTIFICATIONS</h2>
 						<span class="dot-dash dark" style="position: relative;text-align: center;font-size:50px;
 										color: #fcd200;display: block;">.</span>
@@ -941,15 +945,15 @@ function showSlides() {
 								<img src="smart/assets/img/certify/rohs.png" alt="" style="height: 100px;">
 								</div>
                            </div>
-						
+
                     </div>
                 </div>
             </div>
         </section>
-		
-		
+
+
 		 <section class="get-started">
-		  
+
             <div class="container">
              <style>
   @keyframes wave {
@@ -986,16 +990,16 @@ path:nth-child(4) {
             </svg>
 			</div>
 			 <h2>GPS+IRNSS TRACKER<h2>
-               <div class="row"> 
+               <div class="row">
 					<div class="col-md-4 col-sm-2">
-						<h6 style="color: #fcd200;text-transform: none;">1500mAh Battery</h6> 
-					</div> 
+						<h6 style="color: #fcd200;text-transform: none;">1500mAh Battery</h6>
+					</div>
 					<div class="col-md-4 col-sm-2 col-xs-12">
-						<h5 style="color: #fcd200;">1.2 GB Data</h5> 
-					</div> 
+						<h5 style="color: #fcd200;">1.2 GB Data</h5>
+					</div>
 					<div class="col-md-4 col-sm-2 col-xs-12">
-						<h5 style="color: #fcd200;"> 1+4 Yrs Extended Warranty</h5> 
-					</div> 
+						<h5 style="color: #fcd200;"> 1+4 Yrs Extended Warranty</h5>
+					</div>
 			   </div>
             </div>
         </section>
@@ -1010,31 +1014,31 @@ path:nth-child(4) {
                         <li><a href="https://twitter.com/MobilityVst" target="_blank"><i class="fa fa-twitter"></i></a></li>
 						<li><a href="https://in.pinterest.com/infovstmobility/" target="_blank"><i class="fa fa-pinterest"></i></a></li>
 						<li><a href="https://www.youtube.com/channel/UCI62mNkTTZeXw6kXB_E0dow" target="_blank"><i class="fa fa-youtube"></i></a></li>
-                       
+
                     </ul>
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <p><a href="https://vstmobility.com/" target="_blank">VST Mobility Solutions Pvt Ltd</a></p>
-					
+
 
                 </div>
             </div>
         </div>
     </footer>
-	
-	
+
+
 <!-------------------------------------------------------------------------------------------------->
 
- 
+
 <!------------------------------------------------------------------------------------------------------------------------------------->
-	
-	
-	
+
+
+
 	<script>
 $('.counter23').each(function() {
   var $this = $(this),
       countTo = $this.attr('data-count');
-  
+
   $({ countNum: $this.text()}).animate({
     countNum: countTo
   },
@@ -1051,14 +1055,14 @@ $('.counter23').each(function() {
       //alert('finished');
     }
 
-  });  
-  
-  
+  });
+
+
 
 });
 </script>
 <!-------------------------------------------------------------------------------------------------->
-  
+
     <script src="smart/js/vendor/jquery-3.1.0.min.js"></script>
     <script src="smart/js/vendor/jquery.easing.min.js"></script>
     <script src="smart/js/vendor/tether.js"></script>
@@ -1066,13 +1070,13 @@ $('.counter23').each(function() {
     <script src="smart/js/vendor/slick.js"></script>
     <script src="smart/js/vendor/isotope.pkgd.min.js"></script>
     <script src="smart/js/main.js"></script>
-	
+
 	<!------------------------------------------------>
-		      
+
     <script src="smart/js/owl.carousel.min.js"></script>
     <script src="smart/js/script.js"></script>
-    <script type="text/javascript" src="smart/js/jquery.carousel-1.1.js"></script> 
-		
+    <script type="text/javascript" src="smart/js/jquery.carousel-1.1.js"></script>
+
 <!--------------------------------------->
       <!-- jQuery -->
     <script type="text/javascript" src="smart/js/jquery.min.js"></script>
@@ -1082,7 +1086,7 @@ $('.counter23').each(function() {
     <script type="text/javascript" src="smart/js/owl-carousel/owl.carousel.min.js"></script>
     <!-- Counter -->
     <script type="text/javascript" src="smart/js/counter/jquery.countTo.js"></script>
-    <!-- Magnific Popup --> 
+    <!-- Magnific Popup -->
     <script type="text/javascript" src="smart/js/magnific-popup/jquery.magnific-popup.min.js"></script>
     <!-- wow -->
     <script type="text/javascript" src="smart/js/wow.min.js"></script>

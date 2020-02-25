@@ -16,55 +16,76 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use DataTables;
 class DriverController extends Controller {
-   
+
     //employee creation page
     public function create()
     {
        return view('Driver::driver-create');
     }
-    //upload employee details to database table
+
     public function save(Request $request)
-    {    
-        $client_id=\Auth::user()->client->id; 
+    {
+        $client_id=\Auth::user()->client->id;
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
-
-        if (strpos($url, $rayfleet_key) == true) {
-             $rules = $this->rayfleetDriverCreateRules();
-        }
-        else if (strpos($url, $eclipse_key) == true) {
+            if (strpos($url, $rayfleet_key) == true) {
+            $rules = $this->rayfleetDriverCreateRules();
+            }
+            else if (strpos($url, $eclipse_key) == true) {
             $rules = $this->driver_create_rules();
-        }
-        else
-        {
-           $rules = $this->driver_create_rules();
-        }
-        
-        $this->validate($request, $rules);           
-        $client = Driver::create([            
-            'name' => $request->name,            
-            'address' => $request->address,
-            'mobile' => $request->mobile,
-            'client_id' => $client_id, 
-            'points' => 100          
+            }
+            else
+            {
+            $rules = $this->driver_create_rules();
+            }
+             $this->validate($request, $rules);
+        $client = Driver::create([
+        'name' => $request->name,
+        'address' => $request->address,
+        'mobile' => $request->mobile,
+        'client_id' => $client_id,
+        'points' => 100
         ]);
         $eid= encrypt($client->id);
-        $request->session()->flash('message', 'New Driver created successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('drivers'));        
-    }
-    public function driverList()
+        $request->session()->flash('message', 'New Driver created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('drivers'));
+        }
+
+        public function driverList()
+        {
+            return view('Driver::driver-list');
+        }
+
+
+    public function validateMobilenoDriver(Request $request)
     {
-        return view('Driver::driver-list');
+
+        $client_id=\Auth::user()->client->id;
+        $driver_available = Driver::where('mobile','=',$request->mobile)->where('client_id', $client_id)->count();
+        if ($driver_available >= 1)
+        {
+            $data       = [
+                'status'        => 1,
+                'driver_exists' => true
+            ];
+        }else
+        {
+            $data       = [
+                'status'        => 0,
+                'driver_exists' => false
+            ];
+        }
+        return response()->json($data);
     }
     public function driver_create_rules()
     {
         $rules = [
             'name' => 'required',
             'address' => 'required|max:150',
-            'mobile' => 'required|numeric|unique:drivers',
-            
+            'mobile' => 'required|numeric',
+
         ];
         return  $rules;
     }
@@ -73,19 +94,19 @@ class DriverController extends Controller {
         $rules = [
             'name' => 'required',
             'address' => 'required|max:150',
-            'mobile' => 'required|numeric|unique:drivers',
-            
+            'mobile' => 'required|numeric',
+
         ];
         return  $rules;
     }
 
-    
+
     public function getDriverlist(Request $request)
     {
         $client_id=\Auth::user()->client->id;
         $driver = Driver::select(
-        'id', 
-        'name',                   
+        'id',
+        'name',
         'address',
         'mobile',
         'client_id',
@@ -99,25 +120,25 @@ class DriverController extends Controller {
         ->addIndexColumn()
         ->addColumn('action', function ($driver) {
              $b_url = \URL::to('/');
-        if($driver->deleted_at == null){ 
+        if($driver->deleted_at == null){
             if(\Auth::user()->hasRole('fundamental|superior|pro')){
                 // <a href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='view!'><i class='fas fa-eye'></i> View</a>
                 return "
                 <a onclick=\"return validate_driver(".$driver->id.")\" href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit</a>
                 <a href=".$b_url."/single-drivers-score/".Crypt::encrypt($driver->id)." class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'>Driver Score </a>
-                
+
                 <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
 
             }
-            else{ // 
+            else{ //
                 return "
                 <a onclick=\"return validate_driver(".$driver->id.")\" href=".$b_url."/driver/".Crypt::encrypt($driver->id)."/edit class='btn btn-xs btn-primary' data-toggle='tooltip' title='edit!'><i class='fa fa-edit'></i> Edit</a>
                 <button onclick=delDriver(".$driver->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate!'><i class='fas fa-trash'></i> Deactivate</button>";
             }
-            
-        }else{                   
+
+        }else{
             return "
-          
+
             <button onclick=activateDriver(".$driver->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Ativate!'><i class='fas fa-check'></i> Activate</button>";
             }
         })
@@ -126,8 +147,8 @@ class DriverController extends Controller {
     }
     public function edit(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id); 
-        $driver = Driver::find($decrypted);       
+        $decrypted = Crypt::decrypt($request->id);
+        $driver = Driver::find($decrypted);
         if($driver == null)
         {
            return view('Driver::404');
@@ -136,8 +157,8 @@ class DriverController extends Controller {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public function validateDriver(Request $request)
     {
@@ -166,7 +187,7 @@ class DriverController extends Controller {
         $driver = Driver::where('id', $request->id)->first();
         if($driver == null){
            return view('Driver::404');
-        } 
+        }
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
@@ -182,16 +203,16 @@ class DriverController extends Controller {
            $rules = $this->driverUpdateRules($driver);
         }
 
-        
-        $this->validate($request, $rules);       
+
+        $this->validate($request, $rules);
         $driver->name = $request->name;
         $driver->address = $request->address;
         $driver->mobile = $request->mobile;
-        $driver->save();      
+        $driver->save();
         $did = encrypt($driver->id);
         $request->session()->flash('message', 'Driver details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('driver.details',$did));  
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('driver.details',$did));
     }
 
     public function performanceScore()
@@ -242,9 +263,9 @@ class DriverController extends Controller {
                     ->first();
          $alert_type_point->driver_point = $request->over_speed_gf_exit;
          $alert_type_point->save();
-        $request->session()->flash('message', 'Alert points updated successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('performance-score'));  
+        $request->session()->flash('message', 'Alert points updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('performance-score'));
     }
 
     /// performance score history
@@ -255,14 +276,15 @@ class DriverController extends Controller {
         $drivers = Driver::select('id','name')
                     ->where('client_id',$client_id)
                     ->get();
+
         return view('Driver::performance-score-history',['drivers' => $drivers]);
     }
 
     public function performanceScoreHistoryList(Request $request)
     {
-        
+
         $client_id= \Auth::user()->client->id;
-        $driver_id= $request->driver;   
+        $driver_id= $request->driver;
         $from = date("Y-m-d", strtotime($request->fromDate));
         $to = date("Y-m-d", strtotime($request->toDate));
         $search_key = ( isset($request->search_key) ) ? $request->search_key : null;
@@ -273,16 +295,17 @@ class DriverController extends Controller {
         {
             $single_drivers[] = $driver->id;
         }
-        
+        // $from = $request->fromDate;
+        // $to = $request->toDate;
         $performance_score = DriverBehaviour::select(
                 'id',
                 'vehicle_id',
                 'driver_id',
                 'gps_id',
                 'alert_id',
-                'points',                
+                'points',
                 'created_at'
-            )               
+            )
             ->with('alert:id,alert_type_id')
             // ->with(['driver' => function($query) use ($search_key){
             //     if( $search_key != null )
@@ -308,9 +331,9 @@ class DriverController extends Controller {
             // paginate
             $performance_score = $performance_score->paginate(15);
 
-            
 
-        return view('Driver::performance-score-history',['drivers'=>$drivers,'performance_score'=>$performance_score,'driver_id'=>$driver_id,'from'=>$from,'to'=>$to]); 
+
+        return view('Driver::performance-score-history',['drivers'=>$drivers,'performance_score'=>$performance_score,'driver_id'=>$driver_id,'from'=>$from,'to'=>$to]);
     }
 
     //OLD DRIVER PERFORMANCE HISTORY
@@ -336,9 +359,9 @@ class DriverController extends Controller {
     //             'driver_id',
     //             'gps_id',
     //             'alert_id',
-    //             'points',                
+    //             'points',
     //             'created_at'
-    //         )               
+    //         )
     //         ->with('alert:id,alert_type_id')
     //         ->with('driver:id,name')
     //         ->with('vehicle:id,name,register_number')
@@ -379,19 +402,19 @@ class DriverController extends Controller {
     //         ->addIndexColumn()
     //         ->addColumn('description', function ($performance_score) {
     //             $description=$performance_score->alert->alertType->description;
-    //             return $description;                    
-    //         })  
+    //             return $description;
+    //         })
     //         ->addColumn('date', function ($performance_score) {
     //             $date=date("d-m-y H:i:s ", strtotime($performance_score->created_at));
-    //             return $date;                    
-    //         })            
+    //             return $date;
+    //         })
     //     ->rawColumns(['link', 'action'])
     //     ->make();
     // }
     //driver score page
     public function driverScorePage()
     {
-        $client_id=\Auth::user()->client->id;         
+        $client_id=\Auth::user()->client->id;
         $drivers = Driver::select(
             'id',
             'name',
@@ -405,8 +428,8 @@ class DriverController extends Controller {
 
     public function singleDriverScorePage(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id); 
-        $driver = Driver::find($decrypted);       
+        $decrypted = Crypt::decrypt($request->id);
+        $driver = Driver::find($decrypted);
         if($driver == null)
         {
            return view('Driver::404');
@@ -420,13 +443,13 @@ class DriverController extends Controller {
     public function driverScore(Request $request)
     {
         $driver=$request->driver;
-       
+
         // if($driver){
         //     $driver_id=$request->driver;
         // }
         // else
         // {
-        //    $driver_id=0; 
+        //    $driver_id=0;
         // }
         $client_id=\Auth::user()->client->id;
         $drivers = Driver::select(
@@ -437,7 +460,7 @@ class DriverController extends Controller {
         ->where('client_id',$client_id);
         if($driver)
         {
-          $drivers=$drivers->where('id',$driver);  
+          $drivers=$drivers->where('id',$driver);
         }
         $drivers=$drivers->get();
         $single_driver_name = [];
@@ -454,7 +477,7 @@ class DriverController extends Controller {
                     "drive_data"=>$single_driver_name,
                     "drive_score"=>$single_driver_point
                 );
-        return response()->json($score); 
+        return response()->json($score);
     }
     //driver score alerts
     public function driverScoreAlerts(Request $request)
@@ -465,7 +488,7 @@ class DriverController extends Controller {
         }
         else
         {
-           $driver_id=0; 
+           $driver_id=0;
         }
         $client_id=\Auth::user()->client->id;
         $gps_stocks = GpsStock::where('client_id',$client_id)->get();
@@ -519,11 +542,11 @@ class DriverController extends Controller {
             $overspeed_gf_exit_count=DriverBehaviour::where('driver_id',$driver->id)->whereIn('alert_id',$single_over_speed_gf_exit_alerts)->count();
             $background_border_color='rgba('.rand(1,255).','.rand(1,255).','.rand(1,255);
             $score[]=array(
-                    'label' => $driver->name,    
-                    'data'=>[$harsh_breaking_count, 
+                    'label' => $driver->name,
+                    'data'=>[$harsh_breaking_count,
                             $overspeed_count,
                             $tilt_count,
-                            $impact_count,       
+                            $impact_count,
                             $overspeed_gf_entry_count,
                             $overspeed_gf_exit_count
                             ],
@@ -532,7 +555,7 @@ class DriverController extends Controller {
                     'borderWidth'=> 2
                     );
         }
-        return response()->json($score); 
+        return response()->json($score);
     }
 
 
@@ -540,15 +563,15 @@ class DriverController extends Controller {
     public function clientDriverCreate(Request $request)
     {
 
-        $servicer_job_id= $request->servicer_job_id;         
-        $driver_name= $request->driver_name;         
+        $servicer_job_id= $request->servicer_job_id;
+        $driver_name= $request->driver_name;
         $mobile = $request->mobile;
         $address = $request->address;
         $client_id = $request->client_id;
         $driver_mobile = Driver::select(
             'name',
-            'mobile'               
-        )               
+            'mobile'
+        )
         ->where('mobile',$mobile)
         ->count();
         if($driver_mobile==0)
@@ -560,24 +583,24 @@ class DriverController extends Controller {
                     'mobile' => $mobile,
                     'address' => $address,
                     'points' => 100,
-                    'client_id' => $client_id                    
-                ]);                
-            } 
-            $driver_id=$create_driver->id;               
+                    'client_id' => $client_id
+                ]);
+            }
+            $driver_id=$create_driver->id;
             return response()->json([
                 'driver_id'=>$driver_id,
                 'driver_name'=>$driver_name,
-                'status' => 'driver'           
+                'status' => 'driver'
             ]);
         }
         else
         {
-             return response()->json([               
-                'status' => 'mobile_already'           
+             return response()->json([
+                'status' => 'mobile_already'
             ]);
         }
-       
-      
+
+
     }
 
      //validation for employee updation
@@ -587,7 +610,7 @@ class DriverController extends Controller {
             'name' => 'required',
             'address' => 'required|max:150',
             'mobile' => 'required|numeric|unique:drivers,mobile,'.$driver->id
-            
+
         ];
         return  $rules;
     }
@@ -598,13 +621,13 @@ class DriverController extends Controller {
             'name' => 'required',
             'address' => 'required|max:150',
             'mobile' => 'required|numeric|unique:drivers,mobile,'.$driver->id
-            
+
         ];
         return  $rules;
     }
 
-    
-    
+
+
     // details page
     public function details(Request $request)
     {
@@ -612,11 +635,11 @@ class DriverController extends Controller {
         $driver=Driver::find($decrypted_id);
         if($driver==null){
             return view('Driver::404');
-        } 
+        }
         return view('Driver::driver-details',['driver' => $driver]);
     }
 
-  
+
      //delete Sub Dealer details from table
     public function deleteDriver(Request $request)
     {

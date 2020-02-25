@@ -99,5 +99,13 @@ class GpsData extends Model
     protected $casts = [
         'lat' => 'float',
         'lng' => 'float',
-    ];
+	];
+	
+	//detailed packet data based on id in vlt data table
+	public function getDetailedPacketData($vlt_data_id)
+    {
+		return self::select('gps_id','header', 'imei', 'alert_id', 'packet_status', 'device_time', 'latitude', 'lat_dir', 'longitude', 'lon_dir', 'mcc', 'mnc', 'lac', 'cell_id', 'heading', 'speed', 'no_of_satelites', 'hdop', 'gsm_signal_strength', 'ignition', 'main_power_status', 'vehicle_mode')
+					->where('vlt_data',$vlt_data_id)
+					->first();
+    }
 }

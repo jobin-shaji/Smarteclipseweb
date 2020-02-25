@@ -38,7 +38,7 @@ Parking Report
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> From Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" required autocomplete="off" onkeydown="return false">
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" required autocomplete="off" onkeydown="return false" required>
                             <span class="input-group-addon" style="z-index: 99;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                             </span>
@@ -47,7 +47,7 @@ Parking Report
                           <div class="col-lg-3 col-md-3">
                           <div class="form-group">                     
                             <label> To Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" autocomplete="off" required onkeydown="return false">
+                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" autocomplete="off" required onkeydown="return false" required>
                             <span class="input-group-addon" style="z-index: 99;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                             </span>

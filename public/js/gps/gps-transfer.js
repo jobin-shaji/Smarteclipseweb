@@ -100,7 +100,7 @@ $('.clientData').on('change', function() {
 
 $('.clientDataInTrader').on('change', function() {
     var clientUserID=this.value;
-    var purl = getUrl() + '/'+'gps-transfer-trader-client-dropdown' ;
+    var purl = getUrl() + '/'+'gps-transfer-trader-end-user-dropdown' ;
     var data = { client_user_id : clientUserID };
     $.ajax({
         type:'POST',

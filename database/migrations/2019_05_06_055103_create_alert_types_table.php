@@ -16,7 +16,8 @@ class CreateAlertTypesTable extends Migration
         Schema::create('alert_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code');
-            $table->string('description');          
+            $table->string('description');
+            $table->integer('sort');
             $table->integer('status');
             $table->text('path');
             $table->integer('driver_point');

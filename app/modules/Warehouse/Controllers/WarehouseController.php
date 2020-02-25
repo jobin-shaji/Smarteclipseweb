@@ -441,7 +441,7 @@ class WarehouseController extends Controller {
                 if($gps_transfer->accepted_on == null && $gps_transfer->deleted_at == null)
                 {
                     return "
-                    <a href=".$b_url."/gps-transfer-root-trader-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer-root-trader-end-user/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                     <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <b style='color:#008000';>Transfer In Progress</b>";
                 }
@@ -452,7 +452,7 @@ class WarehouseController extends Controller {
                 }
                 else{
                     return "
-                    <a href=".$b_url."/gps-transfer-root-trader-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+                    <a href=".$b_url."/gps-transfer-root-trader-end-user/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
                     <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
                     <b style='color:#008000';>Transferred</b>";
                 }
@@ -1962,7 +1962,7 @@ class WarehouseController extends Controller {
     // gps transfer list - dealer
     public function getTraderToClientTransferredList()
     {
-        return view('Warehouse::gps-transfer-trader-to-client-list');
+        return view('Warehouse::gps-transfer-trader-to-end-user-list');
     }
 
     //gps transfer list data - dealer
@@ -1995,7 +1995,7 @@ class WarehouseController extends Controller {
         {
             $b_url = \URL::to('/');
             return "
-            <a href=".$b_url."/gps-transfer-root-trader-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
+            <a href=".$b_url."/gps-transfer-root-trader-end-user/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
             <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
             <b style='color:#008000';>Transferred</b>";
         })
@@ -2016,7 +2016,7 @@ class WarehouseController extends Controller {
                         ->get();
         $entities   =   $trader->clients()->with('user')->get();
         $entities   =   $entities->where('user.deleted_at',null);
-        return view('Warehouse::trader-to-client-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Warehouse::trader-to-end-user-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
     }
 
     //get address and mobile details based on client selection in trader transfer page
@@ -2064,7 +2064,7 @@ class WarehouseController extends Controller {
         $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Warehouse::trader-to-client-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+        return view('Warehouse::trader-to-end-user-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
     }
 
     // save trader gps transfer/transfer gps from trader to client
@@ -2086,7 +2086,7 @@ class WarehouseController extends Controller {
         if($transferred_devices >= 1){
             $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('gps-transfer-trader-client.create'));
+            return redirect(route('gps-transfer-trader-end-user.create'));
         }else{
             $uniqid=uniqid();
             $order_number=$uniqid.date("Y-m-d h:i:s");
@@ -2119,7 +2119,7 @@ class WarehouseController extends Controller {
             $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
             $request->session()->flash('message', 'GPS Transfer successfully completed!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('gps-transfer-root-trader-client.label',$encrypted_gps_transfer_id));
+            return redirect(route('gps-transfer-root-trader-end-user.label',$encrypted_gps_transfer_id));
         }
     }
 
@@ -2476,7 +2476,7 @@ class WarehouseController extends Controller {
         if($gps_transfer == null){
            return view('Warehouse::404');
         }
-       return view('Warehouse::gps-transfer-label-root-trader-client',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
+       return view('Warehouse::gps-transfer-label-root-trader-end-user',['gps_transfer' => $gps_transfer,'gps_items' => $gps_items,'role_details' => $role_details,'user_details' => $user_details]);
     }
 
     //label for transferred gps
