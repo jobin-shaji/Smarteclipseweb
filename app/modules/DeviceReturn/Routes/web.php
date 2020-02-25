@@ -8,6 +8,7 @@ Route::post('/devicereturn/create','DeviceReturnController@save')->name('devicer
 Route::get('/devicereturn','DeviceReturnController@deviceListPage')->name('devicereturn');
 Route::post('/device-return-list','DeviceReturnController@getDeviceList')->name('device.return.list');
 Route::get('/device','DeviceReturnController@DeviceReturnListPage')->name('device');
+Route::post('/select/vehicle','DeviceReturnController@selectVehicle')->name('select.vehicle.list');
 });
 
 

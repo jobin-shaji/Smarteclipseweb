@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DeviceReturn extends Model
 {
   protected $fillable=[
-		'id','gps_id','client_id','type_of_issues','comments','created_at','updated_at','deleted_at'
+		'id','gps_id','servicer_id','type_of_issues','comments','created_at','updated_at','deleted_at'
 	];
 
 	public function gps()

@@ -31,6 +31,7 @@
                      <th>Serial Number</th>
                      <th>Date</th>
                      <th>Type of issues</th>
+                     <th>Comments</th>
                     </tr>
                 </thead>
               </table>
@@ -43,7 +44,7 @@
 </div>
 
 @section('script')
- @role('client')
+ @role('servicer')
     <script src="{{asset('js/gps/client-device-return-list.js')}}"></script>
   @endrole
   

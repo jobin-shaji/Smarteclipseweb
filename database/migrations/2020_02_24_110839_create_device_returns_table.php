@@ -16,7 +16,7 @@ class CreateDeviceReturnsTable extends Migration
         Schema::create('device_returns', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('gps_id');
-            $table->integer('client_id');
+            $table->integer('servicer_id');
             $table->integer('type_of _issues');
             $table->text('comments');
             $table->timestamps();
