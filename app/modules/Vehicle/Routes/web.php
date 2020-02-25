@@ -89,8 +89,6 @@ Route::get('/vehicles-second/{id}/location','VehicleController@vehicleLocationTr
 // new track firebase
 Route::get('/vehicles/{id}/location-firebase','VehicleController@locationFirebase')->name('vehicles.location.firebase');
 
-Route::post('/vehicles/location-track-firebase','VehicleController@locationTrackFirebase')->name('vehicles.location-track-firebase');
-
 });
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -17976,3 +17976,17 @@ input:invalid, textarea:invalid, select:invalid {
     right: 26px;
     top: 37px;
 }
+
+.km_grid {
+    font-size: 15px;
+    color:#fff;
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    margin-left: 915px !important;
+    box-shadow: 0 1px 1px
+    rgba(0,0,0,0.1);
+    border-radius: 5px;
+    max-width: 14%;
+}

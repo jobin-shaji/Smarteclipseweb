@@ -210,6 +210,12 @@
        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
 
 
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+
+
+
+
+
     <script>
         var km_data           = 0;
         var pauseMapRendering = false;
@@ -1080,12 +1086,12 @@
 
        //  }
 
-       function kmCalculation(lat1,lng1,lat2,lng2) {
+        function kmCalculation(lat1,lng1,lat2,lng2) {
 
           var p1 = new google.maps.LatLng(lat1,lng1);
           var p2 = new google.maps.LatLng(lat2,lng2);
           var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
-          
+
               km_data            = km_data+total_distance;
              $('#km_data').text((km_data/1000).toFixed(2));
         }
