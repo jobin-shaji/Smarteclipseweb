@@ -28,7 +28,8 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/complaint-list')}}">COMPLAINT LIST </a>  
             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">COMPLAINT HISTORY </a>  
-                                     
+            <a class="dropdown-item" href="{{url('/devicereturn/create')}}"> ADD DEVICE RETURN <span></span></a>                              
+           <a class="dropdown-item" href="{{url('/device')}}"> LIST DEVICE RETURN<span></span></a>                                                   
         </div>
     </li>
      <li class="nav-item dropdown">
