@@ -2,7 +2,7 @@ var svg_icon        =   $("#svg_icon").val();
 var vehicle_scale   =   $("#vehicle_scale").val();
 var stroke_weight   =   $("#stroke_weight").val();
 var opacity         =   $("#opacity").val();
-var marker, map, icon;
+var marker, map, icon, snap_route;
 var numDeltas       = 100;
 var delay           = 5; //milliseconds
 var i               = 0;
@@ -72,10 +72,6 @@ function getFirebaseData()
       var connection_lost_time_motion   =  live_data_for_tracking.config_connection_lost_time_motion;
       var connection_lost_time_halt     =  live_data_for_tracking.config_connection_lost_time_halt;
       var connection_lost_time_sleep    =  live_data_for_tracking.config_connection_lost_time_sleep;
-      var today                         =   new Date();
-      var date                          =   today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time                          =   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var currentDateTime               =   date+' '+time;
 
       if(live_data_for_tracking.ac_status != undefined)
       {
@@ -155,7 +151,27 @@ function getFirebaseData()
         signalStrength          =   "Connection Lost";
       }
 
-      //var snap_route            =   liveSnapRoot(latitude,longitude);
+      var clickedPointCurrent   =   vehicle_data.latitude + ',' + vehicle_data.longitude;
+
+      // for snap routing
+      $.ajax({
+        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+        crossDomain: true,
+        dataType: 'jsonp'
+      }).done(function(response) {
+        if(response.snappedPoints == undefined){
+          track(vehicle_data.latitude,vehicle_data.longitude,angle);
+        }
+        else
+        {
+          $.each(response.snappedPoints, function (i, snap_data) {
+            var local_data=snap_data.location;
+            vehicle_data.latitude   = local_data.latitude;
+            vehicle_data.longitude  = local_data.longitude;
+            track(vehicle_data.latitude,vehicle_data.longitude,angle);
+          });
+        }
+      });
 
       document.getElementById("user").innerHTML         = vehicle_name;
       document.getElementById("vehicle_name").innerHTML = vehicle_reg;
@@ -380,17 +396,37 @@ function getFirebaseData()
       }
     
       document.getElementById("car_battery").innerHTML = battery_status;
-      document.getElementById("car_location").innerHTML = place;
+      //for getting place name 
+      $.ajax({
+        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+clickedPointCurrent+'&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo', 
+      }).done(function(response) {
+        place = (response.status=="OK")?response.results[1].formatted_address:'';
+        document.getElementById("car_location").innerHTML = place;
+      });
       document.getElementById("ac").innerHTML = ac;
       document.getElementById("fuel").innerHTML = fuel;
       document.getElementById("odometer").innerHTML = odometer;
-
-      track(vehicle_data.latitude,vehicle_data.longitude,angle);
     }
     
     
   });
 }
+
+// function liveSnapRoot(clickedPointCurrent)
+// {
+//   $.ajax({
+//     url: 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&interpolate=true', //true', 
+//     crossDomain: true,
+//     dataType: 'jsonp'
+//   }).done(function(response) {
+//     $.each(response.snappedPoints, function (i, snap_data) {
+//       var local_data=snap_data.location;
+//       vehicle_data.latitude   = local_data.latitude;
+//       vehicle_data.longitude  = local_data.longitude;
+//       console.log(vehicle_data.latitude);
+//     });
+//   });
+// }
 
 function track(latitude,longitude,angle) 
 {
