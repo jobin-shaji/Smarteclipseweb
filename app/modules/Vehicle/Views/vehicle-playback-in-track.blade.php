@@ -207,6 +207,8 @@
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
 
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
+       <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+
 
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
 
@@ -1089,10 +1091,9 @@
           var p1 = new google.maps.LatLng(lat1,lng1);
           var p2 = new google.maps.LatLng(lat2,lng2);
           var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
-          
+
               km_data            = km_data+total_distance;
              $('#km_data').text((km_data/1000).toFixed(2));
-
         }
 
        function stopPlayback(){
