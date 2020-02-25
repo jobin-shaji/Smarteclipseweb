@@ -8,6 +8,8 @@ use App\Modules\Alert\Models\AlertType;
 use App\Modules\Alert\Models\UserAlerts;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+use DB;
+
 
 class UserAlertController extends Controller {
     public function edit(Request $request)
@@ -17,11 +19,24 @@ class UserAlertController extends Controller {
         $root = $user->root;
         $alert_type = AlertType::all();
         $user_alert=array();
-        $user_alert = UserAlerts::select('client_id', 'alert_id', 'status')
-        ->where('client_id',$client->id)
-        ->where('alert_id','!=',21)
-        ->with('alertType:id,description,code')
-        ->get();
+        $exclude            = [22, 23, 24];
+        // $user_alert = UserAlerts::select('client_id', 'alert_id', 'status')
+        // ->where('client_id',$client->id)
+        // ->whereNotIn('alert_id', $exclude)
+        // ->with('alertType:id,description,code')
+        // ->get();
+
+
+        $user_alert = DB::table('user_alerts')
+            ->where('user_alerts.client_id', $client->id)
+            ->whereNotIn('alert_id', $exclude)
+            ->join('alert_types', 'user_alerts.alert_id', '=', 'alert_types.id')
+            ->orderBy('alert_types.sort', 'ASC')
+            ->select('user_alerts.alert_id as user_alert_id','user_alerts.status as status', 'alert_types.description as alert_name','alert_types.code as code')
+            
+            ->get();
+
+
         return view('UserAlert::alert-manager',['user_alert' => $user_alert]);
     }
     public function savealertManager(Request $request) 
