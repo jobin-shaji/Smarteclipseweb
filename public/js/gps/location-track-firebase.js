@@ -4,7 +4,7 @@ var stroke_weight   =   $("#stroke_weight").val();
 var opacity         =   $("#opacity").val();
 var marker, map, icon, snap_route;
 var numDeltas       = 100;
-var delay           = 5; //milliseconds
+var delay           = 100; //milliseconds
 var i               = 0;
 var posLat          = '';
 var posLng          = '';
@@ -119,10 +119,18 @@ function getFirebaseData()
       if(live_data_for_tracking.lat != undefined)
       {
         vehicle_data.latitude = parseFloat(live_data_for_tracking.lat);
+        if(posLat == '')
+        {
+          posLat = parseFloat(live_data_for_tracking.lat);
+        }
       }
       if(live_data_for_tracking.lon != undefined)
       {
         vehicle_data.longitude = parseFloat(live_data_for_tracking.lon);
+        if(posLng == '')
+        {
+          posLng = parseFloat(live_data_for_tracking.lon);
+        }
       }
       if(live_data_for_tracking.main_power_status != undefined)
       {
@@ -144,7 +152,7 @@ function getFirebaseData()
       {
         vehicle_reg = live_data_for_tracking.vehicle_register_number;
       }
-
+ 
       if( device_time <  last_update_time )
       {
         vehicleStatus           =   "Offline";
@@ -176,7 +184,7 @@ function getFirebaseData()
       document.getElementById("user").innerHTML         = vehicle_name;
       document.getElementById("vehicle_name").innerHTML = vehicle_reg;
 
-      if (vehicleStatus == 'M' && speed != '0' && device_time >= connection_lost_time_motion)
+      if (vehicleStatus == 'M' && Math.floor(speed) != 0 && device_time >= connection_lost_time_motion)
       {
         $("#online").show();
         $("#zero_speed_online").hide();
@@ -186,7 +194,7 @@ function getFirebaseData()
         $("#connection_lost").hide();
         vehicleColor="#84b752";
       }
-      else if (vehicleStatus == 'M' && speed != '0' && device_time <= connection_lost_time_motion)
+      else if (vehicleStatus == 'M' && Math.floor(speed) != 0 && device_time <= connection_lost_time_motion)
       {
         if(connection_lost_time_minutes){
           $('#connection_lost_last_seen').text(connection_lost_time_minutes);
@@ -199,7 +207,7 @@ function getFirebaseData()
         $("#connection_lost").show();
         vehicleColor="#84b752";
       } 
-      else if (vehicleStatus == 'M' && speed == '0' && device_time >= connection_lost_time_motion)
+      else if (vehicleStatus == 'M' && Math.floor(speed) == 0 && device_time >= connection_lost_time_motion)
       {
         $("#zero_speed_online").show();
         $("#halt").hide();
@@ -210,7 +218,7 @@ function getFirebaseData()
         vehicleColor="#84b752";
 
       }
-      else if (vehicleStatus == 'M' && speed == '0' && device_time <= connection_lost_time_motion)
+      else if (vehicleStatus == 'M' && Math.floor(speed) == 0 && device_time <= connection_lost_time_motion)
       {
         if(connection_lost_time_minutes){
           $('#connection_lost_last_seen').text(connection_lost_time_minutes);
@@ -295,7 +303,7 @@ function getFirebaseData()
       {
         document.getElementById("car_power").innerHTML = "DISCONNECTED";
       }
-      if(vehicleStatus == 'M' && speed == '0') 
+      if(vehicleStatus == 'M' && Math.floor(speed) == 0) 
       {
         document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
         $('#valid_speed').css('display','none');
@@ -433,8 +441,8 @@ function track(latitude,longitude,angle)
 
   var lat = latitude;
   var lng = longitude;
-  posLat  = latitude;
-  posLng  = longitude;
+  // posLat  = latitude;
+  // posLng  = longitude;
   angle   = parseInt(angle);
   var markerLatLng = new google.maps.LatLng(lat,lng);
   i = 0;
@@ -457,6 +465,8 @@ function track(latitude,longitude,angle)
 
 function moveMarker() 
 {
+  // console.log(i+'start moving - increment lat '+deltaLat+' long '+deltaLng+' numdeltas '+numDeltas);
+  // console.log('postlat '+posLat+' long '+posLng);
   posLat += deltaLat;
   posLng += deltaLng;
   var latlng = new google.maps.LatLng(posLat, posLng);
@@ -469,6 +479,11 @@ function moveMarker()
     i++;
     setTimeout(moveMarker, delay);
   }
+  else
+  {
+    // console.log('movement completed');
+  }
+  
 }
 
  // ---------------------center on  a marker--------------------------
