@@ -31,7 +31,7 @@
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Client</label>
                     <select class="form-control select2"  data-live-search="true" title="Select Client" id='client_id'  required>
-                    <option selected disabled>Select Country</option>
+                    <option selected disabled>Select Client</option>
                     @foreach($client as $each_client)
                     <option value="{{$each_client->id}}">{{$each_client->name}}</option>  
                     @endforeach

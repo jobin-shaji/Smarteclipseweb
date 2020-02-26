@@ -15,7 +15,6 @@ use DataTables;
 class DeviceReturnController extends Controller {
     public function create()
     {
-       
         $servicer_id=\Auth::user()->servicer->id;
         $servicer = Servicer::where('id',$servicer_id)->first();
               if($servicer->sub_dealer_id == null && $servicer->trader_id == null) 
@@ -45,6 +44,7 @@ class DeviceReturnController extends Controller {
                     'gps_id' => $request->gps_id,
                     'type_of_issues' => $request->type_of_issues,
                     'comments' => $request->comments,
+                    'status' => 0,
                     'servicer_id' =>$servicer_id,
                     'created_at'=> date('Y-m-d H:i:s'),
                     'updated_at'=> date('Y-m-d H:i:s')
@@ -53,20 +53,22 @@ class DeviceReturnController extends Controller {
          $request->session()->flash('alert-class', 'alert-success'); 
          return redirect(route('device')); 
     }
+
     public function DeviceReturnListPage()
     {
        return view('DeviceReturn::device-return-list');   
     }  
+
     public function getDeviceList()
     {
             $device_return = DeviceReturn::select(
-                'id', 
-                'gps_id',                      
-                'type_of_issues',
-                'comments',                                        
-                'created_at',
-                'servicer_id'
-             )
+                    'id', 
+                    'gps_id',                      
+                    'type_of_issues',
+                    'comments',                                        
+                    'created_at',
+                    'servicer_id'
+                )
             ->with('gps:id,imei,serial_no')
             ->orderBy('id','desc');
             $servicer_id=\Auth::user()->servicer->id;
@@ -74,6 +76,11 @@ class DeviceReturnController extends Controller {
             $device_return = $device_return->get();
             return DataTables::of($device_return)
             ->addIndexColumn()
+            ->addColumn('comments', function ($device_return) { 
+              $str = mb_strimwidth("$device_return->comments", 0, 20, "...");
+                       return $str;
+              
+                     })
             ->addColumn('type_of_issues', function ($device_return) { 
                 if($device_return->type_of_issues==0){
                     return "Hardware";
@@ -83,39 +90,119 @@ class DeviceReturnController extends Controller {
                     return "software";
                 }
                 })
+                ->addColumn('action', function ($device_return) 
+                {
+                   
+                    if($device_return->status == 0)
+                        {
+                        return "
+                         <button onclick=cancelDeviceReturn(".$device_return->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                        </button>";
+                        }
+                 })
+                
            ->rawColumns(['link', 'action'])
             ->make();
         
     }
     public function selectVehicle(Request $request)
     {
-
         $client_id=$request->client_id;
         $vehicle=Vehicle::with('gps')->where('client_id',$client_id)->get();
-        // dd($vehicle);
-       
-        if($vehicle== null){
-            return response()->json([
-                 'vehicle' => '',
-                'message' => 'no vehicle found'
-            ]);
-         }else
-         {
-           return response()->json([
-                'vehicle' => $vehicle,
-           ]);
-         }
+                if($vehicle== null){
+                    return response()->json([
+                        'vehicle' => '',
+                        'message' => 'no vehicle found'
+                    ]);
+                }else
+                {
+                return response()->json([
+                        'vehicle' => $vehicle,
+                ]);
+                }
     }
   
-    public function device_return_create_rules()
+      //cancel device return
+      public function cancelDeviceReturn(Request $request)
       {
-        $rules = [
-            'gps_id' => 'required',       
-            'type_of_issues' =>'required',
-            'comments' => 'required|max:500'
-                 ];
-        return  $rules;
-     }
+        $device_return = DeviceReturn::find($request->id);
+        $servicer_id=\Auth::user()->servicer->id;
+
+                if($device_return->servicer_id  != $servicer_id){
+                    return response()->json([
+                        'status' => 0,
+                        'title' => 'Error',
+                        'message' => 'not a logged in servicer'
+                    ]);
+                }else{
+                $device_return->status=1;
+                $device_return->save();
+                $device_return=$device_return->delete();
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Device return Cancelled successfully'
+                ]);
+                }
+        }
+    public function deviceReturnRootHistoryList()
+    {
+        return view('DeviceReturn::device-return-root-history-list');
+    }
+    public function getdeviceReturnRootHistoryList()
+    {
+            $device_return = DeviceReturn::select(
+                    'id', 
+                    'gps_id',                      
+                    'type_of_issues',
+                    'comments',                                        
+                    'created_at',
+                    'servicer_id'
+                )
+            ->with('gps:id,imei,serial_no')
+            ->with('servicer:id,name')
+           -> where('status', '!=' , 1)
+            ->orderBy('id','desc');
+           $device_return = $device_return->get();
+            return DataTables::of($device_return)
+            ->addIndexColumn()
+            ->addColumn('comments', function ($device_return) { 
+                $str = mb_strimwidth("$device_return->comments", 0, 20, "...");
+                         return $str;
+                
+                       })
+             ->addColumn('status', function ($device_return) { 
+                if($device_return->status==0){
+                    return "submitted";
+                }
+               else{
+                    return "approved";
+                }
+                        
+                               })
+            ->addColumn('type_of_issues', function ($device_return) { 
+                if($device_return->type_of_issues==0){
+                    return "Hardware";
+                }
+                else 
+                {
+                    return "software";
+                }
+                })
+            ->rawColumns(['link', 'action'])
+            ->make();
+        
+    }
+    
+    public function device_return_create_rules()
+        {
+            $rules = [
+                'gps_id' => 'required',       
+                'type_of_issues' =>'required',
+                'comments' => 'required|max:500'
+                    ];
+            return  $rules;
+        }
    
    
 }

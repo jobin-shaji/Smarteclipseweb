@@ -150,6 +150,7 @@
             <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">ASSIGNED COMPLAINT HISTORY </a>
+            <a class="dropdown-item" href="{{url('/device-return-history-list')}}">LIST DEVICE RETURN </a>
         </div>
     </li>
       <li class="nav-item dropdown">
