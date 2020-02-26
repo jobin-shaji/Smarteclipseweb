@@ -535,7 +535,7 @@
             <i class="fa fa-tablet"></i>
           </div>
           <div class="a-tag">
-            <a href="/gps-sub-dealer" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps-in-stock-sub-dealer" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
