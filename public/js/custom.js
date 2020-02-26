@@ -498,6 +498,9 @@ function backgroundPostData(url, data, callBack, options) {
                     gpsAlertconfirm(res);
                 }
 
+                else if(callBack=='rootVehicle'){
+                    rootVehicle(res);
+                }
 
 
 
@@ -1533,6 +1536,38 @@ function rootTrader(res)
               $("#trader").append(trader_text+trader);
         }
    }
+   function selectVehicle(client_id)
+{
+
+    var url = 'select/vehicle';
+    var data = {
+        client_id : client_id
+    };
+    backgroundPostData(url,data,'rootVehicle',{alert:true});
+
+
+}
+function rootVehicle(res)
+{
+    
+        $("#device").empty();
+    
+        var length=res.vehicle.length
+    
+        device_text='<option value="">Choose device from the list</option>';
+        if(length == 0)
+        {
+            device='<option value="">No Device</option>';
+            $("#device").append(device);
+        }else
+        {
+            for (var i = 0; i < length; i++)
+            {
+            device+='  <option value="'+res.vehicle[i].gps.id+'"  >'+res.vehicle[i].gps.imei+'||'+res.vehicle[i].gps.serial_no+'</option>';
+            }
+            $("#device").append(device_text+device);
+    }
+}
 
 // ---------------check notification-----------------------------------
     // setInterval(function() {

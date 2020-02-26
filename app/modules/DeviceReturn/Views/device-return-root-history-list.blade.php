@@ -27,12 +27,12 @@
                 <thead>
                   <tr>
                     <th>SL.No</th>
-                    <th>imei </th>   
-                     <th>Serial Number</th>
-                     <th>Date</th>
-                     <th>Type of issues</th>
-                     <th>Comments</th>
-                     <th>Action</th>
+                    <th>Servicer</th>
+                    <th>imei </th> 
+                    <th>Serial No</th>
+                    <th>Type of Issues</th>
+                     <th>Status</th>
+                     <!-- <th>Action</th> -->
                     </tr>
                 </thead>
               </table>
@@ -45,8 +45,8 @@
 </div>
 
 @section('script')
- @role('servicer')
-    <script src="{{asset('js/gps/client-device-return-list.js')}}"></script>
+ @role('root')
+    <script src="{{asset('js/gps/device-return-root-history-list.js')}}"></script>
   @endrole
   
 @endsection

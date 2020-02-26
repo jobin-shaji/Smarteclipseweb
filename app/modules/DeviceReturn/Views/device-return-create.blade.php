@@ -30,18 +30,32 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Client</label>
-                    <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
-                      <option value="" selected disabled>Select Client</option>
-                     @foreach($client as $clients)
-                      <option value="{{$clients->id}}">{{$clients->name}}</option>
-                      @endforeach
+                    <select class="form-control select2"  data-live-search="true" title="Select Client" id='client_id'  required>
+                    <option selected disabled>Select Client</option>
+                    @foreach($client as $each_client)
+                    <option value="{{$each_client->id}}">{{$each_client->name}}</option>  
+                    @endforeach
                     </select>
-                    @if ($errors->has('gps_id'))
+                    @if ($errors->has('client_id'))
                     <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                        <strong class="error-text">{{ $errors->first('client_id') }}</strong>
                     </span>
                     @endif
                   </div>
+                  <div class="col-md-6">
+                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
+                    <label class="srequired">Device</label>
+                    <select class="form-control select2" id="gps_id" name="gps_id" data-live-search="true" title="Select Device" required>
+                      <option selected disabled>Select Client First</option>
+                     </select>
+                    <!-- @if ($errors->has('gps_id'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
+                    </span>
+                    @endif -->
+                  </div>
+                  </div>
+
                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Type Of Issues</label>
                     <select class="form-control" name="type_of_issues" id="type_of_issues" required>
@@ -52,7 +66,7 @@
                   </div>     
                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Comments</label>
-                    <textarea rows="5" cols="10" class="form-control {{ $errors->has('comments') ? ' has-error' : '' }}" placeholder="Comments" name="comments" value="{{ old('comments') }}" required></textarea>
+                    <textarea rows="5" cols="10" maxlength="500" class="form-control {{ $errors->has('comments') ? ' has-error' : '' }}" placeholder="Comments" name="comments" value="{{ old('comments') }}" required></textarea>
                  
                     @if ($errors->has('description'))
                       <span class="help-block">
@@ -103,6 +117,6 @@ margin-bottom: 1.2em;
 </style>
 
 @section('script')
-    <!-- <script src="{{asset('js/gps/complaint-dependent-dropdown.js')}}"></script> -->
+  <script src="{{asset('js/gps/device-return.js')}}"></script> 
 @endsection
 @endsection
