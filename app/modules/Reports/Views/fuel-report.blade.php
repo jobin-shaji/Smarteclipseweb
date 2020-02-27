@@ -16,8 +16,11 @@ Fuel Report
       <div class="row">
         <div class="col-lg-12"><br>
           <div class="cover_div_search">
+
+
+            <span class="cover_date_select">
             <div class="row">
-              <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-3">
                 <div class="form-group">
                   <label>Vehicle</label>
                   <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
@@ -29,18 +32,71 @@ Fuel Report
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                  <label>Report Type</label>
+                  <select class="form-control select2" data-live-search="true" title="Select Report" id="report_type" name="report_type" onchange="reportType(this.value)">
+                  <option selected="selected" disabled="disabled">Select</option>
+                    <option value='1'>Date</option>
+                    <option value='2'>Month</option>
+                  </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3" id="single_date">
                   <div class="form-group">
                     <label>Date</label>
                     <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="date" name="date" onkeydown="return false" autocomplete="off">
                   </div>
                 </div>
+
+                 <div class="col-lg-3 col-md-3" id="single_month">
+                  <div class="form-group">
+                    <label>Month</label>
+                    <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))monthpickerFundamental @elseif(\Auth::user()->hasRole('superior')) monthpickerSuperior @elseif(\Auth::user()->hasRole('pro')) monthpickerPro @else monthpickerFreebies @endif form-control" id="month" name="month" onkeydown="return false" autocomplete="off">
+                  </div>
+                </div>
+
                 <div class="col-lg-3 col-md-3 pt-4">
                   <div class="form-group">
                   <button class="btn btn-sm btn-info btn2 srch" onclick="getFuelGraphDetails()"> <i class="fa fa-search"></i> </button>
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
+              </span>
+              <span id="show_selected_date" class="show_selected_date fuel-report-out">
+              </span>
+            </div>
+
+
+
+<style>
+.fuel-report-out{
+  width: 36%;
+    float: left;
+    border-radius: 12px;
+    padding: 2px 9px 2px 15px;
+    color: #fff;
+    background: #b59704;
+    text-align: center;
+    line-height: 27px;
+}
+.fule-cal{
+  width: 100%;
+    flex: auto;
+    max-width: 100%;
+}
+.ful-close{
+  float: right;
+    border-radius: 50%;
+    background: #fff;
+    width: 22px;
+    color:#b59704;
+    line-height: 21px;
+    height: 22px;
+    margin-top: 2px;
+}
+</style>
 
           <!-- <div class="col-lg-4 col-md-4">
             <div class="form-group">
@@ -86,7 +142,16 @@ Fuel Report
     </div>
   </div>
 </div>
-
+<style>
+.+{
+  width: 36%;
+    float: left;
+    border-radius: 12px;
+    padding: 7px 9px 7px 15px;
+    color: #fff;
+    text-align: center;
+}
+</style>
 @section('script')
     <script src="{{asset('js/gps/mdb.js')}}"></script>
     <script src="{{asset('js/gps/fuel-report-graph.js')}}"></script>
