@@ -6,7 +6,7 @@ use App\Exports\GpsProcessedDataReportExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
-use App\Modules\Gps\Models\VltData;
+use App\Modules\VltData\Models\VltData;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsConfiguration;
 use Illuminate\Support\Str;
@@ -21,10 +21,26 @@ use Config;
 
 class GpsRecordController extends Controller {
 
-    public function gpsDateWiseRecord()
+    public function gpsDateWiseRecord(Request $request)
     {
-        $gps = Gps::all();
-        return view('GpsConfig::gps-daily-record',['gps' => $gps]);
+        $imei_serial_no_list    = (new Gps())->getImeiList();
+        $data                   = [];
+        // params
+        $this->imei             = ( isset($request->imei) ) ? $request->imei : '';
+        $this->date             = ( isset($request->date) ) ? date('Y-m-d', strtotime($request->date)) : '';
+
+        // filters
+        $filters    = [
+            'imei'  => $this->imei,
+            'date'  => $this->date
+        ];
+
+        if( $this->imei != '' && $this->date != '' )
+        {
+            $data   = (new VltData())->getProcessedVltData($this->imei, $this->date);
+        }
+        
+        return view('GpsConfig::gps-daily-record', [ 'imei_serial_no_list' => $imei_serial_no_list, 'data' => $data, 'filters' => $filters ]);
     }
     public function gpsDateWiseRecordList(Request $request)
     {
@@ -47,7 +63,7 @@ class GpsRecordController extends Controller {
     {
         ob_end_clean();
         ob_start();
-        return Excel::download(new GpsProcessedDataReportExport($request->gps_id,$request->date), 'gps-processed-data-report.xlsx');
+        return Excel::download(new GpsProcessedDataReportExport($request->imei,$request->date), 'gps-processed-data-report.xlsx');
     }
 
     public function gpsUnprocessedDateWiseRecord()

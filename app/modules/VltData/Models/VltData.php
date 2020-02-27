@@ -41,7 +41,7 @@ class VltData extends Model
      * 
      * 
      */
-    public function getProcessedVltData($imei)
+    public function getProcessedVltData($imei,$date=null)
     {
         $query  =   DB::table('vlt_data')
                         ->select('id','imei','vltdata','created_at')
@@ -51,6 +51,31 @@ class VltData extends Model
         {
             $query = $query->where('imei', $imei);
         }
+        if( $date != null )
+        {
+            $query = $query->whereDate('created_at', $date);
+        }
         return $query->paginate(10);
+    }
+    /**
+     * 
+     * 
+     * 
+     */
+    public function getProcessedVltDataDownload($imei,$date=null)
+    {
+        $query  =   DB::table('vlt_data')
+                        ->select('id','imei','vltdata','created_at')
+                        ->where('is_processed', '1')
+                        ->orderBy('created_at','DESC');
+        if( $imei != '0' )
+        {
+            $query = $query->where('imei', $imei);
+        }
+        if( $date != null )
+        {
+            $query = $query->whereDate('created_at', $date);
+        }
+        return $query->get();
     }
 }

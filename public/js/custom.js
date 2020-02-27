@@ -108,6 +108,11 @@ $(function () {
         useCurrent: true,
         maxDate: new Date()
      });
+    $( ".datepicker_operations" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        defaultDate: null,
+        useCurrent: true
+     });
     $( ".datepickerFreebies" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
@@ -191,21 +196,21 @@ $(function () {
         // minDate: new Date()
         minDate: moment().millisecond(0).second(0).minute(0).hour(0)
 
- });
-$( ".date_expiry_edit" ).datetimepicker({
-    format: 'DD-MM-YYYY',
-    minDate: moment().millisecond(0).second(0).minute(0).hour(0)
-    // minDate: moment().subtract(1,'d')
- });
+    });
+    $( ".date_expiry_edit" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        minDate: moment().millisecond(0).second(0).minute(0).hour(0)
+        // minDate: moment().subtract(1,'d')
+    });
 
- $( ".manufacturing_date" ).datetimepicker({
-    format: 'DD-MM-YYYY',
-    minDate: '2019-01-01',
-    // maxDate: new Date(),
-    maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
-    // useCurrent: false
+     $( ".manufacturing_date" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        minDate: '2019-01-01',
+        // maxDate: new Date(),
+        maxDate: moment().millisecond(0).second(0).minute(0).hour(0)
+        // useCurrent: false
 
- });
+    });
  $( ".manufacturing_date_edit" ).datetimepicker({
     format: 'DD-MM-YYYY',
     minDate: '2019-01-01',
@@ -1063,11 +1068,10 @@ function downloadGpsUnprocessedDataReport(){
 
 function downloadGpsProcessedDataReport(){
     var url = 'gps-processed-records/export';
-    var gps_id=$('#gps_id').val();
+    var imei=$('#imei').val();
     var date=$('#date').val();
-
     var data = {
-    'gps_id':gps_id,'date':date
+    'imei':imei,'date':date
     };
     downloadFile(url,data);
 }
