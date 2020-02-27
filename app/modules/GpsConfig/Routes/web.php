@@ -8,7 +8,6 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 
 	//processed data
 	Route::get('/gps-records','GpsRecordController@gpsDateWiseRecord')->name('gps.records');
-	Route::post('/gps-records-list','GpsRecordController@gpsDateWiseRecordList')->name('gps.records.list');
 	Route::post('/gps-processed-records/export','GpsRecordController@exportProcessedData')->name('gps.processed.records.export');
 	
 	//unprocessed data

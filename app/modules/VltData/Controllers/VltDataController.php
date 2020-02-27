@@ -115,73 +115,70 @@ class VltDataController extends Controller
      */
     public function consoleDataPacketView(Request $request)
     {
-         $vlt_data_id    =   $request->vlt_data_id;
-         $imei           =   $request->imei;
-         $vlt_data       =   $request->vlt_data;
-         $gps_data       =   (new Gps())->getGpsId($imei);
-         $header=substr($vlt_data,0,3);
-      
-            if($header == "ACK"  || $header == "AVK" )
-         {
-         $data=$this->processAckData($vlt_data);
-          
-         }elseif($header == "ALT")
-         {
-           
-            $data = $this->processAltData($vlt_data);
-         }
-         elseif($header == "CRT")
-         {
-           
-            $data = $this->processCrtData($vlt_data);
-         } elseif($header == "EPB")
-         {
-           
-            $data = $this->processEpbData($vlt_data);
-         }
-         elseif($header == "FUL")
-         {
-           
-            $data = $this->processFULData($vlt_data);
-         }
-         elseif($header == "HLM")
-         {
-           
-            $data = $this->processHlmData($vlt_data);
-         }
-         elseif($header == "LGN")
-         {
-           
-            $data = $this->processLgnData($vlt_data);
-         }
-         elseif($header == "NRM")
-         {
-           
-            $data = $this->processNrmData($vlt_data);
-         }
-         elseif($header == "BTH")
-         {
-            $imei = substr($vlt_data,3,15);
-            $batch_log_count = substr($vlt_data,18,3);
-            $balance_packet = substr($vlt_data,21);
-            $packets=[];
-            do
-            {
-                $return_array   =   $this->batchPacketSplitting($imei,$balance_packet);
-                $balance_packet =   $return_array['balance_packet'];
-                $packets[]      =   $return_array['packet'];
-            }
-            while (!empty($balance_packet));
-            $packets['header']="BTH";
-            $data           =   $packets;
-           
-         }
-         else{
-            $data = null; 
-         }
-      
-      
-      
+        $vlt_data_id    =   $request->vlt_data_id;
+        $imei           =   $request->imei;
+        $vlt_data       =   $request->vlt_data;
+        $gps_data       =   (new Gps())->getGpsId($imei);
+        $header=substr($vlt_data,0,3);
+    
+        if($header == "ACK"  || $header == "AVK" )
+        {
+        $data=$this->processAckData($vlt_data);
+        
+        }elseif($header == "ALT")
+        {
+        
+        $data = $this->processAltData($vlt_data);
+        }
+        elseif($header == "CRT")
+        {
+        
+        $data = $this->processCrtData($vlt_data);
+        } elseif($header == "EPB")
+        {
+        
+        $data = $this->processEpbData($vlt_data);
+        }
+        elseif($header == "FUL")
+        {
+        
+        $data = $this->processFULData($vlt_data);
+        }
+        elseif($header == "HLM")
+        {
+        
+        $data = $this->processHlmData($vlt_data);
+        }
+        elseif($header == "LGN")
+        {
+        
+        $data = $this->processLgnData($vlt_data);
+        }
+        elseif($header == "NRM")
+        {
+        
+        $data = $this->processNrmData($vlt_data);
+        }
+        elseif($header == "BTH")
+        {
+        $imei = substr($vlt_data,3,15);
+        $batch_log_count = substr($vlt_data,18,3);
+        $balance_packet = substr($vlt_data,21);
+        $packets=[];
+        do
+        {
+            $return_array   =   $this->batchPacketSplitting($imei,$balance_packet);
+            $balance_packet =   $return_array['balance_packet'];
+            $packets[]      =   $return_array['packet'];
+        }
+        while (!empty($balance_packet));
+        $packets['header']="BTH";
+        $data           =   $packets;
+        
+        }
+        else{
+        $data = null; 
+        }
         if($data == null)
         {
             $response    =  array(
@@ -201,10 +198,10 @@ class VltDataController extends Controller
         }
         return response()->json($response);
     }
-     /**
+    /**
      * 
      * 
-     */
+    */
 
     public function processAckData($vlt_data){
 
