@@ -41,14 +41,26 @@
        </div>
 
         <div class="row">
-            @foreach ($user_alert as $user_alert)
-              <div class="col-lg-6 col-md-4 cover_alert_manager">
-              <label class="switch">
-                  <input type="checkbox" name="alert_id[]" value="{{$user_alert->user_alert_id}}" @if ($user_alert->status==1) checked="checked"  @endif @if ($user_alert->code==22 || $user_alert->code==10) onclick="javascript: return false;" @endif>  <span class="slider round"></span>
-                  <span class="user_alerts_title">{{$user_alert->alert_name}}</span>
-                </label>
-              </div>
-            @endforeach
+        @foreach ($user_alert as $user_alert)
+          <?php 
+            $system_managed = false;
+            $wrapper_class  = "col-lg-6 col-md-4 cover_alert_manager";
+            if( (in_array($user_alert->user_alert_id, [13,21])) )
+            {
+              $system_managed = true;
+              $wrapper_class .= ' mb-3';
+            }
+          ?>
+          <div class="<?php  echo $wrapper_class; ?>">
+            <label class="switch">
+              <input type="checkbox" name="alert_id[]" value="{{$user_alert->user_alert_id}}" @if ($user_alert->status==1) checked="checked"  @endif @if ($user_alert->code==22 || $user_alert->code==10) onclick="javascript: return false;" @endif>  <span class="slider round"></span>
+              <span class="user_alerts_title">{{$user_alert->alert_name}}</span>
+              <?php if( $system_managed ){ ?>
+                <p class="alert-type-helptext">This is a system managed alert and can not be modified</p>
+              <?php } ?>
+            </label>
+          </div>
+        @endforeach
 
          </div> 
             <button type="submit" class="btn btn-primary btn-md form-btn ">Update alerts</button>
@@ -179,8 +191,12 @@ input[type="checkbox"][readonly] {
     right: 0px !important;
 }
 
-
-
+.alert-type-helptext{
+  margin-left: 60px;
+  font-size: 13px;
+  padding-top: 2px;
+  color: red;
+}
 
 </style>
  @endsection
