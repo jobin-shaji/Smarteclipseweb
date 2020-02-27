@@ -123,8 +123,11 @@ class AlertController extends Controller {
     public function save(Request $request)
     {
         $rules = $this->alert_rules();
-        $this->validate($request, $rules);
-        $file=$request->path;
+        $messages = [
+            'icon.uploaded' => "The icon size should be less than 2MB"
+        ];
+        $this->validate($request, $rules, $messages);
+        $file=$request->icon;
         $getFileExt   = $file->getClientOriginalExtension();
         $uploadedFile =   $request->code.'.'.$getFileExt;
         //Move Uploaded File
@@ -231,8 +234,11 @@ class AlertController extends Controller {
            return view('Alert::404');
         }
         $rules = $this->alertUpdateRules($alert_type);
-        $this->validate($request, $rules);
-        $file=$request->path;
+        $messages = [
+            'icon.uploaded' => "The icon size should be less than 2MB"
+        ];
+        $this->validate($request, $rules, $messages);
+        $file=$request->icon;
         if($file!=null)
         {
             $getFileExt   = $file->getClientOriginalExtension();
@@ -645,7 +651,7 @@ class AlertController extends Controller {
             'code' => 'required|unique:alert_types',
             'description' => 'required',
             'driver_point' => 'required|numeric',
-            'path' => 'required|mimes:jpg,jpeg,png|max:20000'
+            'icon' => 'required|mimes:jpg,jpeg,png|max:20000|dimensions:width=60,height=60'
 
         ];
         return  $rules;
@@ -656,7 +662,8 @@ class AlertController extends Controller {
         $rules = [
             'code' => 'required|unique:alert_types,code,'.$alert_type->id,
             'description' => 'required',
-            'driver_point' => 'required'
+            'driver_point' => 'required|numeric',
+            'icon' => 'required|mimes:jpg,jpeg,png|max:20000|dimensions:width=60,height=60'
         ];
         return  $rules;
     }

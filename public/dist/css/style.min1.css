@@ -17990,3 +17990,10 @@ input:invalid, textarea:invalid, select:invalid {
     border-radius: 5px;
     max-width: 14%;
 }
+
+.helptext{
+    color:#7b89a7;
+    margin-top: -6px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}

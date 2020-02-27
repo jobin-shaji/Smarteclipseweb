@@ -19,7 +19,7 @@
       </div>
       @endif 
     </nav>
-    <div class="container-fluid"><h4>Alert Type List</h4>
+    <div class="container-fluid">
       <div class="card-body">
         <div class="table-responsive scrollmenu">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
