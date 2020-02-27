@@ -42,22 +42,6 @@ class GpsRecordController extends Controller {
         
         return view('GpsConfig::gps-daily-record', [ 'imei_serial_no_list' => $imei_serial_no_list, 'data' => $data, 'filters' => $filters ]);
     }
-    public function gpsDateWiseRecordList(Request $request)
-    {
-        $gps_id = $request->gps_id;
-        $gps = Gps::all();
-        $date = date('Y-m-d',strtotime($request->date));
-        $datas = GpsData::select('id', 'gps_id','imei','vlt_data','device_time','created_at')
-                ->where('gps_id',$gps_id)
-                ->whereDate('created_at',$date)
-                ->with('vlt_data')
-                ->orderBy('created_at','asc')
-                ->paginate(10);
-        // return ($datas != null) ? Response([ 'links' => $datas->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
-        return view('GpsConfig::gps-daily-record',['gps' => $gps,'data'=>$datas]);
-
-    //    return response()->json($datas);
-    }
 
     public function exportProcessedData(Request $request)
     {

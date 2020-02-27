@@ -111,7 +111,8 @@ $(function () {
     $( ".datepicker_operations" ).datetimepicker({
         format: 'DD-MM-YYYY',
         defaultDate: null,
-        useCurrent: true
+        useCurrent: true,
+        minDate: new Date(currentYear, currentMonth-2, currentDate)
      });
     $( ".datepickerFreebies" ).datetimepicker({
         // format: 'DD-MM-YYYY',
