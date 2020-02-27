@@ -33,22 +33,22 @@
                       <label class="srequired">Code</label>
                       <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" maxlength='25' name="code" value="{{ $alert_type->code}}"> 
                       <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                       @if ($errors->has('code'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('code') }}</strong>
-                      </span>
-                    @endif
+                      @if ($errors->has('code'))
+                        <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('code') }}</strong>
+                        </span>
+                      @endif
                     </div>
                    
                     <div class="form-group has-feedback"><br>
                       <label class="srequired">Description</label>
                       <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" maxlength='150' name="description" value="{{ $alert_type->description}}">
                       <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-                        @if ($errors->has('description'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('description') }}</strong>
-                      </span>
-                    @endif
+                      @if ($errors->has('description'))
+                        <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('description') }}</strong>
+                        </span>
+                      @endif
                     </div>
                 
                     <div class="form-group has-feedback"><br>
@@ -56,10 +56,10 @@
                       <input type="text" class="form-control {{ $errors->has('driver_point') ? ' has-error' : '' }}" placeholder="Driver Point" maxlength='5' name="driver_point" value="{{ $alert_type->driver_point}}">
                       <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       @if ($errors->has('driver_point'))
-                      <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('driver_point') }}</strong>
-                      </span>
-                    @endif
+                        <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('driver_point') }}</strong>
+                        </span>
+                      @endif
                     </div>
                   
                     <div class="form-group has-feedback"><br>
