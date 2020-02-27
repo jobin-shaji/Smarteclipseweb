@@ -19,7 +19,7 @@
       </div>
       @endif 
     </nav>
-    <div class="card-body"><h4>Update Alert Type</h4>
+    <div class="card-body">
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  
           <div class="row">
@@ -31,7 +31,7 @@
                   <div class="col-md-6">
                     <div class="form-group has-feedback">
                       <label class="srequired">Code</label>
-                      <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" name="code" value="{{ $alert_type->code}}"> 
+                      <input type="text" class="form-control {{ $errors->has('code') ? ' has-error' : '' }}" placeholder="Code" maxlength='25' name="code" value="{{ $alert_type->code}}"> 
                       <span class="glyphicon glyphicon-user form-control-feedback"></span>
                        @if ($errors->has('code'))
                       <span class="help-block">
@@ -40,9 +40,9 @@
                     @endif
                     </div>
                    
-                    <div class="form-group has-feedback">
+                    <div class="form-group has-feedback"><br>
                       <label class="srequired">Description</label>
-                      <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ $alert_type->description}}">
+                      <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" maxlength='150' name="description" value="{{ $alert_type->description}}">
                       <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                         @if ($errors->has('description'))
                       <span class="help-block">
@@ -51,9 +51,9 @@
                     @endif
                     </div>
                 
-                    <div class="form-group has-feedback">
+                    <div class="form-group has-feedback"><br>
                       <label class="srequired">Driver Point</label>
-                      <input type="text" class="form-control {{ $errors->has('driver_point') ? ' has-error' : '' }}" placeholder="Driver Point" name="driver_point" value="{{ $alert_type->driver_point}}">
+                      <input type="text" class="form-control {{ $errors->has('driver_point') ? ' has-error' : '' }}" placeholder="Driver Point" maxlength='5' name="driver_point" value="{{ $alert_type->driver_point}}">
                       <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       @if ($errors->has('driver_point'))
                       <span class="help-block">
@@ -62,19 +62,21 @@
                     @endif
                     </div>
                   
-                    <div class="form-group has-feedback">
-                      <label class="srequired">Upload Icon
-                      </label>
-                      <input type="file" class="form-control" placeholder="Choose File" name="path" value="{{$alert_type->path}}" > 
+                    <div class="form-group has-feedback"><br>
+                      <label class="srequired">Upload Icon</label>
+                      <div class="helptext">
+                        Icon should be less than 2MB in size and have a dimension of 60x60
+                      </div>
+                      <input type="file" class="form-control" placeholder="Choose File" name="icon" value="{{$alert_type->path}}" > 
                       <span class="glyphicon glyphicon-car form-control-feedback"></span>
-                      @if ($errors->has('path'))
-                      <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('path') }}</strong>
-                      </span>
+                      @if ($errors->has('icon'))
+                        <span class="help-block">
+                          <strong class="error-text">{{ $errors->first('icon') }}</strong>
+                        </span>
                       @endif
                     </div>
                   </div>
-                </div>
+                </div><br>
                 <div class="row">
                   <div class="col-md-3 ">
                     <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
