@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Modules\GpsConfig\Controllers;
 
 use App\Exports\GpsUnprocessedDataReportExport;
@@ -11,6 +11,7 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsConfiguration;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use PDF;
 use Auth;
@@ -28,17 +29,26 @@ class GpsRecordController extends Controller {
     public function gpsDateWiseRecordList(Request $request)
     {
         $gps_id = $request->gps_id;
+        $gps = Gps::all();
         $date = date('Y-m-d',strtotime($request->date));
-        $datas = GpsData::select('gps_id','imei','vlt_data','device_time','created_at')->where('gps_id',$gps_id)->whereDate('created_at',$date)->orderBy('created_at','asc')->get();  
-        return response()->json($datas); 
+        $datas = GpsData::select('id', 'gps_id','imei','vlt_data','device_time','created_at')
+                ->where('gps_id',$gps_id)
+                ->whereDate('created_at',$date)
+                ->with('vlt_data')
+                ->orderBy('created_at','asc')
+                ->paginate(10);
+        // return ($datas != null) ? Response([ 'links' => $datas->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+        return view('GpsConfig::gps-daily-record',['gps' => $gps,'data'=>$datas]);
+
+    //    return response()->json($datas);
     }
 
     public function exportProcessedData(Request $request)
     {
-        ob_end_clean(); 
-        ob_start(); 
+        ob_end_clean();
+        ob_start();
         return Excel::download(new GpsProcessedDataReportExport($request->gps_id,$request->date), 'gps-processed-data-report.xlsx');
-    } 
+    }
 
     public function gpsUnprocessedDateWiseRecord()
     {
@@ -50,15 +60,15 @@ class GpsRecordController extends Controller {
         $gps_id = $request->gps_id;
         $gps = Gps::find($gps_id);
         $date = date('Y-m-d',strtotime($request->date));
-        $datas = VltData::select('imei','vltdata','created_at')->where('imei',$gps->imei)->whereDate('created_at',$date)->orderBy('created_at','asc')->get();  
-        return response()->json($datas); 
+        $datas = VltData::select('imei','vltdata','created_at')->where('imei',$gps->imei)->whereDate('created_at',$date)->orderBy('created_at','asc')->get();
+        return response()->json($datas);
     }
 
     public function exportUnprocessedData(Request $request)
     {
-        ob_end_clean(); 
+        ob_end_clean();
         ob_start();
         return Excel::download(new GpsUnprocessedDataReportExport($request->gps_id,$request->date), 'gps-unprocessed-data-report.xlsx');
-    } 
-    
+    }
+
 }

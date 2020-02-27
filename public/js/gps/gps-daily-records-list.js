@@ -1,5 +1,6 @@
 $(function(){
     $('#searchclick').click(function() {
+
         if(document.getElementById('gps_id').value == ''){
             alert('Please select GPS');
         }else if(document.getElementById('date').value == ''){
@@ -18,21 +19,24 @@ $(function(){
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function (res) {
+                success: function (data) {
                     $('#tabledata').empty();
-                    for (var i = 0; i < res.length; i++) {
+                    for (var i = 0; i < data.links.data.length; i++) {
+                        var vlt_data_packet = (data.links.data[i].vlt_data != null) ? data.links.data[i].vlt_data.vltdata : '';
                         var j=i+1;
                         var tablerow = '<tr><td>'+j+'</td>'+
-                        '<td>'+res[i].imei+'</td>'+
-                        '<td>'+res[i].vlt_data+'</td>'+
-                        '<td>'+res[i].device_time+'</td>'+ 
-                        '<td>'+res[i].created_at+'</td>'+       
+                        '<td>'+data.links.data[i].imei+'</td>'+
+                        '<td>'+vlt_data_packet+'</td>'+
+                        '<td>'+data.links.data[i].device_time+'</td>'+
+                        '<td>'+data.links.data[i].created_at+'</td>'+
                         '</tr>';
                         $("#tabledata").append(tablerow);
                     }
+
                 }
+
             });
-          
+
         }
     });
 });

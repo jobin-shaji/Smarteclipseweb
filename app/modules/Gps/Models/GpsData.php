@@ -8,7 +8,7 @@ class GpsData extends Model
 
 	 protected $table = 'gps_data';
 
-    protected $fillable=[ 
+    protected $fillable=[
     	'client_id',
     	'gps_id',
     	'vehicle_id',
@@ -91,16 +91,20 @@ class GpsData extends Model
     public function vehicleGps()
     {
         return $this->belongsToMany('App\Modules\Gps\Models\GpsData', 'vehicle_gps',  'vehicle_id' ,'gps_id')->withPivot('id');
-    } 
+    }
     public function dailyKm()
     {
         return $this->hasOne('App\Modules\Vehicle\Models\DailyKm','gps_id','gps_id');
+	}
+	public function vlt_data()
+    {
+        return $this->hasOne('App\Modules\VltData\Models\VltData','id','vlt_data');
     }
     protected $casts = [
         'lat' => 'float',
         'lng' => 'float',
 	];
-	
+
 	//detailed packet data based on id in vlt data table
 	public function getDetailedPacketData($vlt_data_id)
     {
