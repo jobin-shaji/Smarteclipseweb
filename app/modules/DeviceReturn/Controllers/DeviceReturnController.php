@@ -40,7 +40,7 @@ class DeviceReturnController extends Controller {
         $rules = $this->device_return_create_rules();
         $this->validate($request, $rules);
     
-                 $device = DeviceReturn::create([
+                     $device = DeviceReturn::create([
                     'gps_id' => $request->gps_id,
                     'type_of_issues' => $request->type_of_issues,
                     'comments' => $request->comments,
@@ -67,17 +67,17 @@ class DeviceReturnController extends Controller {
                     'type_of_issues',
                     'comments',                                        
                     'created_at',
-                    'servicer_id'
+                    'servicer_id','status'
                 )
             ->with('gps:id,imei,serial_no')
             ->orderBy('id','desc');
             $servicer_id=\Auth::user()->servicer->id;
-            $device_return = $device_return->where('servicer_id',$servicer_id);
-            $device_return = $device_return->get();
+            $device_return = $device_return->where('servicer_id',$servicer_id)->get();
+            
             return DataTables::of($device_return)
             ->addIndexColumn()
             ->addColumn('comments', function ($device_return) { 
-              $str = mb_strimwidth("$device_return->comments", 0, 20, "...");
+            $str = mb_strimwidth("$device_return->comments", 0, 20, "...");
                        return $str;
               
                      })
@@ -90,25 +90,38 @@ class DeviceReturnController extends Controller {
                     return "software";
                 }
                 })
+            ->addColumn('status', function ($device_return) { 
+                
+                    if($device_return->status==1){
+                        return "Cancelled";
+                    }
+                   else if($device_return->status==0){
+                        return "Submitted";
+                    }
+                    else
+                    {
+                        return "Accepted";
+                    }
+                            
+                    })
+                
                 ->addColumn('action', function ($device_return) 
                 {
-                   
-                    if($device_return->status == 0)
-                        {
-                        return "
-                         <button onclick=cancelDeviceReturn(".$device_return->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
-                        </button>";
-                        }
-                 })
-                
-           ->rawColumns(['link', 'action'])
-            ->make();
+                if($device_return->status == 0)
+                    {
+                    return "
+                    <button onclick=cancelDeviceReturn(".$device_return->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                    </button>";
+                    }
+                })
+                ->rawColumns(['link', 'action'])
+                ->make();
         
     }
     public function selectVehicle(Request $request)
     {
         $client_id=$request->client_id;
-        $vehicle=Vehicle::with('gps')->where('client_id',$client_id)->get();
+        $vehicle=GpsStock::with('gps')->where('client_id',$client_id)->get();
                 if($vehicle== null){
                     return response()->json([
                         'vehicle' => '',
@@ -122,9 +135,9 @@ class DeviceReturnController extends Controller {
                 }
     }
   
-      //cancel device return
-      public function cancelDeviceReturn(Request $request)
-      {
+    //cancel device return
+    public function cancelDeviceReturn(Request $request)
+    {
         $device_return = DeviceReturn::find($request->id);
         $servicer_id=\Auth::user()->servicer->id;
 
@@ -144,10 +157,25 @@ class DeviceReturnController extends Controller {
                     'message' => 'Device return Cancelled successfully'
                 ]);
                 }
-        }
+    }
+     //accept device return
+    public function acceptDeviceReturn(Request $request)
+    {
+                $device_return = DeviceReturn::find($request->id);
+                $device_return->status=2;
+                $device_return->save();
+                
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Device return Accepted successfully'
+                    ]);
+                
+    }
+    // for device return list in root
     public function deviceReturnRootHistoryList()
     {
-        return view('DeviceReturn::device-return-root-history-list');
+              return view('DeviceReturn::device-return-root-history-list');
     }
     public function getdeviceReturnRootHistoryList()
     {
@@ -157,13 +185,13 @@ class DeviceReturnController extends Controller {
                     'type_of_issues',
                     'comments',                                        
                     'created_at',
-                    'servicer_id'
-                )
+                    'servicer_id',
+                    'status')
             ->with('gps:id,imei,serial_no')
             ->with('servicer:id,name')
-           -> where('status', '!=' , 1)
+            -> where('status', '!=' , 1)
             ->orderBy('id','desc');
-           $device_return = $device_return->get();
+            $device_return = $device_return->get();
             return DataTables::of($device_return)
             ->addIndexColumn()
             ->addColumn('comments', function ($device_return) { 
@@ -172,37 +200,58 @@ class DeviceReturnController extends Controller {
                 
                        })
              ->addColumn('status', function ($device_return) { 
-                if($device_return->status==0){
-                    return "submitted";
+                
+                if($device_return->status==1){
+                    return "Cancelled";
                 }
-               else{
-                    return "approved";
+               else if($device_return->status==0){
+                    return "Submitted";
+                }
+                else{
+                    return "Accepted";
                 }
                         
-                               })
+                })
             ->addColumn('type_of_issues', function ($device_return) { 
                 if($device_return->type_of_issues==0){
                     return "Hardware";
                 }
                 else 
                 {
-                    return "software";
+                    return "Software";
                 }
                 })
+            ->addColumn('action', function ($device_return) { 
+               return "
+                <a href=/device-return-detail-view/".Crypt::encrypt($device_return->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+               
+            })
             ->rawColumns(['link', 'action'])
             ->make();
-        
     }
     
+    //device return details view
+    public function deviceReturnDetailview(Request $request)
+    {
+            $decrypted = Crypt::decrypt($request->id); 
+            $device_return_details=DeviceReturn::find($decrypted); 
+            if($device_return_details == null)
+                {
+                return view('DeviceReturn::404');
+                }
+            return view('DeviceReturn::device-return-view',['device_return_details' => $device_return_details]);
+     }
+
     public function device_return_create_rules()
-        {
-            $rules = [
-                'gps_id' => 'required',       
-                'type_of_issues' =>'required',
-                'comments' => 'required|max:500'
-                    ];
-            return  $rules;
-        }
+    {
+                $rules = [
+                    'gps_id' => 'required',       
+                    'type_of_issues' =>'required',
+                    'comments' => 'required|max:500'
+                        ];
+                return  $rules;
+    }
+      
    
    
 }

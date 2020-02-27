@@ -47,6 +47,7 @@ function callBackDataTable(){
             {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
             {data: 'type_of_issues', name: 'type_of_issues', orderable: false},
             {data: 'comments', name: 'comments', orderable: false},
+            {data: 'status', name: 'status', orderable: false},
              {data: 'action', name: 'action', orderable: false, searchable: false},        
         ],
         

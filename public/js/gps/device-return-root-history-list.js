@@ -2,10 +2,20 @@ $(document).ready(function () {
     callBackDataTable();
 });
 
-
+function acceptDeviceReturn(device_return_id){
+    if(confirm('Are you sure to accept this?')){
+        var url = '/device-return/accept';
+        var data = {
+            id : device_return_id
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+      
+    } 
+    setTimeout(function() {
+        document.location.reload()
+  }, 5000);
+}
 function callBackDataTable(){
-     // var showAdminColumns =  role ==3 ? true:false;
-
     var  data = {
     
     }; 
@@ -39,6 +49,7 @@ function callBackDataTable(){
             {data: 'gps.serial_no', name: 'gps.serial_no' , orderable: false},
             {data: 'type_of_issues', name: 'type_of_issues', orderable: false},
             {data: 'status', name: 'status', orderable: false, searchable: false},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
                  
         ],
         
