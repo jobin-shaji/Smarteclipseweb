@@ -145,6 +145,28 @@ $(function () {
         minDate: new Date(currentYear, currentMonth-6, currentDate)
         // minDate:pro_date
     });
+
+    $( ".monthpickerFreebies" ).datetimepicker({
+        format: 'MM-YYYY',
+        maxDate: new Date(),
+        minDate: new Date(currentYear, currentMonth-1, currentDate)
+    });
+    $(".monthpickerFundamental").datetimepicker({
+        format: 'MM-YYYY',
+        maxDate: new Date(),
+        minDate: new Date(currentYear, currentMonth-2, currentDate)
+    });
+    $( ".monthpickerSuperior" ).datetimepicker({
+        format: 'MM-YYYY',
+        maxDate: new Date(),
+        minDate: new Date(currentYear, currentMonth-4, currentDate)
+     });
+    $(".monthpickerPro" ).datetimepicker({
+        format: 'MM-YYYY',
+        maxDate: new Date(),
+        minDate: new Date(currentYear, currentMonth-6, currentDate)
+    });
+
     $('.datepickerFundamental').val("");
     $('.datepickerFreebies').val("");
     $('.datepickerSuperior').val("");
@@ -496,6 +518,9 @@ function backgroundPostData(url, data, callBack, options) {
                 }
                 else if(callBack=='gpsAlertconfirm'){
                     gpsAlertconfirm(res);
+                }
+                else if(callBack =='monthFuelGraph'){
+                    monthFuelGraph(res);
                 }
 
                 else if(callBack=='rootVehicle'){
