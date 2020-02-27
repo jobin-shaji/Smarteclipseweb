@@ -32,6 +32,7 @@
                      <th>Date</th>
                      <th>Type of issues</th>
                      <th>Comments</th>
+                     <th>Status</th>
                      <th>Action</th>
                     </tr>
                 </thead>

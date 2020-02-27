@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  View Complaints
+  View Device Return details
 @endsection
 @section('content')
 <div class="page-wrapper_new">
@@ -32,7 +32,7 @@
                     <th>Serial No</th>
                     <th>Type of Issues</th>
                      <th>Status</th>
-                     <!-- <th>Action</th> -->
+                     <th>Action</th>
                     </tr>
                 </thead>
               </table>

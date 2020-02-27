@@ -13,8 +13,10 @@ Route::post('/device-return/cancel','DeviceReturnController@cancelDeviceReturn')
 });
 
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\DeviceReturn\Controllers' ] , function() {	
+    Route::get('/device-return-detail-view/{id}/view','DeviceReturnController@deviceReturnDetailview')->name('device.return.detail.view');
     Route::get('/device-return-history-list','DeviceReturnController@deviceReturnRootHistoryList')->name('device.return.history.list');
     Route::post('/device-return-root-history-list','DeviceReturnController@getdeviceReturnRootHistoryList')->name('device.return.root.history.list');
-    });
+    Route::post('/device-return/accept','DeviceReturnController@acceptDeviceReturn')->name('device.return.accept');
+});
 
 
