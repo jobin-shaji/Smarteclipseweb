@@ -499,6 +499,41 @@ class GpsController extends Controller {
             ->make();
     }
 
+    //Display gps in stock of sub dealer
+    public function gpsInStockSubDealerPage()
+    {
+        return view('Gps::gps-in-stock-sub-dealer-list');
+    } 
+
+    //returns gps in stock of sub dealer as json 
+    public function getSubDealerGpsInStock()
+    {
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $gps_stock = GpsStock::select(
+                'id',
+                'gps_id'
+                )
+                ->withTrashed()
+                ->with('gps')
+                ->whereNull('trader_id')
+                ->whereNull('client_id')
+                ->where('subdealer_id',$sub_dealer_id)
+                ->get();
+        return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) {
+                $b_url = \URL::to('/');
+                if($gps_stock->deleted_at == null){
+                    return "
+                        <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";     
+                }else{
+                    return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
     //deactivate gps
     public function gpsStatusDeactivate(Request $request)
     {

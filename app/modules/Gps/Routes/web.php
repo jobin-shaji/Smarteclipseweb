@@ -35,6 +35,10 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
 	Route::get('/gps-sub-dealer','GpsController@gpsSubDealerListPage')->name('gps-sub-dealer');
 	Route::post('/gps-sub-dealer-list','GpsController@getSubDealerGps')->name('gps-sub-dealer-list');
 
+	//gps sub dealer in stock list
+	Route::get('/gps-in-stock-sub-dealer','GpsController@gpsInStockSubDealerPage')->name('gps-in-stock-sub-dealer');
+	Route::post('/gps-in-stock-sub-dealer-list','GpsController@getSubDealerGpsInStock')->name('gps-in-stock-sub-dealer-list');
+
 	//gps activate-deactivate
 	Route::post('/gps-status/deactivate','GpsController@gpsStatusDeactivate')->name('gps-status.deactivate');
 	Route::post('/gps-status/activate','GpsController@gpsStatusActivate')->name('gps-status.activate');
