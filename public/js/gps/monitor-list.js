@@ -733,14 +733,23 @@ function repaint(id)
     $('#'+id).text('');
 }
 
-function markAlertAsRead(id,time)
+function markAlertAsRead(id, time)
 {
     if($.inArray(id, read_alerts) == -1)
     {
-        read_alerts.push(id.toString());
+        // remove old alert with same gps id existing
+        for(var i=0; i<read_alerts.length; i++)
+        {
+            if( read_alerts[i].startsWith(id+"-") )
+            {
+                read_alerts.splice(i,1);
+            }
+        }
+        read_alerts.push(id.toString()+'-'+time);
         localStorage.setItem('read_alerts', read_alerts);
         // remove the read alert
         $('.eam-each_alert-'+id).remove();
+        var split_time = localStorage
         // if there is only on alert in the modal and that too read
         // remove that alert and close the modal
         if( (read_alerts.length - critical_alerts.length) == 0 )
@@ -828,24 +837,34 @@ $(document).ready(function(){
 
 function isAlertNeedsToDisplay(alert)
 {
-   return ( (alert.vehicle != null) && ($.inArray(alert.id.toString(), read_alerts) == -1) ) ? true : false;
+    var time                    = alert.emergencylogs;
+    var emergency_alert_time    = '';
+    if(time != null)
+    {
+        datetime                = ' at '+time.device_time+'.';
+        emergency_alert_time    = + new Date(time.device_time);
+    }
+   return ( (alert.vehicle != null) && ($.inArray(alert.id.toString()+'-'+emergency_alert_time, read_alerts) == -1) ) ? true : false;
 }
 
 function prepareAlertModalContent(alert)
 {
-    var datetime    = ".";
-    var time        = alert.emergencylogs;
+    var datetime                = ".";
+    var time                    = alert.emergencylogs;
+    var emergency_alert_time    = '';
     if(time != null)
     {
-        datetime = ' at '+time.device_time+'.';
+        datetime                = ' at '+time.device_time+'.';
+        emergency_alert_time    = + new Date(time.device_time);
     }
+
     var alert_title = getAlertTitle(alert);
     var map_url     = '/monitor-map?&latitude='+alert.lat+'&longitude='+alert.lon;
     return '<div class="eam-each_alert each_popup_alert eam-each_alert-'+alert.id+'">'
         +'<p style="background:#f00; padding:6px 0;  color:#fff; font-weight:700;font-size:18px;border-top-left-radius: 7px;border-top-right-radius: 7px; ">'+alert_title+'</p>'
         +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+datetime+'</p>'
         +'<p style="margin-top:7px;font-size:12px;font-weight:10"> <button style="border-radius: 5px;padding: 5px 5px;"><a href="'+map_url+'" target="_blank">View map</a></button>'
-        +' <button style="border-radius: 5px;padding: 5px 5px;" onclick="markAlertAsRead('+alert.id+datetime+')">Mark as read</button> </p>'
+        +' <button style="border-radius: 5px;padding: 5px 5px;" onclick="markAlertAsRead('+alert.id+','+emergency_alert_time+')">Mark as read</button> </p>'
         +'<h6></h6>'
         +'</div>';
 }
