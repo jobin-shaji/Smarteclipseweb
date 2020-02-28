@@ -8,7 +8,7 @@ use App\Scopes\DeleteScope;
 class Gps extends Model
 {
 	use SoftDeletes;
- 
+
 
     protected static function boot()
     {
@@ -35,7 +35,7 @@ class Gps extends Model
     {
     	return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
-    
+
 
     public function gpsdata()
     {
@@ -45,6 +45,10 @@ class Gps extends Model
     // vehicle gps
     public function vehicle(){
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id')->withTrashed();
+    }
+
+    public function emergencylogs(){
+        return $this->hasOne('App\Modules\Operations\Models\EmergencyLog','gps_id','id')->withTrashed();
     }
 
      public function employee(){
@@ -65,15 +69,16 @@ class Gps extends Model
     {
       return self::select('emergency_status','tilt_status','id','lat','lon','imei','serial_no','e_sim_number')
                     ->with('vehicle','vehicle.client')
+                    ->with('emergencylogs')
                     ->where('emergency_status',1)
                     ->orWhere('tilt_status',1)
                     ->get();
     }
 
     /**
-     * 
-     * 
-     * 
+     *
+     *
+     *
      */
     public function getTransferredGpsDetails($transferred_gps_device_ids, $search_key = '')
     {
@@ -86,16 +91,16 @@ class Gps extends Model
     }
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public function getImeiList()
     {
         return self::select('imei', 'serial_no')->get();
     }
     /**
-     * 
-     * 
+     *
+     *
      */
     public function getGpsId($imei)
     {
