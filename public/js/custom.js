@@ -1232,6 +1232,7 @@ $(function () {
 
 function clearLocalStorage(){
     localStorage.removeItem("qwertasdfgzxcvb");
+    localStorage.setItem('login', 0);
 }
 
 
@@ -1858,3 +1859,5 @@ function getUploadDocs(res)
 function getUploads(res){
     location.reload();
 }
+// set a flag for login
+localStorage.setItem('login', 1);
