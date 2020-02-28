@@ -50,7 +50,7 @@ class GpsRecordController extends Controller {
         return Excel::download(new GpsProcessedDataReportExport($request->imei,$request->date), 'gps-processed-data-report.xlsx');
     }
 
-    public function gpsUnprocessedDateWiseRecord()
+    public function gpsUnprocessedDateWiseRecord(Request $request)
     {
         $imei_serial_no_list    = (new Gps())->getImeiList();
         $data                   = [];
