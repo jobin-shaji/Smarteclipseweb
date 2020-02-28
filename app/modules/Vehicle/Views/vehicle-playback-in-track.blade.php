@@ -1188,7 +1188,8 @@ $(function() {
   });
 
 });
-      $( document ).ready(function() {
+
+$( document ).ready(function() {
         // makes sure the whole site is loaded
 jQuery(window).load(function() {
 // will first fade out the loading animation
@@ -1196,8 +1197,32 @@ jQuery("#status").fadeOut();
 // will fade out the whole DIV that covers the website.
 jQuery("#preloader").delay(1000).fadeOut("slow");
 })
-
 });
+
+/**
+ * Bug #I698 
+ * If playback window is opened and user is logged out from the main window
+ * the user should not be able to access the playback functionality when the window is
+ * refocused. 
+ * @author PMS
+ * date 2020-02-28
+ * @return void
+ */
+function forceReload()
+{
+  var loginStatus = parseInt(localStorage.getItem('login'));
+  if(loginStatus != '1')
+  {
+    window.location.reload();
+  }
+  console.log('loginStatus '+loginStatus);
+}
+// Active
+window.addEventListener('focus', function(){ forceReload(); });
+// Inactive
+window.addEventListener('blur', function(){ forceReload(); });
+
+
 </script>
 <script>
 
