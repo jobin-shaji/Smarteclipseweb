@@ -354,6 +354,7 @@ Vehicle Details
               </div>
             </div>
           </div>
+@endsection
         </div>
       </div>
     </div>

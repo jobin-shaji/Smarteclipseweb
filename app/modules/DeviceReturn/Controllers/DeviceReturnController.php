@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsData;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
@@ -11,7 +12,9 @@ use App\Modules\DeviceReturn\Models\DeviceReturn;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\VltData\Models\VltData;
 use DataTables;
+use DB;
 class DeviceReturnController extends Controller {
     public function create()
     {
@@ -121,7 +124,25 @@ class DeviceReturnController extends Controller {
     public function selectVehicle(Request $request)
     {
         $client_id=$request->client_id;
-        $vehicle=GpsStock::with('gps')->where('client_id',$client_id)->get();
+
+        $devices=DeviceReturn::all();
+        $device_gps_id=[];
+        foreach($devices as $device)
+        {
+            $device_gps_id[]= $device->gps_id;
+        }
+
+        $vehicle=GpsStock::select(
+            'gps_id',
+            'client_id'
+        )
+        ->with('gps')
+        ->where('client_id',$client_id)
+        // ->whereNotIn('gps_id',$device_gps_id)
+        ->with('deviceReturn:gps_id,status')
+        ->get();
+    //  dd( $vehicle);
+       
                 if($vehicle== null){
                     return response()->json([
                         'vehicle' => '',
@@ -164,6 +185,75 @@ class DeviceReturnController extends Controller {
                 $device_return = DeviceReturn::find($request->id);
                 $device_return->status=2;
                 $device_return->save();
+                $gps_data           = Gps::find($device_return->gps_id);
+                $gps_data_in_stock  = GpsStock::where('gps_id',$device_return->gps_id)
+                                        ->first();
+                //old data stored in a variable for creating new row
+                $imei =$gps_data->imei;
+                $serial_no= $gps_data->serial_no;
+                $manufacturing_date= $gps_data->manufacturing_date;
+                $icc_id=$gps_data->icc_id;
+                $imsi= $gps_data->imsi;
+                $e_sim_number = $gps_data->e_sim_number;
+                $batch_number= $gps_data->batch_number;
+                $employee_code= $gps_data->employee_code;
+                $model_name=$gps_data->model_name;
+                $version= $gps_data->version;
+                     
+                $imei_RET                   =   $gps_data->imei."-RET-" ;
+                $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
+                $gps_find_imei_and_slno     =   Gps::where('imei', 'like','%'.$imei_RET.'%')
+                                                ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
+                                                ->count();
+                $increment_value            =    $gps_find_imei_and_slno +1;
+                $imei_incremented           =    $imei."-RET-"."".$increment_value;
+                $serial_no_incremented      =    $serial_no."-RET-"."". $increment_value;
+                //To update returned status in gps table
+                $gps_data->imei             =    $imei_incremented;
+                $gps_data->serial_no        =    $serial_no_incremented;
+                $gps_data->is_returned      =    1;
+                $gps_data->save();
+                //To update returned status in gps stock table
+                $gps_data_in_stock->is_returned      =    1;
+                $gps_data_in_stock->save();
+                 //To update imei in gps data
+                
+                 $gps_data=GpsData::where('imei',$imei)->update([
+                    'imei' =>  $imei_incremented,
+                     ]);
+                     
+                //To update imei in vlt data
+                
+                 $Vlt_Data=VltData::where('imei',$imei)->update([
+                    'imei' =>  $imei_incremented,
+                     ]);
+                //To update imei in vlt data
+                DB::table('vlt_data_archived')->where('imei',$imei)
+                  ->update([
+                    'imei' =>  $imei_incremented,
+                     ]);
+
+                //to create new row with returend gps
+                $gps        = Gps::create([
+                                'serial_no'=>$serial_no,
+                                'icc_id'=>$icc_id,
+                                'imsi'=>$imsi,
+                                'imei'=>$imei,
+                                'manufacturing_date'=>$manufacturing_date,
+                                'e_sim_number'=>$e_sim_number,
+                                'batch_number'=>$batch_number,
+                                'model_name'=>$model_name,
+                                'version'=>$version,
+                                'employee_code'=>$employee_code,
+                                'status'=>1
+                            ]); 
+                //to get user id of manufacture
+                $root_id    =\Auth::user()->id;
+                $gps_stock  = GpsStock::create([
+                                    'gps_id'=> $gps->id,
+                                    'inserted_by' => $root_id
+                            ]); 
+    
                 
                 return response()->json([
                     'status' => 1,

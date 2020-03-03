@@ -54,4 +54,9 @@ class GpsStock extends Model
         return $this->hasone('App\Modules\Root\Models\Root','user_id','inserted_by');
     }
 
+    public function deviceReturn()
+    {
+        return $this->hasone('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','gps_id')->where('status','!=',2);
+    }
+
 }
