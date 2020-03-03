@@ -29,6 +29,7 @@ var cityCircle;
 var circleStatus=0;
 var myGoogleRadar;
 var radarStatus=0;
+var selected_vehicle_mode = null;
 
 function initMap() {
  map = new google.maps.Map(document.getElementById('map'), {
@@ -251,8 +252,8 @@ function locationSearch() {
     return false;
 }
 
-function mode(vehicle_mode) {
-
+function mode(vehicle_mode)
+{
   if(selected_vehicle_mode == vehicle_mode)
   {
     window.location.reload(true);
@@ -275,17 +276,17 @@ function mode(vehicle_mode) {
   });
 }
 
-function selectVehicleModeTrack(res) {
- // console.log(res);
- deleteMarkers();
- flag = 0;
- vehicleTrack(res);
-
+function selectVehicleModeTrack(res)
+{
+  deleteMarkers();
+  flag = 0;
+  vehicleTrack(res);
 }
 
-function deleteMarkers() {
- clearMarkers();
- markers = [];
+function deleteMarkers()
+{
+  clearMarkers();
+  markers = [];
 }
 
 function clearMarkers() {
