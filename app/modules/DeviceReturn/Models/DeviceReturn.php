@@ -7,7 +7,7 @@ class DeviceReturn extends Model
 {
 	use SoftDeletes;    
   protected $fillable=[
-		'id','gps_id','servicer_id','type_of_issues','status','comments','created_at','updated_at','deleted_at'
+		'id','gps_id','servicer_id','client_id','type_of_issues','status','comments','created_at','updated_at','deleted_at'
 	];
 
 	public function gps()

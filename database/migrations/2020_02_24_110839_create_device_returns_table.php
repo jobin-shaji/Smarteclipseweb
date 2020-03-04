@@ -17,6 +17,8 @@ class CreateDeviceReturnsTable extends Migration
             $table->increments('id');
             $table->integer('gps_id');
             $table->integer('servicer_id');
+            $table->integer('client_id');
+
             $table->integer('type_of_issues')->comment = '0-hardware,1-software';
             $table->integer('status')->comment = '0-submit,1-cancel,2-accept';
             $table->text('comments');

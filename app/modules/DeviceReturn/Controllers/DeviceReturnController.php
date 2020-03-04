@@ -42,18 +42,27 @@ class DeviceReturnController extends Controller {
         $servicer_id=\Auth::user()->servicer->id;
         $rules = $this->device_return_create_rules();
         $this->validate($request, $rules);
-    
-                     $device = DeviceReturn::create([
-                    'gps_id' => $request->gps_id,
-                    'type_of_issues' => $request->type_of_issues,
-                    'comments' => $request->comments,
-                    'status' => 0,
-                    'servicer_id' =>$servicer_id,
-                    'created_at'=> date('Y-m-d H:i:s'),
-                    'updated_at'=> date('Y-m-d H:i:s')
-                ]);
-         $request->session()->flash('message', 'New Device Return registered successfully!'); 
-         $request->session()->flash('alert-class', 'alert-success'); 
+
+        $existing_gps_return_count = DeviceReturn::where('gps_id',$request->gps_id)->where('status',0)->count();
+        if($existing_gps_return_count>0){
+            $request->session()->flash('message', 'Already Exist!'); 
+         $request->session()->flash('alert-class', 'alert-danger'); 
+        }
+        else{
+            $device = DeviceReturn::create([
+                'gps_id' => $request->gps_id,
+                'type_of_issues' => $request->type_of_issues,
+                'comments' => $request->comments,
+                'status' => 0,
+                'servicer_id' =>$servicer_id,
+                'client_id' =>$request->client_id,
+                'created_at'=> date('Y-m-d H:i:s'),
+                'updated_at'=> date('Y-m-d H:i:s')
+            ]);
+     $request->session()->flash('message', 'New Device Return registered successfully!'); 
+     $request->session()->flash('alert-class', 'alert-success'); 
+        }
+                   
          return redirect(route('device')); 
     }
 
@@ -122,45 +131,37 @@ class DeviceReturnController extends Controller {
         
     }
     public function selectVehicle(Request $request)
-    {
-        $client_id=$request->client_id;
-
-        $devices=DeviceReturn::all();
-        $device_gps_id=[];
-        foreach($devices as $device)
         {
-            $device_gps_id[]= $device->gps_id;
-        }
-
-        $vehicle=GpsStock::select(
-            'gps_id',
-            'client_id'
-        )
-        ->with('gps')
-        ->where('client_id',$client_id)
-        // ->whereNotIn('gps_id',$device_gps_id)
-        ->with('deviceReturn:gps_id,status')
-        ->get();
-    //  dd( $vehicle);
-       
-                if($vehicle== null){
+         $client_id=$request->client_id;
+         $device_gps_id=DeviceReturn::select('gps_id')
+                        ->where('client_id',$client_id)
+                        ->where('status','!=',1)->pluck('gps_id');
+                            $vehicle=GpsStock::select(
+                                                'gps_id',
+                                                'client_id')
+                                        ->with('gps')
+                                        ->where('client_id',$client_id)
+                                        ->whereNotIn('gps_id',$device_gps_id)
+                                        ->with('deviceReturn:gps_id,status')
+                                        ->get();
+                    if($vehicle== null){
+                        return response()->json([
+                            'vehicle' => '',
+                            'message' => 'no vehicle found'
+                        ]);
+                    }else
+                    {
                     return response()->json([
-                        'vehicle' => '',
-                        'message' => 'no vehicle found'
+                            'vehicle' => $vehicle,
                     ]);
-                }else
-                {
-                return response()->json([
-                        'vehicle' => $vehicle,
-                ]);
-                }
-    }
+                    }
+        }
   
     //cancel device return
     public function cancelDeviceReturn(Request $request)
     {
-        $device_return = DeviceReturn::find($request->id);
-        $servicer_id=\Auth::user()->servicer->id;
+             $device_return = DeviceReturn::find($request->id);
+             $servicer_id=\Auth::user()->servicer->id;
 
                 if($device_return->servicer_id  != $servicer_id){
                     return response()->json([
@@ -199,15 +200,17 @@ class DeviceReturnController extends Controller {
                 $employee_code= $gps_data->employee_code;
                 $model_name=$gps_data->model_name;
                 $version= $gps_data->version;
-                     
+            
                 $imei_RET                   =   $gps_data->imei."-RET-" ;
                 $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
                 $gps_find_imei_and_slno     =   Gps::where('imei', 'like','%'.$imei_RET.'%')
                                                 ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
-                                                ->count();
+                                                ->count();        
                 $increment_value            =    $gps_find_imei_and_slno +1;
                 $imei_incremented           =    $imei."-RET-"."".$increment_value;
                 $serial_no_incremented      =    $serial_no."-RET-"."". $increment_value;
+               
+                
                 //To update returned status in gps table
                 $gps_data->imei             =    $imei_incremented;
                 $gps_data->serial_no        =    $serial_no_incremented;
@@ -227,7 +230,7 @@ class DeviceReturnController extends Controller {
                  $Vlt_Data=VltData::where('imei',$imei)->update([
                     'imei' =>  $imei_incremented,
                      ]);
-                //To update imei in vlt data
+                //To update imei in vlt data archived
                 DB::table('vlt_data_archived')->where('imei',$imei)
                   ->update([
                     'imei' =>  $imei_incremented,
@@ -322,25 +325,25 @@ class DeviceReturnController extends Controller {
     
     //device return details view
     public function deviceReturnDetailview(Request $request)
-    {
-            $decrypted = Crypt::decrypt($request->id); 
-            $device_return_details=DeviceReturn::find($decrypted); 
-            if($device_return_details == null)
-                {
-                return view('DeviceReturn::404');
-                }
-            return view('DeviceReturn::device-return-view',['device_return_details' => $device_return_details]);
-     }
+        {
+                $decrypted = Crypt::decrypt($request->id); 
+                $device_return_details=DeviceReturn::find($decrypted); 
+                if($device_return_details == null)
+                    {
+                    return view('DeviceReturn::404');
+                    }
+                return view('DeviceReturn::device-return-view',['device_return_details' => $device_return_details]);
+        }
 
     public function device_return_create_rules()
-    {
-                $rules = [
-                    'gps_id' => 'required',       
-                    'type_of_issues' =>'required',
-                    'comments' => 'required|max:500'
-                        ];
-                return  $rules;
-    }
+        {
+                    $rules = [
+                        'gps_id' => 'required',       
+                        'type_of_issues' =>'required',
+                        'comments' => 'required|max:500'
+                            ];
+                    return  $rules;
+        }
       
    
    
