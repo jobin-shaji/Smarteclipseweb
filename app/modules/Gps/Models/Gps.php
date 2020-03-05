@@ -8,7 +8,6 @@ use App\Scopes\DeleteScope;
 class Gps extends Model
 {
 	use SoftDeletes;
- 
 
     protected static function boot()
     {
@@ -28,12 +27,12 @@ class Gps extends Model
     //join user table with gps table
     public function user()
     {
-    	return $this->belongsTo('App\Modules\User\Models\User','user_id');
+        return $this->belongsTo('App\Modules\User\Models\User','user_id');
     }
 
     public function transfers()
     {
-    	return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
+        return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
     
 
@@ -47,7 +46,7 @@ class Gps extends Model
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','id')->withTrashed();
     }
 
-     public function employee(){
+    public function employee(){
         return $this->hasOne('App\Modules\Employee\Models\Employee','id','employee_code')->withTrashed();
     }
 
@@ -60,10 +59,14 @@ class Gps extends Model
     {
         return $this->hasMany('App\Modules\Ota\Models\OtaUpdates','gps_id','id');
     }
-
-     public function getEmergencyalerts()
+    /**
+     * 
+     * 
+     * 
+     */
+    public function getEmergencyalerts()
     {
-      return self::select('emergency_status','tilt_status','id','lat','lon','imei','serial_no','e_sim_number')
+        return self::select('emergency_status','tilt_status','id','lat','lon','imei','serial_no','e_sim_number')
                     ->with('vehicle','vehicle.client')
                     ->where('emergency_status',1)
                     ->orWhere('tilt_status',1)
@@ -77,7 +80,7 @@ class Gps extends Model
      */
     public function getTransferredGpsDetails($transferred_gps_device_ids, $search_key = '')
     {
-        $query = self::select('imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name');
+        $query = self::select('imei','serial_no','icc_id','imsi','version','e_sim_number','batch_number','employee_code','model_name','is_returned');
         if($search_key != '')
         {
             $query = $query->where('imei','LIKE','%'.$search_key."%");

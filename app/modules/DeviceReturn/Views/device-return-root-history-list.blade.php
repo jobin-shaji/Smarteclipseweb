@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-  View Device Return details
+  Returned Device List
 @endsection
 @section('content')
 <div class="page-wrapper_new">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device Return List</li>
-       <b>Device Return List</b>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Returned Device List</li>
+      <b>Returned Device List</b>
     </ol>  
     @if(Session::has('message'))
       <div class="pad margin no-print">

@@ -3,14 +3,13 @@
   Create Device Return
 @endsection
 @section('content')  
-     
 <section class="hilite-content">
   <!-- title row -->
   <div class="page-wrapper_new mrg-top-50">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Device Return</li>
-        <b>Add Device Return</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Add Device For Return</li>
+        <b>Add Device For Return</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -47,7 +46,7 @@
                     <label class="srequired">Device</label>
                     <select class="form-control select2" id="gps_id" name="gps_id" data-live-search="true" title="Select Device" required>
                       <option selected disabled>Select Client First</option>
-                     </select>
+                    </select>
                     <!-- @if ($errors->has('gps_id'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('gps_id') }}</strong>
@@ -56,7 +55,7 @@
                   </div>
                   </div>
 
-                 <div class="form-group has-feedback form-group-1 mrg-rt-5">
+                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Type Of Issues</label>
                     <select class="form-control" name="type_of_issues" id="type_of_issues" required>
                     <option value="">Select Return Type of issues</option>
@@ -64,10 +63,9 @@
                       <option value="1">Software</option>
                     </select>
                   </div>     
-                 <div class="form-group has-feedback form-group-1 mrg-rt-5">
+                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Comments</label>
                     <textarea rows="5" cols="10" maxlength="500" class="form-control {{ $errors->has('comments') ? ' has-error' : '' }}" placeholder="Comments" name="comments" value="{{ old('comments') }}" required></textarea>
-                 
                     @if ($errors->has('description'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('comments') }}</strong>
