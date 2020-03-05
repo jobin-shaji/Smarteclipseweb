@@ -273,18 +273,18 @@ class DeviceReturnController extends Controller {
     public function getdeviceReturnRootHistoryList()
     {
             $device_return = DeviceReturn::select(
-                    'id', 
-                    'gps_id',                      
-                    'type_of_issues',
-                    'comments',                                        
-                    'created_at',
-                    'servicer_id',
-                    'status')
-            ->with('gps:id,imei,serial_no')
-            ->with('servicer:id,name')
-            -> where('status', '!=' , 1)
-            ->orderBy('id','desc');
-            $device_return = $device_return->get();
+                            'id', 
+                            'gps_id',                      
+                            'type_of_issues',
+                            'comments',                                        
+                            'created_at',
+                            'servicer_id',
+                            'status')
+                            ->with('gps:id,imei,serial_no')
+                            ->with('servicer:id,name')
+                            -> where('status', '!=' , 1)
+                            ->orderBy('id','desc');
+                            $device_return = $device_return->get();
             return DataTables::of($device_return)
             ->addIndexColumn()
             ->addColumn('comments', function ($device_return) { 
