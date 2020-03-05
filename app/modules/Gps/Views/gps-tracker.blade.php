@@ -142,7 +142,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
 <script src="{{asset('js/gps/gps-location-track.js')}}"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&libraries=places&callback=initMap" async defer></script>
 
 @endsection
 
