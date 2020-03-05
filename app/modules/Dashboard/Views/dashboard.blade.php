@@ -1439,7 +1439,7 @@
   @role('client')
   <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
   <script type="text/javascript">
     // refresh button on the map should be hidden when the dashboard loads
     window.onload = function() {
@@ -1517,7 +1517,7 @@
 
   @role('school')
   <script src="{{asset('js/gps/dashb-client.js')}}"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=places&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
   <script type="text/javascript">
 
   </script>
