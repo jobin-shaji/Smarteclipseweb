@@ -126,7 +126,7 @@
  @if(\Auth::user()->roles->first()->name=='school' && !empty(\Auth::user()->geofence))
   @section('script')
     <script src="{{asset('js/gps/school-geofence-details.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap"
          async defer></script>
   @endsection
 @endif
