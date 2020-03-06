@@ -106,7 +106,7 @@
                         <div class="col-md-12">
                             <input type="hidden" name="set_ota_gps_id" id="set_ota_gps_id" value="">
                             <div class="form-group row" style="float:none!important">
-                                <label for"fname" class="col-sm-3 text-right control-label col-form-label">Command:</label>
+                                <label class="col-sm-3 text-right control-label col-form-label">Command:</label>
                                 <div class="form-group has-feedback">
                                     <textarea class="form-control" name="command" id="command" rows=7></textarea>
                                 </div>
