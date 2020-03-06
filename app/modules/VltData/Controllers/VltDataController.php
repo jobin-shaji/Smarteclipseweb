@@ -70,6 +70,32 @@ class VltDataController extends Controller
      * 
      * 
      */
+    public function getGpsIdFromImei(Request $request)
+    {
+        $imei           =   $request->imei;
+        $gps_data     =   (new Gps())->getGpsId($imei );
+        if($gps_data == null)
+        {
+            $response    =  array(
+                'status'    =>  0,
+                'message'   =>  'failed'
+            );
+        }
+        else
+        {
+            $response    =  array(
+                'status'        =>  1,
+                'message'       =>  'success',
+                'gps_id'        =>  $gps_data->id
+            );
+        }
+        return response()->json($response);
+    }
+
+    /**
+     * 
+     * 
+     */
     public function consoleDataView(Request $request)
     {
         $imei_serial_no_list    = (new Gps())->getImeiList();
@@ -203,10 +229,9 @@ class VltDataController extends Controller
      * 
     */
 
-    public function processAckData($vlt_data){
-
+    public function processAckData($vlt_data)
+    {
         $comma_seperated = substr($vlt_data,96);
-
         $imei = substr($vlt_data,3,15);
         $date = substr($vlt_data,22,6);
         $time = substr($vlt_data,28,6);
@@ -232,7 +257,7 @@ class VltDataController extends Controller
 
         $array=[];
         $array=array(
-        	   'header' => substr($vlt_data,0,3),
+                'header' => substr($vlt_data,0,3),
                 'imei' => $imei,
                 'alert_id' => $code,
                 'packet_status' => substr($vlt_data,20,1),
@@ -257,11 +282,11 @@ class VltDataController extends Controller
                 'vehicle_mode' => $vehicle_mode,
                 'response' => $response,
                 'vlt_data' => $vlt_data,
-                 'response' => $response,
-                 'comma_seperated'=>$comma_seperated,
+                'response' => $response,
+                'comma_seperated'=>$comma_seperated,
                 'device_time' => $device_time
-              );
-             return $array;
+            );
+            return $array;
 
     }
     public function processAltData($vlt_data){
