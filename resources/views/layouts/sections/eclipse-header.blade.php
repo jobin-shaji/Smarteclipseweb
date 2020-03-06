@@ -433,8 +433,8 @@
                             measurementId: '{{Config::get("firebase.measurementId")}}'
                         }; 
                     </script>
-                    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-                    <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>
+                    <!-- <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script> -->
+                    <!-- <script src="{{asset('js/gps/firebase_notifications.js')}}"></script> -->
                 </li> 
                 <li class="nav-item dropdown">
                     <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>
