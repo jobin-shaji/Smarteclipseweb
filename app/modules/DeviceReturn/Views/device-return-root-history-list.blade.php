@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-  Returned Device List
+  Device List - Return
 @endsection
 @section('content')
 <div class="page-wrapper_new">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Returned Device List</li>
-      <b>Returned Device List</b>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device List - Return</li>
+      <b>Device List - Return</b>
     </ol>  
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -31,8 +31,8 @@
                     <th>imei </th> 
                     <th>Serial No</th>
                     <th>Type of Issues</th>
-                     <th>Status</th>
-                     <th>Action</th>
+                    <th>Status</th>
+                    <th>Action</th>
                     </tr>
                 </thead>
               </table>

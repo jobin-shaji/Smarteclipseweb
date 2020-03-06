@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-    Returned GPS List
+    GPS: Return List
 @endsection
 @section('content')
 
@@ -8,8 +8,8 @@
     <div class="page-wrapper-root1">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS: Returned List</li>
-                <b>GPS: Returned List</b>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS: Return List</li>
+                <b>GPS: Return List</b>
                 @if(Session::has('message'))
                 <div class="pad margin no-print">
                     <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
@@ -32,7 +32,6 @@
                                             <th>SL.No</th>
                                             <th>IMEI</th>
                                             <th>Serial Number</th>
-                                            <th>E-SIM Number</th>
                                             <th>Batch Number</th>
                                             <th>Version</th>
                                         </tr>

@@ -108,7 +108,7 @@
               <h3 id="gps_returned">
                 <div class="loader"></div>
               </h3>
-              <p>GPS Devices: Returned</p>
+              <p>GPS Devices: Return</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -292,7 +292,7 @@
                         <h3 id="gps_returned">
                           <div class="loader"></div>
                         </h3>
-                        <p>GPS Devices: Returned</p>
+                        <p>GPS Devices: Return</p>
                       </div>
                       <div class="icon">
                         <i class="fa fa-tablet"></i>
@@ -613,7 +613,7 @@
             <h3 id="gps_returned">
               <div class="loader"></div>
             </h3>
-            <p>GPS Devices: Returned</p>
+            <p>GPS Devices: Return</p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
@@ -721,7 +721,7 @@
             <h3 id="gps_returned">
               <div class="loader"></div>
             </h3>
-            <p>GPS Devices: Returned</p>
+            <p>GPS Devices: Return</p>
           </div>
           <div class="icon">
             <i class="fa fa-tablet"></i>
