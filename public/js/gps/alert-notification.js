@@ -11,8 +11,8 @@ function initMap() {
 $(document).ready(function () {
   $(".loader-1").show();
     $.ajax({
-            type:'GET',
-            url: alert_url+"/last-seven-days-alerts",
+            type:'post',
+            url: url_ms_alerts+"/last-seven-days-alerts",
             dataType: "json",
             success: function (res) 
             {            
@@ -82,8 +82,8 @@ function gpsAlertCount(value){
   var data={ id:  value};   
   $.ajax({
     type:'POST',
-    data:data,
-    url: alert_url+"/alert-mark-as-read",
+    data:data, 
+    url: url_ms_alerts+'/alert-mark-as-read',
     dataType: "json",
     success: function (res) 
     {  

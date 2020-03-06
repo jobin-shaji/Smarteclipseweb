@@ -419,7 +419,9 @@
                     </div>
                     
                     <script> 
-                   var alert_url= 'http://localhost:9000';//'{{Config::get("firebase.appId")}}';
+
+                   var url_ms_alerts = '{{ Config::get("eclipse.urls.ms_alerts") }}';
+                   console.log('url_ms_alerts'+url_ms_alerts);
                         // var firebaseConfig = {
                         //     apiKey:  '{{Config::get("firebase.apiKey")}}',
                         //     authDomain: '{{Config::get("firebase.authDomain")}}',

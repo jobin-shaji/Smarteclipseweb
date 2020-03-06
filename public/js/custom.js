@@ -213,7 +213,6 @@ $(function () {
     });
 
 
-
     $( ".date_expiry" ).datetimepicker({
         format: 'DD-MM-YYYY',
         // minDate: new Date()
@@ -1819,11 +1818,10 @@ localStorage.setItem('login', 1);
 
     function alertCount()
     {
-        
         $.ajax({
-            type:'get',
+            type:'post',
             // data:data,
-            url: alert_url+"/alert-count",
+            url: url_ms_alerts+'/alert-count',
             dataType: "json",
             success: function (res) 
             {                   
@@ -1839,9 +1837,9 @@ localStorage.setItem('login', 1);
     }
     function clientAlerts(){       
         $.ajax({
-            type:'get',
+            type:'post',
             // data:data,
-            url: alert_url+"/last-five-unread-alerts",
+            url: url_ms_alerts+"/last-five-unread-alerts",
             dataType: "json",
             success: function (res) 
             { 
@@ -1872,7 +1870,7 @@ localStorage.setItem('login', 1);
             $.ajax({
                 type:'POST',
                 data:data,
-                url: alert_url+"/alert-mark-as-read",
+                url: url_ms_alerts+"/alert-mark-as-read",
                 dataType: "json",
                 success: function (res) 
                 {         
