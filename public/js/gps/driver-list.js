@@ -42,7 +42,7 @@ function callBackDataTable(){
     });
 }
 function delDriver(driver){
-    if(confirm('The driver will be removed from the assigned vehicle.   Are you sure to deactivate this driver?')){
+    if(confirm('The driver will be removed from the assigned vehicle.Are you sure to deactivate this driver?')){
         var url = 'driver/delete';
         var data = {
             uid : driver
@@ -51,7 +51,7 @@ function delDriver(driver){
     }
 }
 function activateDriver(driver){
-    if(confirm('Driver should be assigned manually to any vehicle.        Are you sure to activate this driver?')){
+    if(confirm('Driver should be assigned manually to any vehicle.Are you sure to activate this driver?')){
         var url = 'driver/activate';
         var data = {
             id : driver

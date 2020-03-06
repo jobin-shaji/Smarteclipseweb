@@ -207,6 +207,8 @@
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
 
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
+       <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+
 
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
 
@@ -1089,10 +1091,9 @@
           var p1 = new google.maps.LatLng(lat1,lng1);
           var p2 = new google.maps.LatLng(lat2,lng2);
           var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
-          
+
               km_data            = km_data+total_distance;
              $('#km_data').text((km_data/1000).toFixed(2));
-
         }
 
        function stopPlayback(){
@@ -1187,7 +1188,8 @@ $(function() {
   });
 
 });
-      $( document ).ready(function() {
+
+$( document ).ready(function() {
         // makes sure the whole site is loaded
 jQuery(window).load(function() {
 // will first fade out the loading animation
@@ -1195,8 +1197,32 @@ jQuery("#status").fadeOut();
 // will fade out the whole DIV that covers the website.
 jQuery("#preloader").delay(1000).fadeOut("slow");
 })
-
 });
+
+/**
+ * Bug #I698 
+ * If playback window is opened and user is logged out from the main window
+ * the user should not be able to access the playback functionality when the window is
+ * refocused. 
+ * @author PMS
+ * date 2020-02-28
+ * @return void
+ */
+function forceReload()
+{
+  var loginStatus = parseInt(localStorage.getItem('login'));
+  if(loginStatus != '1')
+  {
+    window.location.reload();
+  }
+  console.log('loginStatus '+loginStatus);
+}
+// Active
+window.addEventListener('focus', function(){ forceReload(); });
+// Inactive
+window.addEventListener('blur', function(){ forceReload(); });
+
+
 </script>
 <script>
 

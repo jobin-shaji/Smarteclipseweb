@@ -133,7 +133,7 @@
   @section('script')
   @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence)) 
  <script src="{{asset('js/gps/school-geofence-edit.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing,places,geometry&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing,places,geometry&callback=initMap"
    async defer></script>
 
 @endif

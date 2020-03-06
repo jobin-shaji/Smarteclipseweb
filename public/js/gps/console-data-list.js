@@ -30,8 +30,6 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
         },
         success: function (res) 
         {
-            console.log(res.data);
-            $("#set_ota_gps_id").val(res.gps_id);
             $('#packet_datas').empty();
             if(res.data.header == "ACK"||res.data.header == "AVK")
             {
@@ -59,7 +57,7 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                         '<tr><td>ignition</td><td>'+res.data.ignition+'</td></tr>'+
                         '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
                         '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'+
-                         '<tr><td>Key and Values</td><td>'+res.data.response+'</td></tr>';  
+                        '<tr><td>Key and Values</td><td>'+res.data.response+'</td></tr>';  
                     $("#packet_datas").append(packet_data);         
             }else if(res.data.header == "ALT")
             {
@@ -87,7 +85,7 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td>ignition</td><td>'+res.data.ignition+'</td></tr>'+
                 '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
                 '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'
-                 ;  
+                ;  
             $("#packet_datas").append(packet_data);      
             }
             else if(res.data.header == "CRT")
@@ -117,7 +115,7 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
                 '<tr><td>GF Id</td><td>'+res.data.gf_id+'</td></tr>'+
                 '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'
-                 ;  
+                ;  
             $("#packet_datas").append(packet_data);      
             } else if(res.data.header == "EPB")
             {
@@ -145,7 +143,7 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td>ignition</td><td>'+res.data.ignition+'</td></tr>'+
                 '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
                 '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'
-                 ;  
+                ;  
             $("#packet_datas").append(packet_data);      
             }else if(res.data.header == "FUL")
             {
@@ -173,22 +171,22 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td>ignition</td><td>'+res.data.ignition+'</td></tr>'+
                 '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
                 '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'+
-                 '<tr><td>Vendor ID</td><td>'+res.data.vendor_id+'</td></tr>'+
-                 '<tr><td>Firmware Version</td><td>'+res.data.firmware_version+'</td></tr>'+
-                 '<tr><td>Vehicele Reg No</td><td>'+res.data.vehicle_register_num+'</td></tr>'+
-                 '<tr><td>Altitude</td><td>'+res.data.altitude+'</td></tr>'+
-                 '<tr><td>Pdop</td><td>'+res.data.pdop+'</td></tr>'+
-                 '<tr><td>Network Operator Name</td><td>'+res.data.nw_op_name+'</td></tr>'+
-                 '<tr><td>NMR</td><td style=" word-wrap: anywhere; width: 50px">'+res.data.nmr+'</td></tr>'+
-                 '<tr><td>Main Input Voltage</td><td>'+res.data.main_input_voltage+'</td></tr>'+
-                 '<tr><td>Tamper Alert</td><td>'+res.data.tamper_alert+'</td></tr>'+
-                 '<tr><td>Digital I/O Status</td><td>'+res.data.digital_io_status+'</td></tr>'+
-                 '<tr><td>Internal Battery Voltage</td><td>'+res.data.internal_battery_voltage+'</td></tr>'+
-                 '<tr><td>Frame Number</td><td>'+res.data.frame_number+'</td></tr>'+  
-                 '<tr><td>Check Sum</td><td>'+res.data.checksum+'</td></tr>'
-                 +
-                 '<tr><td>Gps Fix</td><td>'+res.data.gps_fix+'</td></tr>'
-                 ;  
+                '<tr><td>Vendor ID</td><td>'+res.data.vendor_id+'</td></tr>'+
+                '<tr><td>Firmware Version</td><td>'+res.data.firmware_version+'</td></tr>'+
+                '<tr><td>Vehicele Reg No</td><td>'+res.data.vehicle_register_num+'</td></tr>'+
+                '<tr><td>Altitude</td><td>'+res.data.altitude+'</td></tr>'+
+                '<tr><td>Pdop</td><td>'+res.data.pdop+'</td></tr>'+
+                '<tr><td>Network Operator Name</td><td>'+res.data.nw_op_name+'</td></tr>'+
+                '<tr><td>NMR</td><td style=" word-wrap: anywhere; width: 50px">'+res.data.nmr+'</td></tr>'+
+                '<tr><td>Main Input Voltage</td><td>'+res.data.main_input_voltage+'</td></tr>'+
+                '<tr><td>Tamper Alert</td><td>'+res.data.tamper_alert+'</td></tr>'+
+                '<tr><td>Digital I/O Status</td><td>'+res.data.digital_io_status+'</td></tr>'+
+                '<tr><td>Internal Battery Voltage</td><td>'+res.data.internal_battery_voltage+'</td></tr>'+
+                '<tr><td>Frame Number</td><td>'+res.data.frame_number+'</td></tr>'+  
+                '<tr><td>Check Sum</td><td>'+res.data.checksum+'</td></tr>'
+                +
+                '<tr><td>Gps Fix</td><td>'+res.data.gps_fix+'</td></tr>'
+                ;  
             $("#packet_datas").append(packet_data);      
             }
             else if(res.data.header == "HLM")
@@ -207,8 +205,7 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td style="padding:0.5rem;">Memory percentage</td><td>'+res.data.memory_percentage+'</td></tr>'+
                 '<tr><td style="padding:0.5rem;">Digital I/O status</td><td>'+res.data.digital_io_status+'</td></tr>'+
                 '<tr><td style="padding:0.5rem;">Analog Input Status</td><td>'+res.data.analog_io_status+'</td></tr>'
-                 
-                 ;  
+                ;  
             $("#packet_datas").append(packet_data);      
             }
             else if(res.data.header == "LGN")
@@ -224,8 +221,7 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td>Longitude Direction</td><td>'+res.data.lon_dir+'</td></tr>'+
                 '<tr><td>Activation Key</td><td>'+res.data.activation_key+'</td></tr>'+
                 '<tr><td>Speed</td><td>'+res.data.speed+'</td></tr>'
-                 
-                 ;  
+                ;  
             $("#packet_datas").append(packet_data);      
             }
             //  else if(res.data.header == "NRM")
@@ -241,7 +237,6 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
             //     '<tr><td>Longitude Direction</td><td>'+res.data.lon_dir+'</td></tr>'+
             //     '<tr><td>Activation Key</td><td>'+res.data.activation_key+'</td></tr>'+
             //     '<tr><td>Speed</td><td>'+res.data.speed+'</td></tr>'
-                 
             //      ;  
             // $("#packet_datas").append(packet_data);      
             // }
@@ -263,15 +258,15 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 '<tr><td>Lac </td><td>'+res.data.lac+'</td></tr>'+
                 '<tr><td>Cell Id </td><td>'+res.data.cell_id+'</td></tr>'+
                 '<tr><td>Speed</td><td>'+res.data.speed+'</td></tr>'+ 
-                 '<tr><td>GNSS Fix</td><td>'+res.data.gps_fix+'</td></tr>'+
-                 '<tr><td>Heading</td><td>'+res.data.heading+'</td></tr>'+     
-                 '<tr><td>No of Satelites</td><td>'+res.data.no_of_satelites+'</td></tr>'+
-                 '<tr><td>Hdop</td><td>'+res.data.hdop+'</td></tr>'+
-                 '<tr><td>Signal Strength</td><td>'+res.data.gsm_signal_strength+'</td></tr>'+
-                 '<tr><td>ignition</td><td>'+res.data.ignition+'</td></tr>'+
-                 '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
-                 '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'
-                 ;  
+                '<tr><td>GNSS Fix</td><td>'+res.data.gps_fix+'</td></tr>'+
+                '<tr><td>Heading</td><td>'+res.data.heading+'</td></tr>'+     
+                '<tr><td>No of Satelites</td><td>'+res.data.no_of_satelites+'</td></tr>'+
+                '<tr><td>Hdop</td><td>'+res.data.hdop+'</td></tr>'+
+                '<tr><td>Signal Strength</td><td>'+res.data.gsm_signal_strength+'</td></tr>'+
+                '<tr><td>ignition</td><td>'+res.data.ignition+'</td></tr>'+
+                '<tr><td>main power status</td><td>'+res.data.main_power_status+'</td></tr>'+
+                '<tr><td>Vehicle Mode</td><td>'+res.data.vehicle_mode+'</td></tr>'
+                ;  
             $("#packet_datas").append(packet_data);      
             }else if(res.data.header == "BTH"){
                 // $('#batchtabledata').empty();
@@ -284,8 +279,33 @@ function clickedPacketDetails(vlt_data_id,imei,vlt_data)
                 }
             }
             else{
-                alert(res.data);
                 $("#packet_datas").append("No data available");
+            }
+        }
+
+    });
+}
+
+function sendCommandToDevice(imei)
+{
+    var url = 'get-gps-id-from-imei';
+    var data = {
+        imei:imei
+    };   
+    $.ajax({
+        type:'POST',
+        url: url,
+        data:data ,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            
+        },
+        success: function (res) 
+        {
+            if(res.status == 1)
+            {
+                $("#set_ota_gps_id").val(res.gps_id);
             }
         }
 
@@ -297,8 +317,8 @@ function setOta(gps_id) {
         alert('Please enter your command');
     }
     else{
-      var command = document.getElementById('command').value;
-      var data = {'gps_id':gps_id, 'command':command};
+        var command = document.getElementById('command').value;
+        var data = {'gps_id':gps_id, 'command':command};
     }
     var url = 'setota';
     $.ajax({
@@ -318,5 +338,4 @@ function setOta(gps_id) {
             }
         }
     });
-  
-  }
+    }

@@ -17,7 +17,7 @@ function clicked_vehicle_details(vehicle_id, row_id)
 {
     $('#vehicle_id').val(vehicle_id);
     // clear previous modal data
-    clearPreviousModalData(); 
+    clearPreviousModalData();
     // highlight clicked row
     highLightClickedRow(row_id);
 
@@ -131,7 +131,7 @@ function render_vehicletab(res)
         /* /Driver Details */
     ].forEach(function(each_element){
         repaint(each_element.id);
-       
+
         if(typeof each_element.key == 'string')
         {
             // console.log(each_element.id);
@@ -151,7 +151,7 @@ function render_vehicletab(res)
         else if(typeof each_element.key == 'object')
         {
 
-            var detail = res.data;               
+            var detail = res.data;
 
             each_element.key.forEach(function(key){
                 if(detail[key] != null)
@@ -162,9 +162,9 @@ function render_vehicletab(res)
                 {
                     detail = '';
                     return false;
-                }                    
+                }
             });
-          
+
             if( each_element.id == 'tvc_client_package')
             {
                 var client_package = {
@@ -297,7 +297,7 @@ function render_devicetab(res)
                     return false;
                 }
             });
-           
+
              // custom ignition status
             if( each_element.id == 'tvc_device_ignition')
             {
@@ -306,12 +306,12 @@ function render_devicetab(res)
             else if( each_element.id == 'tvc_device_emergency_status')
             {
                 $('#'+each_element.id).text((detail == '1') ? 'On' : 'Off');
-             
+
             }
             else if( each_element.id == 'tvc_device_gps_fix')
             {
                 $('#'+each_element.id).text((detail == '') ? 'Not received' : detail);
-              
+
             }
             else if( (each_element.id == 'tvc_device_fuel_status') )
             {
@@ -429,7 +429,7 @@ function render_devicetab(res)
             {
                 $('#'+each_element.id).text(detail);
             }
-           
+
         }
     });
     /***** */
@@ -580,7 +580,7 @@ function render_devicetab(res)
         });
         table += '</table>';
     }
-   
+
     $('#ota').html(table);
     /**** */
         // display vehicle tab
@@ -632,7 +632,7 @@ function render_installationtab(res)
     {
         $('#installation_table_wrapper').html(table);
     }
-   
+
 }
 
 function render_servicetab(res)
@@ -670,7 +670,7 @@ function render_servicetab(res)
     {
         $('#service_table_wrapper').html(table);
     }
-   
+
 }
 
 function render_alerttab(res)
@@ -699,7 +699,7 @@ function render_alerttab(res)
         });
         table += '</table>';
     }
-   
+
     $('#alert_table_wrapper').html(table);
 }
 
@@ -733,14 +733,23 @@ function repaint(id)
     $('#'+id).text('');
 }
 
-function markAlertAsRead(id)
+function markAlertAsRead(id, time)
 {
     if($.inArray(id, read_alerts) == -1)
     {
-        read_alerts.push(id.toString());
+        // remove old alert with same gps id existing
+        for(var i=0; i<read_alerts.length; i++)
+        {
+            if( read_alerts[i].startsWith(id+"-") )
+            {
+                read_alerts.splice(i,1);
+            }
+        }
+        read_alerts.push(id.toString()+'-'+time);
         localStorage.setItem('read_alerts', read_alerts);
         // remove the read alert
         $('.eam-each_alert-'+id).remove();
+        var split_time = localStorage
         // if there is only on alert in the modal and that too read
         // remove that alert and close the modal
         if( (read_alerts.length - critical_alerts.length) == 0 )
@@ -775,7 +784,7 @@ $(document).ready(function(){
             success: function (res){
                 // prepare content
                 if(res.data.length > 0)
-                {                          
+                {
                     var html = '';
                     res.data.forEach(function(alert)
                     {
@@ -798,10 +807,9 @@ $(document).ready(function(){
                         // append to alerts tab
                         if(need_to_append)
                         {
-                            critical_alerts.push(alert); 
+                            critical_alerts.push(alert);
                             $('#critical_alerts_table').prepend(critical_alerts_html);
                         }
-
                         if( !isAlertNeedsToDisplay(alert) )
                         {
                             return false;
@@ -809,7 +817,6 @@ $(document).ready(function(){
                         // modal contents
                         html += prepareAlertModalContent(alert);
                     });
-
                     // trigger alert modal
                     if( (html != '') && (current_active_tab != 'map'))
                     {
@@ -825,24 +832,39 @@ $(document).ready(function(){
                 }
             }
         });
-
     }, 5000);
 });
 
 function isAlertNeedsToDisplay(alert)
 {
-   return ( (alert.vehicle != null) && ($.inArray(alert.id.toString(), read_alerts) == -1) ) ? true : false;
+    var time                    = alert.emergencylogs;
+    var emergency_alert_time    = '';
+    if(time != null)
+    {
+        datetime                = ' at '+time.device_time+'.';
+        emergency_alert_time    = + new Date(time.device_time);
+    }
+   return ( (alert.vehicle != null) && ($.inArray(alert.id.toString()+'-'+emergency_alert_time, read_alerts) == -1) ) ? true : false;
 }
 
 function prepareAlertModalContent(alert)
 {
+    var datetime                = ".";
+    var time                    = alert.emergencylogs;
+    var emergency_alert_time    = '';
+    if(time != null)
+    {
+        datetime                = ' at '+time.device_time+'.';
+        emergency_alert_time    = + new Date(time.device_time);
+    }
+
     var alert_title = getAlertTitle(alert);
     var map_url     = '/monitor-map?&latitude='+alert.lat+'&longitude='+alert.lon;
     return '<div class="eam-each_alert each_popup_alert eam-each_alert-'+alert.id+'">'
         +'<p style="background:#f00; padding:6px 0;  color:#fff; font-weight:700;font-size:18px;border-top-left-radius: 7px;border-top-right-radius: 7px; ">'+alert_title+'</p>'
-        +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
+        +'<p class="p-padding">'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+datetime+'</p>'
         +'<p style="margin-top:7px;font-size:12px;font-weight:10"> <button style="border-radius: 5px;padding: 5px 5px;"><a href="'+map_url+'" target="_blank">View map</a></button>'
-        +' <button style="border-radius: 5px;padding: 5px 5px;" onclick="markAlertAsRead('+alert.id+')">Mark as read</button> </p>'
+        +' <button style="border-radius: 5px;padding: 5px 5px;" onclick="markAlertAsRead('+alert.id+','+emergency_alert_time+')">Mark as read</button> </p>'
         +'<h6></h6>'
         +'</div>';
 }
@@ -850,6 +872,12 @@ function prepareAlertModalContent(alert)
 function prepareAlertTabContent(alert)
 {
     var alert_title = getAlertTitle(alert);
+    var datetime    = ".";
+    var time        = alert.emergencylogs;
+    if(time != null)
+    {
+        datetime = ' at '+time.device_time+'.';
+    }
     var map_details={"lat":alert.lat,"lon":alert.lon,"id":alert.id,"title":alert_title,"client":alert.vehicle.client.name,"vehicle":alert.vehicle.name,"reg":alert.vehicle.register_number,"imei":alert.imei,"serial":alert.serial_no};
     var myJSON = btoa(JSON.stringify(map_details));
     var msg_data = encodeURI(myJSON);
@@ -857,7 +885,7 @@ function prepareAlertTabContent(alert)
     return '<div class="alert-page-dispaly" id="'+alert.id+'">'
         +'<div class="eam-each_alert">'
         +'<p class="t-alert">'+alert_title.charAt(0).toUpperCase()+'</p>'
-        +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+'</p>'
+        +'<p>'+alert.vehicle.name+' with registration number '+alert.vehicle.register_number+' has got '+alert_title+datetime+'</p>'
         +'<p style="width:auto; float: left;"> <button class="bt-1"><a href="'+map_url+'" target="_blank">View map</a></button> </p>'
         // +'<p style="width:auto; float: left;"> <button onclick="clearAlert('+alert.id+')" class="bt-2">Clear</button> </p>'
         +'</div></div>';
@@ -881,17 +909,17 @@ function alertAddonqueue(alert_id,lat,lng,html)
     {
      if(alerts_list.length > 0)
       {
-           alerts_list.find(function(x,i){ 
+           alerts_list.find(function(x,i){
             if(x != undefined)
            {
-           
+
             if(alerts_list['id'] != alert_id){
               var alert_data ={
                 "id":alert_id,
                 "lat":lat,
                 "lng":lng,
                 "html":html,
-              } 
+              }
               alerts_list.push(alert_data);
              }
             }
@@ -908,7 +936,7 @@ function alertAddonqueue(alert_id,lat,lng,html)
       }
 
     }
-       
+
 
 function clearAlert(alert_id)
 {

@@ -70,6 +70,32 @@ class VltDataController extends Controller
      * 
      * 
      */
+    public function getGpsIdFromImei(Request $request)
+    {
+        $imei           =   $request->imei;
+        $gps_data     =   (new Gps())->getGpsId($imei );
+        if($gps_data == null)
+        {
+            $response    =  array(
+                'status'    =>  0,
+                'message'   =>  'failed'
+            );
+        }
+        else
+        {
+            $response    =  array(
+                'status'        =>  1,
+                'message'       =>  'success',
+                'gps_id'        =>  $gps_data->id
+            );
+        }
+        return response()->json($response);
+    }
+
+    /**
+     * 
+     * 
+     */
     public function consoleDataView(Request $request)
     {
         $imei_serial_no_list    = (new Gps())->getImeiList();
@@ -115,73 +141,70 @@ class VltDataController extends Controller
      */
     public function consoleDataPacketView(Request $request)
     {
-         $vlt_data_id    =   $request->vlt_data_id;
-         $imei           =   $request->imei;
-         $vlt_data       =   $request->vlt_data;
-         $gps_data       =   (new Gps())->getGpsId($imei);
-         $header=substr($vlt_data,0,3);
-      
-            if($header == "ACK"  || $header == "AVK" )
-         {
-         $data=$this->processAckData($vlt_data);
-          
-         }elseif($header == "ALT")
-         {
-           
-            $data = $this->processAltData($vlt_data);
-         }
-         elseif($header == "CRT")
-         {
-           
-            $data = $this->processCrtData($vlt_data);
-         } elseif($header == "EPB")
-         {
-           
-            $data = $this->processEpbData($vlt_data);
-         }
-         elseif($header == "FUL")
-         {
-           
-            $data = $this->processFULData($vlt_data);
-         }
-         elseif($header == "HLM")
-         {
-           
-            $data = $this->processHlmData($vlt_data);
-         }
-         elseif($header == "LGN")
-         {
-           
-            $data = $this->processLgnData($vlt_data);
-         }
-         elseif($header == "NRM")
-         {
-           
-            $data = $this->processNrmData($vlt_data);
-         }
-         elseif($header == "BTH")
-         {
-            $imei = substr($vlt_data,3,15);
-            $batch_log_count = substr($vlt_data,18,3);
-            $balance_packet = substr($vlt_data,21);
-            $packets=[];
-            do
-            {
-                $return_array   =   $this->batchPacketSplitting($imei,$balance_packet);
-                $balance_packet =   $return_array['balance_packet'];
-                $packets[]      =   $return_array['packet'];
-            }
-            while (!empty($balance_packet));
-            $packets['header']="BTH";
-            $data           =   $packets;
-           
-         }
-         else{
-            $data = null; 
-         }
-      
-      
-      
+        $vlt_data_id    =   $request->vlt_data_id;
+        $imei           =   $request->imei;
+        $vlt_data       =   $request->vlt_data;
+        $gps_data       =   (new Gps())->getGpsId($imei);
+        $header=substr($vlt_data,0,3);
+    
+        if($header == "ACK"  || $header == "AVK" )
+        {
+        $data=$this->processAckData($vlt_data);
+        
+        }elseif($header == "ALT")
+        {
+        
+        $data = $this->processAltData($vlt_data);
+        }
+        elseif($header == "CRT")
+        {
+        
+        $data = $this->processCrtData($vlt_data);
+        } elseif($header == "EPB")
+        {
+        
+        $data = $this->processEpbData($vlt_data);
+        }
+        elseif($header == "FUL")
+        {
+        
+        $data = $this->processFULData($vlt_data);
+        }
+        elseif($header == "HLM")
+        {
+        
+        $data = $this->processHlmData($vlt_data);
+        }
+        elseif($header == "LGN")
+        {
+        
+        $data = $this->processLgnData($vlt_data);
+        }
+        elseif($header == "NRM")
+        {
+        
+        $data = $this->processNrmData($vlt_data);
+        }
+        elseif($header == "BTH")
+        {
+        $imei = substr($vlt_data,3,15);
+        $batch_log_count = substr($vlt_data,18,3);
+        $balance_packet = substr($vlt_data,21);
+        $packets=[];
+        do
+        {
+            $return_array   =   $this->batchPacketSplitting($imei,$balance_packet);
+            $balance_packet =   $return_array['balance_packet'];
+            $packets[]      =   $return_array['packet'];
+        }
+        while (!empty($balance_packet));
+        $packets['header']="BTH";
+        $data           =   $packets;
+        
+        }
+        else{
+        $data = null; 
+        }
         if($data == null)
         {
             $response    =  array(
@@ -201,15 +224,14 @@ class VltDataController extends Controller
         }
         return response()->json($response);
     }
-     /**
+    /**
      * 
      * 
-     */
+    */
 
-    public function processAckData($vlt_data){
-
+    public function processAckData($vlt_data)
+    {
         $comma_seperated = substr($vlt_data,96);
-
         $imei = substr($vlt_data,3,15);
         $date = substr($vlt_data,22,6);
         $time = substr($vlt_data,28,6);
@@ -235,7 +257,7 @@ class VltDataController extends Controller
 
         $array=[];
         $array=array(
-        	   'header' => substr($vlt_data,0,3),
+                'header' => substr($vlt_data,0,3),
                 'imei' => $imei,
                 'alert_id' => $code,
                 'packet_status' => substr($vlt_data,20,1),
@@ -260,11 +282,11 @@ class VltDataController extends Controller
                 'vehicle_mode' => $vehicle_mode,
                 'response' => $response,
                 'vlt_data' => $vlt_data,
-                 'response' => $response,
-                 'comma_seperated'=>$comma_seperated,
+                'response' => $response,
+                'comma_seperated'=>$comma_seperated,
                 'device_time' => $device_time
-              );
-             return $array;
+            );
+            return $array;
 
     }
     public function processAltData($vlt_data){

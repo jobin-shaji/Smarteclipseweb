@@ -519,8 +519,8 @@ trait VehicleDataProcessorTrait{
     {
         $single_vehicle_gps_id = [];     
         $single_vehicle_gps_id =  $this->vehicleGps($vehicle_id);
-        $from_date_time = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
-        $to_date_time = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
+        // $from_date_time = date('Y-m-d H:i:s', strtotime($date_and_time['from_date']));
+        // $to_date_time = date('Y-m-d H:i:s', strtotime($date_and_time['to_date']));
         $from_date = date('Y-m-d', strtotime($date_and_time['from_date']));
         $to_date = date('Y-m-d', strtotime($date_and_time['to_date']));
         // $tracking_mode = $this->trackingMode($single_vehicle_gps_id,$from_date_time,$to_date_time);

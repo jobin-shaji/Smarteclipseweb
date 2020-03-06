@@ -1,19 +1,20 @@
-<?php 
+<?php
 
 Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
 
 
-	// geofence report 
+	// geofence report
 	Route::get('/geofence-report','GeofenceReportController@geofenceReport')->name('geofence-report');
 	Route::post('/geofence-report-list','GeofenceReportController@geofenceReportList')->name('geofence-report-list');
 	Route::post('/geofence-report/export','GeofenceReportController@export')->name('geofence.report.export');
 
-	// fuel report 
+	// fuel report
 	Route::get('/fuel-report','FuelReportController@fuelReport')->name('fuel-report');
 	Route::post('/fuel-report-list','FuelReportController@fuelReportList')->name('fuel-report-list');
 	Route::post('/fuel-graph','FuelReportController@getFuelGraphDetails')->name('fuel.graph');
-	
-	// alert report 
+	// Route::post('/month-fuel-graph','FuelReportController@getMonthFuelGraphDetails')->name('month.fuel.graph');
+
+	// alert report
 	Route::get('/alert-report','AlertReportController@alertReport')->name('alert-report');
 	Route::get('/alert-report-list','AlertReportController@alertReportList')->name('alert-report-list');
 	// Route::post('/alert-report-list-demo','AlertReportController@alertReportListDemo')->name('alert-report-list-demo');
@@ -21,22 +22,22 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::get('/alert/report/{id}/mapview','AlertReportController@location')->name('alert.report.mapview');
 	Route::post('/alert/report/show','AlertReportController@alertmap')->name('alert.report.show');
 		Route::post('/alert-report/export','AlertReportController@export')->name('alert.report.export');
-	// tracking report 
+	// tracking report
 	Route::get('/tracking-report','TrackingReportController@trackingReport')->name('tracking-report');
 	Route::post('/track-report-list','TrackingReportController@trackReportList')->name('track-report-list');
 	Route::post('/track-report/export','TrackingReportController@export')->name('track.report.export');
 
-	// route deviation report 
+	// route deviation report
 	Route::get('/route-deviation-report','RouteDeviationReportController@routeDeviationReport')->name('route-deviation-report');
  	Route::post('/route-deviation-report-list','RouteDeviationReportController@routeDeviationReportList')->name('route-deviation-report-list');
  	Route::post('/route-report/export','RouteDeviationReportController@export')->name('route.report.export');
 
 
- 	// harsh braking report 
+ 	// harsh braking report
 	Route::get('/harsh-braking-report','HarshBrakingReportController@harshBrakingReport')->name('harsh-braking-report');
 	Route::post('/harsh-braking-report-list','HarshBrakingReportController@harshBrakingReportList')->name('harsh-braking-report-list');
 	Route::post('/harsh-braking-report/export','HarshBrakingReportController@export')->name('harsh.braking.report.export');
-	
+
 //sudden acceleration report
 	Route::get('/sudden-acceleration-report','SuddenAccelerationReportController@suddenAccelerationReport')->name('sudden-acceleration-report');
 Route::post('/sudden-acceleration-report-list','SuddenAccelerationReportController@suddenAccelerationReportList')->name('sudden-acceleration-report-list');
@@ -54,7 +55,7 @@ Route::post('/km-report-list','TotalKMReportController@kmReportList')->name('km-
 Route::post('/km-report/export','TotalKMReportController@kmExport')->name('km.report.export');
 
 
-	
+
 //Daily KM report
 	Route::get('/daily-km-report','DailyKMReportController@dailyKMReport')->name('daily-km-report');
 Route::post('/dailykm-report-list','DailyKMReportController@dailyKMReportList')->name('dailykm-report-list');
@@ -82,7 +83,7 @@ Route::post('/accident-impact-alert-report-list','AccidentImpactAlertReportContr
 
 	//accident-imapct-alert-report
 	Route::get('/terain-roads-condition-operation-temperature-report','TerainRoadsConditionOperationTemperatureReportController@terainRoadConditionReport')->name('terain-roads-condition-operation-temperature-report');
-	
+
 	Route::get('/idle-report','IdleReportController@idleReport')->name('idle-report');
 	Route::post('/idle-report-list','IdleReportController@idleReportList')->name('idle-report-list');
 	Route::post('/idle-report/export','IdleReportController@export')->name('idle.report.export');

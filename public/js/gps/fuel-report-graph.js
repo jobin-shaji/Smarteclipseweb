@@ -1,24 +1,49 @@
 function getFuelGraphDetails()
 {
+
+    var report_type = document.getElementById("report_type").value;
     var gps_id = document.getElementById("vehicle").value;
-    var date = document.getElementById("date").value;
-    if(date == '')
+    if(report_type==1)
     {
-        alert('Please select date from calendar');
-    }else if(gps_id == '')
+        var date = document.getElementById("date").value;
+        document.getElementById("month").value="";
+        if(date == '')
+        {
+            alert('Please select date from calendar');
+        }
+    }
+    else if(report_type==2)
+    {
+        var date = document.getElementById("month").value;
+        document.getElementById("date").value=""
+        if(date == '')
+        {
+            alert('Please select date from calendar');
+        }
+    }
+    if(gps_id == '')
     {
         alert('Please select vehicle');
-    }else{
-        callBackDataTable(gps_id,date);
-        var url = 'fuel-graph';
-        var data = {
-            gps_id:gps_id,date:date
-        };
-        backgroundPostData(url, data, 'fuelGraph', {alert: false});
     }
-
+    else{
+        $('.show_selected_date').show();
+        $('.cover_div_search').hide();
+        // cover_div_search
+        $('.cover_date_select').css('display','none');
+        $('.show_selected_date').append('<div class="col-sm-4 col-date-outer fule-cal"><span class="datetime_searched"> Fuel Report : '+date+ '</span><span onclick="resetDate()" class="close-span-rt ful-close"><i class="fa fa-times"></i></span></div>');
+        callBackDataTable(gps_id,date,report_type)
+            var url = 'fuel-graph';
+            var data = {
+                gps_id:gps_id,date:date,report_type:report_type
+            };
+            backgroundPostData(url, data, 'fuelGraph', {alert: false});
+        }
 }
-function callBackDataTable(gps_id,date)
+function resetDate(){
+    location.reload(true);
+  }
+
+function callBackDataTable(gps_id,date,report_type)
 {
     $('#dataTable').show();
     $("#dataTable").DataTable({
@@ -32,7 +57,7 @@ function callBackDataTable(gps_id,date)
             url: 'fuel-report-list',
             type: 'POST',
             data: {
-                'gps_id': gps_id,'date': date
+                'gps_id': gps_id,'date': date,'report_type':report_type
             },
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
@@ -58,22 +83,35 @@ function callBackDataTable(gps_id,date)
 
 function fuelGraph(res)
 {
+    $('#fuel_km').empty();
+    $('#fuel_graph').empty();
     if(res.status == 1)
     {
+        if(res.fuel_km){
+           var km=res.fuel_km.km;
+        }
+        else{
+            var km="";
+        }
         // res.fuel_km.km
        var fuel_km= '<div class="col-lg-3 col-xs-6 gps_dashboard_grid km_grid">'+
         '<div class="small-box bg-green bxs">'+
           '<div class="inner">'+
-            '<h3 >KM : '+res.fuel_km.km+
-            '</h3>'+
+            '<h5 >KM : '+km+
+            '</h5>'+
           '</div>'+
         '</div>'+
       '</div>';
         $('#fuel_km').append(fuel_km);
         $('#fuel_graph').show();
         //line graph
+
         var fuel_chart_container = document.getElementById("fuel_graph").getContext('2d');
-        new Chart(fuel_chart_container, {
+        myChart= new Chart(fuel_chart_container, {
+
+
+
+
             type: 'line',
             data: {
                 labels: res.date_time,
@@ -108,11 +146,38 @@ function fuelGraph(res)
                 }
             }
         });
+
+
     }
     else
     {
-        $('#fuel_km').text('');
+
+        $('#fuel_km').hide();
         $('#fuel_graph').hide();
     }
+
+
+}
+$(document).ready(function() {
+    $('.show_selected_date').hide();
+    show_selected_date
+    $('#single_date').hide();
+    $('#single_month').hide();
+
+  });
+function reportType(value){
+    if(value==1){
+        $('#single_date').show();
+        $('#single_month').hide();
+    }
+    else if(value==2){
+        $('#single_date').hide();
+        $('#single_month').show();
+    }
+}
+
+
+function monthFuelGraph(res)
+{
 
 }

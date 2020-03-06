@@ -499,6 +499,41 @@ class GpsController extends Controller {
             ->make();
     }
 
+    //Display gps in stock of sub dealer
+    public function gpsInStockSubDealerPage()
+    {
+        return view('Gps::gps-in-stock-sub-dealer-list');
+    } 
+
+    //returns gps in stock of sub dealer as json 
+    public function getSubDealerGpsInStock()
+    {
+        $sub_dealer_id=\Auth::user()->subdealer->id;
+        $gps_stock = GpsStock::select(
+                'id',
+                'gps_id'
+                )
+                ->withTrashed()
+                ->with('gps')
+                ->whereNull('trader_id')
+                ->whereNull('client_id')
+                ->where('subdealer_id',$sub_dealer_id)
+                ->get();
+        return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) {
+                $b_url = \URL::to('/');
+                if($gps_stock->deleted_at == null){
+                    return "
+                        <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";     
+                }else{
+                    return ""; 
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
     //deactivate gps
     public function gpsStatusDeactivate(Request $request)
     {
@@ -1340,7 +1375,7 @@ class GpsController extends Controller {
     function getPlacenameFromLatLng($latitude,$longitude){
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo'); 
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get('eclipse.keys.googleMap')); 
             $output = json_decode($geocodeFromLatLong);
              
          
@@ -1408,7 +1443,7 @@ class GpsController extends Controller {
         $lat = $b_lat;
         $lng = $b_lng;
         $route = $lat . "," . $lng;
-        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo";
+        $url = "https://roads.googleapis.com/v1/snapToRoads?path=" . $route . "&interpolate=true&key=".Config::get('eclipse.keys.googleMap');
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if (isset($output_deals->snappedPoints)) {
