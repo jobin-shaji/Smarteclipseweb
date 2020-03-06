@@ -417,7 +417,11 @@
                         </div>
                         <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                     </div>
+                    
                     <script> 
+
+                   var url_ms_alerts = '{{ Config::get("eclipse.urls.ms_alerts") }}';
+                   console.log('url_ms_alerts'+url_ms_alerts);
                         var firebaseConfig = {
                             apiKey:  '{{Config::get("firebase.apiKey")}}',
                             authDomain: '{{Config::get("firebase.authDomain")}}',
@@ -427,7 +431,7 @@
                             messagingSenderId: '{{Config::get("firebase.messagingSenderId")}}',
                             appId: '{{Config::get("firebase.appId")}}',
                             measurementId: '{{Config::get("firebase.measurementId")}}'
-                        };
+                        }; 
                     </script>
                     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
                     <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>

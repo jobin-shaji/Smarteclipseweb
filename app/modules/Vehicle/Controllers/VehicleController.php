@@ -356,7 +356,8 @@ class VehicleController extends Controller
         }
         $rules = $this->documentUpdateRules();
         $messages = [
-            'path.uploaded' => "The file size should be less than 2MB"
+            'path.uploaded' => "The file size should be less than 2MB",
+            'path.max' => 'The file size should be less than 2MB'
         ];
         $this->validate($request, $rules,$messages);
         $file=$request->path;
@@ -3027,7 +3028,8 @@ class VehicleController extends Controller
     public function saveUploadDocuments(Request $request)
     {
         $messages = [
-            'path.uploaded' => "The file size should be less than 2MB"
+            'path.uploaded' => "The file size should be less than 2MB",
+            'path.max' => 'The file size should be less than 2MB'
         ];
         if($request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8)
         {
@@ -3085,6 +3087,10 @@ class VehicleController extends Controller
         }
         else
         {
+            $messages = [
+                'path.uploaded' => "The file size should be less than 2MB",
+                'path.max' => 'The file size should be less than 2MB'
+            ];
             $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
             $expiry_date=date("Y-m-d", strtotime($request->expiry_date));
             if ($validator->fails())
@@ -3198,7 +3204,8 @@ class VehicleController extends Controller
         $documents = Document::where('id',$request->id)->first();
          if($request->path){
             $messages = [
-                'path.uploaded' => "The file size should be less than 2MB"
+                'path.uploaded' => "The file size should be less than 2MB",
+                'path.max' => 'The file size should be less than 2MB'
             ];
             $validator = Validator::make($request->all(), $this->customDocCreateRules(),$messages);
             if ($validator->fails())
