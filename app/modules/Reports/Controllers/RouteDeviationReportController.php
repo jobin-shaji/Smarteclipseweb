@@ -77,7 +77,7 @@ class RouteDeviationReportController extends Controller
          $longitude=$route_deviation->longitude;          
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing&callback=initMap'); 
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap'); 
             $output = json_decode($geocodeFromLatLong);         
             $status = $output->status;
             //Get address from json data

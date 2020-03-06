@@ -44,7 +44,7 @@
 
 @section('script')
 <script src="{{asset('js/gps/gps-km-tracker.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing&libraries=geometry,places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing&libraries=geometry,places&callback=initMap" async defer></script>
 <script type="text/javascript">
    $( ".datetimepicker" ).datetimepicker({ 
         format: 'YYYY-MM-DD HH:mm:ss',

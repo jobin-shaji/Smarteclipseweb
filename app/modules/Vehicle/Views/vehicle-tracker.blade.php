@@ -187,7 +187,7 @@ cursor:pointer
 }
 </style>
 <!-- <script src="{{asset('js/odometer.js')}}"></script> -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing,geometry,places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing,geometry,places"></script>
 
 <script src="{{asset('js/gps/location-track.js')}}"></script>
 <script src="{{asset('js/gps_animation/jquery.easing.1.3.js')}}"></script>

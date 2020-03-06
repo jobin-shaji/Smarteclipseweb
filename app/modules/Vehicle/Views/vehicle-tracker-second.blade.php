@@ -197,7 +197,7 @@ cursor:pointer
       // add behavior control
 
          </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing,geometry,places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing,geometry,places"></script>
 <script src="{{asset('js/gps/location-track-second.js')}}"></script>
 @endsection
 

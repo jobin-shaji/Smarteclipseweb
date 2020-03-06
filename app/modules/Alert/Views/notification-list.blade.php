@@ -72,7 +72,7 @@
 </div>
 @section('script')
 
-<script async defer src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&callback=initMap"></script>
+<script async defer src ="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&callback=initMap"></script>
 <script src="{{asset('js/gps/alert-notification-firebase.js')}}"></script>
 <!-- <script src="{{asset('js/gps/alert-notification.js')}}"></script> -->
 

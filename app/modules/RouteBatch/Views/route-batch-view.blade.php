@@ -53,7 +53,7 @@
 @endsection
 
   @section('script')
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=drawing&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap" async defer></script>
     <script>        
     
       var lat;
