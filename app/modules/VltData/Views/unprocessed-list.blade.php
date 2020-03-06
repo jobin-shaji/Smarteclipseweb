@@ -63,6 +63,9 @@
 
 <section class="content" >
     <div class="col-md-6">
+        @if ($filters['imei'] != 0)
+        <button class="btn btn-sm btn-info" style ="margin-left: 1160px;margin-top: 6px;" onclick="return sendCommandToDevice({{$filters['imei']}})" data-toggle="modal" data-target="#setOtaModal">Send Command </button>
+        @endif
         @foreach($data as $key => $each_data)
         <div class="gps_data_item">
             {{$each_data->vltdata}}
@@ -82,13 +85,46 @@
         </div>
         @endif
         <?php if( gettype($data) == 'object') { echo $data->appends([
-               'sort'       => 'votes',
-               'imei'       => $filters['imei'],
-               'header'     => $filters['header'],
-               'search_key' => $filters['search_key']
+                'sort'       => 'votes',
+                'imei'       => $filters['imei'],
+                'header'     => $filters['header'],
+                'search_key' => $filters['search_key']
             ])->links(); } ?>
     </div>
 </section>
+<div class="modal fade" id="setOtaModal" tabindex="-1" role="dialog" aria-labelledby="setOtaModalLabel" style="display: none;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="padding: 25px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <form method="POST" id="form1">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" name="set_ota_gps_id" id="set_ota_gps_id" value="">
+                            <div class="form-group row" style="float:none!important">
+                                <label class="col-sm-3 text-right control-label col-form-label">Command:</label>
+                                <div class="form-group has-feedback">
+                                    <textarea class="form-control" name="command" id="command" rows=7></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="pull-center">
+                        <button type="button" class="btn btn-success btn-md btn-block" onclick="setOta(document.getElementById('set_ota_gps_id').value)">
+                            POST
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="clearfix" style="height:27vh"></div>
 <style>
     .console-body {
