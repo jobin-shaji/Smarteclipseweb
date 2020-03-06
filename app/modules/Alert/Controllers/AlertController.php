@@ -641,6 +641,61 @@ class AlertController extends Controller {
             return false;
         }
     }
+    
+    public function allGpsAlerts(Request $request)
+    {
+       
+        $client_id=\Auth::user()->client->id;
+        $client=Client::find($client_id);
+        return view('Alert::alert-notification-list',['client'=>$client]);
+    }
+    public function alertNotificationList(Request $request)
+    {
+        $user = $request->user();
+        $client_id=\Auth::user()->client->id;
+        /**
+         * select Client gps
+         * 
+         */
+        $single_vehicle_gps =  $this->singleGps($client_id);
+        $userAlerts = UserAlerts::select(
+            'id',
+            'client_id',
+            'alert_id',
+            'status'
+        )
+        ->where('status',1)
+        ->where('client_id',$client_id)
+        ->get();
+        $alert_id=[];
+        foreach ($userAlerts as $userAlert) {
+              $alert_id[]=$userAlert->alert_id;
+        }
+        $alerts = Alert::select(
+            'id',
+            'alert_type_id',
+            'device_time',
+            'gps_id',
+            'latitude',
+            'longitude',
+            'status',
+            'created_at',
+            'device_time'
+        )
+        ->with('alertType:id,code,description')
+        ->with('gps.vehicle')
+        // ->with('gps:id,imei')
+        ->orderBy('device_time', 'desc')
+        ->whereIn('gps_id',$single_vehicle_gps)
+        ->whereIn('alert_type_id',$alert_id)
+        ->whereNotIn('alert_type_id',[17,18,23,24])
+        ->whereBetween('device_time', [Carbon::now()->subDays(7)->toDateString(),date('Y-m-d H:i:s')])
+        ->get();
+        return response()->json([
+            'alerts' => $alerts,
+            'status' => 'notificationAlerts'
+        ]);
+    }
 
 
 

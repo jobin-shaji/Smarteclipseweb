@@ -417,20 +417,22 @@
                         </div>
                         <a class="dropdown-item" href="{{url('/all-alerts')}}">VIEW ALL ALERTS</a>
                     </div>
+                    
                     <script> 
-                        var firebaseConfig = {
-                            apiKey:  '{{Config::get("firebase.apiKey")}}',
-                            authDomain: '{{Config::get("firebase.authDomain")}}',
-                            databaseURL: '{{Config::get("firebase.databaseURL")}}',
-                            projectId: '{{Config::get("firebase.projectId")}}',
-                            storageBucket: '{{Config::get("firebase.storageBucket")}}',
-                            messagingSenderId: '{{Config::get("firebase.messagingSenderId")}}',
-                            appId: '{{Config::get("firebase.appId")}}',
-                            measurementId: '{{Config::get("firebase.measurementId")}}'
-                        };
+                   var alert_url= 'http://localhost:9000';//'{{Config::get("firebase.appId")}}';
+                        // var firebaseConfig = {
+                        //     apiKey:  '{{Config::get("firebase.apiKey")}}',
+                        //     authDomain: '{{Config::get("firebase.authDomain")}}',
+                        //     databaseURL: '{{Config::get("firebase.databaseURL")}}',
+                        //     projectId: '{{Config::get("firebase.projectId")}}',
+                        //     storageBucket: '{{Config::get("firebase.storageBucket")}}',
+                        //     messagingSenderId: '{{Config::get("firebase.messagingSenderId")}}',
+                        //     appId: '{{Config::get("firebase.appId")}}',
+                        //     measurementId: '{{Config::get("firebase.measurementId")}}'
+                        // }; 
                     </script>
-                    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-                    <script src="{{asset('js/gps/firebase_notifications.js')}}"></script>
+                    <!-- <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script> -->
+                    <!-- <script src="{{asset('js/gps/firebase_notifications.js')}}"></script> -->
                 </li> 
                 <li class="nav-item dropdown">
                     <a href="#" onclick="documents()" class="nav-link dropdown-toggle waves-effect waves-dark" title="Documents" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-file-document-box" ></i>

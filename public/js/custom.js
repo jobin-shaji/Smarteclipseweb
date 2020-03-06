@@ -568,6 +568,7 @@ function getPlaceNameFromLatLng(latitude,longitude){
 
 }
 function getPlaceName(res){
+    $('#alert_address').text(res);
     $('#emergency_vehicle_location').text(res);
     $('#header_emergency_vehicle_location').text(res);
     $('#critical_alert_location').text(res);
@@ -1264,13 +1265,13 @@ function notification(res){
     }
 
     expire_length=res.expire_documents.length;
- $("#expire_notification").empty();
+$("#expire_notification").empty();
     for (var i = 0; i < expire_length; i++) {
 
-    expire_register_number=res.expire_documents[i].vehicle.register_number;
-      expire_vehicle_name=res.expire_documents[i].vehicle.name;
-     expire_document_name=res.expire_documents[i].document_type.name;
-      expire_expiry_date=res.expire_documents[i].expiry_date;
+        expire_register_number=res.expire_documents[i].vehicle.register_number;
+        expire_vehicle_name=res.expire_documents[i].vehicle.name;
+        expire_document_name=res.expire_documents[i].document_type.name;
+        expire_expiry_date=res.expire_documents[i].expiry_date;
 
         var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
         '<span class="btn btn-success btn-circle"><i class="mdi mdi-file"></i></span>'+
@@ -1279,67 +1280,21 @@ function notification(res){
         '<small class="font-light">'+expire_vehicle_name+'</small><br>'+
         '<small class="font-light">'+expire_register_number+'</small><br>'+
         '</div></div>';
-         $("#expire_notification").append(expire_documents);
-      }
-
-       if(expire_length==0)
-      {
-        var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
-        '<span class="btn btn-success btn-circle"><i class="fa fa-check"></i></span>'+
-        '<div class="m-l-10" >'+
-        '<small class="font-light"> No expiring  Documents</small><br>'+
-
-        '</div></div>';
-         $("#expire_notification").append(expire_documents);
-      }
+        $("#expire_notification").append(expire_documents);
+    }
+        if(expire_length==0)
+        {
+            var expire_documents='  <div class="d-flex no-block align-items-center p-10"  >'+
+            '<span class="btn btn-success btn-circle"><i class="fa fa-check"></i></span>'+
+            '<div class="m-l-10" >'+
+            '<small class="font-light"> No expiring  Documents</small><br>'+
+            '</div></div>';
+            $("#expire_notification").append(expire_documents);
+        }
     }
 }
 
-function clientAlerts(){
-    // console.log(1);
-  var flag;
-    var url = 'alert-notification';
-    var data = {
-        flag:1
-    };
-    backgroundPostData(url,data,'alertNotification',{alert:false});
-}
-    function alertNotification(res)
-    {
-      $('#load-2').show();
 
-        if(res)
-        {
-        $("#alert_notification").empty();
-        // display each alerts
-        for (var i = 0; i < res.alert.length; i++)
-        {
-            $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal3" onclick="gpsAlertUpdate('+res.alert[i].id+')">'+res.alert[i].alert_type.description+'<br>('+res.alert[i].vehicle.register_number+')</div>');
-        }
-        if(res.alert.length==0){
-            $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
-        }
-        }
-    }
-
-    function gpsAlertUpdate(value)
-    {
-        $("#load2").css("display", "none");
-        var url = 'gps-alert-update';
-        var data={
-            id:value
-        }
-        backgroundPostData(url,data,'gpsAlertconfirm',{alert:true});
-    }
-    function gpsAlertconfirm(res)
-    {
-
-        $("#load-2").css("display", "none");
-        $('#alert_'+res.alertmap.id).removeClass('alert');
-        var alert_content = res.alert_icon.description+' on vehicle '+res.get_vehicle.name+'('+res.get_vehicle.register_number+') at '+res.alertmap.device_time;
-        $('#alert_content').text(alert_content);
-        $('#alert_address').text(res.address);
-    }
 
 function downloadLabel(id){
     var url = 'gps-transfer-label/export';
@@ -1600,27 +1555,6 @@ function rootVehicle(res)
     }
 }
 
-// ---------------check notification-----------------------------------
-    // setInterval(function() {
-
-    //     var url = 'notification_alert_count';
-    //     var data = {};
-    //     backgroundPostData(url,data,'notificationCount',{alert:false});
-    // }, 8000);
-
-    // $( document ).ready(function() {
-    //     var flag;
-    //     var url = 'notification_alert_count';
-    //     var data = {};
-    //     backgroundPostData(url,data,'notificationCount',{alert:false});
-    // });
-// ---------------check notification-----------------------------------
-
-    // function notificationCount(res){
-    //     // if(res.status=="success"){
-    //     //     var count_notification=res.notification_count;
-    //     //     $("#bell_notification_count").text(count_notification);
-    //     // }
 
     //     if(res.emergency_response.status == 'success')
     //     {
@@ -1664,6 +1598,8 @@ function rootVehicle(res)
     //         //clientAlerts();
     //     }
     // }
+
+    
 /////////////////////////Km Report/////////////////////////
 function downloadKMReport(){
     var url = 'km-report/export';
@@ -1861,3 +1797,96 @@ function getUploads(res){
 }
 // set a flag for login
 localStorage.setItem('login', 1);
+
+
+
+
+
+
+
+
+// ---------------check notification-----------------------------------
+
+    setInterval(function() {
+        alertCount();
+        clientAlerts();
+    }, 8000);
+
+    $( document ).ready(function() {
+        alertCount();
+        clientAlerts();
+    });
+
+    function alertCount()
+    {
+        
+        $.ajax({
+            type:'get',
+            // data:data,
+            url: alert_url+"/alert-count",
+            dataType: "json",
+            success: function (res) 
+            {                   
+                notificationCount(res.data) ;
+            }
+        });
+    }
+// ---------------check notification-----------------------------------
+
+    function notificationCount(res){
+            var count_notification=res;
+            $("#bell_notification_count").text(count_notification);
+    }
+    function clientAlerts(){       
+        $.ajax({
+            type:'get',
+            // data:data,
+            url: alert_url+"/last-five-unread-alerts",
+            dataType: "json",
+            success: function (res) 
+            { 
+                alertNotification(res.data) ;
+            }
+        });
+    }
+        function alertNotification(res)
+        {
+            $('#load-2').show();           
+            if(res)
+            {
+            $("#alert_notification").empty();
+            // display each alerts
+            for (var i = 0; i < res.length; i++)
+            {
+                $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal3" onclick="gpsAlertUpdate(\''+res[i]._id+'\')">'+res[i].alert_type.description+'<br>('+res[i].gps.connected_vehicle_registration_number+')</div>');
+            }
+            if(res.length==0){
+                $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
+            }
+            }
+        }
+        function gpsAlertUpdate(value)
+        {
+            $("#load2").css("display", "none");
+            var data={ id:  value}; 
+            $.ajax({
+                type:'POST',
+                data:data,
+                url: alert_url+"/alert-mark-as-read",
+                dataType: "json",
+                success: function (res) 
+                {         
+                    gpsAlertconfirm(res.data.alert) ;
+                }
+            });
+        }
+        function gpsAlertconfirm(res)
+        {           
+            var latitude                =   res.latitude;
+            var longitude               =   res.longitude;
+            getPlaceNameFromLatLng(latitude,longitude);
+            $("#load-2").css("display", "none");
+            $('#alert_'+res._id).removeClass('alert');
+            var alert_content = res.alert_type.description+' on vehicle '+res.gps.connected_vehicle_name+'('+res.gps.connected_vehicle_registration_number+') at '+res.device_time;
+            $('#alert_content').text(alert_content);           
+        }
