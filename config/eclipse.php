@@ -8,5 +8,8 @@ return array(
    'connectionlosttimesleep' => "-11 minutes",
    'keys' => array(
       'googleMap' => env("GOOGLE_MAP_API_KEY"),
-   )
+   ),
+   'urls' => [
+      'ms_alerts' => env("URL_MS_ALERTS")
+   ]
 );

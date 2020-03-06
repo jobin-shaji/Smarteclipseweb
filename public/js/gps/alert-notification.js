@@ -1,5 +1,3 @@
-var locationNameData;
-var locationName="";
 var latitude= parseFloat(document.getElementById('lat').value);
 var longitude= parseFloat(document.getElementById('lng').value); 
 function initMap() {
@@ -11,34 +9,38 @@ function initMap() {
   });
 }
 $(document).ready(function () {
-   $(".loader-1").show();
-  var url = 'notification-alerts-list';
-  var data={  
-  }
-  backgroundPostData(url,data,'notificationAlertsList',{alert:true});
+  $(".loader-1").show();
+    $.ajax({
+            type:'post',
+            url: url_ms_alerts+"/last-seven-days-alerts",
+            dataType: "json",
+            success: function (res) 
+            {            
+              notificationAlertsList(res.data) 
+            }
+          });
 });
-
 function notificationAlertsList(res)
 {
     $(".loader-1").hide();
-    for (var i = 0; i < res.alerts.length; i++)
+    for (var i = 0; i < res.length; i++)
     {
-      register_number = res.alerts[i].gps.vehicle.register_number;
-      vehicle_name    = res.alerts[i].gps.vehicle.name;
-      alert           = res.alerts[i].alert_type.description;
-      device_time     = res.alerts[i].device_time;
-      id              = res.alerts[i].id;
+      register_number = res[i].gps.connected_vehicle_registration_number;
+      vehicle_name    = res[i].gps.connected_vehicle_name;
+      alert           = res[i].alert_type.description;
+      device_time     = res[i].device_time;
+      id              = res[i]._id;
       // read alerts
-      if(res.alerts[i].status == 1)
+      if(res[i].is_read == 1)
       {
-        var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#clickedModelInDetailPage">'+  
-         '<div class="not-icon-bg">'+
+        var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount(\''+id+'\')" data-target="#clickedModelInDetailPage">'+  
+        '<div class="not-icon-bg">'+
         '<img src="images/bell.svg"/>'+
         '</div>'+
         '<div class="deatils-bx-rt">'+
         '<div class="vech-no-out">'+
         '<div class="vech-no">'+
-         vehicle_name+'<span>('+register_number+')</span>'+
+        vehicle_name+'<span>('+register_number+')</span>'+
         '</div>'+
         '<div class="ash-time">'+alert+'</div>'+
         '</div>'+
@@ -47,16 +49,16 @@ function notificationAlertsList(res)
         '</div>  ';    
       }
       // unread alerts
-      if(res.alerts[i].status == 0)
+      if(res[i].is_read == 0)
       {
-        var notification=' <div class="item active-read alert psudo-link alert_color_'+res.alerts[i].id+'" id="alert_'+res.alerts[i].id+'" data-toggle="modal" onclick="gpsAlertCount('+id+')" data-target="#clickedModelInDetailPage"  >'+  
-         '<div class="not-icon-bg" >'+
+        var notification=' <div class="item active-read alert psudo-link alert_color_'+id+'" id="alert_'+id+'" data-toggle="modal" onclick="gpsAlertCount(\''+id+'\')" data-target="#clickedModelInDetailPage"  >'+  
+        '<div class="not-icon-bg" >'+
         '<img src="/images/bell.svg"/>'+
         '</div>'+
         '<div class="deatils-bx-rt">'+
         '<div class="vech-no">'+
         '<div class="vech">'+
-         vehicle_name+'<span>('+register_number+')</span>'+
+        vehicle_name+'<span>('+register_number+')</span>'+
         '</div>'+
         '<div class="ash-time">'+alert+'</div>'+
         '</div>'+
@@ -67,37 +69,38 @@ function notificationAlertsList(res)
       $("#notification").append(notification);       
     }
     // empty alerts message
-    if(res.alerts.length == 0)
+    if(res.length == 0)
     {
       var notification = ' <div class="item active-read psudo-link"  data-toggle="modal">No alerts found'+
       '</div>';
       $("#notification").append(notification); 
     }
-   // responseList(res);
     $("#loader-1").hide();
     $(".loader-1").hide();
-
 }
-
 function gpsAlertCount(value){
-  // console.log(res);
-  var url = 'gps-alert-tracker';
-  var data={
-    id:value    
-  }
-  backgroundPostData(url,data,'gpsAlertTracker',{alert:true});
+  var data={ id:  value};   
+  $.ajax({
+    type:'POST',
+    data:data, 
+    url: url_ms_alerts+'/alert-mark-as-read',
+    dataType: "json",
+    success: function (res) 
+    {  
+      gpsAlertTracker(res.data.alert) 
+    }
+  });
 }
 function gpsAlertTracker(res)
 {  
-
-  $('#alert_'+res.alertmap.id).removeClass('alert');
-  var latitude=parseFloat(res.alertmap.latitude);
-  var longitude=parseFloat(res.alertmap.longitude);
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 17,
-    center: {lat: latitude, lng: longitude},
-    mapTypeId: 'terrain'
-  });
+  $('#alert_'+res._id).removeClass('alert');
+  var latitude=parseFloat(res.latitude);
+  var longitude=parseFloat(res.longitude);
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 17,
+      center: {lat: latitude, lng: longitude},
+      mapTypeId: 'terrain'
+    });
   $.ajax({
     url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
     method  :"get",
@@ -121,23 +124,32 @@ function gpsAlertTracker(res)
       fillOpacity: 0.35,
       map: map,
       center: alertMap[alert].center
-      // radius: Math.sqrt(citymap[city].population) * 100
-      // radius: 0
-    });
+      });
   }
   var marker = new google.maps.Marker({
     position:  alertMap[alert].center,
-    // icon: iconBase,
     map: map
   });
-  // console.log(res);
   function locs()
   {
-    $('#address').text(res.address);
-    $('#vehicle_name').text(res.get_vehicle.name);
-    $('#register_number').text(res.get_vehicle.register_number);
-    $('#description').text(res.alert_icon.description);
-    $('#device_time').text(res.alertmap.device_time);
-
+    getAddress(res.latitude,res.longitude);
+    $('#vehicle_name').text(res.gps.connected_vehicle_name);
+    $('#register_number').text(res.gps.connected_vehicle_registration_number);
+    $('#description').text(res.alert_type.description);
+    $('#device_time').text(res.device_time);
   }
 }
+function getAddress(lat, lng) {
+  var address=""
+  var latlng = new google.maps.LatLng(lat, lng);
+  var geocoder = geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            address= results[0].formatted_address;    
+            $('#address').text(address);         
+          }        
+      }    
+  }); 
+}
+

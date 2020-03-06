@@ -47,6 +47,9 @@
 
 <section class="content">
     <div class="col-md-6">
+        @if ($filters['imei'] != 0)
+            <button class="btn btn-sm btn-info" style ="margin-left: 1160px;margin-top: 6px;" onclick="return sendCommandToDevice({{$filters['imei']}})" data-toggle="modal" data-target="#setOtaModal">Send Command </button>
+        @endif
         @foreach($data as $key => $each_data)
         <div class="gps_data_item" onclick="clickedPacketDetails('{{$each_data->id}}','{{$each_data->imei}}','{{$each_data->vltdata}}')" data-target="#sidebar-right" data-toggle="modal">
             {{$each_data->vltdata}}
@@ -84,9 +87,6 @@
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div style='padding-right: 50px;padding-left: 50px;'>
-                    <button class="btn btn-md btn-success form-control" id="set_ota_button" data-toggle="modal" data-target="#setOtaModal">SET OTA</button>
                 </div>
                 <div class="modal-body console-body">
                     <table class="table">
