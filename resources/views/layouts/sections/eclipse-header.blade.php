@@ -182,7 +182,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{url('/complaint/create')}}"> ADD COMPLAINT <span></span></a>                              
-                        <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>                              
+                        <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>
+                        <a class="dropdown-item" href="{{url('/returned-gps')}}"> LIST RETURNED DEVICES<span></span></a>                              
                     </div>
                    
                 </li>

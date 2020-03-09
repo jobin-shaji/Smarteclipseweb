@@ -60,19 +60,35 @@ $is_root = false;
                                             </thead>
                                             <tbody id="data_tbody">
                                               @foreach($devices as $device)
-                                              <tr>
-                                                <td>{{$loop->iteration}}</td>
-                                                <td>{{$device->imei}}</td>
-                                                <td>{{$device->serial_no}}</td>
-                                                <td>{{$device->icc_id}}</td>
-                                                <td>{{$device->imsi}}</td>
-                                                <td>{{$device->version}}</td>
-                                                <td>{{$device->batch_number}}</td>
-                                                @role('root')
-                                                <td>{{$device->employee_code}}</td>
-                                                @endrole
-                                                <td>{{$device->model_name}}</td>
-                                              </tr>
+                                              @if($device->is_returned ==  1)
+                                                <tr style='background-color:#e1868647;'>
+                                                  <td>{{$loop->iteration}}</td>
+                                                  <td>{{$device->imei}}-Returned Back</td>
+                                                  <td>{{$device->serial_no}}</td>
+                                                  <td>{{$device->icc_id}}</td>
+                                                  <td>{{$device->imsi}}</td>
+                                                  <td>{{$device->version}}</td>
+                                                  <td>{{$device->batch_number}}</td>
+                                                  @role('root')
+                                                  <td>{{$device->employee_code}}</td>
+                                                  @endrole
+                                                  <td>{{$device->model_name}}</td>
+                                                </tr>
+                                              @else
+                                                <tr>
+                                                  <td>{{$loop->iteration}}</td>
+                                                  <td>{{$device->imei}}</td>
+                                                  <td>{{$device->serial_no}}</td>
+                                                  <td>{{$device->icc_id}}</td>
+                                                  <td>{{$device->imsi}}</td>
+                                                  <td>{{$device->version}}</td>
+                                                  <td>{{$device->batch_number}}</td>
+                                                  @role('root')
+                                                  <td>{{$device->employee_code}}</td>
+                                                  @endrole
+                                                  <td>{{$device->model_name}}</td>
+                                                </tr>
+                                              @endif
                                               @endforeach
                                             </tbody>
                                           </table>

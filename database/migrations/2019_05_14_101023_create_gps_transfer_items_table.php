@@ -17,6 +17,7 @@ class CreateGpsTransferItemsTable extends Migration
             $table->increments('id');
             $table->integer('gps_transfer_id');
             $table->integer('gps_id');
+            $table->integer('is_returned')->nullable()->comment = '0,null-not returned,1-returned';
             $table->timestamps();
         });
     }

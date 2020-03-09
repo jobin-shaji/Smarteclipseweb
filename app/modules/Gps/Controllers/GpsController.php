@@ -1863,7 +1863,7 @@ class GpsController extends Controller {
     {
         return view('Gps::combined-gps-report');  
     }  
-     public function combinedGpsReportList(Request $request)
+    public function combinedGpsReportList(Request $request)
     {
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
@@ -1945,7 +1945,7 @@ class GpsController extends Controller {
     {
         return view('Gps::combined-stock-report');  
     }  
-     public function combinedReportList(Request $request)
+    public function combinedReportList(Request $request)
     {
         $from = $request->data['from_date'];
         $to = $request->data['to_date'];
@@ -2029,7 +2029,7 @@ class GpsController extends Controller {
     }
     public function setOtaInConsoleOperations(Request $request)
     {
-         $rules = $this->otaCreateRules();
+        $rules = $this->otaCreateRules();
         $this->validate($request, $rules); 
         $gps_id=$request->gps_id;  
         $command=$request->command; 
@@ -2051,14 +2051,57 @@ class GpsController extends Controller {
         }else{
         //     $request->session()->flash('message', 'Try again'); 
         // $request->session()->flash('alert-class', 'alert-success');
-           return response()->json([
+            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Try again!!'
             ]); 
         }
 
-         return redirect(route('set.ota.operations'));
+        return redirect(route('set.ota.operations'));
+    }
+
+    //Returned GPS List in root
+    public function getReturnedGps()
+    {
+        return view('Gps::returned-gps-list');
+    }
+
+    public function getReturnedGpsList(Request $request)
+    {
+        $gps_stock      =   GpsStock::withTrashed()
+                                    ->orderBy('updated_at','DESC')
+                                    ->with('gps')
+                                    ->whereNotNull('client_id')
+                                    ->where('is_returned',1);
+        if(\Auth::user()->hasRole('root'))
+        {
+            $gps_stock  =   $gps_stock->get();
+        }
+        else if(\Auth::user()->hasRole('dealer'))
+        {
+            $dealer_id  =   \Auth::user()->dealer->id;
+            $gps_stock  =   $gps_stock->where('dealer_id',$dealer_id)->get();  
+        }
+        else if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            $sub_dealer_id  =   \Auth::user()->subdealer->id;
+            $gps_stock      =   $gps_stock->where('subdealer_id',$sub_dealer_id)->get();
+        }
+        else if(\Auth::user()->hasRole('trader'))
+        {
+            $trader_id  =   \Auth::user()->trader->id;
+            $gps_stock      =   $gps_stock->where('trader_id',$trader_id)->get(); 
+        }
+        else if(\Auth::user()->hasRole('client'))
+        {
+            $client_id  =   \Auth::user()->client->id;
+            $gps_stock      =   $gps_stock->where('client_id',$client_id)->get();           
+        }
+
+        return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->make();
     }
 
     //validation for gps creation

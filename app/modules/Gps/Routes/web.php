@@ -67,10 +67,13 @@ Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App
 	Route::get('/subscription-success','GpsController@subscriptionSuccess')->name('subscription.success');
 	});
 	
-Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root|trader'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root|trader|client'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 	Route::get('/gps/{id}/details','GpsController@details')->name('gps.details');
 	Route::get('/gps/{id}/download','GpsController@downloadGpsDataTransfer')->name('gps.download');
+
+	Route::get('/returned-gps','GpsController@getReturnedGps')->name('returned-gps');
+	Route::post('/returned-gps-list','GpsController@getReturnedGpsList')->name('returned-gps-list');
 });
 
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {

@@ -7,7 +7,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device Return List</li>
-       <b>Device Return List</b>
+        <b>Device Return List</b>
     </ol>  
     @if(Session::has('message'))
       <div class="pad margin no-print">
@@ -28,13 +28,13 @@
                   <tr>
                     <th>SL.No</th>
                     <th>imei </th>   
-                     <th>Serial Number</th>
-                     <th>Date</th>
-                     <th>Type of issues</th>
-                     <th>Comments</th>
-                     <th>Status</th>
-                     <th>Action</th>
-                    </tr>
+                    <th>Serial Number</th>
+                    <th>Date</th>
+                    <th>Type of issues</th>
+                    <th>Comments</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
                 </thead>
               </table>
             </div>

@@ -24,7 +24,7 @@ function callBackDataTable(){
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
+        //order: [[1, 'desc']],
         ajax: {
             url: 'device-return-list',
             type: 'POST',
@@ -35,7 +35,11 @@ function callBackDataTable(){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-       
+        createdRow: function ( row, data, index ) {
+            if ( data['deleted_at'] ) {
+                $('td', row).css('background-color', 'rgb(243, 204, 204)');
+            }
+        },
         fnDrawCallback: function (oSettings, json) {
 
         },
