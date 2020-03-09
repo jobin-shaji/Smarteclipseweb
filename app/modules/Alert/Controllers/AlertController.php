@@ -631,7 +631,7 @@ class AlertController extends Controller {
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get('eclipse.keys.googleMap'));
             $output = json_decode($geocodeFromLatLong);
             $status = $output->status;
-             $address = ($status=="OK")?$output->results[0]->formatted_address:'';
+            $address = ($status=="OK")?$output->results[0]->formatted_address:'';
             if(!empty($address)){
                 return $address;
             }else{

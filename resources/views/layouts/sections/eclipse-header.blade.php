@@ -422,16 +422,16 @@
 
                    var url_ms_alerts = '{{ Config::get("eclipse.urls.ms_alerts") }}';
                    console.log('url_ms_alerts'+url_ms_alerts);
-                        // var firebaseConfig = {
-                        //     apiKey:  '{{Config::get("firebase.apiKey")}}',
-                        //     authDomain: '{{Config::get("firebase.authDomain")}}',
-                        //     databaseURL: '{{Config::get("firebase.databaseURL")}}',
-                        //     projectId: '{{Config::get("firebase.projectId")}}',
-                        //     storageBucket: '{{Config::get("firebase.storageBucket")}}',
-                        //     messagingSenderId: '{{Config::get("firebase.messagingSenderId")}}',
-                        //     appId: '{{Config::get("firebase.appId")}}',
-                        //     measurementId: '{{Config::get("firebase.measurementId")}}'
-                        // }; 
+                        var firebaseConfig = {
+                            apiKey:  '{{Config::get("firebase.apiKey")}}',
+                            authDomain: '{{Config::get("firebase.authDomain")}}',
+                            databaseURL: '{{Config::get("firebase.databaseURL")}}',
+                            projectId: '{{Config::get("firebase.projectId")}}',
+                            storageBucket: '{{Config::get("firebase.storageBucket")}}',
+                            messagingSenderId: '{{Config::get("firebase.messagingSenderId")}}',
+                            appId: '{{Config::get("firebase.appId")}}',
+                            measurementId: '{{Config::get("firebase.measurementId")}}'
+                        }; 
                     </script>
                     <!-- <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script> -->
                     <!-- <script src="{{asset('js/gps/firebase_notifications.js')}}"></script> -->
