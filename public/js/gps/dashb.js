@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-   $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0').hide();
+   $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
 
   var url = 'dash-count';
   var data = {
@@ -154,6 +154,12 @@ function vehicle_details(res){
   else if(fuel > 75)
   {
     $('#fuel_100').show();
+    $('.fa-spinner').hide();
+  }
+  else
+  {
+    $('#upgrade').show();
+    document.getElementById("upgradefuel").innerHTML = "Upgrade Version";
     $('.fa-spinner').hide();
   }
 

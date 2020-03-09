@@ -137,14 +137,14 @@ function vehicleTrack(res) {
     '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
     '<h3 class="h3 mb-3 font-weight-normal" style="text-align: left!important;font-size:1.25rem;margin-bottom:0!important;text-transform: uppercase ">'
     + vehicle_name +
-   
+
     '<p style="text-align:left!important;margin-bottom: -1rem!important;font-size:.9rem!important"><code>'
     + vehicle_status +
     '</code><br><img src="assets/images/plate.png" width=30 height=30><b>&nbsp;Vehicle Number:-</b> '
     + reg +'</p>'+
     '</div>'+
 
-    
+
     '<a href="/vehicle/'+ encrypt_gps_id +'/alert" ><button class="btn-pop type="submit" style="margin-right:2%;margin-left:3%;background-color:#f0b100;border-radius:5px"><img src="assets/images/alarm.svg" width=13 height=13>Alerts</button></a>'+
     '<a href="/vehicles/'
     + vehicle_id +
@@ -226,9 +226,9 @@ function selectVehicleTrack(res) {
   // map.setMax(18);
   if(circleStatus==1){
     cityCircle.setMap(null);
-  } 
+  }
   refesh_flag=1;
-  redarLocationSelectVehicle(res.lat,res.lon,0.08); 
+  redarLocationSelectVehicle(res.lat,res.lon,0.08);
 }
 
 $(".vehicle_gps_id").click(function() {
@@ -257,6 +257,7 @@ function getVehicleTrack(gps_id){
 
 function locationSearch()
 {
+  document.getElementById('map_refresh_button').style.display="block";
   var place_name = $('#search_place').val();
   radius = $('#search_radius').val();
   if(radius!="KM"){
@@ -436,7 +437,7 @@ function redarLocationSelectVehicle(lat, lng, radius) {
      myGoogleRadar.hidePolygon();
    }
  }
- 
+
  var radius_in_meter = radius * 1000;
  var latlng = new google.maps.LatLng(lat,lng);
 
@@ -455,7 +456,7 @@ function redarLocationSelectVehicle(lat, lng, radius) {
  };
  cityCircle = new google.maps.Circle(sunCircle);
 
- 
+
  circleStatus=1;
 }
 
