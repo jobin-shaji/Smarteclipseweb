@@ -434,7 +434,7 @@
                   </div>
               </div>
               
-                    <div class="service-center-content animatable moveUp">
+                <div class="service-center-content animatable moveUp">
         
                   <div class="service-center-content-box">
                   
@@ -463,11 +463,35 @@
                       
                       <span>Tectiv</span>
                           <p>Networking And Security Systems<br> Door N0:15/486n Center Point Building <br>Near Rto Office Vellarikundu (Po)<br> Pin :671533 </p>
+                     
+                     <p></p> </div>
+                  
+                  </div>
+                  
+                  </div>
+
+
+                  <div class="service-center-content-box">
+                  
+                  <div class="service-center-content-box-lf">
+                  <img src="images/call-center-icon.png"/>
+                  </div>
+                  <div class="service-center-content-box-rt">
+                  <div class="sevice-cent-sub-head">Alappuzha</div>
+                      <div class="sevice-cent-sub-text">
+                      
+                      <span>Maaz Cars Private Limited</span>
+                          <p>Zion Tower Mc Road Kallissery P.o<br> Chengannur Alappuzha</p>
+                          <p>Mob: 9496333264</p>
                       </div>
                   
                   </div>
+                  
                   </div>
               </div>
+
+              
+              
           
           </div>
           
@@ -524,6 +548,11 @@
           </div>
                           <div class="app-sceen-image animatable bounceIn">
           <img src="images/app-screen4.png"/>
+          </div>
+
+
+          <div class="app-sceen-image animatable bounceIn">
+          <img src="images/app-screen5.png"/>
           </div>
                       <div class="app-sceen-image animatable bounceIn">
           <img src="images/app-screen1.png"/>
