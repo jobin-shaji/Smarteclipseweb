@@ -24,19 +24,20 @@
                       <div class="panel-heading">
                         <div class="cover_div_search">
                         <div class="row">
-                          <div class="col-lg-3 col-md-3"> 
+                          <div class="col-lg-3 col-md-3">
                            <div class="form-group">
-                            <label>Vehicle</label>                    
+                            <label>Vehicle</label>
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                              <option value=""></option>
                               <option value="0">All</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->name}}||{{$vehicles->register_number}}</option>
-                              @endforeach  
+                              @endforeach
                             </select>
                           </div>
                           </div>
-                          <div class="col-lg-3 col-md-3">  
-                          <div class="form-group">                   
+                          <div class="col-lg-3 col-md-3">
+                          <div class="form-group">
                             <label> From Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off">
                             <span class="input-group-addon" style="z-index: 99;">
@@ -45,7 +46,7 @@
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3">
-                          <div class="form-group">                     
+                          <div class="form-group">
                             <label> To Date</label>
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">
                             <span class="input-group-addon" style="z-index: 99;">
@@ -55,15 +56,15 @@
                           </div>
 
                            <div class="col-lg-3 col-md-3 pt-4">
-                           <div class="form-group">          
+                           <div class="form-group">
                             <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
                             <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadharshBrakingReport()">
                               <i class="fa fa-file"></i>Download Excel</button>                        </div>
                           </div>
-                          
+
                         </div>
                       </div>
-                      </div>                
+                      </div>
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
                         <thead>
                              <tr>
@@ -72,7 +73,7 @@
                               <th>Alert Type</th>
 
                               <th>Date & Time</th>
-                              <th>Action</th>        
+                              <th>Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -82,7 +83,7 @@
               </div>
             </div>
           </div>
-          <div class="row">           
+          <div class="row">
           </div>
         </div>
       </div>

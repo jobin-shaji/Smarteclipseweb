@@ -1,4 +1,4 @@
-$(document).ready(function () { 
+$(document).ready(function () {
    var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -9,20 +9,20 @@ $(document).ready(function () {
          vehicle : vehicle,
           from_date : today
           // to_date : today
-    };     
+    };
     // var today = new Date();
     callBackDataTable(data);
 });
 
     function check()
-    {     
+    {
         if(document.getElementById('vehicle').value == ''){
             alert('Please Select Vehicle');
         }
         else if(document.getElementById('fromDate').value == ''){
-            alert('please enter from date');
+            alert('Please enter from date');
         }
-        else{    
+        else{
             callBackDataTable();
         }
     }
@@ -34,7 +34,7 @@ function callBackDataTable(){
             vehicle : vehicle,
             from_date : from_date
             // to_date : to_date
-        }; 
+        };
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -52,16 +52,16 @@ function callBackDataTable(){
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
-        },       
+        },
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
             {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false, searchable: false},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},            
+            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
             {data: 'totalkm', name: 'totalkm', orderable: false},
             {data: 'date', name: 'date', orderable: false},
-        ],        
+        ],
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }

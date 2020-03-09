@@ -6,7 +6,7 @@ $(document).ready(function () {
 function check(){
 
     if(document.getElementById('vehicle').value == ''){
-        alert('please enter vehicle');
+        alert('Please enter vehicle');
     }
       else if(document.getElementById('fromDate').value == ''){
         alert('Please select From date');
@@ -40,7 +40,7 @@ function callBackDataTable(data=null){
         from_date : document.getElementById('fromDate').value,
         to_date : document.getElementById('toDate').value,
         vehicle : document.getElementById('vehicle').value,
-    }; 
+    };
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -58,21 +58,21 @@ function callBackDataTable(data=null){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-       
+
         fnDrawCallback: function (oSettings, json) {
 
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
             {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
-                   
+
             {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
             // {data: 'location', name: 'location', orderable: false},
             {data: 'device_time', name: 'device_time', orderable: false},
              {data: 'action', name: 'action', orderable: false, searchable: false}
-           
+
         ],
-        
+
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
@@ -83,12 +83,12 @@ function refresh(){
     if(document.getElementById('fromDate').value == '' || document.getElementById('toDate').value == ''){
         callBackDataTable();
     }
-    else{                      
+    else{
     var from_date = document.getElementById('fromDate').value;
     var to_date = document.getElementById('toDate').value;
     var data = { 'agent':agent,'depot':depot, 'from_date':from_date , 'to_date':to_date};
     callBackDataTable(data);
-    }   
+    }
 }
 
 
