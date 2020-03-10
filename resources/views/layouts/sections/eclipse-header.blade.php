@@ -588,6 +588,9 @@
                 $role=md5('servicer');
             }
     ?>
+    @role('client')
+    <input type="hidden" id="client_id" name="client_id" value="{{\Auth::user()->client->id}}">
+    @endrole
     <input type="hidden" id="header_role" name="header_role" value="{{$role}}">
     </nav>
 </header>

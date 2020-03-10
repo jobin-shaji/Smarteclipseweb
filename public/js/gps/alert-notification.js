@@ -9,9 +9,12 @@ function initMap() {
   });
 }
 $(document).ready(function () {
+ 
+  var data={ client_id:  alert_client_id}; 
   $(".loader-1").show();
     $.ajax({
             type:'post',
+            data:data,
             url: url_ms_alerts+"/last-seven-days-alerts",
             dataType: "json",
             success: function (res) 
