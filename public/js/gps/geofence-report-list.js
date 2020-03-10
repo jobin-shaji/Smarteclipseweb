@@ -1,20 +1,20 @@
 function check(){
      if(document.getElementById('vehicle').value == ''){
-        alert('please select Vehicle');
+        alert('Please select Vehicle');
     }
     else if(document.getElementById('fromDate').value == ''){
-        alert('please select From date');
+        alert('Please select From date');
     }else if(document.getElementById('toDate').value == ''){
-        alert('please select To date');
+        alert('Please select To date');
     }
     else{
-        calculate();   
+        calculate();
          var client=$('meta[name = "client"]').attr('content');
         var from_date = document.getElementById('fromDate').value;
         var to_date = document.getElementById('toDate').value;
         var vehicle = document.getElementById('vehicle').value;
         var data = {'client':client,'vehicle':vehicle, 'from_date':from_date , 'to_date':to_date};
-        callBackDataTable(data);       
+        callBackDataTable(data);
     }
 }
 function calculate() {
@@ -34,7 +34,7 @@ function calculate() {
 }
 
 function callBackDataTable(data=null){
-    
+
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -51,9 +51,9 @@ function callBackDataTable(data=null){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-       
+
         fnDrawCallback: function (oSettings, json) {
-            
+
 
         },
         columns: [
@@ -64,7 +64,7 @@ function callBackDataTable(data=null){
             {data: 'device_time', name: 'device_time', orderable: false},
 
         ],
-        
+
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
