@@ -2223,7 +2223,7 @@ class VehicleController extends Controller
     function getPlacenameFromLatLng($latitude,$longitude){
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get('eclipse.keys.googleMap'));
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
             $output = json_decode($geocodeFromLatLong);
 
 
@@ -2247,7 +2247,7 @@ class VehicleController extends Controller
         $lng = $b_lng;
         // if($lat != null){
         //     $route = $lat.",".$lng;
-        //     $url = "https://roads.googleapis.com/v1/snapToRoads?path=".$route."&interpolate=true&key=".Config::get('eclipse.keys.googleMap');
+        //     $url = "https://roads.googleapis.com/v1/snapToRoads?path=".$route."&interpolate=true&key=".config('eclipse.keys.googleMap');
         //     $geocode_stats = file_get_contents($url);
         //     $output_deals = json_decode($geocode_stats);
         //     if (isset($output_deals->snappedPoints)) {
