@@ -969,7 +969,7 @@ class ClientController extends Controller {
         {
            return view('Client::404');
         }
-        return view('Client::-chang',['client' => $client,'user' => $user]);
+        return view('Client::client-change-password',['client' => $client,'user' => $user]);
     }
 
     // update change password
