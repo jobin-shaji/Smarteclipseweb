@@ -1884,12 +1884,10 @@ var alert_client_id=document.getElementById('client_id').value;
             });
         }
         function gpsAlertconfirm(res)
-        {           
-            var latitude                =   res.latitude;
-            var longitude               =   res.longitude;
-            getPlaceNameFromLatLng(latitude,longitude);
+        {     
             $("#load-2").css("display", "none");
             $('#alert_'+res._id).removeClass('alert');
             var alert_content = res.alert_type.description+' on vehicle '+res.gps.connected_vehicle_name+'('+res.gps.connected_vehicle_registration_number+') at '+res.device_time;
-            $('#alert_content').text(alert_content);           
+            $('#alert_content').text(alert_content);  
+            $('#alert_address').text(res.address);           
         }
