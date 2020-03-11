@@ -27,7 +27,7 @@ class SuddenAccelerationReportExport implements FromView
         ->with('gps.vehicle');
        if($vehicle==0 || $vehicle==null)
         {
-            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('gps_id','client_id')->where('client_id',$client)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;

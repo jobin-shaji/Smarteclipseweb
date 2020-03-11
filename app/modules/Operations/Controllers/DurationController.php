@@ -15,7 +15,8 @@ class DurationController extends Controller {
 
     public function vehicleDuration()
     {
-        $gps = Gps::all();
+        
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Operations::duration-view',['gps' => $gps]);
     }
 

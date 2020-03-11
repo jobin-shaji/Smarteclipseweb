@@ -192,7 +192,7 @@ class DeviceReturnController extends Controller {
         $device_return->status      =   2;
         $device_return->save();
         $gps_data                   =   Gps::find($device_return->gps_id);
-        $gps_data_in_stock          =   GpsStock::where('gps_id',$device_return->gps_id)->first();
+        $gps_data_in_stock          =   GpsStock::select('gps_id','is_returned')->where('gps_id',$device_return->gps_id)->first();
         $gps_in_vehicle             =   Vehicle::where('gps_id',$device_return->gps_id)->first();
 
         //old data stored in a variable for creating new row
@@ -209,7 +209,7 @@ class DeviceReturnController extends Controller {
     
         $imei_RET                   =   $gps_data->imei."-RET-" ;
         $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
-        $gps_find_imei_and_slno     =   Gps::where('imei', 'like','%'.$imei_RET.'%')
+        $gps_find_imei_and_slno     =   Gps::select('imei','serial_no')->where('imei', 'like','%'.$imei_RET.'%')
                                         ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
                                         ->count();        
         $increment_value            =    $gps_find_imei_and_slno +1;

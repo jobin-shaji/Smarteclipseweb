@@ -721,7 +721,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $stock_in_distributor=GpsStock::where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
+            $stock_in_distributor=GpsStock::select('dealer_id','subdealer_id')->where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
             if($stock_in_distributor > 1) {
                 $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
             }else{
@@ -838,7 +838,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $stock_in_dealer=GpsStock::where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
+            $stock_in_dealer=GpsStock::select('subdealer_id','client_id')->where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
            
             if($stock_in_dealer > 1) {
                 $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
@@ -1033,7 +1033,7 @@ class WarehouseController extends Controller {
                 $gps_transfer_items[] = $gps_transfer->id;
             }
             $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $stock_in_sub_dealer=GpsStock::where('trader_id',$to_user_details->id)->whereNull('client_id')->count();
+            $stock_in_sub_dealer=GpsStock::select('trader_id','client_id')->where('trader_id',$to_user_details->id)->whereNull('client_id')->count();
            
             if($stock_in_sub_dealer > 1) {
                 $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
@@ -1158,7 +1158,7 @@ class WarehouseController extends Controller {
                         ->first();
         if($device != null)
         {
-            $device_in_stock = GpsStock::where('gps_id',$device->id)->first();
+            $device_in_stock = GpsStock::select('gps_id')->where('gps_id',$device->id)->first();
             if($device_in_stock != null)
             {
                 if($user->hasRole('root'))
@@ -1391,7 +1391,7 @@ class WarehouseController extends Controller {
                     ]);
                     if($gps_transfer_item){
                         //update gps stock table
-                        $gps = GpsStock::where('gps_id',$gps_id)->first();
+                        $gps = GpsStock::select('dealer_id','gps_id')->where('gps_id',$gps_id)->first();
                         $gps->dealer_id =0;
                         $gps->save();
                     }
@@ -1568,7 +1568,7 @@ class WarehouseController extends Controller {
                     ]);
                     if($gps_transfer_item){
                         //update gps stock table
-                        $gps = GpsStock::where('gps_id',$gps_id)->first();
+                        $gps = GpsStock::select('gps_id','subdealer_id')->where('gps_id',$gps_id)->first();
                         $gps->subdealer_id =0;
                         $gps->save();
                     }
@@ -1763,7 +1763,7 @@ class WarehouseController extends Controller {
                     ]);
                     if($gps_transfer_item){
                         //update gps stock table
-                        $gps = GpsStock::where('gps_id',$gps_id)->first();
+                        $gps = GpsStock::select('gps_id','trader_id')->where('gps_id',$gps_id)->first();
                         $gps->trader_id =0;
                         $gps->save();
                     }
@@ -1946,7 +1946,7 @@ class WarehouseController extends Controller {
                     ]);
                     if($gps_transfer_item){
                         //update gps stock table
-                        $gps = GpsStock::where('gps_id',$gps_id)->first();
+                        $gps = GpsStock::select('gps_id','client_id')->where('gps_id',$gps_id)->first();
                         $gps->client_id =$client_id;
                         $gps->save();
                     }
@@ -2110,7 +2110,7 @@ class WarehouseController extends Controller {
                     ]);
                     if($gps_transfer_item){
                         //update gps stock table
-                        $gps = GpsStock::where('gps_id',$gps_id)->first();
+                        $gps = GpsStock::select('gps_id','client_id')->where('gps_id',$gps_id)->first();
                         $gps->client_id =$client_id;
                         $gps->save();
                     }
@@ -2175,7 +2175,7 @@ class WarehouseController extends Controller {
             foreach($gps_items as $gps_item){
                 $single_gps_id= $gps_item->gps_id;
                 //update gps table
-                $gps = GpsStock::where('gps_id',$single_gps_id)->first();
+                $gps = GpsStock::select('gps_id','dealer_id')->where('gps_id',$single_gps_id)->first();
                 $gps->dealer_id =$dealer_id;
                 $gps->save();
             }
@@ -2212,7 +2212,7 @@ class WarehouseController extends Controller {
             foreach($gps_items as $gps_item){
                 $single_gps_id= $gps_item->gps_id;
                 //update gps table
-                $gps = GpsStock::where('gps_id',$single_gps_id)->first();
+                $gps = GpsStock::select('gps_id','subdealer_id')->where('gps_id',$single_gps_id)->first();
                 $gps->subdealer_id =$subdealer_id;
                 $gps->save();
             }
@@ -2249,7 +2249,8 @@ class WarehouseController extends Controller {
             foreach($gps_items as $gps_item){
                 $single_gps_id= $gps_item->gps_id;
                 //update gps table
-                $gps = GpsStock::where('gps_id',$single_gps_id)->first();
+                $gps = GpsStock::select('gps_id','trader_id')->where('gps_id',$single_gps_id)->first();
+                
                 $gps->trader_id =$trader_id;
                 $gps->save();
             }
@@ -2284,7 +2285,7 @@ class WarehouseController extends Controller {
             foreach($gps_items as $gps_item){
                 $single_gps_id= $gps_item->gps_id;
                 //update gps table
-                $gps = GpsStock::where('gps_id',$single_gps_id)->first();
+                $gps = GpsStock::select('gps_id','dealer_id')->where('gps_id',$single_gps_id)->first();
                 $gps->dealer_id =null;
                 $gps->save();
             }
@@ -2319,7 +2320,7 @@ class WarehouseController extends Controller {
             foreach($gps_items as $gps_item){
                 $single_gps_id= $gps_item->gps_id;
                 //update gps table
-                $gps = GpsStock::where('gps_id',$single_gps_id)->first();
+                $gps = GpsStock::select('gps_id','subdealer_id')->where('gps_id',$single_gps_id)->first();
                 $gps->subdealer_id =null;
                 $gps->save();
             }
@@ -2354,7 +2355,7 @@ class WarehouseController extends Controller {
             foreach($gps_items as $gps_item){
                 $single_gps_id= $gps_item->gps_id;
                 //update gps table
-                $gps = GpsStock::where('gps_id',$single_gps_id)->first();
+                $gps = GpsStock::select('gps_id','trader_id')->where('gps_id',$single_gps_id)->first();
                 $gps->trader_id =null;
                 $gps->save();
             }

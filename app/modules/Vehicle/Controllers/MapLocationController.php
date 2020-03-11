@@ -33,7 +33,8 @@ class MapLocationController extends Controller {
 
     public function gpsMapLocation(Request $request)
     {
-        $gps=Gps::all();
+       
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Vehicle::gps-location-tracker',['gps' => $gps]);
     }
 
@@ -64,7 +65,8 @@ class MapLocationController extends Controller {
 
     public function gpsKmMapLocation(Request $request)
     {
-        $gps=Gps::all();
+       
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Vehicle::gps-km-location-tracker',['gps' => $gps]);
     }
     public function gpsKmMapLocationTrack(Request $request)
@@ -91,7 +93,8 @@ class MapLocationController extends Controller {
 
     public function gpsMapLocationPublic(Request $request)
     {
-        $gps=Gps::all();
+       
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Vehicle::gps-location-tracker-public',['gps' => $gps]);
     }
 
