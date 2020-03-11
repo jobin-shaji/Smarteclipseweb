@@ -1444,7 +1444,6 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
 
     }
-
      public function playbackB(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);

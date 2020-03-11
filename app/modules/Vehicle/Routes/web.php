@@ -91,6 +91,7 @@ Route::get('/vehicles/{id}/location-firebase','VehicleController@locationFirebas
 
 Route::get('/vehicles/{id}/location-firebase-hmap','VehicleController@locationFirebaseHmap')->name('vehicles.location.firebase.hmap');
 Route::get('/vehicles/{id}/location-firebase-hmap-new','VehicleController@locationFirebaseHmapNew')->name('vehicles.location.firebase.hmap.new');
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////
