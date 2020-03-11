@@ -284,8 +284,9 @@
       var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
      }
    </script>
+   
    <script async defer
-   src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
+   src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
 <script src="{{asset('js/gps/client-create.js')}}"></script>
 
 @endsection

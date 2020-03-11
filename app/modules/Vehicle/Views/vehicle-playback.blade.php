@@ -39,7 +39,7 @@
 @section('script')
 
 <script src="{{asset('js/gps/location-playback.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap" async defer></script>
 @endsection
 
 @endsection
