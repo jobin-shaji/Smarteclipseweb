@@ -120,7 +120,7 @@ class AlertReportController extends Controller
     }
     public function location(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
-        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $get_alerts=Alert::select('id','latitude','alert_type_id','latitude')->where('id',$decrypted_id)->with('gps.vehicle')->first();
         $alert_icon  =  AlertType:: select(['description',
             'path'])->where('id',$get_alerts->alert_type_id)->first(); 
         $get_vehicle=Vehicle::select(['id','register_number',

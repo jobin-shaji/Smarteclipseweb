@@ -678,7 +678,7 @@ class VehicleController extends Controller
         $decrypted_vehicle_id   = Crypt::decrypt($request->id);
         $alert_id               = $request->alert_id;
         $vehicle                = Vehicle::find($decrypted_vehicle_id);
-        $alerts                 = Alert::where('alert_type_id',$alert_id)
+        $alerts                 = Alert::select('alert_type_id','status','gps_id')->where('alert_type_id',$alert_id)
             ->where('status',0)
             ->where('gps_id',$vehicle->gps_id)
             ->count();
@@ -2955,7 +2955,7 @@ class VehicleController extends Controller
 
           $from_date_time   = $track_data->first()->dateTime;
           $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
-          $alerts_list      = Alert::where('device_time', '>=' ,$from_date_time)
+          $alerts_list      = Alert::select('device_time','gps_id','alert_type_id')->where('device_time', '>=' ,$from_date_time)
                                     ->where('device_time', '<=' ,$last_date_time)
                                     ->where('gps_id',$gps_id)
                                     ->whereNotIn('alert_type_id',[17,18,23,24])

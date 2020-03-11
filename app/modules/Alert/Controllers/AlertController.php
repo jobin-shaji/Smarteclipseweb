@@ -33,7 +33,7 @@ class AlertController extends Controller {
         ->get();
         $single_vehicle_gps = [];
         foreach($VehicleGpss as $VehicleGps){
-            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
+            $confirm_alerts =Alert::select('gps_id','status')->where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
              $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
         $userAlerts = UserAlerts::select(

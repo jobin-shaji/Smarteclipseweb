@@ -125,6 +125,8 @@ class ClientController extends Controller {
                
             }
             $alert_types = AlertType::all();
+            
+
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
@@ -187,6 +189,7 @@ class ClientController extends Controller {
                 User::select('username')->where('username', $request->username)->first()->assignRole('client');
             }
             $alert_types = AlertType::all();
+            
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
