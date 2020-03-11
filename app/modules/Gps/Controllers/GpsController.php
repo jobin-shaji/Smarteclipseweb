@@ -256,7 +256,7 @@ class GpsController extends Controller {
     //delete gps details
     public function deleteGps(Request $request){
         $gps = Gps::find($request->uid);
-        $gps_stock = GpsStock::where('gps_id',$request->uid)->first();
+        $gps_stock = GpsStock::select('gps_id','deleted_by')->where('gps_id',$request->uid)->first();
         if($gps == null){
             return response()->json([
                 'status' => 0,
@@ -281,7 +281,7 @@ class GpsController extends Controller {
     public function activateGps(Request $request)
     {
         $gps = Gps::withTrashed()->find($request->id);
-        $gps_stock = GpsStock::withTrashed()->where('gps_id',$request->id)->first();
+        $gps_stock = GpsStock::select('gps_id','deleted_by')->withTrashed()->where('gps_id',$request->id)->first();
         if($gps==null){
              return response()->json([
                 'status' => 0,
@@ -1472,8 +1472,8 @@ class GpsController extends Controller {
         $from_date=$request->from_date;
         $to_date=$request->to_date;
         $gps_id=$request->gps_id;
-
-        $gps = Gps::all();
+        $gps = Gps::select('id','imei')->get();
+       
 
         $sleep=0;
         $halt=0;
@@ -1486,8 +1486,8 @@ class GpsController extends Controller {
         $previous_id=0;
 
         $summery=array(); 
-        $gps_mode_change=GpsModeChange::
-                                    where('device_time','>=',$from_date)
+        $gps_mode_change=GpsModeChange::select('device_time','gps_id','mode','id')
+                                  ->where('device_time','>=',$from_date)
                                   ->where('device_time','<=',$to_date)
                                   ->where('gps_id',$gps_id)
                                   ->orderBy('device_time','asc')
@@ -1576,7 +1576,7 @@ class GpsController extends Controller {
     public function allgpsDataListPage()
     {
         $ota = OtaType::all();
-        $gps = Gps::all();
+        $gps = Gps::select('id','imei','serial_no')->get();
         // $items = GpsData::orderBy('created_at', 'DESC')->limit(20)->get(); 
         // $last_data = GpsData::orderBy('created_at', 'DESC')->first();
         // dd($gps_data);
@@ -1585,7 +1585,8 @@ class GpsController extends Controller {
      public function allPublicgpsDataListPage()
     {
         $ota = OtaType::all();
-        $gps = Gps::all();
+        $gps = Gps::select('id','imei','serial_no')->get();
+       
         // $items = GpsData::orderBy('created_at', 'DESC')->limit(20)->get(); 
         // $last_data = GpsData::orderBy('created_at', 'DESC')->first();
         // dd($gps_data);
@@ -1714,7 +1715,7 @@ class GpsController extends Controller {
         $this->validate($request, $rules); 
         $gps_id= $request->serial_no;
         $gps = Gps::find($gps_id);
-        $gps_stock = GpsStock::where('gps_id',$gps_id)->first();       
+        $gps_stock = GpsStock::select('gps_id')->where('gps_id',$gps_id)->first();       
         if($gps_stock==null)
         {
             $gps->manufacturing_date = $maufacture;
@@ -1735,8 +1736,8 @@ class GpsController extends Controller {
 
 
             $request->session()->flash('message', 'Already added to stock!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-         return redirect(route('gps.stock'));
+             $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('gps.stock'));
         }          
         
        
@@ -1745,15 +1746,13 @@ class GpsController extends Controller {
 
     public function otaResponseListPage()
     {
-       
-        $gps = Gps::all();
-        
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Gps::ota-response-list',['gps' => $gps]);
     }
      public function getOtaResponseAllData(Request $request)
     {
         if($request->gps){
-         $items = OtaResponse::where('gps_id',$request->gps)->limit(500);  
+         $items = OtaResponse::select('response','sent_at','verified_at')->where('gps_id',$request->gps)->limit(500);  
         }
         
         return DataTables::of($items)
@@ -1764,9 +1763,8 @@ class GpsController extends Controller {
     }
     public function allpublicgpsListPage(Request $request)
     {
-        
-        $ota = OtaType::all();
-        $gps = Gps::all();
+        $gps = Gps::select('id','imei','serial_no')->get();
+        $ota = OtaType::select('code','name')->get();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();
         // dd($header);
         return view('Gps::public-alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
@@ -1886,9 +1884,7 @@ class GpsController extends Controller {
 
     public function otaUpdatesListPage()
     {
-       
-        $gps = Gps::all();
-        
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Gps::ota-updates-list',['gps' => $gps]);
     }
     public function getOtaUpdatesAllData(Request $request)
@@ -1997,7 +1993,7 @@ class GpsController extends Controller {
      public function setOtaInUnprocessed(Request $request)
     {
         $imei=$request->imei; 
-        $gps=Gps::where('imei',$imei)->first(); 
+        $gps=Gps::select('imei','id')->where('imei',$imei)->first(); 
         $gps_id=$gps->id;
         $command=$request->command;        
         $response = OtaResponse::create([
@@ -2020,8 +2016,7 @@ class GpsController extends Controller {
     }
     public function operationsSetOtaListPage()
     {      
-        $gps = Gps::all();
-
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('Gps::set-ota',['devices' => $gps]);
     }
     public function setOtaInConsoleOperations(Request $request)
@@ -2066,7 +2061,7 @@ class GpsController extends Controller {
 
     public function getReturnedGpsList(Request $request)
     {
-        $gps_stock      =   GpsStock::withTrashed()
+        $gps_stock      =   GpsStock::select('updated_at','client_id','is_returned','dealer_id','subdealer_id','trader_id','client_id')->withTrashed()
                                     ->orderBy('updated_at','DESC')
                                     ->with('gps')
                                     ->whereNotNull('client_id')

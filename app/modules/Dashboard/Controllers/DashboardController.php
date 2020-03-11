@@ -211,7 +211,7 @@ class DashboardController extends Controller
                 'gps_stock' => GpsStock::select('id')->count(),
                 'gps_to_verify' => Gps::select('id')->count()-GpsStock::select('id')->count(),
 
-                'gps_today' => Gps::WhereDate('manufacturing_date',date("Y-m-d"))->count(),
+                'gps_today' => Gps::select('manufacturing_date')->WhereDate('manufacturing_date',date("Y-m-d"))->count(),
                 // 'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
 
 

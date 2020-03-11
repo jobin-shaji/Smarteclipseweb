@@ -491,7 +491,7 @@ class DriverController extends Controller {
            $driver_id=0;
         }
         $client_id=\Auth::user()->client->id;
-        $gps_stocks = GpsStock::where('client_id',$client_id)->get();
+        $gps_stocks = GpsStock::select('client_id','gps_id')->where('client_id',$client_id)->get();
         $single_gps_stock=[];
         foreach ($gps_stocks as $gps_stock) {
             $single_gps_stock[] = $gps_stock->gps_id;

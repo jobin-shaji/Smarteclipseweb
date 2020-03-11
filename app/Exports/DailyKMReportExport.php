@@ -27,7 +27,7 @@ class DailyKMReportExport implements FromView
         ->orderBy('id', 'desc');      
        
         if($vehicle_id==0 || $vehicle_id==null){
-            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('client_id','gps_id')->where('client_id',$client)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
