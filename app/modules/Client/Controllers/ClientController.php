@@ -276,8 +276,8 @@ class ClientController extends Controller {
         if(!empty($latitude) && !empty($longitude))
         {
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-            
-           
+
+
             $output = json_decode($geocodeFromLatLong, true);
             $location = $client->location;
          }
@@ -369,7 +369,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($user->id);
 
-        $rules=$this->updateUserPassword($user);
+        $rules=$this->updateUserPassword();
         $this->validate($request,$rules);
         $user->password=bcrypt($request->password);
         $user->save();
@@ -397,7 +397,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateUserPassword($client);
+        $rules=$this->updateUserPasswordBySubdealer();
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->save();
@@ -461,11 +461,17 @@ class ClientController extends Controller {
     {
         $rules=[
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
-             'oldpassword'=>'required',
+            'oldpassword'=>'required',
         ];
         return $rules;
     }
-
+    public function updateUserPasswordBySubdealer()
+    {
+        $rules=[
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
+        ];
+        return $rules;
+    }
     public function activatesubscription()
     {
         $rules=[
