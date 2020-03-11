@@ -143,9 +143,9 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
 	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
 
 });
-Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-
- 	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () 
+{
+	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
 	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
 
 
@@ -153,22 +153,3 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
 });
 
-///API-START//
-Route::group(['prefix' => 'api/v1','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-	Route::post('/vehicle_statitics','VehicleController@vehicleStatics');
-	Route::post('/travel_summary','VehicleController@getTravelSummary');
-	Route::post('/vehicle_report','VehicleController@singleVehicleReport');
-	Route::post('/vehicle_travel_summary','VehicleController@getVehicleTravelSummary');
-
-});
-
-
-Route::group(['prefix' => 'api/v2','namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-
-	Route::post('/vehicle_report','VehicleController@eclipseSingleVehicleReport');
-	Route::post('/vehicle_travel_summary','VehicleController@eclipseGetVehicleTravelSummary');
-
-});
-
-
-///API-END//

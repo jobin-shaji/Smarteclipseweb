@@ -80,15 +80,15 @@ class IdleReportExport implements FromView
         )
         ->with('gps.vehicle');     
         if($vehicle==0 || $vehicle==null )
-       {         
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->groupBy('date');
-       }
-       else
-       {
-        $query = $query->where('gps_id',$single_vehicle_ids)
-           ->groupBy('date'); 
-       }
+        {         
+            $query  =    $query->whereIn('gps_id',$single_vehicle_id)
+                        ->groupBy('date');
+        }
+        else
+        {
+            $query  =   $query->where('gps_id',$single_vehicle_ids)
+                        ->groupBy('date'); 
+        }
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
@@ -96,7 +96,7 @@ class IdleReportExport implements FromView
     }
     public function view(): View
 	{
-       return view('Exports::idle-report', [
+        return view('Exports::idle-report', [
             'idleReportExport' => $this->idleReportExport
         ]);
 	}
