@@ -794,9 +794,9 @@ class GpsController extends Controller {
     public function allgpsListPage()
     {
         $ota = OtaType::all();
-        $gps = Gps::all();
+        $gps = Gps::select('id','imei')->get();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();
-        // dd($header);
+       
         return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
     public function getAllData(Request $request)
@@ -859,17 +859,13 @@ class GpsController extends Controller {
 
     public function vltdataListPage()
     {
-        // $ota = OtaType::all();
-        $gps = Gps::all();
-         // $gps = Gps::all();
-        $gps_data = VltData::select('id','header')->groupBy('header')->get();
+         $gps= Gps::select('id','imei')->get();
+         $gps_data = VltData::select('id','header')->groupBy('header')->get();
         return view('Gps::vltdata-list',['gps' => $gps,'gpsDatas' => $gps_data]);
     }
     public function publicVltdataListPage()
     {
-        // $ota = OtaType::all();
-        $gps = Gps::all();
-         // $gps = Gps::all();
+        $gps= Gps::select('id','imei')->get();
         $gps_data = VltData::select('id','header')->groupBy('header')->get();
         return view('Gps::public-vltdata-list',['gps' => $gps,'gpsDatas' => $gps_data]);
     }
@@ -1462,7 +1458,8 @@ class GpsController extends Controller {
     }
     
     public function travelSummery(){
-        $gps = Gps::all();
+      
+        $gps = Gps::select('id','imei')->get();
         $summery=array();
         $total_data=array('sleep' =>0,  
                           'motion' =>0,   
