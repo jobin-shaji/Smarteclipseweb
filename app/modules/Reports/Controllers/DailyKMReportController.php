@@ -46,7 +46,11 @@ class DailyKMReportController extends Controller
             $query = $query->whereIn('gps_id',$gps_list);          
         }
         else{
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id); 
+           
+            $vehicle    =   Vehicle::select('id','gps_id')
+                                    ->where('id',$vehicle_id)
+                                    ->withTrashed()
+                                    ->first();
             $query = $query->where('gps_id',$vehicle->gps_id);            
         }  
         if($from){            

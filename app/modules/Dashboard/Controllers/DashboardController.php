@@ -78,7 +78,7 @@ class DashboardController extends Controller
     {
         $client_id=\Auth::user()->client->id;
         $alerts =  $this->getAlerts($client_id);
-        $gps_stocks = GpsStock::select('gps_id')->where('client_id',$client_id)->get();
+        $gps_stocks = GpsStock::select('id','gps_id','client_id')->where('client_id',$client_id)->get();
         $single_gps_in_stocks=[];
         foreach ($gps_stocks as $gps) {
             $single_gps_in_stocks[]=$gps->gps_id;
@@ -197,8 +197,8 @@ class DashboardController extends Controller
         }else if($user->hasRole('school')){
             return response()->json([
                 // 'gps' => Gps::where('user_id',$user->id)->count(),
-                'vehicles' => Vehicle::where('client_id',$client->id)->count(),
-                'geofence' => Geofence::where('user_id',$user->id)->count(),
+                'vehicles' => Vehicle::select('id','client_id')->where('client_id',$client->id)->count(),
+                'geofence' => Geofence::select('id','user_id')->where('user_id',$user->id)->count(),
                 'moving' => $moving,
                 'idle' => $idle,
                 'stop' => $stop,
@@ -223,19 +223,19 @@ class DashboardController extends Controller
     {
         
        
-         $gps_manufactured           =    Gps::select('is_returned')
+         $gps_manufactured           =    Gps::select('id','is_returned')
                                                 ->where('is_returned',0)
                                                 ->orWhere('is_returned',NULL)
                                                 ->count();
 
-        $gps_nontransferred_stock   =   GpsStock::select('dealer_id','subdealer_id','client_id','is_returned')
+        $gps_nontransferred_stock   =   GpsStock::select('id','dealer_id','subdealer_id','client_id','is_returned')
                                                 ->whereNull('dealer_id')->whereNull('subdealer_id')
                                                 ->whereNull('client_id')->where(function ($query) {
                                                 $query->where('is_returned', '=', 0)
                                                 ->orWhere('is_returned', '=', NULL);
                                                 })->count();
-        $gps_transferred            =   GpsStock::select('dealer_id')->whereNotNull('dealer_id')->count();
-        $gps_returned               =   Gps::select('is_returned')->where('is_returned',1)->count();
+        $gps_transferred            =   GpsStock::select('id','dealer_id')->whereNotNull('dealer_id')->count();
+        $gps_returned               =   Gps::select('id','is_returned')->where('is_returned',1)->count();
         $gps_to_be_added_to_stock   =   $gps_manufactured-($gps_nontransferred_stock+$gps_transferred);
         return response()->json([
             'gps_manufactured'          => $gps_manufactured, 
@@ -304,7 +304,7 @@ class DashboardController extends Controller
             }
             $new_arrival_gps_count          =   GpsTransferItems::select('gps_transfer_id')->whereIn('gps_transfer_id',$single_new_transfer_ids)->count();
         }
-        $gps_returned                       =   GpsStock::select('dealer_id','is_returned')->where('dealer_id',$dealer_id)->where('is_returned',1)->count();
+        $gps_returned                       =   GpsStock::select('id','dealer_id','is_returned')->where('dealer_id',$dealer_id)->where('is_returned',1)->count();
 
         return response()->json([
             'subdealers'                =>  SubDealer::select('dealer_id')->where('dealer_id',$dealer_id)->count(),
@@ -322,9 +322,9 @@ class DashboardController extends Controller
     {
         $sub_dealer_user_id                     =   $user->id;
         $sub_dealer_id                          =   $user->subdealer->id;
-        $total_gps                              =   GpsStock::select('subdealer_id')->where('subdealer_id',$sub_dealer_id)->count();
-        $gps_in_stock                           =   GpsStock::select('subdealer_id','trader_id','client_id')->where('subdealer_id',$sub_dealer_id)->whereNull('trader_id')->whereNull('client_id')->count();
-        $gps_awaiting_confirmation_from_trader  =   GpsStock::select('subdealer_id','trader_id','client_id')->where('subdealer_id',$sub_dealer_id)->where('trader_id',0)->whereNull('client_id')->count();
+        $total_gps                              =   GpsStock::select('id','subdealer_id')->where('subdealer_id',$sub_dealer_id)->count();
+        $gps_in_stock                           =   GpsStock::select('id','subdealer_id','trader_id','client_id')->where('subdealer_id',$sub_dealer_id)->whereNull('trader_id')->whereNull('client_id')->count();
+        $gps_awaiting_confirmation_from_trader  =   GpsStock::select('id','subdealer_id','trader_id','client_id')->where('subdealer_id',$sub_dealer_id)->where('trader_id',0)->whereNull('client_id')->count();
         $clients_of_subdealers                  =   Client::select('id','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $traders_of_subdealers                  =   Trader::select('id','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->withTrashed()->get();
         $single_clients_array                   =   [];
@@ -335,8 +335,8 @@ class DashboardController extends Controller
         foreach($traders_of_subdealers as $traders_array){
             $single_traders_array[]             =   $traders_array->id;
         }
-        $dealer_to_trader_transferred_gps_count =   GpsStock::select('trader_id','subdealer_id')->whereIn('trader_id',$single_traders_array)->where('subdealer_id',$sub_dealer_id)->count(); 
-        $dealer_to_client_transferred_gps_count =   GpsStock::select('client_id','subdealer_id')->whereIn('client_id',$single_clients_array)->where('subdealer_id',$sub_dealer_id)->count(); 
+        $dealer_to_trader_transferred_gps_count =   GpsStock::select('id','trader_id','subdealer_id')->whereIn('trader_id',$single_traders_array)->where('subdealer_id',$sub_dealer_id)->count(); 
+        $dealer_to_client_transferred_gps_count =   GpsStock::select('id','client_id','subdealer_id')->whereIn('client_id',$single_clients_array)->where('subdealer_id',$sub_dealer_id)->count(); 
         
         $single_new_transfer_ids                =   [];
         $new_arrival_gps_count                  =   0;
@@ -350,7 +350,7 @@ class DashboardController extends Controller
             $new_arrival_gps_count              =   GpsTransferItems::select('gps_transfer_id')->whereIn('gps_transfer_id',$single_new_transfer_ids)->count();
         }
 
-        $gps_returned                           =   GpsStock::select('subdealer_id','is_returned')->where('subdealer_id',$sub_dealer_id)->where('is_returned',1)->count();
+        $gps_returned                           =   GpsStock::select('id','subdealer_id','is_returned')->where('subdealer_id',$sub_dealer_id)->where('is_returned',1)->count();
 
         return response()->json([
             'clients'                                   =>  Client::select('sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->count(),
@@ -370,7 +370,7 @@ class DashboardController extends Controller
     {
         $trader_user_id                             =   $user->id;
         $trader_id                                  =   $user->trader->id;
-        $total_gps                                  =   GpsStock::select('trader_id')->where('trader_id',$trader_id)->count();
+        $total_gps                                  =   GpsStock::select('id','trader_id')->where('trader_id',$trader_id)->count();
         $clients_of_traders                         =   Client::select('id')->where('trader_id',$trader_id)->withTrashed()->get();
         $single_clients_array                       =   [];
         foreach($clients_of_traders as $clients_array){
@@ -387,7 +387,7 @@ class DashboardController extends Controller
             }
             $new_arrival_gps_count                  =   GpsTransferItems::select('gps_transfer_id')->whereIn('gps_transfer_id',$single_new_transfer_ids)->count();
         }
-        $gps_returned                               =   GpsStock::select('trader_id','is_returned')->where('trader_id',$trader_id)->where('is_returned',1)->count();
+        $gps_returned                               =   GpsStock::select('id','trader_id','is_returned')->where('trader_id',$trader_id)->where('is_returned',1)->count();
 
         return response()->json([
             'clients'                                   =>  Client::select('trader_id')->where('trader_id',$trader_id)->count(),
@@ -449,7 +449,7 @@ class DashboardController extends Controller
         }
         else
         {
-            $moving=Gps::select('lat','lon','device_time')->where('mode','M')
+            $moving=Gps::select('id','lat','lon','device_time')->where('mode','M')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
             ->where('device_time','>=',$oneMinut_currentDateTime);
@@ -460,7 +460,7 @@ class DashboardController extends Controller
     function getOffline($single_vehicle,$oneMinut_currentDateTime){
         $user = \Auth::user();
         if($user->hasRole('client|school')){
-            $offline=Gps::select('lat','lon','device_time','id')->whereNotNull('lat')
+            $offline=Gps::select('id','lat','lon','device_time','id')->whereNotNull('lat')
             ->whereNotNull('lon')
             ->where('device_time','<',$oneMinut_currentDateTime)
             ->where('id',$single_vehicle);
@@ -468,7 +468,7 @@ class DashboardController extends Controller
         }
         else
         {
-            $offline=Gps::select('lat','lon','device_time')->whereNotNull('lat')
+            $offline=Gps::select('id', 'lat','lon','device_time')->whereNotNull('lat')
             ->whereNotNull('lon')
             ->where('device_time','<',$oneMinut_currentDateTime);
             $offline=$offline->count();
@@ -487,7 +487,7 @@ class DashboardController extends Controller
         }
         else
         {
-            $idle=Gps::select('mode','lat','lon','device_time')->where('mode','H')
+            $idle=Gps::select('mode','lat','lon','device_time','id')->where('mode','H')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
             ->where('device_time','>=',$oneMinut_currentDateTime);
@@ -507,7 +507,7 @@ class DashboardController extends Controller
         }
         else
         {
-            $sleep=Gps::select('mode','lat','lon','device_time')->where('mode','S')
+            $sleep=Gps::select('id','mode','lat','lon','device_time')->where('mode','S')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
             ->where('device_time','>=',$oneMinut_currentDateTime);
@@ -965,7 +965,7 @@ class DashboardController extends Controller
     public function vehicleTrackList(Request $request)
     {
         $gps_id=$request->gps_id;
-        $user_data=Gps::Select('lat','lat_dir','lon','lon_dir')
+        $user_data=Gps::Select('id','lat','lat_dir','lon','lon_dir')
         ->where('id',$gps_id)
         ->first();
         return response()->json($user_data);

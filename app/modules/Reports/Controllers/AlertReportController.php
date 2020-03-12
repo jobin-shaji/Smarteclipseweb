@@ -82,12 +82,20 @@ class AlertReportController extends Controller
        }
        else if($alert_id==0 && $vehicle_id!=0)
        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+            // $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+            $vehicle=Vehicle::select('id','gps_id','name','register_number')
+                    ->where('id',$vehicle_id)
+                    ->withTrashed()
+                    ->first();
             $query = $query->where('gps_id',$vehicle->gps_id);            
        }
        else
        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+           
+            $vehicle=Vehicle::select('id','gps_id','name','register_number')
+                    ->where('id',$vehicle_id)
+                    ->withTrashed()
+                    ->first();
             $query = $query->where('alert_type_id',$alert_id)
             ->where('gps_id',$vehicle->gps_id);
        }       

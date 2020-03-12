@@ -653,7 +653,11 @@ class DriverController extends Controller {
         }
         $driver_delete=$driver->delete();
         if($driver_delete){
-            $vehicle = Vehicle::where('driver_id', $driver->id)->first();
+          
+             $vehicle=Vehicle::select('id','driver_id')
+            ->where('driver_id',$driver->id)
+            ->first();
+        
             if ($vehicle != null) {
                 $vehicle->driver_id = null;
                 $vehicle->save();

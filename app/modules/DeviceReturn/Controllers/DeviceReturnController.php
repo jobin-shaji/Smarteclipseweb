@@ -192,8 +192,8 @@ class DeviceReturnController extends Controller {
         $device_return->status      =   2;
         $device_return->save();
         $gps_data                   =   Gps::find($device_return->gps_id);
-        $gps_data_in_stock          =   GpsStock::select('gps_id','is_returned')->where('gps_id',$device_return->gps_id)->first();
-        $gps_in_vehicle             =   Vehicle::where('gps_id',$device_return->gps_id)->first();
+        $gps_data_in_stock          =   GpsStock::select('id','gps_id','is_returned')->where('gps_id',$device_return->gps_id)->first();
+        $gps_in_vehicle             =   Vehicle::select('id','gps_id','is_returned')->where('gps_id',$device_return->gps_id)->first();
 
         //old data stored in a variable for creating new row
         $imei                       =   $gps_data->imei;

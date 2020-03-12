@@ -124,9 +124,8 @@ class ClientController extends Controller {
                 User::select('username')->where('username', $request->username)->first()->assignRole('client');
 
             }
-            $alert_types = AlertType::all();
+            $alert_types = AlertType::select('id','driver_point')->get();
             
-
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
@@ -188,8 +187,13 @@ class ClientController extends Controller {
             }else{
                 User::select('username')->where('username', $request->username)->first()->assignRole('client');
             }
-            $alert_types = AlertType::all();
-            
+           
+            $alert_types = AlertType::select(
+                            'id',
+                            'driver_point'
+                            )
+                            ->get();
+                        
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
@@ -358,14 +362,12 @@ class ClientController extends Controller {
     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
-
-
         $decrypted = Crypt::decrypt($request->id);
         $client = Client::select('user_id')->where('user_id', $decrypted)->first();
         if($client == null){
            return view('Client::404');
         }
-    return view('Client::client-change-password',['client' => $client,
+        return view('Client::client-change-password',['client' => $client,
         'decrypted'=>$decrypted]);
     }
 
@@ -735,7 +737,7 @@ class ClientController extends Controller {
         }
         $user = User::find($client_user_id);
 
-        $vehicles= Vehicle::select('client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
+        $vehicles= Vehicle::select('id','client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
             $response_string="CLR VGF";
             $geofence_response= OtaResponse::create([
@@ -791,7 +793,7 @@ class ClientController extends Controller {
             $geofence_cleared = $geofence->forceDelete();
         }
 
-        $vehicles= Vehicle::select('client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
+        $vehicles= Vehicle::select('id','client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
             $response_string="CLR VGF";
             $geofence_response= OtaResponse::create([
@@ -1142,7 +1144,8 @@ public function selectTrader(Request $request)
             }else{
                 User::where('username', $request->username)->first()->assignRole('client');
             }
-            $alert_types = AlertType::all();
+            
+            $alert_types = AlertType::select('id','driver_point')->get();
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
