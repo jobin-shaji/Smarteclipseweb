@@ -33,8 +33,8 @@ Alert Report
                                 <div class="col-lg-2 col-md-2">
                                   <div class="form-group">    
                                     <label>Vehicle</label>                      
-                                    <select class="form-control selectpicker" style="width: 100%" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                                    <option value="" selected="selected" disabled="disabled">select</option>
+                                    <select class="form-control selectpicker" required style="width: 100%" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                    <option value="" selected="selected" disabled="disabled">Select</option>
                                     @foreach ($vehicles as $vehicle)                          
                                     <option value="{{$vehicle->id}}"  @if(isset($alertReports) && $vehicle->id==$vehicle_id){{"selected"}} @endif>{{$vehicle->name}}||{{$vehicle->register_number}}</option>
                                     @endforeach  

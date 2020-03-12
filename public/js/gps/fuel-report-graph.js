@@ -1,34 +1,51 @@
 function getFuelGraphDetails()
 {
 
-    var report_type = document.getElementById("report_type").value;
-    var gps_id = document.getElementById("vehicle").value;
+    var gps_id      = $("#vehicle").val();
+    var report_type = $("#report_type").val();
+    var hasError = false;
+
+    if(gps_id.length == 0){
+        $("#vehicle").siblings('.error').remove();
+        $("#vehicle").after("<span class='error text-danger'>Please Select Vehicle</span>")
+        hasError = true;
+    }else{
+        $("#vehicle").siblings('.error').remove();
+    } 
+    if(report_type.length == 0){
+        $("#report_type").siblings('.error').remove();
+        $("#report_type").after("<span class='error text-danger'>Please Select  Report Type </span>")
+        hasError = true;
+    }else{
+        $("#report_type").siblings('.error').remove();
+    } 
     if(report_type==1)
     {
-        var date = document.getElementById("date").value;
-        document.getElementById("month").value="";
+        var date = $("#date").val(); $("#month").val("");
+
         if(date == '')
         {
-            alert('Please select date from calendar');
+            $("#date").siblings('.error').remove();
+            $("#date").after("<span class='error text-danger'>Please Select Month From Calender</span>")
+            hasError = true;
         }
     }
     else if(report_type==2)
     {
-        var date = document.getElementById("month").value;
-        document.getElementById("date").value=""
+        var date = $("#month").val(); $("#date").val("");
+
         if(date == '')
         {
-            alert('Please select date from calendar');
+            $("#month").siblings('.error').remove();
+            $("#month").after("<span class='error text-danger'>Please Select  Calender</span>")
+            hasError = true;
         }
     }
-    if(gps_id == '')
+
+    if(hasError == false)
     {
-        alert('Please select vehicle');
-    }
-    else{
         $('.show_selected_date').show();
         $('.cover_div_search').hide();
-        // cover_div_search
         $('.cover_date_select').css('display','none');
         $('.show_selected_date').append('<div class="col-sm-4 col-date-outer fule-cal"><span class="datetime_searched"> Fuel Report : '+date+ '</span><span onclick="resetDate()" class="close-span-rt ful-close"><i class="fa fa-times"></i></span></div>');
         callBackDataTable(gps_id,date,report_type)
@@ -37,7 +54,15 @@ function getFuelGraphDetails()
                 gps_id:gps_id,date:date,report_type:report_type
             };
             backgroundPostData(url, data, 'fuelGraph', {alert: false});
-        }
+    }
+    else
+    {
+        return false;
+    }
+
+
+    
+       
 }
 function resetDate(){
     location.reload(true);
