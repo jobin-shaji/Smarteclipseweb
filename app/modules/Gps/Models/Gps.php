@@ -110,4 +110,28 @@ class Gps extends Model
     {
         return self::select('id')->where('imei',$imei)->first();
     }
+    /**
+     *
+     *
+     *
+     */
+    public function getGpsDetails($gps_id)
+    {
+        return self::select(
+                    'id',
+                    'imei',
+                    'serial_no',
+                    'manufacturing_date',
+                    'icc_id',
+                    'imsi',
+                    'e_sim_number',
+                    'batch_number',
+                    'employee_code',
+                    'model_name',
+                    'version',
+                    'is_returned'
+                    )
+                    ->where('id',$gps_id)
+                    ->first();
+    }
 }

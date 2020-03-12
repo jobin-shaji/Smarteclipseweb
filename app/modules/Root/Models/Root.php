@@ -7,7 +7,13 @@ class Root extends Model
 {
   use SoftDeletes;
   
-    public function dealers(){
-      return $this->hasMany('App\Modules\Dealer\Models\Dealer');
-    }
+  public function dealers()
+  {
+    return $this->hasMany('App\Modules\Dealer\Models\Dealer');
+  }
+
+  public function getManufacturerDetails($root_id)
+  {
+    return self::select('id','name')->where('id',$root_id)->first();
+  }
 }

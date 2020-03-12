@@ -27,10 +27,13 @@
                 <thead>
                   <tr>
                     <th>SL.No</th>
-                    <th>Servicer</th>
+                    <th>Code</th>
                     <th>imei </th> 
                     <th>Serial No</th>
-                    <th>Type of Issues</th>
+                    <th>Servicer</th>
+                    <th>Sub Dealer</th>
+                    <th>Dealer</th>
+                    <th>Distributor</th>
                     <th>Status</th>
                     <th>Action</th>
                     </tr>

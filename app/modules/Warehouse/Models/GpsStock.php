@@ -59,4 +59,15 @@ class GpsStock extends Model
         return $this->hasone('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','gps_id')->where('status','!=',0);
     }
 
+    public function getSingleGpsStockDetails($gps_id)
+    {
+        return self::select(
+                    'id',
+                    'gps_id',
+                    'is_returned'
+                    )
+                    ->where('gps_id',$gps_id)
+                    ->first();
+    }
+
 }

@@ -19,9 +19,26 @@ class Servicer extends Model
     ];
 
     public function user()
-  	{
-    	return $this->belongsTo('App\Modules\User\Models\User')->withTrashed();
-  	}
+    {
+    return $this->belongsTo('App\Modules\User\Models\User')->withTrashed();
+    }
+
+    // with sub dealer table
+    public function subDealer()
+    {
+        return $this->hasOne('App\Modules\SubDealer\Models\SubDealer','id','sub_dealer_id')->withTrashed();
+    }
+
+    // with sub dealer table
+    public function Trader()
+    {
+        return $this->hasOne('App\Modules\Trader\Models\Trader','id','trader_id')->withTrashed();
+    }
+
+    public function getServicerDetails($servicer_id)
+	{
+		return self::select('name')->where('id',$servicer_id)->first();
+	}
 
 
 }

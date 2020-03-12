@@ -38,16 +38,16 @@ class Vehicle extends Model
     public function gps(){
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
-     
-     public function vehicleModels()
-     {
+    
+    public function vehicleModels()
+    {
       return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id');
-     }
+    }
 
-     public function servicerjob()
-     {
+    public function servicerjob()
+    {
       return $this->hasOne('App\Modules\Servicer\Models\ServicerJob','id','servicer_job_id');
-     }
+    }
 
     public function jobs()
     {
@@ -163,16 +163,25 @@ class Vehicle extends Model
         ->join('alerts', 'vehicles.gps_id', '=', 'alerts.gps_id')
         ->join('alert_types', 'alerts.alert_type_id', '=', 'alert_types.id')
         ->select('alert_types.description as alert',
-                 'vehicles.name as vehicle_name',
-                 'vehicles.register_number as register_number',
-                 'gps.imei as imei',
-                 'alerts.latitude as lat',
-                 'alerts.longitude as lon',
-                 'alerts.created_at as date'
+                  'vehicles.name as vehicle_name',
+                  'vehicles.register_number as register_number',
+                  'gps.imei as imei',
+                  'alerts.latitude as lat',
+                  'alerts.longitude as lon',
+                  'alerts.created_at as date'
           );
         
         // response
         return $query->orderBy('alerts.created_at', 'desc')->paginate(10);
-      
+    }
+
+    public function getSingleVehicleDetailsBasedOnGps($gps_id)
+    {
+        return self::select(
+                    'id',
+                    'is_returned'
+                    )
+                    ->where('gps_id',$gps_id)
+                    ->first();
     }
 }
