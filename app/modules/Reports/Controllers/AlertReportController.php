@@ -38,12 +38,12 @@ class AlertReportController extends Controller
     public function alertReportList(Request $request)
     {
         
-        $client= \Auth::user()->client->id;
-        $alert_id= $request->alert;
-        $vehicle_id= $request->vehicle;       
-        $from = $request->fromDate;
-        $to = $request->toDate;
-         // dd($from);
+        $client         = \Auth::user()->client->id;
+        $alert_id       = $request->alert;
+        $vehicle_id     = $request->vehicle;       
+        $from           = $request->fromDate;
+        $to             = $request->toDate;
+        //  dd($from);
         $user=\Auth::user();  
         $VehicleGpss=Vehicle::select(
             'id',
