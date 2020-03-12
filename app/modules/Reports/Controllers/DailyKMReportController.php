@@ -38,7 +38,7 @@ class DailyKMReportController extends Controller
         ->orderBy('id', 'desc');      
        
         if($vehicle_id==0 || $vehicle_id==null){
-            $gps_stocks=GpsStock::select('client_id','gps_id')->where('client_id',$client_id)->get();
+            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client_id)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
