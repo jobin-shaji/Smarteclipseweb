@@ -18,6 +18,7 @@ class DailyKMReportExport implements FromView
         $search_from_date=date("Y-m-d", strtotime($from));
         // $search_to_date=date("Y-m-d", strtotime($to));
         // dd($from);
+        
         $query =DailyKm::select(
             'gps_id', 
             'date',      
@@ -27,7 +28,8 @@ class DailyKMReportExport implements FromView
         ->orderBy('id', 'desc');      
        
         if($vehicle_id==0 || $vehicle_id==null){
-            $gps_stocks=GpsStock::select('client_id','gps_id')->where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client)->get();
+            
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
@@ -35,7 +37,8 @@ class DailyKMReportExport implements FromView
             $query = $query->whereIn('gps_id',$gps_list);          
         }
         else{
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id); 
+            $vehicle=Vehicle::select('id','gps_id')->where('id',$vehicle_id)->withTrashed()->first();
+            // $vehicle=Vehicle::withTrashed()->find($vehicle_id); 
             $query = $query->where('gps_id',$vehicle->gps_id);            
         }  
         if($from){            

@@ -51,7 +51,7 @@ class HarshBrakingReportController extends Controller
         // }   
         if($vehicle==0 || $vehicle==null)
         {
-            $gps_stocks=GpsStock::select('client_id','gps_id')->where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
@@ -66,7 +66,11 @@ class HarshBrakingReportController extends Controller
         }
         else
         {
-            $vehicle=Vehicle::withTrashed()->find($vehicle); 
+            // $vehicle=Vehicle::withTrashed()->find($vehicle); 
+            $vehicle    =   Vehicle::select('id','gps_id')
+                            ->where('id',$vehicle)
+                            ->withTrashed()
+                            ->first();
             $query = $query->where('alert_type_id',1)->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
             if($from){

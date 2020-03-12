@@ -32,7 +32,11 @@ class ParkingReportController extends Controller
         $from = $request->from_date;
         $to = $request->to_date;
         $vehicle = $request->vehicle;
-        $vehicleGps=Vehicle::withTrashed()->find($vehicle); 
+        
+        $vehicleGps=Vehicle::select('id','gps_id','name','register_number')
+                            ->where('id',$vehicle)
+                            ->withTrashed()
+                            ->first();
         $from_date = date('Y-m-d H:i:s', strtotime($from));
         $to_date = date('Y-m-d H:i:s', strtotime($to.' 23:59:59'));
         $date_and_time=array('from_date' => $from_date, 'to_date' => $to_date);
