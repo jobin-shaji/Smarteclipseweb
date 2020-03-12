@@ -634,7 +634,8 @@ class AlertController extends Controller {
     function getPlacenameFromLatLng($latitude,$longitude){
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get('eclipse.keys.googleMap'));
+            
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
             $output = json_decode($geocodeFromLatLong);
             $status = $output->status;
             $address = ($status=="OK")?$output->results[0]->formatted_address:'';

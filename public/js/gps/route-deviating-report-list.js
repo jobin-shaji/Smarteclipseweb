@@ -3,12 +3,12 @@ $(document).ready(function () {
 });
 function check(){
     if(document.getElementById('vehicle').value == ''){
-        alert('please select vehicle');
+        alert('Please select vehicle');
     }
     else if(document.getElementById('fromDate').value == ''){
-        alert('please select From date');
+        alert('Please select From date');
     }else if(document.getElementById('toDate').value == ''){
-        alert('please select To date');
+        alert('Please select To date');
     }
     else{
         calculate();
@@ -36,7 +36,7 @@ function callBackDataTable(){
           from_date : document.getElementById('fromDate').value,
           to_date : document.getElementById('toDate').value,
           vehicle : document.getElementById('vehicle').value,
-    }; 
+    };
 
 
     $("#dataTable").DataTable({
@@ -56,9 +56,9 @@ function callBackDataTable(){
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-       
+
         fnDrawCallback: function (oSettings, json) {
-            
+
 
         },
         columns: [
@@ -70,7 +70,7 @@ function callBackDataTable(){
             {data: 'deviating_time', name: 'deviating_time', orderable: false},
 
         ],
-        
+
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }

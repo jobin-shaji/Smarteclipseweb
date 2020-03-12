@@ -9,9 +9,12 @@ function initMap() {
   });
 }
 $(document).ready(function () {
+ 
+  var data={ client_id:  alert_client_id}; 
   $(".loader-1").show();
     $.ajax({
             type:'post',
+            data:data,
             url: url_ms_alerts+"/last-seven-days-alerts",
             dataType: "json",
             success: function (res) 
@@ -132,24 +135,12 @@ function gpsAlertTracker(res)
   });
   function locs()
   {
-    getAddress(res.latitude,res.longitude);
     $('#vehicle_name').text(res.gps.connected_vehicle_name);
     $('#register_number').text(res.gps.connected_vehicle_registration_number);
     $('#description').text(res.alert_type.description);
     $('#device_time').text(res.device_time);
+    $('#address').text(res.address); 
   }
 }
-function getAddress(lat, lng) {
-  var address=""
-  var latlng = new google.maps.LatLng(lat, lng);
-  var geocoder = geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-          if (results[1]) {
-            address= results[0].formatted_address;    
-            $('#address').text(address);         
-          }        
-      }    
-  }); 
-}
+
 

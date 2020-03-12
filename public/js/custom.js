@@ -1805,22 +1805,26 @@ localStorage.setItem('login', 1);
 
 
 // ---------------check notification-----------------------------------
+var alert_client_id=document.getElementById('client_id').value;
 
     setInterval(function() {
-        alertCount();
-        clientAlerts();
+        alertCount(alert_client_id);
+        clientAlerts(alert_client_id);
     }, 8000);
 
     $( document ).ready(function() {
-        alertCount();
-        clientAlerts();
+
+        alertCount(alert_client_id);
+        clientAlerts(alert_client_id);
     });
 
-    function alertCount()
+    function alertCount(alert_client_id)
     {
+        var data={ client_id:  alert_client_id}; 
+        // alert(alert_client_id);
         $.ajax({
             type:'post',
-            // data:data,
+            data:data,
             url: url_ms_alerts+'/alert-count',
             dataType: "json",
             success: function (res) 
@@ -1835,10 +1839,11 @@ localStorage.setItem('login', 1);
             var count_notification=res;
             $("#bell_notification_count").text(count_notification);
     }
-    function clientAlerts(){       
+    function clientAlerts(alert_client_id){  
+        var data={ client_id:  alert_client_id};      
         $.ajax({
             type:'post',
-            // data:data,
+            data:data,
             url: url_ms_alerts+"/last-five-unread-alerts",
             dataType: "json",
             success: function (res) 
@@ -1879,12 +1884,10 @@ localStorage.setItem('login', 1);
             });
         }
         function gpsAlertconfirm(res)
-        {           
-            var latitude                =   res.latitude;
-            var longitude               =   res.longitude;
-            getPlaceNameFromLatLng(latitude,longitude);
+        {     
             $("#load-2").css("display", "none");
             $('#alert_'+res._id).removeClass('alert');
             var alert_content = res.alert_type.description+' on vehicle '+res.gps.connected_vehicle_name+'('+res.gps.connected_vehicle_registration_number+') at '+res.device_time;
-            $('#alert_content').text(alert_content);           
+            $('#alert_content').text(alert_content);  
+            $('#alert_address').text(res.address);           
         }
