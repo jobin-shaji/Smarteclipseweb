@@ -491,37 +491,37 @@ class DriverController extends Controller {
            $driver_id=0;
         }
         $client_id=\Auth::user()->client->id;
-        $gps_stocks = GpsStock::select('client_id','gps_id')->where('client_id',$client_id)->get();
+        $gps_stocks = GpsStock::select('gps_id','client_id','id')->where('client_id',$client_id)->get();
         $single_gps_stock=[];
         foreach ($gps_stocks as $gps_stock) {
             $single_gps_stock[] = $gps_stock->gps_id;
         }
-        $harsh_braking_alerts=Alert::where('alert_type_id',1)->whereIn('gps_id',$single_gps_stock)->get();
+        $harsh_braking_alerts=Alert::select('alert_type_id','gps_id','id')->where('alert_type_id',1)->whereIn('gps_id',$single_gps_stock)->get();
         $single_harsh_braking_alerts = [];
         foreach($harsh_braking_alerts as $harsh_braking_alert){
             $single_harsh_braking_alerts[] = $harsh_braking_alert->id;
         }
-        $over_speed_alerts=Alert::where('alert_type_id',12)->whereIn('gps_id',$single_gps_stock)->get();
+        $over_speed_alerts=Alert::select('alert_type_id','gps_id','id')->where('alert_type_id',12)->whereIn('gps_id',$single_gps_stock)->get();
         $single_over_speed_alerts = [];
         foreach($over_speed_alerts as $over_speed_alert){
             $single_over_speed_alerts[] = $over_speed_alert->id;
         }
-        $tilt_alerts=Alert::where('alert_type_id',13)->whereIn('gps_id',$single_gps_stock)->get();
+        $tilt_alerts=Alert::select('alert_type_id','gps_id','id')->where('alert_type_id',13)->whereIn('gps_id',$single_gps_stock)->get();
         $single_tilt_alerts = [];
         foreach($tilt_alerts as $tilt_alert){
             $single_tilt_alerts[] = $tilt_alert->id;
         }
-        $impact_alerts=Alert::where('alert_type_id',14)->whereIn('gps_id',$single_gps_stock)->get();
+        $impact_alerts=Alert::select('alert_type_id','gps_id','id')->where('alert_type_id',14)->whereIn('gps_id',$single_gps_stock)->get();
         $single_impact_alerts = [];
         foreach($impact_alerts as $impact_alert){
             $single_impact_alerts[] = $impact_alert->id;
         }
-        $over_speed_gf_entry_alerts=Alert::where('alert_type_id',15)->whereIn('gps_id',$single_gps_stock)->get();
+        $over_speed_gf_entry_alerts=Alert::select('alert_type_id','gps_id','id')->where('alert_type_id',15)->whereIn('gps_id',$single_gps_stock)->get();
         $single_over_speed_gf_entry_alerts = [];
         foreach($over_speed_gf_entry_alerts as $over_speed_gf_entry_alert){
             $single_over_speed_gf_entry_alerts[] = $over_speed_gf_entry_alert->id;
         }
-        $over_speed_gf_exit_alerts=Alert::where('alert_type_id',16)->whereIn('gps_id',$single_gps_stock)->get();
+        $over_speed_gf_exit_alerts=Alert::select('alert_type_id','gps_id','id')->where('alert_type_id',16)->whereIn('gps_id',$single_gps_stock)->get();
         $single_over_speed_gf_exit_alerts = [];
         foreach($over_speed_gf_exit_alerts as $over_speed_gf_exit_alert){
             $single_over_speed_gf_exit_alerts[] = $over_speed_gf_exit_alert->id;
@@ -653,7 +653,11 @@ class DriverController extends Controller {
         }
         $driver_delete=$driver->delete();
         if($driver_delete){
-            $vehicle = Vehicle::where('driver_id', $driver->id)->first();
+          
+             $vehicle=Vehicle::select('id','driver_id')
+            ->where('driver_id',$driver->id)
+            ->first();
+        
             if ($vehicle != null) {
                 $vehicle->driver_id = null;
                 $vehicle->save();

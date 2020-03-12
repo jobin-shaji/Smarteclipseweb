@@ -601,7 +601,11 @@ trait VehicleDataProcessorTrait{
     }
 
     public function vehicleGps($vehicle_id){       
-        $vehicle_details =Vehicle::withTrashed()->find($vehicle_id);
+       
+        $vehicle_details    =   Vehicle::select('id','gps_id')
+                                        ->where('id',$vehicle_id)
+                                        ->withTrashed()
+                                        ->first();
        	return  $single_vehicle_gps_id = $vehicle_details->gps_id;
     }
 

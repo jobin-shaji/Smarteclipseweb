@@ -1242,7 +1242,7 @@ public function serviceJobDetails(Request $request)
                 $location= "No Address";
             }
 
-            $gps_stocks = GpsStock::select(
+            $gps_stocks = GpsStock::select('id',
                 'gps_id',
                 'client_id'
             )
