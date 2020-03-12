@@ -215,13 +215,17 @@ class VehicleController extends Controller
         $this->validate($request, $rules);
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
-        if($vehicle_update && $new_driver_id && $old_driver){
-                $vehicle_driver_log = VehicleDriverLog::create([
-                'vehicle_id' => $vehicle->id,
-                'from_driver_id' => $old_driver,
-                'to_driver_id' => $new_driver_id,
-                'client_id' =>$vehicle->client_id
-            ]);
+        // if same driver updated no insertion
+        if($old_driver != $new_driver_id)
+        {
+            if($vehicle_update && $new_driver_id && $old_driver){
+                    $vehicle_driver_log = VehicleDriverLog::create([
+                    'vehicle_id' => $vehicle->id,
+                    'from_driver_id' => $old_driver,
+                    'to_driver_id' => $new_driver_id,
+                    'client_id' =>$vehicle->client_id
+                ]);
+            }
         }
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Driver updated successfully!');
@@ -721,6 +725,7 @@ class VehicleController extends Controller
         ->with('vehicle:id,name,register_number')
         ->orderBy('id','desc')
         ->get();
+        
 // dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
             ->addIndexColumn()
