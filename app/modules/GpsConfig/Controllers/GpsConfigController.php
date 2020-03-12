@@ -17,7 +17,8 @@ class GpsConfigController extends Controller {
 
     public function gpsConfigListPage()
     {
-        $gps = Gps::all();
+       
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('GpsConfig::gps-config-list',['gps' => $gps]);
     }
     public function getAllGpsConfig(Request $request)
@@ -31,7 +32,8 @@ class GpsConfigController extends Controller {
     }
     public function allGpsConfigListPage()
     {
-        $gps = Gps::all();
+       
+        $gps = Gps::select('id','imei','serial_no')->get();
         return view('GpsConfig::all-gps-config-list',['gps' => $gps]);
     }
     public function getAllGpsConfigList(Request $request)
@@ -44,7 +46,8 @@ class GpsConfigController extends Controller {
     }
     public function gpsConfigListPagePublic()
     {
-        $gps = Gps::all();
+        $gps = Gps::select('id','imei','serial_no')->get();
+        
         return view('GpsConfig::gps-config-list-public',['gps' => $gps]);
     }
     public function getAllGpsConfigPublic(Request $request)
