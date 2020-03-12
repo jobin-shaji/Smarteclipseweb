@@ -1,5 +1,7 @@
 $(document).ready(function () { 
-     $("#loader-1").hide();
+   
+        $("#load6").css("display","none");
+        $("#load-6").css("display","none");
 });
 
 function trackMode()
@@ -10,7 +12,9 @@ function trackMode()
      if(document.getElementById('report').value == ''){
         alert('Please enter report type');
     }
-    else{       
+    else{
+        $("#load6").css("display","show");
+        $("#load-6").css("display","show"); 
         var vehicle_id=$('#vehicle').val(); 
         var report_type=$('#report').val(); 
         var client=$('meta[name = "client"]').attr('content');
@@ -21,14 +25,18 @@ function trackMode()
             'client':client, 
             'type':report_type 
         };
-       $("#loader-1").show();
+   
+        $("#load6").css("display","show");
+        $("#load-6").css("display","show");
        backgroundPostData(url,data,'vehicleTrackReport',{alert:true});           
     }
 
    
 }
 function vehicleTrackReport(res){
-  $("#loader-1").hide();
+// //   $("#loader-1").hide();
+  $("#load6").css("display","none");
+  $("#load-6").css("display","none");
   $('#sl').text("1");
   $('#sleep').text(res.sleep);
   $('#motion').text(res.motion);
