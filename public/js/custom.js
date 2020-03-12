@@ -181,7 +181,7 @@ $(function () {
     $( ".performancedatepickerSuperior" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
-        useCurrent: true,
+        useCurrent: false,
         defaultDate: null,
         maxDate: new Date(),
         minDate: new Date(currentYear, currentMonth-4, currentDate)
@@ -191,7 +191,7 @@ $(function () {
         format: 'YYYY-MM-DD',
         // format: 'DD-MM-YYYY',
         defaultDate: null,
-        useCurrent: true,
+        useCurrent: false,
         maxDate: new Date(),
         minDate: new Date(currentYear, currentMonth-6, currentDate)
         // minDate:pro_date

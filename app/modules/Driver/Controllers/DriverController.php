@@ -283,20 +283,17 @@ class DriverController extends Controller {
     public function performanceScoreHistoryList(Request $request)
     {
 
-        $client_id= \Auth::user()->client->id;
-        $driver_id= $request->driver;
-        $from = date("Y-m-d", strtotime($request->fromDate));
-        $to = date("Y-m-d", strtotime($request->toDate));
-        $search_key = ( isset($request->search_key) ) ? $request->search_key : null;
-        // client drivers list
-        $drivers        = Driver::where('client_id',$client_id)->get();
+        $client_id      = \Auth::user()->client->id;
+        $driver_id      = ( $request->driver) ? $request->driver : '' ;
+        $from           = ( $request->fromDate) ? date("Y-m-d", strtotime($request->fromDate)) : date('Y-m-d');
+        $to             = ( $request->toDate ) ?  date("Y-m-d", strtotime($request->toDate)) : date('Y-m-d') ;
+        $search_key     = ( isset($request->search_key) ) ? $request->search_key : null;
+        $drivers        =  Driver::where('client_id',$client_id)->get();
         $single_drivers = [];
         foreach($drivers as $driver)
         {
             $single_drivers[] = $driver->id;
         }
-        // $from = $request->fromDate;
-        // $to = $request->toDate;
         $performance_score = DriverBehaviour::select(
                 'id',
                 'vehicle_id',
@@ -321,7 +318,7 @@ class DriverController extends Controller {
             ->whereDate('created_at', '<=', $to);
 
             // if driver id is not provided, choose all drivers under that client
-            $performance_score = (( $driver_id != 0 ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers));
+            $performance_score = (( $driver_id != 'all' ) ? $performance_score->where('driver_id',$driver_id) : $performance_score->whereIn('driver_id',$single_drivers));
             // search section
             // if( isset($request->search_item) )
             // {
