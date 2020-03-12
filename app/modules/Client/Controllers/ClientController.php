@@ -119,10 +119,10 @@ class ClientController extends Controller {
             ]);
             if($request->client_category=="school"){
                 User::select('username')->where('username', $request->username)->first()->assignRole('school');
-               
+
             }else{
                 User::select('username')->where('username', $request->username)->first()->assignRole('client');
-               
+
             }
             $alert_types = AlertType::all();
             if($client){
@@ -182,7 +182,7 @@ class ClientController extends Controller {
                 'latest_user_updates'=>$current_date
             ]);
             if($request->client_category=="school"){
-                User::select('username')->where('username', $request->username)->first()->assignRole('school');    
+                User::select('username')->where('username', $request->username)->first()->assignRole('school');
             }else{
                 User::select('username')->where('username', $request->username)->first()->assignRole('client');
             }
@@ -280,15 +280,15 @@ class ClientController extends Controller {
             'location',
             'name',
             'address'
-            
+
             )->withTrashed()->where('user_id', $decrypted)->first();
         $latitude= $client->latitude;
         $longitude=$client->longitude;
         if(!empty($latitude) && !empty($longitude))
         {
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-            
-           
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
+
+
             $output = json_decode($geocodeFromLatLong, true);
             $location = $client->location;
          }
@@ -381,7 +381,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($user->id);
 
-        $rules=$this->updateUserPassword($user);
+        $rules=$this->updateUserPassword();
         $this->validate($request,$rules);
         $user->password=bcrypt($request->password);
         $user->save();
@@ -409,7 +409,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateUserPassword($client);
+        $rules=$this->updateUserPasswordBySubdealer();
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->save();
@@ -424,12 +424,12 @@ class ClientController extends Controller {
         $plan=Plan::find($plan_id);
         $url=url()->current();
         $rayfleet_key="rayfleet";
-        if (strpos($url, $rayfleet_key) == true) { 
+        if (strpos($url, $rayfleet_key) == true) {
             $subscription=Subscription::select('plan_id','country_id','amount')->where('plan_id',$plan_id)->where('country_id',178)->first();
-           
+
         }else{
             $subscription=Subscription::select('plan_id','country_id','amount')->where('plan_id',$plan_id)->where('country_id',101)->first();
-          
+
         }
         $amount = $subscription->amount;
         $voucher = Voucher::create([
@@ -475,11 +475,17 @@ class ClientController extends Controller {
     {
         $rules=[
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
-             'oldpassword'=>'required',
+            'oldpassword'=>'required',
         ];
         return $rules;
     }
-
+    public function updateUserPasswordBySubdealer()
+    {
+        $rules=[
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
+        ];
+        return $rules;
+    }
     public function activatesubscription()
     {
         $rules=[
@@ -595,7 +601,7 @@ class ClientController extends Controller {
         $client = Client::select('user_id')
                          ->where('user_id',$request->id)
                          ->first();
-        
+
         if($client_user == null){
             return response()->json([
                 'status' => 0,
