@@ -1,5 +1,7 @@
 $(document).ready(function () { 
-     $("#loader-1").hide();
+   
+        $("#load6").css("display","none");
+        $("#load-6").css("display","none");
 });
 
 function trackMode()
@@ -31,7 +33,9 @@ function trackMode()
             'client':client, 
             'type':report_type 
         };
-       $("#loader-1").show();
+   
+        $("#load6").css("display","show");
+        $("#load-6").css("display","show");
        backgroundPostData(url,data,'vehicleTrackReport',{alert:true});           
     }
     else
@@ -41,7 +45,9 @@ function trackMode()
 
 }
 function vehicleTrackReport(res){
-  $("#loader-1").hide();
+
+  $("#load6").css("display","none");
+  $("#load-6").css("display","none");
   $('#sl').text("1");
   $('#sleep').text(res.sleep);
   $('#motion').text(res.motion);

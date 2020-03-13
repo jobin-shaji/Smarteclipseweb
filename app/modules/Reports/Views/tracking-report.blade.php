@@ -102,8 +102,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="loader-wrapper" id="loader-1">
-                      <div id="loader"></div>
+                    <div class="loader-wrapper" id="load-6">
+                      <div id="load6"></div>
                     </div> 
                   </div>
                   </div>
