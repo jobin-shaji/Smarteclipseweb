@@ -1094,6 +1094,11 @@
   @role('client')
   <input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
   <input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">
+  <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
+    <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
+      <i class="fa fa-refresh"></i> Refresh
+    </button>
+  </div>
   <div class="dashboar-1-map-box">
     <div class="dasb-board-googlemap">
       <div id="map" style="width:100%; height:100%;"></div>
@@ -1128,15 +1133,15 @@
       </div>
       <div class="dashboard-serch-km-section">
         <div class="dash-bord-bottom">
-        <div class="st-button-main str-icon">
-                <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
-              </div>
+          <div class="st-button-main str-icon">
+            <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
+          </div>
           <div class="dash-board-bt-inner">
             <div class="right-bottom">
             </div>
             @role('fundamental|superior|pro|school')
             <form onsubmit="return locationSearch();">
-              <input type="text" id="search_place" name="fname" placeholder="Enter a location">
+              <input type="text" id="search_place" class="form-control" value="">
               <select id="search_radius" name="cars">
                 <option selected>KM</option>
                 <option value="10">10 KM</option>
@@ -1623,12 +1628,13 @@
   <script src="{{asset('js/gps/mdb.js')}}"></script>
   <script src="{{asset('js/gps/dashb.js')}}"></script>
 
+
   @role('client')
   <link rel="stylesheet" href="{{asset('css/firebaselivetrack-new-css.css')}}" type="text/css" / >
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  <script src="{{asset('js/gps/dashb-client.js')}}"></script>
+    <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&libraries=places&callback=initMap"></script>
   <script type="text/javascript">
@@ -1638,7 +1644,6 @@
     }
   </script>
   <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
-
   <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
   <style type="text/css">
     .container-fluid {
